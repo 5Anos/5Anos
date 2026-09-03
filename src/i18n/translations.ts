@@ -34,6 +34,8 @@ export const translations = {
     exploreThemesDesc: 'Seleciona um tema para explorar os conteúdos e praticar nos jogos e desafios interativos.',
     recentBadgesTitle: 'Conquistas Recentes',
     viewAllProgress: 'Ver galeria de conquistas',
+    continueLearning: 'Continuar Aprendizagem',
+    continueFromWhereYouLeft: 'Continua de onde paraste na tua última atividade!',
 
     // Themes
     tabContent: '📚 Conteúdos',
@@ -148,6 +150,8 @@ export const translations = {
     exploreThemesDesc: 'Choose a theme to explore learning topics and practice with games and interactive challenges.',
     recentBadgesTitle: 'Recent Achievements',
     viewAllProgress: 'View achievements gallery',
+    continueLearning: 'Continue Learning',
+    continueFromWhereYouLeft: 'Resume from where you left off in your latest activity!',
 
     // Themes
     tabContent: '📚 Learning Topics',

@@ -218,9 +218,9 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {progressList.map((item) => (
-                  <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
+                  <tr key={item.activityId} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-3 font-semibold text-slate-800">
-                      {item.activityTitle || item.activityId}
+                      {item.activityId}
                     </td>
                     <td className="py-3 text-slate-500">
                       {item.activityType === 'module'
@@ -249,7 +249,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                       {item.attempts}
                     </td>
                     <td className="py-3 text-slate-500">
-                      {new Date(item.lastAttemptAt).toLocaleDateString()}
+                      {item.lastUpdated ? new Date(item.lastUpdated).toLocaleDateString() : '—'}
                     </td>
                   </tr>
                 ))}
@@ -272,7 +272,9 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
               <div key={tx.id} className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between text-xs sm:text-sm">
                 <div>
                   <p className="font-semibold text-slate-800">{tx.reason}</p>
-                  <p className="text-[11px] text-slate-400">{new Date(tx.createdAt).toLocaleTimeString()} — {new Date(tx.createdAt).toLocaleDateString()}</p>
+                  <p className="text-[11px] text-slate-400">
+                    {tx.timestamp ? `${new Date(tx.timestamp).toLocaleTimeString()} — ${new Date(tx.timestamp).toLocaleDateString()}` : '—'}
+                  </p>
                 </div>
                 <span className="font-black text-amber-700 bg-amber-100/70 px-2.5 py-1 rounded-lg text-xs">
                   +{tx.amount} pts
