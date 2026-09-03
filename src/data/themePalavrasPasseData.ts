@@ -2,7 +2,7 @@ import { ThemeDefinition } from '../types';
 
 export const themePalavrasPasseData: ThemeDefinition = {
   id: 'palavras-passe',
-  number: 4,
+  number: 3,
   title: {
     pt: 'Palavras-passe Seguras',
     en: 'Secure Passwords',
@@ -19,6 +19,53 @@ export const themePalavrasPasseData: ThemeDefinition = {
   illustrationKey: 'palavras-passe',
   accentColor: 'purple',
   badgeCount: 2,
+  lessons: [
+    {
+      eyebrow: { pt: 'Vamos descobrir', en: "Let's discover" },
+      h: { pt: 'O que é uma palavra-passe?', en: 'What is a password?' },
+      body: {
+        pt: 'Uma palavra-passe é um código secreto que usamos para provar que somos nós a aceder a uma conta — como o email ou uma plataforma escolar. Funciona como uma chave que só tu deves conhecer.',
+        en: 'A password is a secret passcode used to verify your identity when logging into accounts—such as your student email or school platform. It functions as a personal digital key that only you should possess.',
+      },
+      icon: '🔐',
+    },
+    {
+      eyebrow: { pt: 'Atenção!', en: 'Attention!' },
+      h: { pt: 'Características de uma palavra-passe segura', en: 'Traits of a strong password' },
+      body: {
+        pt: 'Uma boa palavra-passe deve:<ul><li>Ter pelo menos 8 caracteres.</li><li>Misturar letras maiúsculas, minúsculas, números e símbolos.</li><li>Não conter o teu nome, data de nascimento ou dados pessoais.</li><li>Não ser uma sequência óbvia, como "123456" ou "abcdef".</li><li>Ser diferente para cada conta que uses.</li></ul>',
+        en: 'A robust password must:<ul><li>Be at least 8 characters long.</li><li>Mix uppercase letters, lowercase letters, numbers, and symbols.</li><li>Avoid including your name, birthdate, or obvious personal details.</li><li>Never use predictable patterns like "123456" or "abcdef".</li><li>Be unique across different online services.</li></ul>',
+      },
+      icon: '🛡️',
+    },
+    {
+      eyebrow: { pt: 'Sabias que...?', en: 'Did you know...?' },
+      h: { pt: 'Usar dados pessoais é arriscado', en: 'Using personal data is risky' },
+      body: {
+        pt: 'Palavras-passe como o teu nome, a tua data de nascimento ou o nome do teu animal de estimação são fáceis de descobrir para quem te conhece um pouco — por isso são consideradas fracas, mesmo que pareçam difíceis de adivinhar.',
+        en: 'Passcodes featuring your first name, birthday, or pet’s name are remarkably easy for acquaintances to guess. Consequently, cybersecurity experts classify them as weak, no matter how clever they seem.',
+      },
+      icon: '⚠️',
+    },
+    {
+      eyebrow: { pt: 'Vamos pensar', en: "Let's think" },
+      h: { pt: 'Nunca partilhes a tua palavra-passe', en: 'Never share your password' },
+      body: {
+        pt: 'Mesmo com amigos próximos, a palavra-passe deve permanecer secreta. Se alguém souber a tua palavra-passe, pode aceder à tua conta e usar informação em teu nome sem que percebas.',
+        en: 'Even with your best friends, passwords must stay strictly private. If someone acquires your key, they can enter your profile and act on your behalf without your consent.',
+      },
+      icon: '🤫',
+    },
+    {
+      eyebrow: { pt: 'Exemplo', en: 'Example' },
+      h: { pt: 'Uma conta, uma palavra-passe', en: 'One account, one unique key' },
+      body: {
+        pt: 'Se usares a mesma palavra-passe em todas as contas e alguém a descobrir num sítio menos seguro, pode aceder a todas as tuas contas. Por isso, o ideal é ter palavras-passe diferentes para cada serviço.',
+        en: 'If you reuse the same password everywhere and one service gets compromised, attackers gain instant access to all your accounts. Using unique passcodes safeguards the rest of your digital presence.',
+      },
+      icon: '🔑',
+    },
+  ],
   modules: [
     {
       id: 'pass-anatomia-forte',

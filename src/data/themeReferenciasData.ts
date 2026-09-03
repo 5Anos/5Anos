@@ -2,7 +2,7 @@ import { ThemeDefinition } from '../types';
 
 export const themeReferenciasData: ThemeDefinition = {
   id: 'referencias-fontes',
-  number: 6,
+  number: 7,
   title: {
     pt: 'Referências e Fontes',
     en: 'References and Sources',
@@ -19,6 +19,53 @@ export const themeReferenciasData: ThemeDefinition = {
   illustrationKey: 'referencias-fontes',
   accentColor: 'indigo',
   badgeCount: 2,
+  lessons: [
+    {
+      eyebrow: { pt: 'Vamos descobrir', en: "Let's discover" },
+      h: { pt: 'Como citar fontes num trabalho de TIC?', en: 'How to cite sources in an ICT report?' },
+      body: {
+        pt: 'Dar crédito aos autores é essencial. Uma boa referência deve identificar quem produziu a obra, qual é o título, onde foi encontrada e quando foi consultada.<br><br>Isto valoriza o teu trabalho escolar e permite ao professor e aos colegas verificar as fontes.',
+        en: 'Giving credit to creators is essential. A good reference identifies who made the work, its title, where it was published, and the date it was accessed.<br><br>This elevates the quality of your school work and allows teachers and classmates to verify the sources.',
+      },
+      icon: '📚',
+    },
+    {
+      eyebrow: { pt: 'Na prática', en: 'In practice' },
+      h: { pt: 'A fórmula da citação escolar', en: 'The student citation formula' },
+      body: {
+        pt: 'Para referenciar uma fonte da Internet num trabalho do 5.º ano:<ul><li><strong>Autor ou Organização:</strong> Nome do autor ou entidade (ex.: <em>SeguraNet</em>, <em>DGE</em>).</li><li><strong>Título do Artigo / Página:</strong> Nome da página ou trabalho consultado.</li><li><strong>Endereço Web (URL):</strong> Link direto para o sítio da Internet.</li><li><strong>Data de Consulta:</strong> O dia, mês e ano em que consultaste a página.</li></ul>',
+        en: 'To reference a web source in 5th grade:<ul><li><strong>Author or Organization:</strong> Name of author or entity (e.g., <em>SeguraNet</em>, <em>DGE</em>).</li><li><strong>Title of Article / Page:</strong> Name of the visited page.</li><li><strong>Web Address (URL):</strong> Direct link to the website.</li><li><strong>Access Date:</strong> The day, month, and year you consulted the page.</li></ul>',
+      },
+      icon: '📋',
+    },
+    {
+      eyebrow: { pt: 'Exemplo', en: 'Example' },
+      h: { pt: 'Exemplo de referência correta', en: 'Example of an accurate citation' },
+      body: {
+        pt: '<em>SeguraNet (2024). Guia de Segurança para Jovens. Disponível em https://www.seguranet.pt (Consultado em 15/10/2024).</em><br><br>Simples, claro e com todas as informações essenciais para dar crédito.',
+        en: '<em>SeguraNet (2024). Youth Safety Guide. Available at https://www.seguranet.pt (Accessed October 15, 2024).</em><br><br>Simple, clear, and containing all essential details to give proper credit.',
+      },
+      icon: '💡',
+    },
+    {
+      eyebrow: { pt: 'Atenção!', en: 'Attention!' },
+      h: { pt: 'O que evitar nas referências', en: 'What to avoid in citations' },
+      body: {
+        pt: 'Evita colocar apenas "Google" ou "Internet" na bibliografia. O Google é um motor de busca, não o autor do conteúdo. Procura sempre o site original onde o artigo ou a imagem está alojada.',
+        en: 'Never simply write "Google" or "Internet" in your bibliography. Google is a search engine, not the author. Always identify the original website where the article or image is hosted.',
+      },
+      icon: '⚠️',
+    },
+    {
+      eyebrow: { pt: 'Vamos pensar', en: "Let's think" },
+      h: { pt: 'Porque citamos as fontes?', en: 'Why do we cite sources?' },
+      body: {
+        pt: 'Citar fontes não serve apenas para cumprir regras: serve para sermos justos com quem trabalhou para criar a informação e para demonstrar que o nosso trabalho foi bem investigado e fundamentado.',
+        en: 'Citing sources is not just about following rules—it is about fairness to those who created the knowledge and proving your research is thorough and truthful.',
+      },
+      icon: '🤔',
+    },
+  ],
   modules: [
     {
       id: 'ref-avaliar-fiabilidade',

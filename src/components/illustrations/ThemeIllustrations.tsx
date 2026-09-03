@@ -388,26 +388,18 @@ export const Theme6ReferencesIllustration: React.FC<IllustrationProps> = ({ clas
   </svg>
 );
 
-// Map of all theme illustrations
-export const ThemeIllustration: React.FC<{ themeId: string; className?: string }> = ({ themeId, className }) => {
-  switch (themeId) {
-    case 'tic-sociedade':
-    case 'seguranca-digital':
-      return <Theme1SocietyIllustration className={className} />;
-    case 'ergonomia':
-    case 'correio-eletronico':
-      return <Theme2ErgonomicsIllustration className={className} />;
-    case 'navegar-internet':
-    case 'pesquisa-informacao':
-      return <Theme3InternetIllustration className={className} />;
-    case 'palavras-passe':
-      return <Theme4PasswordsIllustration className={className} />;
-    case 'direitos-autor':
-      return <Theme5CopyrightIllustration className={className} />;
-    case 'referencias-fontes':
-    case 'referencias-bibliograficas':
-      return <Theme6ReferencesIllustration className={className} />;
-    default:
-      return <Theme1SocietyIllustration className={className} />;
-  }
+import { getThemeImage } from '../../data/themeImages';
+
+// Map of all theme illustrations using 3D renders with SVG fallbacks
+export const ThemeIllustration: React.FC<{ themeId: string; className?: string; alt?: string }> = ({ themeId, className = 'w-full h-full object-cover', alt = 'Ilustração do Tema' }) => {
+  const imageUrl = getThemeImage(themeId);
+  return (
+    <img
+      src={imageUrl}
+      alt={alt}
+      referrerPolicy="no-referrer"
+      className={`${className} object-cover`}
+    />
+  );
 };
+

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { BookOpen, Gamepad2, ArrowLeft, CheckCircle2, Circle, Clock, Play, ChevronRight } from 'lucide-react';
+import { BookOpen, Gamepad2, ArrowLeft, CheckCircle2, Circle, Clock, Play, ChevronRight, ChevronLeft, Sparkles, ArrowRight } from 'lucide-react';
 import { ThemeDefinition, ActivityProgress, Language } from '../types';
 import { translations } from '../i18n/translations';
 import { ThemeIllustration } from './illustrations/ThemeIllustrations';
+import { getThemeImage } from '../data/themeImages';
 
 interface ThemeViewProps {
   theme: ThemeDefinition;
@@ -22,7 +23,12 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
   onOpenChallenge,
 }) => {
   const [activeTab, setActiveTab] = useState<'content' | 'games'>('content');
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const t = translations[language];
+
+  const lessons = theme.lessons || [];
+  const currentLesson = lessons[currentStepIndex] || lessons[0];
+  const themeImg = getThemeImage(theme.id);
 
   // Accent gradient based on theme
   const getBannerGradient = (themeNumber: number) => {
@@ -36,11 +42,27 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
       case 4:
         return 'from-purple-950 via-violet-900 to-slate-900';
       case 5:
-        return 'from-amber-950 via-yellow-900 to-slate-900';
+        return 'from-rose-950 via-indigo-900 to-slate-900';
       case 6:
-        return 'from-indigo-950 via-slate-900 to-blue-950';
+        return 'from-amber-950 via-orange-900 to-slate-900';
+      case 7:
+        return 'from-teal-950 via-slate-900 to-cyan-950';
       default:
         return 'from-indigo-950 via-slate-900 to-blue-950';
+    }
+  };
+
+  const handlePrevStep = () => {
+    if (currentStepIndex > 0) {
+      setCurrentStepIndex(currentStepIndex - 1);
+    }
+  };
+
+  const handleNextStep = () => {
+    if (currentStepIndex < lessons.length - 1) {
+      setCurrentStepIndex(currentStepIndex + 1);
+    } else {
+      setActiveTab('games');
     }
   };
 
@@ -74,15 +96,6 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
             <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
               {theme.intro[language]}
             </p>
-
-            <div className="flex flex-wrap gap-2.5 pt-2">
-              <span className="bg-white/10 px-3 py-1 rounded-xl text-xs font-semibold backdrop-blur-sm border border-white/10">
-                📖 {theme.modules.length} {language === 'pt' ? 'Conteúdos' : 'Topics'}
-              </span>
-              <span className="bg-white/10 px-3 py-1 rounded-xl text-xs font-semibold backdrop-blur-sm border border-white/10">
-                🎮 {theme.challenges.length} {language === 'pt' ? 'Desafios e Jogos' : 'Challenges'}
-              </span>
-            </div>
           </div>
 
           {/* Theme custom illustration graphic */}
@@ -107,9 +120,6 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
         >
           <BookOpen className="w-5 h-5" />
           <span>{t.tabContent}</span>
-          <span className="ml-1 px-2.5 py-0.5 text-xs rounded-full bg-slate-100 text-slate-700 font-bold">
-            {theme.modules.length}
-          </span>
         </button>
 
         <button
@@ -122,70 +132,162 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
         >
           <Gamepad2 className="w-5 h-5" />
           <span>{t.tabGames}</span>
-          <span className="ml-1 px-2.5 py-0.5 text-xs rounded-full bg-slate-100 text-slate-700 font-bold">
-            {theme.challenges.length}
-          </span>
         </button>
       </div>
 
       {/* Tab 1: Conteúdos Pedagógicos */}
       {activeTab === 'content' && (
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {theme.modules.map((mod) => {
-              const record = progressList.find((p) => p.activityId === mod.id);
-              const isDone = record?.status === 'completed';
-
-              return (
-                <div
-                  key={mod.id}
-                  onClick={() => onOpenModule(mod.id)}
-                  className={`rounded-[2rem] border bg-white p-6 shadow-xs hover:border-indigo-300 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between ${
-                    isDone ? 'border-emerald-200 bg-emerald-50/15' : 'border-slate-200'
-                  }`}
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-700 uppercase tracking-wider">
-                        {language === 'pt' ? 'Conteúdo' : 'Topic'} {mod.number}
-                      </span>
-                      {isDone ? (
-                        <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-100/70 px-2.5 py-1 rounded-full">
-                          <CheckCircle2 className="w-3.5 h-3.5" />
-                          <span>{t.completedStatus}</span>
+        <div className="space-y-6 animate-in fade-in duration-150">
+          {lessons && lessons.length > 0 && currentLesson ? (
+            <div className="space-y-6">
+              {/* Stepper Navigation Pills with Step Names */}
+              <div className="bg-white p-3 rounded-2xl border border-slate-200/90 shadow-2xs">
+                <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+                  {lessons.map((lesson, idx) => {
+                    const isActive = idx === currentStepIndex;
+                    const isCompleted = idx < currentStepIndex;
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => setCurrentStepIndex(idx)}
+                        className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all cursor-pointer ${
+                          isActive
+                            ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200/50'
+                            : isCompleted
+                            ? 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200/80'
+                            : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200/60'
+                        }`}
+                      >
+                        <span
+                          className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-extrabold shrink-0 ${
+                            isActive
+                              ? 'bg-white/20 text-white'
+                              : isCompleted
+                              ? 'bg-emerald-200 text-emerald-800'
+                              : 'bg-slate-200/80 text-slate-600'
+                          }`}
+                        >
+                          {idx + 1}
                         </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full">
-                          <Circle className="w-3.5 h-3.5" />
-                          <span>{t.notStartedStatus}</span>
+                        {lesson.icon && <span className="text-sm">{lesson.icon}</span>}
+                        <span className="truncate max-w-[200px] sm:max-w-none">
+                          {lesson.eyebrow[language]}
                         </span>
-                      )}
-                    </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
 
-                    <h3 className="text-lg font-bold text-slate-900 leading-snug">
-                      {mod.title[language]}
-                    </h3>
-
-                    <p className="mt-2 text-xs sm:text-sm text-slate-600 line-clamp-3 leading-relaxed">
-                      {mod.shortDesc[language]}
-                    </p>
+              {/* Active Step Card */}
+              <div className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/90 shadow-sm space-y-6 relative overflow-hidden">
+                {/* Header of Active Step */}
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-5">
+                  <div className="flex items-center gap-2.5">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-indigo-50 text-indigo-700 border border-indigo-100">
+                      <span>{currentLesson.icon || '📖'}</span>
+                      <span>{currentLesson.eyebrow[language]}</span>
+                    </span>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-                    <span className="text-xs font-semibold text-slate-500 flex items-center gap-1">
-                      <BookOpen className="w-3.5 h-3.5 text-slate-400" />
-                      <span>{language === 'pt' ? '5 passos pedagógicos' : '5 learning steps'}</span>
-                    </span>
-
-                    <button className="text-xs sm:text-sm font-bold flex items-center gap-1 text-indigo-600 group-hover:text-indigo-700">
-                      <span>{isDone ? (language === 'pt' ? 'Rever' : 'Review') : t.startModule}</span>
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
+                  <div className="text-xs sm:text-sm font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+                    {language === 'pt'
+                      ? `Passo ${currentStepIndex + 1} de ${lessons.length}`
+                      : `Step ${currentStepIndex + 1} of ${lessons.length}`}
                   </div>
                 </div>
-              );
-            })}
-          </div>
+
+                {/* Main Heading */}
+                <h2 className="text-xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
+                  {currentLesson.h[language]}
+                </h2>
+
+                {/* Two-Column Responsive Layout: Content & 3D Visual Illustration */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                  <div className="lg:col-span-7 space-y-4">
+                    {/* Content Body */}
+                    <div
+                      className="text-sm sm:text-base text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"
+                      dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
+                    />
+                  </div>
+
+                  {/* 3D Illustration Card */}
+                  <div className="lg:col-span-5 flex flex-col items-center">
+                    <div className="w-full rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-slate-50 relative group">
+                      <img
+                        src={themeImg}
+                        alt={currentLesson.h[language]}
+                        referrerPolicy="no-referrer"
+                        className="w-full h-56 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
+                        <p className="text-white text-xs font-semibold drop-shadow-sm flex items-center gap-1.5">
+                          <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                          <span>{theme.title[language]}</span>
+                        </p>
+                      </div>
+                    </div>
+                    <span className="text-[11px] text-slate-400 mt-2 italic text-center">
+                      {language === 'pt' ? 'Ilustração 3D interativa do tema' : 'Interactive 3D theme illustration'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Bottom Navigation Buttons */}
+                <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <button
+                    onClick={handlePrevStep}
+                    disabled={currentStepIndex === 0}
+                    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all w-full sm:w-auto justify-center ${
+                      currentStepIndex === 0
+                        ? 'opacity-40 cursor-not-allowed bg-slate-100 text-slate-400'
+                        : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer shadow-2xs'
+                    }`}
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                    <span>{language === 'pt' ? 'Passo Anterior' : 'Previous Step'}</span>
+                  </button>
+
+                  {/* Step dots */}
+                  <div className="flex items-center gap-1.5">
+                    {lessons.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setCurrentStepIndex(idx)}
+                        className={`h-2 rounded-full transition-all cursor-pointer ${
+                          idx === currentStepIndex
+                            ? 'w-6 bg-indigo-600'
+                            : 'w-2 bg-slate-200 hover:bg-slate-300'
+                        }`}
+                        title={`Passo ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={handleNextStep}
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-indigo-600 hover:bg-indigo-700 text-white shadow-md transition-all hover:scale-102 cursor-pointer w-full sm:w-auto justify-center"
+                  >
+                    <span>
+                      {currentStepIndex === lessons.length - 1
+                        ? language === 'pt'
+                          ? '🎮 Ir para Jogos e Desafios'
+                          : '🎮 Go to Games & Challenges'
+                        : language === 'pt'
+                        ? 'Próximo Passo'
+                        : 'Next Step'}
+                    </span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="text-center py-12 text-slate-500">
+              {language === 'pt' ? 'Sem conteúdos para apresentar.' : 'No topics available.'}
+            </div>
+          )}
         </div>
       )}
 

@@ -99,7 +99,7 @@ export const Header: React.FC<HeaderProps> = ({
                 >
                   <BookOpen className="w-4 h-4" />
                   <span>
-                    {currentActiveTheme ? `Tema ${currentActiveTheme.number}: ${currentActiveTheme.title[language]}` : (language === 'pt' ? 'Temas (1 a 6)' : 'Topics (1 to 6)')}
+                    {currentActiveTheme ? `Tema ${currentActiveTheme.number}: ${currentActiveTheme.title[language]}` : (language === 'pt' ? `Temas (1 a ${ALL_THEMES.length})` : `Topics (1 to ${ALL_THEMES.length})`)}
                   </span>
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform ${themesDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
@@ -127,9 +127,6 @@ export const Header: React.FC<HeaderProps> = ({
                             <div className="flex-1 min-w-0">
                               <p className="font-semibold truncate">
                                 Tema {theme.number}: {theme.title[language]}
-                              </p>
-                              <p className="text-[11px] text-slate-500 truncate">
-                                {theme.modules.length} {language === 'pt' ? 'conteúdos' : 'topics'} • {theme.challenges.length} {language === 'pt' ? 'desafios' : 'challenges'}
                               </p>
                             </div>
                           </button>
@@ -309,7 +306,7 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           <div className="pt-2 pb-1 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-            {language === 'pt' ? 'Temas de Estudo (1 a 6)' : 'Study Topics (1 to 6)'}
+            {language === 'pt' ? `Temas de Estudo (1 a ${ALL_THEMES.length})` : `Study Topics (1 to ${ALL_THEMES.length})`}
           </div>
 
           {ALL_THEMES.map((theme) => {

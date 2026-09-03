@@ -2,7 +2,7 @@ import { ThemeDefinition } from '../types';
 
 export const themeNavegarInternetData: ThemeDefinition = {
   id: 'navegar-internet',
-  number: 3,
+  number: 5,
   title: {
     pt: 'Navegar na Internet',
     en: 'Internet Browsing',
@@ -19,6 +19,53 @@ export const themeNavegarInternetData: ThemeDefinition = {
   illustrationKey: 'navegar-internet',
   accentColor: 'sky',
   badgeCount: 2,
+  lessons: [
+    {
+      eyebrow: { pt: 'Vamos descobrir', en: "Let's discover" },
+      h: { pt: 'Internet, Web e navegador', en: 'Internet, Web and browser' },
+      body: {
+        pt: 'A Internet é a rede mundial que liga milhões de computadores. A Web (ou "www") é o conjunto de páginas e sites que podemos visitar através dela. O navegador é o programa que usamos para aceder a essas páginas, como o endereço/URL de cada site.',
+        en: 'The Internet is the global network connecting millions of computers. The Web (or "www") is the universe of pages and websites we visit through it. The browser is the application we use to access these web pages via their unique URL addresses.',
+      },
+      icon: '🌐',
+    },
+    {
+      eyebrow: { pt: 'Como funciona?', en: 'How it works' },
+      h: { pt: 'Fazer uma boa pesquisa', en: 'Conducting effective searches' },
+      body: {
+        pt: 'Para pesquisar bem na Internet:<ul><li>Usa palavras-chave curtas e específicas, em vez de frases muito longas.</li><li>Compara vários resultados antes de confiar apenas no primeiro.</li><li>Verifica sempre a origem da informação (quem escreveu, que site é).</li><li>Desconfia de títulos muito exagerados ou sensacionalistas.</li></ul>',
+        en: 'To research effectively online:<ul><li>Use concise, specific keywords rather than full-length conversational questions.</li><li>Compare multiple search results before trusting the top link.</li><li>Always verify the author and publication source.</li><li>Be cautious of sensationalist or exaggerated headlines.</li></ul>',
+      },
+      icon: '🔍',
+    },
+    {
+      eyebrow: { pt: 'Atenção!', en: 'Attention!' },
+      h: { pt: 'Nem tudo o que está online é verdade', en: 'Not everything online is true' },
+      body: {
+        pt: 'Qualquer pessoa pode publicar conteúdo na Internet, seja verdadeiro, falso ou incerto. Antes de confiares numa informação, confirma-a em mais do que uma fonte credível — como sites oficiais, notícias verificadas ou livros escolares.',
+        en: 'Anyone can publish content on the web—true, misleading, or outright false. Before trusting any piece of information, cross-check it across multiple verified sources like official portals, reputable news outlets, or school textbooks.',
+      },
+      icon: '⚠️',
+    },
+    {
+      eyebrow: { pt: 'Sabias que...?', en: 'Did you know...?' },
+      h: { pt: 'Sinais de um site suspeito', en: 'Signs of a suspicious website' },
+      body: {
+        pt: 'Desconfia de sites com muitos erros, anúncios excessivos, pedidos estranhos de dados pessoais ou downloads inesperados. Esses são sinais de que o site pode não ser seguro.',
+        en: 'Be wary of web pages riddled with spelling errors, aggressive pop-ups, unusual requests for personal data, or automatic downloads. These are classic indicators of potentially unsafe websites.',
+      },
+      icon: '🛡️',
+    },
+    {
+      eyebrow: { pt: 'Vamos pensar', en: "Let's think" },
+      h: { pt: 'Navegar com responsabilidade', en: 'Browsing responsibly' },
+      body: {
+        pt: 'Durante a navegação, protege os teus dados pessoais, evita clicar em anúncios ou downloads desconhecidos e mantém um comportamento seguro em qualquer site que visites.',
+        en: 'While exploring the web, safeguard your personal information, avoid clicking on dubious ads or unrequested downloads, and practice safe digital habits wherever you go.',
+      },
+      icon: '🧭',
+    },
+  ],
   modules: [
     {
       id: 'net-o-que-e-navegador',

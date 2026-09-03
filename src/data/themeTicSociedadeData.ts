@@ -19,6 +19,53 @@ export const themeTicSociedadeData: ThemeDefinition = {
   illustrationKey: 'tic-sociedade',
   accentColor: 'indigo',
   badgeCount: 2,
+  lessons: [
+    {
+      eyebrow: { pt: 'Vamos descobrir', en: "Let's discover" },
+      h: { pt: 'O que são as TIC?', en: 'What is ICT?' },
+      body: {
+        pt: 'As TIC — Tecnologias da Informação e Comunicação — são o conjunto de ferramentas que usamos para criar, guardar, partilhar e encontrar informação: computadores, tablets, telemóveis, a Internet e todos os programas e aplicações que usamos com eles.<br><br>Nasceste num mundo onde as TIC já fazem parte de quase tudo: da escola aos transportes, da saúde ao entretenimento.',
+        en: 'ICT — Information and Communication Technologies — is the set of tools we use to create, store, share, and find information: computers, tablets, smartphones, the Internet, and all software and apps we use with them.<br><br>You were born in a world where ICT is already part of almost everything: from school to transport, healthcare to entertainment.',
+      },
+      icon: '💡',
+    },
+    {
+      eyebrow: { pt: 'Na vida real', en: 'In real life' },
+      h: { pt: 'As TIC em vários setores', en: 'ICT across different sectors' },
+      body: {
+        pt: 'As TIC mudaram a forma como trabalhamos e vivemos em quase todas as áreas:<ul><li><strong>Educação</strong> — plataformas de estudo, aulas online, manuais digitais.</li><li><strong>Saúde</strong> — marcação de consultas online, processos clínicos digitais, telemedicina.</li><li><strong>Comércio</strong> — compras online, pagamentos com telemóvel, lojas virtuais.</li><li><strong>Transportes</strong> — aplicações de trânsito, bilhetes digitais, GPS.</li><li><strong>Agricultura</strong> — sensores que medem a humidade do solo, drones que vigiam plantações.</li><li><strong>Indústria</strong> — robôs e máquinas controladas por computador nas fábricas.</li></ul>',
+        en: 'ICT has changed how we work and live across almost every field:<ul><li><strong>Education</strong> — study platforms, online classes, digital textbooks.</li><li><strong>Healthcare</strong> — online appointment booking, digital health records, telemedicine.</li><li><strong>Commerce</strong> — online shopping, mobile payments, virtual stores.</li><li><strong>Transport</strong> — traffic apps, digital tickets, GPS.</li><li><strong>Agriculture</strong> — soil moisture sensors, drones monitoring crops.</li><li><strong>Industry</strong> — robots and computer-controlled machines in factories.</li></ul>',
+      },
+      icon: '🏥',
+    },
+    {
+      eyebrow: { pt: 'Sabias que...?', en: 'Did you know...?' },
+      h: { pt: 'A comunicação mudou por completo', en: 'Communication has changed completely' },
+      body: {
+        pt: 'Há poucas décadas, para enviar uma mensagem a alguém noutro país era preciso escrever uma carta que demorava semanas a chegar. Hoje, com as TIC, conseguimos falar em vídeo com alguém do outro lado do mundo em segundos.<br><br>Isto aproximou pessoas, famílias e escolas — mas também exige que aprendamos a usar essa comunicação de forma responsável.',
+        en: 'A few decades ago, sending a message to someone in another country required writing a letter that took weeks to arrive. Today, with ICT, we can video chat with someone across the globe in seconds.<br><br>This brought people, families, and schools closer — but also demands that we learn to communicate responsibly.',
+      },
+      icon: '🌐',
+    },
+    {
+      eyebrow: { pt: 'Como funciona?', en: 'How it works' },
+      h: { pt: 'Comércio eletrónico', en: 'E-Commerce' },
+      body: {
+        pt: 'O comércio eletrónico é a compra e venda de produtos ou serviços através da Internet. Uma pessoa escolhe um produto num site, paga eletronicamente e o produto é entregue em casa através dos transportes.<br><br>É um bom exemplo de como várias TIC trabalham em conjunto: o site, o pagamento digital e o acompanhamento da entrega.',
+        en: 'E-commerce is the buying and selling of goods or services via the Internet. A person selects an item on a website, pays electronically, and the parcel is delivered home through transport networks.<br><br>It is a great example of how multiple ICT tools cooperate: the website, digital payment, and delivery tracking.',
+      },
+      icon: '🛒',
+    },
+    {
+      eyebrow: { pt: 'Vamos pensar', en: "Let's think" },
+      h: { pt: 'Um dia sem TIC', en: 'A day without ICT' },
+      body: {
+        pt: 'Imagina um dia inteiro sem computador, sem telemóvel e sem Internet. Como seria ir à escola? Como marcarias uma consulta? Como saberias as notícias?<br><br>Esta reflexão ajuda-nos a perceber o quanto as TIC já fazem parte do nosso quotidiano — e por isso é tão importante aprender a usá-las bem.',
+        en: 'Imagine an entire day without a computer, smartphone, or Internet. How would going to school be? How would you book a doctor appointment? How would you check the news?<br><br>This reflection helps us realize how deeply ICT is woven into daily life — and why learning to use it well is so vital.',
+      },
+      icon: '🤔',
+    },
+  ],
   modules: [
     {
       id: 'tic-soc-o-que-sao',

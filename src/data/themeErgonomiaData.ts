@@ -19,6 +19,53 @@ export const themeErgonomiaData: ThemeDefinition = {
   illustrationKey: 'ergonomia',
   accentColor: 'emerald',
   badgeCount: 2,
+  lessons: [
+    {
+      eyebrow: { pt: 'Como funciona?', en: 'How it works' },
+      h: { pt: 'O que é a ergonomia?', en: 'What is ergonomics?' },
+      body: {
+        pt: 'Ergonomia é a forma como organizamos o nosso corpo e o espaço à nossa volta para trabalhar de maneira confortável e saudável.<br><br>Quando usamos computadores, tablets ou telemóveis durante muito tempo, uma postura incorreta pode causar dores nas costas, pescoço, olhos e pulsos.',
+        en: 'Ergonomics is how we arrange our body and the surrounding workspace to work comfortably and healthily.<br><br>When using computers, tablets, or smartphones for long periods, poor posture can cause back, neck, eye, and wrist strain.',
+      },
+      icon: '🪑',
+    },
+    {
+      eyebrow: { pt: 'Atenção!', en: 'Attention!' },
+      h: { pt: 'A postura correta', en: 'The correct posture' },
+      body: {
+        pt: 'Para uma boa postura à frente do computador:<ul><li>Costas direitas, encostadas na cadeira.</li><li>Pés bem apoiados no chão.</li><li>Braços num ângulo confortável, próximo de 90 graus.</li><li>Ecrã à altura dos olhos, nem muito alto nem muito baixo.</li><li>Distância do ecrã de cerca de 50 a 70 centímetros.</li></ul>Evita curvar as costas, levantar demasiado os ombros ou aproximar o rosto do ecrã.',
+        en: 'For proper posture in front of a computer:<ul><li>Straight back supported by the chair.</li><li>Feet firmly resting on the floor.</li><li>Arms at a comfortable 90-degree angle.</li><li>Screen at eye level, neither too high nor too low.</li><li>Screen distance of approximately 50 to 70 centimeters.</li></ul>Avoid slouching, tensing your shoulders, or leaning too close to the screen.',
+      },
+      icon: '📐',
+    },
+    {
+      eyebrow: { pt: 'Sabias que...?', en: 'Did you know...?' },
+      h: { pt: 'A iluminação também conta', en: 'Lighting matters too' },
+      body: {
+        pt: 'Uma sala com boa iluminação, sem reflexos fortes no ecrã, ajuda a proteger os olhos e evita dores de cabeça. Evita trabalhar num quarto totalmente escuro apenas com a luz do ecrã.',
+        en: 'A well-lit room without harsh glare on your screen protects your eyesight and prevents headaches. Avoid working in a pitch-black room illuminated only by the display screen.',
+      },
+      icon: '💡',
+    },
+    {
+      eyebrow: { pt: 'Vamos pensar', en: "Let's think" },
+      h: { pt: 'A importância das pausas', en: 'The importance of breaks' },
+      body: {
+        pt: 'Ficar sentado e imóvel durante muito tempo não é saudável. A cada 30 a 40 minutos, é recomendável levantar, esticar as pernas e os braços e descansar os olhos, olhando para longe durante alguns segundos.',
+        en: 'Sitting motionless for hours is unhealthy. Every 30 to 40 minutes, stand up, stretch your arms and legs, and rest your eyes by looking at a distant point for several seconds.',
+      },
+      icon: '⏰',
+    },
+    {
+      eyebrow: { pt: 'Na vida real', en: 'In real life' },
+      h: { pt: 'Organizar o espaço de trabalho', en: 'Organizing your workspace' },
+      body: {
+        pt: 'Uma mesa arrumada, com espaço suficiente para os braços e o teclado, e uma cadeira ajustada à altura do corpo, tornam o estudo mais confortável e seguro, seja com um computador, um tablet ou um telemóvel.',
+        en: 'A tidy desk with ample room for your keyboard and arms, paired with a height-adjusted chair, makes study sessions comfortable and safe whether using a PC, tablet, or mobile phone.',
+      },
+      icon: '🖥️',
+    },
+  ],
   modules: [
     {
       id: 'ergo-postura-corpo',

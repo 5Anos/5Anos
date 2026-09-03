@@ -74,15 +74,21 @@ export const Dashboard: React.FC<DashboardProps> = ({
         };
       case 5:
         return {
+          bgBadge: 'bg-rose-100 text-rose-800 border-rose-200',
+          bar: 'bg-rose-600',
+          hoverBorder: 'hover:border-rose-400',
+        };
+      case 6:
+        return {
           bgBadge: 'bg-amber-100 text-amber-800 border-amber-200',
           bar: 'bg-amber-600',
           hoverBorder: 'hover:border-amber-400',
         };
-      case 6:
+      case 7:
         return {
-          bgBadge: 'bg-indigo-100 text-indigo-800 border-indigo-200',
-          bar: 'bg-indigo-600',
-          hoverBorder: 'hover:border-indigo-400',
+          bgBadge: 'bg-teal-100 text-teal-800 border-teal-200',
+          bar: 'bg-teal-600',
+          hoverBorder: 'hover:border-teal-400',
         };
       default:
         return {
@@ -107,8 +113,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </h1>
           <p className="text-slate-500 mt-1 text-sm sm:text-base">
             {language === 'pt'
-              ? 'Explora os 6 temas principais de Tecnologias de Informação e Comunicação.'
-              : 'Explore the 6 main topics of Information and Communication Technologies.'}
+              ? `Explora os ${ALL_THEMES.length} temas principais de Tecnologias de Informação e Comunicação.`
+              : `Explore the ${ALL_THEMES.length} main topics of Information and Communication Technologies.`}
           </p>
         </div>
 
@@ -248,18 +254,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
                     <p className="text-slate-500 text-xs sm:text-sm mt-1.5 line-clamp-2 leading-relaxed">
                       {theme.tagline[language]}
                     </p>
-
-                    {/* Contents & Challenges badges */}
-                    <div className="flex flex-wrap gap-2 text-xs font-medium text-slate-600 my-3.5">
-                      <span className="bg-slate-100 px-2.5 py-1 rounded-lg flex items-center gap-1">
-                        <BookOpen className="w-3 h-3 text-slate-500" />
-                        <span>{theme.modules.length} {language === 'pt' ? 'Conteúdos' : 'Topics'}</span>
-                      </span>
-                      <span className="bg-slate-100 px-2.5 py-1 rounded-lg flex items-center gap-1">
-                        <Gamepad2 className="w-3 h-3 text-slate-500" />
-                        <span>{theme.challenges.length} {language === 'pt' ? 'Desafios' : 'Challenges'}</span>
-                      </span>
-                    </div>
                   </div>
 
                   {/* Progress & Action Button */}

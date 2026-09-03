@@ -2,7 +2,7 @@ import { ThemeDefinition } from '../types';
 
 export const themeDireitosAutorData: ThemeDefinition = {
   id: 'direitos-autor',
-  number: 5,
+  number: 6,
   title: {
     pt: 'Direitos de Autor',
     en: 'Copyright',
@@ -19,6 +19,53 @@ export const themeDireitosAutorData: ThemeDefinition = {
   illustrationKey: 'direitos-autor',
   accentColor: 'amber',
   badgeCount: 2,
+  lessons: [
+    {
+      eyebrow: { pt: 'Vamos descobrir', en: "Let's discover" },
+      h: { pt: 'O que são direitos de autor?', en: 'What is copyright?' },
+      body: {
+        pt: 'Os direitos de autor protegem o trabalho criado por uma pessoa — como textos, imagens, vídeos, músicas ou outros trabalhos digitais. Quem cria uma obra é o autor, e tem o direito de decidir como ela pode ser usada por outras pessoas.',
+        en: 'Copyright protects original creative works created by an individual—such as texts, photographs, videos, music, and digital artwork. The creator is the author and holds the legal right to decide how their creation can be utilized by others.',
+      },
+      icon: '©️',
+    },
+    {
+      eyebrow: { pt: 'Atenção!', en: 'Attention!' },
+      h: { pt: 'Encontrar não é o mesmo que poder copiar', en: 'Finding is not the same as being allowed to copy' },
+      body: {
+        pt: 'Encontrar uma imagem, texto ou música na Internet não significa que sejas livre de copiar e usar sem quaisquer regras. Muitos conteúdos só podem ser usados com autorização do autor ou indicando corretamente a fonte.',
+        en: 'Locating a photo, article, or audio track on Google or social media does not grant automatic permission to copy and reuse it arbitrarily. Most online content requires author permission or explicit attribution.',
+      },
+      icon: '⚠️',
+    },
+    {
+      eyebrow: { pt: 'Exemplo', en: 'Example' },
+      h: { pt: 'Um trabalho escolar', en: 'A school assignment' },
+      body: {
+        pt: '<em>"Encontraste uma imagem na Internet para um trabalho. O que deves fazer?"</em> O correto é verificar se podes usá-la (por exemplo, se é de utilização livre) e, sempre que possível, indicar a fonte de onde a retiraste.',
+        en: '<em>"You found a great picture online for your school presentation. What should you do?"</em> Always check its usage license (e.g. Creative Commons or free-to-use) and clearly cite the source where you retrieved it.',
+      },
+      icon: '📝',
+    },
+    {
+      eyebrow: { pt: 'Vamos pensar', en: "Let's think" },
+      h: { pt: 'O que é o plágio?', en: 'What is plagiarism?' },
+      body: {
+        pt: 'Plágio é copiar o trabalho de outra pessoa e apresentá-lo como se fosse teu, sem indicar o autor original. É uma falta de respeito pelo trabalho de quem criou o conteúdo e deve sempre ser evitado.',
+        en: 'Plagiarism is copying someone else’s work and presenting it as your own creation without acknowledging the original author. It disrespects the creator’s hard work and is considered unethical.',
+      },
+      icon: '🚫',
+    },
+    {
+      eyebrow: { pt: 'Sabias que...?', en: 'Did you know...?' },
+      h: { pt: 'Indicar a fonte é um sinal de respeito', en: 'Citing sources shows digital citizenship' },
+      body: {
+        pt: 'Sempre que usares um texto, imagem ou ideia de outra pessoa num trabalho escolar, deves indicar de onde veio. Isso mostra respeito pelo autor e torna o teu trabalho mais correto e credível.',
+        en: 'Whenever you reference another person’s writing, illustration, or concept in a school report, citing the author elevates your credibility and demonstrates authentic digital integrity.',
+      },
+      icon: '💡',
+    },
+  ],
   modules: [
     {
       id: 'copy-o-que-sao-direitos',

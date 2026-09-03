@@ -127,6 +127,13 @@ export interface ChallengeItem {
     | 'order_sequence';
 }
 
+export interface LessonCard {
+  eyebrow: { pt: string; en: string };
+  h: { pt: string; en: string };
+  body: { pt: string; en: string };
+  icon?: string;
+}
+
 export interface ThemeDefinition {
   id: string;
   number: number;
@@ -137,7 +144,8 @@ export interface ThemeDefinition {
   illustrationKey?: string;
   accentColor: string;
   badgeCount: number;
-  modules: TopicContent[]; // Learning contents
+  lessons?: LessonCard[]; // Quick visual theory lessons
+  modules: TopicContent[]; // Detailed 5-step learning modules
   challenges: ChallengeItem[]; // Games and challenges
   finalQuiz: QuizQuestion[]; // Comprehensive quiz (15-20 questions)
 }

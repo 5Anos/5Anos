@@ -48,23 +48,26 @@ export default function App() {
 
   // Helper to resolve theme by id or legacy name
   const resolveTheme = (idOrAlias: string) => {
-    if (idOrAlias === 'theme1' || idOrAlias === 'seguranca-digital') {
+    if (idOrAlias === 'theme1' || idOrAlias === 'seguranca-digital' || idOrAlias === 'tic-sociedade') {
       return ALL_THEMES.find((th) => th.id === 'tic-sociedade') || ALL_THEMES[0];
     }
-    if (idOrAlias === 'theme2' || idOrAlias === 'correio-eletronico') {
+    if (idOrAlias === 'theme2' || idOrAlias === 'ergonomia') {
       return ALL_THEMES.find((th) => th.id === 'ergonomia') || ALL_THEMES[1];
     }
-    if (idOrAlias === 'theme3' || idOrAlias === 'pesquisa-informacao') {
-      return ALL_THEMES.find((th) => th.id === 'navegar-internet') || ALL_THEMES[2];
+    if (idOrAlias === 'theme3' || idOrAlias === 'palavras-passe') {
+      return ALL_THEMES.find((th) => th.id === 'palavras-passe') || ALL_THEMES[2];
     }
-    if (idOrAlias === 'theme4') {
-      return ALL_THEMES.find((th) => th.id === 'palavras-passe') || ALL_THEMES[3];
+    if (idOrAlias === 'theme4' || idOrAlias === 'correio-eletronico') {
+      return ALL_THEMES.find((th) => th.id === 'correio-eletronico') || ALL_THEMES[3];
     }
-    if (idOrAlias === 'theme5') {
-      return ALL_THEMES.find((th) => th.id === 'direitos-autor') || ALL_THEMES[4];
+    if (idOrAlias === 'theme5' || idOrAlias === 'navegar-internet' || idOrAlias === 'pesquisa-informacao') {
+      return ALL_THEMES.find((th) => th.id === 'navegar-internet') || ALL_THEMES[4];
     }
-    if (idOrAlias === 'theme6') {
-      return ALL_THEMES.find((th) => th.id === 'referencias-fontes') || ALL_THEMES[5];
+    if (idOrAlias === 'theme6' || idOrAlias === 'direitos-autor') {
+      return ALL_THEMES.find((th) => th.id === 'direitos-autor') || ALL_THEMES[5];
+    }
+    if (idOrAlias === 'theme7' || idOrAlias === 'referencias-fontes' || idOrAlias === 'referencias-bibliograficas') {
+      return ALL_THEMES.find((th) => th.id === 'referencias-fontes') || ALL_THEMES[6];
     }
     const found = ALL_THEMES.find((th) => th.id === idOrAlias);
     return found || ALL_THEMES[0];
