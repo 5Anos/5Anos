@@ -174,7 +174,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                   <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
                     <span className="text-xs font-semibold text-slate-500 flex items-center gap-1">
                       <BookOpen className="w-3.5 h-3.5 text-slate-400" />
-                      <span>6 passos de aprendizagem</span>
+                      <span>{language === 'pt' ? '5 passos pedagógicos' : '5 learning steps'}</span>
                     </span>
 
                     <button className="text-xs sm:text-sm font-bold flex items-center gap-1 text-indigo-600 group-hover:text-indigo-700">

@@ -42,8 +42,9 @@ export const Header: React.FC<HeaderProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const isThemeActive = activeView.startsWith('theme-') || ALL_THEMES.some((t) => t.id === activeView);
-  const currentActiveTheme = ALL_THEMES.find((th) => th.id === activeView || `theme-${th.number}` === activeView);
+  const safeActiveView = activeView || '';
+  const isThemeActive = safeActiveView.startsWith('theme-') || ALL_THEMES.some((t) => t.id === safeActiveView);
+  const currentActiveTheme = ALL_THEMES.find((th) => th.id === safeActiveView || `theme-${th.number}` === safeActiveView);
 
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shrink-0 shadow-2xs">

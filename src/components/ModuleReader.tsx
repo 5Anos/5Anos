@@ -31,7 +31,6 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
     { num: 3, title: t.step3Title },
     { num: 4, title: t.step4Title },
     { num: 5, title: t.step5Title },
-    { num: 6, title: t.step6Title },
   ];
 
   const handleSelectOption = (questionId: string, optionIndex: number) => {
@@ -41,12 +40,12 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
 
   const calculateQuizScore = () => {
     let score = 0;
-    module.quizQuestions.forEach((q) => {
+    (module.quizQuestions || []).forEach((q) => {
       if (selectedAnswers[q.id] === q.correctIndex) {
         score += 1;
       }
     });
-    const maxScore = module.quizQuestions.length;
+    const maxScore = module.quizQuestions?.length || 1;
     const percentage = Math.round((score / maxScore) * 100);
     return { score, maxScore, percentage };
   };
@@ -87,7 +86,7 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
       </div>
 
       {/* Progress Step Pills */}
-      <div className="grid grid-cols-6 gap-1.5 sm:gap-2 mb-8">
+      <div className="grid grid-cols-5 gap-1.5 sm:gap-2 mb-8">
         {steps.map((s) => (
           <button
             key={s.num}
@@ -108,41 +107,16 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
 
       {/* Content Container */}
       <div className="rounded-[2rem] bg-white border border-slate-200 shadow-xs p-6 sm:p-8 min-h-[380px] flex flex-col justify-between">
-        {/* STEP 1: O que vais aprender? */}
+        {/* STEP 1: Explicação direta */}
         {currentStep === 1 && (
           <div className="space-y-4 animate-in fade-in">
-            <div className="flex items-center gap-2 text-emerald-700">
-              <BookOpen className="w-6 h-6" />
+            <div className="flex items-center gap-2 text-indigo-700">
+              <Lightbulb className="w-6 h-6" />
               <h2 className="text-xl font-bold">{t.step1Title}</h2>
             </div>
 
-            <p className="text-sm sm:text-base text-slate-600">
-              {language === 'pt'
-                ? 'Neste conteúdo de TIC, vais explorar os seguintes objetivos essenciais:'
-                : 'In this ICT topic, you will master the following core learning goals:'}
-            </p>
-
-            <div className="space-y-2.5 pt-2">
-              {module.whatYouWillLearn[language].map((item, idx) => (
-                <div key={idx} className="flex items-start gap-3 p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-100">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                  <span className="text-sm font-medium text-slate-800">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* STEP 2: Explicação */}
-        {currentStep === 2 && (
-          <div className="space-y-4 animate-in fade-in">
-            <div className="flex items-center gap-2 text-blue-700">
-              <Lightbulb className="w-6 h-6" />
-              <h2 className="text-xl font-bold">{t.step2Title}</h2>
-            </div>
-
             <div className="space-y-3.5 text-sm sm:text-base text-slate-700 leading-relaxed">
-              {module.explanation[language].map((paragraph, idx) => (
+              {(module.explanation?.[language] || []).map((paragraph, idx) => (
                 <p key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-200/70">
                   {paragraph}
                 </p>
@@ -151,61 +125,65 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
           </div>
         )}
 
-        {/* STEP 3: Exemplo do Quotidiano */}
-        {currentStep === 3 && (
+        {/* STEP 2: Exemplo do Quotidiano */}
+        {currentStep === 2 && (
           <div className="space-y-4 animate-in fade-in">
             <div className="flex items-center gap-2 text-amber-700">
               <Sparkles className="w-6 h-6" />
-              <h2 className="text-xl font-bold">{t.step3Title}</h2>
+              <h2 className="text-xl font-bold">{t.step2Title}</h2>
             </div>
 
             <div className="p-6 rounded-2xl bg-amber-50/70 border border-amber-200/80 space-y-3">
               <h3 className="text-base sm:text-lg font-bold text-amber-900">
-                {module.example.title[language]}
+                {module.example?.title?.[language]}
               </h3>
               <p className="text-sm sm:text-base text-slate-800 leading-relaxed whitespace-pre-line">
-                {module.example.scenario[language]}
+                {module.example?.scenario?.[language]}
               </p>
-              <div className="pt-3 border-t border-amber-200 text-xs sm:text-sm font-semibold text-amber-900 bg-amber-100/60 p-3 rounded-xl">
-                💡 {module.example.tip[language]}
-              </div>
+              {module.example?.tip?.[language] && (
+                <div className="pt-3 border-t border-amber-200 text-xs sm:text-sm font-semibold text-amber-900 bg-amber-100/60 p-3 rounded-xl">
+                  💡 {module.example.tip[language]}
+                </div>
+              )}
             </div>
           </div>
         )}
 
-        {/* STEP 4: Sabias que...? */}
-        {currentStep === 4 && (
+        {/* STEP 3: Sabias que...? */}
+        {currentStep === 3 && (
           <div className="space-y-4 animate-in fade-in">
             <div className="flex items-center gap-2 text-purple-700">
               <Sparkles className="w-6 h-6" />
-              <h2 className="text-xl font-bold">{t.step4Title}</h2>
+              <h2 className="text-xl font-bold">{t.step3Title}</h2>
             </div>
 
             <div className="p-8 rounded-2xl bg-purple-50/80 border border-purple-200 text-center space-y-4">
               <div className="text-4xl">🌟</div>
               <p className="text-base sm:text-lg font-medium text-slate-800 max-w-xl mx-auto leading-relaxed">
-                {module.funFact[language]}
+                {module.funFact?.[language]}
               </p>
             </div>
           </div>
         )}
 
-        {/* STEP 5: Vamos pensar (Reflexão) */}
-        {currentStep === 5 && (
+        {/* STEP 4: Vamos pensar (Reflexão) */}
+        {currentStep === 4 && (
           <div className="space-y-4 animate-in fade-in">
             <div className="flex items-center gap-2 text-indigo-700">
               <HelpCircle className="w-6 h-6" />
-              <h2 className="text-xl font-bold">{t.step5Title}</h2>
+              <h2 className="text-xl font-bold">{t.step4Title}</h2>
             </div>
 
             <div className="p-6 rounded-2xl bg-indigo-50/60 border border-indigo-200/80 space-y-4">
               <p className="text-base sm:text-lg font-bold text-indigo-950">
-                {module.thinkAboutIt.question[language]}
+                {module.thinkAboutIt?.question?.[language]}
               </p>
 
-              <div className="p-3 rounded-xl bg-white border border-indigo-100 text-xs sm:text-sm text-slate-600 font-medium">
-                🔍 <strong>{language === 'pt' ? 'Pista:' : 'Clue:'}</strong> {module.thinkAboutIt.clue[language]}
-              </div>
+              {module.thinkAboutIt?.clue?.[language] && (
+                <div className="p-3 rounded-xl bg-white border border-indigo-100 text-xs sm:text-sm text-slate-600 font-medium">
+                  🔍 <strong>{language === 'pt' ? 'Pista:' : 'Clue:'}</strong> {module.thinkAboutIt.clue[language]}
+                </div>
+              )}
 
               <div className="pt-2">
                 <button
@@ -221,7 +199,7 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
                     <p className="font-bold text-indigo-900 mb-1">
                       {language === 'pt' ? 'Reflexão Pedagógica:' : 'Educational Insight:'}
                     </p>
-                    <p>{module.thinkAboutIt.reflection[language]}</p>
+                    <p>{module.thinkAboutIt?.reflection?.[language]}</p>
                   </div>
                 )}
               </div>
@@ -229,18 +207,18 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
           </div>
         )}
 
-        {/* STEP 6: Verifica o que aprendeste (Mini-quiz) */}
-        {currentStep === 6 && (
+        {/* STEP 5: Verifica o que aprendeste (Mini-quiz) */}
+        {currentStep === 5 && (
           <div className="space-y-6 animate-in fade-in">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-emerald-700">
                 <CheckCircle2 className="w-6 h-6" />
-                <h2 className="text-xl font-bold">{t.step6Title}</h2>
+                <h2 className="text-xl font-bold">{t.step5Title}</h2>
               </div>
               {submittedQuiz && (
                 <button
                   onClick={handleResetQuiz}
-                  className="text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1"
+                  className="text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1 cursor-pointer"
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
                   <span>{t.tryAgain}</span>
@@ -251,7 +229,7 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
             <p className="text-sm text-slate-600">{t.miniQuizPrompt}</p>
 
             <div className="space-y-6">
-              {module.quizQuestions.map((q, idx) => {
+              {(module.quizQuestions || []).map((q, idx) => {
                 const userChoice = selectedAnswers[q.id];
                 const isCorrect = userChoice === q.correctIndex;
 
@@ -262,12 +240,12 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
                         {idx + 1}
                       </span>
                       <p className="font-bold text-sm sm:text-base text-slate-900">
-                        {q.question[language]}
+                        {q.question?.[language]}
                       </p>
                     </div>
 
                     <div className="space-y-2 pl-8">
-                      {q.options[language].map((opt, optIdx) => {
+                      {(q.options?.[language] || []).map((opt, optIdx) => {
                         let btnStyle = 'border-slate-200 bg-white hover:bg-slate-100 text-slate-800';
 
                         if (submittedQuiz) {
@@ -306,7 +284,7 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
                         isCorrect ? 'bg-emerald-100/70 text-emerald-900' : 'bg-amber-100/70 text-amber-900'
                       }`}>
                         <p className="font-bold mb-0.5">{isCorrect ? t.correctAnswer : t.wrongAnswer}</p>
-                        <p>{q.explanation[language]}</p>
+                        <p>{q.explanation?.[language]}</p>
                       </div>
                     )}
                   </div>
@@ -317,7 +295,7 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
             {/* Quiz Submit button */}
             {!submittedQuiz && (
               <button
-                disabled={Object.keys(selectedAnswers).length < module.quizQuestions.length}
+                disabled={Object.keys(selectedAnswers).length < (module.quizQuestions?.length || 0)}
                 onClick={handleSubmitQuiz}
                 className="w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-all disabled:opacity-40 cursor-pointer"
               >
@@ -346,8 +324,8 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
           </div>
         )}
 
-        {/* Step Navigation Footer (Steps 1 to 5) */}
-        {currentStep < 6 && (
+        {/* Step Navigation Footer (Steps 1 to 4) */}
+        {currentStep < 5 && (
           <div className="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between">
             <button
               disabled={currentStep === 1}
@@ -358,7 +336,7 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
             </button>
 
             <button
-              onClick={() => setCurrentStep((prev) => Math.min(6, prev + 1))}
+              onClick={() => setCurrentStep((prev) => Math.min(5, prev + 1))}
               className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
             >
               <span>{t.nextStep}</span>
