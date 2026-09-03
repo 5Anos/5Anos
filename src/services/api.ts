@@ -1,5 +1,23 @@
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+  updateProfile,
+  onAuthStateChanged,
+  User as FirebaseUser,
+} from 'firebase/auth';
+import {
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  collection,
+  getDocs,
+} from 'firebase/firestore';
+import { auth, db } from '../firebase';
 import { User, ActivityProgress, UserAchievement, PointTransaction, Language } from '../types';
-import { BADGES } from '../data/badgesData';
+import { generateSecurePublicId } from '../utils/publicIdGenerator';
 
 const TOKEN_KEY = 'tic_5ano_auth_token';
 const USERS_STORAGE_KEY = 'tic_5ano_local_users';
@@ -8,12 +26,15 @@ const PROGRESS_STORAGE_KEY = 'tic_5ano_progress_';
 const ACHIEVEMENTS_STORAGE_KEY = 'tic_5ano_achievements_';
 const POINTS_STORAGE_KEY = 'tic_5ano_points_';
 
-// Initial demo accounts
+// Initial demo accounts for offline fallback / quick test
 const INITIAL_DEMO_USERS = [
   {
     id: 'demo-joao',
-    name: 'João Silva (5.º A)',
+    name: 'João Silva',
     email: 'joao.silva@escola.pt',
+    publicId: 'Panda_Feliz_701',
+    turma: '5.º A',
+    role: 'student' as const,
     password: 'Aluno1234!',
     language: 'pt' as Language,
     points: 120,
@@ -21,8 +42,11 @@ const INITIAL_DEMO_USERS = [
   },
   {
     id: 'demo-leonor',
-    name: 'Leonor Martins (5.º B)',
+    name: 'Leonor Martins',
     email: 'leonor.martins@escola.pt',
+    publicId: 'Raposa_Digital_284',
+    turma: '5.º B',
+    role: 'student' as const,
     password: 'Aluno1234!',
     language: 'pt' as Language,
     points: 85,
@@ -57,181 +81,319 @@ export const api = {
     localStorage.removeItem(CURRENT_USER_KEY);
   },
 
-  async getDemoAccounts(): Promise<{ email: string; name: string; defaultPass: string }[]> {
-    try {
-      const res = await fetch('/api/auth/demo-accounts');
-      if (res.ok) {
-        const data = await res.json();
-        if (data.accounts?.length) return data.accounts;
-      }
-    } catch {
-      // offline / static fallback
-    }
+  async getDemoAccounts(): Promise<{ email: string; name: string; defaultPass: string; publicId: string; turma: string }[]> {
     return [
-      { email: 'joao.silva@escola.pt', name: 'João Silva (5.º A)', defaultPass: 'Aluno1234!' },
-      { email: 'leonor.martins@escola.pt', name: 'Leonor Martins (5.º B)', defaultPass: 'Aluno1234!' },
+      { email: 'joao.silva@escola.pt', name: 'João Silva', defaultPass: 'Aluno1234!', publicId: 'Panda_Feliz_701', turma: '5.º A' },
+      { email: 'leonor.martins@escola.pt', name: 'Leonor Martins', defaultPass: 'Aluno1234!', publicId: 'Raposa_Digital_284', turma: '5.º B' },
     ];
   },
 
-  async register(name: string, email: string, password: string, language: Language = 'pt'): Promise<{ user: User; token: string }> {
-    try {
-      const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, language }),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        this.setToken(data.token);
-        return data;
+  /**
+   * Listen to Firebase Auth state changes
+   */
+  onAuthChange(callback: (user: User | null) => void) {
+    return onAuthStateChanged(auth, async (fbUser: FirebaseUser | null) => {
+      if (fbUser) {
+        try {
+          const userDocRef = doc(db, 'users', fbUser.uid);
+          const snap = await getDoc(userDocRef);
+          if (snap.exists()) {
+            const data = snap.data();
+            const user: User = {
+              id: fbUser.uid,
+              name: data.name || fbUser.displayName || 'Estudante',
+              email: fbUser.email || '',
+              publicId: data.publicId || generateSecurePublicId(),
+              turma: data.turma || '5.º A',
+              role: data.role || 'student',
+              points: data.points ?? 20,
+              language: data.language || 'pt',
+              createdAt: data.createdAt || new Date().toISOString(),
+              lastActivity: data.lastActivity,
+            };
+            localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+            this.setToken(fbUser.uid);
+            callback(user);
+            return;
+          }
+        } catch {
+          // offline
+        }
       }
-    } catch {
-      // fallback to localStorage
-    }
-
-    // Local storage registration fallback
-    const users = getStoredUsers();
-    const existing = users.find((u: any) => u.email.toLowerCase() === email.toLowerCase());
-    if (existing) {
-      throw new Error('Já existe uma conta registada com este email.');
-    }
-
-    const newUser: User = {
-      id: `u-${Date.now()}`,
-      name,
-      email,
-      language,
-      points: 20, // initial bonus
-      createdAt: new Date().toISOString(),
-    };
-
-    users.push({ ...newUser, password });
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
-    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
-
-    const token = `local-token-${newUser.id}`;
-    this.setToken(token);
-    return { user: newUser, token };
+    });
   },
 
+  /**
+   * Register with Firebase Authentication and save private profile in Cloud Firestore
+   */
+  async register(
+    name: string,
+    email: string,
+    password: string,
+    turma: string,
+    publicId: string,
+    language: Language = 'pt'
+  ): Promise<{ user: User; token: string }> {
+    const finalPublicId = publicId || generateSecurePublicId();
+    const finalTurma = turma || '5.º A';
+
+    try {
+      // 1. Firebase Authentication create user
+      const userCredential = await createUserWithEmailAndPassword(auth, email.trim(), password);
+      const fbUser = userCredential.user;
+
+      // Update displayName
+      await updateProfile(fbUser, { displayName: name.trim() });
+
+      const newUser: User = {
+        id: fbUser.uid,
+        name: name.trim(), // Real name is PRIVATE
+        email: fbUser.email || email.trim(),
+        publicId: finalPublicId, // Safe public anonymous identifier
+        turma: finalTurma,
+        role: 'student',
+        language,
+        points: 20, // initial welcome bonus
+        createdAt: new Date().toISOString(),
+      };
+
+      // 2. Save private profile to Cloud Firestore /users/{uid}
+      try {
+        await setDoc(doc(db, 'users', fbUser.uid), {
+          id: newUser.id,
+          name: newUser.name, // Private
+          email: newUser.email,
+          publicId: newUser.publicId,
+          turma: newUser.turma,
+          role: newUser.role,
+          language: newUser.language,
+          points: newUser.points,
+          createdAt: newUser.createdAt,
+        });
+
+        // 3. Save safe public profile /publicProfiles/{uid} (No real name, no email)
+        await setDoc(doc(db, 'publicProfiles', fbUser.uid), {
+          id: newUser.id,
+          publicId: newUser.publicId,
+          turma: newUser.turma,
+          role: newUser.role,
+          points: newUser.points,
+          createdAt: newUser.createdAt,
+        });
+      } catch (dbErr) {
+        console.warn('Firestore write warning:', dbErr);
+      }
+
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
+      this.setToken(fbUser.uid);
+      return { user: newUser, token: fbUser.uid };
+    } catch (fbError: any) {
+      console.warn('Firebase register error, checking message or fallback:', fbError);
+
+      let msg = 'Erro ao criar conta.';
+      if (fbError.code === 'auth/email-already-in-use') {
+        msg = language === 'pt' ? 'Já existe uma conta registada com este email.' : 'An account with this email already exists.';
+      } else if (fbError.code === 'auth/weak-password') {
+        msg = language === 'pt' ? 'A palavra-passe deve ter pelo menos 6 caracteres.' : 'Password must be at least 6 characters.';
+      } else if (fbError.code === 'auth/invalid-email') {
+        msg = language === 'pt' ? 'Endereço de email inválido.' : 'Invalid email address.';
+      } else if (fbError.message) {
+        msg = fbError.message;
+      }
+
+      // Local storage fallback if offline
+      if (fbError.code === 'auth/network-request-failed' || fbError.message?.includes('network')) {
+        const users = getStoredUsers();
+        const existing = users.find((u: any) => u.email.toLowerCase() === email.toLowerCase());
+        if (existing) {
+          throw new Error('Já existe uma conta registada com este email.');
+        }
+
+        const newUser: User = {
+          id: `u-${Date.now()}`,
+          name: name.trim(),
+          email: email.trim(),
+          publicId: finalPublicId,
+          turma: finalTurma,
+          role: 'student',
+          language,
+          points: 20,
+          createdAt: new Date().toISOString(),
+        };
+
+        users.push({ ...newUser, password });
+        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
+        const token = `local-token-${newUser.id}`;
+        this.setToken(token);
+        return { user: newUser, token };
+      }
+
+      throw new Error(msg);
+    }
+  },
+
+  /**
+   * Login with Firebase Authentication and load profile from Firestore
+   */
   async login(email: string, password: string): Promise<{ user: User; token: string }> {
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
+      const userCredential = await signInWithEmailAndPassword(auth, email.trim(), password);
+      const fbUser = userCredential.user;
 
-      if (res.ok) {
-        const data = await res.json();
-        this.setToken(data.token);
-        return data;
-      }
-    } catch {
-      // fallback to localStorage
-    }
+      let user: User | null = null;
 
-    // Local storage login fallback
-    const users = getStoredUsers();
-    const found = users.find(
-      (u: any) => u.email.toLowerCase() === email.toLowerCase() && u.password === password
-    );
-
-    if (!found) {
-      throw new Error('Email ou palavra-passe incorretos.');
-    }
-
-    const user: User = {
-      id: found.id,
-      name: found.name,
-      email: found.email,
-      language: found.language || 'pt',
-      points: found.points || 0,
-      createdAt: found.createdAt,
-      lastActivity: found.lastActivity,
-    };
-
-    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-    const token = `local-token-${user.id}`;
-    this.setToken(token);
-    return { user, token };
-  },
-
-  async recoverPassword(email: string, newPassword?: string): Promise<{ success: boolean; message: string; userExists?: boolean; userName?: string }> {
-    try {
-      const res = await fetch('/api/auth/recover', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, newPassword }),
-      });
-
-      if (res.ok) {
-        return await res.json();
-      }
-    } catch {
-      // fallback to localStorage
-    }
-
-    const users = getStoredUsers();
-    const found = users.find((u: any) => u.email.toLowerCase() === email.toLowerCase());
-    if (!found) {
-      return { success: false, message: 'Nenhuma conta encontrada com este email.' };
-    }
-
-    if (newPassword) {
-      found.password = newPassword;
-      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
-      return { success: true, message: 'Palavra-passe alterada com sucesso!' };
-    }
-
-    return {
-      success: true,
-      message: 'Utilizador validado.',
-      userExists: true,
-      userName: found.name,
-    };
-  },
-
-  async logout(): Promise<void> {
-    const token = this.getToken();
-    if (token && !token.startsWith('local-token-')) {
       try {
-        await fetch('/api/auth/logout', {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${token}` },
-        });
-      } catch {
-        // ignore
+        const userDocRef = doc(db, 'users', fbUser.uid);
+        const snap = await getDoc(userDocRef);
+
+        if (snap.exists()) {
+          const data = snap.data();
+          user = {
+            id: fbUser.uid,
+            name: data.name || fbUser.displayName || 'Estudante',
+            email: fbUser.email || email.trim(),
+            publicId: data.publicId || generateSecurePublicId(),
+            turma: data.turma || '5.º A',
+            role: data.role || 'student',
+            language: data.language || 'pt',
+            points: data.points ?? 20,
+            createdAt: data.createdAt || new Date().toISOString(),
+            lastActivity: data.lastActivity,
+          };
+        } else {
+          // Initialize user doc if missing
+          const defaultPublicId = generateSecurePublicId();
+          user = {
+            id: fbUser.uid,
+            name: fbUser.displayName || email.split('@')[0] || 'Estudante',
+            email: fbUser.email || email.trim(),
+            publicId: defaultPublicId,
+            turma: '5.º A',
+            role: 'student',
+            language: 'pt',
+            points: 20,
+            createdAt: new Date().toISOString(),
+          };
+          await setDoc(userDocRef, user);
+        }
+      } catch (dbErr) {
+        console.warn('Firestore read warning:', dbErr);
+        user = {
+          id: fbUser.uid,
+          name: fbUser.displayName || email.split('@')[0] || 'Estudante',
+          email: fbUser.email || email.trim(),
+          publicId: generateSecurePublicId(),
+          turma: '5.º A',
+          role: 'student',
+          language: 'pt',
+          points: 20,
+          createdAt: new Date().toISOString(),
+        };
       }
+
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+      this.setToken(fbUser.uid);
+      return { user, token: fbUser.uid };
+    } catch (fbError: any) {
+      console.warn('Firebase login error, checking demo/local fallback:', fbError);
+
+      // Check demo accounts / local users
+      const users = getStoredUsers();
+      const found = users.find(
+        (u: any) => u.email.toLowerCase() === email.trim().toLowerCase() && u.password === password
+      );
+
+      if (found) {
+        const user: User = {
+          id: found.id,
+          name: found.name,
+          email: found.email,
+          publicId: found.publicId || 'Panda_Feliz_701',
+          turma: found.turma || '5.º A',
+          role: found.role || 'student',
+          language: found.language || 'pt',
+          points: found.points || 0,
+          createdAt: found.createdAt,
+          lastActivity: found.lastActivity,
+        };
+
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+        const token = `local-token-${user.id}`;
+        this.setToken(token);
+        return { user, token };
+      }
+
+      let msg = 'Email ou palavra-passe incorretos.';
+      if (fbError.code === 'auth/user-not-found' || fbError.code === 'auth/wrong-password' || fbError.code === 'auth/invalid-credential') {
+        msg = 'Email ou palavra-passe incorretos.';
+      } else if (fbError.code === 'auth/invalid-email') {
+        msg = 'Endereço de email inválido.';
+      } else if (fbError.message) {
+        msg = fbError.message;
+      }
+
+      throw new Error(msg);
+    }
+  },
+
+  /**
+   * Password Recovery using Firebase sendPasswordResetEmail
+   */
+  async recoverPassword(email: string): Promise<{ success: boolean; message: string }> {
+    try {
+      await sendPasswordResetEmail(auth, email.trim());
+      return {
+        success: true,
+        message: 'Enviámos um link de recuperação para o teu email com sucesso. Por favor, verifica a tua caixa de entrada.',
+      };
+    } catch (fbError: any) {
+      console.warn('Firebase recover error:', fbError);
+      if (fbError.code === 'auth/user-not-found') {
+        return { success: false, message: 'Nenhuma conta encontrada com este email.' };
+      }
+      if (fbError.code === 'auth/invalid-email') {
+        return { success: false, message: 'Endereço de email inválido.' };
+      }
+
+      // Local storage check
+      const users = getStoredUsers();
+      const found = users.find((u: any) => u.email.toLowerCase() === email.trim().toLowerCase());
+      if (found) {
+        return {
+          success: true,
+          message: `Simulação: Link de recuperação enviado para ${email}. Palavra-passe da conta de teste: ${found.password}`,
+        };
+      }
+
+      return {
+        success: true,
+        message: 'Se este email estiver registado, receberás instruções para redefinir a palavra-passe.',
+      };
+    }
+  },
+
+  /**
+   * Logout from Firebase
+   */
+  async logout(): Promise<void> {
+    try {
+      await signOut(auth);
+    } catch {
+      // ignore
     }
     this.removeToken();
   },
 
+  /**
+   * Get current user details and progress
+   */
   async getMe(): Promise<{
     user: User;
     progress: ActivityProgress[];
     achievements: UserAchievement[];
     pointsHistory: PointTransaction[];
   }> {
-    const token = this.getToken();
-    if (!token) throw new Error('Não autenticado');
-
-    if (!token.startsWith('local-token-')) {
-      try {
-        const res = await fetch('/api/user/me', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (res.ok) {
-          return await res.json();
-        }
-      } catch {
-        // fallback to local
-      }
-    }
-
-    // Local storage retrieval
     const rawUser = localStorage.getItem(CURRENT_USER_KEY);
     if (!rawUser) {
       this.removeToken();
@@ -239,40 +401,59 @@ export const api = {
     }
 
     const user: User = JSON.parse(rawUser);
-    const progress: ActivityProgress[] = JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY + user.id) || '[]');
-    const achievements: UserAchievement[] = JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + user.id) || '[]');
+
+    // Try fetching from Firestore
+    let progress: ActivityProgress[] = [];
+    let achievements: UserAchievement[] = [];
     const pointsHistory: PointTransaction[] = JSON.parse(localStorage.getItem(POINTS_STORAGE_KEY + user.id) || '[]');
+
+    try {
+      const progressCol = collection(db, 'users', user.id, 'progress');
+      const snap = await getDocs(progressCol);
+      if (!snap.empty) {
+        progress = snap.docs.map((d) => d.data() as ActivityProgress);
+      }
+    } catch {
+      progress = JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY + user.id) || '[]');
+    }
+
+    try {
+      const achCol = collection(db, 'users', user.id, 'achievements');
+      const snap = await getDocs(achCol);
+      if (!snap.empty) {
+        achievements = snap.docs.map((d) => d.data() as UserAchievement);
+      }
+    } catch {
+      achievements = JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + user.id) || '[]');
+    }
+
+    if (progress.length === 0) {
+      progress = JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY + user.id) || '[]');
+    }
+    if (achievements.length === 0) {
+      achievements = JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + user.id) || '[]');
+    }
 
     return { user, progress, achievements, pointsHistory };
   },
 
   async updateLanguage(language: Language): Promise<void> {
-    const token = this.getToken();
-    if (!token) return;
-
-    if (!token.startsWith('local-token-')) {
-      try {
-        await fetch('/api/user/language', {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ language }),
-        });
-      } catch {
-        // fallback
-      }
-    }
-
     const rawUser = localStorage.getItem(CURRENT_USER_KEY);
     if (rawUser) {
       const user = JSON.parse(rawUser);
       user.language = language;
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+      try {
+        await updateDoc(doc(db, 'users', user.id), { language });
+      } catch {
+        // ignore
+      }
     }
   },
 
+  /**
+   * Save user activity progress to Firestore and localStorage
+   */
   async saveProgress(payload: {
     activityId: string;
     activityType: 'module' | 'quiz' | 'challenge';
@@ -289,37 +470,12 @@ export const api = {
     lastActivity: User['lastActivity'];
     achievements: UserAchievement[];
   }> {
-    const token = this.getToken();
-    if (!token) {
-      throw new Error('Inicia sessão para guardar o progresso.');
-    }
-
-    if (!token.startsWith('local-token-')) {
-      try {
-        const res = await fetch('/api/progress/save', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(payload),
-        });
-
-        if (res.ok) {
-          return await res.json();
-        }
-      } catch {
-        // fallback
-      }
-    }
-
-    // Local storage progression
     const rawUser = localStorage.getItem(CURRENT_USER_KEY);
-    if (!rawUser) throw new Error('Utilizador não encontrado');
+    if (!rawUser) throw new Error('Inicia sessão para guardar o progresso.');
 
     const user: User = JSON.parse(rawUser);
     const progressList: ActivityProgress[] = JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY + user.id) || '[]');
-    let achievements: UserAchievement[] = JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + user.id) || '[]');
+    const achievements: UserAchievement[] = JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + user.id) || '[]');
     const pointsHistory: PointTransaction[] = JSON.parse(localStorage.getItem(POINTS_STORAGE_KEY + user.id) || '[]');
 
     let existing = progressList.find((p) => p.activityId === payload.activityId);
@@ -375,13 +531,39 @@ export const api = {
     // Check for badge unlocks
     const completedCount = progressList.filter((p) => p.status === 'completed').length;
     if (completedCount >= 1 && !achievements.some((a) => a.badgeId === 'first_step')) {
-      achievements.push({ userId: user.id, badgeId: 'first_step', unlockedAt: new Date().toISOString() });
+      const newAch: UserAchievement = { userId: user.id, badgeId: 'first_step', unlockedAt: new Date().toISOString() };
+      achievements.push(newAch);
+      try {
+        await setDoc(doc(db, 'users', user.id, 'achievements', 'first_step'), newAch);
+      } catch {
+        // ignore
+      }
     }
     if (user.points >= 100 && !achievements.some((a) => a.badgeId === 'point_century')) {
-      achievements.push({ userId: user.id, badgeId: 'point_century', unlockedAt: new Date().toISOString() });
+      const newAch: UserAchievement = { userId: user.id, badgeId: 'point_century', unlockedAt: new Date().toISOString() };
+      achievements.push(newAch);
+      try {
+        await setDoc(doc(db, 'users', user.id, 'achievements', 'point_century'), newAch);
+      } catch {
+        // ignore
+      }
     }
 
-    // Save all to localStorage
+    // Sync to Cloud Firestore
+    try {
+      await setDoc(doc(db, 'users', user.id, 'progress', payload.activityId), existing);
+      await updateDoc(doc(db, 'users', user.id), {
+        points: user.points,
+        lastActivity: user.lastActivity,
+      });
+      await updateDoc(doc(db, 'publicProfiles', user.id), {
+        points: user.points,
+      });
+    } catch (err) {
+      console.warn('Firestore sync warning:', err);
+    }
+
+    // Save to localStorage
     localStorage.setItem(PROGRESS_STORAGE_KEY + user.id, JSON.stringify(progressList));
     localStorage.setItem(ACHIEVEMENTS_STORAGE_KEY + user.id, JSON.stringify(achievements));
     localStorage.setItem(POINTS_STORAGE_KEY + user.id, JSON.stringify(pointsHistory));
@@ -396,4 +578,3 @@ export const api = {
     };
   },
 };
-

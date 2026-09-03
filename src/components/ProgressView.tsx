@@ -53,11 +53,26 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
             {t.navProgress}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
-            {user
-              ? `${language === 'pt' ? 'Aluno:' : 'Student:'} ${user.name} (${user.email})`
-              : t.guestNotice}
-          </p>
+          <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-500 font-medium mt-1">
+            {user ? (
+              <>
+                <span className="font-bold text-slate-800">{user.name}</span>
+                {user.turma && (
+                  <span className="px-2 py-0.5 rounded-md font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs">
+                    {user.turma}
+                  </span>
+                )}
+                {user.publicId && (
+                  <span className="px-2 py-0.5 rounded-md font-bold bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono">
+                    🎭 {user.publicId}
+                  </span>
+                )}
+                <span className="text-slate-400">({user.email})</span>
+              </>
+            ) : (
+              <span>{t.guestNotice}</span>
+            )}
+          </div>
         </div>
 
         <div className="flex items-center gap-3">

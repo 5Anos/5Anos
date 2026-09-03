@@ -1,0 +1,85 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account profile with private details and public identifier",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "publicId": { "type": "string" },
+        "turma": { "type": "string" },
+        "role": { "type": "string", "enum": ["student", "teacher", "admin"] },
+        "points": { "type": "number" },
+        "language": { "type": "string", "enum": ["pt", "en"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "name", "email", "publicId", "turma", "points", "language", "createdAt"]
+    },
+    "TurmasConfig": {
+      "title": "TurmasConfig",
+      "description": "Configurable list of classes for registration",
+      "type": "object",
+      "properties": {
+        "list": { "type": "array" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["list"]
+    },
+    "UserProgress": {
+      "title": "UserProgress",
+      "description": "Activity progress and quiz scores",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "activityId": { "type": "string" },
+        "activityType": { "type": "string", "enum": ["module", "quiz", "challenge"] },
+        "themeId": { "type": "string" },
+        "status": { "type": "string", "enum": ["completed", "in_progress"] },
+        "score": { "type": "number" },
+        "maxScore": { "type": "number" },
+        "percentage": { "type": "number" },
+        "attempts": { "type": "number" },
+        "bestScore": { "type": "number" },
+        "bestPercentage": { "type": "number" },
+        "lastUpdated": { "type": "string" }
+      },
+      "required": ["userId", "activityId", "activityType", "themeId", "status", "attempts", "lastUpdated"]
+    },
+    "UserAchievementDoc": {
+      "title": "UserAchievementDoc",
+      "description": "Unlocked badges and achievements",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "badgeId": { "type": "string" },
+        "unlockedAt": { "type": "string" }
+      },
+      "required": ["userId", "badgeId", "unlockedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Private user profile documents"
+    },
+    "/publicProfiles/{userId}": {
+      "schema": "UserProfile",
+      "description": "Public anonymous leaderboard profile"
+    },
+    "/config/turmas": {
+      "schema": "TurmasConfig",
+      "description": "School class list configuration"
+    },
+    "/users/{userId}/progress/{activityId}": {
+      "schema": "UserProgress",
+      "description": "User activity progress"
+    },
+    "/users/{userId}/achievements/{badgeId}": {
+      "schema": "UserAchievementDoc",
+      "description": "User unlocked badges"
+    }
+  }
+}

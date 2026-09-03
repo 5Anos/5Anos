@@ -79,7 +79,7 @@ export default function App() {
   const allModules = ALL_THEMES.flatMap((th) => th.modules);
   const currentModule = activeModuleId ? allModules.find((m) => m.id === activeModuleId) : null;
 
-  // Auto-load session on mount
+  // Auto-load session on mount and listen to Firebase Auth
   useEffect(() => {
     async function loadUser() {
       try {
@@ -96,6 +96,25 @@ export default function App() {
       }
     }
     loadUser();
+
+    // Firebase Auth listener
+    const unsubscribe = api.onAuthChange(async (firebaseLoggedUser) => {
+      if (firebaseLoggedUser) {
+        setUser(firebaseLoggedUser);
+        try {
+          const data = await api.getMe();
+          setProgressList(data.progress);
+          setAchievements(data.achievements);
+          setPointsHistory(data.pointsHistory);
+        } catch {
+          // ignore
+        }
+      }
+    });
+
+    return () => {
+      if (typeof unsubscribe === 'function') unsubscribe();
+    };
   }, []);
 
   const handleLanguageChange = (newLang: Language) => {

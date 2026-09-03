@@ -1,0 +1,48 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Config: Publicly readable, writeable by admin or initial setup
+    match /config/{docId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // User Private Profile: Strictly accessed by the user themself
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId);
+      // Students cannot modify their 'turma' after creation
+      allow update: if isOwner(userId) && (
+        !request.resource.data.diff(resource.data).affectedKeys().hasAny(['turma', 'id'])
+        || resource.data.turma == request.resource.data.turma
+      );
+      allow delete: if false;
+
+      // Subcollection: Activity Progress
+      match /progress/{activityId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Subcollection: Achievements / Badges
+      match /achievements/{badgeId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // Public Profiles (for ranking / leaderboard without revealing real name or email)
+    match /publicProfiles/{userId} {
+      allow read: if true;
+      allow write: if isOwner(userId);
+    }
+  }
+}

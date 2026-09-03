@@ -2,8 +2,11 @@ export type Language = 'pt' | 'en';
 
 export interface User {
   id: string;
-  name: string;
+  name: string; // Real Name (Private to student and teacher)
   email: string;
+  publicId: string; // Safe Public Identifier (e.g. Panda_Feliz_701)
+  turma: string; // Class (e.g. 5.º A)
+  role?: 'student' | 'teacher' | 'admin';
   language: Language;
   points: number;
   createdAt: string;
