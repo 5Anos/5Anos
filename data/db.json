@@ -1,0 +1,80 @@
+{
+  "users": [
+    {
+      "id": "student-demo-1",
+      "name": "João Silva",
+      "email": "joao.silva@escola.pt",
+      "passwordHash": "ea5402a44cabbee0ea3e57e519dc363b98b423c9cf6e70c3b3e6e67f859eeaca5b2c663080f88659011e18c6d4001bf8f650e1ea03a58157266a4260666a993c",
+      "salt": "d5386d222d0f81ae19bbe47f22e17b99",
+      "language": "pt",
+      "createdAt": "2026-09-03T18:03:47.206Z",
+      "points": 155,
+      "lastActivity": {
+        "themeId": "seguranca-digital",
+        "challengeId": "desafio-seguro-perigoso",
+        "title": "Seguro ou Perigoso?",
+        "timestamp": "2026-09-03T18:04:02.369Z"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "token": "eeed7b6fc01058d80dbdd882c8ca9f7c3df75828a3adb2da98e89130c14a43b8",
+      "userId": "student-demo-1",
+      "expiresAt": 1791050627206
+    }
+  ],
+  "progress": [
+    {
+      "userId": "student-demo-1",
+      "activityId": "seguranca-digital-intro",
+      "activityType": "module",
+      "themeId": "seguranca-digital",
+      "status": "completed",
+      "attempts": 1,
+      "score": 3,
+      "maxScore": 3,
+      "percentage": 100,
+      "bestScore": 3,
+      "bestPercentage": 100,
+      "lastUpdated": "2026-09-03T18:03:47.206Z"
+    },
+    {
+      "userId": "student-demo-1",
+      "activityId": "desafio-seguro-perigoso",
+      "activityType": "challenge",
+      "themeId": "seguranca-digital",
+      "status": "completed",
+      "attempts": 1,
+      "score": 6,
+      "maxScore": 6,
+      "percentage": 100,
+      "bestScore": 6,
+      "bestPercentage": 100,
+      "lastUpdated": "2026-09-03T18:04:02.369Z"
+    }
+  ],
+  "achievements": [
+    {
+      "userId": "student-demo-1",
+      "badgeId": "primeiros-passos",
+      "unlockedAt": "2026-09-03T18:03:47.206Z"
+    }
+  ],
+  "pointsHistory": [
+    {
+      "id": "pt-1",
+      "userId": "student-demo-1",
+      "amount": 120,
+      "reason": "Boas-vindas à plataforma de TIC",
+      "timestamp": "2026-09-03T18:03:47.206Z"
+    },
+    {
+      "id": "990fd8f9-1423-46a5-9f70-f6db468cbb97",
+      "userId": "student-demo-1",
+      "amount": 35,
+      "reason": "Conclusão: Seguro ou Perigoso?",
+      "timestamp": "2026-09-03T18:04:02.369Z"
+    }
+  ]
+}

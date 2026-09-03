@@ -1,0 +1,6 @@
+{
+  "name": "Mundo TIC — 5.º Ano",
+  "description": "Plataforma educativa interativa de Tecnologias de Informação e Comunicação para o 5.º ano. Professora Carla Oliveira.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
