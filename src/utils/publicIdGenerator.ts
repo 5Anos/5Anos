@@ -62,12 +62,22 @@ const ADJECTIVES = [
   'Dinâmico',
 ];
 
-export function generateSecurePublicId(): string {
-  const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)];
-  const adj = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
-  const randomNum = Math.floor(100 + Math.random() * 900); // 3-digit number 100-999
+export function generateSecurePublicId(existingIds: string[] = []): string {
+  const existingSet = new Set(existingIds.map((id) => id.toLowerCase().trim()));
 
-  return `${noun}_${adj}_${randomNum}`;
+  for (let attempt = 0; attempt < 50; attempt++) {
+    const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)];
+    const adj = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
+    const randomNum = Math.floor(100 + Math.random() * 900); // 3-digit number 100-999
+    const candidate = `${noun}_${adj}_${randomNum}`;
+
+    if (!existingSet.has(candidate.toLowerCase())) {
+      return candidate;
+    }
+  }
+
+  // Fallback with extra timestamp digits if crowded
+  return `Explorador_TIC_${Math.floor(1000 + Math.random() * 9000)}`;
 }
 
 export const PUBLIC_ID_EXPLANATION = {

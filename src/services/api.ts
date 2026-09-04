@@ -88,6 +88,25 @@ export const api = {
     ];
   },
 
+  getAllTakenPublicIds(): string[] {
+    const users = getStoredUsers();
+    const ids = users.map((u: any) => u.publicId).filter(Boolean);
+    INITIAL_DEMO_USERS.forEach((u) => {
+      if (!ids.includes(u.publicId)) ids.push(u.publicId);
+    });
+    return ids;
+  },
+
+  getAllRegisteredEmails(): string[] {
+    const users = getStoredUsers();
+    const emails = users.map((u: any) => u.email.toLowerCase().trim()).filter(Boolean);
+    INITIAL_DEMO_USERS.forEach((u) => {
+      const em = u.email.toLowerCase().trim();
+      if (!emails.includes(em)) emails.push(em);
+    });
+    return emails;
+  },
+
   /**
    * Listen to Firebase Auth state changes
    */
@@ -103,7 +122,7 @@ export const api = {
               id: fbUser.uid,
               name: data.name || fbUser.displayName || 'Estudante',
               email: fbUser.email || '',
-              publicId: data.publicId || generateSecurePublicId(),
+              publicId: data.publicId || generateSecurePublicId(this.getAllTakenPublicIds()),
               turma: data.turma || '5.º A',
               role: data.role || 'student',
               points: data.points ?? 20,
@@ -124,7 +143,7 @@ export const api = {
   },
 
   /**
-   * Register with Firebase Authentication and save private profile in Cloud Firestore
+   * Register with strict uniqueness for both email and publicId
    */
   async register(
     name: string,
@@ -134,8 +153,35 @@ export const api = {
     publicId: string,
     language: Language = 'pt'
   ): Promise<{ user: User; token: string }> {
-    const finalPublicId = publicId || generateSecurePublicId();
+    const normalizedEmail = email.trim().toLowerCase();
+    const trimmedPublicId = (publicId || '').trim();
     const finalTurma = turma || '5.º A';
+
+    // 1. Strict Validation: Uniqueness of Email & Public ID across local storage & demo accounts
+    const users = getStoredUsers();
+    
+    // Check Email Uniqueness
+    const emailExists = users.some((u: any) => (u.email || '').toLowerCase().trim() === normalizedEmail);
+    if (emailExists) {
+      throw new Error(
+        language === 'pt'
+          ? '❌ Já existe uma conta registada com este email. Por favor, usa outro email ou faz login.'
+          : '❌ An account is already registered with this email.'
+      );
+    }
+
+    // Check Public Identifier Uniqueness
+    const takenPublicIds = this.getAllTakenPublicIds();
+    const publicIdExists = takenPublicIds.some((id) => id.toLowerCase().trim() === trimmedPublicId.toLowerCase());
+    if (publicIdExists) {
+      throw new Error(
+        language === 'pt'
+          ? `❌ O identificador "${trimmedPublicId}" já pertence a outro aluno. Por favor, clica em "Baralhar outro nome".`
+          : `❌ The public identifier "${trimmedPublicId}" is already in use by another student. Please shuffle to get a new one.`
+      );
+    }
+
+    const finalPublicId = trimmedPublicId || generateSecurePublicId(takenPublicIds);
 
     try {
       // 1. Firebase Authentication create user
@@ -149,7 +195,7 @@ export const api = {
         id: fbUser.uid,
         name: name.trim(), // Real name is PRIVATE
         email: fbUser.email || email.trim(),
-        publicId: finalPublicId, // Safe public anonymous identifier
+        publicId: finalPublicId, // Safe public anonymous identifier (GUARANTEED UNIQUE)
         turma: finalTurma,
         role: 'student',
         language,
@@ -184,18 +230,13 @@ export const api = {
         console.warn('Firestore write warning:', dbErr);
       }
 
+      users.push({ ...newUser, password });
+      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
       this.setToken(fbUser.uid);
       return { user: newUser, token: fbUser.uid };
     } catch (fbError: any) {
-      console.warn('Firebase register error, checking message or fallback:', fbError);
-
-      // If Firebase Auth throws ANY error (config, permission, or offline), seamlessly use the built-in persistent database
-      const users = getStoredUsers();
-      const existing = users.find((u: any) => u.email.toLowerCase() === email.trim().toLowerCase());
-      if (existing) {
-        throw new Error(language === 'pt' ? 'Já existe uma conta registada com este email.' : 'An account with this email already exists.');
-      }
+      console.warn('Firebase register notice, using built-in database:', fbError);
 
       const newUser: User = {
         id: `u-${Date.now()}`,

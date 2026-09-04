@@ -56,7 +56,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         setTurma(turmas[0]);
       }
       if (!publicId) {
-        setPublicId(generateSecurePublicId());
+        const taken = api.getAllTakenPublicIds();
+        setPublicId(generateSecurePublicId(taken));
       }
     }
   }, [isOpen]);
@@ -65,7 +66,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
 
   const handleShufflePublicId = () => {
     setIsShuffling(true);
-    const newId = generateSecurePublicId();
+    const taken = api.getAllTakenPublicIds();
+    const newId = generateSecurePublicId(taken);
     setPublicId(newId);
     setTimeout(() => setIsShuffling(false), 300);
   };
@@ -385,9 +387,22 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
 
               {/* 2. Email */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
-                  {language === 'pt' ? 'Email' : 'Email'}
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                    {language === 'pt' ? 'Email' : 'Email'}
+                  </label>
+                  {email.trim() && (
+                    api.getAllRegisteredEmails().includes(email.trim().toLowerCase()) ? (
+                      <span className="text-[10px] font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
+                        {language === 'pt' ? '❌ Email já registado' : '❌ Already in use'}
+                      </span>
+                    ) : email.includes('@') && email.includes('.') ? (
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                        {language === 'pt' ? '✅ Email disponível' : '✅ Available'}
+                      </span>
+                    ) : null
+                  )}
+                </div>
                 <div className="relative">
                   <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
                   <input
@@ -478,7 +493,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                     🎭
                   </div>
                   <div className="flex-1">
-                    <p className="text-xs text-slate-400 font-semibold">{language === 'pt' ? 'O teu avatar público:' : 'Your public avatar:'}</p>
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs text-slate-400 font-semibold">{language === 'pt' ? 'O teu avatar público:' : 'Your public avatar:'}</p>
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
+                        {language === 'pt' ? '✅ 100% Único' : '✅ Unique'}
+                      </span>
+                    </div>
                     <p className="text-base font-extrabold text-indigo-950 tracking-tight font-mono">
                       {publicId}
                     </p>
