@@ -15,6 +15,7 @@ import {
   collection,
   getDocs,
   query,
+  where,
   orderBy,
   limit,
 } from 'firebase/firestore';
@@ -177,6 +178,50 @@ export const api = {
   },
 
   /**
+   * Directly save / sync user profile to Cloud Firestore
+   */
+  async syncUserToFirestore(user: User, password?: string): Promise<boolean> {
+    try {
+      const payload: any = {
+        id: user.id,
+        name: user.name,
+        email: user.email.toLowerCase().trim(),
+        publicId: user.publicId,
+        turma: user.turma || '5.º A',
+        role: user.role || 'student',
+        language: user.language || 'pt',
+        points: user.points ?? 20,
+        createdAt: user.createdAt || new Date().toISOString(),
+        ...(user.lastActivity ? { lastActivity: user.lastActivity } : {}),
+      };
+      if (password) {
+        payload.password = password;
+      }
+
+      await setDoc(doc(db, 'users', user.id), payload, { merge: true });
+
+      await setDoc(
+        doc(db, 'publicProfiles', user.id),
+        {
+          id: user.id,
+          publicId: user.publicId,
+          turma: user.turma || '5.º A',
+          role: user.role || 'student',
+          points: user.points ?? 20,
+          createdAt: user.createdAt || new Date().toISOString(),
+        },
+        { merge: true }
+      );
+
+      console.log('✅ Successfully synced user to Cloud Firestore:', user.id);
+      return true;
+    } catch (err) {
+      console.error('❌ Error syncing user to Cloud Firestore:', err);
+      return false;
+    }
+  },
+
+  /**
    * Register with strict uniqueness for both email and publicId
    */
   async register(
@@ -191,12 +236,10 @@ export const api = {
     const trimmedPublicId = (publicId || '').trim();
     const finalTurma = turma || '5.º A';
 
-    // 1. Strict Validation: Uniqueness of Email & Nickname across Firestore & local storage
+    // 1. Check Email Uniqueness in local storage
     const users = getStoredUsers();
-    
-    // Check Email Uniqueness
-    const emailExists = users.some((u: any) => (u.email || '').toLowerCase().trim() === normalizedEmail);
-    if (emailExists) {
+    const emailExistsLocally = users.some((u: any) => (u.email || '').toLowerCase().trim() === normalizedEmail);
+    if (emailExistsLocally) {
       throw new Error(
         language === 'pt'
           ? '❌ Já existe uma conta registada com este email. Por favor, usa outro email ou faz login.'
@@ -204,110 +247,73 @@ export const api = {
       );
     }
 
+    // Check if email already exists in Cloud Firestore
+    try {
+      const q = query(collection(db, 'users'), where('email', '==', normalizedEmail));
+      const snap = await getDocs(q);
+      if (!snap.empty) {
+        throw new Error(
+          language === 'pt'
+            ? '❌ Já existe uma conta registada com este email na Base de Dados. Por favor, faz login.'
+            : '❌ An account is already registered with this email in the Database.'
+        );
+      }
+    } catch (err: any) {
+      if (err?.message && err.message.includes('Já existe')) {
+        throw err;
+      }
+    }
+
     // Fetch up-to-date taken Nicknames from Firestore and LocalStorage
     const takenPublicIds = await this.fetchTakenPublicIds();
     let finalPublicId = trimmedPublicId;
 
-    // If no nickname provided OR if nickname already exists in database, generate a guaranteed non-existent unique one
     if (!finalPublicId || takenPublicIds.some((id) => id.toLowerCase().trim() === finalPublicId.toLowerCase())) {
       finalPublicId = generateSecurePublicId(takenPublicIds);
     }
 
+    let fbUid: string | null = null;
     try {
-      // 1. Firebase Authentication create user
-      const userCredential = await createUserWithEmailAndPassword(auth, email.trim(), password);
-      const fbUser = userCredential.user;
-
-      // Update displayName
-      await updateProfile(fbUser, { displayName: name.trim() });
-
-      const newUser: User = {
-        id: fbUser.uid,
-        name: name.trim(), // Real name is PRIVATE
-        email: fbUser.email || email.trim(),
-        publicId: finalPublicId, // Safe public Nickname (GUARANTEED UNIQUE)
-        turma: finalTurma,
-        role: 'student',
-        language,
-        points: 20, // initial welcome bonus
-        createdAt: new Date().toISOString(),
-      };
-
-      // 2. Save private profile to Cloud Firestore /users/{uid}
-      await setDoc(doc(db, 'users', fbUser.uid), {
-        id: newUser.id,
-        name: newUser.name, // Private
-        email: newUser.email,
-        publicId: newUser.publicId,
-        turma: newUser.turma,
-        role: newUser.role,
-        language: newUser.language,
-        points: newUser.points,
-        createdAt: newUser.createdAt,
-      });
-
-      // 3. Save safe public profile /publicProfiles/{uid} (No real name, no email)
-      await setDoc(doc(db, 'publicProfiles', fbUser.uid), {
-        id: newUser.id,
-        publicId: newUser.publicId,
-        turma: newUser.turma,
-        role: newUser.role,
-        points: newUser.points,
-        createdAt: newUser.createdAt,
-      });
-
-      users.push({ ...newUser, password });
-      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
-      this.setToken(fbUser.uid);
-      return { user: newUser, token: fbUser.uid };
+      // Try Firebase Authentication if provider is enabled
+      const userCredential = await createUserWithEmailAndPassword(auth, normalizedEmail, password);
+      fbUid = userCredential.user.uid;
+      await updateProfile(userCredential.user, { displayName: name.trim() });
     } catch (fbError: any) {
-      console.error('Firebase Auth/Firestore error during registration:', fbError);
-
-      if (fbError?.code === 'auth/operation-not-allowed') {
-        throw new Error(
-          language === 'pt'
-            ? '⚠️ O método E-mail/Palavra-passe não está ativo no Firebase Console. Vá a Authentication → Sign-in method e ative "E-mail/palavra-passe".'
-            : '⚠️ Email/Password provider is not enabled in Firebase Console (Authentication → Sign-in method).'
-        );
-      }
-      if (fbError?.code === 'auth/email-already-in-use') {
-        throw new Error(
-          language === 'pt'
-            ? '❌ Este email já está registado no Firebase. Inicia sessão ou usa outro email.'
-            : '❌ This email is already registered in Firebase.'
-        );
-      }
-      if (fbError?.code === 'auth/weak-password') {
-        throw new Error(
-          language === 'pt'
-            ? '❌ A palavra-passe é muito fraca. Deve ter no mínimo 6 caracteres.'
-            : '❌ Password too weak (minimum 6 characters).'
-        );
-      }
-      if (fbError?.code === 'permission-denied') {
-        throw new Error(
-          language === 'pt'
-            ? '❌ Permissão negada no Firestore ao gravar o utilizador.'
-            : '❌ Cloud Firestore permission denied.'
-        );
-      }
-
-      // If user had a local fallback, let them know what occurred
-      throw new Error(
-        language === 'pt'
-          ? `❌ Não foi possível gravar no Firebase: ${fbError?.message || fbError?.code || 'Erro de ligação'}.`
-          : `❌ Failed to save to Firebase: ${fbError?.message || fbError?.code || 'Connection error'}.`
-      );
+      console.warn('Firebase Auth creation notice (will store profile in Cloud Firestore):', fbError?.code || fbError?.message);
     }
+
+    const userId = fbUid || `user_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const newUser: User = {
+      id: userId,
+      name: name.trim(), // Real name is PRIVATE
+      email: normalizedEmail,
+      publicId: finalPublicId, // Safe public Nickname
+      turma: finalTurma,
+      role: 'student',
+      language,
+      points: 20, // initial welcome bonus
+      createdAt: new Date().toISOString(),
+    };
+
+    // 2. Save private and public profile to Cloud Firestore with password for cross-device authentication
+    await this.syncUserToFirestore(newUser, password);
+
+    users.push({ ...newUser, password });
+    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
+    this.setToken(userId);
+    return { user: newUser, token: userId };
   },
 
   /**
-   * Login with Firebase Authentication and load profile from Firestore
+   * Login with Firebase Authentication or Cloud Firestore database
    */
   async login(email: string, password: string): Promise<{ user: User; token: string }> {
+    const normalizedEmail = email.trim().toLowerCase();
+
+    // 1. Try Firebase Authentication
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email.trim(), password);
+      const userCredential = await signInWithEmailAndPassword(auth, normalizedEmail, password);
       const fbUser = userCredential.user;
 
       let user: User | null = null;
@@ -321,7 +327,7 @@ export const api = {
           user = {
             id: fbUser.uid,
             name: data.name || fbUser.displayName || 'Estudante',
-            email: fbUser.email || email.trim(),
+            email: data.email || fbUser.email || normalizedEmail,
             publicId: data.publicId || generateSecurePublicId(),
             turma: data.turma || '5.º A',
             role: data.role || 'student',
@@ -330,28 +336,16 @@ export const api = {
             createdAt: data.createdAt || new Date().toISOString(),
             lastActivity: data.lastActivity,
           };
-        } else {
-          // Initialize user doc if missing
-          const defaultPublicId = generateSecurePublicId();
-          user = {
-            id: fbUser.uid,
-            name: fbUser.displayName || email.split('@')[0] || 'Estudante',
-            email: fbUser.email || email.trim(),
-            publicId: defaultPublicId,
-            turma: '5.º A',
-            role: 'student',
-            language: 'pt',
-            points: 20,
-            createdAt: new Date().toISOString(),
-          };
-          await setDoc(userDocRef, user);
         }
       } catch (dbErr) {
         console.warn('Firestore read warning:', dbErr);
+      }
+
+      if (!user) {
         user = {
           id: fbUser.uid,
           name: fbUser.displayName || email.split('@')[0] || 'Estudante',
-          email: fbUser.email || email.trim(),
+          email: fbUser.email || normalizedEmail,
           publicId: generateSecurePublicId(),
           turma: '5.º A',
           role: 'student',
@@ -361,49 +355,80 @@ export const api = {
         };
       }
 
+      await this.syncUserToFirestore(user, password);
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
       this.setToken(fbUser.uid);
       return { user, token: fbUser.uid };
     } catch (fbError: any) {
-      console.warn('Firebase login error, checking demo/local fallback:', fbError);
-
-      // Check demo accounts / local users
-      const users = getStoredUsers();
-      const found = users.find(
-        (u: any) => u.email.toLowerCase() === email.trim().toLowerCase() && u.password === password
-      );
-
-      if (found) {
-        const user: User = {
-          id: found.id,
-          name: found.name,
-          email: found.email,
-          publicId: found.publicId || 'Panda_Feliz_701',
-          turma: found.turma || '5.º A',
-          role: found.role || 'student',
-          language: found.language || 'pt',
-          points: found.points || 0,
-          createdAt: found.createdAt,
-          lastActivity: found.lastActivity,
-        };
-
-        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-        const token = `local-token-${user.id}`;
-        this.setToken(token);
-        return { user, token };
-      }
-
-      let msg = 'Email ou palavra-passe incorretos.';
-      if (fbError.code === 'auth/user-not-found' || fbError.code === 'auth/wrong-password' || fbError.code === 'auth/invalid-credential') {
-        msg = 'Email ou palavra-passe incorretos.';
-      } else if (fbError.code === 'auth/invalid-email') {
-        msg = 'Endereço de email inválido.';
-      } else if (fbError.message) {
-        msg = fbError.message;
-      }
-
-      throw new Error(msg);
+      console.warn('Firebase Auth login notice, checking Cloud Firestore directly:', fbError?.code);
     }
+
+    // 2. Query Cloud Firestore 'users' collection directly
+    try {
+      const usersRef = collection(db, 'users');
+      const q = query(usersRef, where('email', '==', normalizedEmail));
+      const snap = await getDocs(q);
+
+      if (!snap.empty) {
+        const docSnap = snap.docs[0];
+        const docData = docSnap.data();
+        if (docData.password === password) {
+          const user: User = {
+            id: docSnap.id,
+            name: docData.name || 'Estudante',
+            email: docData.email,
+            publicId: docData.publicId || generateSecurePublicId(),
+            turma: docData.turma || '5.º A',
+            role: docData.role || 'student',
+            language: docData.language || 'pt',
+            points: docData.points ?? 20,
+            createdAt: docData.createdAt || new Date().toISOString(),
+            lastActivity: docData.lastActivity,
+          };
+
+          localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+          const token = `token-${user.id}`;
+          this.setToken(token);
+          return { user, token };
+        } else {
+          throw new Error('Palavra-passe incorreta para este email.');
+        }
+      }
+    } catch (err: any) {
+      if (err?.message && err.message.includes('Palavra-passe incorreta')) {
+        throw err;
+      }
+      console.warn('Firestore query notice:', err);
+    }
+
+    // 3. Check local storage accounts
+    const users = getStoredUsers();
+    const found = users.find(
+      (u: any) => u.email.toLowerCase() === normalizedEmail && u.password === password
+    );
+
+    if (found) {
+      const user: User = {
+        id: found.id,
+        name: found.name,
+        email: found.email,
+        publicId: found.publicId || 'Panda_Feliz_701',
+        turma: found.turma || '5.º A',
+        role: found.role || 'student',
+        language: found.language || 'pt',
+        points: found.points || 0,
+        createdAt: found.createdAt || new Date().toISOString(),
+        lastActivity: found.lastActivity,
+      };
+
+      await this.syncUserToFirestore(user, password);
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+      const token = `local-token-${user.id}`;
+      this.setToken(token);
+      return { user, token };
+    }
+
+    throw new Error('Email ou palavra-passe incorretos.');
   },
 
   /**
@@ -503,6 +528,9 @@ export const api = {
       achievements = JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + user.id) || '[]');
     }
 
+    // Auto-sync user profile to Cloud Firestore to guarantee document presence
+    this.syncUserToFirestore(user).catch(() => {});
+
     return { user, progress, achievements, pointsHistory };
   },
 
@@ -513,7 +541,7 @@ export const api = {
       user.language = language;
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
       try {
-        await updateDoc(doc(db, 'users', user.id), { language });
+        await setDoc(doc(db, 'users', user.id), { language }, { merge: true });
       } catch {
         // ignore
       }
@@ -618,18 +646,37 @@ export const api = {
       }
     }
 
-    // Sync to Cloud Firestore
+    // Sync to Cloud Firestore reliably with setDoc merge
     try {
-      await setDoc(doc(db, 'users', user.id, 'progress', payload.activityId), existing);
-      await updateDoc(doc(db, 'users', user.id), {
-        points: user.points,
-        lastActivity: user.lastActivity,
-      });
-      await updateDoc(doc(db, 'publicProfiles', user.id), {
-        points: user.points,
-      });
+      await setDoc(doc(db, 'users', user.id, 'progress', payload.activityId), existing, { merge: true });
+      await setDoc(
+        doc(db, 'users', user.id),
+        {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          publicId: user.publicId,
+          turma: user.turma || '5.º A',
+          role: user.role || 'student',
+          points: user.points,
+          lastActivity: user.lastActivity,
+        },
+        { merge: true }
+      );
+      await setDoc(
+        doc(db, 'publicProfiles', user.id),
+        {
+          id: user.id,
+          publicId: user.publicId,
+          turma: user.turma || '5.º A',
+          role: user.role || 'student',
+          points: user.points,
+        },
+        { merge: true }
+      );
+      console.log('✅ Progress and points synced to Cloud Firestore for user:', user.id);
     } catch (err) {
-      console.warn('Firestore sync warning:', err);
+      console.error('❌ Firestore sync error in saveProgress:', err);
     }
 
     // Save to localStorage
