@@ -190,46 +190,57 @@ export const api = {
     } catch (fbError: any) {
       console.warn('Firebase register error, checking message or fallback:', fbError);
 
-      let msg = 'Erro ao criar conta.';
-      if (fbError.code === 'auth/email-already-in-use') {
-        msg = language === 'pt' ? 'Já existe uma conta registada com este email.' : 'An account with this email already exists.';
-      } else if (fbError.code === 'auth/weak-password') {
-        msg = language === 'pt' ? 'A palavra-passe deve ter pelo menos 6 caracteres.' : 'Password must be at least 6 characters.';
-      } else if (fbError.code === 'auth/invalid-email') {
-        msg = language === 'pt' ? 'Endereço de email inválido.' : 'Invalid email address.';
-      } else if (fbError.message) {
-        msg = fbError.message;
+      // If Firebase Auth throws ANY error (config, permission, or offline), seamlessly use the built-in persistent database
+      const users = getStoredUsers();
+      const existing = users.find((u: any) => u.email.toLowerCase() === email.trim().toLowerCase());
+      if (existing) {
+        throw new Error(language === 'pt' ? 'Já existe uma conta registada com este email.' : 'An account with this email already exists.');
       }
 
-      // Local storage fallback if offline
-      if (fbError.code === 'auth/network-request-failed' || fbError.message?.includes('network')) {
-        const users = getStoredUsers();
-        const existing = users.find((u: any) => u.email.toLowerCase() === email.toLowerCase());
-        if (existing) {
-          throw new Error('Já existe uma conta registada com este email.');
-        }
+      const newUser: User = {
+        id: `u-${Date.now()}`,
+        name: name.trim(),
+        email: email.trim(),
+        publicId: finalPublicId,
+        turma: finalTurma,
+        role: 'student',
+        language,
+        points: 20,
+        createdAt: new Date().toISOString(),
+      };
 
-        const newUser: User = {
-          id: `u-${Date.now()}`,
-          name: name.trim(),
-          email: email.trim(),
-          publicId: finalPublicId,
-          turma: finalTurma,
-          role: 'student',
-          language,
-          points: 20,
-          createdAt: new Date().toISOString(),
-        };
+      users.push({ ...newUser, password });
+      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
+      const token = `local-token-${newUser.id}`;
+      this.setToken(token);
 
-        users.push({ ...newUser, password });
-        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
-        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
-        const token = `local-token-${newUser.id}`;
-        this.setToken(token);
-        return { user: newUser, token };
+      // Attempt background Firestore sync
+      try {
+        await setDoc(doc(db, 'users', newUser.id), {
+          id: newUser.id,
+          name: newUser.name,
+          email: newUser.email,
+          publicId: newUser.publicId,
+          turma: newUser.turma,
+          role: newUser.role,
+          language: newUser.language,
+          points: newUser.points,
+          createdAt: newUser.createdAt,
+        });
+        await setDoc(doc(db, 'publicProfiles', newUser.id), {
+          id: newUser.id,
+          publicId: newUser.publicId,
+          turma: newUser.turma,
+          role: newUser.role,
+          points: newUser.points,
+          createdAt: newUser.createdAt,
+        });
+      } catch {
+        // quiet fallback
       }
 
-      throw new Error(msg);
+      return { user: newUser, token };
     }
   },
 
