@@ -462,7 +462,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                 className="w-full mt-2 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {loading ? (
-                  <span className="animate-pulse">{language === 'pt' ? 'A criar conta no Firebase...' : 'Creating account...'}</span>
+                  <span className="animate-pulse">{language === 'pt' ? 'A criar conta...' : 'Creating account...'}</span>
                 ) : (
                   <>
                     <span>{language === 'pt' ? 'Concluir Registo' : 'Complete Registration'}</span>

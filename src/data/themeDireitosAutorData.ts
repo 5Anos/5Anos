@@ -391,7 +391,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
       type: 'true_false',
     },
     {
-      id: 'quiz-final-tema5',
+      id: 'quiz-final-tema6',
       themeId: 'direitos-autor',
       number: 6,
       title: { pt: '🎯 Quiz Direitos de Autor', en: '🎯 Copyright Master Quiz' },

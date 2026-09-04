@@ -290,7 +290,7 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       type: 'detect_phishing',
     },
     {
-      id: 'quiz-final-correio-eletronico',
+      id: 'quiz-final-tema4',
       themeId: 'correio-eletronico',
       number: 5,
       title: { pt: '🎯 Quiz de Correio Eletrónico', en: '🎯 Email Mastery Quiz' },

@@ -199,8 +199,8 @@ export const DAILY_TIC_FACTS: DailyTicFact[] = [
       en: 'Every 20 minutes, look at something 20 feet away for 20 seconds.'
     },
     description: {
-      pt: 'Quando olhamos para ecrãs de computadores ou telemóveis, piscamos os olhos metade das vezes normais, o que provoca cansaço e secura ocular. Os médicos recomendam: a cada 20 minutos, olhar para um objeto a pelo menos 6 metros (20 pés) de distância durante 20 segundos.',
-      en: 'We blink 50% less when looking at screens. Rest your eye muscles with the 20-20-20 rule.'
+      pt: 'Quando olhamos para ecrãs de computadores ou telemóveis, piscamos os olhos metade das vezes normais, o que provoca cansaço e secura ocular. Os médicos recomendam: a cada 20 minutos de ecrã, olhar para um objeto a pelo menos 6 metros de distância durante 20 segundos.',
+      en: 'We blink 50% less when looking at screens. Rest your eye muscles with the 20-20-20 rule (look 6 meters away for 20 seconds).'
     },
     whyItMatters: {
       pt: 'Relaxa os pequenos músculos oculares e evita dores de cabeça após o estudo ou jogos no computador.',
@@ -417,6 +417,58 @@ export const DAILY_TIC_FACTS: DailyTicFact[] = [
     funFact: {
       pt: 'O teste clássico para saber se uma máquina consegue conversar como um humano chama-se "Teste de Turing", proposto por Alan Turing em 1950!',
       en: 'Alan Turing created the famous "Turing Test" in 1950 to evaluate machine conversational intelligence!'
+    }
+  },
+  {
+    id: 16,
+    category: { pt: 'Cidadania Digital & Segurança', en: 'Digital Citizenship & Safety' },
+    icon: '🛡️',
+    badgeColor: 'rose',
+    title: {
+      pt: 'Stop Cyberbullying: A Linha Internet Segura em Portugal!',
+      en: 'Stop Cyberbullying: The Internet Segura Toll-Free Helpline in Portugal!'
+    },
+    teaser: {
+      pt: 'Existe uma linha gratuita (800 21 90 90) para ajudar jovens e famílias em situações de cyberbullying.',
+      en: 'There is a free confidential helpline (800 21 90 90) supporting youth with online harassment.'
+    },
+    description: {
+      pt: 'O cyberbullying acontece quando alguém usa a Internet, telemóveis ou jogos para ameaçar, humilhar, gozar ou excluir intencionalmente outra pessoa. Em Portugal, a Linha Internet Segura (800 21 90 90) e a Linha SOS Criança (116 111) são gratuitas, confidenciais e estão sempre prontas para ajudar!',
+      en: 'Cyberbullying happens when technology is used to harass, humiliate, or exclude peers. The Internet Segura helpline (800 21 90 90) and SOS Criança (116 111) offer free, confidential guidance.'
+    },
+    whyItMatters: {
+      pt: 'Se fores vítima ou testemunha de cyberbullying: não respondas ao agressor, guarda provas (printscreen), bloqueia o contacto e pede ajuda a um adulto de confiança.',
+      en: 'If you witness cyberbullying: do not retaliate, take screenshots as evidence, block the sender, and tell a trusted adult.'
+    },
+    funFact: {
+      pt: 'A regra de ouro da cidadania digital é a empatia: nunca digas ou partilhes algo online que não dirias cara a cara com gentileza!',
+      en: 'The golden rule of digital citizenship is empathy: never say or share anything online that you wouldn’t say kindly in person!'
+    }
+  },
+  {
+    id: 17,
+    category: { pt: 'Bem-Estar & Saúde Digital', en: 'Well-being & Digital Health' },
+    icon: '🌙',
+    badgeColor: 'amber',
+    title: {
+      pt: 'Desliga os ecrãs 1 hora antes de dormir para um sono perfeito!',
+      en: 'Turn off screens 1 hour before bed for restful sleep!'
+    },
+    teaser: {
+      pt: 'A luz azul emitida por telemóveis e computadores confunde o cérebro e rouba energia.',
+      en: 'Blue light from screens delays melatonin and impacts sleep quality.'
+    },
+    description: {
+      pt: 'Os nossos olhos têm sensores sensíveis à luz azul que avisam o cérebro quando é dia. Quando olhamos para telemóveis ou tablets na cama à noite, o cérebro atrasa a produção de melatonina (a hormona do sono), dificultando o adormecer e deixando-nos cansados na escola no dia seguinte.',
+      en: 'Our eyes perceive screen blue light as daylight. Using devices in bed blocks melatonin, disrupting restful sleep cycles.'
+    },
+    whyItMatters: {
+      pt: 'Desligar os aparelhos 60 minutos antes de deitar e trocar por um livro ou conversa melhora a memória, a concentração e a boa disposição.',
+      en: 'Switching off devices 60 minutes before bedtime and reading a book enhances memory, focus, and mood.'
+    },
+    funFact: {
+      pt: 'Dormir entre 9 a 10 horas por noite é o superpoder dos alunos do 5.º ano para consolidar tudo o que aprenderam durante o dia!',
+      en: 'Sleeping 9 to 10 hours a night is a superpower for 5th graders to consolidate everything learned during the day!'
     }
   }
 ];

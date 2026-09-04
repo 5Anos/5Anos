@@ -389,7 +389,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
       type: 'what_would_you_do',
     },
     {
-      id: 'quiz-final-tema4',
+      id: 'quiz-final-tema3',
       themeId: 'palavras-passe',
       number: 6,
       title: { pt: '🎯 Quiz de Segurança', en: '🎯 Password Security Master Quiz' },

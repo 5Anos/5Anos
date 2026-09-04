@@ -391,7 +391,7 @@ export const themeNavegarInternetData: ThemeDefinition = {
       type: 'detect_phishing',
     },
     {
-      id: 'quiz-final-tema3',
+      id: 'quiz-final-tema5',
       themeId: 'navegar-internet',
       number: 6,
       title: { pt: '🎯 Quiz Navegar na Internet', en: '🎯 Internet Browsing Master Quiz' },

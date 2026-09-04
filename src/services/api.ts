@@ -540,7 +540,7 @@ export const api = {
 
       // If user exists in Firestore
       if (registeredUser || existsInFirestore) {
-        throw new Error('Ocorreu um erro ao enviar o email de recuperação pelo Firebase. Por favor, tenta novamente dentro de instantes.');
+        throw new Error('Ocorreu um erro ao enviar o email de recuperação. Por favor, tenta novamente dentro de instantes.');
       }
 
       // If user doesn't exist anywhere

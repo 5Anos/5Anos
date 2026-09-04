@@ -403,7 +403,7 @@ export const themeReferenciasData: ThemeDefinition = {
       type: 'detect_phishing',
     },
     {
-      id: 'quiz-final-tema6',
+      id: 'quiz-final-tema7',
       themeId: 'referencias-fontes',
       number: 6,
       title: { pt: '🎯 Quiz Referências e Fontes', en: '🎯 Sources and Citations Master Quiz' },
