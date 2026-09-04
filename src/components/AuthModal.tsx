@@ -139,8 +139,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
       const res = await api.register(name, email, password, turma, publicId, language);
       setSuccessMsg(
         language === 'pt'
-          ? 'Conta criada com sucesso! Bem-vindo ao Mundo TIC!'
-          : 'Account created successfully! Welcome to Mundo TIC!'
+          ? 'Conta criada com sucesso! Bem-vindo ao TIC 5 — Descomplica!'
+          : 'Account created successfully! Welcome to TIC 5 — Descomplica!'
       );
       setTimeout(() => {
         onSuccess(res.user);
@@ -160,12 +160,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         <div className="px-6 pt-6 pb-5 bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-900 text-white flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-xl font-bold border border-white/15">
-              🌐
+              💡
             </div>
             <div>
-              <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-indigo-300">
-                <Sparkles className="w-3 h-3" />
-                Mundo TIC • 5.º Ano
+              <span className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-indigo-300">
+                <Sparkles className="w-3 h-3 text-amber-300" />
+                TIC 5 — Descomplica!
               </span>
               <h3 className="text-xl font-bold tracking-tight mt-0.5">
                 {tab === 'login' && (language === 'pt' ? '🔐 Entrar na Conta' : '🔐 Sign In')}
@@ -439,7 +439,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
-                      <p className="text-xs text-slate-400 font-semibold">{language === 'pt' ? 'O teu Nickname no Mundo TIC:' : 'Your Nickname in Mundo TIC:'}</p>
+                      <p className="text-xs text-slate-400 font-semibold">{language === 'pt' ? 'O teu Nickname no TIC 5 — Descomplica:' : 'Your Nickname in TIC 5 — Descomplica:'}</p>
                       <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
                         {language === 'pt' ? '✅ 100% Único' : '✅ Unique'}
                       </span>

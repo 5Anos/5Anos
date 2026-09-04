@@ -1,6 +1,6 @@
 export const translations = {
   pt: {
-    appTitle: 'Mundo TIC',
+    appTitle: 'TIC 5 — Descomplica!',
     appSubtitle: 'Aventura Digital de Tecnologias de Informação e Comunicação',
     gradeLabel: '5.º Ano de Escolaridade (10–11 anos)',
     teacherName: 'Professora Carla Oliveira',
@@ -116,7 +116,7 @@ export const translations = {
     guestNotice: 'Estás a explorar em modo visitante. Inicia sessão para guardar pontos e conquistas permanentemente!',
   },
   en: {
-    appTitle: 'Mundo TIC',
+    appTitle: 'TIC 5 — Descomplica!',
     appSubtitle: 'Digital Adventure for Information and Communication Technologies',
     gradeLabel: '5th Grade (Ages 10–11)',
     teacherName: 'Teacher Carla Oliveira',

@@ -636,25 +636,11 @@ export default function App() {
       <footer className="bg-white border-t border-slate-200 py-8 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center sm:text-left">
           <div className="flex flex-col sm:flex-row items-center gap-2">
-            <span className="font-extrabold text-slate-900 tracking-tight">Mundo TIC • 5.º Ano</span>
+            <span className="font-black text-slate-900 tracking-tight">TIC 5 — Descomplica!</span>
             <span className="hidden sm:inline">•</span>
             <span className="font-medium text-slate-600">
               Website criado com recurso a Inteligência Artificial | Textos e conteúdos revistos pela professora
             </span>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => {
-                setCurrentView('progress');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="hover:text-indigo-600 font-semibold cursor-pointer transition-colors"
-            >
-              {t.navProgress}
-            </button>
-            <span>•</span>
-            <span>{language === 'pt' ? '6 Temas de Aprendizagem' : '6 Learning Themes'}</span>
           </div>
         </div>
       </footer>
