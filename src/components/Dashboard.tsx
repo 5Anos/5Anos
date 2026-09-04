@@ -265,6 +265,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
         {/* Right Column (Span 4): Gamification & Stats */}
         <div className="lg:col-span-4 flex flex-col gap-6">
+          {/* Daily TIC Tip & Fun Fact Widget (Sabias que...?) with points reward */}
+          <DailyTipWidget
+            user={user}
+            language={language}
+            onPointsAwarded={onPointsAwarded}
+            onOpenAuth={onOpenAuth}
+          />
+
           {/* Achievements Card */}
           <div className="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-xs flex flex-col">
             <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex justify-between items-center">
@@ -314,58 +322,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
               {language === 'pt' ? 'Ver todas as insígnias →' : 'View all badges →'}
             </button>
           </div>
-
-          {/* Daily TIC Tip & Fun Fact Widget (Sabias que...?) with points reward */}
-          <DailyTipWidget
-            user={user}
-            language={language}
-            onPointsAwarded={onPointsAwarded}
-            onOpenAuth={onOpenAuth}
-          />
-        </div>
-      </div>
-
-      {/* Badges Carousel at Bottom */}
-      <div className="bg-white p-6 sm:p-7 rounded-[2rem] border border-slate-200 shadow-xs">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <Award className="w-5 h-5 text-amber-500" />
-            <h3 className="text-base sm:text-lg font-bold text-slate-900">{t.recentBadgesTitle}</h3>
-          </div>
-          <button
-            onClick={onNavigateProgress}
-            className="text-xs sm:text-sm font-semibold text-indigo-600 hover:text-indigo-700 hover:underline cursor-pointer"
-          >
-            {t.viewAllProgress} →
-          </button>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-9 gap-3">
-          {BADGES.map((badge) => {
-            const isUnlocked = achievements.some((a) => a.badgeId === badge.id);
-            return (
-              <div
-                key={badge.id}
-                className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center justify-center ${
-                  isUnlocked
-                    ? 'bg-amber-50/60 border-amber-200 shadow-xs'
-                    : 'bg-slate-50/70 border-slate-200/70 opacity-55 grayscale'
-                }`}
-              >
-                <div className="text-2xl sm:text-3xl mb-1">{badge.icon}</div>
-                <p className="text-[11px] font-bold text-slate-900 leading-tight truncate w-full">
-                  {language === 'pt' ? badge.namePt : badge.nameEn}
-                </p>
-                <span
-                  className={`text-[10px] font-semibold mt-1 px-1.5 py-0.5 rounded-md ${
-                    isUnlocked ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-600'
-                  }`}
-                >
-                  {isUnlocked ? (language === 'pt' ? 'Ganho' : 'Earned') : (language === 'pt' ? 'Bloqueado' : 'Locked')}
-                </span>
-              </div>
-            );
-          })}
         </div>
       </div>
     </div>
