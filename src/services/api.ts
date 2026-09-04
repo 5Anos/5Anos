@@ -31,6 +31,18 @@ const PROGRESS_STORAGE_KEY = 'tic_5ano_progress_';
 const ACHIEVEMENTS_STORAGE_KEY = 'tic_5ano_achievements_';
 const POINTS_STORAGE_KEY = 'tic_5ano_points_';
 
+// Admin / Teacher designated accounts with full access to school class records and XLS exports
+export const ADMIN_EMAILS = [
+  'imaginebycarla2023@gmail.com',
+];
+
+export function isUserAdmin(email?: string, role?: string): boolean {
+  if (role === 'admin' || role === 'teacher') return true;
+  if (!email) return false;
+  const norm = email.toLowerCase().trim();
+  return ADMIN_EMAILS.includes(norm);
+}
+
 // No demo accounts - real student accounts only
 const INITIAL_DEMO_USERS: any[] = [];
 
@@ -153,13 +165,14 @@ export const api = {
           const snap = await getDoc(userDocRef);
           if (snap.exists()) {
             const data = snap.data();
+            const isAdmin = isUserAdmin(data.email || fbUser.email || '', data.role);
             const user: User = {
               id: fbUser.uid,
               name: data.name || fbUser.displayName || 'Estudante',
               email: fbUser.email || '',
               publicId: data.publicId || generateSecurePublicId(this.getAllTakenPublicIds()),
               turma: data.turma || '5.º A',
-              role: data.role || 'student',
+              role: isAdmin ? 'admin' : (data.role || 'student'),
               points: data.points ?? 20,
               language: data.language || 'pt',
               createdAt: data.createdAt || new Date().toISOString(),
@@ -182,13 +195,17 @@ export const api = {
    */
   async syncUserToFirestore(user: User, password?: string): Promise<boolean> {
     try {
+      const isAdmin = isUserAdmin(user.email, user.role);
+      const finalRole = isAdmin ? 'admin' : (user.role || 'student');
+      user.role = finalRole;
+
       const payload: any = {
         id: user.id,
         name: user.name,
         email: user.email.toLowerCase().trim(),
         publicId: user.publicId,
         turma: user.turma || '5.º A',
-        role: user.role || 'student',
+        role: finalRole,
         language: user.language || 'pt',
         points: user.points ?? 20,
         createdAt: user.createdAt || new Date().toISOString(),
@@ -206,7 +223,7 @@ export const api = {
           id: user.id,
           publicId: user.publicId,
           turma: user.turma || '5.º A',
-          role: user.role || 'student',
+          role: finalRole,
           points: user.points ?? 20,
           createdAt: user.createdAt || new Date().toISOString(),
         },
@@ -283,13 +300,14 @@ export const api = {
     }
 
     const userId = fbUid || `user_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const isAdmin = isUserAdmin(normalizedEmail);
     const newUser: User = {
       id: userId,
       name: name.trim(), // Real name is PRIVATE
       email: normalizedEmail,
       publicId: finalPublicId, // Safe public Nickname
       turma: finalTurma,
-      role: 'student',
+      role: isAdmin ? 'admin' : 'student',
       language,
       points: 20, // initial welcome bonus
       createdAt: new Date().toISOString(),
@@ -324,13 +342,14 @@ export const api = {
 
         if (snap.exists()) {
           const data = snap.data();
+          const isAdmin = isUserAdmin(data.email || fbUser.email || normalizedEmail, data.role);
           user = {
             id: fbUser.uid,
             name: data.name || fbUser.displayName || 'Estudante',
             email: data.email || fbUser.email || normalizedEmail,
             publicId: data.publicId || generateSecurePublicId(),
             turma: data.turma || '5.º A',
-            role: data.role || 'student',
+            role: isAdmin ? 'admin' : (data.role || 'student'),
             language: data.language || 'pt',
             points: data.points ?? 20,
             createdAt: data.createdAt || new Date().toISOString(),
@@ -342,13 +361,14 @@ export const api = {
       }
 
       if (!user) {
+        const isAdmin = isUserAdmin(fbUser.email || normalizedEmail);
         user = {
           id: fbUser.uid,
           name: fbUser.displayName || email.split('@')[0] || 'Estudante',
           email: fbUser.email || normalizedEmail,
           publicId: generateSecurePublicId(),
           turma: '5.º A',
-          role: 'student',
+          role: isAdmin ? 'admin' : 'student',
           language: 'pt',
           points: 20,
           createdAt: new Date().toISOString(),
@@ -373,13 +393,14 @@ export const api = {
         const docSnap = snap.docs[0];
         const docData = docSnap.data();
         if (docData.password === password) {
+          const isAdmin = isUserAdmin(docData.email || normalizedEmail, docData.role);
           const user: User = {
             id: docSnap.id,
             name: docData.name || 'Estudante',
             email: docData.email,
             publicId: docData.publicId || generateSecurePublicId(),
             turma: docData.turma || '5.º A',
-            role: docData.role || 'student',
+            role: isAdmin ? 'admin' : (docData.role || 'student'),
             language: docData.language || 'pt',
             points: docData.points ?? 20,
             createdAt: docData.createdAt || new Date().toISOString(),
@@ -408,13 +429,14 @@ export const api = {
     );
 
     if (found) {
+      const isAdmin = isUserAdmin(found.email, found.role);
       const user: User = {
         id: found.id,
         name: found.name,
         email: found.email,
         publicId: found.publicId || 'Panda_Feliz_701',
         turma: found.turma || '5.º A',
-        role: found.role || 'student',
+        role: isAdmin ? 'admin' : (found.role || 'student'),
         language: found.language || 'pt',
         points: found.points || 0,
         createdAt: found.createdAt || new Date().toISOString(),
@@ -495,6 +517,10 @@ export const api = {
     }
 
     const user: User = JSON.parse(rawUser);
+    if (isUserAdmin(user.email, user.role)) {
+      user.role = 'admin';
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+    }
 
     // Try fetching from Firestore
     let progress: ActivityProgress[] = [];
@@ -817,5 +843,74 @@ export const api = {
       badgeCount: Math.min(6, Math.floor((u.points || 0) / 30) + 1),
       isCurrentUser: u.id === currentUserId,
     }));
+  },
+
+  /**
+   * Fetch all registered students from Cloud Firestore and local storage
+   * For the Administrator / Teacher reserved area with real names, emails, and points
+   */
+  async getAllStudentsForAdmin(): Promise<User[]> {
+    const studentMap = new Map<string, User>();
+
+    // 1. Fetch from Firestore users collection
+    try {
+      const q = query(collection(db, 'users'), limit(500));
+      const snap = await getDocs(q);
+      snap.forEach((docSnap) => {
+        const data = docSnap.data();
+        if (data.email) {
+          const emailNorm = String(data.email).toLowerCase().trim();
+          const isAdmin = isUserAdmin(emailNorm, data.role);
+          const u: User = {
+            id: docSnap.id,
+            name: data.name || 'Estudante',
+            email: data.email,
+            publicId: data.publicId || 'Estudante',
+            turma: data.turma || '5.º A',
+            role: isAdmin ? 'admin' : (data.role || 'student'),
+            language: data.language || 'pt',
+            points: typeof data.points === 'number' ? data.points : 0,
+            createdAt: data.createdAt || new Date().toISOString(),
+            lastActivity: data.lastActivity,
+          };
+          studentMap.set(emailNorm, u);
+        }
+      });
+    } catch (err) {
+      console.warn('Could not query users collection for admin:', err);
+    }
+
+    // 2. Fetch from local storage and merge (preserving newest/highest score)
+    const localUsers = getStoredUsers();
+    localUsers.forEach((data: any) => {
+      if (data.email) {
+        const emailNorm = String(data.email).toLowerCase().trim();
+        const isAdmin = isUserAdmin(emailNorm, data.role);
+        const existing = studentMap.get(emailNorm);
+        if (!existing) {
+          studentMap.set(emailNorm, {
+            id: data.id || `local-${emailNorm}`,
+            name: data.name || 'Estudante',
+            email: data.email,
+            publicId: data.publicId || 'Estudante',
+            turma: data.turma || '5.º A',
+            role: isAdmin ? 'admin' : (data.role || 'student'),
+            language: data.language || 'pt',
+            points: typeof data.points === 'number' ? data.points : 0,
+            createdAt: data.createdAt || new Date().toISOString(),
+            lastActivity: data.lastActivity,
+          });
+        } else if (typeof data.points === 'number' && data.points > (existing.points || 0)) {
+          existing.points = data.points;
+        }
+      }
+    });
+
+    return Array.from(studentMap.values()).sort((a, b) => {
+      if (a.turma !== b.turma) {
+        return a.turma.localeCompare(b.turma);
+      }
+      return (b.points || 0) - (a.points || 0);
+    });
   },
 };

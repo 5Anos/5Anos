@@ -1,10 +1,11 @@
 import React from 'react';
-import { Award, ArrowRight } from 'lucide-react';
+import { Award, ArrowRight, ShieldCheck, FileSpreadsheet } from 'lucide-react';
 import { User, ActivityProgress, UserAchievement, Language } from '../types';
 import { translations } from '../i18n/translations';
 import { ALL_THEMES } from '../data/allThemesData';
 import { BADGES } from '../data/badgesData';
 import { ThemeIllustration } from './illustrations/ThemeIllustrations';
+import { isUserAdmin } from '../services/api';
 
 interface DashboardProps {
   user: User | null;
@@ -14,6 +15,7 @@ interface DashboardProps {
   onNavigateTheme: (themeId: string, moduleId?: string, challengeId?: string) => void;
   onNavigateProgress: () => void;
   onOpenAuth: () => void;
+  onOpenAdmin?: () => void;
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({
@@ -24,8 +26,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
   onNavigateTheme,
   onNavigateProgress,
   onOpenAuth,
+  onOpenAdmin,
 }) => {
   const t = translations[language];
+  const isAdmin = user ? isUserAdmin(user.email, user.role) : false;
 
   // Calculate statistics across all 6 themes
   const totalActivities = ALL_THEMES.reduce(
@@ -142,6 +146,41 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </div>
         </div>
       </header>
+
+      {/* Admin / Teacher Welcome Banner */}
+      {isAdmin && onOpenAdmin && (
+        <div className="p-5 sm:p-6 rounded-3xl bg-linear-to-r from-indigo-950 via-indigo-900 to-slate-900 text-white shadow-lg border border-amber-400/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-400/40 flex items-center justify-center text-amber-300 shrink-0">
+              <ShieldCheck className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                  {language === 'pt' ? 'Área da Professora / Administrador' : 'Teacher / Administrator'}
+                </span>
+                <span className="text-xs text-indigo-300">{user?.email}</span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold text-white mt-1">
+                {language === 'pt' ? 'Pautas de Avaliação & Exportação para Excel' : 'Class Assessment & Excel Export'}
+              </h3>
+              <p className="text-xs text-indigo-200 mt-0.5">
+                {language === 'pt'
+                  ? 'Consulte os alunos registados por turma com nome real, email e pontuação (XP), e descarregue em ficheiro XLS.'
+                  : 'View registered students by class with real names, emails and points (XP), and download XLS files.'}
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={onOpenAdmin}
+            className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+          >
+            <FileSpreadsheet className="w-4 h-4 text-slate-950" />
+            <span>{language === 'pt' ? 'Abrir Pautas & Exportar XLS' : 'Open Records & Export XLS'}</span>
+          </button>
+        </div>
+      )}
 
       {/* Welcome & Introduction Presentation */}
       <div className="bg-white rounded-[2rem] p-6 sm:p-8 border border-slate-200 shadow-xs space-y-4">

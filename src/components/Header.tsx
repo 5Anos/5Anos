@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { BarChart3, User as UserIcon, LogOut, Menu, X, Sparkles, Compass, Trophy, Cloud, Check } from 'lucide-react';
+import { BarChart3, User as UserIcon, LogOut, Menu, X, Sparkles, Compass, Trophy, Cloud, Check, ShieldCheck, FileSpreadsheet } from 'lucide-react';
 import { User, Language } from '../types';
 import { translations } from '../i18n/translations';
-import { api } from '../services/api';
+import { api, isUserAdmin } from '../services/api';
 
 interface HeaderProps {
   user: User | null;
@@ -12,6 +12,7 @@ interface HeaderProps {
   onNavigate: (view: string) => void;
   onOpenAuth: () => void;
   onOpenLeaderboard: () => void;
+  onOpenAdmin?: () => void;
   onLogout: () => void;
 }
 
@@ -23,6 +24,7 @@ export const Header: React.FC<HeaderProps> = ({
   onNavigate,
   onOpenAuth,
   onOpenLeaderboard,
+  onOpenAdmin,
   onLogout,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -30,6 +32,8 @@ export const Header: React.FC<HeaderProps> = ({
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [syncSuccess, setSyncSuccess] = useState<boolean | null>(null);
+
+  const isAdmin = user ? isUserAdmin(user.email, user.role) : false;
 
   const handleSyncCloud = async () => {
     if (!user) return;
@@ -109,6 +113,17 @@ export const Header: React.FC<HeaderProps> = ({
                 <Trophy className="w-4 h-4 text-amber-500 animate-pulse" />
                 <span>{language === 'pt' ? '🏆 Ranking Turmas' : '🏆 Class Ranking'}</span>
               </button>
+
+              {/* Teacher / Admin Reserved Area */}
+              {isAdmin && onOpenAdmin && (
+                <button
+                  onClick={onOpenAdmin}
+                  className="py-5 text-sm font-extrabold text-indigo-950 hover:text-indigo-900 transition-colors flex items-center gap-2 cursor-pointer bg-linear-to-r from-amber-100 to-amber-200/90 hover:from-amber-200 hover:to-amber-300 px-3.5 my-2.5 rounded-xl border border-amber-300 shadow-2xs"
+                >
+                  <ShieldCheck className="w-4 h-4 text-indigo-800" />
+                  <span>{language === 'pt' ? 'Área da Professora (XLS)' : 'Teacher Portal (XLS)'}</span>
+                </button>
+              )}
             </nav>
           </div>
 
@@ -178,14 +193,16 @@ export const Header: React.FC<HeaderProps> = ({
                   className="flex items-center gap-3 cursor-pointer group"
                 >
                   <div className="text-right hidden sm:block">
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-tight">
-                      {language === 'pt' ? 'Estudante' : 'Student'}
+                    <p className="text-[10px] font-bold uppercase tracking-widest leading-tight text-slate-400">
+                      {isAdmin ? (language === 'pt' ? 'Professora' : 'Teacher') : (language === 'pt' ? 'Estudante' : 'Student')}
                     </p>
                     <p className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors truncate max-w-[120px]">
                       {user.name}
                     </p>
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-indigo-100 border-2 border-white shadow-sm flex items-center justify-center text-indigo-700 font-bold text-sm">
+                  <div className={`w-10 h-10 rounded-full border-2 border-white shadow-sm flex items-center justify-center font-bold text-sm ${
+                    isAdmin ? 'bg-amber-100 text-amber-900 ring-2 ring-amber-300' : 'bg-indigo-100 text-indigo-700'
+                  }`}>
                     {user.name
                       .split(' ')
                       .map((n) => n[0])
@@ -199,8 +216,10 @@ export const Header: React.FC<HeaderProps> = ({
                   <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white shadow-xl border border-slate-200 py-2 z-50 animate-in fade-in">
                     <div className="px-4 py-2.5 border-b border-slate-100">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{t.studentAccount}</span>
-                        {user.turma && (
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-600">
+                          {isAdmin ? (language === 'pt' ? '🔐 Professora • Administrador' : '🔐 Teacher • Admin') : t.studentAccount}
+                        </span>
+                        {user.turma && !isAdmin && (
                           <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-200">
                             {user.turma}
                           </span>
@@ -215,6 +234,19 @@ export const Header: React.FC<HeaderProps> = ({
                         </div>
                       )}
                     </div>
+
+                    {isAdmin && onOpenAdmin && (
+                      <button
+                        onClick={() => {
+                          setUserDropdownOpen(false);
+                          onOpenAdmin();
+                        }}
+                        className="w-full text-left px-4 py-2 text-xs sm:text-sm text-indigo-950 bg-amber-50 hover:bg-amber-100 flex items-center gap-2 font-bold cursor-pointer border-b border-amber-200/80"
+                      >
+                        <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
+                        <span>{language === 'pt' ? '📗 Pautas das Turmas (XLS)' : '📗 Class Records (XLS)'}</span>
+                      </button>
+                    )}
 
                     <button
                       onClick={() => {
@@ -324,6 +356,19 @@ export const Header: React.FC<HeaderProps> = ({
             <Trophy className="w-5 h-5 text-amber-500 animate-pulse" />
             <span>{language === 'pt' ? '🏆 Ranking das Turmas' : '🏆 Class Ranking'}</span>
           </button>
+
+          {isAdmin && onOpenAdmin && (
+            <button
+              onClick={() => {
+                onOpenAdmin();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-black text-indigo-950 bg-amber-100 border border-amber-300 flex items-center gap-3"
+            >
+              <ShieldCheck className="w-5 h-5 text-indigo-800" />
+              <span>{language === 'pt' ? 'Área da Professora & Pautas XLS' : 'Teacher Portal & XLS Records'}</span>
+            </button>
+          )}
         </div>
       )}
     </header>
