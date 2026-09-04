@@ -5,6 +5,7 @@ import { translations } from '../i18n/translations';
 import { ALL_THEMES } from '../data/allThemesData';
 import { BADGES } from '../data/badgesData';
 import { ThemeIllustration } from './illustrations/ThemeIllustrations';
+import { getThemeImage } from '../data/themeImages';
 import { isUserAdmin } from '../services/api';
 import { HeroTICBanner } from './HeroTICBanner';
 
@@ -223,8 +224,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 >
                   <div>
                     {/* Theme Illustration Header */}
-                    <div className="w-full h-36 rounded-2xl overflow-hidden mb-4 bg-slate-50 border border-slate-100 group-hover:scale-[1.02] transition-transform duration-200">
-                      <ThemeIllustration themeId={theme.id} className="w-full h-full object-contain" />
+                    <div className="w-full h-40 rounded-2xl overflow-hidden mb-4 bg-slate-100 border border-slate-200/80 group-hover:scale-[1.02] transition-transform duration-300 relative shadow-inner">
+                      <img
+                        src={getThemeImage(theme.id)}
+                        alt={theme.title[language]}
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
                     </div>
 
                     {/* Theme Badge & Number */}

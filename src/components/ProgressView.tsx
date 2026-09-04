@@ -1,9 +1,10 @@
 import React from 'react';
-import { Award, Sparkles, CheckCircle2, Circle, Clock, Printer, Shield, Mail, TrendingUp, Calendar } from 'lucide-react';
+import { Award, Sparkles, CheckCircle2, Circle, Clock, Printer, Shield, Mail, TrendingUp, Calendar, Trophy, Star, Zap } from 'lucide-react';
 import { User, ActivityProgress, UserAchievement, PointTransaction, Language } from '../types';
 import { translations } from '../i18n/translations';
 import { BADGES } from '../data/badgesData';
 import { ALL_THEMES } from '../data/allThemesData';
+import { quizGameTrophy, boyAvatarImg, girlAvatarImg } from '../data/themeImages';
 
 interface ProgressViewProps {
   user: User | null;
@@ -48,9 +49,9 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
         <div>
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200/60 w-fit mb-2">
             <TrendingUp className="w-3.5 h-3.5" />
-            <span>{language === 'pt' ? 'Relatório de Aprendizagem' : 'Learning Report'}</span>
+            <span>{language === 'pt' ? 'Relatório & Conquistas' : 'Report & Achievements'}</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             {t.navProgress}
           </h1>
           <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-500 font-medium mt-1">
@@ -58,16 +59,15 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
               <>
                 <span className="font-bold text-slate-800">{user.name}</span>
                 {user.turma && (
-                  <span className="px-2 py-0.5 rounded-md font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs">
-                    {user.turma}
+                  <span className="px-2.5 py-0.5 rounded-full font-black bg-indigo-100 text-indigo-800 border border-indigo-200 text-xs">
+                    Turma {user.turma}
                   </span>
                 )}
                 {user.publicId && (
                   <span className="px-2 py-0.5 rounded-md font-bold bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono">
-                    🎭 {user.publicId}
+                    ID: {user.publicId}
                   </span>
                 )}
-                <span className="text-slate-400">({user.email})</span>
               </>
             ) : (
               <span>{t.guestNotice}</span>
@@ -84,6 +84,56 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
             <span>{language === 'pt' ? 'Imprimir Certificado' : 'Print Certificate'}</span>
           </button>
         </div>
+      </div>
+
+      {/* Colorful Student Hero Banner with 3D Trophy */}
+      <div className="rounded-[2.5rem] p-6 sm:p-8 bg-gradient-to-r from-indigo-900 via-purple-900 to-amber-900 text-white shadow-xl relative overflow-hidden border-2 border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="relative z-10 max-w-xl space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/20 backdrop-blur-md text-amber-300 text-xs font-black uppercase tracking-wider border border-amber-400/30">
+            <Trophy className="w-3.5 h-3.5 text-amber-400" />
+            <span>{language === 'pt' ? 'Quadro de Conquistas TIC' : 'ICT Achievement Board'}</span>
+          </div>
+
+          <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight">
+            {user
+              ? language === 'pt'
+                ? `Parabéns pela tua dedicação, ${user.name}!`
+                : `Great job on your progress, ${user.name}!`
+              : language === 'pt'
+              ? 'Explora, joga e ganha insígnias digitais!'
+              : 'Explore, play and earn digital badges!'}
+          </h2>
+
+          <p className="text-xs sm:text-sm text-indigo-100 leading-relaxed font-medium">
+            {language === 'pt'
+              ? 'Continua a responder aos quizzes e a completar desafios para encher o teu troféu de pontos e desbloquear todas as insígnias!'
+              : 'Keep answering quizzes and completing challenges to fill your trophy with points and unlock all badges!'}
+          </p>
+
+          <div className="pt-2 flex flex-wrap items-center gap-3">
+            <div className="px-3.5 py-1.5 rounded-xl bg-white/15 backdrop-blur-md border border-white/20 text-xs font-extrabold flex items-center gap-1.5">
+              <Sparkles className="w-4 h-4 text-amber-300" />
+              <span>{user?.points || 0} XP Acumulados</span>
+            </div>
+            <div className="px-3.5 py-1.5 rounded-xl bg-white/15 backdrop-blur-md border border-white/20 text-xs font-extrabold flex items-center gap-1.5">
+              <Award className="w-4 h-4 text-purple-300" />
+              <span>{achievements.length} Insígnias Desbloqueadas</span>
+            </div>
+          </div>
+        </div>
+
+        {/* 3D Trophy Illustration */}
+        <div className="relative z-10 w-44 sm:w-52 h-44 sm:h-52 shrink-0 rounded-3xl overflow-hidden shadow-2xl border-4 border-amber-300/40 bg-white/10 p-1.5 group hover:scale-105 transition-transform duration-300">
+          <img
+            src={quizGameTrophy}
+            alt="Troféu TIC 3D"
+            referrerPolicy="no-referrer"
+            className="w-full h-full object-cover rounded-2xl"
+          />
+        </div>
+
+        <div className="absolute right-0 bottom-0 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute left-0 top-0 w-60 h-60 bg-indigo-500/20 rounded-full blur-2xl pointer-events-none" />
       </div>
 
       {!user && (

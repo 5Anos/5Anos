@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { BookOpen, Gamepad2, ArrowLeft, CheckCircle2, Circle, Clock, Play, ChevronRight, ChevronLeft, Sparkles, ArrowRight } from 'lucide-react';
+import { BookOpen, Gamepad2, ArrowLeft, CheckCircle2, Circle, Clock, Play, ChevronRight, ChevronLeft, Sparkles, Trophy, Award, Zap } from 'lucide-react';
 import { ThemeDefinition, ActivityProgress, Language } from '../types';
 import { translations } from '../i18n/translations';
 import { ThemeIllustration } from './illustrations/ThemeIllustrations';
-import { getThemeImage } from '../data/themeImages';
+import { getThemeImage, getThemeStepImage, getChallengeImage } from '../data/themeImages';
 
 interface ThemeViewProps {
   theme: ThemeDefinition;
@@ -29,24 +29,25 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
   const lessons = theme.lessons || [];
   const currentLesson = lessons[currentStepIndex] || lessons[0];
   const themeImg = getThemeImage(theme.id);
+  const currentStepImg = getThemeStepImage(theme.id, currentStepIndex);
 
   // Accent gradient based on theme
   const getBannerGradient = (themeNumber: number) => {
     switch (themeNumber) {
       case 1:
-        return 'from-blue-950 via-indigo-900 to-slate-900';
+        return 'from-blue-900 via-indigo-900 to-slate-900';
       case 2:
-        return 'from-emerald-950 via-teal-900 to-slate-900';
+        return 'from-emerald-900 via-teal-900 to-slate-900';
       case 3:
-        return 'from-sky-950 via-blue-900 to-slate-900';
+        return 'from-sky-900 via-blue-900 to-indigo-950';
       case 4:
-        return 'from-purple-950 via-violet-900 to-slate-900';
+        return 'from-purple-900 via-violet-900 to-indigo-950';
       case 5:
-        return 'from-rose-950 via-indigo-900 to-slate-900';
+        return 'from-indigo-900 via-purple-900 to-slate-900';
       case 6:
-        return 'from-amber-950 via-orange-900 to-slate-900';
+        return 'from-amber-900 via-orange-950 to-slate-900';
       case 7:
-        return 'from-teal-950 via-slate-900 to-cyan-950';
+        return 'from-teal-900 via-cyan-950 to-slate-900';
       default:
         return 'from-indigo-950 via-slate-900 to-blue-950';
     }
@@ -79,40 +80,46 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
         </button>
 
         <div
-          className={`p-6 sm:p-8 md:p-10 rounded-[2rem] text-white shadow-xl relative overflow-hidden bg-gradient-to-br ${getBannerGradient(
+          className={`p-6 sm:p-8 md:p-10 rounded-[2.5rem] text-white shadow-xl relative overflow-hidden bg-gradient-to-br ${getBannerGradient(
             theme.number
-          )} flex flex-col md:flex-row items-center justify-between gap-6`}
+          )} flex flex-col md:flex-row items-center justify-between gap-6 border-2 border-white/10`}
         >
           <div className="relative z-10 max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-bold uppercase tracking-wider text-white border border-white/20">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-black uppercase tracking-wider text-amber-300 border border-white/20 shadow-xs">
               <span className="text-base">{theme.icon}</span>
               <span>Tema {theme.number}</span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-bold tracking-tight">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
               {theme.title[language]}
             </h1>
 
-            <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-medium">
               {theme.intro[language]}
             </p>
           </div>
 
-          {/* Theme custom illustration graphic */}
-          <div className="relative z-10 w-full md:w-80 max-w-xs shrink-0 rounded-2xl overflow-hidden shadow-lg border border-white/20 bg-white/10 p-2">
-            <ThemeIllustration themeId={theme.id} className="w-full h-auto rounded-xl" />
+          {/* Theme custom 3D illustration graphic */}
+          <div className="relative z-10 w-full md:w-80 max-w-xs shrink-0 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/30 bg-white/10 p-1.5 group hover:scale-[1.02] transition-transform duration-300">
+            <img
+              src={themeImg}
+              alt={theme.title[language]}
+              referrerPolicy="no-referrer"
+              className="w-full h-48 sm:h-56 object-cover rounded-2xl shadow-inner"
+            />
           </div>
 
           {/* Geometric blur accents */}
-          <div className="absolute right-[-30px] top-[-30px] w-64 h-64 bg-white/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute right-[-30px] top-[-30px] w-64 h-64 bg-sky-400/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute left-[-20px] bottom-[-20px] w-48 h-48 bg-amber-400/10 rounded-full blur-2xl pointer-events-none" />
         </div>
       </div>
 
       {/* Tabs Selector: Conteúdos vs Jogos e Desafios */}
-      <div className="flex border-b border-slate-200">
+      <div className="flex border-b border-slate-200 gap-2">
         <button
           onClick={() => setActiveTab('content')}
-          className={`pb-4 px-6 text-sm sm:text-base font-bold flex items-center gap-2.5 border-b-2 transition-all cursor-pointer ${
+          className={`pb-4 px-6 text-sm sm:text-base font-black flex items-center gap-2.5 border-b-3 transition-all cursor-pointer ${
             activeTab === 'content'
               ? 'border-indigo-600 text-indigo-600'
               : 'border-transparent text-slate-500 hover:text-slate-800'
@@ -124,7 +131,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
 
         <button
           onClick={() => setActiveTab('games')}
-          className={`pb-4 px-6 text-sm sm:text-base font-bold flex items-center gap-2.5 border-b-2 transition-all cursor-pointer ${
+          className={`pb-4 px-6 text-sm sm:text-base font-black flex items-center gap-2.5 border-b-3 transition-all cursor-pointer ${
             activeTab === 'games'
               ? 'border-indigo-600 text-indigo-600'
               : 'border-transparent text-slate-500 hover:text-slate-800'
@@ -132,6 +139,9 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
         >
           <Gamepad2 className="w-5 h-5" />
           <span>{t.tabGames}</span>
+          <span className="px-2 py-0.5 rounded-full text-xs font-extrabold bg-amber-100 text-amber-800 border border-amber-200">
+            {theme.challenges.length}
+          </span>
         </button>
       </div>
 
@@ -212,24 +222,25 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                     />
                   </div>
 
-                  {/* 3D Illustration Card */}
+                  {/* 3D Illustration Card per step */}
                   <div className="lg:col-span-5 flex flex-col items-center">
-                    <div className="w-full rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-slate-50 relative group">
+                    <div className="w-full rounded-2xl overflow-hidden border-2 border-indigo-100 shadow-md bg-slate-50 relative group">
                       <img
-                        src={themeImg}
+                        key={`${theme.id}-step-${currentStepIndex}`}
+                        src={currentStepImg}
                         alt={currentLesson.h[language]}
                         referrerPolicy="no-referrer"
-                        className="w-full h-56 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-56 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-300 animate-in fade-in"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
                         <p className="text-white text-xs font-semibold drop-shadow-sm flex items-center gap-1.5">
                           <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                          <span>{theme.title[language]}</span>
+                          <span>{currentLesson.eyebrow[language]}</span>
                         </p>
                       </div>
                     </div>
                     <span className="text-[11px] text-slate-400 mt-2 italic text-center">
-                      {language === 'pt' ? 'Ilustração 3D interativa do tema' : 'Interactive 3D theme illustration'}
+                      {language === 'pt' ? 'Ilustração 3D interativa de aprendizagem' : 'Interactive 3D learning visual'}
                     </span>
                   </div>
                 </div>
@@ -293,37 +304,64 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
 
       {/* Tab 2: Jogos e Desafios (Challenges) */}
       {activeTab === 'games' && (
-        <div className="space-y-4">
+        <div className="space-y-6 animate-in fade-in duration-150">
+          {/* Fun Games Header Banner */}
+          <div className="p-6 rounded-[2rem] bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-3xl shadow-inner border border-white/30 shrink-0">
+                🎮
+              </div>
+              <div>
+                <h2 className="text-xl sm:text-2xl font-black">
+                  {language === 'pt' ? 'Zona de Jogos & Desafios TIC' : 'ICT Games & Challenge Zone'}
+                </h2>
+                <p className="text-xs sm:text-sm text-amber-100 font-medium mt-0.5">
+                  {language === 'pt'
+                    ? 'Ganha pontos XP, desbloqueia insígnias e testa as tuas habilidades neste tema!'
+                    : 'Earn XP points, unlock badges, and test your skills in this topic!'}
+                </p>
+              </div>
+            </div>
+            <div className="px-4 py-2 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 text-white font-extrabold text-xs sm:text-sm shrink-0 flex items-center gap-1.5">
+              <Sparkles className="w-4 h-4 text-amber-200" />
+              <span>{theme.challenges.length} {language === 'pt' ? 'Atividades Disponíveis' : 'Activities Available'}</span>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {theme.challenges.map((chal) => {
               const record = progressList.find((p) => p.activityId === chal.id);
               const isDone = record?.status === 'completed';
               const isFinalQuiz = chal.type === 'final_quiz';
+              const chalImg = getChallengeImage(chal.type);
 
               return (
                 <div
                   key={chal.id}
                   onClick={() => onOpenChallenge(chal.id)}
-                  className={`rounded-[2rem] border p-6 shadow-xs hover:border-indigo-300 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between ${
+                  className={`rounded-[2rem] border-2 p-6 shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer flex flex-col justify-between group relative overflow-hidden ${
                     isFinalQuiz
-                      ? 'border-amber-300 bg-gradient-to-br from-amber-50/70 to-orange-50/50 hover:border-amber-400'
+                      ? 'border-amber-300 bg-gradient-to-b from-amber-50/90 via-orange-50/40 to-white hover:border-amber-400'
                       : isDone
-                      ? 'border-emerald-200 bg-emerald-50/15'
-                      : 'border-slate-200 bg-white'
+                      ? 'border-emerald-200 bg-gradient-to-b from-emerald-50/30 to-white hover:border-emerald-300'
+                      : 'border-slate-200 bg-white hover:border-indigo-300'
                   }`}
                 >
                   <div>
+                    {/* Card Top Pill Badge */}
                     <div className="flex items-center justify-between mb-4">
                       <span
-                        className={`text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider ${
-                          isFinalQuiz ? 'bg-amber-200/80 text-amber-900 font-extrabold' : 'bg-slate-100 text-slate-700'
+                        className={`text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider ${
+                          isFinalQuiz
+                            ? 'bg-amber-200/90 text-amber-950 shadow-2xs'
+                            : 'bg-slate-100 text-slate-700'
                         }`}
                       >
                         {isFinalQuiz ? '🏆 Quiz de Aprendizagem' : `Desafio ${chal.number}`}
                       </span>
 
                       {isDone ? (
-                        <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-100/70 px-2.5 py-1 rounded-full">
+                        <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-full border border-emerald-200">
                           <CheckCircle2 className="w-3.5 h-3.5" />
                           <span>{record.bestPercentage ? `${record.bestPercentage}%` : t.completedStatus}</span>
                         </span>
@@ -335,9 +373,21 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                       )}
                     </div>
 
-                    <h3 className="text-lg font-bold text-slate-900 leading-snug">
-                      {chal.title[language]}
-                    </h3>
+                    {/* Fun icon header */}
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-12 h-12 rounded-2xl bg-indigo-50 group-hover:bg-indigo-600 group-hover:text-white text-indigo-600 flex items-center justify-center text-2xl transition-colors shadow-inner border border-indigo-100">
+                        {chal.icon || (isFinalQuiz ? '🏆' : '🕹️')}
+                      </div>
+                      <div>
+                        <h3 className="text-base sm:text-lg font-black text-slate-900 group-hover:text-indigo-600 transition-colors leading-snug">
+                          {chal.title[language]}
+                        </h3>
+                        <span className="text-[11px] font-bold text-amber-600 flex items-center gap-1 mt-0.5">
+                          <Zap className="w-3 h-3 fill-current" />
+                          <span>+25 XP por completar</span>
+                        </span>
+                      </div>
+                    </div>
 
                     <p className="mt-2 text-xs sm:text-sm text-slate-600 line-clamp-3 leading-relaxed">
                       {chal.shortDesc[language]}
@@ -351,8 +401,12 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                     </span>
 
                     <button
-                      className={`text-xs sm:text-sm font-bold flex items-center gap-1 ${
-                        isFinalQuiz ? 'text-amber-900' : 'text-indigo-600'
+                      className={`text-xs sm:text-sm font-black px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer ${
+                        isFinalQuiz
+                          ? 'bg-amber-400 hover:bg-amber-500 text-slate-950 shadow-xs'
+                          : isDone
+                          ? 'bg-slate-100 hover:bg-slate-200 text-slate-800'
+                          : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs'
                       }`}
                     >
                       <Play className="w-3.5 h-3.5 fill-current" />
@@ -368,3 +422,4 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
     </div>
   );
 };
+
