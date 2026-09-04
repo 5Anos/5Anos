@@ -348,69 +348,135 @@ export const themeReferenciasData: ThemeDefinition = {
   ],
   challenges: [
     {
-      id: 'jogo-ref-fonte-fiavel',
+      id: 'jogo-ref-tf',
       themeId: 'referencias-fontes',
       number: 1,
-      title: { pt: '🚦 Esta fonte é fiável?', en: '🚦 Is This Source Reliable?' },
-      shortDesc: { pt: 'Analisa sites e decide se são de confiança ou duvidosos.', en: 'Evaluate sites and categorize them as trusted or suspicious.' },
+      title: { pt: '⚡ Verdadeiro ou Falso: Fontes e Fake News', en: '⚡ True or False: Sources & Fake News' },
+      shortDesc: { pt: 'Distingue fontes fiáveis de notícias falsas e boatos.', en: 'Distinguish reliable sources from fake news and rumors.' },
+      icon: '⚡',
+      durationMinutes: 3,
+      points: 15,
+      type: 'true_false',
+      gameData: {
+        type: 'tf',
+        title: 'Verdadeiro ou Falso: Fontes e Fake News',
+        icon: '⚡',
+        xp: 15,
+        desc: 'Classifica as afirmações sobre a verificação de factos e credibilidade.',
+        data: {
+          items: [
+            { s: 'Uma notícia sensacionalista com um título exagerado e sem autor indicado é logo de confiar.', a: false, e: 'Incorreto! Títulos exagerados e sem autor são grandes sinais de alerta de fake news.' },
+            { s: 'Devemos sempre cruzar a informação com pelo menos duas fontes oficiais antes de aceitar como verdade.', a: true, e: 'Correto! A triangulação de fontes protege contra desinformação.' },
+            { s: 'As enciclopédias escolares e sites institucionais (.gov ou .edu) são geralmente mais fiáveis.', a: true, e: 'Correto! Passam por validação rigorosa e têm especialistas por trás.' }
+          ]
+        }
+      }
+    },
+    {
+      id: 'jogo-ref-mc',
+      themeId: 'referencias-fontes',
+      number: 2,
+      title: { pt: '🚦 Como detetar uma Fake News?', en: '🚦 How to Spot Fake News?' },
+      shortDesc: { pt: 'Identifica técnicas de verificação e espírito crítico.', en: 'Identify verification techniques and critical thinking.' },
       icon: '🚦',
       durationMinutes: 4,
       points: 20,
       type: 'safe_dangerous',
+      gameData: {
+        type: 'mc',
+        title: 'Como detetar uma Fake News?',
+        icon: '🚦',
+        xp: 20,
+        desc: 'Responde às perguntas sobre a análise de credibilidade de conteúdos online.',
+        data: {
+          questions: [
+            {
+              q: 'O que deves fazer se vires uma notícia chocante nas redes sociais sem qualquer link para fontes oficiais?',
+              opts: [
+                'Investigar noutros jornais e sites de verificação de factos (fact-checking) antes de partilhar',
+                'Partilhar imediatamente com todos os amigos para alertar o mundo',
+                'Acreditar cegamente porque tem muitos gostos (likes)',
+                'Criar um vídeo a dramatizar a situação'
+              ],
+              c: 0,
+              e: 'Nunca partilhes sem verificar. O número de likes não prova que uma notícia é verdadeira.'
+            },
+            {
+              q: 'Qual é a principal utilidade de citar as fontes num trabalho escolar?',
+              opts: [
+                'Provar a veracidade dos dados e dar créditos aos autores originais',
+                'Preencher espaço para o trabalho ficar maior',
+                'Cumprir uma obrigação chata sem importância',
+                'Impedir que outras pessoas leiam o trabalho'
+              ],
+              c: 0,
+              e: 'As referências bibliográficas mostram rigor científico e respeitam o trabalho alheio.'
+            }
+          ]
+        }
+      }
     },
     {
-      id: 'jogo-ref-constroi-referencia',
-      themeId: 'referencias-fontes',
-      number: 2,
-      title: { pt: '🧩 Constrói a referência', en: '🧩 Assemble the Citation' },
-      shortDesc: { pt: 'Ordena os blocos: Autor, Título, Data, URL e Acesso.', en: 'Order blocks: Author, Title, Date, URL, and Access Date.' },
-      icon: '🧩',
-      durationMinutes: 5,
-      points: 20,
-      type: 'order_sequence',
-    },
-    {
-      id: 'jogo-ref-deteta-erro',
+      id: 'jogo-ref-match',
       themeId: 'referencias-fontes',
       number: 3,
-      title: { pt: '🔎 Deteta o erro na referência', en: '🔎 Spot the Citation Flaw' },
-      shortDesc: { pt: 'Descobre o que está a faltar em bibliografias mal feitas.', en: 'Discover missing critical data in incomplete citations.' },
-      icon: '🔎',
+      title: { pt: '🔗 Tipo de Fonte', en: '🔗 Source Type Match' },
+      shortDesc: { pt: 'Associa cada tipo de fonte ao seu grau de fiabilidade.', en: 'Match each source type to its reliability degree.' },
+      icon: '🔗',
       durationMinutes: 4,
       points: 20,
-      type: 'find_error',
+      type: 'match_pairs',
+      gameData: {
+        type: 'match',
+        title: 'Tipo de Fonte',
+        icon: '🔗',
+        xp: 20,
+        desc: 'Associa corretamente cada origem de informação ao seu nível de confiança.',
+        data: {
+          pairs: [
+            { left: 'Artigo científico revisto por peritos', right: 'Elevada fiabilidade académica' },
+            { left: 'Publicação anónima numa rede social', right: 'Baixa fiabilidade / duvidosa' },
+            { left: 'Portal oficial do governo (.gov.pt)', right: 'Fonte institucional segura' },
+            { left: 'Blog pessoal sem referências', right: 'Necessita verificação cruzada' }
+          ]
+        }
+      }
     },
     {
-      id: 'jogo-ref-verdadeira-fake-news',
+      id: 'jogo-ref-order',
       themeId: 'referencias-fontes',
       number: 4,
-      title: { pt: '📰 Notícia real ou Fake News?', en: '📰 Fact or Fake News?' },
-      shortDesc: { pt: 'Distingue factos reais de títulos enganadores e boatos.', en: 'Distinguish authentic journalism from deceptive hoaxes.' },
-      icon: '📰',
+      title: { pt: '📦 Passos de Verificação de Factos', en: '📦 Fact-Checking Steps Order' },
+      shortDesc: { pt: 'Ordena os passos para investigar a veracidade de uma notícia.', en: 'Order the steps to investigate the truthfulness of a news story.' },
+      icon: '📦',
       durationMinutes: 4,
-      points: 15,
-      type: 'true_false',
-    },
-    {
-      id: 'jogo-ref-quem-escreveu',
-      themeId: 'referencias-fontes',
-      number: 5,
-      title: { pt: '🔍 Quem escreveu isto?', en: '🔍 Who Authored This?' },
-      shortDesc: { pt: 'Investiga perfis de autores e verifica a sua autoridade.', en: 'Inspect author credentials to evaluate domain authority.' },
-      icon: '🔍',
-      durationMinutes: 5,
       points: 20,
-      type: 'detect_phishing',
+      type: 'order_sequence',
+      gameData: {
+        type: 'order',
+        title: 'Passos de Verificação de Factos',
+        icon: '📦',
+        xp: 20,
+        desc: 'Coloca os passos de checagem de factos na ordem lógica ideal.',
+        data: {
+          items: [
+            'Ler a notícia inteira e não ficar apenas pelo título chamativo',
+            'Verificar quem é o autor e se a instituição é legítima',
+            'Procurar a mesma notícia em agências de notícias de referência',
+            'Concluir se é verídica, falsa ou manipulada antes de decidir partilhar'
+          ]
+        }
+      }
     },
     {
       id: 'quiz-final-tema7',
       themeId: 'referencias-fontes',
-      number: 6,
-      title: { pt: '🎯 Quiz Referências e Fontes', en: '🎯 Sources and Citations Master Quiz' },
-      shortDesc: { pt: '16 perguntas completas com feedback pedagógico instantâneo!', en: '16 comprehensive questions with instant feedback!' },
-      icon: '🎯',
+      number: 5,
+      title: { pt: '🏆 Quiz de Aprendizagem: Fontes e Referências', en: '🏆 Learning Quiz: Sources & Citations' },
+      shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 7.', en: 'Comprehensive final assessment on Topic 7.' },
+      icon: '🏆',
       durationMinutes: 10,
-      points: 80,
+      points: 50,
       type: 'final_quiz',
     },
   ],

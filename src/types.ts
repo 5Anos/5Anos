@@ -109,6 +109,7 @@ export interface ChallengeItem {
   icon: string;
   durationMinutes: number;
   points?: number;
+  gameData?: any;
   type:
     | 'safe_dangerous'
     | 'password_builder'

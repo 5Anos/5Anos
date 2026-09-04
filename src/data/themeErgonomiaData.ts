@@ -336,69 +336,135 @@ export const themeErgonomiaData: ThemeDefinition = {
   ],
   challenges: [
     {
-      id: 'jogo-ergo-postura-correta',
+      id: 'jogo-ergo-tf',
       themeId: 'ergonomia',
       number: 1,
-      title: { pt: '🪑 Qual é a postura correta?', en: '🪑 Spot the Correct Posture' },
-      shortDesc: { pt: 'Compara ilustrações e identifica a postura saudável.', en: 'Compare illustrations and pick the ergonomic pose.' },
+      title: { pt: '🪑 Postura correta ou incorreta?', en: '🪑 Correct or Incorrect Posture?' },
+      shortDesc: { pt: 'Avalia posturas corporais ao utilizar computadores e tablets.', en: 'Evaluate body posture when using computers and tablets.' },
       icon: '🪑',
       durationMinutes: 4,
-      points: 20,
-      type: 'find_error',
-    },
-    {
-      id: 'jogo-ergo-encontra-erro',
-      themeId: 'ergonomia',
-      number: 2,
-      title: { pt: '🔎 Encontra o erro ergonómico', en: '🔎 Find the Ergonomic Flaw' },
-      shortDesc: { pt: 'Deteta os maus hábitos numa secretária desarrumada.', en: 'Detect bad habits in a poorly configured workstation.' },
-      icon: '🔎',
-      durationMinutes: 4,
-      points: 20,
-      type: 'find_error',
-    },
-    {
-      id: 'jogo-ergo-organiza-espaco',
-      themeId: 'ergonomia',
-      number: 3,
-      title: { pt: '🖥️ Organiza o espaço de trabalho', en: '🖥️ Organize Workstation' },
-      shortDesc: { pt: 'Coloca cada elemento no seu sítio correto: monitor, luz e cadeira.', en: 'Place each element correctly: screen, lamp, and chair.' },
-      icon: '🖥️',
-      durationMinutes: 5,
-      points: 20,
-      type: 'order_sequence',
-    },
-    {
-      id: 'jogo-ergo-seguro-incorreto',
-      themeId: 'ergonomia',
-      number: 4,
-      title: { pt: '👍 Seguro ou incorreto?', en: '👍 Safe or Unhealthy?' },
-      shortDesc: { pt: 'Avalia comportamentos posturais do dia a dia.', en: 'Evaluate real-life postural habits.' },
-      icon: '👍',
-      durationMinutes: 4,
-      points: 15,
-      type: 'safe_dangerous',
-    },
-    {
-      id: 'jogo-ergo-verdadeiro-falso',
-      themeId: 'ergonomia',
-      number: 5,
-      title: { pt: '⚡ Verdadeiro ou Falso: Ergonomia', en: '⚡ True or False: Ergonomics' },
-      shortDesc: { pt: 'Distingue os mitos e as verdades sobre a saúde digital.', en: 'Distinguish myths from facts about digital well-being.' },
-      icon: '⚡',
-      durationMinutes: 3,
       points: 15,
       type: 'true_false',
+      gameData: {
+        type: 'tf',
+        title: 'Postura correta ou incorreta?',
+        icon: '🪑',
+        xp: 15,
+        desc: 'Classifica as afirmações sobre a saúde postural em frente aos ecrãs.',
+        data: {
+          items: [
+            { s: 'Os pés devem estar bem apoiados no chão ou num apoio, com os joelhos a 90 graus.', a: true, e: 'Correto! Os pés apoiados evitam tensão na zona lombar.' },
+            { s: 'Podemos usar o portátil deitado na cama de barriga para baixo durante horas.', a: false, e: 'Incorreto! Causa dores intensas no pescoço, costas e pulsos.' },
+            { s: 'O topo do monitor deve ficar ao nível dos olhos ou ligeiramente abaixo.', a: true, e: 'Correto! Previne a fadiga cervical e mantém a cabeça direita.' }
+          ]
+        }
+      }
+    },
+    {
+      id: 'jogo-ergo-mc',
+      themeId: 'ergonomia',
+      number: 2,
+      title: { pt: '🎯 Escolhe a melhor posição', en: '🎯 Choose the Best Position' },
+      shortDesc: { pt: 'Seleciona as recomendações ergonómicas para evitar lesões.', en: 'Select ergonomic recommendations to prevent injuries.' },
+      icon: '🎯',
+      durationMinutes: 4,
+      points: 20,
+      type: 'what_would_you_do',
+      gameData: {
+        type: 'mc',
+        title: 'Escolhe a melhor posição',
+        icon: '🎯',
+        xp: 20,
+        desc: 'Responde às perguntas de escolha múltipla sobre ergonomia e descanso visual.',
+        data: {
+          questions: [
+            {
+              q: 'O que dita a regra 20-20-20 para proteger a visão?',
+              opts: [
+                'A cada 20 minutos, olhar para algo a 20 pés (6 metros) de distância durante 20 segundos',
+                'Jogar videojogos 20 horas por dia com 20 minutos de pausa',
+                'Comprar 20 óculos de sol por 20 euros',
+                'Piscar os olhos 20 vezes por segundo'
+              ],
+              c: 0,
+              e: 'A regra 20-20-20 relaxa os músculos oculares e previne a secura nos olhos.'
+            },
+            {
+              q: 'Qual é a distância recomendada entre os olhos e o ecrã do computador?',
+              opts: [
+                'Cerca de 50 a 70 centímetros (um braço estendido)',
+                'Colar o nariz a 2 centímetros do vidro',
+                'A 5 metros de distância de costas voltadas',
+                'Exatamente a 3 centímetros'
+              ],
+              c: 0,
+              e: 'Um braço de distância protege a visão e evita reflexos incómodos.'
+            }
+          ]
+        }
+      }
+    },
+    {
+      id: 'jogo-ergo-match',
+      themeId: 'ergonomia',
+      number: 3,
+      title: { pt: '🔗 Problema e Solução', en: '🔗 Problem and Solution' },
+      shortDesc: { pt: 'Associa cada hábito incorreto à sua solução ergonómica.', en: 'Match each incorrect habit to its ergonomic solution.' },
+      icon: '🔗',
+      durationMinutes: 4,
+      points: 20,
+      type: 'match_pairs',
+      gameData: {
+        type: 'match',
+        title: 'Problema e Solução',
+        icon: '🔗',
+        xp: 20,
+        desc: 'Associa o problema postural à respetiva recomendação de saúde.',
+        data: {
+          pairs: [
+            { left: 'Pescoço dorido a olhar para baixo', right: 'Elevar o ecrã ao nível dos olhos' },
+            { left: 'Olhos secos e cansados', right: 'Aplicar a regra 20-20-20 e pestanejar' },
+            { left: 'Pulsos doridos no teclado', right: 'Manter os punhos direitos e apoio almofadado' },
+            { left: 'Fadiga geral ao fim de horas', right: 'Fazer pausas e caminhar a cada 45 minutos' }
+          ]
+        }
+      }
+    },
+    {
+      id: 'jogo-ergo-order',
+      themeId: 'ergonomia',
+      number: 4,
+      title: { pt: '📦 Organiza a secretária ergonómica', en: '📦 Organize Ergonomic Desk' },
+      shortDesc: { pt: 'Ordena os passos para arrumar o teu posto de trabalho.', en: 'Order the steps to set up your workstation.' },
+      icon: '📦',
+      durationMinutes: 4,
+      points: 20,
+      type: 'order_sequence',
+      gameData: {
+        type: 'order',
+        title: 'Organiza a secretária ergonómica',
+        icon: '📦',
+        xp: 20,
+        desc: 'Coloca os passos de arrumação ergonómica na ordem ideal.',
+        data: {
+          items: [
+            'Ajustar a altura da cadeira para os pés assentarem no chão',
+            'Posicionar o monitor à distância de um braço',
+            'Colocar o teclado e rato perto sem esticar os braços',
+            'Ligar a luz ambiente adequada sem reflexos no ecrã'
+          ]
+        }
+      }
     },
     {
       id: 'quiz-final-tema2',
       themeId: 'ergonomia',
-      number: 6,
-      title: { pt: '🎯 Quiz de Ergonomia', en: '🎯 Ergonomics Master Quiz' },
-      shortDesc: { pt: '16 perguntas completas com feedback instantâneo para testares tudo!', en: '16 comprehensive questions with instant feedback!' },
-      icon: '🎯',
+      number: 5,
+      title: { pt: '🏆 Quiz de Aprendizagem: Ergonomia', en: '🏆 Learning Quiz: Ergonomics' },
+      shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 2.', en: 'Comprehensive final assessment on Topic 2.' },
+      icon: '🏆',
       durationMinutes: 10,
-      points: 80,
+      points: 50,
       type: 'final_quiz',
     },
   ],

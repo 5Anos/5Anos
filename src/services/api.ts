@@ -23,7 +23,7 @@ import {
 import { auth, db } from '../firebase';
 import { User, ActivityProgress, UserAchievement, PointTransaction, Language, TurmaRanking, StudentRanking } from '../types';
 import { generateSecurePublicId } from '../utils/publicIdGenerator';
-import { getTurmasList } from '../data/turmasData';
+import { getTurmasList, saveTurmasList, addTurma, removeTurmas } from '../data/turmasData';
 
 const TOKEN_KEY = 'tic_5ano_auth_token';
 const USERS_STORAGE_KEY = 'tic_5ano_local_users';
@@ -1288,6 +1288,283 @@ export const api = {
     return {
       success: true,
       message: 'Registo do aluno atualizado com sucesso!',
+    };
+  },
+
+  /**
+   * Delete a single student from Firestore, publicProfiles, and LocalStorage
+   * Ensures teacher/admin accounts are NEVER deleted.
+   */
+  async adminDeleteStudent(studentId: string, studentEmail: string): Promise<{ success: boolean; message: string }> {
+    const normalizedEmail = (studentEmail || '').toLowerCase().trim();
+    if (isUserAdmin(normalizedEmail)) {
+      throw new Error('Não é permitido eliminar a conta da Professora / Administrador.');
+    }
+
+    // 1. Delete from Firestore users
+    try {
+      if (studentId && !studentId.startsWith('local-')) {
+        await deleteDoc(doc(db, 'users', studentId));
+        await deleteDoc(doc(db, 'publicProfiles', studentId));
+      } else if (normalizedEmail) {
+        const q = query(collection(db, 'users'), where('email', '==', normalizedEmail));
+        const snap = await getDocs(q);
+        for (const docSnap of snap.docs) {
+          await deleteDoc(doc(db, 'users', docSnap.id));
+          await deleteDoc(doc(db, 'publicProfiles', docSnap.id));
+        }
+      }
+    } catch (err) {
+      console.warn('Firestore deletion warning for student:', err);
+    }
+
+    // 2. Delete from localStorage
+    const users = getStoredUsers();
+    const filteredUsers = users.filter((u: any) => {
+      const uEmail = (u.email || '').toLowerCase().trim();
+      return uEmail !== normalizedEmail && u.id !== studentId;
+    });
+    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(filteredUsers));
+
+    // Clear local cache for this user
+    if (studentId) {
+      localStorage.removeItem(PROGRESS_STORAGE_KEY + studentId);
+      localStorage.removeItem(ACHIEVEMENTS_STORAGE_KEY + studentId);
+      localStorage.removeItem(POINTS_STORAGE_KEY + studentId);
+    }
+
+    // If currently logged in as this student on this browser, log out
+    const rawCurrent = localStorage.getItem(CURRENT_USER_KEY);
+    if (rawCurrent) {
+      try {
+        const currentUser = JSON.parse(rawCurrent);
+        if ((currentUser.email || '').toLowerCase().trim() === normalizedEmail || currentUser.id === studentId) {
+          localStorage.removeItem(CURRENT_USER_KEY);
+          localStorage.removeItem(TOKEN_KEY);
+        }
+      } catch {
+        // ignore
+      }
+    }
+
+    return {
+      success: true,
+      message: 'Aluno eliminado com sucesso da plataforma.',
+    };
+  },
+
+  /**
+   * Delete multiple students in batch
+   */
+  async adminDeleteStudents(studentIdsOrEmails: string[]): Promise<{ success: boolean; deletedCount: number; message: string }> {
+    if (!studentIdsOrEmails || studentIdsOrEmails.length === 0) {
+      return { success: true, deletedCount: 0, message: 'Nenhum aluno selecionado.' };
+    }
+
+    let deletedCount = 0;
+    const targetSet = new Set(studentIdsOrEmails.map(s => s.toLowerCase().trim()));
+
+    // 1. Process Firestore deletions
+    try {
+      const snap = await getDocs(query(collection(db, 'users'), limit(500)));
+      for (const docSnap of snap.docs) {
+        const data = docSnap.data();
+        const email = (data.email || '').toLowerCase().trim();
+        const id = docSnap.id;
+        if (!isUserAdmin(email, data.role) && (targetSet.has(id.toLowerCase()) || targetSet.has(email))) {
+          await deleteDoc(doc(db, 'users', id));
+          await deleteDoc(doc(db, 'publicProfiles', id));
+          deletedCount++;
+        }
+      }
+    } catch (err) {
+      console.warn('Firestore batch deletion warning:', err);
+    }
+
+    // 2. Process localStorage deletions
+    const users = getStoredUsers();
+    const remainingUsers = users.filter((u: any) => {
+      const email = (u.email || '').toLowerCase().trim();
+      const id = String(u.id || '').toLowerCase().trim();
+      const shouldDelete = !isUserAdmin(email, u.role) && (targetSet.has(email) || targetSet.has(id));
+      if (shouldDelete) {
+        deletedCount++;
+        localStorage.removeItem(PROGRESS_STORAGE_KEY + u.id);
+        localStorage.removeItem(ACHIEVEMENTS_STORAGE_KEY + u.id);
+        localStorage.removeItem(POINTS_STORAGE_KEY + u.id);
+      }
+      return !shouldDelete;
+    });
+    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(remainingUsers));
+
+    return {
+      success: true,
+      deletedCount,
+      message: `${deletedCount} aluno(s) eliminado(s) com sucesso.`,
+    };
+  },
+
+  /**
+   * Delete all students belonging to one or more specific classes (turmas)
+   */
+  async adminDeleteStudentsByTurmas(turmaNames: string[]): Promise<{ success: boolean; deletedCount: number; message: string }> {
+    if (!turmaNames || turmaNames.length === 0) {
+      return { success: true, deletedCount: 0, message: 'Nenhuma turma selecionada.' };
+    }
+
+    const turmasSet = new Set(turmaNames.map(t => t.toLowerCase().trim()));
+    let count = 0;
+
+    // 1. Delete from Firestore
+    try {
+      const snap = await getDocs(query(collection(db, 'users'), limit(500)));
+      for (const docSnap of snap.docs) {
+        const data = docSnap.data();
+        const email = (data.email || '').toLowerCase().trim();
+        const turma = (data.turma || '').toLowerCase().trim();
+        if (!isUserAdmin(email, data.role) && turmasSet.has(turma)) {
+          await deleteDoc(doc(db, 'users', docSnap.id));
+          await deleteDoc(doc(db, 'publicProfiles', docSnap.id));
+          count++;
+        }
+      }
+    } catch (err) {
+      console.warn('Firestore deletion by turma warning:', err);
+    }
+
+    // 2. Delete from localStorage
+    const users = getStoredUsers();
+    const remainingUsers = users.filter((u: any) => {
+      const email = (u.email || '').toLowerCase().trim();
+      const turma = (u.turma || '').toLowerCase().trim();
+      const shouldDelete = !isUserAdmin(email, u.role) && turmasSet.has(turma);
+      if (shouldDelete) {
+        count++;
+        localStorage.removeItem(PROGRESS_STORAGE_KEY + u.id);
+        localStorage.removeItem(ACHIEVEMENTS_STORAGE_KEY + u.id);
+        localStorage.removeItem(POINTS_STORAGE_KEY + u.id);
+      }
+      return !shouldDelete;
+    });
+    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(remainingUsers));
+
+    return {
+      success: true,
+      deletedCount: count,
+      message: `Alunos da(s) turma(s) ${turmaNames.join(', ')} eliminados com sucesso.`,
+    };
+  },
+
+  /**
+   * Delete ALL students in the entire platform (for school year reset)
+   * GUARANTEES that Teacher/Admin accounts remain 100% untouched and safe.
+   */
+  async adminDeleteAllStudents(): Promise<{ success: boolean; deletedCount: number; message: string }> {
+    let count = 0;
+
+    // 1. Delete all non-admin users from Firestore
+    try {
+      const snap = await getDocs(query(collection(db, 'users'), limit(1000)));
+      for (const docSnap of snap.docs) {
+        const data = docSnap.data();
+        const email = (data.email || '').toLowerCase().trim();
+        if (!isUserAdmin(email, data.role)) {
+          await deleteDoc(doc(db, 'users', docSnap.id));
+          await deleteDoc(doc(db, 'publicProfiles', docSnap.id));
+          count++;
+        }
+      }
+    } catch (err) {
+      console.warn('Firestore deleteAllStudents warning:', err);
+    }
+
+    // 2. Clear all students from localStorage
+    const users = getStoredUsers();
+    const adminsOnly = users.filter((u: any) => {
+      const email = (u.email || '').toLowerCase().trim();
+      const isAdm = isUserAdmin(email, u.role);
+      if (!isAdm) {
+        count++;
+        localStorage.removeItem(PROGRESS_STORAGE_KEY + u.id);
+        localStorage.removeItem(ACHIEVEMENTS_STORAGE_KEY + u.id);
+        localStorage.removeItem(POINTS_STORAGE_KEY + u.id);
+      }
+      return isAdm;
+    });
+    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(adminsOnly));
+
+    return {
+      success: true,
+      deletedCount: count,
+      message: 'Todos os alunos e pautas foram eliminados com sucesso. A conta de professor foi preservada.',
+    };
+  },
+
+  /**
+   * Create a new School Class (Turma)
+   */
+  async adminCreateTurma(turmaName: string): Promise<{ success: boolean; turmas: string[]; message: string }> {
+    const trimmed = (turmaName || '').trim();
+    if (!trimmed) {
+      throw new Error('O nome da turma não pode estar vazio.');
+    }
+    if (trimmed.length > 20) {
+      throw new Error('O nome da turma é demasiado longo (máx. 20 carateres).');
+    }
+
+    const updated = addTurma(trimmed);
+
+    // Save to Firestore config if possible
+    try {
+      await setDoc(doc(db, 'config', 'school_turmas'), {
+        list: updated,
+        updatedAt: new Date().toISOString(),
+      }, { merge: true });
+    } catch (err) {
+      console.warn('Could not sync school_turmas to Firestore:', err);
+    }
+
+    return {
+      success: true,
+      turmas: updated,
+      message: `Turma "${trimmed}" criada com sucesso!`,
+    };
+  },
+
+  /**
+   * Delete one or more School Classes (Turmas) and optionally their students
+   */
+  async adminDeleteTurmas(
+    turmaNames: string[],
+    deleteStudentsToo = false
+  ): Promise<{ success: boolean; turmas: string[]; deletedStudentsCount: number; message: string }> {
+    if (!turmaNames || turmaNames.length === 0) {
+      throw new Error('Nenhuma turma selecionada para eliminar.');
+    }
+
+    let deletedStudentsCount = 0;
+    if (deleteStudentsToo) {
+      const res = await this.adminDeleteStudentsByTurmas(turmaNames);
+      deletedStudentsCount = res.deletedCount;
+    }
+
+    const updated = removeTurmas(turmaNames);
+
+    // Sync to Firestore
+    try {
+      await setDoc(doc(db, 'config', 'school_turmas'), {
+        list: updated,
+        updatedAt: new Date().toISOString(),
+      }, { merge: true });
+    } catch (err) {
+      console.warn('Could not sync school_turmas to Firestore:', err);
+    }
+
+    return {
+      success: true,
+      turmas: updated,
+      deletedStudentsCount,
+      message: `Turma(s) ${turmaNames.join(', ')} eliminada(s) com sucesso.`,
     };
   },
 };

@@ -334,69 +334,135 @@ export const themePalavrasPasseData: ThemeDefinition = {
   ],
   challenges: [
     {
-      id: 'jogo-pass-qual-mais-segura',
+      id: 'jogo-pass-mc',
       themeId: 'palavras-passe',
       number: 1,
       title: { pt: '🔑 Qual é a mais segura?', en: '🔑 Which is the Strongest?' },
-      shortDesc: { pt: 'Compara palavras-passe e identifica a mais robusta.', en: 'Compare passwords and pick the strongest combination.' },
+      shortDesc: { pt: 'Identifica a palavra-passe mais robusta e resistente a ataques.', en: 'Identify the most robust and secure password.' },
       icon: '🔑',
       durationMinutes: 4,
       points: 20,
-      type: 'safe_dangerous',
+      type: 'what_would_you_do',
+      gameData: {
+        type: 'mc',
+        title: 'Qual é a mais segura?',
+        icon: '🔑',
+        xp: 20,
+        desc: 'Escolhe qual das seguintes opções constitui uma palavra-passe verdadeiramente segura.',
+        data: {
+          questions: [
+            {
+              q: 'Qual destas palavras-passe é a mais difícil de adivinhar por um pirata informático?',
+              opts: [
+                'B!9q$L7m#zP2',
+                '12345678',
+                'maria2014',
+                'palavrapasse'
+              ],
+              c: 0,
+              e: 'Misturar letras maiúsculas, minúsculas, números e símbolos cria uma chave impenetrável.'
+            },
+            {
+              q: 'Porque é que nunca deves usar a tua data de nascimento ou o nome do teu animal de estimação como senha?',
+              opts: [
+                'Porque são fáceis de descobrir por quem te conhece ou nas redes sociais',
+                'Porque os computadores não aceitam números',
+                'Porque consomem mais bateria no telemóvel',
+                'Porque a Internet fica mais lenta'
+              ],
+              c: 0,
+              e: 'Informações pessoais são fáceis de adivinhar por conhecidos ou pesquisando perfis online.'
+            }
+          ]
+        }
+      }
     },
     {
-      id: 'jogo-pass-deteta-erros',
+      id: 'jogo-pass-tf',
       themeId: 'palavras-passe',
       number: 2,
-      title: { pt: '🕵️ Deteta os erros na senha', en: '🕵️ Spot Password Flaws' },
-      shortDesc: { pt: 'Descobre o que está errado com palavras-passe fracas.', en: 'Discover flaws in weak, vulnerable passwords.' },
-      icon: '🕵️',
-      durationMinutes: 4,
-      points: 20,
-      type: 'find_error',
-    },
-    {
-      id: 'jogo-pass-constroi-segura',
-      themeId: 'palavras-passe',
-      number: 3,
-      title: { pt: '🧩 Constrói uma palavra-passe', en: '🧩 Build a Strong Password' },
-      shortDesc: { pt: 'Combina blocos de letras, números e símbolos até atingir 100%.', en: 'Combine building blocks until you achieve 100% security.' },
-      icon: '🧩',
-      durationMinutes: 5,
-      points: 20,
-      type: 'password_builder',
-    },
-    {
-      id: 'jogo-pass-verdadeiro-falso',
-      themeId: 'palavras-passe',
-      number: 4,
       title: { pt: '⚡ Verdadeiro ou Falso: Senhas', en: '⚡ True or False: Passwords' },
-      shortDesc: { pt: 'Testa mitos e regras sobre a segurança das tuas contas.', en: 'Test myths and rules about account security.' },
+      shortDesc: { pt: 'Testa regras fundamentais de segurança de contas.', en: 'Test fundamental account security rules.' },
       icon: '⚡',
       durationMinutes: 3,
       points: 15,
       type: 'true_false',
+      gameData: {
+        type: 'tf',
+        title: 'Verdadeiro ou Falso: palavras-passe',
+        icon: '⚡',
+        xp: 15,
+        desc: 'Classifica as afirmações sobre a proteção de palavras-passe.',
+        data: {
+          items: [
+            { s: 'Deves emprestar a tua palavra-passe ao teu melhor amigo para demonstrar confiança.', a: false, e: 'Nunca partilhes senhas com ninguém, nem com os melhores amigos!' },
+            { s: 'Usar a mesma senha em dez sites diferentes é um risco enorme.', a: true, e: 'Correto! Se um site for hackeado, todas as tuas outras contas ficam em perigo.' },
+            { s: 'Ativar a verificação em dois passos (2FA) adiciona uma barreira extra de proteção.', a: true, e: 'Correto! Mesmo que descubram a senha, precisam do código enviado para o telemóvel.' }
+          ]
+        }
+      }
     },
     {
-      id: 'jogo-pass-o-que-farias',
+      id: 'jogo-pass-order',
       themeId: 'palavras-passe',
-      number: 5,
-      title: { pt: '🚨 O que farias?', en: '🚨 What Would You Do?' },
-      shortDesc: { pt: 'Resolve dilemas de amigos que pedem a tua palavra-passe.', en: 'Solve peer dilemmas when friends ask for credentials.' },
-      icon: '🚨',
-      durationMinutes: 5,
+      number: 3,
+      title: { pt: '🧩 Cria uma palavra-passe segura', en: '🧩 Build a Secure Password' },
+      shortDesc: { pt: 'Ordena os passos para criar uma chave forte e segura.', en: 'Order the steps to build a strong password.' },
+      icon: '🧩',
+      durationMinutes: 4,
       points: 20,
-      type: 'what_would_you_do',
+      type: 'order_sequence',
+      gameData: {
+        type: 'order',
+        title: 'Cria uma palavra-passe segura',
+        icon: '🧩',
+        xp: 20,
+        desc: 'Coloca os critérios de robustez pela ordem ideal.',
+        data: {
+          items: [
+            'Usar um comprimento mínimo de 12 carateres',
+            'Misturar letras maiúsculas e minúsculas',
+            'Incluir números e símbolos especiais (!, #, $)',
+            'Evitar dados pessoais como datas ou nomes'
+          ]
+        }
+      }
+    },
+    {
+      id: 'jogo-pass-match',
+      themeId: 'palavras-passe',
+      number: 4,
+      title: { pt: '🔗 Segura ou Insegura?', en: '🔗 Safe or Insecure Match' },
+      shortDesc: { pt: 'Associa cada exemplo de senha à sua avaliação correta.', en: 'Match each password example to its security rating.' },
+      icon: '🔗',
+      durationMinutes: 4,
+      points: 20,
+      type: 'match_pairs',
+      gameData: {
+        type: 'match',
+        title: 'Segura ou Insegura?',
+        icon: '🔗',
+        xp: 20,
+        desc: 'Associa corretamente cada palavra-passe à respetiva classificação.',
+        data: {
+          pairs: [
+            { left: 'password123', right: 'Extremamente fraca e vulnerável' },
+            { left: 'Aka7#mP9$kL2', right: 'Forte e altamente segura' },
+            { left: 'futebol2024', right: 'Fácil de adivinhar por dicionário' },
+            { left: 'Usar gestor de senhas', right: 'Prática recomendada para guardar chaves' }
+          ]
+        }
+      }
     },
     {
       id: 'quiz-final-tema3',
       themeId: 'palavras-passe',
-      number: 6,
-      title: { pt: '🎯 Quiz de Segurança', en: '🎯 Password Security Master Quiz' },
-      shortDesc: { pt: '16 perguntas completas com feedback instantâneo para seres um verdadeiro perito!', en: '16 complete questions with instant feedback to test password mastery!' },
-      icon: '🎯',
+      number: 5,
+      title: { pt: '🏆 Quiz de Aprendizagem: Palavras-passe', en: '🏆 Learning Quiz: Passwords' },
+      shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 3.', en: 'Comprehensive final assessment on Topic 3.' },
+      icon: '🏆',
       durationMinutes: 10,
-      points: 80,
+      points: 50,
       type: 'final_quiz',
     },
   ],

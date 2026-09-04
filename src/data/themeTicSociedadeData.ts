@@ -386,69 +386,135 @@ export const themeTicSociedadeData: ThemeDefinition = {
   ],
   challenges: [
     {
-      id: 'jogo-tic-onde-usadas',
+      id: 'jogo-tic-setor-match',
       themeId: 'tic-sociedade',
       number: 1,
-      title: { pt: '🏢 Onde são utilizadas as TIC?', en: '🏢 Where is ICT Used?' },
-      shortDesc: { pt: 'Descobre os aparelhos e sistemas tecnológicos em cada local.', en: 'Identify digital devices and systems in each environment.' },
-      icon: '🏢',
-      durationMinutes: 4,
-      points: 20,
-      type: 'match_pairs',
-    },
-    {
-      id: 'jogo-tic-liga-setor',
-      themeId: 'tic-sociedade',
-      number: 2,
-      title: { pt: '🔗 Liga a tecnologia ao setor', en: '🔗 Match Tech to Industry' },
-      shortDesc: { pt: 'Associa cada inovação (saúde, transporte, escola) ao seu setor.', en: 'Link each innovation to its respective sector.' },
+      title: { pt: '🔗 Tecnologia ou Setor?', en: '🔗 Match Tech to Industry' },
+      shortDesc: { pt: 'Associa cada setor da sociedade à sua ferramenta tecnológica.', en: 'Match each sector to its technological tool.' },
       icon: '🔗',
       durationMinutes: 4,
-      points: 15,
+      points: 20,
       type: 'match_pairs',
+      gameData: {
+        type: 'match',
+        title: 'Tecnologia ou Setor?',
+        icon: '🔗',
+        xp: 20,
+        desc: 'Associa corretamente cada setor de atividade à respetiva aplicação TIC.',
+        data: {
+          pairs: [
+            { left: 'Educação', right: 'Plataformas de estudo e manuais digitais' },
+            { left: 'Saúde', right: 'Telemedicina e processos clínicos digitais' },
+            { left: 'Comércio', right: 'Lojas online e pagamentos com telemóvel' },
+            { left: 'Transportes', right: 'Aplicações de trânsito e bilhetes digitais' }
+          ]
+        }
+      }
     },
     {
-      id: 'jogo-tic-dia-a-dia',
+      id: 'jogo-tic-tf',
       themeId: 'tic-sociedade',
-      number: 3,
-      title: { pt: '🏠 TIC no dia a dia', en: '🏠 ICT in Daily Life' },
-      shortDesc: { pt: 'Avalia situações do quotidiano e escolhe a atitude correta.', en: 'Evaluate real-life scenarios and choose the right approach.' },
-      icon: '🏠',
-      durationMinutes: 5,
-      points: 20,
-      type: 'safe_dangerous',
-    },
-    {
-      id: 'jogo-tic-descobre-tech',
-      themeId: 'tic-sociedade',
-      number: 4,
-      title: { pt: '🕵️ Descobre a tecnologia', en: '🕵️ Spot the Technology' },
-      shortDesc: { pt: 'Resolve enigmas para descobrir que tecnologia está a ser usada.', en: 'Solve riddles to identify the hidden technology.' },
-      icon: '🕵️',
-      durationMinutes: 5,
-      points: 20,
-      type: 'what_would_you_do',
-    },
-    {
-      id: 'jogo-tic-verdadeiro-falso',
-      themeId: 'tic-sociedade',
-      number: 5,
+      number: 2,
       title: { pt: '⚡ Verdadeiro ou Falso: TIC', en: '⚡ True or False: ICT' },
-      shortDesc: { pt: 'Responde rápido e testa a tua rapidez mental sobre as TIC.', en: 'Answer quickly and test your agility on ICT concepts.' },
+      shortDesc: { pt: 'Testa os teus conhecimentos sobre o impacto das TIC.', en: 'Test your knowledge about ICT impact.' },
       icon: '⚡',
       durationMinutes: 3,
       points: 15,
       type: 'true_false',
+      gameData: {
+        type: 'tf',
+        title: 'Verdadeiro ou Falso: TIC no dia a dia',
+        icon: '⚡',
+        xp: 15,
+        desc: 'Classifica cada afirmação sobre o papel das tecnologias na sociedade.',
+        data: {
+          items: [
+            { s: 'As TIC apenas servem para jogar videojogos nos tempos livres.', a: false, e: 'As TIC são usadas na saúde, transportes, educação, comércio e muito mais!' },
+            { s: 'O comércio eletrónico permite comprar produtos pela Internet com entrega em casa.', a: true, e: 'Correto! É a compra e venda de bens através de redes digitais.' },
+            { s: 'A Linha Internet Segura é um serviço gratuito para apoiar em casos de cyberbullying.', a: true, e: 'Correto! O número 800 21 90 90 é confidencial e gratuito em Portugal.' }
+          ]
+        }
+      }
+    },
+    {
+      id: 'jogo-tic-mc',
+      themeId: 'tic-sociedade',
+      number: 3,
+      title: { pt: '🎯 Onde se usam as TIC?', en: '🎯 Where is ICT Used?' },
+      shortDesc: { pt: 'Escolhe a opção correta sobre o uso das tecnologias.', en: 'Choose the correct option about technology usage.' },
+      icon: '🎯',
+      durationMinutes: 4,
+      points: 20,
+      type: 'what_would_you_do',
+      gameData: {
+        type: 'mc',
+        title: 'Onde se usam as TIC?',
+        icon: '🎯',
+        xp: 20,
+        desc: 'Responde às perguntas de escolha múltipla sobre o quotidiano digital.',
+        data: {
+          questions: [
+            {
+              q: 'Qual é a principal vantagem das TIC na medicina atual?',
+              opts: [
+                'Permitir robôs cirúrgicos de precisão e acesso imediato a exames clínicos',
+                'Substituir totalmente os médicos por computadores sem pessoal',
+                'Impedir os hospitais de usarem eletricidade',
+                'Eliminar a necessidade de medicamentos'
+              ],
+              c: 0,
+              e: 'Os computadores e robôs ajudam os médicos a diagnosticar e operar com enorme precisão.'
+            },
+            {
+              q: 'O que deves fazer se presenciares cyberbullying num chat de turma?',
+              opts: [
+                'Guardar provas (printscreen), não responder e avisar um adulto',
+                'Juntar-te ao grupo para gozar também com o colega',
+                'Apagar o telemóvel e nunca mais falar com ninguém',
+                'Fingir que não viste nada e reencaminhar a mensagem'
+              ],
+              c: 0,
+              e: 'Nunca reencaminhes nem participes. Guarda provas e pede ajuda a um adulto de confiança!'
+            }
+          ]
+        }
+      }
+    },
+    {
+      id: 'jogo-tic-order',
+      themeId: 'tic-sociedade',
+      number: 4,
+      title: { pt: '📦 Como chega uma compra online?', en: '📦 How does an online purchase arrive?' },
+      shortDesc: { pt: 'Ordena os passos desde a encomenda até à entrega em casa.', en: 'Order the steps from order to home delivery.' },
+      icon: '📦',
+      durationMinutes: 4,
+      points: 20,
+      type: 'order_sequence',
+      gameData: {
+        type: 'order',
+        title: 'Como chega uma compra online?',
+        icon: '📦',
+        xp: 20,
+        desc: 'Coloca os passos do comércio eletrónico pela ordem correta.',
+        data: {
+          items: [
+            'Escolher o produto num site de comércio eletrónico',
+            'Efetuar o pagamento digital seguro',
+            'O armazém prepara e embala a encomenda',
+            'A transportadora entrega o pacote em casa'
+          ]
+        }
+      }
     },
     {
       id: 'quiz-final-tema1',
       themeId: 'tic-sociedade',
-      number: 6,
-      title: { pt: '🎯 Quiz TIC na Sociedade', en: '🎯 ICT in Society Master Quiz' },
-      shortDesc: { pt: 'Desafio completo com 16 perguntas e feedback imediato!', en: 'Comprehensive 16-question quiz with instant feedback!' },
-      icon: '🎯',
+      number: 5,
+      title: { pt: '🏆 Quiz de Aprendizagem: TIC na Sociedade', en: '🏆 Learning Quiz: ICT in Society' },
+      shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 1.', en: 'Comprehensive final assessment on Topic 1.' },
+      icon: '🏆',
       durationMinutes: 10,
-      points: 80,
+      points: 50,
       type: 'final_quiz',
     },
   ],

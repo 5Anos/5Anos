@@ -246,58 +246,135 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
   ],
   challenges: [
     {
-      id: 'desafio-laboratorio-email',
+      id: 'jogo-email-order',
       themeId: 'correio-eletronico',
       number: 1,
-      title: { pt: '✉️ Laboratório de Redação de Email', en: '✉️ Email Writing Lab' },
-      shortDesc: { pt: 'Escreve um email escolar com destinatário, assunto, saudação e assinatura.', en: 'Draft a proper school email with recipient, subject, greeting, and signature.' },
+      title: { pt: '✉️ Constrói um email', en: '✉️ Draft an Email' },
+      shortDesc: { pt: 'Ordena os elementos fundamentais para enviar uma mensagem correta.', en: 'Order the key elements to send a proper message.' },
       icon: '✉️',
       durationMinutes: 4,
       points: 20,
-      type: 'build_email',
+      type: 'order_sequence',
+      gameData: {
+        type: 'order',
+        title: 'Constrói um email',
+        icon: '✉️',
+        xp: 20,
+        desc: 'Coloca os campos de uma mensagem de email pela ordem correta de envio.',
+        data: {
+          items: [
+            'Inserir o endereço de email do destinatário (Para)',
+            'Escrever um assunto claro e direto',
+            'Adicionar a saudação inicial e a mensagem principal',
+            'Colocar a assinatura e verificar os anexos antes de enviar'
+          ]
+        }
+      }
     },
     {
-      id: 'desafio-organizar-inbox',
+      id: 'jogo-email-mc',
       themeId: 'correio-eletronico',
       number: 2,
-      title: { pt: '📥 O Organizador da Caixa de Correio', en: '📥 Mailbox Sorting Master' },
-      shortDesc: { pt: 'Organiza mensagens em Entrada, Spam, Enviados e Lixo.', en: 'Sort emails into Inbox, Spam, Sent, and Trash.' },
-      icon: '📥',
-      durationMinutes: 4,
-      points: 20,
-      type: 'folder_sorting',
-    },
-    {
-      id: 'desafio-cc-bcc',
-      themeId: 'correio-eletronico',
-      number: 3,
-      title: { pt: '📬 O Enigma do Para, Cc e Bcc', en: '📬 Mystery of To, Cc & Bcc' },
-      shortDesc: { pt: 'Aprende quando usar destinatário direto, cópia ou cópia oculta.', en: 'Learn when to use Direct, Cc (carbon copy), or Bcc (blind copy).' },
-      icon: '📬',
-      durationMinutes: 4,
-      points: 20,
-      type: 'inspect_email',
-    },
-    {
-      id: 'desafio-phishing',
-      themeId: 'correio-eletronico',
-      number: 4,
-      title: { pt: '🎣 Detetor de Phishing e Mensagens Suspeitas', en: '🎣 Phishing & Scam Radar' },
-      shortDesc: { pt: 'Identifica emails fraudulentos com links perigosos.', en: 'Spot fraudulent emails and dangerous malicious links.' },
+      title: { pt: '🎣 Isto é spam ou mensagem suspeita?', en: '🎣 Is this Spam or Phishing?' },
+      shortDesc: { pt: 'Identifica sinais de correio fraudulento e tentativas de roubo de dados.', en: 'Identify signs of fraudulent emails and data theft attempts.' },
       icon: '🎣',
-      durationMinutes: 5,
+      durationMinutes: 4,
       points: 20,
       type: 'detect_phishing',
+      gameData: {
+        type: 'mc',
+        title: 'Isto é spam ou mensagem suspeita?',
+        icon: '🎣',
+        xp: 20,
+        desc: 'Responde às perguntas sobre a identificação de emails maliciosos.',
+        data: {
+          questions: [
+            {
+              q: 'O que deves fazer se receberes um email a dizer que ganhaste um prémio milionário mas tens de clicar num link suspeito?',
+              opts: [
+                'Apagar imediatamente o email e nunca clicar no link',
+                'Clicar a correr para reclamar o prémio',
+                'Enviar os teus dados pessoais e senha',
+                'Reencaminhar para toda a escola'
+              ],
+              c: 0,
+              e: 'É uma tentativa clássica de phishing (roubo de dados). Os prémios falsos nunca devem ser abertos!'
+            },
+            {
+              q: 'Para que serve o campo Bcc (Cópia Oculta) ao enviar um email a muitas pessoas?',
+              opts: [
+                'Para ocultar os endereços de email dos destinatários uns dos outros, protegendo a privacidade',
+                'Para enviar o email mais depressa',
+                'Para bloquear vírus automaticamente',
+                'Para apagar o email após 24 horas'
+              ],
+              c: 0,
+              e: 'O Bcc esconde as listas de endereços, evitando que estranhos vejam os contactos uns dos outros.'
+            }
+          ]
+        }
+      }
+    },
+    {
+      id: 'jogo-email-tf',
+      themeId: 'correio-eletronico',
+      number: 3,
+      title: { pt: '⚡ Verdadeiro ou Falso: Email', en: '⚡ True or False: Email' },
+      shortDesc: { pt: 'Testa regras de boa educação e segurança no correio eletrónico.', en: 'Test etiquette and safety rules for email.' },
+      icon: '⚡',
+      durationMinutes: 3,
+      points: 15,
+      type: 'true_false',
+      gameData: {
+        type: 'tf',
+        title: 'Verdadeiro ou Falso: email',
+        icon: '⚡',
+        xp: 15,
+        desc: 'Classifica as afirmações sobre a utilização do correio eletrónico.',
+        data: {
+          items: [
+            { s: 'Escrever uma mensagem inteira em LETRAS MAIÚSCULAS equivale a estar a gritar.', a: true, e: 'Correto na etiqueta digital! Escrever em maiúsculas transmite agressividade.' },
+            { s: 'Devemos abrir sempre qualquer anexo enviado por um endereço desconhecido.', a: false, e: 'Incorreto! Anexos desconhecidos podem conter vírus ou ransomware.' },
+            { s: 'O assunto do email deve resumir claramente o conteúdo da mensagem.', a: true, e: 'Correto! Ajuda o destinatário a perceber do que se trata antes de abrir.' }
+          ]
+        }
+      }
+    },
+    {
+      id: 'jogo-email-match',
+      themeId: 'correio-eletronico',
+      number: 4,
+      title: { pt: '🔗 Parte do Email', en: '🔗 Parts of an Email Match' },
+      shortDesc: { pt: 'Associa cada componente do email à sua respetiva função.', en: 'Match each email component to its purpose.' },
+      icon: '🔗',
+      durationMinutes: 4,
+      points: 20,
+      type: 'match_pairs',
+      gameData: {
+        type: 'match',
+        title: 'Parte do Email',
+        icon: '🔗',
+        xp: 20,
+        desc: 'Associa corretamente cada elemento do cabeçalho de email.',
+        data: {
+          pairs: [
+            { left: 'Para (To)', right: 'Destinatário principal da mensagem' },
+            { left: 'Assunto (Subject)', right: 'Resumo rápido do tema tratado' },
+            { left: 'Cc (Cópia)', right: 'Destinatários secundários visíveis por todos' },
+            { left: 'Anexo (Attachment)', right: 'Ficheiro (documento ou foto) enviado em conjunto' }
+          ]
+        }
+      }
     },
     {
       id: 'quiz-final-tema4',
       themeId: 'correio-eletronico',
       number: 5,
-      title: { pt: '🎯 Quiz de Correio Eletrónico', en: '🎯 Email Mastery Quiz' },
-      shortDesc: { pt: 'Testa todos os teus conhecimentos sobre email, anexos e segurança!', en: 'Test your knowledge on email, attachments, and communication safety!' },
-      icon: '🎯',
-      durationMinutes: 8,
-      points: 60,
+      title: { pt: '🏆 Quiz de Aprendizagem: Correio Eletrónico', en: '🏆 Learning Quiz: Email' },
+      shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 4.', en: 'Comprehensive final assessment on Topic 4.' },
+      icon: '🏆',
+      durationMinutes: 10,
+      points: 50,
       type: 'final_quiz',
     },
   ],

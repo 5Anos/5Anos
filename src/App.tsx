@@ -20,6 +20,7 @@ import { ReliableSourcesGame } from './components/games/ReliableSourcesGame';
 import { SearchOperatorsGame } from './components/games/SearchOperatorsGame';
 import { CopyOrCreditGame } from './components/games/CopyOrCreditGame';
 import { GenericChallengeGame } from './components/games/GenericChallengeGame';
+import { GenericHtmlGameRunner } from './components/games/GenericHtmlGameRunner';
 
 import { api } from './services/api';
 import { User, ActivityProgress, UserAchievement, PointTransaction, Language } from './types';
@@ -234,6 +235,29 @@ export default function App() {
   // Render the appropriate challenge / game
   const renderChallengeComponent = () => {
     if (!activeChallengeId) return null;
+
+    const activeChallengeItem = currentTheme.challenges.find((c) => c.id === activeChallengeId);
+    if (activeChallengeItem?.gameData) {
+      return (
+        <GenericHtmlGameRunner
+          gameData={activeChallengeItem.gameData}
+          language={language}
+          onBack={() => setCurrentView('theme')}
+          onFinish={(score, maxScore, percentage) => {
+            handleSaveProgress({
+              activityId: activeChallengeId,
+              activityType: 'challenge',
+              themeId: currentTheme.id,
+              status: 'completed',
+              score,
+              maxScore,
+              percentage,
+              activityTitle: activeChallengeItem.title[language],
+            });
+          }}
+        />
+      );
+    }
 
     // Check if it's a final quiz
     const isFinalQuiz =

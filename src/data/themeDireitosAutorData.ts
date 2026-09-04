@@ -336,69 +336,135 @@ export const themeDireitosAutorData: ThemeDefinition = {
   ],
   challenges: [
     {
-      id: 'jogo-copy-posso-usar',
+      id: 'jogo-copy-tf',
       themeId: 'direitos-autor',
       number: 1,
-      title: { pt: '🖼️ Posso utilizar esta imagem?', en: '🖼️ Can I Use This Picture?' },
-      shortDesc: { pt: 'Verifica licenças e decide se a imagem pode ser colocada no trabalho.', en: 'Check license badges and decide if media is cleared for use.' },
-      icon: '🖼️',
-      durationMinutes: 4,
-      points: 20,
-      type: 'copy_or_create',
-    },
-    {
-      id: 'jogo-copy-deteta-plagio',
-      themeId: 'direitos-autor',
-      number: 2,
-      title: { pt: '🕵️ Deteta o plágio', en: '🕵️ Spot the Plagiarism' },
-      shortDesc: { pt: 'Compara textos de alunos com a fonte e encontra cópias.', en: 'Compare student essays with original texts to flag plagiarism.' },
-      icon: '🕵️',
-      durationMinutes: 4,
-      points: 20,
-      type: 'find_error',
-    },
-    {
-      id: 'jogo-copy-criei-ou-copiei',
-      themeId: 'direitos-autor',
-      number: 3,
-      title: { pt: '✍️ Criei ou copiei?', en: '✍️ Original or Copied?' },
-      shortDesc: { pt: 'Avalia se o trabalho representa criação própria ou cópia indevida.', en: 'Determine whether student work is original or improperly copied.' },
-      icon: '✍️',
-      durationMinutes: 4,
-      points: 15,
-      type: 'safe_dangerous',
-    },
-    {
-      id: 'jogo-copy-quem-e-autor',
-      themeId: 'direitos-autor',
-      number: 4,
-      title: { pt: '©️ Quem é o autor?', en: '©️ Who is the Creator?' },
-      shortDesc: { pt: 'Associa obras a autores e identifica créditos corretos.', en: 'Match works with authentic authors and proper credits.' },
-      icon: '©️',
-      durationMinutes: 4,
-      points: 20,
-      type: 'match_pairs',
-    },
-    {
-      id: 'jogo-copy-verdadeiro-falso',
-      themeId: 'direitos-autor',
-      number: 5,
       title: { pt: '⚡ Verdadeiro ou Falso: Direitos de Autor', en: '⚡ True or False: Copyright' },
-      shortDesc: { pt: 'Responde com rapidez a mitos sobre imagens e textos na web.', en: 'Fast-paced true/false facts on digital copyright.' },
+      shortDesc: { pt: 'Distingue regras sobre cópia de imagens e textos na web.', en: 'Distinguish rules on copying images and texts on the web.' },
       icon: '⚡',
       durationMinutes: 3,
       points: 15,
       type: 'true_false',
+      gameData: {
+        type: 'tf',
+        title: 'Verdadeiro ou Falso: Direitos de Autor',
+        icon: '⚡',
+        xp: 15,
+        desc: 'Classifica as afirmações sobre autoria, plágio e licenças Creative Commons.',
+        data: {
+          items: [
+            { s: 'Tudo o que aparece no Google Imagens pode ser copiado e usado livremente em trabalhos escolares.', a: false, e: 'Incorreto! A maioria das imagens tem direitos de autor protegidos.' },
+            { s: 'O plágio consiste em apresentar o trabalho de outra pessoa como se fosse nosso.', a: true, e: 'Correto! Plágio é uma forma de roubo intelectual e é proibido.' },
+            { s: 'As licenças Creative Commons permitem partilhar obras com regras claras definidas pelo autor.', a: true, e: 'Correto! Facilitam a reutilização legal e ética de conteúdos.' }
+          ]
+        }
+      }
+    },
+    {
+      id: 'jogo-copy-mc',
+      themeId: 'direitos-autor',
+      number: 2,
+      title: { pt: '🖼️ Posso usar esta imagem?', en: '🖼️ Can I Use This Image?' },
+      shortDesc: { pt: 'Identifica boas práticas ao utilizar conteúdos criados por terceiros.', en: 'Identify good practices when using content created by others.' },
+      icon: '🖼️',
+      durationMinutes: 4,
+      points: 20,
+      type: 'copy_or_create',
+      gameData: {
+        type: 'mc',
+        title: 'Posso usar esta imagem?',
+        icon: '🖼️',
+        xp: 20,
+        desc: 'Responde às perguntas sobre a utilização legítima de fotografias e textos.',
+        data: {
+          questions: [
+            {
+              q: 'O que deves fazer se quiseres incluir uma fotografia fantástica encontrada num site num trabalho escolar?',
+              opts: [
+                'Pedir autorização ao autor ou usar imagens com licença Creative Commons indicando a fonte',
+                'Descarregar sem dizer nada e fingir que foste tu a tirar a foto',
+                'Apagar a imagem e não colocar ilustrações no trabalho',
+                'Mudar a cor da foto para ninguém reconhecer'
+              ],
+              c: 0,
+              e: 'Citar sempre o autor e verificar a licença garante o respeito pelos direitos de criação.'
+            },
+            {
+              q: 'O que significa a sigla CC-BY numa obra?',
+              opts: [
+                'Atribuição obrigatória do autor original ao reutilizar',
+                'Proibição total de copiar',
+                'Compra garantida',
+                'Cópia clandestina'
+              ],
+              c: 0,
+              e: 'BY significa "Attribution" (Atribuição) — podes usar se indicares o nome do criador.'
+            }
+          ]
+        }
+      }
+    },
+    {
+      id: 'jogo-copy-match',
+      themeId: 'direitos-autor',
+      number: 3,
+      title: { pt: '🔗 Tipo de Licença', en: '🔗 Copyright License Match' },
+      shortDesc: { pt: 'Associa cada símbolo Creative Commons à respetiva regra.', en: 'Match each Creative Commons symbol to its rule.' },
+      icon: '🔗',
+      durationMinutes: 4,
+      points: 20,
+      type: 'match_pairs',
+      gameData: {
+        type: 'match',
+        title: 'Tipo de Licença',
+        icon: '🔗',
+        xp: 20,
+        desc: 'Associa cada símbolo de licença à sua permissão correta.',
+        data: {
+          pairs: [
+            { left: 'BY (Atribuição)', right: 'Mencionar sempre o autor original' },
+            { left: 'NC (Não Comercial)', right: 'Não pode ser usada para fins lucrativos' },
+            { left: 'ND (Sem Obras Derivadas)', right: 'Não podes modificar ou alterar a obra' },
+            { left: 'SA (Partilha Igual)', right: 'Novas obras devem ter a mesma licença' }
+          ]
+        }
+      }
+    },
+    {
+      id: 'jogo-copy-order',
+      themeId: 'direitos-autor',
+      number: 4,
+      title: { pt: '📦 Como citar corretamente', en: '📦 Proper Citation Order' },
+      shortDesc: { pt: 'Ordena os elementos de uma citação bibliográfica escolar.', en: 'Order the elements of a school bibliographic citation.' },
+      icon: '📦',
+      durationMinutes: 4,
+      points: 20,
+      type: 'order_sequence',
+      gameData: {
+        type: 'order',
+        title: 'Como citar corretamente',
+        icon: '📦',
+        xp: 20,
+        desc: 'Coloca os dados de uma referência bibliográfica na ordem padrão.',
+        data: {
+          items: [
+            'Nome do autor (Apelido, Nome)',
+            'Título da obra ou artigo em itálico',
+            'Data de publicação ou consulta',
+            'Endereço web (URL) ou editora'
+          ]
+        }
+      }
     },
     {
       id: 'quiz-final-tema6',
       themeId: 'direitos-autor',
-      number: 6,
-      title: { pt: '🎯 Quiz Direitos de Autor', en: '🎯 Copyright Master Quiz' },
-      shortDesc: { pt: '16 perguntas completas com feedback pedagógico instantâneo!', en: '16 comprehensive questions with instant feedback!' },
-      icon: '🎯',
+      number: 5,
+      title: { pt: '🏆 Quiz de Aprendizagem: Direitos de Autor', en: '🏆 Learning Quiz: Copyright' },
+      shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 6.', en: 'Comprehensive final assessment on Topic 6.' },
+      icon: '🏆',
       durationMinutes: 10,
-      points: 80,
+      points: 50,
       type: 'final_quiz',
     },
   ],

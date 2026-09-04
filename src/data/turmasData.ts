@@ -29,8 +29,29 @@ export function getTurmasList(): string[] {
 
 export function saveTurmasList(turmas: string[]): void {
   try {
-    localStorage.setItem(TURMAS_STORAGE_KEY, JSON.stringify(turmas));
+    const cleanList = Array.from(new Set(turmas.map(t => t.trim()).filter(Boolean)));
+    localStorage.setItem(TURMAS_STORAGE_KEY, JSON.stringify(cleanList));
   } catch {
     // ignore
   }
+}
+
+export function addTurma(turmaName: string): string[] {
+  const trimmed = turmaName.trim();
+  if (!trimmed) return getTurmasList();
+  const current = getTurmasList();
+  if (!current.includes(trimmed)) {
+    const updated = [...current, trimmed];
+    saveTurmasList(updated);
+    return updated;
+  }
+  return current;
+}
+
+export function removeTurmas(turmaNamesToRemove: string[]): string[] {
+  const toRemoveSet = new Set(turmaNamesToRemove.map(t => t.trim().toLowerCase()));
+  const current = getTurmasList();
+  const updated = current.filter(t => !toRemoveSet.has(t.trim().toLowerCase()));
+  saveTurmasList(updated.length > 0 ? updated : DEFAULT_TURMAS);
+  return updated.length > 0 ? updated : DEFAULT_TURMAS;
 }

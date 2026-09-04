@@ -336,69 +336,135 @@ export const themeNavegarInternetData: ThemeDefinition = {
   ],
   challenges: [
     {
-      id: 'jogo-net-escolhe-pesquisa',
+      id: 'jogo-net-mc',
       themeId: 'navegar-internet',
       number: 1,
-      title: { pt: '🔎 Escolhe a melhor pesquisa', en: '🔎 Master the Best Search' },
-      shortDesc: { pt: 'Seleciona as palavras-chave ideais para encontrar cada informação.', en: 'Select ideal keywords to locate specific facts.' },
+      title: { pt: '🔎 Escolhe as melhores palavras-chave', en: '🔎 Choose the Best Keywords' },
+      shortDesc: { pt: 'Seleciona os termos ideais para encontrar informação rápida e precisa.', en: 'Select ideal terms to find swift and accurate information.' },
       icon: '🔎',
       durationMinutes: 4,
       points: 20,
       type: 'keywords_master',
+      gameData: {
+        type: 'mc',
+        title: 'Escolhe as melhores palavras-chave',
+        icon: '🔎',
+        xp: 20,
+        desc: 'Identifica a melhor estratégia de pesquisa na Internet para trabalhos escolares.',
+        data: {
+          questions: [
+            {
+              q: 'Se precisas de pesquisar sobre os vulcões em Portugal para um trabalho, qual é a melhor pesquisa?',
+              opts: [
+                'vulcões em Portugal características',
+                'quero saber tudo sobre vulcões quentes perto de mim',
+                'como fazer bolo de chocolate no forno',
+                'onde comprar sapatos'
+              ],
+              c: 0,
+              e: 'Usar palavras-chave diretas e específicas ajuda o motor de busca a encontrar exatamente o que precisas.'
+            },
+            {
+              q: 'O que significa encontrar o símbolo do cadeado verde (HTTPS) na barra de endereços do site?',
+              opts: [
+                'Que a ligação entre o teu computador e o site é segura e encriptada',
+                'Que o site tem jogos grátis garantidos',
+                'Que ganhaste um prémio por visitar a página',
+                'Que o computador está bloqueado'
+              ],
+              c: 0,
+              e: 'HTTPS e o cadeado indicam que os dados trocados estão protegidos contra escutas indesejadas.'
+            }
+          ]
+        }
+      }
     },
     {
-      id: 'jogo-net-navega-seguro',
+      id: 'jogo-net-tf',
       themeId: 'navegar-internet',
       number: 2,
-      title: { pt: '🌐 Navega com segurança', en: '🌐 Safe Surfing Challenge' },
-      shortDesc: { pt: 'Toma decisões corretas perante situações da web.', en: 'Make the right calls when navigating web pages.' },
-      icon: '🌐',
-      durationMinutes: 4,
-      points: 20,
-      type: 'safe_dangerous',
+      title: { pt: '⚡ Verdadeiro ou Falso: Navegar', en: '⚡ True or False: Browsing' },
+      shortDesc: { pt: 'Distingue factos de mitos na navegação web.', en: 'Distinguish facts from myths in web browsing.' },
+      icon: '⚡',
+      durationMinutes: 3,
+      points: 15,
+      type: 'true_false',
+      gameData: {
+        type: 'tf',
+        title: 'Verdadeiro ou Falso: navegar na Internet',
+        icon: '⚡',
+        xp: 15,
+        desc: 'Classifica as afirmações sobre a segurança e pesquisa online.',
+        data: {
+          items: [
+            { s: 'Tudo o que está publicado na Internet é sempre 100% verdadeiro.', a: false, e: 'Incorreto! Existem muitas notícias falsas (fake news) e informações erradas.' },
+            { s: 'Os motores de busca ajudam-nos a encontrar páginas através de palavras-chave.', a: true, e: 'Correto! Google, Bing ou DuckDuckGo indexam milhares de milhões de páginas web.' },
+            { s: 'Deves pedir autorização aos pais antes de descarregar ficheiros ou aplicações desconhecidas.', a: true, e: 'Correto! Previne a instalação de vírus e software malicioso.' }
+          ]
+        }
+      }
     },
     {
-      id: 'jogo-net-seguro-suspeito',
+      id: 'jogo-net-match',
       themeId: 'navegar-internet',
       number: 3,
-      title: { pt: '🚦 Seguro ou suspeito?', en: '🚦 Safe or Suspicious?' },
-      shortDesc: { pt: 'Inspeciona sites e endereços e deteta se são de confiança.', en: 'Inspect URLs and websites to verify legitimacy.' },
-      icon: '🚦',
-      durationMinutes: 4,
-      points: 15,
-      type: 'detect_phishing',
-    },
-    {
-      id: 'jogo-net-deteta-perigo',
-      themeId: 'navegar-internet',
-      number: 4,
-      title: { pt: '🕵️ Deteta o perigo digital', en: '🕵️ Spot the Online Hazard' },
-      shortDesc: { pt: 'Descobre as armadilhas escondidas em anúncios falsos.', en: 'Discover hidden traps in deceptive advertisements.' },
-      icon: '🕵️',
-      durationMinutes: 5,
-      points: 20,
-      type: 'detect_phishing',
-    },
-    {
-      id: 'jogo-net-link-seguro',
-      themeId: 'navegar-internet',
-      number: 5,
-      title: { pt: '🔗 Link seguro ou suspeito?', en: '🔗 Safe or Fishy Link?' },
-      shortDesc: { pt: 'Analisa links encurtados e extensões de domínio.', en: 'Analyze short links and deceptive domain extensions.' },
+      title: { pt: '🔗 Sinal de site suspeito?', en: '🔗 Suspicious Website Sign Match' },
+      shortDesc: { pt: 'Associa cada indício à sua avaliação de segurança.', en: 'Match each indicator to its safety rating.' },
       icon: '🔗',
       durationMinutes: 4,
-      points: 15,
-      type: 'detect_phishing',
+      points: 20,
+      type: 'match_pairs',
+      gameData: {
+        type: 'match',
+        title: 'Sinal de site suspeito?',
+        icon: '🔗',
+        xp: 20,
+        desc: 'Associa cada pista visual ao respetivo nível de risco online.',
+        data: {
+          pairs: [
+            { left: 'Endereço com erros ortográficos no nome do banco', right: 'Site de phishing / burla' },
+            { left: 'Cadeado HTTPS e domínio oficial .gov.pt', right: 'Site institucional seguro' },
+            { left: 'Janela pop-up a gritar "Ganhou um telemóvel!"', right: 'Anúncio falso e enganador' },
+            { left: 'Pedir palavra-passe para ver um vídeo engraçado', right: 'Tentativa de roubo de conta' }
+          ]
+        }
+      }
+    },
+    {
+      id: 'jogo-net-order',
+      themeId: 'navegar-internet',
+      number: 4,
+      title: { pt: '📦 Desafio de pesquisa', en: '📦 Search Challenge Order' },
+      shortDesc: { pt: 'Ordena os passos para realizar uma boa investigação escolar na web.', en: 'Order the steps for a thorough school web research.' },
+      icon: '📦',
+      durationMinutes: 4,
+      points: 20,
+      type: 'order_sequence',
+      gameData: {
+        type: 'order',
+        title: 'Desafio de pesquisa',
+        icon: '📦',
+        xp: 20,
+        desc: 'Coloca os passos de investigação digital pela ordem recomendada.',
+        data: {
+          items: [
+            'Definir claramente o tema e o objetivo da pesquisa',
+            'Escolher palavras-chave precisas no motor de busca',
+            'Comparar a informação encontrada em pelo menos dois sites oficiais',
+            'Registar as fontes e o autor para colocar na bibliografia'
+          ]
+        }
+      }
     },
     {
       id: 'quiz-final-tema5',
       themeId: 'navegar-internet',
-      number: 6,
-      title: { pt: '🎯 Quiz Navegar na Internet', en: '🎯 Internet Browsing Master Quiz' },
-      shortDesc: { pt: '16 perguntas completas com feedback instantâneo sobre navegação e pesquisa!', en: '16 complete questions with instant feedback on search and browsing!' },
-      icon: '🎯',
+      number: 5,
+      title: { pt: '🏆 Quiz de Aprendizagem: Navegar na Internet', en: '🏆 Learning Quiz: Internet Browsing' },
+      shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 5.', en: 'Comprehensive final assessment on Topic 5.' },
+      icon: '🏆',
       durationMinutes: 10,
-      points: 80,
+      points: 50,
       type: 'final_quiz',
     },
   ],
