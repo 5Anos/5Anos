@@ -8,6 +8,7 @@ import { ThemeIllustration } from './illustrations/ThemeIllustrations';
 import { getThemeImage } from '../data/themeImages';
 import { isUserAdmin } from '../services/api';
 import { HeroTICBanner } from './HeroTICBanner';
+import { DailyTipWidget } from './DailyTipWidget';
 
 interface DashboardProps {
   user: User | null;
@@ -19,6 +20,7 @@ interface DashboardProps {
   onOpenAuth: () => void;
   onOpenAdmin?: () => void;
   onOpenLeaderboard?: () => void;
+  onPointsAwarded?: (user: User | null, points: number, achievements: UserAchievement[]) => void;
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({
@@ -31,6 +33,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   onOpenAuth,
   onOpenAdmin,
   onOpenLeaderboard,
+  onPointsAwarded,
 }) => {
   const t = translations[language];
   const isAdmin = user ? isUserAdmin(user.email, user.role) : false;
@@ -312,22 +315,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </button>
           </div>
 
-          {/* Performance Card */}
-          <div className="bg-emerald-50 p-6 rounded-[2rem] border border-emerald-100 flex items-center gap-4">
-            <div className="w-12 h-12 bg-emerald-500 rounded-2xl flex items-center justify-center text-white text-xl shrink-0 shadow-xs">
-              🎯
-            </div>
-            <div>
-              <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">
-                {language === 'pt' ? 'Melhor Desempenho' : 'Best Performance'}
-              </p>
-              <p className="text-sm font-bold text-emerald-900">
-                {bestScore > 0
-                  ? (language === 'pt' ? `Quiz: Melhor Nota (${bestScore}%)` : `Quiz: Top Score (${bestScore}%)`)
-                  : (language === 'pt' ? 'Pronto para o 1.º Quiz!' : 'Ready for Quiz 1!')}
-              </p>
-            </div>
-          </div>
+          {/* Daily TIC Tip & Fun Fact Widget (Sabias que...?) with points reward */}
+          <DailyTipWidget
+            user={user}
+            language={language}
+            onPointsAwarded={onPointsAwarded}
+            onOpenAuth={onOpenAuth}
+          />
         </div>
       </div>
 

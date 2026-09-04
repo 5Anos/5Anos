@@ -895,6 +895,97 @@ export const api = {
   },
 
   /**
+   * Record Daily TIC Tip Bonus (+15 points once per day)
+   */
+  async recordDailyTipBonus(tipTitle: string, bonusPoints = 15): Promise<{
+    success: boolean;
+    user: User | null;
+    userPoints: number;
+    achievements: UserAchievement[];
+  }> {
+    const rawUser = localStorage.getItem(CURRENT_USER_KEY);
+    if (!rawUser) {
+      return {
+        success: true,
+        user: null,
+        userPoints: 0,
+        achievements: [],
+      };
+    }
+
+    const user: User = JSON.parse(rawUser);
+    const achievements: UserAchievement[] = JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + user.id) || '[]');
+    const pointsHistory: PointTransaction[] = JSON.parse(localStorage.getItem(POINTS_STORAGE_KEY + user.id) || '[]');
+
+    user.points = (user.points || 0) + bonusPoints;
+    user.lastActivity = {
+      themeId: 'daily_tip',
+      title: `💡 Curiosidade: ${tipTitle}`,
+      timestamp: new Date().toISOString(),
+    };
+
+    pointsHistory.unshift({
+      id: `pt-daily-${Date.now()}`,
+      userId: user.id,
+      amount: bonusPoints,
+      reason: `💡 Curiosidade TIC: ${tipTitle}`,
+      timestamp: new Date().toISOString(),
+    });
+
+    if (user.points >= 100 && !achievements.some((a) => a.badgeId === 'point_century')) {
+      const newAch: UserAchievement = { userId: user.id, badgeId: 'point_century', unlockedAt: new Date().toISOString() };
+      achievements.push(newAch);
+      try {
+        await setDoc(doc(db, 'users', user.id, 'achievements', 'point_century'), newAch);
+      } catch {
+        // ignore
+      }
+    }
+
+    // Sync to Firestore
+    try {
+      await setDoc(
+        doc(db, 'users', user.id),
+        {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          publicId: user.publicId,
+          turma: user.turma || '5.º A',
+          role: user.role || 'student',
+          points: user.points,
+          lastActivity: user.lastActivity,
+        },
+        { merge: true }
+      );
+
+      await setDoc(
+        doc(db, 'publicProfiles', user.publicId),
+        {
+          publicId: user.publicId,
+          turma: user.turma || '5.º A',
+          role: user.role || 'student',
+          points: user.points,
+        },
+        { merge: true }
+      );
+    } catch (err) {
+      console.warn('Firestore sync warning for daily tip:', err);
+    }
+
+    localStorage.setItem(ACHIEVEMENTS_STORAGE_KEY + user.id, JSON.stringify(achievements));
+    localStorage.setItem(POINTS_STORAGE_KEY + user.id, JSON.stringify(pointsHistory));
+    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+
+    return {
+      success: true,
+      user,
+      userPoints: user.points,
+      achievements,
+    };
+  },
+
+  /**
    * Get Class/Turma Rankings with Gamification metrics
    */
   async getTurmaRankings(): Promise<TurmaRanking[]> {

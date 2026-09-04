@@ -564,6 +564,22 @@ export default function App() {
             onOpenAuth={() => setAuthModalOpen(true)}
             onOpenAdmin={() => setAdminModalOpen(true)}
             onOpenLeaderboard={() => setLeaderboardModalOpen(true)}
+            onPointsAwarded={(updatedUser, updatedPoints, updatedAchievements) => {
+              if (updatedUser) {
+                setUser(updatedUser);
+              }
+              if (updatedAchievements && updatedAchievements.length > 0) {
+                setAchievements(updatedAchievements);
+              }
+              setToastMessage({
+                title: language === 'pt' ? '🎉 +15 Pontos Ganhos!' : '🎉 +15 Points Earned!',
+                subtitle:
+                  language === 'pt'
+                    ? 'Leste a Curiosidade TIC do Dia com sucesso!'
+                    : 'You successfully read the Daily ICT Fun Fact!',
+              });
+              setTimeout(() => setToastMessage(null), 4000);
+            }}
           />
         )}
 
