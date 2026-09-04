@@ -113,42 +113,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
             {language === 'pt' ? 'Olá' : 'Hello'}, {user ? user.name : (language === 'pt' ? 'Estudante' : 'Student')}! 👋
           </h1>
         </div>
-
-        {/* Circular General Progress Badge */}
-        <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs flex items-center gap-4 shrink-0">
-          <div className="text-right">
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{t.overallProgress}</p>
-            <p className="text-lg font-bold text-indigo-600">{overallPercentage}%</p>
-          </div>
-          <div className="w-14 h-14 sm:w-16 sm:h-16 relative">
-            <svg className="w-full h-full transform -rotate-90">
-              <circle
-                cx="32"
-                cy="32"
-                r="26"
-                stroke="currentColor"
-                strokeWidth="5"
-                fill="transparent"
-                className="text-slate-100"
-              />
-              <circle
-                cx="32"
-                cy="32"
-                r="26"
-                stroke="currentColor"
-                strokeWidth="5"
-                fill="transparent"
-                strokeDasharray={163.36}
-                strokeDashoffset={163.36 * (1 - overallPercentage / 100)}
-                strokeLinecap="round"
-                className="text-indigo-600 transition-all duration-700"
-              />
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-slate-700">
-              {completedCount}/{totalActivities}
-            </div>
-          </div>
-        </div>
       </header>
 
       {/* Admin / Teacher Welcome Banner */}
