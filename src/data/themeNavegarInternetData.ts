@@ -2,7 +2,7 @@ import { ThemeDefinition } from '../types';
 
 export const themeNavegarInternetData: ThemeDefinition = {
   id: 'navegar-internet',
-  number: 5,
+  number: 6,
   title: {
     pt: 'Navegar na Internet',
     en: 'Internet Browsing',

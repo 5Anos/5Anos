@@ -12,6 +12,7 @@ interface ThemeViewProps {
   onBack: () => void;
   onOpenModule: (moduleId: string) => void;
   onOpenChallenge: (challengeId: string) => void;
+  initialTab?: 'content' | 'games';
 }
 
 export const ThemeView: React.FC<ThemeViewProps> = ({
@@ -21,8 +22,9 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
   onBack,
   onOpenModule,
   onOpenChallenge,
+  initialTab = 'content',
 }) => {
-  const [activeTab, setActiveTab] = useState<'content' | 'games'>('content');
+  const [activeTab, setActiveTab] = useState<'content' | 'games'>(initialTab);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const t = translations[language];
 

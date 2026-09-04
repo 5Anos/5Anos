@@ -2,7 +2,7 @@ import { ThemeDefinition } from '../types';
 
 export const themeCorreioEletronicoData: ThemeDefinition = {
   id: 'correio-eletronico',
-  number: 4,
+  number: 5,
   title: {
     pt: 'Correio Eletrónico',
     en: 'Email Communication',

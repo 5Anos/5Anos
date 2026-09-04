@@ -2,7 +2,7 @@ import { ThemeDefinition } from '../types';
 
 export const themeReferenciasData: ThemeDefinition = {
   id: 'referencias-fontes',
-  number: 7,
+  number: 8,
   title: {
     pt: 'Referências e Fontes',
     en: 'References and Sources',

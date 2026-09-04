@@ -42,6 +42,13 @@ export default function App() {
   const [activeThemeId, setActiveThemeId] = useState<string>('tic-sociedade');
   const [activeModuleId, setActiveModuleId] = useState<string | null>(null);
   const [activeChallengeId, setActiveChallengeId] = useState<string | null>(null);
+  const [activeThemeTab, setActiveThemeTab] = useState<'content' | 'games'>('content');
+
+  const returnToGames = () => {
+    setActiveThemeTab('games');
+    setCurrentView('theme');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // Modals & Notifications
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -220,6 +227,7 @@ export default function App() {
   // Navigation handlers
   const navigateToTheme = (themeId: string, moduleId?: string, challengeId?: string) => {
     setActiveThemeId(themeId);
+    setActiveThemeTab('content');
     if (moduleId) {
       setActiveModuleId(moduleId);
       setCurrentView('module');
@@ -242,7 +250,7 @@ export default function App() {
         <GenericHtmlGameRunner
           gameData={activeChallengeItem.gameData}
           language={language}
-          onBack={() => setCurrentView('theme')}
+          onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
               activityId: activeChallengeId,
@@ -271,7 +279,7 @@ export default function App() {
           themeNumber={currentTheme.number}
           questions={currentTheme.finalQuiz}
           language={language}
-          onBack={() => setCurrentView('theme')}
+          onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
               activityId: activeChallengeId,
@@ -293,7 +301,7 @@ export default function App() {
       return (
         <SafeOrDangerousGame
           language={language}
-          onBack={() => setCurrentView('theme')}
+          onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
               activityId: activeChallengeId,
@@ -314,7 +322,7 @@ export default function App() {
       return (
         <PasswordBuilderGame
           language={language}
-          onBack={() => setCurrentView('theme')}
+          onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
               activityId: activeChallengeId,
@@ -335,7 +343,7 @@ export default function App() {
       return (
         <PhishingDetectorGame
           language={language}
-          onBack={() => setCurrentView('theme')}
+          onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
               activityId: 'desafio-detetive-phishing',
@@ -356,7 +364,7 @@ export default function App() {
       return (
         <WhatWouldYouDoGame
           language={language}
-          onBack={() => setCurrentView('theme')}
+          onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
               activityId: 'desafio-o-que-farias',
@@ -377,7 +385,7 @@ export default function App() {
       return (
         <EmailLabGame
           language={language}
-          onBack={() => setCurrentView('theme')}
+          onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
               activityId: 'desafio-escrever-email',
@@ -398,7 +406,7 @@ export default function App() {
       return (
         <InboxSortingGame
           language={language}
-          onBack={() => setCurrentView('theme')}
+          onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
               activityId: 'desafio-organizar-inbox',
@@ -419,7 +427,7 @@ export default function App() {
       return (
         <CcBccSimulatorGame
           language={language}
-          onBack={() => setCurrentView('theme')}
+          onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
               activityId: 'desafio-cc-bcc',
@@ -440,7 +448,7 @@ export default function App() {
       return (
         <KeywordMasterGame
           language={language}
-          onBack={() => setCurrentView('theme')}
+          onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
               activityId: 'desafio-palavras-chave',
@@ -461,7 +469,7 @@ export default function App() {
       return (
         <ReliableSourcesGame
           language={language}
-          onBack={() => setCurrentView('theme')}
+          onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
               activityId: activeChallengeId,
@@ -482,7 +490,7 @@ export default function App() {
       return (
         <SearchOperatorsGame
           language={language}
-          onBack={() => setCurrentView('theme')}
+          onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
               activityId: 'desafio-misterio-aspas',
@@ -503,7 +511,7 @@ export default function App() {
       return (
         <CopyOrCreditGame
           language={language}
-          onBack={() => setCurrentView('theme')}
+          onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
               activityId: 'desafio-copiar-criar',
@@ -525,7 +533,7 @@ export default function App() {
       <GenericChallengeGame
         challengeId={activeChallengeId}
         language={language}
-        onBack={() => setCurrentView('theme')}
+        onBack={returnToGames}
         onFinish={(score, maxScore, percentage) => {
           handleSaveProgress({
             activityId: activeChallengeId,
@@ -621,13 +629,16 @@ export default function App() {
             theme={currentTheme}
             progressList={progressList}
             language={language}
+            initialTab={activeThemeTab}
             onBack={() => {
               setCurrentView('dashboard');
+              setActiveThemeTab('content');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onOpenModule={(modId) => {
               setActiveModuleId(modId);
               setCurrentView('module');
+              setActiveThemeTab('content');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onOpenChallenge={(chalId) => {

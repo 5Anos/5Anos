@@ -2,7 +2,7 @@ import { ThemeDefinition } from '../types';
 
 export const themePalavrasPasseData: ThemeDefinition = {
   id: 'palavras-passe',
-  number: 3,
+  number: 4,
   title: {
     pt: 'Palavras-passe Seguras',
     en: 'Secure Passwords',

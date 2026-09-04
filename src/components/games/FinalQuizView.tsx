@@ -21,6 +21,28 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
   onFinish,
 }) => {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
+  const [shuffledQuestions, setShuffledQuestions] = useState(() => {
+    return questions.map((q) => {
+      const optsPt = q.options.pt;
+      const optsEn = q.options.en;
+      const indices = optsPt.map((_, idx) => idx);
+      for (let i = indices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [indices[i], indices[j]] = [indices[j], indices[i]];
+      }
+      const newOptsPt = indices.map((idx) => optsPt[idx]);
+      const newOptsEn = indices.map((idx) => optsEn[idx]);
+      const newCorrectIndex = indices.indexOf(q.correctIndex);
+      return {
+        ...q,
+        options: {
+          pt: newOptsPt,
+          en: newOptsEn,
+        },
+        correctIndex: newCorrectIndex,
+      };
+    });
+  });
   const [submitted, setSubmitted] = useState(false);
 
   const t = translations[language];
@@ -32,12 +54,12 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
 
   const calculateScore = () => {
     let score = 0;
-    questions.forEach((q) => {
+    shuffledQuestions.forEach((q) => {
       if (selectedAnswers[q.id] === q.correctIndex) {
         score += 1;
       }
     });
-    const maxScore = questions.length;
+    const maxScore = shuffledQuestions.length;
     const percentage = Math.round((score / maxScore) * 100);
     return { score, maxScore, percentage };
   };
@@ -51,9 +73,31 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
   const handleRetry = () => {
     setSelectedAnswers({});
     setSubmitted(false);
+    setShuffledQuestions(
+      questions.map((q) => {
+        const optsPt = q.options.pt;
+        const optsEn = q.options.en;
+        const indices = optsPt.map((_, idx) => idx);
+        for (let i = indices.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [indices[i], indices[j]] = [indices[j], indices[i]];
+        }
+        const newOptsPt = indices.map((idx) => optsPt[idx]);
+        const newOptsEn = indices.map((idx) => optsEn[idx]);
+        const newCorrectIndex = indices.indexOf(q.correctIndex);
+        return {
+          ...q,
+          options: {
+            pt: newOptsPt,
+            en: newOptsEn,
+          },
+          correctIndex: newCorrectIndex,
+        };
+      })
+    );
   };
 
-  const allAnswered = Object.keys(selectedAnswers).length === questions.length;
+  const allAnswered = Object.keys(selectedAnswers).length === shuffledQuestions.length;
   const result = calculateScore();
 
   return (
@@ -122,7 +166,7 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
 
       {/* Questions list */}
       <div className="space-y-6">
-        {questions.map((q, idx) => {
+        {shuffledQuestions.map((q, idx) => {
           const userChoice = selectedAnswers[q.id];
           const isCorrect = userChoice === q.correctIndex;
 

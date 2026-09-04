@@ -13,6 +13,7 @@ interface GenericHtmlGameRunnerProps {
   };
   language: Language;
   onBack: () => void;
+  onReturnToGames?: () => void;
   onFinish: (score: number, maxScore: number, percentage: number) => void;
 }
 
@@ -20,11 +21,31 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
   gameData,
   language,
   onBack,
+  onReturnToGames,
   onFinish,
 }) => {
   const [answers, setAnswers] = useState<Record<number, boolean>>({});
   const [mcIndex, setMcIndex] = useState(0);
   const [mcAnswers, setMcAnswers] = useState<number[]>([]);
+  const [shuffledQuestions] = useState(() => {
+    if (gameData.type === 'mc' && gameData.data?.questions) {
+      return gameData.data.questions.map((q: any) => {
+        const indices = q.opts.map((_: any, idx: number) => idx);
+        for (let i = indices.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [indices[i], indices[j]] = [indices[j], indices[i]];
+        }
+        const newOpts = indices.map((idx: number) => q.opts[idx]);
+        const newC = indices.indexOf(q.c);
+        return {
+          ...q,
+          opts: newOpts,
+          c: newC,
+        };
+      });
+    }
+    return gameData.data?.questions || [];
+  });
   const [matched, setMatched] = useState<number[]>([]);
   const [picked, setPicked] = useState<[number?, number?]>([]);
   const [shakeIdx, setShakeIdx] = useState<number | null>(null);
@@ -64,7 +85,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
   };
 
   const handleMcNext = () => {
-    const qs = data.questions;
+    const qs = shuffledQuestions;
     if (mcIndex + 1 < qs.length) {
       setMcIndex(mcIndex + 1);
     } else {
@@ -218,7 +239,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
 
         {/* 2. MULTIPLE CHOICE */}
         {type === 'mc' && !completed && (() => {
-          const qs = data.questions;
+          const qs = shuffledQuestions;
           const q = qs[mcIndex];
           const chosen = mcAnswers[mcIndex];
           return (
@@ -410,10 +431,10 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
               Parabéns! Ganhaste <strong>+{gameData.xp} XP</strong> e avançaste no teu progresso.
             </p>
             <button
-              onClick={onBack}
+              onClick={onReturnToGames || onBack}
               className="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition-all cursor-pointer inline-flex items-center gap-2"
             >
-              <span>Continuar a Aprender →</span>
+              <span>{language === 'pt' ? 'Continuar a Jogar →' : 'Continue Playing →'}</span>
             </button>
           </div>
         )}

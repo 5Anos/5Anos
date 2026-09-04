@@ -2,7 +2,7 @@ import { ThemeDefinition } from '../types';
 
 export const themeDireitosAutorData: ThemeDefinition = {
   id: 'direitos-autor',
-  number: 6,
+  number: 7,
   title: {
     pt: 'Direitos de Autor',
     en: 'Copyright',
