@@ -246,8 +246,10 @@ export const HeroTICBanner: React.FC<HeroTICBannerProps> = ({
         {/* CARD 3: Trophy / XP & Conquistas */}
         <div
           onClick={() => {
-            if (onOpenLeaderboard) {
+            if (user && onOpenLeaderboard) {
               onOpenLeaderboard();
+            } else if (!user) {
+              onOpenAuth();
             } else {
               scrollToThemes();
             }

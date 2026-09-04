@@ -79,14 +79,16 @@ export const Header: React.FC<HeaderProps> = ({
                 <span>{t.navProgress}</span>
               </button>
 
-              {/* Ranking das Turmas */}
-              <button
-                onClick={onOpenLeaderboard}
-                className="py-5 text-sm font-extrabold text-amber-700 hover:text-amber-900 transition-colors border-b-2 border-transparent flex items-center gap-2 cursor-pointer bg-amber-50/60 hover:bg-amber-100/80 px-3 my-2.5 rounded-xl border border-amber-200/80"
-              >
-                <Trophy className="w-4 h-4 text-amber-500 animate-pulse" />
-                <span>{language === 'pt' ? '🏆 Ranking Turmas' : '🏆 Class Ranking'}</span>
-              </button>
+              {/* Ranking das Turmas - only visible when logged in */}
+              {user && (
+                <button
+                  onClick={onOpenLeaderboard}
+                  className="py-5 text-sm font-extrabold text-amber-700 hover:text-amber-900 transition-colors border-b-2 border-transparent flex items-center gap-2 cursor-pointer bg-amber-50/60 hover:bg-amber-100/80 px-3 my-2.5 rounded-xl border border-amber-200/80"
+                >
+                  <Trophy className="w-4 h-4 text-amber-500 animate-pulse" />
+                  <span>{language === 'pt' ? '🏆 Ranking Turmas' : '🏆 Class Ranking'}</span>
+                </button>
+              )}
 
               {/* Teacher / Admin Reserved Area */}
               {isAdmin && onOpenAdmin && (
@@ -297,16 +299,18 @@ export const Header: React.FC<HeaderProps> = ({
             <span>{t.navProgress}</span>
           </button>
 
-          <button
-            onClick={() => {
-              onOpenLeaderboard();
-              setMobileMenuOpen(false);
-            }}
-            className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-extrabold text-amber-900 bg-amber-50 border border-amber-200 flex items-center gap-3"
-          >
-            <Trophy className="w-5 h-5 text-amber-500 animate-pulse" />
-            <span>{language === 'pt' ? '🏆 Ranking das Turmas' : '🏆 Class Ranking'}</span>
-          </button>
+          {user && (
+            <button
+              onClick={() => {
+                onOpenLeaderboard();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-extrabold text-amber-900 bg-amber-50 border border-amber-200 flex items-center gap-3"
+            >
+              <Trophy className="w-5 h-5 text-amber-500 animate-pulse" />
+              <span>{language === 'pt' ? '🏆 Ranking das Turmas' : '🏆 Class Ranking'}</span>
+            </button>
+          )}
 
           {isAdmin && onOpenAdmin && (
             <button

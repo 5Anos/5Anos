@@ -518,6 +518,14 @@ export default function App() {
     );
   };
 
+  const handleOpenLeaderboard = () => {
+    if (!user) {
+      setAuthModalOpen(true);
+    } else {
+      setLeaderboardModalOpen(true);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-indigo-200 selection:text-indigo-900">
       {/* Top Navigation Bar */}
@@ -542,7 +550,7 @@ export default function App() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
         onOpenAuth={() => setAuthModalOpen(true)}
-        onOpenLeaderboard={() => setLeaderboardModalOpen(true)}
+        onOpenLeaderboard={handleOpenLeaderboard}
         onOpenAdmin={() => setAdminModalOpen(true)}
         onLogout={handleLogout}
       />
@@ -563,7 +571,7 @@ export default function App() {
             }}
             onOpenAuth={() => setAuthModalOpen(true)}
             onOpenAdmin={() => setAdminModalOpen(true)}
-            onOpenLeaderboard={() => setLeaderboardModalOpen(true)}
+            onOpenLeaderboard={handleOpenLeaderboard}
             onPointsAwarded={(updatedUser, updatedPoints, updatedAchievements) => {
               if (updatedUser) {
                 setUser(updatedUser);
@@ -648,14 +656,26 @@ export default function App() {
         )}
       </main>
 
-      {/* Footer - strictly respecting user instruction */}
-      <footer className="bg-white border-t border-slate-200 py-8 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center sm:text-left">
-          <div className="flex flex-col sm:flex-row items-center gap-2">
-            <span className="font-black text-slate-900 tracking-tight">TIC 5 — Descomplica!</span>
-            <span className="hidden sm:inline">•</span>
-            <span className="font-medium text-slate-600">
-              {t.aiDisclaimer}
+      {/* Footer - strictly matching screenshot layout */}
+      <footer className="bg-white border-t border-slate-200 py-6 mt-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          {/* Left Block */}
+          <div className="flex flex-col items-center sm:items-start">
+            <span className="text-sm sm:text-base font-black text-slate-900 tracking-tight">
+              TIC 5 — Descomplica!
+            </span>
+            <span className="text-xs text-slate-500 mt-0.5">
+              {t.footerAiDisclaimer}
+            </span>
+          </div>
+
+          {/* Right Block */}
+          <div className="flex flex-col items-center sm:items-end text-center sm:text-right">
+            <span className="text-xs text-slate-600">
+              {t.footerReviewedBy}
+            </span>
+            <span className="text-xs sm:text-sm font-bold text-slate-900 mt-0.5">
+              {t.footerCopyright}
             </span>
           </div>
         </div>
@@ -682,13 +702,15 @@ export default function App() {
         language={language}
       />
 
-      {/* Class & Student Leaderboard Modal */}
-      <LeaderboardModal
-        isOpen={leaderboardModalOpen}
-        onClose={() => setLeaderboardModalOpen(false)}
-        currentUser={user}
-        language={language}
-      />
+      {/* Class & Student Leaderboard Modal - only when logged in */}
+      {user && (
+        <LeaderboardModal
+          isOpen={leaderboardModalOpen}
+          onClose={() => setLeaderboardModalOpen(false)}
+          currentUser={user}
+          language={language}
+        />
+      )}
 
       {/* Teacher / Admin Reserved Area Modal */}
       <AdminPanelModal
