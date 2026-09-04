@@ -563,6 +563,7 @@ export default function App() {
             }}
             onOpenAuth={() => setAuthModalOpen(true)}
             onOpenAdmin={() => setAdminModalOpen(true)}
+            onOpenLeaderboard={() => setLeaderboardModalOpen(true)}
           />
         )}
 

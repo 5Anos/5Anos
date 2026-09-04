@@ -6,6 +6,7 @@ import { ALL_THEMES } from '../data/allThemesData';
 import { BADGES } from '../data/badgesData';
 import { ThemeIllustration } from './illustrations/ThemeIllustrations';
 import { isUserAdmin } from '../services/api';
+import { HeroTICBanner } from './HeroTICBanner';
 
 interface DashboardProps {
   user: User | null;
@@ -16,6 +17,7 @@ interface DashboardProps {
   onNavigateProgress: () => void;
   onOpenAuth: () => void;
   onOpenAdmin?: () => void;
+  onOpenLeaderboard?: () => void;
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({
@@ -27,6 +29,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   onNavigateProgress,
   onOpenAuth,
   onOpenAdmin,
+  onOpenLeaderboard,
 }) => {
   const t = translations[language];
   const isAdmin = user ? isUserAdmin(user.email, user.role) : false;
@@ -182,134 +185,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
       )}
 
-      {/* Welcome & Introduction Presentation */}
-      <div className="bg-white rounded-[2rem] p-6 sm:p-8 border border-slate-200 shadow-xs space-y-4">
-        {language === 'pt' ? (
-          <>
-            <div className="space-y-3 text-slate-700 text-sm sm:text-base leading-relaxed">
-              <p className="text-base sm:text-lg font-extrabold text-slate-900">
-                Olá! 👋
-                <br />
-                Bem-vindo ao teu espaço de TIC — Tecnologias da Informação e Comunicação.
-              </p>
-
-              <p>
-                Aqui vais aprender, experimentar e descobrir novas formas de utilizar a tecnologia de maneira segura, responsável, criativa e inteligente.
-              </p>
-
-              <p>
-                Ao longo da tua aprendizagem, vais encontrar conteúdos, atividades, jogos, desafios e quizzes que te vão ajudar a compreender melhor o mundo digital e a desenvolver novas competências.
-              </p>
-            </div>
-
-            {/* 5 Highlights */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 my-4">
-              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm">
-                <span className="text-xl">🎮</span>
-                <span>Aprende enquanto jogas</span>
-              </div>
-              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm">
-                <span className="text-xl">🧠</span>
-                <span>Testa os teus conhecimentos</span>
-              </div>
-              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm">
-                <span className="text-xl">🏆</span>
-                <span>Ganha XP e conquistas</span>
-              </div>
-              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm">
-                <span className="text-xl">📈</span>
-                <span>Acompanha o teu progresso</span>
-              </div>
-              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm sm:col-span-2 lg:col-span-2">
-                <span className="text-xl">🚀</span>
-                <span>Supera novos desafios</span>
-              </div>
-            </div>
-
-            <div className="space-y-3 text-slate-700 text-sm sm:text-base leading-relaxed">
-              <p>
-                Não tens de saber tudo à primeira. Podes explorar, experimentar, errar, aprender e tentar novamente.
-              </p>
-
-              <p>
-                O mais importante é participares, descobrires coisas novas e aprenderes a utilizar a tecnologia de forma cada vez mais autónoma e consciente.
-              </p>
-            </div>
-
-            <div className="pt-3 border-t border-slate-100">
-              <p className="font-bold text-indigo-900 text-sm sm:text-base">
-                🌟 Estás pronto?
-              </p>
-              <p className="font-extrabold text-indigo-600 text-base sm:text-lg tracking-tight mt-0.5">
-                Entra, explora e começa a tua aventura nas TIC!
-              </p>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="space-y-3 text-slate-700 text-sm sm:text-base leading-relaxed">
-              <p className="text-base sm:text-lg font-extrabold text-slate-900">
-                Hello! 👋
-                <br />
-                Welcome to your ICT space — Information and Communication Technologies.
-              </p>
-
-              <p>
-                Here you will learn, experiment, and discover new ways to use technology safely, responsibly, creatively, and smartly.
-              </p>
-
-              <p>
-                Throughout your learning journey, you will find content, activities, games, challenges, and quizzes that will help you better understand the digital world and build new skills.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 my-4">
-              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm">
-                <span className="text-xl">🎮</span>
-                <span>Learn while playing</span>
-              </div>
-              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm">
-                <span className="text-xl">🧠</span>
-                <span>Test your knowledge</span>
-              </div>
-              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm">
-                <span className="text-xl">🏆</span>
-                <span>Earn XP and achievements</span>
-              </div>
-              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm">
-                <span className="text-xl">📈</span>
-                <span>Track your progress</span>
-              </div>
-              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm sm:col-span-2 lg:col-span-2">
-                <span className="text-xl">🚀</span>
-                <span>Overcome new challenges</span>
-              </div>
-            </div>
-
-            <div className="space-y-3 text-slate-700 text-sm sm:text-base leading-relaxed">
-              <p>
-                You don't have to know everything on the first try. You can explore, experiment, make mistakes, learn, and try again.
-              </p>
-
-              <p>
-                The most important thing is to participate, discover new things, and learn to use technology in an increasingly autonomous and mindful way.
-              </p>
-            </div>
-
-            <div className="pt-3 border-t border-slate-100">
-              <p className="font-bold text-indigo-900 text-sm sm:text-base">
-                🌟 Are you ready?
-              </p>
-              <p className="font-extrabold text-indigo-600 text-base sm:text-lg tracking-tight mt-0.5">
-                Join in, explore, and begin your adventure in ICT!
-              </p>
-            </div>
-          </>
-        )}
-      </div>
+      {/* Welcome & Introduction Presentation - Exact Visual from User Design */}
+      <HeroTICBanner
+        user={user}
+        language={language}
+        onOpenAuth={onOpenAuth}
+        onOpenLeaderboard={onOpenLeaderboard}
+        onNavigateProgress={onNavigateProgress}
+        onNavigateTheme={onNavigateTheme}
+      />
 
       {/* Main 12-Column Grid for Themes & Sidebar */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div id="curriculum-themes-section" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start scroll-mt-6">
         {/* Left Column (Span 8): 6 Main Theme Cards */}
         <div className="lg:col-span-8 space-y-6">
           <div className="flex items-center justify-between">

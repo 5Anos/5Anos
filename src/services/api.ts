@@ -456,37 +456,154 @@ export const api = {
   /**
    * Password Recovery using Firebase sendPasswordResetEmail
    */
-  async recoverPassword(email: string): Promise<{ success: boolean; message: string }> {
+  async recoverPassword(email: string): Promise<{ success: boolean; message: string; requiresDirectReset?: boolean }> {
+    const normalizedEmail = email.trim().toLowerCase();
+
+    // 1. Check if user exists in Cloud Firestore or localStorage or Demo
+    let existsInFirestore = false;
+    let registeredUser: any = null;
+
     try {
-      await sendPasswordResetEmail(auth, email.trim());
+      const q = query(collection(db, 'users'), where('email', '==', normalizedEmail));
+      const snap = await getDocs(q);
+      if (!snap.empty) {
+        existsInFirestore = true;
+        registeredUser = snap.docs[0].data();
+      }
+    } catch (dbErr) {
+      console.warn('Firestore query warning during recover:', dbErr);
+    }
+
+    if (!registeredUser) {
+      const users = getStoredUsers();
+      registeredUser = users.find((u: any) => (u.email || '').toLowerCase().trim() === normalizedEmail);
+    }
+
+    // Try Firebase Authentication sendPasswordResetEmail
+    try {
+      await sendPasswordResetEmail(auth, normalizedEmail);
       return {
         success: true,
-        message: 'Enviámos um link de recuperação para o teu email com sucesso. Por favor, verifica a tua caixa de entrada.',
+        message: '📧 Enviámos o link de recuperação para o teu email! IMPORTANTE: Verifica a caixa de entrada e a pasta de SPAM / Lixo Eletrónico.',
       };
     } catch (fbError: any) {
-      console.warn('Firebase recover error:', fbError);
-      if (fbError.code === 'auth/user-not-found') {
-        return { success: false, message: 'Nenhuma conta encontrada com este email.' };
-      }
+      console.warn('Firebase recover error:', fbError?.code, fbError?.message);
+
       if (fbError.code === 'auth/invalid-email') {
-        return { success: false, message: 'Endereço de email inválido.' };
+        throw new Error('Endereço de email inválido.');
       }
 
-      // Local storage check
-      const users = getStoredUsers();
-      const found = users.find((u: any) => u.email.toLowerCase() === email.trim().toLowerCase());
-      if (found) {
+      // If user exists in Firestore or local, provide direct recovery so they are never blocked
+      if (registeredUser || existsInFirestore) {
         return {
           success: true,
-          message: `Simulação: Link de recuperação enviado para ${email}. Palavra-passe da conta de teste: ${found.password}`,
+          requiresDirectReset: true,
+          message: 'Conta encontrada na plataforma! Os emails automáticos de serviço escolar podem demorar ou ser filtrados. Podes definir a tua nova palavra-passe diretamente abaixo.',
         };
       }
 
-      return {
-        success: true,
-        message: 'Se este email estiver registado, receberás instruções para redefinir a palavra-passe.',
-      };
+      // If user doesn't exist anywhere
+      throw new Error('Não foi encontrada nenhuma conta registada com este endereço de email.');
     }
+  },
+
+  /**
+   * Direct Password Reset (Updates Firestore, localStorage, and local DB)
+   */
+  async resetPasswordDirect(
+    email: string,
+    newPassword: string,
+    turmaVerification?: string
+  ): Promise<{ success: boolean; message: string }> {
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if (newPassword.length < 6) {
+      throw new Error('A nova palavra-passe deve ter pelo menos 6 caracteres.');
+    }
+
+    let userDocId: string | null = null;
+    let foundUserData: any = null;
+
+    // 1. Search in Cloud Firestore
+    try {
+      const q = query(collection(db, 'users'), where('email', '==', normalizedEmail));
+      const snap = await getDocs(q);
+      if (!snap.empty) {
+        userDocId = snap.docs[0].id;
+        foundUserData = snap.docs[0].data();
+      }
+    } catch (dbErr) {
+      console.warn('Firestore lookup during direct reset:', dbErr);
+    }
+
+    // 2. Search in local storage
+    const users = getStoredUsers();
+    const localUserIndex = users.findIndex(
+      (u: any) => (u.email || '').toLowerCase().trim() === normalizedEmail
+    );
+    if (localUserIndex !== -1 && !foundUserData) {
+      foundUserData = users[localUserIndex];
+      userDocId = foundUserData.id;
+    }
+
+    if (!foundUserData && !userDocId) {
+      throw new Error('Não foi encontrada nenhuma conta associada a este email.');
+    }
+
+    // Verification check: for students, if turma was provided, verify it
+    const isAdmin = isUserAdmin(normalizedEmail, foundUserData?.role);
+    if (!isAdmin && turmaVerification && foundUserData?.turma) {
+      if (turmaVerification.trim() !== foundUserData.turma.trim()) {
+        throw new Error(`A turma indicada não coincide com a turma do registo deste email (${foundUserData.turma}).`);
+      }
+    }
+
+    // 3. Update in Cloud Firestore
+    if (userDocId) {
+      try {
+        await updateDoc(doc(db, 'users', userDocId), {
+          password: newPassword,
+          updatedAt: new Date().toISOString(),
+        });
+        console.log('✅ Updated password in Cloud Firestore for user:', userDocId);
+      } catch (updateErr) {
+        // If doc doesn't exist yet, merge
+        try {
+          await setDoc(
+            doc(db, 'users', userDocId),
+            { password: newPassword, updatedAt: new Date().toISOString() },
+            { merge: true }
+          );
+        } catch (setErr) {
+          console.warn('Failed to update Firestore doc:', setErr);
+        }
+      }
+    }
+
+    // 4. Update in local storage
+    if (localUserIndex !== -1) {
+      users[localUserIndex].password = newPassword;
+      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+    } else if (foundUserData) {
+      users.push({ ...foundUserData, password: newPassword });
+      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+    }
+
+    // 5. Update in server.ts DB
+    try {
+      await fetch('/api/auth/recover', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: normalizedEmail, newPassword }),
+      });
+    } catch {
+      // ignore
+    }
+
+    return {
+      success: true,
+      message: '✅ Palavra-passe atualizada com sucesso! Já podes iniciar sessão com a tua nova palavra-passe.',
+    };
   },
 
   /**
