@@ -12,6 +12,7 @@ import {
   setDoc,
   getDoc,
   updateDoc,
+  deleteDoc,
   collection,
   getDocs,
   query,
@@ -54,14 +55,27 @@ function getStoredUsers(): any[] {
     }
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed)) {
-      // Purge any legacy demo accounts from local storage
-      const cleaned = parsed.filter(
-        (u: any) =>
-          !u?.id?.startsWith('demo-') &&
-          u?.email !== 'joao.silva@escola.pt' &&
-          u?.email !== 'leonor.martins@escola.pt'
-      );
-      if (cleaned.length !== parsed.length) {
+      // Purge any legacy demo accounts and ensure admin/teacher accounts never hold a student turma
+      let hasChanges = false;
+      const cleaned = parsed
+        .filter(
+          (u: any) =>
+            !u?.id?.startsWith('demo-') &&
+            u?.email !== 'joao.silva@escola.pt' &&
+            u?.email !== 'leonor.martins@escola.pt'
+        )
+        .map((u: any) => {
+          if (isUserAdmin(u?.email, u?.role)) {
+            if (u.turma) {
+              delete u.turma;
+              u.role = 'admin';
+              hasChanges = true;
+            }
+          }
+          return u;
+        });
+
+      if (hasChanges || cleaned.length !== parsed.length) {
         localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(cleaned));
       }
       return cleaned;
@@ -168,16 +182,23 @@ export const api = {
             const isAdmin = isUserAdmin(data.email || fbUser.email || '', data.role);
             const user: User = {
               id: fbUser.uid,
-              name: data.name || fbUser.displayName || 'Estudante',
+              name: data.name || fbUser.displayName || (isAdmin ? 'Professora Carla' : 'Estudante'),
               email: fbUser.email || '',
-              publicId: data.publicId || generateSecurePublicId(this.getAllTakenPublicIds()),
-              turma: data.turma || '5.º A',
+              publicId: data.publicId || (isAdmin ? 'Docente_TIC' : generateSecurePublicId(this.getAllTakenPublicIds())),
+              turma: isAdmin ? undefined : (data.turma || '5.º A'),
               role: isAdmin ? 'admin' : (data.role || 'student'),
               points: data.points ?? 20,
               language: data.language || 'pt',
               createdAt: data.createdAt || new Date().toISOString(),
               lastActivity: data.lastActivity,
             };
+            if (isAdmin) {
+              delete user.turma;
+              if (data.turma) {
+                updateDoc(doc(db, 'users', fbUser.uid), { turma: null, role: 'admin' }).catch(() => {});
+              }
+              deleteDoc(doc(db, 'publicProfiles', fbUser.uid)).catch(() => {});
+            }
             localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
             this.setToken(fbUser.uid);
             callback(user);
@@ -198,37 +219,55 @@ export const api = {
       const isAdmin = isUserAdmin(user.email, user.role);
       const finalRole = isAdmin ? 'admin' : (user.role || 'student');
       user.role = finalRole;
+      if (isAdmin) {
+        delete user.turma;
+      }
 
       const payload: any = {
         id: user.id,
         name: user.name,
         email: user.email.toLowerCase().trim(),
         publicId: user.publicId,
-        turma: user.turma || '5.º A',
         role: finalRole,
         language: user.language || 'pt',
         points: user.points ?? 20,
         createdAt: user.createdAt || new Date().toISOString(),
         ...(user.lastActivity ? { lastActivity: user.lastActivity } : {}),
       };
+
+      if (isAdmin) {
+        payload.turma = null; // Explicitly remove class link in Firestore
+      } else {
+        payload.turma = user.turma || '5.º A';
+      }
+
       if (password) {
         payload.password = password;
       }
 
       await setDoc(doc(db, 'users', user.id), payload, { merge: true });
 
-      await setDoc(
-        doc(db, 'publicProfiles', user.id),
-        {
-          id: user.id,
-          publicId: user.publicId,
-          turma: user.turma || '5.º A',
-          role: finalRole,
-          points: user.points ?? 20,
-          createdAt: user.createdAt || new Date().toISOString(),
-        },
-        { merge: true }
-      );
+      // In public rankings: ONLY students appear in publicProfiles
+      if (isAdmin) {
+        try {
+          await deleteDoc(doc(db, 'publicProfiles', user.id));
+        } catch {
+          // ignore
+        }
+      } else {
+        await setDoc(
+          doc(db, 'publicProfiles', user.id),
+          {
+            id: user.id,
+            publicId: user.publicId,
+            turma: user.turma || '5.º A',
+            role: finalRole,
+            points: user.points ?? 20,
+            createdAt: user.createdAt || new Date().toISOString(),
+          },
+          { merge: true }
+        );
+      }
 
       console.log('✅ Successfully synced user to Cloud Firestore:', user.id);
       return true;

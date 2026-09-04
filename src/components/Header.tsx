@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { BarChart3, User as UserIcon, LogOut, Menu, X, Sparkles, Compass, Trophy, Cloud, Check, ShieldCheck, FileSpreadsheet } from 'lucide-react';
+import { BarChart3, User as UserIcon, LogOut, Menu, X, Sparkles, Compass, Trophy, ShieldCheck, FileSpreadsheet } from 'lucide-react';
 import { User, Language } from '../types';
 import { translations } from '../i18n/translations';
-import { api, isUserAdmin } from '../services/api';
+import { isUserAdmin } from '../services/api';
 
 interface HeaderProps {
   user: User | null;
@@ -30,25 +30,8 @@ export const Header: React.FC<HeaderProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
-  const [syncing, setSyncing] = useState(false);
-  const [syncSuccess, setSyncSuccess] = useState<boolean | null>(null);
 
   const isAdmin = user ? isUserAdmin(user.email, user.role) : false;
-
-  const handleSyncCloud = async () => {
-    if (!user) return;
-    setSyncing(true);
-    setSyncSuccess(null);
-    try {
-      const ok = await api.syncUserToFirestore(user);
-      setSyncSuccess(ok);
-      setTimeout(() => setSyncSuccess(null), 3000);
-    } catch {
-      setSyncSuccess(false);
-    } finally {
-      setSyncing(false);
-    }
-  };
 
   const t = translations[language];
 
@@ -257,29 +240,6 @@ export const Header: React.FC<HeaderProps> = ({
                     >
                       <BarChart3 className="w-4 h-4 text-indigo-600" />
                       <span>{t.navProgress}</span>
-                    </button>
-
-                    <button
-                      onClick={handleSyncCloud}
-                      disabled={syncing}
-                      className={`w-full text-left px-4 py-2 text-xs sm:text-sm flex items-center gap-2 font-medium cursor-pointer transition-colors ${
-                        syncSuccess
-                          ? 'text-emerald-700 bg-emerald-50'
-                          : 'text-indigo-700 hover:bg-indigo-50'
-                      }`}
-                    >
-                      {syncSuccess ? (
-                        <Check className="w-4 h-4 text-emerald-600" />
-                      ) : (
-                        <Cloud className={`w-4 h-4 text-indigo-600 ${syncing ? 'animate-bounce' : ''}`} />
-                      )}
-                      <span>
-                        {syncing
-                          ? (language === 'pt' ? 'A guardar na Base de Dados...' : 'Saving to Database...')
-                          : syncSuccess
-                          ? (language === 'pt' ? 'Guardado no Firestore!' : 'Saved to Firestore!')
-                          : (language === 'pt' ? 'Sincronizar com Firestore' : 'Sync to Firestore')}
-                      </span>
                     </button>
 
                     <button
