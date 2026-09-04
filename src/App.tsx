@@ -639,7 +639,7 @@ export default function App() {
             <span className="font-black text-slate-900 tracking-tight">TIC 5 — Descomplica!</span>
             <span className="hidden sm:inline">•</span>
             <span className="font-medium text-slate-600">
-              Website criado com recurso a Inteligência Artificial | Textos e conteúdos revistos pela professora
+              {t.aiDisclaimer}
             </span>
           </div>
         </div>

@@ -262,23 +262,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
         {/* Right Column (Span 4): Gamification & Stats */}
         <div className="lg:col-span-4 flex flex-col gap-6">
-          {/* Accumulated Points Card */}
-          <div className="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-xs flex flex-col items-center text-center">
-            <div className="w-20 h-20 bg-amber-50 rounded-full flex items-center justify-center text-4xl mb-3 border-4 border-white shadow-inner">
-              ⭐
-            </div>
-            <div className="text-3xl font-black text-slate-900">{user?.points || 0}</div>
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">
-              {language === 'pt' ? 'Pontos Acumulados' : 'Accumulated Points'}
-            </p>
-            <button
-              onClick={onNavigateProgress}
-              className="w-full mt-6 py-3 border border-slate-200 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-50 uppercase tracking-wider transition-colors cursor-pointer"
-            >
-              {language === 'pt' ? 'Ver Progresso & Conquistas' : 'View Progress & Badges'}
-            </button>
-          </div>
-
           {/* Achievements Card */}
           <div className="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-xs flex flex-col">
             <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex justify-between items-center">
