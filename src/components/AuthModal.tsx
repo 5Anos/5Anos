@@ -42,13 +42,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
   // Turmas list
   const [turmasList, setTurmasList] = useState<string[]>([]);
 
-  // Recovery states
-  const [forgotRecoveryMethod, setForgotRecoveryMethod] = useState<'direct' | 'email'>('direct');
-  const [forgotNewPassword, setForgotNewPassword] = useState('');
-  const [forgotConfirmPassword, setForgotConfirmPassword] = useState('');
-  const [forgotShowPassword, setForgotShowPassword] = useState(false);
-  const [forgotTurma, setForgotTurma] = useState('');
-
   // UI state
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -175,49 +168,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
     try {
       const res = await api.recoverPassword(email);
       setSuccessMsg(res.message);
-      if (res.requiresDirectReset) {
-        setForgotRecoveryMethod('direct');
-      }
     } catch (err: unknown) {
       setErrorMsg(err instanceof Error ? err.message : 'Erro na recuperação de palavra-passe.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDirectReset = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorMsg('');
-    setSuccessMsg('');
-
-    if (!email.trim() || !email.includes('@')) {
-      setErrorMsg(language === 'pt' ? 'Por favor, insere o teu email de registo.' : 'Please enter your email.');
-      return;
-    }
-
-    if (forgotNewPassword.length < 6) {
-      setErrorMsg(language === 'pt' ? 'A nova palavra-passe deve ter pelo menos 6 caracteres.' : 'Password must be at least 6 characters.');
-      return;
-    }
-
-    if (forgotNewPassword !== forgotConfirmPassword) {
-      setErrorMsg(language === 'pt' ? 'As palavras-passe não coincidem. Confirma e tenta de novo.' : 'Passwords do not match.');
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      const res = await api.resetPasswordDirect(email, forgotNewPassword, forgotTurma);
-      setSuccessMsg(res.message);
-      setPassword(forgotNewPassword);
-      setTimeout(() => {
-        setTab('login');
-        setForgotNewPassword('');
-        setForgotConfirmPassword('');
-      }, 1800);
-    } catch (err: unknown) {
-      setErrorMsg(err instanceof Error ? err.message : 'Erro na redefinição de palavra-passe.');
     } finally {
       setLoading(false);
     }
@@ -559,229 +511,64 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
 
           {/* TAB 3: 🔑 Recuperar Palavra-passe */}
           {tab === 'forgot' && (
-            <div className="space-y-4">
-              {/* Method Switcher */}
-              <div className="flex rounded-xl bg-slate-100 p-1 border border-slate-200 text-xs font-bold">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setForgotRecoveryMethod('direct');
-                    setErrorMsg('');
-                    setSuccessMsg('');
-                  }}
-                  className={`flex-1 py-1.5 px-2 rounded-lg transition-all text-center cursor-pointer ${
-                    forgotRecoveryMethod === 'direct'
-                      ? 'bg-white text-indigo-900 shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  ⚡ {language === 'pt' ? 'Redefinir Imediatamente' : 'Direct Reset (Instant)'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setForgotRecoveryMethod('email');
-                    setErrorMsg('');
-                    setSuccessMsg('');
-                  }}
-                  className={`flex-1 py-1.5 px-2 rounded-lg transition-all text-center cursor-pointer ${
-                    forgotRecoveryMethod === 'email'
-                      ? 'bg-white text-indigo-900 shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  📧 {language === 'pt' ? 'Enviar Link por Email' : 'Email Reset Link'}
-                </button>
+            <form onSubmit={handleForgotEmail} className="space-y-4">
+              <div className="p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-900 text-xs sm:text-sm leading-relaxed">
+                <p className="font-semibold mb-1">
+                  {language === 'pt'
+                    ? '📨 Recuperação por Email:'
+                    : '📨 Email Password Recovery:'}
+                </p>
+                <p className="text-slate-700 text-xs">
+                  {language === 'pt'
+                    ? 'Insere o endereço de email associado à tua conta. Receberás um link oficial para redefinir a tua palavra-passe com segurança.'
+                    : 'Enter your registered email address. You will receive a secure link to reset your password.'}
+                </p>
               </div>
 
-              {/* DIRECT RESET FORM */}
-              {forgotRecoveryMethod === 'direct' ? (
-                <form onSubmit={handleDirectReset} className="space-y-3.5">
-                  <div className="p-3 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-950 text-xs leading-relaxed">
-                    <p className="font-bold mb-1">
-                      {language === 'pt'
-                        ? '🔐 Redefinição Direta e Segura para a Escola:'
-                        : '🔐 Direct & Secure School Reset:'}
-                    </p>
-                    <p className="text-slate-700">
-                      {language === 'pt'
-                        ? 'Insere o teu email e define já a tua nova palavra-passe. Não ficas dependente de filtros de spam do servidor escolar.'
-                        : 'Enter your email and set your new password immediately without waiting for school mail servers.'}
-                    </p>
-                  </div>
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                  {language === 'pt' ? 'Email do Estudante ou Professora' : 'Email Address'}
+                </label>
+                <div className="relative">
+                  <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="exemplo@escola.pt ou imaginebycarla2023@gmail.com"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                  />
+                </div>
+              </div>
 
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
-                      {language === 'pt' ? 'Email da Conta' : 'Account Email'}
-                    </label>
-                    <div className="relative">
-                      <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
-                      <input
-                        type="email"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="aluno@escola.pt ou imaginebycarla2023@gmail.com"
-                        className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                      />
-                    </div>
-                  </div>
+              <div className="flex gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setTab('login');
+                    setErrorMsg('');
+                    setSuccessMsg('');
+                  }}
+                  className="flex-1 py-2.5 px-4 rounded-xl border border-slate-200 text-slate-700 font-bold text-xs sm:text-sm hover:bg-slate-50 transition-colors cursor-pointer"
+                >
+                  {language === 'pt' ? 'Voltar ao Login' : 'Back to Login'}
+                </button>
 
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
-                      {language === 'pt' ? 'Turma (Confirmação para Alunos)' : 'Class (Student Verification)'}
-                    </label>
-                    <div className="relative">
-                      <GraduationCap className="w-4 h-4 text-slate-400 absolute left-3.5 top-3 pointer-events-none" />
-                      <select
-                        value={forgotTurma}
-                        onChange={(e) => setForgotTurma(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white"
-                      >
-                        <option value="">{language === 'pt' ? '-- Seleciona a tua Turma (ou deixa em branco se for Professora) --' : '-- Select Class --'}</option>
-                        {turmasList.map((t) => (
-                          <option key={t} value={t}>
-                            Turma {t}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
-                        {language === 'pt' ? 'Nova Palavra-passe' : 'New Password'}
-                      </label>
-                      <div className="relative">
-                        <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-2.5 pointer-events-none" />
-                        <input
-                          type={forgotShowPassword ? 'text' : 'password'}
-                          required
-                          minLength={6}
-                          value={forgotNewPassword}
-                          onChange={(e) => setForgotNewPassword(e.target.value)}
-                          placeholder="Mínimo 6 caracteres"
-                          className="w-full pl-9 pr-8 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setForgotShowPassword(!forgotShowPassword)}
-                          className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600"
-                        >
-                          {forgotShowPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                        </button>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
-                        {language === 'pt' ? 'Confirmar Nova' : 'Confirm New'}
-                      </label>
-                      <div className="relative">
-                        <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-2.5 pointer-events-none" />
-                        <input
-                          type={forgotShowPassword ? 'text' : 'password'}
-                          required
-                          minLength={6}
-                          value={forgotConfirmPassword}
-                          onChange={(e) => setForgotConfirmPassword(e.target.value)}
-                          placeholder="Repete a palavra-passe"
-                          className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-3 pt-2">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setTab('login');
-                        setErrorMsg('');
-                        setSuccessMsg('');
-                      }}
-                      className="flex-1 py-2 px-3 rounded-xl border border-slate-200 text-slate-700 font-bold text-xs hover:bg-slate-50 transition-colors cursor-pointer"
-                    >
-                      {language === 'pt' ? 'Voltar ao Login' : 'Back to Login'}
-                    </button>
-
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="flex-1 py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
-                    >
-                      <KeyRound className="w-4 h-4" />
-                      <span>
-                        {loading
-                          ? (language === 'pt' ? 'A guardar...' : 'Saving...')
-                          : (language === 'pt' ? 'Atualizar Palavra-passe' : 'Update Password')}
-                      </span>
-                    </button>
-                  </div>
-                </form>
-              ) : (
-                /* EMAIL LINK FORM */
-                <form onSubmit={handleForgotEmail} className="space-y-4">
-                  <div className="p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-900 text-xs sm:text-sm leading-relaxed">
-                    <p className="font-semibold mb-1">
-                      {language === 'pt'
-                        ? '📨 Envio através do Firebase Authentication:'
-                        : '📨 Send via Firebase Authentication:'}
-                    </p>
-                    <p className="text-slate-700 text-xs">
-                      {language === 'pt'
-                        ? 'Receberás um email com o link oficial para alterar a palavra-passe. Se o email não chegar em 1 minuto, verifica o SPAM ou usa a opção de Redefinição Imediata acima.'
-                        : 'You will receive an official reset link. If not received in 1 minute, check your SPAM folder or use the Direct Reset option above.'}
-                    </p>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                      {language === 'pt' ? 'Email do Estudante ou Professora' : 'Email Address'}
-                    </label>
-                    <div className="relative">
-                      <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
-                      <input
-                        type="email"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="exemplo@escola.pt ou imaginebycarla2023@gmail.com"
-                        className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex gap-3 pt-2">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setTab('login');
-                        setErrorMsg('');
-                        setSuccessMsg('');
-                      }}
-                      className="flex-1 py-2.5 px-4 rounded-xl border border-slate-200 text-slate-700 font-bold text-xs sm:text-sm hover:bg-slate-50 transition-colors cursor-pointer"
-                    >
-                      {language === 'pt' ? 'Voltar ao Login' : 'Back to Login'}
-                    </button>
-
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="flex-1 py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm shadow-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
-                    >
-                      <Mail className="w-4 h-4" />
-                      <span>
-                        {loading
-                          ? (language === 'pt' ? 'A enviar email...' : 'Sending email...')
-                          : (language === 'pt' ? 'Enviar Link por Email' : 'Send Reset Link')}
-                      </span>
-                    </button>
-                  </div>
-                </form>
-              )}
-            </div>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="flex-1 py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm shadow-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+                >
+                  <Mail className="w-4 h-4" />
+                  <span>
+                    {loading
+                      ? (language === 'pt' ? 'A enviar email...' : 'Sending email...')
+                      : (language === 'pt' ? 'Enviar Link por Email' : 'Send Reset Link')}
+                  </span>
+                </button>
+              </div>
+            </form>
           )}
         </div>
       </div>

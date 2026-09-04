@@ -531,14 +531,16 @@ export const api = {
       if (fbError.code === 'auth/invalid-email') {
         throw new Error('Endereço de email inválido.');
       }
+      if (fbError.code === 'auth/user-not-found') {
+        throw new Error('Não foi encontrada nenhuma conta registada com este endereço de email.');
+      }
+      if (fbError.code === 'auth/too-many-requests') {
+        throw new Error('Demasiadas tentativas. Por favor, aguarda alguns minutos antes de tentar novamente.');
+      }
 
-      // If user exists in Firestore or local, provide direct recovery so they are never blocked
+      // If user exists in Firestore
       if (registeredUser || existsInFirestore) {
-        return {
-          success: true,
-          requiresDirectReset: true,
-          message: 'Conta encontrada na plataforma! Os emails automáticos de serviço escolar podem demorar ou ser filtrados. Podes definir a tua nova palavra-passe diretamente abaixo.',
-        };
+        throw new Error('Ocorreu um erro ao enviar o email de recuperação pelo Firebase. Por favor, tenta novamente dentro de instantes.');
       }
 
       // If user doesn't exist anywhere
@@ -585,12 +587,27 @@ export const api = {
       userDocId = foundUserData.id;
     }
 
+    const isAdmin = isUserAdmin(normalizedEmail, foundUserData?.role);
+
     if (!foundUserData && !userDocId) {
-      throw new Error('Não foi encontrada nenhuma conta associada a este email.');
+      if (isAdmin) {
+        userDocId = `admin-${Date.now()}`;
+        foundUserData = {
+          id: userDocId,
+          name: 'Professora Carla',
+          email: normalizedEmail,
+          publicId: 'Docente_TIC',
+          role: 'admin',
+          language: 'pt',
+          points: 20,
+          createdAt: new Date().toISOString(),
+        };
+      } else {
+        throw new Error('Não foi encontrada nenhuma conta associada a este email.');
+      }
     }
 
     // Verification check: for students, if turma was provided, verify it
-    const isAdmin = isUserAdmin(normalizedEmail, foundUserData?.role);
     if (!isAdmin && turmaVerification && foundUserData?.turma) {
       if (turmaVerification.trim() !== foundUserData.turma.trim()) {
         throw new Error(`A turma indicada não coincide com a turma do registo deste email (${foundUserData.turma}).`);
