@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { BarChart3, User as UserIcon, LogOut, Menu, X, Sparkles, BookOpen, ChevronDown, Compass } from 'lucide-react';
+import { BarChart3, User as UserIcon, LogOut, Menu, X, Sparkles, BookOpen, ChevronDown, Compass, Trophy } from 'lucide-react';
 import { User, Language } from '../types';
 import { translations } from '../i18n/translations';
 import { ALL_THEMES } from '../data/allThemesData';
@@ -11,6 +11,7 @@ interface HeaderProps {
   activeView: string;
   onNavigate: (view: string) => void;
   onOpenAuth: () => void;
+  onOpenLeaderboard: () => void;
   onLogout: () => void;
 }
 
@@ -21,6 +22,7 @@ export const Header: React.FC<HeaderProps> = ({
   activeView,
   onNavigate,
   onOpenAuth,
+  onOpenLeaderboard,
   onLogout,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -148,6 +150,15 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 <BarChart3 className="w-4 h-4 text-amber-500" />
                 <span>{t.navProgress}</span>
+              </button>
+
+              {/* Ranking das Turmas */}
+              <button
+                onClick={onOpenLeaderboard}
+                className="py-5 text-sm font-extrabold text-amber-700 hover:text-amber-900 transition-colors border-b-2 border-transparent flex items-center gap-2 cursor-pointer bg-amber-50/60 hover:bg-amber-100/80 px-3 my-2.5 rounded-xl border border-amber-200/80"
+              >
+                <Trophy className="w-4 h-4 text-amber-500 animate-pulse" />
+                <span>{language === 'pt' ? '🏆 Ranking Turmas' : '🏆 Class Ranking'}</span>
               </button>
             </nav>
           </div>
@@ -341,7 +352,7 @@ export const Header: React.FC<HeaderProps> = ({
             );
           })}
 
-          <div className="pt-2">
+          <div className="pt-2 space-y-1">
             <button
               onClick={() => {
                 onNavigate('progress');
@@ -353,6 +364,17 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <BarChart3 className="w-5 h-5 text-amber-500" />
               <span>{t.navProgress}</span>
+            </button>
+
+            <button
+              onClick={() => {
+                onOpenLeaderboard();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-extrabold text-amber-900 bg-amber-50 border border-amber-200 flex items-center gap-3"
+            >
+              <Trophy className="w-5 h-5 text-amber-500 animate-pulse" />
+              <span>{language === 'pt' ? '🏆 Ranking das Turmas' : '🏆 Class Ranking'}</span>
             </button>
           </div>
         </div>

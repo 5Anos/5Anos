@@ -14,10 +14,14 @@ import {
   updateDoc,
   collection,
   getDocs,
+  query,
+  orderBy,
+  limit,
 } from 'firebase/firestore';
 import { auth, db } from '../firebase';
-import { User, ActivityProgress, UserAchievement, PointTransaction, Language } from '../types';
+import { User, ActivityProgress, UserAchievement, PointTransaction, Language, TurmaRanking, StudentRanking } from '../types';
 import { generateSecurePublicId } from '../utils/publicIdGenerator';
+import { getTurmasList } from '../data/turmasData';
 
 const TOKEN_KEY = 'tic_5ano_auth_token';
 const USERS_STORAGE_KEY = 'tic_5ano_local_users';
@@ -628,5 +632,114 @@ export const api = {
       lastActivity: user.lastActivity,
       achievements,
     };
+  },
+
+  /**
+   * Get Class/Turma Rankings with Gamification metrics
+   */
+  async getTurmaRankings(): Promise<TurmaRanking[]> {
+    const turmas = getTurmasList();
+    const storedUsers = getStoredUsers();
+    
+    // Combine stored users + initial demo users ensuring no duplicate IDs
+    const userMap = new Map<string, any>();
+    INITIAL_DEMO_USERS.forEach((u) => userMap.set(u.id, u));
+    storedUsers.forEach((u: any) => userMap.set(u.id, u));
+
+    // Try fetching latest public profiles from Firestore if available
+    try {
+      const q = query(collection(db, 'publicProfiles'), orderBy('points', 'desc'), limit(100));
+      const snap = await getDocs(q);
+      snap.forEach((docSnap) => {
+        const d = docSnap.data();
+        if (d.id) {
+          const existing = userMap.get(d.id) || {};
+          userMap.set(d.id, {
+            ...existing,
+            id: d.id,
+            publicId: d.publicId || existing.publicId || 'Estudante_TIC',
+            turma: d.turma || existing.turma || '5.º A',
+            points: d.points ?? existing.points ?? 0,
+          });
+        }
+      });
+    } catch {
+      // offline or rule error, use local map
+    }
+
+    const allUsers = Array.from(userMap.values());
+
+    const result: TurmaRanking[] = turmas.map((turmaName) => {
+      const turmaStudents = allUsers.filter((u) => (u.turma || '5.º A').toLowerCase() === turmaName.toLowerCase());
+      const totalPoints = turmaStudents.reduce((sum, u) => sum + (u.points || 0), 0);
+      const studentCount = turmaStudents.length || 1;
+      const avgPoints = Math.round(totalPoints / studentCount);
+
+      // Sort students in this turma by points
+      const topStudents = [...turmaStudents]
+        .sort((a, b) => (b.points || 0) - (a.points || 0))
+        .slice(0, 3)
+        .map((s) => ({
+          publicId: s.publicId || 'Estudante_TIC',
+          points: s.points || 0,
+        }));
+
+      return {
+        turma: turmaName,
+        totalPoints,
+        avgPoints,
+        studentCount: turmaStudents.length,
+        completedActivities: Math.round(totalPoints / 15),
+        topBadge: avgPoints > 100 ? '🥇 Turma Ouro' : avgPoints > 50 ? '🥈 Turma Prata' : '🥉 Turma Bronze',
+        topStudents,
+      };
+    });
+
+    // Rank classes by average points per student for fairness, or total points if tie
+    result.sort((a, b) => b.totalPoints - a.totalPoints);
+    return result;
+  },
+
+  /**
+   * Get Individual Student Rankings (using safe public identifiers)
+   */
+  async getStudentRankings(currentUserId?: string): Promise<StudentRanking[]> {
+    const storedUsers = getStoredUsers();
+    const userMap = new Map<string, any>();
+    INITIAL_DEMO_USERS.forEach((u) => userMap.set(u.id, u));
+    storedUsers.forEach((u: any) => userMap.set(u.id, u));
+
+    try {
+      const q = query(collection(db, 'publicProfiles'), orderBy('points', 'desc'), limit(100));
+      const snap = await getDocs(q);
+      snap.forEach((docSnap) => {
+        const d = docSnap.data();
+        if (d.id) {
+          const existing = userMap.get(d.id) || {};
+          userMap.set(d.id, {
+            ...existing,
+            id: d.id,
+            publicId: d.publicId || existing.publicId || 'Estudante_TIC',
+            turma: d.turma || existing.turma || '5.º A',
+            points: d.points ?? existing.points ?? 0,
+          });
+        }
+      });
+    } catch {
+      // quiet fallback
+    }
+
+    const sortedUsers = Array.from(userMap.values()).sort((a, b) => (b.points || 0) - (a.points || 0));
+
+    return sortedUsers.map((u, index) => ({
+      position: index + 1,
+      id: u.id,
+      publicId: u.publicId || 'Estudante_TIC',
+      turma: u.turma || '5.º A',
+      points: u.points || 0,
+      activitiesCount: Math.floor((u.points || 0) / 15),
+      badgeCount: Math.min(6, Math.floor((u.points || 0) / 30) + 1),
+      isCurrentUser: u.id === currentUserId,
+    }));
   },
 };

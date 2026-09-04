@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { AuthModal } from './components/AuthModal';
+import { LeaderboardModal } from './components/LeaderboardModal';
 import { Dashboard } from './components/Dashboard';
 import { ThemeView } from './components/ThemeView';
 import { ModuleReader } from './components/ModuleReader';
@@ -42,6 +43,7 @@ export default function App() {
 
   // Modals & Notifications
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [leaderboardModalOpen, setLeaderboardModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<{ title: string; subtitle?: string } | null>(null);
 
   const t = translations[language];
@@ -538,6 +540,7 @@ export default function App() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
         onOpenAuth={() => setAuthModalOpen(true)}
+        onOpenLeaderboard={() => setLeaderboardModalOpen(true)}
         onLogout={handleLogout}
       />
 
@@ -669,6 +672,14 @@ export default function App() {
         isOpen={authModalOpen}
         onClose={() => setAuthModalOpen(false)}
         onSuccess={handleAuthSuccess}
+        language={language}
+      />
+
+      {/* Class & Student Leaderboard Modal */}
+      <LeaderboardModal
+        isOpen={leaderboardModalOpen}
+        onClose={() => setLeaderboardModalOpen(false)}
+        currentUser={user}
         language={language}
       />
     </div>

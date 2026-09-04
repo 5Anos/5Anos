@@ -152,3 +152,28 @@ export interface ThemeDefinition {
   challenges: ChallengeItem[]; // Games and challenges
   finalQuiz: QuizQuestion[]; // Comprehensive quiz (15-20 questions)
 }
+
+export interface TurmaRanking {
+  turma: string;
+  totalPoints: number;
+  avgPoints: number;
+  studentCount: number;
+  completedActivities: number;
+  topBadge: string;
+  topStudents: {
+    publicId: string;
+    points: number;
+  }[];
+}
+
+export interface StudentRanking {
+  position: number;
+  id: string;
+  publicId: string;
+  turma: string;
+  points: number;
+  activitiesCount: number;
+  badgeCount: number;
+  isCurrentUser?: boolean;
+}
+
