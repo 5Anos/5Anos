@@ -13,7 +13,13 @@ import {
   GraduationCap,
   Calendar,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  Edit,
+  Lock,
+  KeyRound,
+  Eye,
+  EyeOff,
+  Save,
 } from 'lucide-react';
 import { User, Language } from '../types';
 import { api, isUserAdmin } from '../services/api';
@@ -39,6 +45,16 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [exportSuccessMsg, setExportSuccessMsg] = useState<string | null>(null);
 
+  // Student Edit State
+  const [editingStudent, setEditingStudent] = useState<User | null>(null);
+  const [editName, setEditName] = useState('');
+  const [editTurma, setEditTurma] = useState('');
+  const [editNewPassword, setEditNewPassword] = useState('');
+  const [showEditPassword, setShowEditPassword] = useState(false);
+  const [editLoading, setEditLoading] = useState(false);
+  const [editError, setEditError] = useState('');
+  const [editSuccess, setEditSuccess] = useState('');
+
   const turmasList = useMemo(() => getTurmasList(), []);
 
   // Fetch student data whenever modal opens
@@ -51,13 +67,13 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   // Keyboard shortcut to close
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
+      if (e.key === 'Escape' && isOpen && !editingStudent) {
         onClose();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, editingStudent]);
 
   const loadStudents = async () => {
     setLoading(true);
@@ -68,6 +84,54 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       console.error('Failed to load students:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const openEditModal = (student: User) => {
+    setEditingStudent(student);
+    setEditName(student.name || '');
+    setEditTurma(student.turma || turmasList[0] || '5.º A');
+    setEditNewPassword('');
+    setShowEditPassword(false);
+    setEditError('');
+    setEditSuccess('');
+  };
+
+  const closeEditModal = () => {
+    setEditingStudent(null);
+    setEditNewPassword('');
+    setEditError('');
+    setEditSuccess('');
+  };
+
+  const handleSaveStudent = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingStudent) return;
+    setEditError('');
+    setEditSuccess('');
+
+    if (editNewPassword && editNewPassword.length < 6) {
+      setEditError(language === 'pt' ? 'A nova palavra-passe deve ter pelo menos 6 caracteres.' : 'Password must have at least 6 characters.');
+      return;
+    }
+
+    setEditLoading(true);
+    try {
+      await api.adminUpdateStudent(editingStudent.id, editingStudent.email, {
+        newName: editName.trim() !== editingStudent.name ? editName.trim() : undefined,
+        newTurma: editTurma !== editingStudent.turma ? editTurma : undefined,
+        newPassword: editNewPassword ? editNewPassword : undefined,
+      });
+
+      setEditSuccess(language === 'pt' ? 'Dados do aluno atualizados com sucesso!' : 'Student updated successfully!');
+      await loadStudents();
+      setTimeout(() => {
+        closeEditModal();
+      }, 1000);
+    } catch (err: any) {
+      setEditError(err?.message || (language === 'pt' ? 'Erro ao atualizar dados do aluno.' : 'Error updating student.'));
+    } finally {
+      setEditLoading(false);
     }
   };
 
@@ -343,7 +407,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                     <th className="py-3 px-3.5">ID Público (Nickname)</th>
                     <th className="py-3 px-3.5 text-right">Pontos (XP)</th>
                     <th className="py-3 px-3.5">Data Registo</th>
-                    <th className="py-3 px-3.5">Última Atividade</th>
+                    <th className="py-3 px-3.5 text-center">Ações</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 bg-white">
@@ -372,8 +436,15 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                       <td className="py-3 px-3.5 whitespace-nowrap text-slate-500 text-xs">
                         {student.createdAt ? new Date(student.createdAt).toLocaleDateString('pt-PT') : '—'}
                       </td>
-                      <td className="py-3 px-3.5 whitespace-nowrap text-slate-600 text-xs">
-                        {student.lastActivity?.title || '—'}
+                      <td className="py-3 px-3.5 whitespace-nowrap text-center">
+                        <button
+                          onClick={() => openEditModal(student)}
+                          className="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-600 hover:text-white text-indigo-700 border border-indigo-200 text-xs font-bold transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                          title="Alterar palavra-passe ou mudar de turma"
+                        >
+                          <Edit className="w-3.5 h-3.5" />
+                          <span>{language === 'pt' ? 'Gerir Aluno' : 'Manage'}</span>
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -389,7 +460,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
             <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
             <span>
               {language === 'pt'
-                ? `Total de ${filteredStudents.length} aluno(s) listados. Os nomes reais e emails são confidenciais e visíveis apenas nesta área do professor.`
+                ? `Total de ${filteredStudents.length} aluno(s) listados. Os nomes reais e emails são confidenciais e visíveis apenas nesta área da professora.`
                 : `${filteredStudents.length} student(s) listed. Real names and emails are confidential and visible only in this teacher portal.`}
             </span>
           </div>
@@ -411,6 +482,149 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
             </button>
           </div>
         </div>
+
+        {/* SUB-MODAL: Edit Student Details (Password & Turma) */}
+        {editingStudent && (
+          <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs animate-in fade-in duration-200">
+            <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
+              {/* Header */}
+              <div className="p-5 bg-gradient-to-r from-indigo-900 to-slate-900 text-white flex items-center justify-between border-b border-indigo-800">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-amber-300">
+                    <Edit className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-white">
+                      {language === 'pt' ? 'Gerir Registo do Aluno' : 'Manage Student Record'}
+                    </h3>
+                    <p className="text-xs text-indigo-200 font-mono">
+                      {editingStudent.email}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={closeEditModal}
+                  className="p-1.5 rounded-full text-indigo-200 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Feedback messages */}
+              {editError && (
+                <div className="mx-5 mt-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-start gap-2 animate-in fade-in">
+                  <AlertCircle className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+                  <span>{editError}</span>
+                </div>
+              )}
+              {editSuccess && (
+                <div className="mx-5 mt-4 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-start gap-2 animate-in fade-in">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <span>{editSuccess}</span>
+                </div>
+              )}
+
+              {/* Edit Form */}
+              <form onSubmit={handleSaveStudent} className="p-5 space-y-4">
+                {/* 1. Nome do Aluno */}
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+                    {language === 'pt' ? 'Nome do Aluno' : 'Student Name'}
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={editName}
+                    onChange={(e) => setEditName(e.target.value)}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                </div>
+
+                {/* 2. Mudar de Turma */}
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center justify-between">
+                    <span>{language === 'pt' ? 'Mudar Turma do Aluno' : 'Change Class / Turma'}</span>
+                    <span className="text-[11px] text-indigo-600 font-semibold">
+                      {language === 'pt' ? 'Atual:' : 'Current:'} {editingStudent.turma || '5.º A'}
+                    </span>
+                  </label>
+                  <select
+                    value={editTurma}
+                    onChange={(e) => setEditTurma(e.target.value)}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+                  >
+                    {turmasList.map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* 3. Definir Nova Palavra-passe */}
+                <div className="pt-1 border-t border-slate-100">
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                      <KeyRound className="w-3.5 h-3.5 text-indigo-600" />
+                      <span>{language === 'pt' ? 'Alterar Palavra-passe' : 'Change Password'}</span>
+                    </label>
+                    <span className="text-[10px] text-slate-400 font-medium">
+                      {language === 'pt' ? '(Deixar vazio para manter)' : '(Leave blank to keep)'}
+                    </span>
+                  </div>
+                  <div className="relative">
+                    <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-2.5 pointer-events-none" />
+                    <input
+                      type={showEditPassword ? 'text' : 'password'}
+                      value={editNewPassword}
+                      onChange={(e) => setEditNewPassword(e.target.value)}
+                      placeholder={language === 'pt' ? 'Nova palavra-passe (mín. 6 carateres)' : 'New password (min 6 chars)'}
+                      className="w-full pl-9 pr-9 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowEditPassword(!showEditPassword)}
+                      className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 cursor-pointer"
+                    >
+                      {showEditPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                  <p className="text-[11px] text-slate-500 mt-1">
+                    {language === 'pt'
+                      ? 'Permite redefinir a palavra-passe do aluno diretamente caso ele se tenha esquecido.'
+                      : 'Allows directly resetting the student password if forgotten.'}
+                  </p>
+                </div>
+
+                {/* Buttons */}
+                <div className="flex items-center gap-2 pt-3 border-t border-slate-100">
+                  <button
+                    type="button"
+                    onClick={closeEditModal}
+                    className="flex-1 py-2 px-3 rounded-xl border border-slate-200 text-slate-700 text-xs sm:text-sm font-bold hover:bg-slate-50 transition-colors cursor-pointer"
+                  >
+                    {language === 'pt' ? 'Cancelar' : 'Cancel'}
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={editLoading}
+                    className="flex-1 py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 shadow-xs"
+                  >
+                    {editLoading ? (
+                      <RefreshCw className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <>
+                        <Save className="w-4 h-4" />
+                        <span>{language === 'pt' ? 'Guardar Alterações' : 'Save Changes'}</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

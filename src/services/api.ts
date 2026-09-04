@@ -345,7 +345,7 @@ export const api = {
       name: name.trim(), // Real name is PRIVATE
       email: normalizedEmail,
       publicId: finalPublicId, // Safe public Nickname
-      turma: finalTurma,
+      turma: isAdmin ? undefined : finalTurma,
       role: isAdmin ? 'admin' : 'student',
       language,
       points: 20, // initial welcome bonus
@@ -387,7 +387,7 @@ export const api = {
             name: data.name || fbUser.displayName || 'Estudante',
             email: data.email || fbUser.email || normalizedEmail,
             publicId: data.publicId || generateSecurePublicId(),
-            turma: data.turma || '5.º A',
+            turma: isAdmin ? undefined : (data.turma || '5.º A'),
             role: isAdmin ? 'admin' : (data.role || 'student'),
             language: data.language || 'pt',
             points: data.points ?? 20,
@@ -406,7 +406,7 @@ export const api = {
           name: fbUser.displayName || email.split('@')[0] || 'Estudante',
           email: fbUser.email || normalizedEmail,
           publicId: generateSecurePublicId(),
-          turma: '5.º A',
+          turma: isAdmin ? undefined : '5.º A',
           role: isAdmin ? 'admin' : 'student',
           language: 'pt',
           points: 20,
@@ -438,7 +438,7 @@ export const api = {
             name: docData.name || 'Estudante',
             email: docData.email,
             publicId: docData.publicId || generateSecurePublicId(),
-            turma: docData.turma || '5.º A',
+            turma: isAdmin ? undefined : (docData.turma || '5.º A'),
             role: isAdmin ? 'admin' : (docData.role || 'student'),
             language: docData.language || 'pt',
             points: docData.points ?? 20,
@@ -474,7 +474,7 @@ export const api = {
         name: found.name,
         email: found.email,
         publicId: found.publicId || 'Panda_Feliz_701',
-        turma: found.turma || '5.º A',
+        turma: isAdmin ? undefined : (found.turma || '5.º A'),
         role: isAdmin ? 'admin' : (found.role || 'student'),
         language: found.language || 'pt',
         points: found.points || 0,
@@ -692,6 +692,7 @@ export const api = {
     const user: User = JSON.parse(rawUser);
     if (isUserAdmin(user.email, user.role)) {
       user.role = 'admin';
+      delete user.turma;
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
     }
 
@@ -1004,7 +1005,9 @@ export const api = {
       // quiet fallback
     }
 
-    const sortedUsers = Array.from(userMap.values()).sort((a, b) => (b.points || 0) - (a.points || 0));
+    const sortedUsers = Array.from(userMap.values())
+      .filter((u) => !isUserAdmin(u.email, u.role) && u.role !== 'admin')
+      .sort((a, b) => (b.points || 0) - (a.points || 0));
 
     return sortedUsers.map((u, index) => ({
       position: index + 1,
@@ -1020,7 +1023,8 @@ export const api = {
 
   /**
    * Fetch all registered students from Cloud Firestore and local storage
-   * For the Administrator / Teacher reserved area with real names, emails, and points
+   * For the Administrator / Teacher reserved area with real names, emails, and points.
+   * NOTE: Administrators / Teachers are excluded from student rosters.
    */
   async getAllStudentsForAdmin(): Promise<User[]> {
     const studentMap = new Map<string, User>();
@@ -1034,13 +1038,20 @@ export const api = {
         if (data.email) {
           const emailNorm = String(data.email).toLowerCase().trim();
           const isAdmin = isUserAdmin(emailNorm, data.role);
+          if (isAdmin) {
+            // If admin has legacy turma in Firestore, clean it up silently
+            if (data.turma) {
+              setDoc(doc(db, 'users', docSnap.id), { turma: null }, { merge: true }).catch(() => {});
+            }
+            return; // Admins are not students
+          }
           const u: User = {
             id: docSnap.id,
             name: data.name || 'Estudante',
             email: data.email,
             publicId: data.publicId || 'Estudante',
             turma: data.turma || '5.º A',
-            role: isAdmin ? 'admin' : (data.role || 'student'),
+            role: 'student',
             language: data.language || 'pt',
             points: typeof data.points === 'number' ? data.points : 0,
             createdAt: data.createdAt || new Date().toISOString(),
@@ -1059,6 +1070,9 @@ export const api = {
       if (data.email) {
         const emailNorm = String(data.email).toLowerCase().trim();
         const isAdmin = isUserAdmin(emailNorm, data.role);
+        if (isAdmin) {
+          return; // Admins are not students
+        }
         const existing = studentMap.get(emailNorm);
         if (!existing) {
           studentMap.set(emailNorm, {
@@ -1067,7 +1081,7 @@ export const api = {
             email: data.email,
             publicId: data.publicId || 'Estudante',
             turma: data.turma || '5.º A',
-            role: isAdmin ? 'admin' : (data.role || 'student'),
+            role: 'student',
             language: data.language || 'pt',
             points: typeof data.points === 'number' ? data.points : 0,
             createdAt: data.createdAt || new Date().toISOString(),
@@ -1080,10 +1094,109 @@ export const api = {
     });
 
     return Array.from(studentMap.values()).sort((a, b) => {
-      if (a.turma !== b.turma) {
-        return a.turma.localeCompare(b.turma);
+      const turmaA = a.turma || '5.º A';
+      const turmaB = b.turma || '5.º A';
+      if (turmaA !== turmaB) {
+        return turmaA.localeCompare(turmaB);
       }
       return (b.points || 0) - (a.points || 0);
     });
+  },
+
+  /**
+   * Teacher / Admin management tool to update a student's password, class (turma), and name
+   */
+  async adminUpdateStudent(
+    studentId: string,
+    studentEmail: string,
+    updates: {
+      newPassword?: string;
+      newTurma?: string;
+      newName?: string;
+    }
+  ): Promise<{ success: boolean; message: string }> {
+    const normalizedEmail = (studentEmail || '').toLowerCase().trim();
+    if (!normalizedEmail && !studentId) {
+      throw new Error('Identificador do aluno não fornecido.');
+    }
+
+    if (updates.newPassword && updates.newPassword.length < 6) {
+      throw new Error('A nova palavra-passe deve ter pelo menos 6 caracteres.');
+    }
+
+    const firestoreUpdates: any = {};
+    if (updates.newPassword) firestoreUpdates.password = updates.newPassword;
+    if (updates.newTurma) firestoreUpdates.turma = updates.newTurma.trim();
+    if (updates.newName) firestoreUpdates.name = updates.newName.trim();
+
+    // 1. Update in Cloud Firestore users collection
+    let updatedDocId = studentId;
+    try {
+      if (studentId && !studentId.startsWith('local-')) {
+        await setDoc(doc(db, 'users', studentId), firestoreUpdates, { merge: true });
+      } else {
+        const q = query(collection(db, 'users'), where('email', '==', normalizedEmail));
+        const snap = await getDocs(q);
+        if (!snap.empty) {
+          updatedDocId = snap.docs[0].id;
+          await setDoc(doc(db, 'users', updatedDocId), firestoreUpdates, { merge: true });
+        }
+      }
+    } catch (err) {
+      console.warn('Firestore update warning in adminUpdateStudent:', err);
+    }
+
+    // 2. Update in Cloud Firestore publicProfiles collection (turma/name)
+    try {
+      if (updatedDocId && !updatedDocId.startsWith('local-')) {
+        const pubUpdates: any = {};
+        if (updates.newTurma) pubUpdates.turma = updates.newTurma.trim();
+        if (Object.keys(pubUpdates).length > 0) {
+          await setDoc(doc(db, 'publicProfiles', updatedDocId), pubUpdates, { merge: true });
+        }
+      }
+    } catch (err) {
+      console.warn('Firestore publicProfile update warning:', err);
+    }
+
+    // 3. Update in local storage
+    const users = getStoredUsers();
+    let localFound = false;
+    const updatedUsers = users.map((u: any) => {
+      if ((u.email || '').toLowerCase().trim() === normalizedEmail || u.id === studentId) {
+        localFound = true;
+        return {
+          ...u,
+          ...(updates.newPassword ? { password: updates.newPassword } : {}),
+          ...(updates.newTurma ? { turma: updates.newTurma.trim() } : {}),
+          ...(updates.newName ? { name: updates.newName.trim() } : {}),
+        };
+      }
+      return u;
+    });
+
+    if (localFound) {
+      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(updatedUsers));
+    }
+
+    // If this student is currently loaded as the current active session in this browser
+    const rawCurrent = localStorage.getItem(CURRENT_USER_KEY);
+    if (rawCurrent) {
+      try {
+        const currentUser = JSON.parse(rawCurrent);
+        if ((currentUser.email || '').toLowerCase().trim() === normalizedEmail) {
+          if (updates.newTurma) currentUser.turma = updates.newTurma.trim();
+          if (updates.newName) currentUser.name = updates.newName.trim();
+          localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(currentUser));
+        }
+      } catch {
+        // ignore
+      }
+    }
+
+    return {
+      success: true,
+      message: 'Registo do aluno atualizado com sucesso!',
+    };
   },
 };
