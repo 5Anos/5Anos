@@ -164,6 +164,12 @@ export interface TurmaRanking {
     publicId: string;
     points: number;
   }[];
+  allStudents?: {
+    publicId: string;
+    points: number;
+    activitiesCount: number;
+    badgeCount: number;
+  }[];
 }
 
 export interface StudentRanking {

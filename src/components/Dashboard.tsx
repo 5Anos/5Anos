@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, ArrowRight, BookOpen, Gamepad2, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Award, ArrowRight } from 'lucide-react';
 import { User, ActivityProgress, UserAchievement, Language } from '../types';
 import { translations } from '../i18n/translations';
 import { ALL_THEMES } from '../data/allThemesData';
@@ -41,9 +41,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
     .filter((p) => p.bestPercentage !== undefined)
     .map((p) => p.bestPercentage as number);
   const bestScore = quizScores.length > 0 ? Math.max(...quizScores) : 0;
-
-  // Last activity recommendation
-  const lastAct = user?.lastActivity;
 
   // Color mappings per theme number
   const getThemeColor = (num: number) => {
@@ -101,21 +98,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 animate-in fade-in duration-300">
-      {/* Header with Geometric Balance Alignment */}
-      <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+      {/* Header */}
+      <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200/60 text-xs font-bold text-indigo-700 mb-2">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
-            <span>Mundo TIC • 5.º Ano</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
             {language === 'pt' ? 'Olá' : 'Hello'}, {user ? user.name : (language === 'pt' ? 'Estudante' : 'Student')}! 👋
           </h1>
-          <p className="text-slate-500 mt-1 text-sm sm:text-base">
-            {language === 'pt'
-              ? `Explora os ${ALL_THEMES.length} temas principais de Tecnologias de Informação e Comunicação.`
-              : `Explore the ${ALL_THEMES.length} main topics of Information and Communication Technologies.`}
-          </p>
         </div>
 
         {/* Circular General Progress Badge */}
@@ -155,51 +143,130 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
       </header>
 
-      {/* Hero Recommendation Card */}
-      <div className="bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-900 rounded-[2rem] p-6 sm:p-8 text-white flex flex-col md:flex-row justify-between items-start md:items-center relative overflow-hidden shadow-xl gap-6">
-        <div className="relative z-10 space-y-3 sm:space-y-4 max-w-lg">
-          <div className="inline-block bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-indigo-100 border border-white/15">
-            {t.continueLearning}
-          </div>
-          <h2 className="text-xl sm:text-2xl font-bold leading-snug">
-            {lastAct
-              ? lastAct.title
-              : (language === 'pt' ? 'As TIC e a Sociedade: Como a tecnologia transforma o nosso dia a dia' : 'ICT and Society: How tech shapes our daily lives')}
-          </h2>
-          <p className="text-indigo-100/90 text-xs sm:text-sm leading-relaxed">
-            {lastAct
-              ? t.continueFromWhereYouLeft
-              : (language === 'pt'
-                  ? 'Aprende como os computadores e a internet funcionam na escola, hospitais, transportes e na comunicação responsável.'
-                  : 'Discover how computers and networks power schools, hospitals, transport, and responsible communication.')}
-          </p>
-          <button
-            onClick={() => {
-              if (lastAct) {
-                onNavigateTheme(lastAct.themeId, lastAct.moduleId, lastAct.challengeId);
-              } else {
-                onNavigateTheme('tic-sociedade');
-              }
-            }}
-            className="bg-white text-indigo-950 px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-indigo-50 transition-colors shadow-sm cursor-pointer"
-          >
-            <span>
-              {lastAct
-                ? (language === 'pt' ? 'Continuar 🚀' : 'Resume 🚀')
-                : (language === 'pt' ? 'Explorar o Tema 🚀' : 'Explore Topic 🚀')}
-            </span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
+      {/* Welcome & Introduction Presentation */}
+      <div className="bg-white rounded-[2rem] p-6 sm:p-8 border border-slate-200 shadow-xs space-y-4">
+        {language === 'pt' ? (
+          <>
+            <div className="space-y-3 text-slate-700 text-sm sm:text-base leading-relaxed">
+              <p className="text-base sm:text-lg font-extrabold text-slate-900">
+                Olá! 👋
+                <br />
+                Bem-vindo ao teu espaço de TIC — Tecnologias da Informação e Comunicação.
+              </p>
 
-        <div className="relative z-10 w-44 h-40 sm:w-56 sm:h-44 bg-white/10 rounded-3xl backdrop-blur-sm border border-white/20 flex flex-col items-center justify-center p-3 shrink-0 self-center md:self-auto overflow-hidden">
-          <ThemeIllustration
-            themeId={lastAct ? lastAct.themeId : 'tic-sociedade'}
-            className="w-full h-full object-contain"
-          />
-        </div>
+              <p>
+                Aqui vais aprender, experimentar e descobrir novas formas de utilizar a tecnologia de maneira segura, responsável, criativa e inteligente.
+              </p>
 
-        <div className="absolute right-[-20px] top-[-20px] w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none" />
+              <p>
+                Ao longo da tua aprendizagem, vais encontrar conteúdos, atividades, jogos, desafios e quizzes que te vão ajudar a compreender melhor o mundo digital e a desenvolver novas competências.
+              </p>
+            </div>
+
+            {/* 5 Highlights */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 my-4">
+              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm">
+                <span className="text-xl">🎮</span>
+                <span>Aprende enquanto jogas</span>
+              </div>
+              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm">
+                <span className="text-xl">🧠</span>
+                <span>Testa os teus conhecimentos</span>
+              </div>
+              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm">
+                <span className="text-xl">🏆</span>
+                <span>Ganha XP e conquistas</span>
+              </div>
+              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm">
+                <span className="text-xl">📈</span>
+                <span>Acompanha o teu progresso</span>
+              </div>
+              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm sm:col-span-2 lg:col-span-2">
+                <span className="text-xl">🚀</span>
+                <span>Supera novos desafios</span>
+              </div>
+            </div>
+
+            <div className="space-y-3 text-slate-700 text-sm sm:text-base leading-relaxed">
+              <p>
+                Não tens de saber tudo à primeira. Podes explorar, experimentar, errar, aprender e tentar novamente.
+              </p>
+
+              <p>
+                O mais importante é participares, descobrires coisas novas e aprenderes a utilizar a tecnologia de forma cada vez mais autónoma e consciente.
+              </p>
+            </div>
+
+            <div className="pt-3 border-t border-slate-100">
+              <p className="font-bold text-indigo-900 text-sm sm:text-base">
+                🌟 Estás pronto?
+              </p>
+              <p className="font-extrabold text-indigo-600 text-base sm:text-lg tracking-tight mt-0.5">
+                Entra, explora e começa a tua aventura nas TIC!
+              </p>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="space-y-3 text-slate-700 text-sm sm:text-base leading-relaxed">
+              <p className="text-base sm:text-lg font-extrabold text-slate-900">
+                Hello! 👋
+                <br />
+                Welcome to your ICT space — Information and Communication Technologies.
+              </p>
+
+              <p>
+                Here you will learn, experiment, and discover new ways to use technology safely, responsibly, creatively, and smartly.
+              </p>
+
+              <p>
+                Throughout your learning journey, you will find content, activities, games, challenges, and quizzes that will help you better understand the digital world and build new skills.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 my-4">
+              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm">
+                <span className="text-xl">🎮</span>
+                <span>Learn while playing</span>
+              </div>
+              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm">
+                <span className="text-xl">🧠</span>
+                <span>Test your knowledge</span>
+              </div>
+              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm">
+                <span className="text-xl">🏆</span>
+                <span>Earn XP and achievements</span>
+              </div>
+              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm">
+                <span className="text-xl">📈</span>
+                <span>Track your progress</span>
+              </div>
+              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 shadow-2xs font-bold text-slate-800 text-xs sm:text-sm sm:col-span-2 lg:col-span-2">
+                <span className="text-xl">🚀</span>
+                <span>Overcome new challenges</span>
+              </div>
+            </div>
+
+            <div className="space-y-3 text-slate-700 text-sm sm:text-base leading-relaxed">
+              <p>
+                You don't have to know everything on the first try. You can explore, experiment, make mistakes, learn, and try again.
+              </p>
+
+              <p>
+                The most important thing is to participate, discover new things, and learn to use technology in an increasingly autonomous and mindful way.
+              </p>
+            </div>
+
+            <div className="pt-3 border-t border-slate-100">
+              <p className="font-bold text-indigo-900 text-sm sm:text-base">
+                🌟 Are you ready?
+              </p>
+              <p className="font-extrabold text-indigo-600 text-base sm:text-lg tracking-tight mt-0.5">
+                Join in, explore, and begin your adventure in ICT!
+              </p>
+            </div>
+          </>
+        )}
       </div>
 
       {/* Main 12-Column Grid for Themes & Sidebar */}
@@ -207,11 +274,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
         {/* Left Column (Span 8): 6 Main Theme Cards */}
         <div className="lg:col-span-8 space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-              <span>{language === 'pt' ? 'Temas de Aprendizagem' : 'Learning Themes'}</span>
-              <span className="text-xs bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded-full">
-                6 {language === 'pt' ? 'Temas' : 'Themes'}
-              </span>
+            <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+              {language === 'pt' ? 'Temas de Aprendizagem' : 'Learning Themes'}
             </h2>
           </div>
 

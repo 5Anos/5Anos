@@ -30,44 +30,32 @@ const PROGRESS_STORAGE_KEY = 'tic_5ano_progress_';
 const ACHIEVEMENTS_STORAGE_KEY = 'tic_5ano_achievements_';
 const POINTS_STORAGE_KEY = 'tic_5ano_points_';
 
-// Initial demo accounts for offline fallback / quick test
-const INITIAL_DEMO_USERS = [
-  {
-    id: 'demo-joao',
-    name: 'João Silva',
-    email: 'joao.silva@escola.pt',
-    publicId: 'Panda_Feliz_701',
-    turma: '5.º A',
-    role: 'student' as const,
-    password: 'Aluno1234!',
-    language: 'pt' as Language,
-    points: 120,
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: 'demo-leonor',
-    name: 'Leonor Martins',
-    email: 'leonor.martins@escola.pt',
-    publicId: 'Raposa_Digital_284',
-    turma: '5.º B',
-    role: 'student' as const,
-    password: 'Aluno1234!',
-    language: 'pt' as Language,
-    points: 85,
-    createdAt: new Date().toISOString(),
-  },
-];
+// No demo accounts - real student accounts only
+const INITIAL_DEMO_USERS: any[] = [];
 
-function getStoredUsers() {
+function getStoredUsers(): any[] {
   try {
     const raw = localStorage.getItem(USERS_STORAGE_KEY);
     if (!raw) {
-      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(INITIAL_DEMO_USERS));
-      return INITIAL_DEMO_USERS;
+      return [];
     }
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) {
+      // Purge any legacy demo accounts from local storage
+      const cleaned = parsed.filter(
+        (u: any) =>
+          !u?.id?.startsWith('demo-') &&
+          u?.email !== 'joao.silva@escola.pt' &&
+          u?.email !== 'leonor.martins@escola.pt'
+      );
+      if (cleaned.length !== parsed.length) {
+        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(cleaned));
+      }
+      return cleaned;
+    }
+    return [];
   } catch {
-    return INITIAL_DEMO_USERS;
+    return [];
   }
 }
 
@@ -86,29 +74,71 @@ export const api = {
   },
 
   async getDemoAccounts(): Promise<{ email: string; name: string; defaultPass: string; publicId: string; turma: string }[]> {
-    return [
-      { email: 'joao.silva@escola.pt', name: 'João Silva', defaultPass: 'Aluno1234!', publicId: 'Panda_Feliz_701', turma: '5.º A' },
-      { email: 'leonor.martins@escola.pt', name: 'Leonor Martins', defaultPass: 'Aluno1234!', publicId: 'Raposa_Digital_284', turma: '5.º B' },
-    ];
+    return [];
+  },
+
+  /**
+   * Fetch all taken Nicknames from Firestore and LocalStorage
+   * to guarantee no duplicates are ever generated
+   */
+  async fetchTakenPublicIds(): Promise<string[]> {
+    const takenSet = new Set<string>();
+
+    // 1. LocalStorage accounts
+    const localUsers = getStoredUsers();
+    localUsers.forEach((u: any) => {
+      if (u?.publicId) {
+        takenSet.add(u.publicId.trim());
+      }
+    });
+
+    // 2. Query Firestore publicProfiles collection
+    try {
+      const q = query(collection(db, 'publicProfiles'), limit(300));
+      const snap = await getDocs(q);
+      snap.forEach((docSnap) => {
+        const d = docSnap.data();
+        if (d?.publicId) {
+          takenSet.add(String(d.publicId).trim());
+        }
+      });
+    } catch (err) {
+      console.warn('Could not query publicProfiles from Firestore:', err);
+    }
+
+    // 3. Query Firestore users collection
+    try {
+      const qUsers = query(collection(db, 'users'), limit(300));
+      const snapUsers = await getDocs(qUsers);
+      snapUsers.forEach((docSnap) => {
+        const d = docSnap.data();
+        if (d?.publicId) {
+          takenSet.add(String(d.publicId).trim());
+        }
+      });
+    } catch {
+      // ignore rule restrictions
+    }
+
+    return Array.from(takenSet);
+  },
+
+  /**
+   * Generate a guaranteed non-existent unique Nickname
+   */
+  async generateUniquePublicId(): Promise<string> {
+    const taken = await this.fetchTakenPublicIds();
+    return generateSecurePublicId(taken);
   },
 
   getAllTakenPublicIds(): string[] {
     const users = getStoredUsers();
-    const ids = users.map((u: any) => u.publicId).filter(Boolean);
-    INITIAL_DEMO_USERS.forEach((u) => {
-      if (!ids.includes(u.publicId)) ids.push(u.publicId);
-    });
-    return ids;
+    return users.map((u: any) => u.publicId).filter(Boolean);
   },
 
   getAllRegisteredEmails(): string[] {
     const users = getStoredUsers();
-    const emails = users.map((u: any) => u.email.toLowerCase().trim()).filter(Boolean);
-    INITIAL_DEMO_USERS.forEach((u) => {
-      const em = u.email.toLowerCase().trim();
-      if (!emails.includes(em)) emails.push(em);
-    });
-    return emails;
+    return users.map((u: any) => (u.email || '').toLowerCase().trim()).filter(Boolean);
   },
 
   /**
@@ -161,7 +191,7 @@ export const api = {
     const trimmedPublicId = (publicId || '').trim();
     const finalTurma = turma || '5.º A';
 
-    // 1. Strict Validation: Uniqueness of Email & Public ID across local storage & demo accounts
+    // 1. Strict Validation: Uniqueness of Email & Nickname across Firestore & local storage
     const users = getStoredUsers();
     
     // Check Email Uniqueness
@@ -174,18 +204,14 @@ export const api = {
       );
     }
 
-    // Check Public Identifier Uniqueness
-    const takenPublicIds = this.getAllTakenPublicIds();
-    const publicIdExists = takenPublicIds.some((id) => id.toLowerCase().trim() === trimmedPublicId.toLowerCase());
-    if (publicIdExists) {
-      throw new Error(
-        language === 'pt'
-          ? `❌ O identificador "${trimmedPublicId}" já pertence a outro aluno. Por favor, clica em "Baralhar outro nome".`
-          : `❌ The public identifier "${trimmedPublicId}" is already in use by another student. Please shuffle to get a new one.`
-      );
-    }
+    // Fetch up-to-date taken Nicknames from Firestore and LocalStorage
+    const takenPublicIds = await this.fetchTakenPublicIds();
+    let finalPublicId = trimmedPublicId;
 
-    const finalPublicId = trimmedPublicId || generateSecurePublicId(takenPublicIds);
+    // If no nickname provided OR if nickname already exists in database, generate a guaranteed non-existent unique one
+    if (!finalPublicId || takenPublicIds.some((id) => id.toLowerCase().trim() === finalPublicId.toLowerCase())) {
+      finalPublicId = generateSecurePublicId(takenPublicIds);
+    }
 
     try {
       // 1. Firebase Authentication create user
@@ -199,7 +225,7 @@ export const api = {
         id: fbUser.uid,
         name: name.trim(), // Real name is PRIVATE
         email: fbUser.email || email.trim(),
-        publicId: finalPublicId, // Safe public anonymous identifier (GUARANTEED UNIQUE)
+        publicId: finalPublicId, // Safe public Nickname (GUARANTEED UNIQUE)
         turma: finalTurma,
         role: 'student',
         language,
@@ -638,17 +664,15 @@ export const api = {
    * Get Class/Turma Rankings with Gamification metrics
    */
   async getTurmaRankings(): Promise<TurmaRanking[]> {
-    const turmas = getTurmasList();
+    const defaultTurmas = getTurmasList();
     const storedUsers = getStoredUsers();
     
-    // Combine stored users + initial demo users ensuring no duplicate IDs
     const userMap = new Map<string, any>();
-    INITIAL_DEMO_USERS.forEach((u) => userMap.set(u.id, u));
     storedUsers.forEach((u: any) => userMap.set(u.id, u));
 
     // Try fetching latest public profiles from Firestore if available
     try {
-      const q = query(collection(db, 'publicProfiles'), orderBy('points', 'desc'), limit(100));
+      const q = query(collection(db, 'publicProfiles'), orderBy('points', 'desc'), limit(300));
       const snap = await getDocs(q);
       snap.forEach((docSnap) => {
         const d = docSnap.data();
@@ -669,48 +693,66 @@ export const api = {
 
     const allUsers = Array.from(userMap.values());
 
-    const result: TurmaRanking[] = turmas.map((turmaName) => {
-      const turmaStudents = allUsers.filter((u) => (u.turma || '5.º A').toLowerCase() === turmaName.toLowerCase());
-      const totalPoints = turmaStudents.reduce((sum, u) => sum + (u.points || 0), 0);
-      const studentCount = turmaStudents.length || 1;
-      const avgPoints = Math.round(totalPoints / studentCount);
+    // Gather unique turmas (combining default turmas and any registered student turmas)
+    const turmaSet = new Set<string>(defaultTurmas);
+    allUsers.forEach((u) => {
+      if (u.turma && typeof u.turma === 'string') {
+        turmaSet.add(u.turma.trim());
+      }
+    });
 
-      // Sort students in this turma by points
-      const topStudents = [...turmaStudents]
+    const allTurmaNames = Array.from(turmaSet);
+
+    const result: TurmaRanking[] = allTurmaNames.map((turmaName) => {
+      const turmaStudents = allUsers.filter(
+        (u) => (u.turma || '5.º A').toLowerCase().trim() === turmaName.toLowerCase().trim()
+      );
+      const totalPoints = turmaStudents.reduce((sum, u) => sum + (u.points || 0), 0);
+      const studentCount = turmaStudents.length;
+      const avgPoints = studentCount > 0 ? Math.round(totalPoints / studentCount) : 0;
+
+      // Sort all students in this turma by points descending
+      const allStudentsInTurma = [...turmaStudents]
         .sort((a, b) => (b.points || 0) - (a.points || 0))
-        .slice(0, 3)
         .map((s) => ({
           publicId: s.publicId || 'Estudante_TIC',
           points: s.points || 0,
+          activitiesCount: Math.floor((s.points || 0) / 15),
+          badgeCount: Math.min(6, Math.floor((s.points || 0) / 30) + 1),
         }));
+
+      const topStudents = allStudentsInTurma.slice(0, 3).map((s) => ({
+        publicId: s.publicId,
+        points: s.points,
+      }));
 
       return {
         turma: turmaName,
         totalPoints,
         avgPoints,
-        studentCount: turmaStudents.length,
+        studentCount,
         completedActivities: Math.round(totalPoints / 15),
-        topBadge: avgPoints > 100 ? '🥇 Turma Ouro' : avgPoints > 50 ? '🥈 Turma Prata' : '🥉 Turma Bronze',
+        topBadge: avgPoints >= 100 ? '🥇 Turma Ouro' : avgPoints >= 50 ? '🥈 Turma Prata' : avgPoints > 0 ? '🥉 Turma Bronze' : '⭐ Estreante',
         topStudents,
+        allStudents: allStudentsInTurma,
       };
     });
 
-    // Rank classes by average points per student for fairness, or total points if tie
-    result.sort((a, b) => b.totalPoints - a.totalPoints);
+    // Rank classes by total points descending, then by avgPoints, then alphabetically
+    result.sort((a, b) => b.totalPoints - a.totalPoints || b.avgPoints - a.avgPoints || a.turma.localeCompare(b.turma));
     return result;
   },
 
   /**
-   * Get Individual Student Rankings (using safe public identifiers)
+   * Get Individual Student Rankings (using safe public Nicknames)
    */
   async getStudentRankings(currentUserId?: string): Promise<StudentRanking[]> {
     const storedUsers = getStoredUsers();
     const userMap = new Map<string, any>();
-    INITIAL_DEMO_USERS.forEach((u) => userMap.set(u.id, u));
     storedUsers.forEach((u: any) => userMap.set(u.id, u));
 
     try {
-      const q = query(collection(db, 'publicProfiles'), orderBy('points', 'desc'), limit(100));
+      const q = query(collection(db, 'publicProfiles'), orderBy('points', 'desc'), limit(300));
       const snap = await getDocs(q);
       snap.forEach((docSnap) => {
         const d = docSnap.data();

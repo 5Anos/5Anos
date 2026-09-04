@@ -63,9 +63,10 @@ const ADJECTIVES = [
 ];
 
 export function generateSecurePublicId(existingIds: string[] = []): string {
-  const existingSet = new Set(existingIds.map((id) => id.toLowerCase().trim()));
+  const existingSet = new Set(existingIds.map((id) => (id || '').toLowerCase().trim()));
 
-  for (let attempt = 0; attempt < 50; attempt++) {
+  // 1. Try standard friendly combinations
+  for (let attempt = 0; attempt < 100; attempt++) {
     const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)];
     const adj = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
     const randomNum = Math.floor(100 + Math.random() * 900); // 3-digit number 100-999
@@ -76,11 +77,21 @@ export function generateSecurePublicId(existingIds: string[] = []): string {
     }
   }
 
-  // Fallback with extra timestamp digits if crowded
-  return `Explorador_TIC_${Math.floor(1000 + Math.random() * 9000)}`;
+  // 2. High-entropy fallback guaranteed to not collide
+  for (let attempt = 0; attempt < 100; attempt++) {
+    const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)];
+    const randomNum = Math.floor(1000 + Math.random() * 9000);
+    const candidate = `${noun}_TIC_${randomNum}`;
+    if (!existingSet.has(candidate.toLowerCase())) {
+      return candidate;
+    }
+  }
+
+  // 3. Absolute unique timestamp fallback
+  return `Estudante_TIC_${Date.now().toString().slice(-4)}`;
 }
 
 export const PUBLIC_ID_EXPLANATION = {
-  pt: 'Este é o nome que os outros alunos verão no ranking. O teu nome verdadeiro permanece privado.',
-  en: 'This is the name other students will see on the leaderboard. Your real name remains private.',
+  pt: 'Este é o teu Nickname para o ranking e para os desafios. O teu nome verdadeiro permanece 100% privado.',
+  en: 'This is your Nickname for leaderboards and challenges. Your real name remains 100% private.',
 };

@@ -56,20 +56,32 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         setTurma(turmas[0]);
       }
       if (!publicId) {
-        const taken = api.getAllTakenPublicIds();
-        setPublicId(generateSecurePublicId(taken));
+        api
+          .generateUniquePublicId()
+          .then((uniqueId) => {
+            setPublicId(uniqueId);
+          })
+          .catch(() => {
+            const taken = api.getAllTakenPublicIds();
+            setPublicId(generateSecurePublicId(taken));
+          });
       }
     }
   }, [isOpen]);
 
   if (!isOpen) return null;
 
-  const handleShufflePublicId = () => {
+  const handleShufflePublicId = async () => {
     setIsShuffling(true);
-    const taken = api.getAllTakenPublicIds();
-    const newId = generateSecurePublicId(taken);
-    setPublicId(newId);
-    setTimeout(() => setIsShuffling(false), 300);
+    try {
+      const newId = await api.generateUniquePublicId();
+      setPublicId(newId);
+    } catch {
+      const taken = api.getAllTakenPublicIds();
+      setPublicId(generateSecurePublicId(taken));
+    } finally {
+      setTimeout(() => setIsShuffling(false), 200);
+    }
   };
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -161,12 +173,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
     } finally {
       setLoading(false);
     }
-  };
-
-  const fillDemoAccount = (demoEmail: string, demoPass: string) => {
-    setEmail(demoEmail);
-    setPassword(demoPass);
-    setErrorMsg('');
   };
 
   return (
@@ -325,31 +331,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                   </>
                 )}
               </button>
-
-              {/* Demo Accounts shortcut */}
-              <div className="pt-4 border-t border-slate-100">
-                <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 text-center">
-                  {language === 'pt' ? 'Contas de Demonstração Rápida' : 'Quick Demo Accounts'}
-                </p>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => fillDemoAccount('joao.silva@escola.pt', 'Aluno1234!')}
-                    className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-left hover:bg-indigo-50/50 hover:border-indigo-200 transition-colors cursor-pointer"
-                  >
-                    <p className="text-xs font-bold text-slate-800 truncate">João Silva (5.º A)</p>
-                    <p className="text-[10px] text-slate-500 truncate">Panda_Feliz_701</p>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => fillDemoAccount('leonor.martins@escola.pt', 'Aluno1234!')}
-                    className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-left hover:bg-indigo-50/50 hover:border-indigo-200 transition-colors cursor-pointer"
-                  >
-                    <p className="text-xs font-bold text-slate-800 truncate">Leonor Martins (5.º B)</p>
-                    <p className="text-[10px] text-slate-500 truncate">Raposa_Digital_284</p>
-                  </button>
-                </div>
-              </div>
             </form>
           )}
 
@@ -469,12 +450,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                 </p>
               </div>
 
-              {/* 5. Identificador Público Seguro */}
+              {/* 5. Nickname (Nome Público) */}
               <div className="p-4 rounded-2xl bg-indigo-50/70 border border-indigo-200/80 space-y-2.5">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-bold uppercase tracking-wider text-indigo-900 flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
-                    {language === 'pt' ? 'Identificador Público Seguro' : 'Safe Public Identifier'}
+                    <span>Nickname</span>
                   </label>
                   <button
                     type="button"
@@ -483,18 +464,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                     className="inline-flex items-center gap-1 text-xs font-bold text-indigo-700 hover:text-indigo-900 bg-white px-2.5 py-1 rounded-lg border border-indigo-200 shadow-2xs hover:bg-indigo-50 transition-colors cursor-pointer"
                   >
                     <RefreshCw className={`w-3.5 h-3.5 ${isShuffling ? 'animate-spin' : ''}`} />
-                    <span>{language === 'pt' ? '🔄 Baralhar outro nome' : '🔄 Shuffle Name'}</span>
+                    <span>{language === 'pt' ? '🔄 Baralhar outro Nickname' : '🔄 Shuffle Nickname'}</span>
                   </button>
                 </div>
 
-                {/* Display Public ID Badge */}
+                {/* Display Nickname Badge */}
                 <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-indigo-200/60 shadow-xs">
                   <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-blue-500 text-white flex items-center justify-center font-bold text-lg shadow-xs">
                     🎭
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
-                      <p className="text-xs text-slate-400 font-semibold">{language === 'pt' ? 'O teu avatar público:' : 'Your public avatar:'}</p>
+                      <p className="text-xs text-slate-400 font-semibold">{language === 'pt' ? 'O teu Nickname no Mundo TIC:' : 'Your Nickname in Mundo TIC:'}</p>
                       <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
                         {language === 'pt' ? '✅ 100% Único' : '✅ Unique'}
                       </span>
