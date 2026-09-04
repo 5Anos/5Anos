@@ -234,31 +234,27 @@ export const api = {
       };
 
       // 2. Save private profile to Cloud Firestore /users/{uid}
-      try {
-        await setDoc(doc(db, 'users', fbUser.uid), {
-          id: newUser.id,
-          name: newUser.name, // Private
-          email: newUser.email,
-          publicId: newUser.publicId,
-          turma: newUser.turma,
-          role: newUser.role,
-          language: newUser.language,
-          points: newUser.points,
-          createdAt: newUser.createdAt,
-        });
+      await setDoc(doc(db, 'users', fbUser.uid), {
+        id: newUser.id,
+        name: newUser.name, // Private
+        email: newUser.email,
+        publicId: newUser.publicId,
+        turma: newUser.turma,
+        role: newUser.role,
+        language: newUser.language,
+        points: newUser.points,
+        createdAt: newUser.createdAt,
+      });
 
-        // 3. Save safe public profile /publicProfiles/{uid} (No real name, no email)
-        await setDoc(doc(db, 'publicProfiles', fbUser.uid), {
-          id: newUser.id,
-          publicId: newUser.publicId,
-          turma: newUser.turma,
-          role: newUser.role,
-          points: newUser.points,
-          createdAt: newUser.createdAt,
-        });
-      } catch (dbErr) {
-        console.warn('Firestore write warning:', dbErr);
-      }
+      // 3. Save safe public profile /publicProfiles/{uid} (No real name, no email)
+      await setDoc(doc(db, 'publicProfiles', fbUser.uid), {
+        id: newUser.id,
+        publicId: newUser.publicId,
+        turma: newUser.turma,
+        role: newUser.role,
+        points: newUser.points,
+        createdAt: newUser.createdAt,
+      });
 
       users.push({ ...newUser, password });
       localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
@@ -266,52 +262,43 @@ export const api = {
       this.setToken(fbUser.uid);
       return { user: newUser, token: fbUser.uid };
     } catch (fbError: any) {
-      console.warn('Firebase register notice, using built-in database:', fbError);
+      console.error('Firebase Auth/Firestore error during registration:', fbError);
 
-      const newUser: User = {
-        id: `u-${Date.now()}`,
-        name: name.trim(),
-        email: email.trim(),
-        publicId: finalPublicId,
-        turma: finalTurma,
-        role: 'student',
-        language,
-        points: 20,
-        createdAt: new Date().toISOString(),
-      };
-
-      users.push({ ...newUser, password });
-      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
-      const token = `local-token-${newUser.id}`;
-      this.setToken(token);
-
-      // Attempt background Firestore sync
-      try {
-        await setDoc(doc(db, 'users', newUser.id), {
-          id: newUser.id,
-          name: newUser.name,
-          email: newUser.email,
-          publicId: newUser.publicId,
-          turma: newUser.turma,
-          role: newUser.role,
-          language: newUser.language,
-          points: newUser.points,
-          createdAt: newUser.createdAt,
-        });
-        await setDoc(doc(db, 'publicProfiles', newUser.id), {
-          id: newUser.id,
-          publicId: newUser.publicId,
-          turma: newUser.turma,
-          role: newUser.role,
-          points: newUser.points,
-          createdAt: newUser.createdAt,
-        });
-      } catch {
-        // quiet fallback
+      if (fbError?.code === 'auth/operation-not-allowed') {
+        throw new Error(
+          language === 'pt'
+            ? '⚠️ O método E-mail/Palavra-passe não está ativo no Firebase Console. Vá a Authentication → Sign-in method e ative "E-mail/palavra-passe".'
+            : '⚠️ Email/Password provider is not enabled in Firebase Console (Authentication → Sign-in method).'
+        );
+      }
+      if (fbError?.code === 'auth/email-already-in-use') {
+        throw new Error(
+          language === 'pt'
+            ? '❌ Este email já está registado no Firebase. Inicia sessão ou usa outro email.'
+            : '❌ This email is already registered in Firebase.'
+        );
+      }
+      if (fbError?.code === 'auth/weak-password') {
+        throw new Error(
+          language === 'pt'
+            ? '❌ A palavra-passe é muito fraca. Deve ter no mínimo 6 caracteres.'
+            : '❌ Password too weak (minimum 6 characters).'
+        );
+      }
+      if (fbError?.code === 'permission-denied') {
+        throw new Error(
+          language === 'pt'
+            ? '❌ Permissão negada no Firestore ao gravar o utilizador.'
+            : '❌ Cloud Firestore permission denied.'
+        );
       }
 
-      return { user: newUser, token };
+      // If user had a local fallback, let them know what occurred
+      throw new Error(
+        language === 'pt'
+          ? `❌ Não foi possível gravar no Firebase: ${fbError?.message || fbError?.code || 'Erro de ligação'}.`
+          : `❌ Failed to save to Firebase: ${fbError?.message || fbError?.code || 'Connection error'}.`
+      );
     }
   },
 
