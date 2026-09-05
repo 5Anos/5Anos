@@ -12,7 +12,7 @@ service cloud.firestore {
 
     function isAdmin() {
       return isSignedIn() && (
-        request.auth.token.email == 'imaginebycarla2023@gmail.com' ||
+        (('email' in request.auth.token) && request.auth.token.email == 'imaginebycarla2023@gmail.com') ||
         (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'teacher'])
       );
@@ -35,7 +35,7 @@ service cloud.firestore {
       // Students can read/write their own profile; Admins/teachers can read and manage
       allow read: if isOwner(userId) || isAdmin();
       allow create: if isOwner(userId) && (!('role' in request.resource.data) || request.resource.data.role == 'student' || isAdmin());
-      allow update: if (isOwner(userId) && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']) || resource.data.role == request.resource.data.role)) || isAdmin();
+      allow update: if (isOwner(userId) && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']) || request.resource.data.role == 'student' || isAdmin())) || isAdmin();
       allow delete: if isAdmin();
 
       // Subcollection: Activity Progress

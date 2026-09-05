@@ -212,10 +212,51 @@ export const api = {
             }
             callback(user);
             return;
+          } else {
+            // User is signed in to Firebase Auth, but Firestore document does not exist yet
+            const isAdmin = isUserAdmin(fbUser.email || '');
+            const rawUser = localStorage.getItem(CURRENT_USER_KEY);
+            let user: User | null = null;
+            if (rawUser) {
+              try {
+                const parsed = JSON.parse(rawUser);
+                if (parsed.email === fbUser.email || parsed.id === fbUser.uid) {
+                  user = parsed;
+                  user!.id = fbUser.uid;
+                }
+              } catch {
+                // ignore
+              }
+            }
+            if (!user) {
+              user = {
+                id: fbUser.uid,
+                name: fbUser.displayName || (isAdmin ? 'Professora Carla' : 'Estudante'),
+                email: fbUser.email || '',
+                publicId: isAdmin ? 'Docente_TIC' : generateSecurePublicId(this.getAllTakenPublicIds()),
+                turma: isAdmin ? undefined : '5.º A',
+                role: isAdmin ? 'admin' : 'student',
+                points: 20,
+                language: 'pt',
+                createdAt: new Date().toISOString(),
+              };
+            }
+            await this.syncUserToFirestore(user);
+            localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+            try {
+              const token = await fbUser.getIdToken();
+              this.setToken(token);
+            } catch {
+              this.setToken(fbUser.uid);
+            }
+            callback(user);
+            return;
           }
-        } catch {
-          // offline
+        } catch (e) {
+          console.warn('onAuthChange profile check notice:', e);
         }
+      } else {
+        callback(null);
       }
     });
   },
@@ -225,7 +266,27 @@ export const api = {
    */
   async syncUserToFirestore(user: User): Promise<boolean> {
     try {
-      const isAdmin = isUserAdmin(user.email, user.role);
+      // 1. Wait for Firebase Auth state to resolve
+      if (typeof auth.authStateReady === 'function') {
+        try {
+          await auth.authStateReady();
+        } catch {
+          // ignore
+        }
+      }
+
+      // 2. Check if authenticated
+      const currentAuthUser = auth.currentUser;
+      if (!currentAuthUser) {
+        // Not authenticated in Firebase Auth (guest mode, local preview, or offline).
+        // Skip Firestore sync cleanly to avoid permission-denied errors.
+        return false;
+      }
+
+      // 3. Align target UID with active authenticated user
+      const targetUserId = currentAuthUser.uid;
+      user.id = targetUserId;
+      const isAdmin = isUserAdmin(currentAuthUser.email || user.email, user.role);
       const finalRole = isAdmin ? 'admin' : (user.role || 'student');
       user.role = finalRole;
       if (isAdmin) {
@@ -233,9 +294,9 @@ export const api = {
       }
 
       const payload: any = {
-        id: user.id,
+        id: targetUserId,
         name: user.name,
-        email: user.email.toLowerCase().trim(),
+        email: (currentAuthUser.email || user.email || '').toLowerCase().trim(),
         publicId: user.publicId,
         role: finalRole,
         language: user.language || 'pt',
@@ -250,18 +311,18 @@ export const api = {
         payload.turma = user.turma || '5.º A';
       }
 
-      await setDoc(doc(db, 'users', user.id), payload, { merge: true });
+      await setDoc(doc(db, 'users', targetUserId), payload, { merge: true });
 
       // In public rankings: ONLY students appear in publicProfiles (minimized data for privacy)
       if (isAdmin) {
         try {
-          await deleteDoc(doc(db, 'publicProfiles', user.id));
+          await deleteDoc(doc(db, 'publicProfiles', targetUserId));
         } catch {
           // ignore
         }
       } else {
         await setDoc(
-          doc(db, 'publicProfiles', user.id),
+          doc(db, 'publicProfiles', targetUserId),
           {
             publicId: user.publicId,
             turma: user.turma || '5.º A',
@@ -271,10 +332,10 @@ export const api = {
         );
       }
 
-      console.log('✅ Successfully synced user to Cloud Firestore:', user.id);
+      console.log('✅ Successfully synced user to Cloud Firestore:', targetUserId);
       return true;
-    } catch (err) {
-      console.error('❌ Error syncing user to Cloud Firestore:', err);
+    } catch (err: any) {
+      console.warn('⚠️ Cloud Firestore sync notice:', err?.message || err);
       return false;
     }
   },
@@ -340,7 +401,13 @@ export const api = {
       console.warn('Firebase Auth creation notice (will store profile in Cloud Firestore):', fbError?.code || fbError?.message);
     }
 
-    const userId = fbUid || `user_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const randBuf = new Uint32Array(1);
+    if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+      crypto.getRandomValues(randBuf);
+    } else {
+      randBuf[0] = Math.floor(Math.random() * 1000000);
+    }
+    const userId = fbUid || `user_${Date.now()}_${randBuf[0].toString(36)}`;
     const isAdmin = isUserAdmin(normalizedEmail);
     const newUser: User = {
       id: userId,
@@ -450,156 +517,6 @@ export const api = {
   },
 
   /**
-   * Password Recovery using Firebase sendPasswordResetEmail
-   */
-  async recoverPassword(email: string): Promise<{ success: boolean; message: string; requiresDirectReset?: boolean }> {
-    const normalizedEmail = email.trim().toLowerCase();
-
-    // 1. Check if user exists in Cloud Firestore or localStorage or Demo
-    let existsInFirestore = false;
-    let registeredUser: any = null;
-
-    try {
-      const q = query(collection(db, 'users'), where('email', '==', normalizedEmail));
-      const snap = await getDocs(q);
-      if (!snap.empty) {
-        existsInFirestore = true;
-        registeredUser = snap.docs[0].data();
-      }
-    } catch (dbErr) {
-      console.warn('Firestore query warning during recover:', dbErr);
-    }
-
-    if (!registeredUser) {
-      const users = getStoredUsers();
-      registeredUser = users.find((u: any) => (u.email || '').toLowerCase().trim() === normalizedEmail);
-    }
-
-    // Try Firebase Authentication sendPasswordResetEmail
-    try {
-      await sendPasswordResetEmail(auth, normalizedEmail);
-      return {
-        success: true,
-        message: '📧 Enviámos o link de recuperação para o teu email! IMPORTANTE: Verifica a caixa de entrada e a pasta de SPAM / Lixo Eletrónico.',
-      };
-    } catch (fbError: any) {
-      console.warn('Firebase recover error:', fbError?.code, fbError?.message);
-
-      if (fbError.code === 'auth/invalid-email') {
-        throw new Error('Endereço de email inválido.');
-      }
-      if (fbError.code === 'auth/user-not-found') {
-        throw new Error('Não foi encontrada nenhuma conta registada com este endereço de email.');
-      }
-      if (fbError.code === 'auth/too-many-requests') {
-        throw new Error('Demasiadas tentativas. Por favor, aguarda alguns minutos antes de tentar novamente.');
-      }
-
-      // If user exists in Firestore
-      if (registeredUser || existsInFirestore) {
-        throw new Error('Ocorreu um erro ao enviar o email de recuperação. Por favor, tenta novamente dentro de instantes.');
-      }
-
-      // If user doesn't exist anywhere
-      throw new Error('Não foi encontrada nenhuma conta registada com este endereço de email.');
-    }
-  },
-
-  /**
-   * Direct Password Reset (Updates Firestore, localStorage, and local DB)
-   */
-  async resetPasswordDirect(
-    email: string,
-    newPassword: string,
-    turmaVerification?: string
-  ): Promise<{ success: boolean; message: string }> {
-    const normalizedEmail = email.trim().toLowerCase();
-
-    if (newPassword.length < 6) {
-      throw new Error('A nova palavra-passe deve ter pelo menos 6 caracteres.');
-    }
-
-    let userDocId: string | null = null;
-    let foundUserData: any = null;
-
-    // 1. Search in Cloud Firestore
-    try {
-      const q = query(collection(db, 'users'), where('email', '==', normalizedEmail));
-      const snap = await getDocs(q);
-      if (!snap.empty) {
-        userDocId = snap.docs[0].id;
-        foundUserData = snap.docs[0].data();
-      }
-    } catch (dbErr) {
-      console.warn('Firestore lookup during direct reset:', dbErr);
-    }
-
-    // 2. Search in local storage
-    const users = getStoredUsers();
-    const localUserIndex = users.findIndex(
-      (u: any) => (u.email || '').toLowerCase().trim() === normalizedEmail
-    );
-    if (localUserIndex !== -1 && !foundUserData) {
-      foundUserData = users[localUserIndex];
-      userDocId = foundUserData.id;
-    }
-
-    const isAdmin = isUserAdmin(normalizedEmail, foundUserData?.role);
-
-    if (!foundUserData && !userDocId) {
-      if (isAdmin) {
-        userDocId = `admin-${Date.now()}`;
-        foundUserData = {
-          id: userDocId,
-          name: 'Professora Carla',
-          email: normalizedEmail,
-          publicId: 'Docente_TIC',
-          role: 'admin',
-          language: 'pt',
-          points: 20,
-          createdAt: new Date().toISOString(),
-        };
-      } else {
-        throw new Error('Não foi encontrada nenhuma conta associada a este email.');
-      }
-    }
-
-    // Verification check: for students, if turma was provided, verify it
-    if (!isAdmin && turmaVerification && foundUserData?.turma) {
-      if (turmaVerification.trim() !== foundUserData.turma.trim()) {
-        throw new Error(`A turma indicada não coincide com a turma do registo deste email (${foundUserData.turma}).`);
-      }
-    }
-
-    // 3. Update in server backend (secure salted pbkdf2 hash)
-    try {
-      await fetch('/api/auth/recover', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: normalizedEmail, newPassword }),
-      });
-    } catch {
-      // ignore
-    }
-
-    // 4. Update profile in Cloud Firestore without plaintext password
-    if (userDocId) {
-      try {
-        await updateDoc(doc(db, 'users', userDocId), {
-          updatedAt: new Date().toISOString(),
-        });
-      } catch {
-        // ignore
-      }
-    }
-
-    return {
-      success: true,
-      message: '✅ Palavra-passe atualizada com sucesso! Já podes iniciar sessão com a tua nova palavra-passe.',
-    };
-  },
-
-  /**
    * Logout from Firebase
    */
   async logout(): Promise<void> {
@@ -677,10 +594,12 @@ export const api = {
       const user = JSON.parse(rawUser);
       user.language = language;
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-      try {
-        await setDoc(doc(db, 'users', user.id), { language }, { merge: true });
-      } catch {
-        // ignore
+      if (auth.currentUser && auth.currentUser.uid === user.id) {
+        try {
+          await setDoc(doc(db, 'users', user.id), { language }, { merge: true });
+        } catch {
+          // ignore
+        }
       }
     }
   },
@@ -784,36 +703,38 @@ export const api = {
     }
 
     // Sync to Cloud Firestore reliably with setDoc merge
-    try {
-      await setDoc(doc(db, 'users', user.id, 'progress', payload.activityId), existing, { merge: true });
-      await setDoc(
-        doc(db, 'users', user.id),
-        {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          publicId: user.publicId,
-          turma: user.turma || '5.º A',
-          role: user.role || 'student',
-          points: user.points,
-          lastActivity: user.lastActivity,
-        },
-        { merge: true }
-      );
-      await setDoc(
-        doc(db, 'publicProfiles', user.id),
-        {
-          id: user.id,
-          publicId: user.publicId,
-          turma: user.turma || '5.º A',
-          role: user.role || 'student',
-          points: user.points,
-        },
-        { merge: true }
-      );
-      console.log('✅ Progress and points synced to Cloud Firestore for user:', user.id);
-    } catch (err) {
-      console.error('❌ Firestore sync error in saveProgress:', err);
+    if (auth.currentUser && auth.currentUser.uid === user.id) {
+      try {
+        await setDoc(doc(db, 'users', user.id, 'progress', payload.activityId), existing, { merge: true });
+        await setDoc(
+          doc(db, 'users', user.id),
+          {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            publicId: user.publicId,
+            turma: user.turma || '5.º A',
+            role: user.role || 'student',
+            points: user.points,
+            lastActivity: user.lastActivity,
+          },
+          { merge: true }
+        );
+        await setDoc(
+          doc(db, 'publicProfiles', user.id),
+          {
+            id: user.id,
+            publicId: user.publicId,
+            turma: user.turma || '5.º A',
+            role: user.role || 'student',
+            points: user.points,
+          },
+          { merge: true }
+        );
+        console.log('✅ Progress and points synced to Cloud Firestore for user:', user.id);
+      } catch (err) {
+        console.warn('⚠️ Firestore sync notice in saveProgress:', err);
+      }
     }
 
     // Save to localStorage
@@ -880,34 +801,36 @@ export const api = {
     }
 
     // Sync to Firestore
-    try {
-      await setDoc(
-        doc(db, 'users', user.id),
-        {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          publicId: user.publicId,
-          turma: user.turma || '5.º A',
-          role: user.role || 'student',
-          points: user.points,
-          lastActivity: user.lastActivity,
-        },
-        { merge: true }
-      );
+    if (auth.currentUser && auth.currentUser.uid === user.id) {
+      try {
+        await setDoc(
+          doc(db, 'users', user.id),
+          {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            publicId: user.publicId,
+            turma: user.turma || '5.º A',
+            role: user.role || 'student',
+            points: user.points,
+            lastActivity: user.lastActivity,
+          },
+          { merge: true }
+        );
 
-      await setDoc(
-        doc(db, 'publicProfiles', user.publicId),
-        {
-          publicId: user.publicId,
-          turma: user.turma || '5.º A',
-          role: user.role || 'student',
-          points: user.points,
-        },
-        { merge: true }
-      );
-    } catch (err) {
-      console.warn('Firestore sync warning for daily tip:', err);
+        await setDoc(
+          doc(db, 'publicProfiles', user.id),
+          {
+            publicId: user.publicId,
+            turma: user.turma || '5.º A',
+            role: user.role || 'student',
+            points: user.points,
+          },
+          { merge: true }
+        );
+      } catch (err) {
+        console.warn('Firestore sync notice for daily tip:', err);
+      }
     }
 
     localStorage.setItem(ACHIEVEMENTS_STORAGE_KEY + user.id, JSON.stringify(achievements));
@@ -1155,19 +1078,6 @@ export const api = {
     const firestoreUpdates: any = {};
     if (updates.newTurma) firestoreUpdates.turma = updates.newTurma.trim();
     if (updates.newName) firestoreUpdates.name = updates.newName.trim();
-
-    if (updates.newPassword) {
-      // Update securely on backend if available
-      try {
-        await fetch('/api/auth/recover', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: normalizedEmail, newPassword: updates.newPassword }),
-        });
-      } catch {
-        // ignore
-      }
-    }
 
     // 1. Update in Cloud Firestore users collection
     let updatedDocId = studentId;

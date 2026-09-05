@@ -372,42 +372,6 @@ app.post('/api/auth/login', (req, res) => {
   });
 });
 
-// Password recovery (safe verification & reset)
-app.post('/api/auth/recover', (req, res) => {
-  const { email, newPassword } = req.body;
-
-  if (!email || typeof email !== 'string' || !email.includes('@')) {
-    return res.status(400).json({ error: 'Email inválido.' });
-  }
-
-  const db = readDB();
-  const normalizedEmail = email.trim().toLowerCase();
-  const user = db.users.find((u) => u.email.toLowerCase() === normalizedEmail);
-
-  if (!user) {
-    // Return friendly generic response for privacy, but also indicate success
-    return res.json({ message: 'Se o email estiver registado, foi iniciada a recuperação.' });
-  }
-
-  if (newPassword) {
-    if (newPassword.length < 6) {
-      return res.status(400).json({ error: 'A nova palavra-passe deve ter pelo menos 6 caracteres.' });
-    }
-    const newSalt = crypto.randomBytes(16).toString('hex');
-    user.salt = newSalt;
-    user.passwordHash = hashPassword(newPassword, newSalt);
-    writeDB(db);
-    return res.json({ success: true, message: 'Palavra-passe alterada com sucesso! Já podes iniciar sessão.' });
-  }
-
-  return res.json({
-    success: true,
-    userExists: true,
-    userName: user.name,
-    message: `Código de verificação enviado para o email do aluno. Podes definir uma nova palavra-passe.`,
-  });
-});
-
 // Logout
 app.post('/api/auth/logout', (req, res) => {
   const authHeader = req.headers.authorization;

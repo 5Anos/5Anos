@@ -82,8 +82,8 @@ const DILEMMAS: Dilemma[] = [
       },
       {
         text: {
-          pt: 'Explicar com simpatia que a palavra-passe é pessoal e ajudá-lo a pedir ao professor ou usar o botão de recuperação.',
-          en: 'Kindly explain that passwords cannot be shared and help him ask the teacher or click password recovery.',
+          pt: 'Explicar com simpatia que a palavra-passe é pessoal e intransmissível e ajudá-lo a falar com o professor.',
+          en: 'Kindly explain that passwords are strictly personal and help him talk to the teacher.',
         },
         isBest: true,
         feedback: {
