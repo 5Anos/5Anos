@@ -12,8 +12,8 @@ export const themePalavrasPasseData: ThemeDefinition = {
     en: 'Learn how to create and safeguard strong passwords.',
   },
   intro: {
-    pt: 'A tua palavra-passe é a chave mestra que protege a tua vida digital: mensagens, fotografias, trabalhos da escola e jogos! Aprende a construir chaves digitais inquebráveis combinando letras, números e símbolos, e descobre por que motivo uma palavra-passe é como uma escova de dentes: nunca se deve partilhar com ninguém!',
-    en: 'Your password is the master key to your digital identity: messages, photos, school work, and games! Learn how to forge unbreakable keys with letters, numbers, and symbols, and why passwords must never be shared!',
+    pt: 'A tua palavra-passe é a chave que protege a tua vida digital: mensagens, fotografias, trabalhos da escola e jogos! Aprende a construir palavras-passe fortes e difíceis de adivinhar combinando comprimento, letras, números e símbolos, e descobre por que motivo não deves partilhar as tuas palavras-passe com colegas ou amigos.',
+    en: 'Your password is the key to your digital identity: messages, photos, school work, and games! Learn how to forge strong and hard-to-guess passwords, and why passwords should stay private and not be shared with peers.',
   },
   icon: '🔐',
   illustrationKey: 'palavras-passe',
@@ -33,8 +33,8 @@ export const themePalavrasPasseData: ThemeDefinition = {
       eyebrow: { pt: 'Atenção!', en: 'Attention!' },
       h: { pt: 'Características de uma palavra-passe segura', en: 'Traits of a strong password' },
       body: {
-        pt: 'Uma boa palavra-passe deve:<ul><li>Ter pelo menos 8 caracteres.</li><li>Misturar letras maiúsculas, minúsculas, números e símbolos.</li><li>Não conter o teu nome, data de nascimento ou dados pessoais.</li><li>Não ser uma sequência óbvia, como "123456" ou "abcdef".</li><li>Ser diferente para cada conta que uses.</li></ul>',
-        en: 'A robust password must:<ul><li>Be at least 8 characters long.</li><li>Mix uppercase letters, lowercase letters, numbers, and symbols.</li><li>Avoid including your name, birthdate, or obvious personal details.</li><li>Never use predictable patterns like "123456" or "abcdef".</li><li>Be unique across different online services.</li></ul>',
+        pt: 'Uma boa palavra-passe deve ser longa e difícil de adivinhar:<ul><li>Ter um bom comprimento (pelo menos 10 a 12 caracteres).</li><li>Pode misturar letras maiúsculas, minúsculas, números e símbolos, ou formar uma frase difícil de adivinhar.</li><li>Não conter o teu nome, data de nascimento ou dados pessoais óbvios.</li><li>Não ser uma sequência simples, como "123456" ou "abcdef".</li><li>Ser diferente para cada conta que uses.</li></ul>',
+        en: 'A robust password should be long and hard to guess:<ul><li>Have good length (at least 10 to 12 characters).</li><li>Mix uppercase and lowercase letters, numbers, and symbols, or use a memorable passphrase.</li><li>Avoid your name, birthdate, or obvious personal details.</li><li>Never use predictable patterns like "123456" or "abcdef".</li><li>Be unique across different online accounts.</li></ul>',
       },
       icon: '🛡️',
     },
@@ -49,10 +49,10 @@ export const themePalavrasPasseData: ThemeDefinition = {
     },
     {
       eyebrow: { pt: 'Vamos pensar', en: "Let's think" },
-      h: { pt: 'Nunca partilhes a tua palavra-passe', en: 'Never share your password' },
+      h: { pt: 'Não partilhes as tuas palavras-passe', en: 'Do not share your passwords' },
       body: {
-        pt: 'Mesmo com amigos próximos, a palavra-passe deve permanecer secreta. Se alguém souber a tua palavra-passe, pode aceder à tua conta e usar informação em teu nome sem que percebas.',
-        en: 'Even with your best friends, passwords must stay strictly private. If someone acquires your key, they can enter your profile and act on your behalf without your consent.',
+        pt: 'Não partilhes as tuas palavras-passe com amigos ou colegas. Se precisares de ajuda com uma conta ou se te esqueceres do acesso, fala com os teus pais ou com o teu professor.',
+        en: 'Do not share your passwords with classmates or friends. If you need help with an account or forget your access, speak with a responsible adult or your teacher.',
       },
       icon: '🤫',
     },
@@ -76,21 +76,21 @@ export const themePalavrasPasseData: ThemeDefinition = {
         en: 'The Anatomy of a Strong Password',
       },
       shortDesc: {
-        pt: 'Comprimento (10+ carateres), maiúsculas, minúsculas, números e símbolos.',
-        en: 'Length (10+ characters), uppercase, lowercase, numbers, and symbols.',
+        pt: 'Comprimento adequado, variedade de carateres e palavras difíceis de adivinhar.',
+        en: 'Good length, character variety, and hard-to-guess combinations.',
       },
       icon: '🛡️',
       explanation: {
         pt: [
-          'Uma palavra-passe fraca é como deixar a porta de casa aberta: qualquer pessoa ou programa malicioso consegue adivinhar em poucos segundos.',
-          'Regra 1 — Comprimento Mínimo: deve ter pelo menos 10 a 12 carateres. Quanto mais comprida, exponencialmente mais difícil é de ser decifrada.',
-          'Regra 2 — Variedade de Carateres: deve juntar letras MAIÚSCULAS (A-Z), letras minúsculas (a-z), algarismos (0-9) e símbolos especiais (!, #, $, %, @, *).',
-          'O que NUNCA usar: palavras do dicionário simples (como "chocolate" ou "amor"), sequências óbvias ("123456" ou "qwerty") ou informações pessoais (como o teu nome, a tua data de nascimento ou o nome do teu cão).',
+          'Uma palavra-passe fraca é como deixar a porta de casa aberta: programas automáticos ou terceiros conseguem adivinhá-la com facilidade.',
+          'Regra 1 — Comprimento Adequado: deve ter pelo menos 10 a 12 carateres. Quanto mais comprida, muito mais difícil é de ser adivinhada.',
+          'Regra 2 — Variedade e Criatividade: podes juntar letras MAIÚSCULAS (A-Z), letras minúsculas (a-z), algarismos (0-9) e símbolos especiais (!, #, $, %, @, *), ou criar uma frase-passe com várias palavras.',
+          'O que NUNCA usar: palavras do dicionário simples (como "chocolate" ou "amor"), sequências óbvias ("123456" ou "qwerty") ou informações pessoais (como o teu nome, a tua data de nascimento ou o nome do teu animal de estimação).',
         ],
         en: [
-          'A weak password is like leaving your front door unlocked: easily cracked in seconds.',
-          'Rule 1 — Length: at least 10 to 12 characters. Longer means exponentially harder to crack.',
-          'Rule 2 — Character Variety: combine UPPERCASE (A-Z), lowercase (a-z), numbers (0-9), and symbols (!, #, $, %, @, *).',
+          'A weak password is like leaving your front door unlocked: automated tools can easily guess it.',
+          'Rule 1 — Length: at least 10 to 12 characters. Longer passwords are substantially harder to guess.',
+          'Rule 2 — Character Variety: combine UPPERCASE (A-Z), lowercase (a-z), numbers (0-9), and symbols, or use a memorable passphrase.',
           'What NEVER to use: common dictionary words, obvious keyboard patterns ("123456", "qwerty"), or personal info (birthday, pet name).',
         ],
       },
@@ -100,8 +100,8 @@ export const themePalavrasPasseData: ThemeDefinition = {
           en: 'Mariana’s passphrase technique',
         },
         scenario: {
-          pt: 'A Mariana quer criar uma palavra-passe inesquecível mas muito forte. Escolheu a frase: "O meu gato Tobias adora peixe em 2026!".',
-          en: 'Mariana wants an unforgettable yet rock-solid password. She picked the sentence: "O meu gato Tobias adora peixe em 2026!".',
+          pt: 'A Mariana quer criar uma palavra-passe fácil de memorizar mas muito forte. Escolheu a frase: "O meu gato Tobias adora peixe em 2026!".',
+          en: 'Mariana wants a memorable yet strong password. She picked the sentence: "O meu gato Tobias adora peixe em 2026!".',
         },
         tip: {
           pt: 'Pegou nas iniciais de cada palavra e juntou os números e o ponto de exclamação: "OmgTa!pe26". Tem 10 carateres, maiúsculas, minúsculas, número e símbolo!',
@@ -109,21 +109,21 @@ export const themePalavrasPasseData: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Sabias que um computador especializado consegue adivinhar uma palavra-passe de 6 letras simples em menos de 1 segundo, mas demora mais de 34 000 ANOS para adivinhar uma combinação de 12 carateres com símbolos e números?',
-        en: 'Did you know a hacking computer can crack a 6-letter lowercase password in under 1 second, but would take over 34,000 YEARS to crack a 12-character mixed combination?',
+        pt: 'Sabias que sequências simples ou palavras do dicionário são testadas quase instantaneamente por computadores, enquanto uma palavra-passe longa e com diferentes tipos de carateres é muito mais difícil de adivinhar?',
+        en: 'Did you know simple sequences or dictionary words are tested very quickly by computers, whereas long and varied passphrases are much harder to uncover?',
       },
       thinkAboutIt: {
         question: {
-          pt: 'Porque é que a palavra-passe "joao2015" é muito perigosa se o aluno se chamar João e tiver nascido em 2015?',
-          en: 'Why is the password "joao2015" dangerous if the student is named João and was born in 2015?',
+          pt: 'Porque é que a palavra-passe "joao2015" é arriscada se o aluno se chamar João e tiver nascido em 2015?',
+          en: 'Why is the password "joao2015" risky if the student is named João and was born in 2015?',
         },
         clue: {
-          pt: 'Qualquer colega ou estranho que veja o teu cartão escolar sabe essa informação.',
+          pt: 'Qualquer colega ou pessoa que veja o teu cartão escolar sabe essa informação.',
           en: 'Anyone seeing your student ID card knows that exact info.',
         },
         reflection: {
-          pt: 'Porque é a primeira coisa que qualquer pessoa tenta adivinhar! Informações públicas como nomes e anos de nascimento nunca devem fazer parte de senhas.',
-          en: 'Because it is the very first guess anyone or automated tool attempts! Public personal facts should never be passwords.',
+          pt: 'Porque é das primeiras coisas que qualquer pessoa tenta adivinhar! Informações pessoais públicas como nomes e anos de nascimento nunca devem fazer parte de palavras-passe.',
+          en: 'Because it is among the first guesses anyone or automated tool attempts! Public personal facts should never be passwords.',
         },
       },
       quizQuestions: [
@@ -164,53 +164,53 @@ export const themePalavrasPasseData: ThemeDefinition = {
         en: 'How to Store and Protect Your Passwords',
       },
       shortDesc: {
-        pt: 'Segredo absoluto, autenticação de dois fatores e nunca partilhar.',
-        en: 'Absolute secrecy, two-factor authentication, and never sharing.',
+        pt: 'Privacidade, autenticação de dois fatores e cuidados na partilha.',
+        en: 'Privacy, two-factor authentication, and sharing precautions.',
       },
       icon: '🔐',
       explanation: {
         pt: [
-          'A regra de ouro: uma palavra-passe NUNCA se partilha com amigos, colegas de turma ou pessoas em jogos online. Os únicos que podem ajudar-te são os teus pais ou encarregados de educação!',
-          'Nunca apontar em papéis colados no monitor (post-its): qualquer pessoa que passe pela tua secretária pode ver a tua senha.',
-          'Palavras-passe diferentes para contas diferentes: se usares a mesma palavra-passe no jogo e no teu email escolar, se o jogo sofrer um ataque, o invasor terá acesso a tudo!',
-          'Autenticação de Dois Fatores (2FA): é uma camada extra que pede um código temporário no telemóvel além da palavra-passe. Mesmo que alguém descubra a tua senha, não consegue entrar!',
+          'A regra fundamental: não partilhes as tuas palavras-passe com amigos ou colegas. Se precisares de ajuda com uma conta, pede apoio aos teus pais ou encarregados de educação ou ao teu professor!',
+          'Nunca apontar em papéis colados no monitor (post-its): qualquer pessoa que passe pela tua secretária pode ver a tua palavra-passe.',
+          'Palavras-passe diferentes para contas diferentes: se usares a mesma palavra-passe no jogo e no teu email escolar, se o jogo sofrer um ataque, o invasor poderá aceder a outras contas.',
+          'Autenticação de Dois Fatores (2FA): é uma camada extra que pede uma confirmação adicional (como um código enviado para o telemóvel) além da palavra-passe. Mesmo que alguém descubra a tua palavra-passe, não consegue entrar facilmente!',
         ],
         en: [
-          'The Golden Rule: NEVER share passwords with friends, peers, or online gamers. Only parents should guide you!',
+          'The golden rule: do not share passwords with classmates or friends. If you need help with an account, ask your parents or your teacher!',
           'Never write passwords on sticky notes attached to screens: anyone walking by can view them.',
-          'Unique passwords for unique accounts: using the same password everywhere means one breach compromises all accounts.',
-          'Two-Factor Authentication (2FA): an extra security layer requesting a temporary phone code in addition to your password.',
+          'Unique passwords for unique accounts: using the same password everywhere means one breach compromises other accounts.',
+          'Two-Factor Authentication (2FA): an extra security layer requesting a temporary code in addition to your password.',
         ],
       },
       example: {
         title: {
-          pt: 'O melhor amigo que pediu a conta de jogo',
-          en: 'The best friend asking for game credentials',
+          pt: 'O amigo que pediu a conta de jogo',
+          en: 'The friend asking for game credentials',
         },
         scenario: {
-          pt: 'O melhor amigo do Tomás pediu-lhe a palavra-passe do jogo para experimentar uma personagem rara durante a noite. O Tomás explicou gentilmente que a palavra-passe é pessoal, mas convidou-o para jogar juntos em sua casa.',
-          en: 'Tomás’s best friend asked for his game password to test a rare skin overnight. Tomás politely explained passwords are strictly private, inviting him over to play together in person instead.',
+          pt: 'Um amigo do Tomás pediu-lhe a palavra-passe do jogo para experimentar uma personagem rara durante a noite. O Tomás explicou gentilmente que a palavra-passe é pessoal, mas convidou-o para jogarem juntos em sua casa.',
+          en: 'Tomás’s friend asked for his game password to test a rare skin overnight. Tomás politely explained passwords are strictly private, inviting him over to play together in person instead.',
         },
         tip: {
-          pt: 'Recusar partilhar a palavra-passe não é falta de amizade; é proteger a segurança da conta e a amizade de mal-entendidos!',
+          pt: 'Recusar partilhar a palavra-passe não é falta de amizade; é proteger a segurança da conta e evitar mal-entendidos!',
           en: 'Refusing to share passwords isn’t unfriendly; it protects your account and preserves your friendship from misunderstandings!',
         },
       },
       funFact: {
-        pt: 'Sabias que as empresas de tecnologia como a Google e a Microsoft NUNCA pedem a tua palavra-passe por email, telefone ou mensagem? Se alguém te pedir, é garantia de fraude!',
-        en: 'Did you know tech companies like Google and Microsoft NEVER ask for your password via email, phone, or message? Anyone requesting it is a fraudster!',
+        pt: 'Sabias que serviços legítimos e plataformas escolares NUNCA te pedem a palavra-passe por email, telefone ou mensagem? Se alguém te pedir, deves desconfiar de imediato.',
+        en: 'Did you know legitimate services and school portals NEVER ask for your password via email, phone, or message? Anyone requesting it should be treated with suspicion.',
       },
       thinkAboutIt: {
         question: {
-          pt: 'O que deves fazer imediatamente se suspeitares que alguém descobriu a tua palavra-passe?',
-          en: 'What should you do immediately if you suspect someone found out your password?',
+          pt: 'O que deves fazer se suspeitares que alguém descobriu a tua palavra-passe?',
+          en: 'What should you do if you suspect someone found out your password?',
         },
         clue: {
-          pt: 'Não esperes que aconteça algo de mau na tua conta.',
-          en: 'Don’t wait for something bad to happen to your account.',
+          pt: 'Não esperes que aconteça algo de indesejado na tua conta.',
+          en: 'Don’t wait for unauthorized activity on your account.',
         },
         reflection: {
-          pt: 'Deves alterar a palavra-passe de imediato nas definições de segurança e avisar os teus pais ou professor para verificar as atividades recentes.',
+          pt: 'Deves alterar a palavra-passe o quanto antes nas definições de segurança e pedir ajuda aos teus pais ou ao professor para verificar a situação.',
           en: 'Change your password right away in security settings and inform your parents or teacher to check recent activity.',
         },
       },
@@ -223,22 +223,22 @@ export const themePalavrasPasseData: ThemeDefinition = {
           },
           options: {
             pt: [
-              'Apenas com os teus pais ou encarregados de educação para salvaguarda',
-              'Com os teus melhores amigos da escola no recreio',
+              'Apenas com pais, encarregados de educação ou professores se precisares de ajuda com a conta',
+              'Com os teus colegas da escola no recreio',
               'Com jogadores desconhecidos que conheceste num chat online',
               'Com qualquer pessoa que te envie uma mensagem a pedir',
             ],
             en: [
-              'Only with your parents or legal guardians for safety',
-              'With your best friends at school recess',
+              'Only with your parents, guardians, or teachers if you need help with your account',
+              'With your classmates at school recess',
               'With unknown players encountered in game lobbies',
               'With anyone sending a direct message asking for it',
             ],
           },
           correctIndex: 0,
           explanation: {
-            pt: 'Correto! As senhas são estritamente privadas, exceto para os teus pais ou encarregados de educação.',
-            en: 'Correct! Passwords are strictly private, except for parents or guardians.',
+            pt: 'Correto! As palavras-passe são privadas e não devem ser partilhadas com colegas. Se precisares de ajuda, fala com os teus pais ou professor.',
+            en: 'Correct! Passwords are private and should not be shared with peers. Seek help from parents or teachers if needed.',
           },
         },
       ],
@@ -252,21 +252,21 @@ export const themePalavrasPasseData: ThemeDefinition = {
         en: 'Password Managers and Best Practices',
       },
       shortDesc: {
-        pt: 'Como memorizar dezenas de senhas com segurança através de um cofre digital.',
-        en: 'How to manage dozens of credentials securely using a digital vault.',
+        pt: 'Como organizar palavras-passe com segurança através de um cofre digital.',
+        en: 'How to manage credentials securely using a digital vault.',
       },
       icon: '🔑',
       explanation: {
         pt: [
-          'Hoje em dia temos contas na escola, em plataformas de leitura, em emails e em jogos. Como memorizar tantas palavras-passe diferentes sem usar sempre a mesma?',
-          'Gestor de Palavras-passe: é uma aplicação que funciona como um cofre digital blindado. Guarda todas as tuas palavras-passe encriptadas e só precisas de memorizar uma única "Chave-Mestra" super segura.',
-          'Troca Periódica: se receberes um alerta de segurança ou se usares um computador partilhado e te esqueceres de sair, altera logo a tua senha.',
+          'Hoje em dia temos contas na escola, em plataformas de leitura, em emails e em jogos. Como gerir tantas palavras-passe diferentes sem usar sempre a mesma?',
+          'Gestor de Palavras-passe: é uma aplicação que funciona como um cofre digital protegido. Guarda todas as tuas palavras-passe cifradas e só precisas de memorizar uma única chave-mestra segura.',
+          'Troca quando necessário: se receberes um alerta de segurança ou se usares um computador partilhado e te esqueceres de terminar a sessão, altera a tua palavra-passe.',
           'Bloqueio de Ecrã: sempre que te levantares do computador, bloqueia a sessão (tecla Windows + L ou no menu Iniciar) para que ninguém mexa na tua conta.',
         ],
         en: [
           'Students have accounts for school portals, e-learning, emails, and games. How can one remember distinct passwords without repeating?',
-          'Password Manager: a digital encrypted vault that stores credentials; you only need to remember one super-strong Master Password.',
-          'Periodic Updates: update passwords whenever security breaches occur or after accidental public device logins.',
+          'Password Manager: a digital encrypted vault that stores credentials; you only need to remember one strong Master Password.',
+          'Updates when needed: update passwords whenever security alerts occur or after using shared devices.',
           'Screen Lock: whenever you leave a desk, lock your machine (Windows + L) so nobody can tamper with your session.',
         ],
       },
@@ -280,26 +280,26 @@ export const themePalavrasPasseData: ThemeDefinition = {
           en: 'Simão went to the restroom leaving a library PC unlocked with his webmail open. Another student could have sent prank emails under his name.',
         },
         tip: {
-          pt: 'Bloquear sempre a sessão (ou terminar sessão) demora apenas 2 segundos e garante tranquilidade total!',
-          en: 'Locking your session or logging out takes only 2 seconds and guarantees total peace of mind!',
+          pt: 'Bloquear sempre a sessão (ou terminar sessão) demora apenas alguns segundos e garante tranquilidade!',
+          en: 'Locking your session or logging out takes only a few seconds and guarantees peace of mind!',
         },
       },
       funFact: {
-        pt: 'Sabias que a palavra-passe mais comum e mais atacada do mundo em 2025 continuava a ser "123456"? Os criminosos conseguem adivinhá-la em 0,0001 segundos!',
-        en: 'Did you know the most common breached password worldwide remains "123456"? Attack tools crack it in 0.0001 seconds!',
+        pt: 'Sabias que a sequência "123456" continua a ser uma das mais usadas no mundo? Por ser tão óbvia, ferramentas automáticas conseguem testá-la e adivinhá-la de forma quase imediata.',
+        en: 'Did you know the sequence "123456" remains one of the most widely used? Being so obvious, automated tools test and guess it almost instantly.',
       },
       thinkAboutIt: {
         question: {
-          pt: 'Porque é uma péssima ideia guardar as palavras-passe num ficheiro de texto chamado "senhas.txt" no Ambiente de Trabalho?',
-          en: 'Why is it a terrible idea to save passwords in a plain text file named "passwords.txt" on the Desktop?',
+          pt: 'Porque é uma má ideia guardar as palavras-passe num ficheiro de texto sem proteção no Ambiente de Trabalho?',
+          en: 'Why is it a bad idea to save passwords in an unprotected text file on the Desktop?',
         },
         clue: {
           pt: 'Pensa em quem consegue abrir esse ficheiro sem qualquer palavra-passe.',
           en: 'Think about who can open that file without any authorization.',
         },
         reflection: {
-          pt: 'Qualquer pessoa que use o computador ou qualquer vírus que infete o sistema pode ler esse ficheiro sem qualquer barreira e roubar todas as tuas contas de uma só vez!',
-          en: 'Anyone sitting at the PC or malicious software can open that plain text file instantly and steal all your credentials at once!',
+          pt: 'Qualquer pessoa que use o computador ou qualquer programa malicioso que infete o sistema pode ler esse ficheiro sem qualquer barreira e ter acesso às tuas contas!',
+          en: 'Anyone sitting at the PC or malicious software can open that plain text file easily and see your credentials!',
         },
       },
       quizQuestions: [
@@ -360,10 +360,10 @@ export const themePalavrasPasseData: ThemeDefinition = {
                 'palavrapasse'
               ],
               c: 0,
-              e: 'Misturar letras maiúsculas, minúsculas, números e símbolos cria uma chave impenetrável.'
+              e: 'Misturar bom comprimento com maiúsculas, minúsculas, números e símbolos cria uma combinação muito forte e difícil de adivinhar.'
             },
             {
-              q: 'Porque é que nunca deves usar a tua data de nascimento ou o nome do teu animal de estimação como senha?',
+              q: 'Porque é que não deves usar a tua data de nascimento ou o nome do teu animal de estimação como palavra-passe?',
               opts: [
                 'Porque são fáceis de descobrir por quem te conhece ou nas redes sociais',
                 'Porque os computadores não aceitam números',
@@ -381,7 +381,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
       id: 'jogo-pass-tf',
       themeId: 'palavras-passe',
       number: 2,
-      title: { pt: '⚡ Verdadeiro ou Falso: Senhas', en: '⚡ True or False: Passwords' },
+      title: { pt: '⚡ Verdadeiro ou Falso: Palavras-passe', en: '⚡ True or False: Passwords' },
       shortDesc: { pt: 'Testa regras fundamentais de segurança de contas.', en: 'Test fundamental account security rules.' },
       icon: '⚡',
       durationMinutes: 3,
@@ -395,9 +395,9 @@ export const themePalavrasPasseData: ThemeDefinition = {
         desc: 'Classifica as afirmações sobre a proteção de palavras-passe.',
         data: {
           items: [
-            { s: 'Deves emprestar a tua palavra-passe ao teu melhor amigo para demonstrar confiança.', a: false, e: 'Nunca partilhes senhas com ninguém, nem com os melhores amigos!' },
-            { s: 'Usar a mesma senha em dez sites diferentes é um risco enorme.', a: true, e: 'Correto! Se um site for hackeado, todas as tuas outras contas ficam em perigo.' },
-            { s: 'Ativar a verificação em dois passos (2FA) adiciona uma barreira extra de proteção.', a: true, e: 'Correto! Mesmo que descubram a senha, precisam do código enviado para o telemóvel.' }
+            { s: 'Deves emprestar a tua palavra-passe ao teu melhor amigo para demonstrar confiança.', a: false, e: 'Não partilhes palavras-passe com colegas ou amigos. Se precisares de ajuda, fala com um adulto responsável ou com o professor!' },
+            { s: 'Usar a mesma palavra-passe em vários sites diferentes é um risco.', a: true, e: 'Correto! Se um serviço for comprometido, todas as outras contas podem ficar em perigo.' },
+            { s: 'Ativar a autenticação de dois fatores (2FA) adiciona uma barreira extra de proteção.', a: true, e: 'Correto! Mesmo que descubram a palavra-passe, é necessária uma confirmação adicional.' }
           ]
         }
       }
@@ -433,7 +433,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
       themeId: 'palavras-passe',
       number: 4,
       title: { pt: '🔗 Segura ou Insegura?', en: '🔗 Safe or Insecure Match' },
-      shortDesc: { pt: 'Associa cada exemplo de senha à sua avaliação correta.', en: 'Match each password example to its security rating.' },
+      shortDesc: { pt: 'Associa cada exemplo de palavra-passe à sua avaliação correta.', en: 'Match each password example to its security rating.' },
       icon: '🔗',
       durationMinutes: 4,
       points: 20,
@@ -449,7 +449,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
             { left: 'password123', right: 'Extremamente fraca e vulnerável' },
             { left: 'Aka7#mP9$kL2', right: 'Forte e altamente segura' },
             { left: 'futebol2024', right: 'Fácil de adivinhar por dicionário' },
-            { left: 'Usar gestor de senhas', right: 'Prática recomendada para guardar chaves' }
+            { left: 'Usar gestor de palavras-passe', right: 'Prática recomendada para guardar chaves' }
           ]
         }
       }
@@ -489,14 +489,14 @@ export const themePalavrasPasseData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Palavras-passe com 10 ou mais carateres oferecem resistência exponencial contra ataques de força bruta.',
-        en: 'Passwords of 10+ characters provide exponential resistance against automated brute-force attacks.',
+        pt: 'Palavras-passe com 10 ou mais carateres oferecem grande resistência contra tentativas automáticas de adivinhação.',
+        en: 'Passwords of 10+ characters provide strong resistance against automated brute-force attacks.',
       },
     },
     {
       id: 'pass-q2',
       question: {
-        pt: 'Quais os 4 tipos de carateres que devem ser misturados numa senha forte?',
+        pt: 'Quais os 4 tipos de carateres que devem ser misturados numa palavra-passe forte?',
         en: 'What 4 character types should be combined in a strong password?',
       },
       options: {
@@ -515,8 +515,8 @@ export const themePalavrasPasseData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'A diversidade entre maiúsculas, minúsculas, números e símbolos torna a decifração quase impossível.',
-        en: 'Combining distinct character classes dramatically expands the cryptographic search space.',
+        pt: 'A diversidade entre maiúsculas, minúsculas, números e símbolos torna a palavra-passe muito mais resistente.',
+        en: 'Combining distinct character classes dramatically expands password strength.',
       },
     },
     {
@@ -541,7 +541,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Reutilizar senhas significa que uma única fuga de dados compromete todas as tuas contas digitais.',
+        pt: 'Reutilizar palavras-passe significa que uma única fuga de dados compromete todas as tuas contas digitais.',
         en: 'Credential stuffing relies on repeated passwords across different platforms.',
       },
     },
@@ -553,10 +553,10 @@ export const themePalavrasPasseData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Recusar educadamente, explicando que as senhas são privadas, e combinar jogar juntos presencialmente',
+          'Recusar educadamente, explicando que as palavras-passe são privadas, e combinar jogar juntos presencialmente',
           'Dar a palavra-passe imediatamente porque os melhores amigos sabem tudo',
-          'Escrever a senha no quadro da sala de aula',
-          'Dar a senha e pedir a dele em troca',
+          'Escrever a palavra-passe no quadro da sala de aula',
+          'Dar a palavra-passe e pedir a dele em troca',
         ],
         en: [
           'Politely decline, explaining credentials are strictly private, and offer to play in person',
@@ -567,8 +567,8 @@ export const themePalavrasPasseData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'As senhas nunca se partilham com colegas ou amigos, prevenindo roubos e mal-entendidos.',
-        en: 'Passwords must never be shared, avoiding accidental loss or friendship friction.',
+        pt: 'As palavras-passe não se partilham com colegas ou amigos, prevenindo roubos de conta e mal-entendidos.',
+        en: 'Passwords must not be shared with peers, avoiding accidental loss or friendship friction.',
       },
     },
     {
@@ -645,7 +645,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Colar papéis com senhas na secretária deixa as tuas contas à mercê de qualquer pessoa que passe por perto.',
+        pt: 'Colar papéis com palavras-passe na secretária deixa as tuas contas à mercê de qualquer pessoa que passe por perto.',
         en: 'Visible sticky notes leave accounts vulnerable to shoulder surfing and casual physical theft.',
       },
     },
@@ -657,7 +657,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Uma aplicação segura que guarda todas as tuas senhas cifradas num cofre digital',
+          'Uma aplicação segura que guarda todas as tuas palavras-passe cifradas num cofre digital',
           'Uma pessoa contratada para vigiar os teus cadernos na escola',
           'Um livro vendido nas bancas de jornais com palavras-passe já feitas',
           'Um vírus que altera as letras no teclado',
@@ -671,7 +671,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Um gestor de senhas gera e guarda chaves complexas com criptografia forte.',
+        pt: 'Um gestor de palavras-passe gera e guarda chaves complexas com criptografia forte.',
         en: 'Password managers generate, store, and autofill encrypted credentials securely.',
       },
     },
@@ -723,7 +723,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Se não pediste o código, alguém tem a tua senha! O código impediu o acesso. Altera a tua senha já.',
+        pt: 'Se não pediste o código, alguém pode ter descoberto a tua palavra-passe! O código impediu o acesso. Altera a tua palavra-passe com a ajuda de um adulto.',
         en: 'An unsolicited code indicates your password was entered. Change credentials immediately.',
       },
     },
@@ -761,9 +761,9 @@ export const themePalavrasPasseData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'É fácil de memorizar para ti, mas muito comprida e quase impossível de adivinhar para um computador',
+          'É fácil de memorizar para ti, mas muito comprida e muito difícil de adivinhar para terceiros',
           'Ocupa menos espaço no disco do computador',
-          'Permite que todas as pessoas adivinhem a tua senha',
+          'Permite que todas as pessoas adivinhem a tua palavra-passe',
           'Faz com que o computador trabalhe sem eletricidade',
         ],
         en: [
@@ -834,7 +834,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
     {
       id: 'pass-q15',
       question: {
-        pt: 'Se o teu professor de TIC te pedir para demonstrares um trabalho no computador da sala, o que deves fazer com a tua senha?',
+        pt: 'Se o teu professor de TIC te pedir para demonstrares um trabalho no computador da sala, o que deves fazer com a tua palavra-passe?',
         en: 'If your ICT teacher asks you to present work on the classroom projector, what should you do with your password?',
       },
       options: {
@@ -842,7 +842,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
           'Escrevê-la com cuidado sem a dizer em voz alta, verificando que o projetor não a mostra a toda a turma',
           'Gritar a palavra-passe bem alto para a turma toda ouvir',
           'Escrever a palavra-passe no quadro com marcador permanente',
-          'Pedir a um colega para adivinhar a tua senha',
+          'Pedir a um colega para adivinhar a tua palavra-passe',
         ],
         en: [
           'Type it quietly without reciting aloud, ensuring the projector isn’t displaying it in plain text',
@@ -853,25 +853,25 @@ export const themePalavrasPasseData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Nunca deves verbalizar nem projetar senhas para a sala de aula.',
+        pt: 'Nunca deves verbalizar nem projetar palavras-passe para a sala de aula.',
         en: 'Never verbalize or project private credentials in public spaces.',
       },
     },
     {
       id: 'pass-q16',
       question: {
-        pt: 'Qual é o resumo perfeito da segurança de palavras-passe?',
+        pt: 'Qual é o resumo fundamental da segurança de palavras-passe?',
         en: 'What is the ideal summary of password safety?',
       },
       options: {
         pt: [
-          'Comprida, complexa, diferente para cada conta e NUNCA partilhada!',
+          'Comprida, difícil de adivinhar, diferente para cada conta e não partilhada com colegas!',
           'Curta, fácil, igual em tudo e partilhada com todos os amigos',
           '1234 em todas as contas da escola',
           'Não ter palavras-passe nenhumas',
         ],
         en: [
-          'Long, complex, unique for every service, and NEVER shared!',
+          'Long, hard to guess, unique for every service, and not shared with peers!',
           'Short, simple, reused everywhere, and shared with friends',
           '1234 across every school account',
           'Using zero passwords anywhere',
@@ -879,8 +879,8 @@ export const themePalavrasPasseData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Comprimento, complexidade, unicidade e segredo absoluto formam o escudo perfeito!',
-        en: 'Length, complexity, uniqueness, and secrecy constitute the ultimate protection shield!',
+        pt: 'Bom comprimento, carateres variados, contas com chaves únicas e privacidade garantem a melhor proteção!',
+        en: 'Good length, variety, unique keys per account, and privacy ensure the best protection!',
       },
     },
   ],

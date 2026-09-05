@@ -287,8 +287,8 @@ export const themeDireitosAutorData: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Sabias que todas as fotografias espaciais e descobertas científicas tiradas pelos telescópios espaciais da NASA (como o Hubble e o James Webb) pertencem ao Domínio Público e podem ser usadas por qualquer estudante do mundo gratuitamente?',
-        en: 'Did you know all space imagery taken by NASA telescopes (like Hubble and James Webb) is in the Public Domain and freely usable by students worldwide?',
+        pt: 'Sabias que grande parte das fotografias astronómicas criadas diretamente pela NASA está no Domínio Público e pode ser usada em trabalhos escolares? Só é preciso ter atenção a materiais de instituições parceiras ou ao logótipo oficial da NASA, que têm regras de proteção próprias.',
+        en: 'Did you know that most astronomical imagery produced directly by NASA is in the Public Domain and can be used in school projects? Exceptions include partner institutions’ material and the NASA insignia, which have distinct protections.',
       },
       thinkAboutIt: {
         question: {

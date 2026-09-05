@@ -12,8 +12,8 @@ export const themeNavegarInternetData: ThemeDefinition = {
     en: 'Discover how to browse, search, and use the Internet safely.',
   },
   intro: {
-    pt: 'A Internet é como uma biblioteca mundial gigantesca com milhares de milhões de páginas! Mas tal como numa grande cidade, é preciso saber caminhar pelas ruas certas, reconhecer os sinais de trânsito digital (HTTPS, cadeado verde) e desviar-se de perigos e armadilhas online.',
-    en: 'The Internet is like a colossal global library with billions of pages! But just like in a big city, you must know which streets to take, recognize digital road signs (HTTPS, green lock), and avoid traps.',
+    pt: 'A Internet é como uma biblioteca mundial gigantesca com milhares de milhões de páginas! Mas tal como numa grande cidade, é preciso saber caminhar pelas ruas certas, reconhecer os sinais de trânsito digital (como o protocolo HTTPS para ligações cifradas) e desviar-se de perigos e armadilhas online.',
+    en: 'The Internet is like a colossal global library with billions of pages! But just like in a big city, you must know which streets to take, recognize digital signs (like HTTPS for encrypted links), and avoid traps.',
   },
   icon: '🌐',
   illustrationKey: 'navegar-internet',
@@ -85,13 +85,13 @@ export const themeNavegarInternetData: ThemeDefinition = {
           'A Internet é a rede mundial de computadores ligados entre si. A World Wide Web (Web ou WWW) é o sistema de páginas e documentos que circulam nessa rede.',
           'Navegador Web (Browser): é o programa que utilizamos para abrir e visualizar páginas da Internet (exemplos: Google Chrome, Mozilla Firefox, Microsoft Edge, Safari).',
           'Endereço URL: é o caminho exato de um site na Internet (exemplo: https://www.seguranet.pt). Funciona como a morada postal de uma casa!',
-          'O protocolo HTTPS com o símbolo do cadeado indica que a ligação entre o teu computador e aquele site está cifrada (segura contra espiões).',
+          'O protocolo HTTPS (sinalizado por um ícone de cadeado ou de definições de segurança) indica que a ligação entre o teu computador e o site é cifrada, protegendo os dados em trânsito contra escutas na rede.',
         ],
         en: [
           'The Internet is the global network of computers. The Web (WWW) is the collection of web pages and media.',
           'Web Browser: the application used to view websites (e.g., Chrome, Firefox, Edge, Safari).',
           'URL Address: the exact web address (e.g., https://www.seguranet.pt), just like a physical street address!',
-          'HTTPS with a padlock icon means communication between your computer and the site is encrypted.',
+          'HTTPS (often indicated by a padlock or site settings icon) ensures encrypted communication between your browser and the server.',
         ],
       },
       example: {
@@ -130,27 +130,27 @@ export const themeNavegarInternetData: ThemeDefinition = {
         {
           id: 'q-net-1',
           question: {
-            pt: 'O que indica o "https://" e o símbolo de cadeado na barra de endereços de um site?',
-            en: 'What does "https://" and the padlock icon in the browser address bar indicate?',
+            pt: 'O que indica a presença de "https://" no início do endereço de um site?',
+            en: 'What does "https://" at the beginning of a website address indicate?',
           },
           options: {
             pt: [
-              'A comunicação entre o teu navegador e o site é encriptada e segura',
+              'A comunicação entre o teu navegador e o site viaja cifrada e protegida contra escutas',
               'O site está bloqueado e é proibido entrar nele',
               'O computador ficou sem bateria',
-              'O site foi desativado pela polícia',
+              'O site nunca tem erros e é sempre 100% verdadeiro',
             ],
             en: [
-              'Communication between your browser and the website is encrypted and secure',
+              'Communication between your browser and the site is encrypted against interception',
               'The website is blocked and forbidden to enter',
               'The computer has run out of battery',
-              'The website was shut down by police',
+              'The website never has errors and is always 100% factual',
             ],
           },
           correctIndex: 0,
           explanation: {
-            pt: 'Exato! O protocolo HTTPS garante que os dados trocados estão cifrados e protegidos.',
-            en: 'Exactly! HTTPS ensures data exchanged between browser and server is encrypted.',
+            pt: 'Exato! O HTTPS garante que os dados viajam cifrados. Atenção: isto protege o envio dos dados, mas não garante por si só que o conteúdo do site seja confiável.',
+            en: 'Exactly! HTTPS ensures data in transit is encrypted, but does not guarantee the content is factual.',
           },
         },
       ],
@@ -365,15 +365,15 @@ export const themeNavegarInternetData: ThemeDefinition = {
               e: 'Usar palavras-chave diretas e específicas ajuda o motor de busca a encontrar exatamente o que precisas.'
             },
             {
-              q: 'O que significa encontrar o símbolo do cadeado verde (HTTPS) na barra de endereços do site?',
+              q: 'O que indica a presença de HTTPS num endereço web?',
               opts: [
-                'Que a ligação entre o teu computador e o site é segura e encriptada',
+                'Que a ligação entre o teu computador e o site é cifrada e protegida em trânsito',
                 'Que o site tem jogos grátis garantidos',
                 'Que ganhaste um prémio por visitar a página',
                 'Que o computador está bloqueado'
               ],
               c: 0,
-              e: 'HTTPS e o cadeado indicam que os dados trocados estão protegidos contra escutas indesejadas.'
+              e: 'O protocolo HTTPS cifra os dados transmitidos. Não garante, no entanto, que todas as informações do site sejam verdadeiras.'
             }
           ]
         }
@@ -423,7 +423,7 @@ export const themeNavegarInternetData: ThemeDefinition = {
         data: {
           pairs: [
             { left: 'Endereço com erros ortográficos no nome do banco', right: 'Site de phishing / burla' },
-            { left: 'Cadeado HTTPS e domínio oficial .gov.pt', right: 'Site institucional seguro' },
+            { left: 'Ligação HTTPS com domínio oficial .gov.pt', right: 'Endereço institucional com ligação cifrada' },
             { left: 'Janela pop-up a gritar "Ganhou um telemóvel!"', right: 'Anúncio falso e enganador' },
             { left: 'Pedir palavra-passe para ver um vídeo engraçado', right: 'Tentativa de roubo de conta' }
           ]
@@ -816,7 +816,7 @@ export const themeNavegarInternetData: ThemeDefinition = {
       options: {
         pt: [
           'Não aceder a contas bancárias nem inserir dados pessoais sensíveis',
-          'Fazer pagamentos bancários e partilhar senhas de cartões',
+          'Fazer pagamentos bancários e partilhar códigos ou palavras-passe confidenciais',
           'Desativar a palavra-passe do telemóvel para todos poderem ver',
           'Deixar o telemóvel ligado a enviar ficheiros privados para desconhecidos',
         ],

@@ -61,24 +61,24 @@ export const DAILY_TIC_FACTS: DailyTicFact[] = [
     icon: '👩‍💻',
     badgeColor: 'indigo',
     title: {
-      pt: 'A primeira pessoa a programar foi uma mulher: Ada Lovelace!',
-      en: 'The world’s first programmer was a woman: Ada Lovelace!'
+      pt: 'Ada Lovelace e as origens da programação',
+      en: 'Ada Lovelace and the origins of programming'
     },
     teaser: {
-      pt: 'Em 1843, Ada Lovelace escreveu o primeiro algoritmo para ser processado por uma máquina.',
-      en: 'In 1843, Ada Lovelace created the first algorithm for a machine.'
+      pt: 'Em 1843, Ada Lovelace escreveu um dos primeiros algoritmos destinados a ser processados por uma máquina.',
+      en: 'In 1843, Ada Lovelace created an early algorithm designed for a machine.'
     },
     description: {
-      pt: 'A matemática britânica Ada Lovelace colaborou com Charles Babbage no projeto da "Máquina Analítica". Ela percebeu que a máquina podia não apenas fazer contas, mas manipular símbolos, música e textos através de instruções lógicas passo a passo.',
-      en: 'Ada Lovelace realized that machines could manipulate symbols and music through logical instructions.'
+      pt: 'A matemática britânica Ada Lovelace colaborou com Charles Babbage no projeto da Máquina Analítica. Lovelace publicou notas detalhadas sobre o funcionamento da máquina e incluiu um algoritmo para calcular os números de Bernoulli, sendo amplamente reconhecida como pioneira na história da programação de computadores.',
+      en: 'Ada Lovelace collaborated with Charles Babbage on the Analytical Engine, documenting an algorithm to compute Bernoulli numbers.'
     },
     whyItMatters: {
-      pt: 'Ada Lovelace é considerada a mãe da programação e inspirou toda a ciência de computadores moderna.',
-      en: 'Ada Lovelace is recognized as the mother of computer programming.'
+      pt: 'Ada Lovelace compreendeu que as máquinas podiam ir além dos simples cálculos matemáticos e manipular símbolos seguindo instruções lógicas.',
+      en: 'Ada Lovelace realized that machines could manipulate symbols through logical step-by-step instructions.'
     },
     funFact: {
-      pt: 'Existe uma linguagem de programação militar e aeroespacial de topo chamada "Ada" em sua honra!',
-      en: 'There is a renowned programming language named "Ada" in her honor!'
+      pt: 'Existe uma linguagem de programação com o nome "Ada" criada em sua homenagem!',
+      en: 'There is a programming language named "Ada" in her honor!'
     }
   },
   {
@@ -87,23 +87,23 @@ export const DAILY_TIC_FACTS: DailyTicFact[] = [
     icon: '🐛',
     badgeColor: 'emerald',
     title: {
-      pt: 'O primeiro "Bug" informático era um inseto de verdade!',
-      en: 'The very first computer "Bug" was a real moth!'
+      pt: 'A história da traça encontrada num computador em 1947',
+      en: 'The moth found inside a computer in 1947'
     },
     teaser: {
-      pt: 'Em 1947, uma traça ficou presa num computador gigante e causou uma falha!',
-      en: 'In 1947, a moth got trapped inside a giant computer relay!'
+      pt: 'Em 1947, uma equipa encontrou uma traça presa num relé do computador Harvard Mark II.',
+      en: 'In 1947, a team found a real moth trapped inside a Harvard Mark II relay.'
     },
     description: {
-      pt: 'Quando a cientista pioneira Grace Hopper estava a trabalhar no computador Mark II da Universidade de Harvard, a máquina começou a dar erros. Ao abrirem os componentes, encontraram uma traça presa num relé eletromecânico.',
-      en: 'Grace Hopper found a real moth trapped inside a Harvard Mark II relay causing errors.'
+      pt: 'A palavra "bug" já era usada há muitos anos por engenheiros e inventores (como Thomas Edison) para descrever pequenas falhas mecânicas. Em 1947, a equipa onde trabalhava a cientista Grace Hopper encontrou uma traça física presa num relé eletromecânico e colou-a no diário de bordo com humor, o que ajudou a popularizar a palavra na informática.',
+      en: 'Engineers already used the term "bug" for technical glitches. In 1947, Grace Hopper’s team documented a literal moth inside a computer.'
     },
     whyItMatters: {
-      pt: 'Desde esse dia, procurar e corrigir erros no código de programação chama-se "Debugging" (desparasitar ou depurar).',
-      en: 'Ever since, finding and fixing coding errors is called "Debugging".'
+      pt: 'Hoje chamamos "bug" a um erro ou falha num programa ou sistema informático, e "debugging" (depuração) à procura e correção desses erros.',
+      en: 'Today, finding and fixing coding errors is called "debugging".'
     },
     funFact: {
-      pt: 'A equipa colou a traça no diário de bordo oficial com a nota: "First actual case of bug being found" (Primeiro caso real de inseto/erro encontrado).',
+      pt: 'A equipa colou a traça no diário com a anotação bem-humorada: "First actual case of bug being found" (Primeiro caso real de inseto/erro encontrado).',
       en: 'They taped the moth to the logbook with the note: "First actual case of bug being found".'
     }
   },
@@ -113,24 +113,24 @@ export const DAILY_TIC_FACTS: DailyTicFact[] = [
     icon: '🌊',
     badgeColor: 'sky',
     title: {
-      pt: 'Mais de 95% da Internet mundial passa debaixo do mar!',
-      en: 'Over 95% of global Internet travels through underwater cables!'
+      pt: 'A maior parte dos dados da Internet atravessa cabos submarinos',
+      en: 'Most global Internet data travels through undersea cables'
     },
     teaser: {
-      pt: 'Não são satélites no espaço! São cabos de fibra ótica gigantes no fundo dos oceanos.',
-      en: 'Not satellites! Deep undersea fiber-optic cables power global Internet.'
+      pt: 'Ao contrário do que muitos pensam, grande parte das comunicações internacionais passa por cabos no fundo dos oceanos.',
+      en: 'Most international communications travel through undersea fiber-optic cables.'
     },
     description: {
-      pt: 'Milhões de quilómetros de cabos submarinos de fibra ótica cruzam todos os oceanos do planeta Terra. Portugal (especialmente Carcavelos e Sines) é um dos maiores pontos de amarração estratégica de cabos que ligam a Europa à América e África!',
-      en: 'Millions of kilometers of undersea fiber cables cross the oceans connecting continents at the speed of light.'
+      pt: 'Uma vasta rede de cabos submarinos de fibra ótica atravessa os oceanos e liga os diferentes continentes, permitindo a circulação rápida de dados a nível mundial. Portugal, pela sua posição geográfica estratégica, é um ponto de amarração relevante de cabos que ligam a Europa a outros continentes.',
+      en: 'Extensive networks of undersea fiber cables cross the oceans connecting continents at high speed.'
     },
     whyItMatters: {
-      pt: 'A luz laser dentro dos fios de vidro de fibra ótica transmite dados com velocidade ultrarrápida e quase sem atraso.',
-      en: 'Fiber optic light transmits terabits of data per second with ultra-low latency.'
+      pt: 'Os cabos de fibra ótica utilizam feixes de luz para transmitir grandes volumes de dados com grande rapidez e estabilidade.',
+      en: 'Fiber optic cables transmit vast amounts of data quickly and reliably.'
     },
     funFact: {
-      pt: 'Os cabos submarinos têm várias camadas de aço e proteção para evitar que tubarões ou âncoras de navios os danifiquem!',
-      en: 'Undersea cables have armor layers to protect against shark bites and ship anchors!'
+      pt: 'Estes cabos possuem várias camadas de proteção reforçadas para resistir à pressão da água, a correntes marítimas e a impactos de âncoras.',
+      en: 'Undersea cables have tough protective armor to withstand oceanic pressure, currents, and ship anchors.'
     }
   },
   {
@@ -139,24 +139,24 @@ export const DAILY_TIC_FACTS: DailyTicFact[] = [
     icon: '🔒',
     badgeColor: 'purple',
     title: {
-      pt: 'Uma palavra-passe curta de 6 números é decifrada em menos de 1 segundo!',
-      en: 'A 6-digit password can be cracked in less than 1 second!'
+      pt: 'Palavras-passe longas e difíceis de adivinhar protegem melhor as tuas contas',
+      en: 'Long, unique passwords protect your accounts much better'
     },
     teaser: {
-      pt: 'Passwords como "123456" são um convite aberto para cibercriminosos.',
-      en: 'Weak passwords like "123456" are cracked instantly by computers.'
+      pt: 'Combinações curtas ou previsíveis como "123456" são facilmente adivinhadas por programas automáticos.',
+      en: 'Short or predictable passwords like "123456" are easily guessed by automated software.'
     },
     description: {
-      pt: 'Os computadores conseguem testar biliões de combinações num piscar de olhos. Uma password fraca é descoberta instantaneamente, mas se usares uma "Frase-passe" com mais de 12 carateres (letras maiúsculas, minúsculas, números e símbolos), um computador demoraria mais de 1000 anos a decifrar!',
-      en: 'Computers test billions of combinations. A passphrase with 12+ characters can take centuries to crack.'
+      pt: 'Os computadores conseguem testar milhares de combinações rapidamente. Uma palavra-passe forte deve ser longa, não conter dados pessoais óbvios e, idealmente, combinar diferentes tipos de carateres ou formar uma frase difícil de adivinhar. Lembra-te também de usar palavras-passe diferentes para contas diferentes.',
+      en: 'Computers can test thousands of guesses quickly. A strong passphrase should be long, avoid personal details, and be unique across accounts.'
     },
     whyItMatters: {
-      pt: 'A tua palavra-passe é a chave da tua identidade digital: protege os teus jogos, redes e trabalhos escolares.',
+      pt: 'A tua palavra-passe protege as tuas contas, as tuas conversas, os teus ficheiros escolares e a tua privacidade.',
       en: 'Your password protects your personal accounts and digital privacy.'
     },
     funFact: {
-      pt: '"123456", "password" e "admin" continuam no topo das passwords mais usadas no mundo!',
-      en: '"123456" and "password" are still the most commonly leaked weak passwords worldwide!'
+      pt: '"123456", "password" e sequências simples continuam infelizmente entre as escolhas mais comuns e menos seguras.',
+      en: '"123456" and "password" remain among the most commonly used and least secure choices.'
     }
   },
   {
@@ -199,12 +199,12 @@ export const DAILY_TIC_FACTS: DailyTicFact[] = [
       en: 'Every 20 minutes, look at something 20 feet away for 20 seconds.'
     },
     description: {
-      pt: 'Quando olhamos para ecrãs de computadores ou telemóveis, piscamos os olhos metade das vezes normais, o que provoca cansaço e secura ocular. Os médicos recomendam: a cada 20 minutos de ecrã, olhar para um objeto a pelo menos 6 metros de distância durante 20 segundos.',
-      en: 'We blink 50% less when looking at screens. Rest your eye muscles with the 20-20-20 rule (look 6 meters away for 20 seconds).'
+      pt: 'Quando usamos ecrãs durante muito tempo, tendemos a piscar os olhos menos vezes, o que pode provocar cansaço ou secura ocular. Fazer pausas regulares ajuda a descansar a visão. Uma boa recomendação é a cada 20 minutos olhar para um objeto a cerca de 6 metros de distância durante 20 segundos.',
+      en: 'When looking at screens for long periods, we tend to blink less frequently, which can cause eye strain. Regular pauses help rest your vision.'
     },
     whyItMatters: {
-      pt: 'Relaxa os pequenos músculos oculares e evita dores de cabeça após o estudo ou jogos no computador.',
-      en: 'It relieves eye strain and prevents headaches during study and gaming.'
+      pt: 'Relaxa os músculos oculares e ajuda a prevenir o cansaço após períodos de estudo ou utilização do computador.',
+      en: 'It relieves eye strain and prevents fatigue during study and computer use.'
     },
     funFact: {
       pt: 'Fazer uma pausa rápida e alongar o pescoço e os ombros também ajuda o teu cérebro a aprender melhor!',
@@ -321,20 +321,20 @@ export const DAILY_TIC_FACTS: DailyTicFact[] = [
     icon: '⌨️',
     badgeColor: 'slate',
     title: {
-      pt: 'A tecla de Espaço é premida 6 milhões de vezes por segundo no mundo!',
-      en: 'The Spacebar is pressed 6 million times every second worldwide!'
+      pt: 'A barra de espaço é a tecla mais utilizada num teclado',
+      en: 'The Spacebar is the most frequently used key on a keyboard'
     },
     teaser: {
-      pt: 'É de longe a tecla mais longa e mais usada de todo o teclado do computador.',
-      en: 'The spacebar is by far the most frequently used key on Earth.'
+      pt: 'É habitualmente a tecla mais longa e mais premida em qualquer teclado.',
+      en: 'The spacebar is typically the longest and most frequently pressed key.'
     },
     description: {
       pt: 'Como quase todas as palavras na escrita humana precisam de um espaço para serem separadas, a barra de espaço é a peça mais ativa do teclado. Foi desenhada com um formato grande para ser fácil de premir com qualquer um dos polegares.',
-      en: 'Because human language separates words with spaces, the thumb spacebar is pressed constantly.'
+      en: 'Because written words need spaces to be separated, the spacebar is the most active key. It is designed wide to be easily pressed with either thumb.'
     },
     whyItMatters: {
-      pt: 'Na dactilografia correta com os 10 dedos, deves usar sempre o polegar da mão dominante para o espaço.',
-      en: 'Proper touch typing uses the thumb on the spacebar while keeping hands rested on home row.'
+      pt: 'Na escrita correta com as duas mãos (digitação), a barra de espaço é premida com os polegares, permitindo que os outros dedos fiquem livres para as restantes teclas.',
+      en: 'Proper touch typing uses the thumbs on the spacebar while keeping other fingers positioned on the keys.'
     },
     funFact: {
       pt: 'Em muitos videojogos (como Roblox e Minecraft), a barra de espaço foi adotada como a tecla universal de Saltar!',
@@ -451,24 +451,24 @@ export const DAILY_TIC_FACTS: DailyTicFact[] = [
     icon: '🌙',
     badgeColor: 'amber',
     title: {
-      pt: 'Desliga os ecrãs 1 hora antes de dormir para um sono perfeito!',
-      en: 'Turn off screens 1 hour before bed for restful sleep!'
+      pt: 'Evita o uso de ecrãs antes de dormir para um descanso de qualidade',
+      en: 'Avoid screens before bed for quality sleep'
     },
     teaser: {
-      pt: 'A luz azul emitida por telemóveis e computadores confunde o cérebro e rouba energia.',
-      en: 'Blue light from screens delays melatonin and impacts sleep quality.'
+      pt: 'A luminosidade dos dispositivos e a estimulação mental podem atrasar o sono.',
+      en: 'Screen brightness and mental stimulation can delay sleep.'
     },
     description: {
-      pt: 'Os nossos olhos têm sensores sensíveis à luz azul que avisam o cérebro quando é dia. Quando olhamos para telemóveis ou tablets na cama à noite, o cérebro atrasa a produção de melatonina (a hormona do sono), dificultando o adormecer e deixando-nos cansados na escola no dia seguinte.',
-      en: 'Our eyes perceive screen blue light as daylight. Using devices in bed blocks melatonin, disrupting restful sleep cycles.'
+      pt: 'A luz emitida pelos ecrãs, combinada com a estimulação mental de jogos, vídeos e conversas, pode atrasar a sensação de sono e dificultar o descanso noturno. Desligar os dispositivos algum tempo antes de deitar ajuda o corpo e a mente a relaxar.',
+      en: 'Screen light combined with mental stimulation from games and videos can delay sleepiness. Turning off devices before bed helps body and mind relax.'
     },
     whyItMatters: {
-      pt: 'Desligar os aparelhos 60 minutos antes de deitar e trocar por um livro ou conversa melhora a memória, a concentração e a boa disposição.',
-      en: 'Switching off devices 60 minutes before bedtime and reading a book enhances memory, focus, and mood.'
+      pt: 'Um sono de qualidade (cerca de 9 a 10 horas) é essencial para a concentração, para a memória e para o bem-estar durante as aulas no 5.º ano.',
+      en: 'Quality sleep is essential for concentration, memory, and daytime well-being.'
     },
     funFact: {
-      pt: 'Dormir entre 9 a 10 horas por noite é o superpoder dos alunos do 5.º ano para consolidar tudo o que aprenderam durante o dia!',
-      en: 'Sleeping 9 to 10 hours a night is a superpower for 5th graders to consolidate everything learned during the day!'
+      pt: 'Trocar o ecrã por um livro ou por uma conversa tranquila antes de deitar é uma excelente forma de preparar uma boa noite de sono.',
+      en: 'Replacing screen time with reading a book or relaxing conversation prepares for a restful night.'
     }
   }
 ];

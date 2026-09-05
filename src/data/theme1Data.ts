@@ -158,13 +158,13 @@ export const theme1Data: ThemeDefinition = {
       },
       whatYouWillLearn: {
         pt: [
-          'Identificar a diferença entre sites seguros e inseguros (o cadeado e o HTTPS);',
+          'Identificar ligações cifradas e o protocolo HTTPS;',
           'Cuidados a ter ao clicar em links e anúncios suspeitos;',
           'O que é o Phishing e como funciona a tentativa de engano;',
           'Regras de segurança ao descarregar ficheiros e usar Wi-Fi público.',
         ],
         en: [
-          'Identify the difference between secure and insecure websites (padlock and HTTPS);',
+          'Identify encrypted connections and the HTTPS protocol;',
           'Precautions when clicking suspicious links and advertisements;',
           'What Phishing is and how scam attempts work;',
           'Safety rules when downloading files and using public Wi-Fi.',
@@ -172,13 +172,13 @@ export const theme1Data: ThemeDefinition = {
       },
       explanation: {
         pt: [
-          'Quando navegas na Internet, deves verificar sempre a barra de endereço do navegador. Um endereço que começa por "https://" com o símbolo de um cadeado fechado significa que a comunicação entre o teu aparelho e o site está cifrada (protegida).',
+          'Quando navegas na Internet, repara na barra de endereço do navegador. Um endereço que começa por "https://" indica que a comunicação entre o teu aparelho e o site está cifrada (protegida contra interceção na rede). Lembra-te: isto protege os dados em trânsito, mas não significa que o site seja necessariamente honesto ou confiável!',
           'Muitos sites maliciosos tentam atrair crianças com anúncios falsos do género "Ganhaste um telemóvel novo!" ou "Clica aqui para moedas grátis no jogo". Isso são quase sempre armadilhas.',
           'O "Phishing" é uma técnica em que pessoas mal-intencionadas se fazem passar por empresas conhecidas ou escolas para tentar roubar os teus dados ou palavras-passe.',
           'Em redes Wi-Fi públicas (em cafés, centros comerciais ou parques), qualquer pessoa pode tentar intercetar os dados. Por isso, nunca deves aceder a contas importantes nem fornecer informações confidenciais numa rede aberta.',
         ],
         en: [
-          'When browsing the Internet, always check the browser address bar. An address starting with "https://" with a closed padlock icon means communication is encrypted (protected).',
+          'When browsing the Internet, check the browser address bar. An address starting with "https://" means communication is encrypted. Keep in mind that encryption secures data in transit, but does not guarantee the site itself is genuine or honest!',
           'Malicious websites often trick young people with fake banners like "You won a new phone!" or "Click here for free game coins!". These are almost always scams.',
           '"Phishing" is a technique where scammers pose as legitimate companies or schools to steal your personal credentials.',
           'On open public Wi-Fi networks (in cafes, malls, or parks), someone could try to intercept unencrypted data. Never access sensitive accounts or enter private info on an open network.',
@@ -767,8 +767,8 @@ export const theme1Data: ThemeDefinition = {
       },
       correctIndex: 1,
       explanation: {
-        pt: 'Perfeito! HTTPS e o cadeado indicam que a ligação ao site é cifrada e autêntica.',
-        en: 'Perfect! HTTPS and the padlock indicate the connection is encrypted and authentic.',
+        pt: 'Perfeito! Começar por "https://" indica que a ligação ao site é cifrada (a informação viaja protegida).',
+        en: 'Perfect! Beginning with "https://" indicates the connection to the site is encrypted.',
       },
     },
     {

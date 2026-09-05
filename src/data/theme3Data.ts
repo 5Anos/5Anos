@@ -655,13 +655,13 @@ export const theme3Data: ThemeDefinition = {
           en: 'A few years ago, someone created an elaborate, believable website about the "Pacific Northwest Tree Octopus", a fake octopus supposed to live in tree canopies! Many students copied the text without cross-checking other sources and failed their Science presentation. If they had checked a Natural History Museum or a reputable encyclopedia, they would have known octopuses do not live in trees!',
         },
         tip: {
-          pt: 'Regra dos 3 sites: Nunca fiques com a primeira informação que leres. Compara sempre o que encontraste em pelo menos dois outros sites fiáveis!',
-          en: 'Rule of 3 sites: Never settle for the first page you read. Cross-check facts across at least two other reputable websites!',
+          pt: 'Dica de investigação: Nunca fiques com a primeira página que leres. Compara sempre o que encontraste com fontes fidedignas e independentes (como enciclopédias, museus ou livros). Vários sites podem simplesmente copiar boatos uns dos outros!',
+          en: 'Research tip: Never settle for the first page you read. Cross-check facts with reputable independent sources (like encyclopedias, museums, or books). Multiple websites can copy unverified rumors from each other!',
         },
       },
       funFact: {
-        pt: 'Em Portugal e na União Europeia, os sites oficiais das escolas e universidades terminam frequentemente em .pt ou .edu, e os organismos do Estado terminam em .gov.pt, garantindo maior fiabilidade institucional.',
-        en: 'In Portugal and the European Union, official school and university websites often end in .pt or .edu, and government bodies end in .gov.pt, ensuring greater institutional reliability.',
+        pt: 'Em Portugal, os serviços e organismos oficiais do Estado utilizam frequentemente o domínio .gov.pt, e muitas escolas e universidades utilizam .pt ou .edu.pt. Embora os endereços oficiais ofereçam maior fiabilidade institucional, devemos sempre analisar o conteúdo com espírito crítico.',
+        en: 'In Portugal, official government bodies frequently use the .gov.pt domain, and educational institutions often use .pt or .edu.pt. While institutional addresses provide official credibility, content should always be analyzed with critical thinking.',
       },
       thinkAboutIt: {
         question: {
@@ -739,13 +739,13 @@ export const theme3Data: ThemeDefinition = {
           options: {
             pt: [
               'Partilhar logo nas redes e acreditar sem hesitar',
-              'Cruzar a informação com outros 2 ou 3 sites conceituados para verificar se é verdade',
+              'Cruzar a informação com fontes independentes e conceituadas (como enciclopédias ou manuais) para verificar se é verdade',
               'Apagar o computador',
               'Inscrever o teu número de telemóvel no site',
             ],
             en: [
               'Instantly share it and believe it without hesitation',
-              'Cross-check the information with 2 or 3 reputable websites to verify if it is true',
+              'Cross-check the information with independent, reputable sources (like encyclopedias or textbooks) to verify if it is true',
               'Delete your computer',
               'Submit your phone number into the website',
             ],

@@ -625,7 +625,7 @@ export const theme2Data: ThemeDefinition = {
           },
           correctIndex: 1,
           explanation: {
-            pt: 'Muito bem! Nenhuma instituição legítima solicita senhas por correio eletrónico.',
+            pt: 'Muito bem! Nenhuma instituição legítima solicita palavras-passe por correio eletrónico.',
             en: 'Very well! No legitimate organization requests passwords over email.',
           },
         },
@@ -933,7 +933,7 @@ export const theme2Data: ThemeDefinition = {
       },
       correctIndex: 1,
       explanation: {
-        pt: 'Parabéns! Entidades sérias nunca solicitam senhas por correio eletrónico.',
+        pt: 'Parabéns! Entidades sérias nunca solicitam palavras-passe por correio eletrónico.',
         en: 'Congratulations! Legitimate entities never solicit passwords via email.',
       },
     },

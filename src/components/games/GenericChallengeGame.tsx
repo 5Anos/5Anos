@@ -89,19 +89,19 @@ export const CHALLENGE_DATA: Record<string, {
   'desafio-ataque-dicionario': {
     title: { pt: '🛡️ Defesa contra Ataques de Dicionário', en: '🛡️ Dictionary Attack Defense' },
     instructions: {
-      pt: 'Aprende como os computadores dos piratas testam milhões de palavras comuns e como deves criar senhas indecifráveis.',
-      en: 'Learn how automated bots guess common dictionary words and how to build impenetrable passphrases.',
+      pt: 'Aprende como os programas automáticos testam palavras comuns e como deves criar palavras-passe difíceis de adivinhar.',
+      en: 'Learn how automated bots guess common dictionary words and how to build strong, hard-to-guess passphrases.',
     },
     questions: [
       {
         id: 'd1',
         situation: {
-          pt: 'Um software automático de força bruta tenta adivinhar senhas testando palavras do dicionário e nomes conhecidos.',
-          en: 'An automated brute-force tool attempts to guess passwords from dictionaries and names.',
+          pt: 'Um programa automático tenta adivinhar palavras-passe testando palavras do dicionário e combinações conhecidas.',
+          en: 'An automated tool attempts to guess passwords from dictionaries and common patterns.',
         },
         question: {
-          pt: 'Qual das seguintes palavras-passe seria decifrada em MENOS de 1 segundo?',
-          en: 'Which of the following passwords would be cracked in UNDER 1 second?',
+          pt: 'Qual das seguintes palavras-passe seria muito fácil e rápida de adivinhar?',
+          en: 'Which of the following passwords would be very easy and quick to guess?',
         },
         options: {
           pt: [

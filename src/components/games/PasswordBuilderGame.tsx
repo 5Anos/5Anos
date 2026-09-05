@@ -28,7 +28,7 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
   let strengthScore = 20;
 
   if (criteriaCount === 5) {
-    strengthLabel = { pt: 'Ultra-Segura! 🛡️', en: 'Ultra-Secure! 🛡️' };
+    strengthLabel = { pt: 'Muito Forte! 🛡️', en: 'Very Strong! 🛡️' };
     strengthColor = 'bg-emerald-500';
     strengthScore = 100;
   } else if (criteriaCount >= 4) {
@@ -191,7 +191,7 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
         <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
           <span className="text-xs text-slate-500 font-medium">
             {criteriaCount === 5
-              ? (language === 'pt' ? '🎉 Criaste uma palavra-passe ultra-segura!' : '🎉 You crafted an ultra-secure password!')
+              ? (language === 'pt' ? '🎉 Criaste uma palavra-passe muito forte!' : '🎉 You crafted a very strong password!')
               : (language === 'pt' ? 'Dica: junta 5 critérios para atingir nota máxima.' : 'Tip: combine 5 criteria to achieve maximum score.')}
           </span>
 

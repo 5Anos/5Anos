@@ -172,7 +172,7 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
         pt: [
           'Netiqueta no Email: saudação cordial, frases respeitosas, evitar CAPS LOCK e incluir assinatura.',
           'Diferença entre Para, Cc (Com conhecimento) e Bcc (Cópia oculta): use Bcc para proteger a privacidade dos contactos de várias pessoas.',
-          'Alerta Phishing: emails a oferecer prémios falsos, a pedir senhas ou com links estranhos.',
+          'Alerta Phishing: emails a oferecer prémios falsos, a pedir palavras-passe ou com links estranhos.',
           'Nunca abrir anexos de remetentes desconhecidos com extensões executáveis (.exe, .zip suspeitos).',
         ],
         en: [
@@ -294,7 +294,7 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
               opts: [
                 'Apagar imediatamente o email e nunca clicar no link',
                 'Clicar a correr para reclamar o prémio',
-                'Enviar os teus dados pessoais e senha',
+                'Enviar os teus dados pessoais e palavra-passe',
                 'Reencaminhar para toda a escola'
               ],
               c: 0,
@@ -486,7 +486,7 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
     {
       id: 'email-q5',
       question: {
-        pt: 'O que deves fazer se receberes um email estranho a pedir dados pessoais ou a tua senha?',
+        pt: 'O que deves fazer se receberes um email estranho a pedir dados pessoais ou a tua palavra-passe?',
         en: 'What should you do upon receiving a suspicious email asking for credentials?',
       },
       options: {
@@ -505,7 +505,7 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'É uma tentativa de phishing (fraude). Nunca deves facultar informações pessoais ou senhas.',
+        pt: 'É uma tentativa de phishing (fraude). Nunca deves facultar informações pessoais ou palavras-passe.',
         en: 'It is a phishing attempt. Never provide personal data or passwords.',
       },
     },
