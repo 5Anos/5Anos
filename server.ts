@@ -73,7 +73,7 @@ interface DB {
 }
 
 function hashPassword(password: string, salt: string): string {
-  return crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
+  return crypto.pbkdf2Sync(password, salt, 100000, 64, 'sha512').toString('hex');
 }
 
 function readDB(): DB {
@@ -86,54 +86,6 @@ function readDB(): DB {
         achievements: [],
         pointsHistory: [],
       };
-      // Pre-seed a friendly demo student so users or testers can immediately test or create custom
-      const salt1 = crypto.randomBytes(16).toString('hex');
-      const passHash1 = hashPassword('Aluno1234!', salt1);
-      const demoUser: User = {
-        id: 'student-demo-1',
-        name: 'João Silva',
-        email: 'joao.silva@escola.pt',
-        passwordHash: passHash1,
-        salt: salt1,
-        language: 'pt',
-        createdAt: new Date().toISOString(),
-        points: 120,
-        lastActivity: {
-          themeId: 'seguranca-digital',
-          moduleId: 'seguranca-digital-intro',
-          title: 'As TIC e a Sociedade — Introdução',
-          timestamp: new Date().toISOString(),
-        },
-      };
-
-      initialDB.users.push(demoUser);
-      initialDB.achievements.push({
-        userId: demoUser.id,
-        badgeId: 'primeiros-passos',
-        unlockedAt: new Date().toISOString(),
-      });
-      initialDB.pointsHistory.push({
-        id: 'pt-1',
-        userId: demoUser.id,
-        amount: 120,
-        reason: 'Boas-vindas à plataforma de TIC',
-        timestamp: new Date().toISOString(),
-      });
-      initialDB.progress.push({
-        userId: demoUser.id,
-        activityId: 'seguranca-digital-intro',
-        activityType: 'module',
-        themeId: 'seguranca-digital',
-        status: 'completed',
-        attempts: 1,
-        score: 3,
-        maxScore: 3,
-        percentage: 100,
-        bestScore: 3,
-        bestPercentage: 100,
-        lastUpdated: new Date().toISOString(),
-      });
-
       fs.writeFileSync(DB_FILE, JSON.stringify(initialDB, null, 2));
       return initialDB;
     }
@@ -295,13 +247,10 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', service: 'Plataforma TIC 5.º Ano' });
 });
 
-// Demo accounts list for quick testing
+// Demo accounts list (disabled for production)
 app.get('/api/auth/demo-accounts', (req, res) => {
   res.json({
-    accounts: [
-      { email: 'joao.silva@escola.pt', name: 'João Silva (5.º A)', defaultPass: 'Aluno1234!' },
-      { email: 'leonor.martins@escola.pt', name: 'Leonor Martins (5.º B)', defaultPass: 'Aluno1234!' },
-    ],
+    accounts: [],
   });
 });
 
@@ -390,36 +339,7 @@ app.post('/api/auth/login', (req, res) => {
   const db = readDB();
   const normalizedEmail = email.trim().toLowerCase();
 
-  // If user doesn't exist yet but is the second demo account, auto-create it
-  let user = db.users.find((u) => u.email.toLowerCase() === normalizedEmail);
-  if (!user && normalizedEmail === 'leonor.martins@escola.pt') {
-    const salt = crypto.randomBytes(16).toString('hex');
-    const passwordHash = hashPassword('Aluno1234!', salt);
-    user = {
-      id: 'student-demo-2',
-      name: 'Leonor Martins',
-      email: 'leonor.martins@escola.pt',
-      passwordHash,
-      salt,
-      language: 'pt',
-      createdAt: new Date().toISOString(),
-      points: 80,
-    };
-    db.users.push(user);
-    db.achievements.push({
-      userId: user.id,
-      badgeId: 'primeiros-passos',
-      unlockedAt: new Date().toISOString(),
-    });
-    db.pointsHistory.push({
-      id: crypto.randomUUID(),
-      userId: user.id,
-      amount: 80,
-      reason: 'Boas-vindas à plataforma',
-      timestamp: new Date().toISOString(),
-    });
-    writeDB(db);
-  }
+  const user = db.users.find((u) => u.email.toLowerCase() === normalizedEmail);
 
   if (!user) {
     return res.status(401).json({ error: 'Email ou palavra-passe incorretos.' });

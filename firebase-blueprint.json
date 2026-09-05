@@ -58,6 +58,17 @@
         "unlockedAt": { "type": "string" }
       },
       "required": ["userId", "badgeId", "unlockedAt"]
+    },
+    "PublicLeaderboardProfile": {
+      "title": "PublicLeaderboardProfile",
+      "description": "Public anonymous leaderboard profile with minimal non-sensitive data for student privacy",
+      "type": "object",
+      "properties": {
+        "publicId": { "type": "string" },
+        "turma": { "type": "string" },
+        "points": { "type": "number" }
+      },
+      "required": ["publicId", "points"]
     }
   },
   "firestore": {
@@ -66,7 +77,7 @@
       "description": "Private user profile documents"
     },
     "/publicProfiles/{userId}": {
-      "schema": "UserProfile",
+      "schema": "PublicLeaderboardProfile",
       "description": "Public anonymous leaderboard profile"
     },
     "/config/turmas": {

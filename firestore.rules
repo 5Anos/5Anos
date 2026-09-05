@@ -2,34 +2,61 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Config / System settings
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'imaginebycarla2023@gmail.com' ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'teacher'])
+      );
+    }
+
+    // Config / System settings (e.g. turmas list)
     match /config/{docId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
     // Connection testing
     match /test/{docId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if isSignedIn();
     }
 
     // User Private Profile & Subcollections
     match /users/{userId} {
-      allow read, write: if true;
+      // Students can read/write their own profile; Admins/teachers can read and manage
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId);
+      allow update: if (isOwner(userId) && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']) || resource.data.role == request.resource.data.role)) || isAdmin();
+      allow delete: if isAdmin();
 
       // Subcollection: Activity Progress
       match /progress/{activityId} {
-        allow read, write: if true;
+        allow read: if isOwner(userId) || isAdmin();
+        allow write: if isOwner(userId) || isAdmin();
       }
 
       // Subcollection: Achievements / Badges
       match /achievements/{badgeId} {
-        allow read, write: if true;
+        allow read: if isOwner(userId) || isAdmin();
+        allow write: if isOwner(userId) || isAdmin();
       }
     }
 
     // Public Profiles (for ranking / leaderboard)
     match /publicProfiles/{userId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow create, update: if isOwner(userId) || isAdmin();
+      allow delete: if isOwner(userId) || isAdmin();
     }
   }
 }
+

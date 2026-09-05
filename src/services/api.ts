@@ -55,7 +55,7 @@ function getStoredUsers(): any[] {
     }
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed)) {
-      // Purge any legacy demo accounts and ensure admin/teacher accounts never hold a student turma
+      // Purge any passwords, legacy demo accounts and ensure admin/teacher accounts never hold a student turma
       let hasChanges = false;
       const cleaned = parsed
         .filter(
@@ -65,6 +65,10 @@ function getStoredUsers(): any[] {
             u?.email !== 'leonor.martins@escola.pt'
         )
         .map((u: any) => {
+          if ('password' in u) {
+            delete u.password;
+            hasChanges = true;
+          }
           if (isUserAdmin(u?.email, u?.role)) {
             if (u.turma) {
               delete u.turma;
@@ -200,7 +204,12 @@ export const api = {
               deleteDoc(doc(db, 'publicProfiles', fbUser.uid)).catch(() => {});
             }
             localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-            this.setToken(fbUser.uid);
+            try {
+              const token = await fbUser.getIdToken();
+              this.setToken(token);
+            } catch {
+              this.setToken(fbUser.uid);
+            }
             callback(user);
             return;
           }
@@ -214,7 +223,7 @@ export const api = {
   /**
    * Directly save / sync user profile to Cloud Firestore
    */
-  async syncUserToFirestore(user: User, password?: string): Promise<boolean> {
+  async syncUserToFirestore(user: User): Promise<boolean> {
     try {
       const isAdmin = isUserAdmin(user.email, user.role);
       const finalRole = isAdmin ? 'admin' : (user.role || 'student');
@@ -241,13 +250,9 @@ export const api = {
         payload.turma = user.turma || '5.º A';
       }
 
-      if (password) {
-        payload.password = password;
-      }
-
       await setDoc(doc(db, 'users', user.id), payload, { merge: true });
 
-      // In public rankings: ONLY students appear in publicProfiles
+      // In public rankings: ONLY students appear in publicProfiles (minimized data for privacy)
       if (isAdmin) {
         try {
           await deleteDoc(doc(db, 'publicProfiles', user.id));
@@ -258,12 +263,9 @@ export const api = {
         await setDoc(
           doc(db, 'publicProfiles', user.id),
           {
-            id: user.id,
             publicId: user.publicId,
             turma: user.turma || '5.º A',
-            role: finalRole,
             points: user.points ?? 20,
-            createdAt: user.createdAt || new Date().toISOString(),
           },
           { merge: true }
         );
@@ -352,23 +354,31 @@ export const api = {
       createdAt: new Date().toISOString(),
     };
 
-    // 2. Save private and public profile to Cloud Firestore with password for cross-device authentication
-    await this.syncUserToFirestore(newUser, password);
+    // 2. Save private and public profile to Cloud Firestore
+    await this.syncUserToFirestore(newUser);
 
-    users.push({ ...newUser, password });
+    users.push(newUser);
     localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
     localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
-    this.setToken(userId);
-    return { user: newUser, token: userId };
+    let token = userId;
+    if (fbUid && auth.currentUser) {
+      try {
+        token = await auth.currentUser.getIdToken();
+      } catch {
+        token = fbUid;
+      }
+    }
+    this.setToken(token);
+    return { user: newUser, token };
   },
 
   /**
-   * Login with Firebase Authentication or Cloud Firestore database
+   * Login with Firebase Authentication
    */
   async login(email: string, password: string): Promise<{ user: User; token: string }> {
     const normalizedEmail = email.trim().toLowerCase();
 
-    // 1. Try Firebase Authentication
+    // Authenticate with Firebase Authentication
     try {
       const userCredential = await signInWithEmailAndPassword(auth, normalizedEmail, password);
       const fbUser = userCredential.user;
@@ -414,82 +424,29 @@ export const api = {
         };
       }
 
-      await this.syncUserToFirestore(user, password);
+      await this.syncUserToFirestore(user);
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-      this.setToken(fbUser.uid);
-      return { user, token: fbUser.uid };
-    } catch (fbError: any) {
-      console.warn('Firebase Auth login notice, checking Cloud Firestore directly:', fbError?.code);
-    }
-
-    // 2. Query Cloud Firestore 'users' collection directly
-    try {
-      const usersRef = collection(db, 'users');
-      const q = query(usersRef, where('email', '==', normalizedEmail));
-      const snap = await getDocs(q);
-
-      if (!snap.empty) {
-        const docSnap = snap.docs[0];
-        const docData = docSnap.data();
-        if (docData.password === password) {
-          const isAdmin = isUserAdmin(docData.email || normalizedEmail, docData.role);
-          const user: User = {
-            id: docSnap.id,
-            name: docData.name || 'Estudante',
-            email: docData.email,
-            publicId: docData.publicId || generateSecurePublicId(),
-            turma: isAdmin ? undefined : (docData.turma || '5.º A'),
-            role: isAdmin ? 'admin' : (docData.role || 'student'),
-            language: docData.language || 'pt',
-            points: docData.points ?? 20,
-            createdAt: docData.createdAt || new Date().toISOString(),
-            lastActivity: docData.lastActivity,
-          };
-
-          localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-          const token = `token-${user.id}`;
-          this.setToken(token);
-          return { user, token };
-        } else {
-          throw new Error('Palavra-passe incorreta para este email.');
-        }
+      let token = fbUser.uid;
+      try {
+        token = await fbUser.getIdToken();
+      } catch {
+        token = fbUser.uid;
       }
-    } catch (err: any) {
-      if (err?.message && err.message.includes('Palavra-passe incorreta')) {
-        throw err;
-      }
-      console.warn('Firestore query notice:', err);
-    }
-
-    // 3. Check local storage accounts
-    const users = getStoredUsers();
-    const found = users.find(
-      (u: any) => u.email.toLowerCase() === normalizedEmail && u.password === password
-    );
-
-    if (found) {
-      const isAdmin = isUserAdmin(found.email, found.role);
-      const user: User = {
-        id: found.id,
-        name: found.name,
-        email: found.email,
-        publicId: found.publicId || 'Panda_Feliz_701',
-        turma: isAdmin ? undefined : (found.turma || '5.º A'),
-        role: isAdmin ? 'admin' : (found.role || 'student'),
-        language: found.language || 'pt',
-        points: found.points || 0,
-        createdAt: found.createdAt || new Date().toISOString(),
-        lastActivity: found.lastActivity,
-      };
-
-      await this.syncUserToFirestore(user, password);
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-      const token = `local-token-${user.id}`;
       this.setToken(token);
       return { user, token };
+    } catch (fbError: any) {
+      console.warn('Firebase Auth login notice:', fbError?.code);
+      if (fbError?.code === 'auth/wrong-password' || fbError?.code === 'auth/invalid-credential') {
+        throw new Error('Palavra-passe incorreta para este email.');
+      }
+      if (fbError?.code === 'auth/user-not-found') {
+        throw new Error('Não existe conta associada a este email.');
+      }
+      if (fbError?.code === 'auth/too-many-requests') {
+        throw new Error('Muitas tentativas falhadas. Por favor, aguarda alguns momentos.');
+      }
+      throw new Error('Email ou palavra-passe incorretos.');
     }
-
-    throw new Error('Email ou palavra-passe incorretos.');
   },
 
   /**
@@ -614,38 +571,7 @@ export const api = {
       }
     }
 
-    // 3. Update in Cloud Firestore
-    if (userDocId) {
-      try {
-        await updateDoc(doc(db, 'users', userDocId), {
-          password: newPassword,
-          updatedAt: new Date().toISOString(),
-        });
-        console.log('✅ Updated password in Cloud Firestore for user:', userDocId);
-      } catch (updateErr) {
-        // If doc doesn't exist yet, merge
-        try {
-          await setDoc(
-            doc(db, 'users', userDocId),
-            { password: newPassword, updatedAt: new Date().toISOString() },
-            { merge: true }
-          );
-        } catch (setErr) {
-          console.warn('Failed to update Firestore doc:', setErr);
-        }
-      }
-    }
-
-    // 4. Update in local storage
-    if (localUserIndex !== -1) {
-      users[localUserIndex].password = newPassword;
-      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
-    } else if (foundUserData) {
-      users.push({ ...foundUserData, password: newPassword });
-      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
-    }
-
-    // 5. Update in server.ts DB
+    // 3. Update in server backend (secure salted pbkdf2 hash)
     try {
       await fetch('/api/auth/recover', {
         method: 'POST',
@@ -654,6 +580,17 @@ export const api = {
       });
     } catch {
       // ignore
+    }
+
+    // 4. Update profile in Cloud Firestore without plaintext password
+    if (userDocId) {
+      try {
+        await updateDoc(doc(db, 'users', userDocId), {
+          updatedAt: new Date().toISOString(),
+        });
+      } catch {
+        // ignore
+      }
     }
 
     return {
@@ -1216,9 +1153,21 @@ export const api = {
     }
 
     const firestoreUpdates: any = {};
-    if (updates.newPassword) firestoreUpdates.password = updates.newPassword;
     if (updates.newTurma) firestoreUpdates.turma = updates.newTurma.trim();
     if (updates.newName) firestoreUpdates.name = updates.newName.trim();
+
+    if (updates.newPassword) {
+      // Update securely on backend if available
+      try {
+        await fetch('/api/auth/recover', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: normalizedEmail, newPassword: updates.newPassword }),
+        });
+      } catch {
+        // ignore
+      }
+    }
 
     // 1. Update in Cloud Firestore users collection
     let updatedDocId = studentId;
@@ -1250,7 +1199,7 @@ export const api = {
       console.warn('Firestore publicProfile update warning:', err);
     }
 
-    // 3. Update in local storage
+    // 3. Update in local storage (never storing plaintext password)
     const users = getStoredUsers();
     let localFound = false;
     const updatedUsers = users.map((u: any) => {
@@ -1258,7 +1207,6 @@ export const api = {
         localFound = true;
         return {
           ...u,
-          ...(updates.newPassword ? { password: updates.newPassword } : {}),
           ...(updates.newTurma ? { turma: updates.newTurma.trim() } : {}),
           ...(updates.newName ? { name: updates.newName.trim() } : {}),
         };

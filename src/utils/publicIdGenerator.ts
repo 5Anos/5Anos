@@ -62,14 +62,24 @@ const ADJECTIVES = [
   'Dinâmico',
 ];
 
+function getSecureRandomInt(min: number, max: number): number {
+  const range = max - min + 1;
+  const array = new Uint32Array(1);
+  if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+    crypto.getRandomValues(array);
+    return min + (array[0] % range);
+  }
+  return min + Math.floor(Math.random() * range);
+}
+
 export function generateSecurePublicId(existingIds: string[] = []): string {
   const existingSet = new Set(existingIds.map((id) => (id || '').toLowerCase().trim()));
 
   // 1. Try standard friendly combinations
   for (let attempt = 0; attempt < 100; attempt++) {
-    const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)];
-    const adj = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
-    const randomNum = Math.floor(100 + Math.random() * 900); // 3-digit number 100-999
+    const noun = NOUNS[getSecureRandomInt(0, NOUNS.length - 1)];
+    const adj = ADJECTIVES[getSecureRandomInt(0, ADJECTIVES.length - 1)];
+    const randomNum = getSecureRandomInt(100, 999); // 3-digit number 100-999
     const candidate = `${noun}_${adj}_${randomNum}`;
 
     if (!existingSet.has(candidate.toLowerCase())) {
@@ -79,8 +89,8 @@ export function generateSecurePublicId(existingIds: string[] = []): string {
 
   // 2. High-entropy fallback guaranteed to not collide
   for (let attempt = 0; attempt < 100; attempt++) {
-    const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)];
-    const randomNum = Math.floor(1000 + Math.random() * 9000);
+    const noun = NOUNS[getSecureRandomInt(0, NOUNS.length - 1)];
+    const randomNum = getSecureRandomInt(1000, 9999);
     const candidate = `${noun}_TIC_${randomNum}`;
     if (!existingSet.has(candidate.toLowerCase())) {
       return candidate;
@@ -92,6 +102,6 @@ export function generateSecurePublicId(existingIds: string[] = []): string {
 }
 
 export const PUBLIC_ID_EXPLANATION = {
-  pt: 'Este é o teu Nickname para o ranking e para os desafios. O teu nome verdadeiro permanece 100% privado.',
-  en: 'This is your Nickname for leaderboards and challenges. Your real name remains 100% private.',
+  pt: 'Este é o teu Nickname para o ranking e para os desafios. O teu nome verdadeiro permanece privado e protegido.',
+  en: 'This is your Nickname for leaderboards and challenges. Your real name remains private and protected.',
 };
