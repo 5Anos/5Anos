@@ -200,12 +200,6 @@ export const SitPostureInfographicPT: React.FC = () => {
           </g>
         </svg>
       </div>
-
-      {/* Footer hint */}
-      <div className="mt-3 flex items-center justify-center gap-1.5 text-xs text-indigo-700/80 font-medium">
-        <span>✨</span>
-        <span>Guia visual de postura correta para o 5.º Ano de TIC</span>
-      </div>
     </div>
   );
 };
