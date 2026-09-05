@@ -48,11 +48,11 @@ export const themeTicSociedadeData: ThemeDefinition = {
       icon: '🌐',
     },
     {
-      eyebrow: { pt: 'Como funciona?', en: 'How it works' },
+      eyebrow: { pt: 'Exemplo', en: 'Example' },
       h: { pt: 'Comércio eletrónico', en: 'E-Commerce' },
       body: {
-        pt: 'O comércio eletrónico é a compra e venda de produtos ou serviços através da Internet. Uma pessoa escolhe um produto num site, paga eletronicamente e o produto é entregue em casa através dos transportes.<br><br>É um bom exemplo de como várias TIC trabalham em conjunto: o site, o pagamento digital e o acompanhamento da entrega.',
-        en: 'E-commerce is the buying and selling of goods or services via the Internet. A person selects an item on a website, pays electronically, and the parcel is delivered home through transport networks.<br><br>It is a great example of how multiple ICT tools cooperate: the website, digital payment, and delivery tracking.',
+        pt: 'O comércio eletrónico é a compra e venda de produtos ou serviços através da Internet. Por exemplo, uma pessoa pode escolher um produto num site, pagar através da Internet e recebê-lo em casa.<br><br>É um bom exemplo de como várias TIC trabalham em conjunto: o site onde fazemos a compra, o sistema de pagamento digital e o acompanhamento da entrega.',
+        en: 'E-commerce is the buying and selling of goods or services through the Internet. For example, a person can choose a product on a website, pay online, and receive it at home.<br><br>It is a great example of how multiple ICT tools work together: the website where we make the purchase, the digital payment system, and delivery tracking.',
       },
       icon: '🛒',
     },
@@ -82,14 +82,12 @@ export const themeTicSociedadeData: ThemeDefinition = {
       icon: '💡',
       explanation: {
         pt: [
-          'A sigla TIC significa Tecnologias da Informação e Comunicação.',
-          'Consiste no conjunto de ferramentas tecnológicas, computadores, telemóveis, redes e programas que nos permitem criar, guardar, processar e partilhar informação com qualquer pessoa no mundo.',
-          'Hoje em dia, quase tudo à nossa volta funciona com recurso às TIC: desde os semáforos inteligentes até aos satélites que prevêem o estado do tempo!',
+          'As TIC — Tecnologias da Informação e Comunicação — são o conjunto de ferramentas que usamos para criar, guardar, partilhar e encontrar informação: computadores, tablets, telemóveis, a Internet e todos os programas e aplicações que usamos com eles.',
+          'Nasceste num mundo onde as TIC já fazem parte de quase tudo: da escola aos transportes, da saúde ao entretenimento.',
         ],
         en: [
-          'ICT stands for Information and Communication Technologies.',
-          'It is the set of tech tools, computers, smartphones, networks, and software that allow us to create, store, process, and share information worldwide.',
-          'Nowadays, almost everything around us uses ICT: from smart traffic lights to weather forecasting satellites!',
+          'ICT — Information and Communication Technologies — is the set of tools we use to create, store, share, and find information: computers, tablets, smartphones, the Internet, and all software and apps we use with them.',
+          'You were born in a world where ICT is already part of almost everything: from school to transport, healthcare to entertainment.',
         ],
       },
       example: {

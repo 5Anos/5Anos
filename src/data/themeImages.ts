@@ -2,6 +2,9 @@ import ticSocietyHero from '../assets/images/tic_society_hero_1788476514973.jpg'
 import hardwarePeripherals from '../assets/images/hardware_peripherals_3d_1788539942831.jpg';
 import ergonomicsGuide from '../assets/images/ergonomics_guide_1788476529797.jpg';
 import activeBreaksPosture from '../assets/images/active_breaks_posture_3d_1788539976910.jpg';
+import correctPostureGuide from '../assets/images/correct_posture_guide_1788640792425.jpg';
+import sitPostureGuide from '../assets/images/sit_posture_guide_1788646722404.jpg';
+import dosDontsPosture from '../assets/images/dos_donts_posture_1788646816497.jpg';
 import passwordsSecurity from '../assets/images/passwords_security_1788476556370.jpg';
 import cyberSafetyShield from '../assets/images/cyber_safety_shield_3d_1788539960280.jpg';
 import emailCommunication from '../assets/images/email_communication_1788476921823.jpg';
@@ -35,10 +38,10 @@ export const THEME_STEP_IMAGES: Record<string, string[]> = {
   ],
   'ergonomia': [
     ergonomicsGuide,
-    activeBreaksPosture,
+    sitPostureGuide,
     girlAvatarImg,
-    ergonomicsGuide,
     activeBreaksPosture,
+    dosDontsPosture,
   ],
   'palavras-passe': [
     passwordsSecurity,
@@ -99,6 +102,9 @@ export {
   hardwarePeripherals,
   ergonomicsGuide,
   activeBreaksPosture,
+  correctPostureGuide,
+  sitPostureGuide,
+  dosDontsPosture,
   passwordsSecurity,
   cyberSafetyShield,
   emailCommunication,

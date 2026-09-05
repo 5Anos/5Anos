@@ -21,22 +21,22 @@ export const themeErgonomiaData: ThemeDefinition = {
   badgeCount: 2,
   lessons: [
     {
-      eyebrow: { pt: 'Como funciona?', en: 'How it works' },
+      eyebrow: { pt: 'O que é?', en: 'What is it?' },
       h: { pt: 'O que é a ergonomia?', en: 'What is ergonomics?' },
       body: {
-        pt: 'Ergonomia é a forma como organizamos o nosso corpo e o espaço à nossa volta para trabalhar de maneira confortável e saudável.<br><br>Quando usamos computadores, tablets ou telemóveis durante muito tempo, uma postura incorreta pode causar dores nas costas, pescoço, olhos e pulsos.',
-        en: 'Ergonomics is how we arrange our body and the surrounding workspace to work comfortably and healthily.<br><br>When using computers, tablets, or smartphones for long periods, poor posture can cause back, neck, eye, and wrist strain.',
+        pt: 'A ergonomia é a forma como organizamos o espaço, os equipamentos e a nossa posição para trabalhar de maneira confortável e saudável.<br><br>Quando usamos computadores, tablets ou telemóveis durante muito tempo, uma postura incorreta pode causar dores nas costas, no pescoço, nos olhos e nos pulsos.',
+        en: 'Ergonomics is the way we organize the space, equipment, and our posture to work comfortably and healthily.<br><br>When we use computers, tablets, or smartphones for a long time, improper posture can cause back, neck, eye, and wrist strain.',
       },
       icon: '🪑',
     },
     {
-      eyebrow: { pt: 'Atenção!', en: 'Attention!' },
-      h: { pt: 'A postura correta', en: 'The correct posture' },
+      eyebrow: { pt: 'Postura Correta', en: 'Correct Posture' },
+      h: { pt: 'Como te deves sentar ao computador?', en: 'How should you sit at the computer?' },
       body: {
-        pt: 'Para uma boa postura à frente do computador:<ul><li>Costas direitas, encostadas na cadeira.</li><li>Pés bem apoiados no chão.</li><li>Braços num ângulo confortável, próximo de 90 graus.</li><li>Ecrã à altura dos olhos, nem muito alto nem muito baixo.</li><li>Distância do ecrã de cerca de 50 a 70 centímetros.</li></ul>Evita curvar as costas, levantar demasiado os ombros ou aproximar o rosto do ecrã.',
-        en: 'For proper posture in front of a computer:<ul><li>Straight back supported by the chair.</li><li>Feet firmly resting on the floor.</li><li>Arms at a comfortable 90-degree angle.</li><li>Screen at eye level, neither too high nor too low.</li><li>Screen distance of approximately 50 to 70 centimeters.</li></ul>Avoid slouching, tensing your shoulders, or leaning too close to the screen.',
+        pt: 'Para manter o corpo saudável e sem cansaço enquanto estudas ao computador:<ul><li><strong>Ombros:</strong> relaxados e descontraídos.</li><li><strong>Costas:</strong> direitas, com a parte inferior bem apoiada na cadeira.</li><li><strong>Cotovelos e pulsos:</strong> alinhados a um ângulo próximo de 90 graus.</li><li><strong>Ecrã:</strong> topo do ecrã ao nível dos olhos (ou ligeiramente abaixo) e a 45–70 cm de distância.</li><li><strong>Pernas e pés:</strong> coxas apoiadas e pés bem assentes no chão ou num descanso de pés.</li><li><strong>Espaço:</strong> área por baixo da secretária desobstruída para esticar confortavelmente as pernas.</li></ul>',
+        en: 'To keep your body healthy and strain-free while working at the computer:<ul><li><strong>Shoulders:</strong> relaxed and dropped.</li><li><strong>Back:</strong> straight, with lower back firmly supported by the chair.</li><li><strong>Elbows & wrists:</strong> aligned at approximately a 90-degree angle.</li><li><strong>Screen:</strong> top of monitor at eye level (or slightly below) and 45–70 cm away.</li><li><strong>Legs & feet:</strong> thighs supported and feet flat on the floor or on a footrest.</li><li><strong>Space:</strong> clear space under the desk to move your legs comfortably.</li></ul>',
       },
-      icon: '📐',
+      icon: '🧍',
     },
     {
       eyebrow: { pt: 'Sabias que...?', en: 'Did you know...?' },
@@ -60,8 +60,8 @@ export const themeErgonomiaData: ThemeDefinition = {
       eyebrow: { pt: 'Na vida real', en: 'In real life' },
       h: { pt: 'Organizar o espaço de trabalho', en: 'Organizing your workspace' },
       body: {
-        pt: 'Uma mesa arrumada, com espaço suficiente para os braços e o teclado, e uma cadeira ajustada à altura do corpo, tornam o estudo mais confortável e seguro, seja com um computador, um tablet ou um telemóvel.',
-        en: 'A tidy desk with ample room for your keyboard and arms, paired with a height-adjusted chair, makes study sessions comfortable and safe whether using a PC, tablet, or mobile phone.',
+        pt: 'Uma mesa arrumada, com espaço suficiente para os braços e o teclado, e uma cadeira ajustada à altura do corpo, tornam o estudo mais confortável e seguro:<br><br><div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-2"><div class="p-3 bg-red-50/80 border border-red-200 rounded-xl text-xs leading-relaxed"><strong class="text-red-700 block mb-1">❌ O que NÃO deves fazer:</strong><ul class="list-disc pl-4 space-y-0.5 text-red-900"><li>Costas curvadas.</li><li>Cabeça muito à frente.</li><li>Ombros tensos.</li><li>Cadeira sem bom apoio.</li><li>Pés sem estarem bem apoiados.</li><li><em>A postura incorreta causa dores e cansaço!</em></li></ul></div><div class="p-3 bg-emerald-50/80 border border-emerald-200 rounded-xl text-xs leading-relaxed"><strong class="text-emerald-700 block mb-1">✅ O que DEVES fazer:</strong><ul class="list-disc pl-4 space-y-0.5 text-emerald-900"><li>Costas direitas e apoiadas.</li><li>Cabeça direita.</li><li>Ecrã à altura dos olhos.</li><li>Ombros relaxados.</li><li>Cotovelos à altura do teclado.</li><li>Pés bem apoiados no chão ou num apoio.</li><li><em>Garante mais conforto e saúde!</em></li></ul></div></div>',
+        en: 'A tidy desk with ample room for your keyboard and arms, paired with a height-adjusted chair, makes study sessions comfortable and safe:<br><br><div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-2"><div class="p-3 bg-red-50/80 border border-red-200 rounded-xl text-xs leading-relaxed"><strong class="text-red-700 block mb-1">❌ What you should NOT do:</strong><ul class="list-disc pl-4 space-y-0.5 text-red-900"><li>Curved/slouched back.</li><li>Head pushed too far forward.</li><li>Tense shoulders.</li><li>Chair without proper back support.</li><li>Feet dangling without firm support.</li><li><em>Bad posture causes pain and fatigue!</em></li></ul></div><div class="p-3 bg-emerald-50/80 border border-emerald-200 rounded-xl text-xs leading-relaxed"><strong class="text-emerald-700 block mb-1">✅ What you SHOULD do:</strong><ul class="list-disc pl-4 space-y-0.5 text-emerald-900"><li>Straight, supported back.</li><li>Upright head position.</li><li>Screen at eye level.</li><li>Relaxed shoulders.</li><li>Elbows level with keyboard.</li><li>Feet firmly flat on floor or footrest.</li><li><em>Ensures greater comfort and health!</em></li></ul></div></div>',
       },
       icon: '🖥️',
     },

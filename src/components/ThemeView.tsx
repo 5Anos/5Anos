@@ -238,9 +238,6 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                         </p>
                       </div>
                     </div>
-                    <span className="text-[11px] text-slate-400 mt-2 italic text-center">
-                      {language === 'pt' ? 'Ilustração 3D interativa de aprendizagem' : 'Interactive 3D learning visual'}
-                    </span>
                   </div>
                 </div>
 
