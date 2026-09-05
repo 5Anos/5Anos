@@ -4,6 +4,7 @@ import { ThemeDefinition, ActivityProgress, Language } from '../types';
 import { translations } from '../i18n/translations';
 import { ThemeIllustration } from './illustrations/ThemeIllustrations';
 import { getThemeImage, getThemeStepImage, getChallengeImage } from '../data/themeImages';
+import { SitPostureInfographicPT } from './SitPostureInfographicPT';
 
 interface ThemeViewProps {
   theme: ThemeDefinition;
@@ -221,23 +222,27 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                     />
                   </div>
 
-                  {/* 3D Illustration Card per step */}
+                  {/* Visual Infographic / Illustration Card per step */}
                   <div className="lg:col-span-5 flex flex-col items-center">
-                    <div className="w-full rounded-2xl overflow-hidden border-2 border-indigo-100 shadow-md bg-slate-50 relative group">
-                      <img
-                        key={`${theme.id}-step-${currentStepIndex}`}
-                        src={currentStepImg}
-                        alt={currentLesson.h[language]}
-                        referrerPolicy="no-referrer"
-                        className="w-full h-56 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-300 animate-in fade-in"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
-                        <p className="text-white text-xs font-semibold drop-shadow-sm flex items-center gap-1.5">
-                          <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                          <span>{currentLesson.eyebrow[language]}</span>
-                        </p>
+                    {theme.id === 'ergonomia' && currentStepIndex === 1 ? (
+                      <SitPostureInfographicPT />
+                    ) : (
+                      <div className="w-full rounded-2xl overflow-hidden border-2 border-indigo-100 shadow-md bg-slate-50 relative group">
+                        <img
+                          key={`${theme.id}-step-${currentStepIndex}`}
+                          src={currentStepImg}
+                          alt={currentLesson.h[language]}
+                          referrerPolicy="no-referrer"
+                          className="w-full h-56 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-300 animate-in fade-in"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
+                          <p className="text-white text-xs font-semibold drop-shadow-sm flex items-center gap-1.5">
+                            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                            <span>{currentLesson.eyebrow[language]}</span>
+                          </p>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
 
