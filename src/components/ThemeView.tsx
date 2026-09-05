@@ -5,6 +5,7 @@ import { translations } from '../i18n/translations';
 import { ThemeIllustration } from './illustrations/ThemeIllustrations';
 import { getThemeImage, getThemeStepImage, getChallengeImage } from '../data/themeImages';
 import { SitPostureInfographicPT } from './SitPostureInfographicPT';
+import { DosDontsPostureInfographicPT } from './DosDontsPostureInfographicPT';
 
 interface ThemeViewProps {
   theme: ThemeDefinition;
@@ -226,6 +227,8 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                   <div className="lg:col-span-5 flex flex-col items-center">
                     {theme.id === 'ergonomia' && currentStepIndex === 1 ? (
                       <SitPostureInfographicPT />
+                    ) : theme.id === 'ergonomia' && currentStepIndex === 4 ? (
+                      <DosDontsPostureInfographicPT />
                     ) : (
                       <div className="w-full rounded-2xl overflow-hidden border-2 border-indigo-100 shadow-md bg-slate-50 relative group">
                         <img
