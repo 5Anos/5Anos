@@ -141,9 +141,6 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
         >
           <Gamepad2 className="w-5 h-5" />
           <span>{t.tabGames}</span>
-          <span className="px-2 py-0.5 rounded-full text-xs font-extrabold bg-amber-100 text-amber-800 border border-amber-200">
-            {theme.challenges.length}
-          </span>
         </button>
       </div>
 
