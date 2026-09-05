@@ -51,10 +51,13 @@ service cloud.firestore {
       }
     }
 
-    // Public Profiles (for ranking / leaderboard)
+    // Public Profiles (for ranking / leaderboard - privacy enforced)
     match /publicProfiles/{userId} {
       allow read: if true;
-      allow create, update: if isOwner(userId) || isAdmin();
+      allow create, update: if (isOwner(userId) || isAdmin()) && 
+        !('email' in request.resource.data) &&
+        !('password' in request.resource.data) &&
+        !('passwordHash' in request.resource.data);
       allow delete: if isOwner(userId) || isAdmin();
     }
   }
