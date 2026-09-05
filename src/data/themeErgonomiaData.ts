@@ -109,8 +109,8 @@ export const themeErgonomiaData: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Sabias que a cabeça de uma criança de 10 anos pesa cerca de 4 a 5 kg quando direita, mas se inclinares o pescoço 45 graus para baixo para olhar para o telemóvel, o esforço no pescoço equivale a carregar cerca de 22 kg (quase um saco de cimento!)?',
-        en: 'Did you know a 10-year-old’s head weighs about 4–5 kg upright, but tilting your neck 45 degrees down to look at a smartphone exerts the pressure of about 22 kg on your spine?',
+        pt: 'Sabias que inclinar frequentemente a cabeça para a frente aumenta o esforço dos músculos do pescoço e pode contribuir para desconforto e dores musculares?',
+        en: 'Did you know that frequently tilting your head forward increases strain on neck muscles and can contribute to discomfort?',
       },
       thinkAboutIt: {
         question: {
@@ -197,8 +197,8 @@ export const themeErgonomiaData: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Sabias que quando estamos muito concentrados a olhar para um ecrã digital piscamos os olhos cerca de 50% menos vezes do que o normal? É por isso que os olhos ficam secos e vermelhos!',
-        en: 'Did you know that when focusing on digital screens, we blink about 50% less often than normal? That is why eyes get dry and irritated!',
+        pt: 'Sabias que quando estamos muito concentrados num ecrã podemos pestanejar menos vezes, o que pode contribuir para olhos secos ou irritados?',
+        en: 'Did you know that when we are deeply focused on a screen we may blink less frequently, which can contribute to dry or irritated eyes?',
       },
       thinkAboutIt: {
         question: {
@@ -282,8 +282,8 @@ export const themeErgonomiaData: ThemeDefinition = {
           en: 'Diogo set a 50-minute timer while doing homework. When it rings, he stands up, does five jumping jacks, and drinks water.',
         },
         tip: {
-          pt: 'Mesmo uma pausa curta de 3 minutos é suficiente para reativar a circulação e melhorar a concentração!',
-          en: 'Even a short 3-minute break restarts circulation and boosts cognitive focus!',
+          pt: 'Pequenas pausas regulares podem ajudar a reduzir o desconforto e a manter a concentração!',
+          en: 'Regular short breaks can help reduce discomfort and sustain concentration!',
         },
       },
       funFact: {
@@ -517,8 +517,8 @@ export const themeErgonomiaData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'O ângulo de 90° graus garante uma postura neutra e sem compressão muscular excessiva.',
-        en: 'A 90-degree angle ensures a neutral anatomical posture without undue muscle strain.',
+        pt: 'Uma posição próxima dos 90° pode ajudar a manter uma postura confortável e neutra.',
+        en: 'A position close to 90 degrees can help maintain a comfortable and neutral posture.',
       },
     },
     {
@@ -569,8 +569,8 @@ export const themeErgonomiaData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Cerca de 50 a 70 cm (um braço esticado) evita o cansaço dos músculos oculares.',
-        en: '50 to 70 cm (arm’s length) prevents visual strain while keeping text legible.',
+        pt: 'Manter uma distância próxima de um braço esticado (cerca de 50 a 70 cm) ajuda a manter uma leitura confortável sem forçar os olhos.',
+        en: 'An approximate arm’s length distance (about 50 to 70 cm) helps maintain comfortable viewing without straining eyes.',
       },
     },
     {

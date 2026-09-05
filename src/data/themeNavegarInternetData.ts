@@ -855,8 +855,8 @@ export const themeNavegarInternetData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'O comando site: limita a pesquisa exclusivamente aos sites pertencentes àquele domínio ou extensão.',
-        en: 'The site: operator restricts results exclusively to the specified top-level or specific domain.',
+        pt: 'O comando site: limita a pesquisa exclusivamente aos sites pertencentes àquele domínio ou extensão. Lembra-te: .pt identifica o domínio de topo de Portugal, mas não garante por si só que a informação seja verdadeira. Deves avaliar sempre a instituição, o autor, a data e o conteúdo.',
+        en: 'The site: operator restricts results exclusively to the specified top-level or specific domain. Remember: .pt identifies Portugal’s country code domain, but does not guarantee on its own that the content is accurate. Always verify author, date, and institution.',
       },
     },
     {

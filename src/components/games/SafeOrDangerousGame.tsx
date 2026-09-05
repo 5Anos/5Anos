@@ -56,13 +56,13 @@ const SCENARIOS: Scenario[] = [
   {
     id: 4,
     text: {
-      pt: 'Verificar se o site onde estás a navegar tem "https://" e o ícone de um cadeado fechado antes de iniciar sessão na plataforma escolar.',
-      en: 'Checking that the website begins with "https://" and shows a closed padlock before signing into your school portal.',
+      pt: 'Antes de iniciar sessão na plataforma escolar, verificar o endereço completo (URL), confirmar que é o domínio oficial da escola e verificar a ligação HTTPS protegida.',
+      en: 'Before logging into your school platform, verifying the full web address (URL), confirming it is the official school domain, and verifying the secure HTTPS connection.',
     },
     isSafe: true,
     explanation: {
-      pt: '✅ Seguro! O protocolo HTTPS e o cadeado confirmam que a ligação está cifrada e que os dados viajam protegidos.',
-      en: '✅ Safe! HTTPS and the padlock verify that communications are encrypted and secure.',
+      pt: '✅ Atitude Segura e Prudente! Verificar o endereço completo, o domínio oficial e o HTTPS em conjunto garante que estás no site verdadeiro. Lembra-te: o HTTPS cifra a comunicação, mas não prova por si só que o site é legítimo (sites falsos de phishing também podem ter HTTPS)!',
+      en: '✅ Safe and Prudent! Checking the full URL, official domain, and HTTPS together ensures you are on the legitimate site. Remember: HTTPS encrypts data transmission, but does not prove on its own that a site is authentic (phishing sites can also use HTTPS)!',
     },
   },
   {

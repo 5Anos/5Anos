@@ -111,12 +111,12 @@ const RIDDLES: OperatorRiddle[] = [
   {
     id: 3,
     missionTitle: {
-      pt: 'Enigma 3: Pesquisar apenas em sites oficiais portugueses (.pt)',
-      en: 'Riddle 3: Search strictly within official Portuguese domains (.pt)',
+      pt: 'Enigma 3: Pesquisar apenas em domínios de topo de Portugal (.pt)',
+      en: 'Riddle 3: Search within Portuguese top-level domains (.pt)',
     },
     problemDescription: {
-      pt: 'O teu professor pediu para pesquisares os parques naturais protegidos em Portugal, garantindo que os dados vêm de domínios nacionais portugueses (.pt) e não de sites brasileiros ou internacionais.',
-      en: 'Your teacher asked you to research protected nature parks in Portugal, ensuring data comes from Portuguese national domains (.pt) rather than foreign sites.',
+      pt: 'O teu professor pediu para pesquisares os parques naturais protegidos em Portugal, filtrando a pesquisa para mostrar apenas páginas terminadas no domínio .pt.',
+      en: 'Your teacher asked you to research protected nature parks in Portugal, filtering results to show only pages with the .pt top-level domain.',
     },
     choices: [
       {
@@ -124,8 +124,8 @@ const RIDDLES: OperatorRiddle[] = [
         operatorUsed: 'Operador site:.pt',
         isCorrect: true,
         explanation: {
-          pt: '🎯 Truque de mestre! O operador "site:.pt" restringe a pesquisa apenas a endereços terminados no domínio de Portugal.',
-          en: '🎯 Master trick! The "site:.pt" operator restricts search results strictly to Portuguese top-level domains.',
+          pt: '🎯 Truque de mestre! O operador "site:.pt" restringe a pesquisa a endereços que utilizam o domínio .pt. Lembra-te: .pt identifica o domínio geográfico de Portugal, mas não garante por si só que a informação seja verdadeira — avalia sempre o autor, a data e a instituição!',
+          en: '🎯 Master trick! The "site:.pt" operator restricts search results to addresses using the .pt domain. Remember: .pt identifies Portugal’s geographic top-level domain, but does not guarantee on its own that the content is accurate — always check the author, date, and institution!',
         },
         searchResultPreview: 'Rede Nacional de Áreas Protegidas — ICNF (icnf.gov.pt)',
       },

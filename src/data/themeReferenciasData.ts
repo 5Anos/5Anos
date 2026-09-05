@@ -111,8 +111,8 @@ export const themeReferenciasData: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Sabias que as chamadas "Fake News" (notícias falsas) espalham-se nas redes sociais cerca de 6 vezes mais depressa do que as notícias verdadeiras, porque usam títulos chocantes feitos para assustar ou revoltar as pessoas?',
-        en: 'Did you know Fake News spreads across social platforms roughly 6 times faster than truthful stories, because sensational titles trigger shock and alarm?',
+        pt: 'Sabias que informação falsa ou enganadora pode espalhar-se rapidamente, especialmente quando provoca emoções fortes (como medo, surpresa ou revolta) e incentiva as pessoas a partilhá-la sem pensar?',
+        en: 'Did you know that false or misleading information can spread rapidly, especially when it triggers strong emotions (like fear, surprise, or anger) and prompts people to share without thinking?',
       },
       thinkAboutIt: {
         question: {
@@ -124,8 +124,8 @@ export const themeReferenciasData: ThemeDefinition = {
           en: 'Think about how Wikipedia is crowd-edited and the footnote citations at the bottom.',
         },
         reflection: {
-          pt: 'Porque a Wikipédia é uma enciclopédia colaborativa aberta onde qualquer pessoa pode editar. O truque dos bons estudantes é descer até ao fundo do artigo e consultar as ligações e referências oficiais que os autores utilizaram!',
-          en: 'Because anyone can edit Wikipedia articles. Top researchers scroll to the bottom footnotes to read the primary sources directly!',
+          pt: 'Porque a Wikipédia é uma enciclopédia colaborativa aberta onde qualquer pessoa pode editar. Escrever apenas "Fonte: Wikipédia" NÃO é uma referência completa nem suficiente. Deves identificar a página específica, descer até ao fundo do artigo e consultar e citar as fontes originais e estudos indicados nas referências!',
+          en: 'Because anyone can edit Wikipedia articles. Citing simply "Source: Wikipedia" is never a complete reference. Always identify the specific article, scroll to the bottom footnotes, and cite the primary verified sources directly!',
         },
       },
       quizQuestions: [
@@ -181,6 +181,8 @@ export const themeReferenciasData: ThemeDefinition = {
           '• DATA DE PUBLICAÇÃO (se existir)',
           '• ENDEREÇO URL COMPLETO (ex.: https://...)',
           '• DATA DE ACESSO (ex.: Consultado em 15 de janeiro de 2026). É fundamental porque as páginas da internet podem mudar!',
+          '• Importante sobre a Wikipédia: escrever apenas "Fonte: Wikipédia" não é uma referência completa. Deves identificar a página específica, a data de consulta e consultar as fontes originais citadas no artigo.',
+          '• Importante sobre Logótipos: colocar o nome ou logótipo de uma entidade não significa automaticamente que se tem autorização para reutilizar o material.',
         ],
         en: [
           'At the end of every school research paper, you must provide a "Bibliographic References" section.',
@@ -192,6 +194,8 @@ export const themeReferenciasData: ThemeDefinition = {
           '• PUBLICATION DATE (if available)',
           '• FULL URL ADDRESS (e.g., https://...)',
           '• ACCESS DATE (e.g., Accessed Jan 15, 2026) because web content can change over time!',
+          '• Important regarding Wikipedia: writing simply "Source: Wikipedia" is not a complete reference. Identify the specific page, retrieval date, and consult original citations.',
+          '• Important regarding Logos: putting an organization’s name or logo on a project does not automatically grant permission to reuse their material.',
         ],
       },
       example: {

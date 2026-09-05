@@ -23,34 +23,30 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
 
   const criteriaCount = [hasMinLength, hasUppercase, hasLowercase, hasNumbers, hasSymbols].filter(Boolean).length;
 
-  let strengthLabel = { pt: 'Muito Fraca', en: 'Very Weak' };
-  let strengthColor = 'bg-rose-500';
-  let strengthScore = 20;
+  let strengthLabel = { pt: 'Precisa de melhorar', en: 'Needs improvement' };
+  let strengthColor = 'bg-amber-400';
+  let strengthScore = 30;
 
   if (criteriaCount === 5) {
-    strengthLabel = { pt: 'Muito Forte! 🛡️', en: 'Very Strong! 🛡️' };
+    strengthLabel = { pt: 'Muito boa', en: 'Very good' };
     strengthColor = 'bg-emerald-500';
     strengthScore = 100;
-  } else if (criteriaCount >= 4) {
-    strengthLabel = { pt: 'Forte 💪', en: 'Strong 💪' };
-    strengthColor = 'bg-teal-500';
-    strengthScore = 80;
   } else if (criteriaCount >= 3) {
-    strengthLabel = { pt: 'Média ⚠️', en: 'Medium ⚠️' };
-    strengthColor = 'bg-amber-500';
-    strengthScore = 60;
-  } else if (criteriaCount >= 2) {
-    strengthLabel = { pt: 'Fraca ❌', en: 'Weak ❌' };
-    strengthColor = 'bg-orange-500';
-    strengthScore = 40;
+    strengthLabel = { pt: 'Boa', en: 'Good' };
+    strengthColor = 'bg-blue-500';
+    strengthScore = 70;
+  } else {
+    strengthLabel = { pt: 'Precisa de melhorar', en: 'Needs improvement' };
+    strengthColor = 'bg-amber-400';
+    strengthScore = 35;
   }
 
-  // Pre-configured training samples for student to test
+  // Pre-configured training samples for student to test (strictly avoiding personal info, clubs or birth years)
   const testSamples = [
-    { label: '123456', hint: { pt: 'Demasiado previsível e rápida de descobrir', en: 'Too predictable and cracked in milliseconds' } },
-    { label: 'qwerty', hint: { pt: 'Sequência óbvia no teclado', en: 'Obvious keyboard row sequence' } },
-    { label: 'benfica2024', hint: { pt: 'Faltam símbolos, maiúsculas e maior comprimento', en: 'Lacks symbols, uppercase letters, and length' } },
-    { label: 'Sol_Amarelo#58', hint: { pt: 'Excelente! Frase memorável e complexa', en: 'Excellent! Memorable passphrase and varied characters' } },
+    { label: '123456', hint: { pt: 'Demasiado curta, previsível e fácil de adivinhar', en: 'Too short, predictable, and easy to guess' } },
+    { label: 'qwerty', hint: { pt: 'Sequência de teclas óbvia no teclado', en: 'Obvious keyboard row sequence' } },
+    { label: 'castelo99', hint: { pt: 'Faltam símbolos, maiúsculas e maior comprimento', en: 'Lacks symbols, uppercase letters, and length' } },
+    { label: 'Sol_Amarelo#58', hint: { pt: 'Frase memorável e variada, sem dados pessoais óbvios', en: 'Memorable varied phrase without obvious personal details' } },
   ];
 
   const handleFinish = () => {
@@ -82,17 +78,25 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
       </div>
 
       {/* Safety pedagogical disclaimer */}
-      <div className="mb-6 p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-900 flex items-start gap-2.5">
-        <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-        <div>
-          <span className="font-bold">
-            {language === 'pt' ? 'Regra de Ouro da Privacidade: ' : 'Privacy Golden Rule: '}
-          </span>
-          <span>
-            {language === 'pt'
-              ? 'Nunca escrevas a tua palavra-passe real aqui nem em computadores públicos. Usa apenas exemplos inventados para praticar!'
-              : 'Never enter your real personal password here or on public computers. Use invented training words only!'}
-          </span>
+      <div className="mb-6 p-4 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-900 space-y-2">
+        <div className="flex items-start gap-2">
+          <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+          <div>
+            <span className="font-bold">
+              {language === 'pt' ? 'Nota Educativa (5.º Ano): ' : 'Educational Note (Grade 5): '}
+            </span>
+            <span>
+              {language === 'pt'
+                ? 'A avaliação deste jogo é uma simplificação educativa. Nenhuma fórmula garante que uma palavra-passe seja inquebrável ou 100% segura. Uma boa palavra-passe deve ser longa, difícil de adivinhar e nunca deve usar informação pessoal óbvia (como o teu nome, clube desportivo ou ano de nascimento).'
+                : 'This evaluation is an educational simplification. No automated check guarantees a password is 100% unbreakable. A good password should be long, hard to guess, and never use obvious personal details (such as your name, sports club, or birth year).'}
+            </span>
+          </div>
+        </div>
+        <div className="text-[11px] text-amber-800/90 pl-6">
+          <strong>{language === 'pt' ? 'Regra de Ouro: ' : 'Golden Rule: '}</strong>
+          {language === 'pt'
+            ? 'Nunca introduzas aqui nem em computadores públicos a tua palavra-passe real!'
+            : 'Never enter your real personal password here or on public computers!'}
         </div>
       </div>
 
@@ -191,8 +195,8 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
         <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
           <span className="text-xs text-slate-500 font-medium">
             {criteriaCount === 5
-              ? (language === 'pt' ? '🎉 Criaste uma palavra-passe muito forte!' : '🎉 You crafted a very strong password!')
-              : (language === 'pt' ? 'Dica: junta 5 critérios para atingir nota máxima.' : 'Tip: combine 5 criteria to achieve maximum score.')}
+              ? (language === 'pt' ? '🎉 Muito bem! Esta combinação cumpre os 5 critérios educativos.' : '🎉 Well done! This combination meets all 5 educational criteria.')
+              : (language === 'pt' ? 'Dica: junta 5 critérios educativos para explorar a classificação máxima.' : 'Tip: combine 5 educational criteria to explore the highest rating.')}
           </span>
 
           <button

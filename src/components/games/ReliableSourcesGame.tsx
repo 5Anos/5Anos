@@ -39,8 +39,8 @@ const CASES: SourceCase[] = [
       en: 'Notice the official government domain (.gov.pt), the responsible public agency, and recent date.',
     },
     explanation: {
-      pt: '🟢 Fonte 100% Fiável! É o organismo público oficial português responsável pela conservação da natureza, com estudos científicos comprovados.',
-      en: '🟢 100% Reliable Source! Official Portuguese public agency responsible for nature conservation with verified scientific data.',
+      pt: '🟢 Fonte institucional de confiança! O ICNF é o organismo público português responsável pela conservação da natureza, com bons indicadores de credibilidade e equipas científicas identificadas.',
+      en: '🟢 Trusted institutional source! ICNF is the official Portuguese agency for nature conservation, with strong credibility indicators and identified scientific teams.',
     },
   },
   {
@@ -59,8 +59,8 @@ const CASES: SourceCase[] = [
       en: 'All-caps sensationalist headline, excessive exclamation marks (!!!), anonymous author, prize bait, and weird domain (.xyz).',
     },
     explanation: {
-      pt: '🔴 Falsa e Perigosa! Notícia falsa evidente (fake news) com táticas de clickbait para roubar dados com anúncios enganosos.',
-      en: '🔴 Fake and Dangerous! Clear fake news with clickbait tactics aimed at phishing and deceptive advertising.',
+      pt: '🔴 Falsa e Perigosa! Notícia falsa evidente (fake news) com táticas de clickbait para enganar leitores com anúncios fraudulentos.',
+      en: '🔴 Fake and Dangerous! Clear fake news with clickbait tactics aimed at misleading readers with scam ads.',
     },
   },
   {
@@ -79,8 +79,8 @@ const CASES: SourceCase[] = [
       en: 'Personal blog reflecting pure OPINION and personal taste, without scientific nutrition backing.',
     },
     explanation: {
-      pt: '🟡 Duvidosa / Mera Opinião! Para um trabalho escolar de Ciências sobre a roda dos alimentos e saúde, este blogue não tem valor científico.',
-      en: '🟡 Doubtful / Pure Opinion! For a Science project on healthy nutrition, this personal blog lacks academic and scientific validity.',
+      pt: '🟡 Duvidosa / Mera Opinião! Para um trabalho escolar de Ciências sobre a roda dos alimentos e saúde, este blogue reflete apenas um gosto pessoal e não tem valor científico.',
+      en: '🟡 Doubtful / Pure Opinion! For a Science project on nutrition, this personal blog reflects personal taste and lacks academic evidence.',
     },
   },
   {
@@ -99,8 +99,8 @@ const CASES: SourceCase[] = [
       en: 'RTP Ensina is a recognized public educational portal supported by history teachers with rigorous facts.',
     },
     explanation: {
-      pt: '🟢 Fonte Muito Fiável! Plataforma educativa pública recomendada pelas escolas para estudo da História de Portugal.',
-      en: '🟢 Highly Reliable Source! Public educational platform recommended across Portuguese schools for history studies.',
+      pt: '🟢 Fonte com bons indicadores de credibilidade! Plataforma educativa pública com revisão pedagógica e identificação clara de autores.',
+      en: '🟢 Source with strong credibility indicators! Public educational portal supported by educators with clear authorship.',
     },
   },
   {
@@ -139,8 +139,8 @@ const CASES: SourceCase[] = [
       en: 'Official public environment agency, established technical authorship, and solid scientific concepts.',
     },
     explanation: {
-      pt: '🟢 Fonte 100% Fiável! Informação direta do Sistema Nacional de Recursos Hídricos e da Agência do Ambiente.',
-      en: '🟢 100% Reliable Source! Direct information from the National Water Resources System and Portuguese Environment Agency.',
+      pt: '🟢 Fonte institucional de confiança! Apresenta bons indicadores de credibilidade e autoria técnica comprovada pelo Sistema Nacional de Recursos Hídricos e pela Agência do Ambiente.',
+      en: '🟢 Trusted institutional source! Presents solid credibility indicators and verified technical authorship from the Portuguese Environment Agency.',
     },
   },
 ];
@@ -263,6 +263,19 @@ export const ReliableSourcesGame: React.FC<ReliableSourcesGameProps> = ({ langua
                   <span>{currentCase.detectiveTip[language]}</span>
                 </div>
               </div>
+              {/* Detective Verification Checklist */}
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1">
+                <p className="font-bold text-slate-900 flex items-center gap-1.5">
+                  <Search className="w-3.5 h-3.5 text-indigo-600" />
+                  <span>{language === 'pt' ? 'Critérios que deves sempre verificar:' : 'Key criteria to verify:'}</span>
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[11px] text-slate-600">
+                  <div>• {language === 'pt' ? '1. Quem publicou (autor ou instituição)' : '1. Who published it (author or institution)'}</div>
+                  <div>• {language === 'pt' ? '2. Data da informação (é recente ou atual?)' : '2. Date of information (is it current?)'}</div>
+                  <div>• {language === 'pt' ? '3. Existência de fontes ou provas' : '3. Evidence and supporting sources'}</div>
+                  <div>• {language === 'pt' ? '4. Confirmação por outras fontes credíveis' : '4. Corroboration by other credible sources'}</div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -285,9 +298,9 @@ export const ReliableSourcesGame: React.FC<ReliableSourcesGameProps> = ({ langua
                 } ${confirmed && currentCase.correctVerdict === 'reliable' ? 'ring-4 ring-emerald-300' : ''}`}
               >
                 <CheckCircle2 className={`w-5 h-5 ${selectedVerdict === 'reliable' ? 'text-white' : 'text-emerald-500'}`} />
-                <span>{language === 'pt' ? '🟢 Fonte Fiável' : '🟢 Reliable Source'}</span>
+                <span>{language === 'pt' ? '🟢 Fonte Institucional' : '🟢 Institutional Source'}</span>
                 <span className="text-[10px] font-normal opacity-80">
-                  {language === 'pt' ? 'Institucional / Rigorosa' : 'Official / Rigorous'}
+                  {language === 'pt' ? 'Bons indicadores de credibilidade' : 'Strong credibility indicators'}
                 </span>
               </button>
 
