@@ -200,8 +200,8 @@ export const themeSegurancaData: ThemeDefinition = {
       eyebrow: { pt: 'Phishing', en: 'Phishing' },
       h: { pt: 'Links e mensagens suspeitas', en: 'Suspicious links and messages' },
       body: {
-        pt: 'O phishing é uma técnica usada para enganar pessoas e roubar dados através de mensagens ou sites falsos que parecem verdadeiros.<br><br>Sinais de alerta:<ul><li>Mensagens de pessoas ou empresas que não conheces.</li><li>Pedidos urgentes de dados pessoais ou palavras-passe.</li><li>Links estranhos ou encurtados.</li><li>Promessas de prémios que pareçam boas demais para ser verdade.</li></ul>Nunca deves clicar em links suspeitos nem partilhar dados pessoais com desconhecidos.',
-        en: 'Phishing is a technique used to trick people and steal data via fake messages or sites that look authentic.<br><br>Warning signs:<ul><li>Messages from people or companies you do not know.</li><li>Urgent requests for personal data or passwords.</li><li>Strange or shortened links.</li><li>Promises of prizes that sound too good to be true.</li></ul>You should never click suspicious links or share personal data with strangers.',
+        pt: 'O phishing é uma técnica usada para enganar pessoas e roubar dados através de mensagens ou sites falsos que parecem verdadeiros.<br><br>Sinais de alerta:<ul><li>Mensagens de pessoas ou empresas que não conheces.</li><li>Pedidos urgentes de dados pessoais ou palavras-passe.</li><li>Links estranhos ou encurtados.</li><li>Promessas de prémios que pareçam boas demais para ser verdade.</li><li>Nunca deves clicar em links suspeitos nem partilhar dados pessoais com desconhecidos.</li></ul>',
+        en: 'Phishing is a technique used to trick people and steal data via fake messages or sites that look authentic.<br><br>Warning signs:<ul><li>Messages from people or companies you do not know.</li><li>Urgent requests for personal data or passwords.</li><li>Strange or shortened links.</li><li>Promises of prizes that sound too good to be true.</li><li>You should never click suspicious links or share personal data with strangers.</li></ul>',
       },
       icon: '🎣',
     },
