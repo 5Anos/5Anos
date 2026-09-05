@@ -6,6 +6,7 @@ import { ThemeIllustration } from './illustrations/ThemeIllustrations';
 import { getThemeImage, getThemeStepImage, getChallengeImage } from '../data/themeImages';
 import { SitPostureInfographicPT } from './SitPostureInfographicPT';
 import { DosDontsPostureInfographicPT } from './DosDontsPostureInfographicPT';
+import { PhishingMessageSimulator } from './PhishingMessageSimulator';
 
 interface ThemeViewProps {
   theme: ThemeDefinition;
@@ -213,41 +214,67 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                   {currentLesson.h[language]}
                 </h2>
 
-                {/* Two-Column Responsive Layout: Content & 3D Visual Illustration */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                  <div className="lg:col-span-7 space-y-4">
+                {/* Layout: Full width vertical stacking for rich comparative infographics, or 2-column layout for standard illustrations */}
+                {theme.id === 'ergonomia' && currentStepIndex === 4 ? (
+                  <div className="space-y-6">
                     {/* Content Body */}
                     <div
                       className="text-sm sm:text-base text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"
                       dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
                     />
-                  </div>
 
-                  {/* Visual Infographic / Illustration Card per step */}
-                  <div className="lg:col-span-5 flex flex-col items-center">
-                    {theme.id === 'ergonomia' && currentStepIndex === 1 ? (
-                      <SitPostureInfographicPT />
-                    ) : theme.id === 'ergonomia' && currentStepIndex === 4 ? (
+                    {/* Infographic placed below text across full width with no scroll */}
+                    <div className="w-full">
                       <DosDontsPostureInfographicPT />
-                    ) : (
-                      <div className="w-full rounded-2xl overflow-hidden border-2 border-indigo-100 shadow-md bg-slate-50 relative group">
-                        <img
-                          key={`${theme.id}-step-${currentStepIndex}`}
-                          src={currentStepImg}
-                          alt={currentLesson.h[language]}
-                          referrerPolicy="no-referrer"
-                          className="w-full h-56 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-300 animate-in fade-in"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
-                          <p className="text-white text-xs font-semibold drop-shadow-sm flex items-center gap-1.5">
-                            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                            <span>{currentLesson.eyebrow[language]}</span>
-                          </p>
-                        </div>
-                      </div>
-                    )}
+                    </div>
                   </div>
-                </div>
+                ) : theme.id === 'ergonomia' && currentStepIndex === 1 ? (
+                  <div className="space-y-6">
+                    {/* Content Body */}
+                    <div
+                      className="text-sm sm:text-base text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"
+                      dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
+                    />
+
+                    {/* Infographic placed below text */}
+                    <div className="w-full max-w-3xl mx-auto">
+                      <SitPostureInfographicPT />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <div className="lg:col-span-7 space-y-4">
+                      {/* Content Body */}
+                      <div
+                        className="text-sm sm:text-base text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"
+                        dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
+                      />
+                    </div>
+
+                    {/* Visual Infographic / Illustration Card per step */}
+                    <div className="lg:col-span-5 flex flex-col items-center">
+                      {theme.id === 'seguranca' && currentStepIndex === 3 ? (
+                        <PhishingMessageSimulator />
+                      ) : (
+                        <div className="w-full rounded-2xl overflow-hidden border-2 border-indigo-100 shadow-md bg-slate-50 relative group">
+                          <img
+                            key={`${theme.id}-step-${currentStepIndex}`}
+                            src={currentStepImg}
+                            alt={currentLesson.h[language]}
+                            referrerPolicy="no-referrer"
+                            className="w-full h-56 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-300 animate-in fade-in"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
+                            <p className="text-white text-xs font-semibold drop-shadow-sm flex items-center gap-1.5">
+                              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                              <span>{currentLesson.eyebrow[language]}</span>
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
 
                 {/* Bottom Navigation Buttons */}
                 <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">

@@ -197,7 +197,7 @@ export const themeSegurancaData: ThemeDefinition = {
       icon: '🛡️',
     },
     {
-      eyebrow: { pt: 'Atenção!', en: 'Attention!' },
+      eyebrow: { pt: 'Phishing', en: 'Phishing' },
       h: { pt: 'Links e mensagens suspeitas', en: 'Suspicious links and messages' },
       body: {
         pt: 'O phishing é uma técnica usada para enganar pessoas e roubar dados através de mensagens ou sites falsos que parecem verdadeiros.<br><br>Sinais de alerta:<ul><li>Mensagens de pessoas ou empresas que não conheces.</li><li>Pedidos urgentes de dados pessoais ou palavras-passe.</li><li>Links estranhos ou encurtados.</li><li>Promessas de prémios que pareçam boas demais para ser verdade.</li></ul>Nunca deves clicar em links suspeitos nem partilhar dados pessoais com desconhecidos.',
@@ -206,22 +206,22 @@ export const themeSegurancaData: ThemeDefinition = {
       icon: '🎣',
     },
     {
-      eyebrow: { pt: 'Na vida real', en: 'In real life' },
-      h: { pt: 'Exemplo: uma mensagem desconhecida', en: 'Example: An unknown message' },
-      body: {
-        pt: '<em>"Recebeste uma mensagem de alguém que não conheces com um link."</em> O que deves fazer? Não clicar no link, não responder com dados pessoais e, se possível, falar com um adulto de confiança sobre a mensagem.',
-        en: '<em>"You received a message from someone you don\'t know with a link."</em> What should you do? Do not click the link, do not reply with personal data, and if possible, talk to a trusted adult about the message.',
-      },
-      icon: '✉️',
-    },
-    {
-      eyebrow: { pt: 'Vamos pensar', en: "Let's think" },
+      eyebrow: { pt: 'Ciberbullying', en: 'Cyberbullying' },
       h: { pt: 'Ciberbullying e respeito', en: 'Cyberbullying and respect' },
       body: {
         pt: 'Ciberbullying é quando alguém usa a Internet ou os dispositivos para intimidar, insultar ou humilhar outra pessoa repetidamente.<br><br>Antes de publicar um comentário, uma fotografia ou uma mensagem, pensa: "Diria isto à pessoa olhos nos olhos?" Se a resposta for não, talvez não devas publicar.<br><br><em>"Um colega publicou uma fotografia de outra pessoa sem autorização."</em> Isto não é correto — devemos sempre pedir autorização antes de partilhar imagens de outras pessoas.',
         en: 'Cyberbullying is when someone uses the Internet or devices to repeatedly intimidate, insult, or humiliate someone.<br><br>Before posting a comment, photo, or message, think: "Would I say this to the person face to face?" If the answer is no, maybe you shouldn\'t post it.',
       },
       icon: '🤝',
+    },
+    {
+      eyebrow: { pt: 'Na vida real', en: 'In real life' },
+      h: { pt: 'Como reagir a uma mensagem desconhecida?', en: 'How to react to an unknown message?' },
+      body: {
+        pt: 'Imagina que recebes uma mensagem com prémios falsos ou um link suspeito no teu telemóvel.<br><br><strong>Aplica imediatamente o protocolo de segurança digital:</strong><ul><li><strong>1. PARA e não cliques:</strong> Nunca abras links nem descarregues ficheiros de remetentes desconhecidos.</li><li><strong>2. NÃO respondas:</strong> Nunca envies o teu nome, idade, morada, escola ou palavras-passe.</li><li><strong>3. AVISA logo um adulto:</strong> Mostra a mensagem aos teus pais ou ao professor para verificarem a segurança.</li><li><strong>4. BLOQUEIA e apaga:</strong> Remove a mensagem e bloqueia o número para tua proteção.</li></ul>',
+        en: 'Imagine you receive a message with fake prizes or a suspicious link on your phone.<br><br><strong>Immediately apply the digital safety protocol:</strong><ul><li><strong>1. STOP and do not click:</strong> Never open links or download files from unknown senders.</li><li><strong>2. DO NOT reply:</strong> Never send your name, age, address, school, or passwords.</li><li><strong>3. REPORT to a trusted adult:</strong> Show the message to your parents or teacher to verify safety.</li><li><strong>4. BLOCK and delete:</strong> Remove the message and block the sender for your protection.</li></ul>',
+      },
+      icon: '✉️',
     },
     {
       eyebrow: { pt: 'Sabias que...?', en: 'Did you know...?' },

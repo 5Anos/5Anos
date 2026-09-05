@@ -244,7 +244,7 @@ export const DosDontsPostureInfographicPT: React.FC = () => {
       </div>
 
       {/* Main Responsive Grid with Interactive Zoom */}
-      <div className="relative w-full bg-white/90 rounded-xl border border-indigo-100/90 shadow-inner overflow-auto max-h-[480px] p-2 flex items-center justify-center">
+      <div className="relative w-full bg-white/90 rounded-xl border border-indigo-100/90 shadow-inner p-2 sm:p-3 flex items-center justify-center">
         <div
           style={{
             transform: `scale(${zoomLevel})`,
