@@ -96,7 +96,7 @@ export const PasswordStrengthTester: React.FC = () => {
             <KeyRound className="w-4 h-4" />
           </span>
           <span className="text-xs sm:text-sm font-black text-indigo-950 uppercase tracking-wide">
-            Construtor & Testador de Palavras-Passe
+            Cria e Testa Palavras
           </span>
         </div>
         <span className="text-[11px] font-bold px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded-full border border-indigo-300">
