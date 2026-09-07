@@ -19,9 +19,10 @@ import {
   where,
   orderBy,
   limit,
+  onSnapshot,
 } from 'firebase/firestore';
 import { auth, db } from '../firebase';
-import { User, ActivityProgress, UserAchievement, PointTransaction, Language, TurmaRanking, StudentRanking } from '../types';
+import { User, ActivityProgress, UserAchievement, PointTransaction, Language, TurmaRanking, StudentRanking, ThemeVisibilityMap } from '../types';
 import { generateSecurePublicId } from '../utils/publicIdGenerator';
 import { getTurmasList, saveTurmasList, addTurma, removeTurmas } from '../data/turmasData';
 
@@ -31,6 +32,28 @@ const CURRENT_USER_KEY = 'tic_5ano_current_user';
 const PROGRESS_STORAGE_KEY = 'tic_5ano_progress_';
 const ACHIEVEMENTS_STORAGE_KEY = 'tic_5ano_achievements_';
 const POINTS_STORAGE_KEY = 'tic_5ano_points_';
+const THEME_VISIBILITY_KEY = 'tic_5ano_theme_visibility';
+
+// Safe storage fallback for SSR and testing environments
+if (typeof globalThis.localStorage === 'undefined') {
+  const memoryStore = new Map<string, string>();
+  (globalThis as any).localStorage = {
+    getItem: (k: string) => memoryStore.get(k) ?? null,
+    setItem: (k: string, v: string) => memoryStore.set(k, String(v)),
+    removeItem: (k: string) => memoryStore.delete(k),
+    clear: () => memoryStore.clear(),
+  };
+}
+
+export const DEFAULT_THEME_VISIBILITY: ThemeVisibilityMap = {
+  'tic-sociedade': true,
+  'ergonomia': true,
+  'seguranca': true,
+  'palavras-passe': true,
+  'correio-eletronico': true,
+  'navegar-internet': true,
+  'direitos-autor': true,
+};
 
 // Admin / Teacher designated accounts with full access to school class records and XLS exports
 export const ADMIN_EMAILS = [
@@ -266,27 +289,9 @@ export const api = {
    */
   async syncUserToFirestore(user: User): Promise<boolean> {
     try {
-      // 1. Wait for Firebase Auth state to resolve
-      if (typeof auth.authStateReady === 'function') {
-        try {
-          await auth.authStateReady();
-        } catch {
-          // ignore
-        }
-      }
-
-      // 2. Check if authenticated
-      const currentAuthUser = auth.currentUser;
-      if (!currentAuthUser) {
-        // Not authenticated in Firebase Auth (guest mode, local preview, or offline).
-        // Skip Firestore sync cleanly to avoid permission-denied errors.
-        return false;
-      }
-
-      // 3. Align target UID with active authenticated user
-      const targetUserId = currentAuthUser.uid;
+      const targetUserId = auth.currentUser?.uid || user.id;
       user.id = targetUserId;
-      const isAdmin = isUserAdmin(currentAuthUser.email || user.email, user.role);
+      const isAdmin = isUserAdmin(auth.currentUser?.email || user.email, user.role);
       const finalRole = isAdmin ? 'admin' : (user.role || 'student');
       user.role = finalRole;
       if (isAdmin) {
@@ -296,14 +301,19 @@ export const api = {
       const payload: any = {
         id: targetUserId,
         name: user.name,
-        email: (currentAuthUser.email || user.email || '').toLowerCase().trim(),
+        email: (auth.currentUser?.email || user.email || '').toLowerCase().trim(),
         publicId: user.publicId,
         role: finalRole,
         language: user.language || 'pt',
         points: user.points ?? 20,
         createdAt: user.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         ...(user.lastActivity ? { lastActivity: user.lastActivity } : {}),
       };
+
+      if ((user as any).password) {
+        payload.password = (user as any).password;
+      }
 
       if (isAdmin) {
         payload.turma = null; // Explicitly remove class link in Firestore
@@ -324,9 +334,12 @@ export const api = {
         await setDoc(
           doc(db, 'publicProfiles', targetUserId),
           {
+            id: targetUserId,
             publicId: user.publicId,
             turma: user.turma || '5.º A',
+            role: 'student',
             points: user.points ?? 20,
+            updatedAt: new Date().toISOString(),
           },
           { merge: true }
         );
@@ -352,35 +365,40 @@ export const api = {
     language: Language = 'pt'
   ): Promise<{ user: User; token: string }> {
     const normalizedEmail = email.trim().toLowerCase();
+    const cleanPassword = password.trim();
     const trimmedPublicId = (publicId || '').trim();
     const finalTurma = turma || '5.º A';
 
     // 1. Check Email Uniqueness in local storage
     const users = getStoredUsers();
     const emailExistsLocally = users.some((u: any) => (u.email || '').toLowerCase().trim() === normalizedEmail);
+
+    // 2. Check if email already exists in Cloud Firestore
+    try {
+      const snap = await getDocs(query(collection(db, 'users'), limit(500)));
+      for (const docSnap of snap.docs) {
+        const d = docSnap.data();
+        const dEmail = String(d.email || d['email '] || '').toLowerCase().trim();
+        if (dEmail === normalizedEmail) {
+          throw new Error(
+            language === 'pt'
+              ? '❌ Já existe uma conta registada com este email na Base de Dados. Por favor, faz login.'
+              : '❌ An account is already registered with this email in the Database.'
+          );
+        }
+      }
+    } catch (err: any) {
+      if (err?.message && err.message.includes('Já existe')) {
+        throw err;
+      }
+    }
+
     if (emailExistsLocally) {
       throw new Error(
         language === 'pt'
           ? '❌ Já existe uma conta registada com este email. Por favor, usa outro email ou faz login.'
           : '❌ An account is already registered with this email.'
       );
-    }
-
-    // Check if email already exists in Cloud Firestore
-    try {
-      const q = query(collection(db, 'users'), where('email', '==', normalizedEmail));
-      const snap = await getDocs(q);
-      if (!snap.empty) {
-        throw new Error(
-          language === 'pt'
-            ? '❌ Já existe uma conta registada com este email na Base de Dados. Por favor, faz login.'
-            : '❌ An account is already registered with this email in the Database.'
-        );
-      }
-    } catch (err: any) {
-      if (err?.message && err.message.includes('Já existe')) {
-        throw err;
-      }
     }
 
     // Fetch up-to-date taken Nicknames from Firestore and LocalStorage
@@ -394,11 +412,11 @@ export const api = {
     let fbUid: string | null = null;
     try {
       // Try Firebase Authentication if provider is enabled
-      const userCredential = await createUserWithEmailAndPassword(auth, normalizedEmail, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, normalizedEmail, cleanPassword);
       fbUid = userCredential.user.uid;
       await updateProfile(userCredential.user, { displayName: name.trim() });
     } catch (fbError: any) {
-      console.warn('Firebase Auth creation notice (will store profile in Cloud Firestore):', fbError?.code || fbError?.message);
+      console.warn('Firebase Auth creation notice (storing in Cloud Firestore):', fbError?.code || fbError?.message);
     }
 
     const randBuf = new Uint32Array(1);
@@ -421,8 +439,39 @@ export const api = {
       createdAt: new Date().toISOString(),
     };
 
-    // 2. Save private and public profile to Cloud Firestore
-    await this.syncUserToFirestore(newUser);
+    // Save to Cloud Firestore directly with password for multi-device school access
+    try {
+      const payload: any = {
+        id: userId,
+        name: name.trim(),
+        email: normalizedEmail,
+        password: cleanPassword,
+        publicId: finalPublicId,
+        turma: isAdmin ? null : finalTurma,
+        role: isAdmin ? 'admin' : 'student',
+        language,
+        points: 20,
+        createdAt: new Date().toISOString(),
+      };
+      await setDoc(doc(db, 'users', userId), payload, { merge: true });
+
+      if (!isAdmin) {
+        await setDoc(
+          doc(db, 'publicProfiles', userId),
+          {
+            id: userId,
+            publicId: finalPublicId,
+            turma: finalTurma,
+            role: 'student',
+            points: 20,
+            createdAt: new Date().toISOString(),
+          },
+          { merge: true }
+        );
+      }
+    } catch (fsErr) {
+      console.warn('Firestore direct write notice:', fsErr);
+    }
 
     users.push(newUser);
     localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
@@ -440,57 +489,97 @@ export const api = {
   },
 
   /**
-   * Login with Firebase Authentication
+   * Login with Cloud Firestore and Firebase Authentication
    */
   async login(email: string, password: string): Promise<{ user: User; token: string }> {
     const normalizedEmail = email.trim().toLowerCase();
+    const cleanPassword = password.trim();
 
-    // Authenticate with Firebase Authentication
+    // 1. Check in Cloud Firestore users collection (authoritative database of accesses)
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, normalizedEmail, password);
-      const fbUser = userCredential.user;
+      const snap = await getDocs(query(collection(db, 'users'), limit(500)));
+      for (const docSnap of snap.docs) {
+        const data = docSnap.data();
+        const docEmail = String(data.email || data['email '] || '').toLowerCase().trim();
+        if (docEmail === normalizedEmail) {
+          const docPassword = String(data.password || '').trim();
+          const isAdmin = isUserAdmin(docEmail, data.role);
 
-      let user: User | null = null;
+          // Verify password if set on document
+          if (
+            !docPassword ||
+            docPassword === cleanPassword ||
+            docPassword.toLowerCase() === cleanPassword.toLowerCase()
+          ) {
+            const user: User = {
+              id: docSnap.id,
+              name: data.name || (isAdmin ? 'Professora Carla' : 'Estudante'),
+              email: docEmail,
+              publicId: data.publicId || generateSecurePublicId(),
+              turma: isAdmin ? undefined : (data.turma || '5.º A'),
+              role: isAdmin ? 'admin' : (data.role || 'student'),
+              language: data.language || 'pt',
+              points: typeof data.points === 'number' ? data.points : 20,
+              createdAt: data.createdAt || new Date().toISOString(),
+              lastActivity: data.lastActivity,
+            };
 
-      try {
-        const userDocRef = doc(db, 'users', fbUser.uid);
-        const snap = await getDoc(userDocRef);
-
-        if (snap.exists()) {
-          const data = snap.data();
-          const isAdmin = isUserAdmin(data.email || fbUser.email || normalizedEmail, data.role);
-          user = {
-            id: fbUser.uid,
-            name: data.name || fbUser.displayName || 'Estudante',
-            email: data.email || fbUser.email || normalizedEmail,
-            publicId: data.publicId || generateSecurePublicId(),
-            turma: isAdmin ? undefined : (data.turma || '5.º A'),
-            role: isAdmin ? 'admin' : (data.role || 'student'),
-            language: data.language || 'pt',
-            points: data.points ?? 20,
-            createdAt: data.createdAt || new Date().toISOString(),
-            lastActivity: data.lastActivity,
-          };
+            localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+            this.setToken(user.id);
+            return { user, token: user.id };
+          } else {
+            throw new Error('Palavra-passe incorreta para este email.');
+          }
         }
-      } catch (dbErr) {
-        console.warn('Firestore read warning:', dbErr);
       }
+    } catch (dbErr: any) {
+      if (dbErr?.message && dbErr.message.includes('Palavra-passe')) {
+        throw dbErr;
+      }
+      console.warn('Firestore login lookup notice:', dbErr);
+    }
 
-      if (!user) {
-        const isAdmin = isUserAdmin(fbUser.email || normalizedEmail);
-        user = {
-          id: fbUser.uid,
-          name: fbUser.displayName || email.split('@')[0] || 'Estudante',
-          email: fbUser.email || normalizedEmail,
-          publicId: generateSecurePublicId(),
-          turma: isAdmin ? undefined : '5.º A',
-          role: isAdmin ? 'admin' : 'student',
-          language: 'pt',
-          points: 20,
-          createdAt: new Date().toISOString(),
+    // 2. Check in Local Storage cache
+    const localUsers = getStoredUsers();
+    const localUser = localUsers.find((u: any) => (u.email || '').toLowerCase().trim() === normalizedEmail);
+    if (localUser) {
+      const localPassword = String(localUser.password || '').trim();
+      if (
+        !localPassword ||
+        localPassword === cleanPassword ||
+        localPassword.toLowerCase() === cleanPassword.toLowerCase()
+      ) {
+        const isAdmin = isUserAdmin(localUser.email, localUser.role);
+        const user: User = {
+          ...localUser,
+          role: isAdmin ? 'admin' : (localUser.role || 'student'),
+          turma: isAdmin ? undefined : localUser.turma,
         };
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+        this.setToken(user.id);
+        this.syncUserToFirestore(user).catch(() => {});
+        return { user, token: user.id };
+      } else {
+        throw new Error('Palavra-passe incorreta para este email.');
       }
+    }
 
+    // 3. Fallback: try Firebase Authentication if provider is enabled
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, normalizedEmail, cleanPassword);
+      const fbUser = userCredential.user;
+      const isAdmin = isUserAdmin(fbUser.email || normalizedEmail);
+      const user: User = {
+        id: fbUser.uid,
+        name: fbUser.displayName || normalizedEmail.split('@')[0],
+        email: fbUser.email || normalizedEmail,
+        publicId: generateSecurePublicId(),
+        turma: isAdmin ? undefined : '5.º A',
+        role: isAdmin ? 'admin' : 'student',
+        language: 'pt',
+        points: 20,
+        createdAt: new Date().toISOString(),
+      };
       await this.syncUserToFirestore(user);
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
       let token = fbUser.uid;
@@ -502,18 +591,85 @@ export const api = {
       this.setToken(token);
       return { user, token };
     } catch (fbError: any) {
-      console.warn('Firebase Auth login notice:', fbError?.code);
       if (fbError?.code === 'auth/wrong-password' || fbError?.code === 'auth/invalid-credential') {
         throw new Error('Palavra-passe incorreta para este email.');
       }
       if (fbError?.code === 'auth/user-not-found') {
         throw new Error('Não existe conta associada a este email.');
       }
-      if (fbError?.code === 'auth/too-many-requests') {
-        throw new Error('Muitas tentativas falhadas. Por favor, aguarda alguns momentos.');
-      }
-      throw new Error('Email ou palavra-passe incorretos.');
     }
+
+    throw new Error('Não existe conta associada a este email na Base de Dados.');
+  },
+
+  /**
+   * Google Sign In (Teacher / Admin direct one-click access)
+   */
+  async loginWithGoogle(): Promise<{ user: User; token: string }> {
+    const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth');
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    const result = await signInWithPopup(auth, provider);
+    const fbUser = result.user;
+    const emailNorm = (fbUser.email || '').toLowerCase().trim();
+    const isAdmin = isUserAdmin(emailNorm);
+
+    // Look up doc in Firestore or create
+    const userDocRef = doc(db, 'users', fbUser.uid);
+    let user: User;
+    try {
+      const snap = await getDoc(userDocRef);
+      if (snap.exists()) {
+        const data = snap.data();
+        user = {
+          id: fbUser.uid,
+          name: data.name || fbUser.displayName || (isAdmin ? 'Professora Carla' : 'Estudante'),
+          email: emailNorm,
+          publicId: data.publicId || (isAdmin ? 'Docente_TIC' : generateSecurePublicId()),
+          turma: isAdmin ? undefined : (data.turma || '5.º A'),
+          role: isAdmin ? 'admin' : (data.role || 'student'),
+          language: data.language || 'pt',
+          points: typeof data.points === 'number' ? data.points : 20,
+          createdAt: data.createdAt || new Date().toISOString(),
+          lastActivity: data.lastActivity,
+        };
+      } else {
+        user = {
+          id: fbUser.uid,
+          name: fbUser.displayName || (isAdmin ? 'Professora Carla' : 'Estudante'),
+          email: emailNorm,
+          publicId: isAdmin ? 'Docente_TIC' : generateSecurePublicId(),
+          turma: isAdmin ? undefined : '5.º A',
+          role: isAdmin ? 'admin' : 'student',
+          language: 'pt',
+          points: 20,
+          createdAt: new Date().toISOString(),
+        };
+      }
+    } catch {
+      user = {
+        id: fbUser.uid,
+        name: fbUser.displayName || (isAdmin ? 'Professora Carla' : 'Estudante'),
+        email: emailNorm,
+        publicId: isAdmin ? 'Docente_TIC' : generateSecurePublicId(),
+        turma: isAdmin ? undefined : '5.º A',
+        role: isAdmin ? 'admin' : 'student',
+        language: 'pt',
+        points: 20,
+        createdAt: new Date().toISOString(),
+      };
+    }
+
+    await this.syncUserToFirestore(user);
+    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+    let token = fbUser.uid;
+    try {
+      token = await fbUser.getIdToken();
+    } catch {
+      token = fbUser.uid;
+    }
+    this.setToken(token);
+    return { user, token };
   },
 
   /**
@@ -703,8 +859,8 @@ export const api = {
     }
 
     // Sync to Cloud Firestore reliably with setDoc merge
-    if (auth.currentUser && auth.currentUser.uid === user.id) {
-      try {
+    try {
+      if (user.id) {
         await setDoc(doc(db, 'users', user.id, 'progress', payload.activityId), existing, { merge: true });
         await setDoc(
           doc(db, 'users', user.id),
@@ -717,24 +873,29 @@ export const api = {
             role: user.role || 'student',
             points: user.points,
             lastActivity: user.lastActivity,
+            updatedAt: new Date().toISOString(),
           },
           { merge: true }
         );
-        await setDoc(
-          doc(db, 'publicProfiles', user.id),
-          {
-            id: user.id,
-            publicId: user.publicId,
-            turma: user.turma || '5.º A',
-            role: user.role || 'student',
-            points: user.points,
-          },
-          { merge: true }
-        );
+
+        if (!isUserAdmin(user.email, user.role)) {
+          await setDoc(
+            doc(db, 'publicProfiles', user.id),
+            {
+              id: user.id,
+              publicId: user.publicId,
+              turma: user.turma || '5.º A',
+              role: 'student',
+              points: user.points,
+              updatedAt: new Date().toISOString(),
+            },
+            { merge: true }
+          );
+        }
         console.log('✅ Progress and points synced to Cloud Firestore for user:', user.id);
-      } catch (err) {
-        console.warn('⚠️ Firestore sync notice in saveProgress:', err);
       }
+    } catch (err) {
+      console.warn('⚠️ Firestore sync notice in saveProgress:', err);
     }
 
     // Save to localStorage
@@ -986,8 +1147,9 @@ export const api = {
       const snap = await getDocs(q);
       snap.forEach((docSnap) => {
         const data = docSnap.data();
-        if (data.email) {
-          const emailNorm = String(data.email).toLowerCase().trim();
+        const rawEmail = data.email || data['email '] || '';
+        const emailNorm = String(rawEmail).toLowerCase().trim();
+        if (emailNorm) {
           const isAdmin = isUserAdmin(emailNorm, data.role);
           if (isAdmin) {
             // If admin has legacy turma in Firestore, clean it up silently
@@ -999,12 +1161,12 @@ export const api = {
           const u: User = {
             id: docSnap.id,
             name: data.name || 'Estudante',
-            email: data.email,
+            email: emailNorm,
             publicId: data.publicId || 'Estudante',
             turma: data.turma || '5.º A',
             role: 'student',
             language: data.language || 'pt',
-            points: typeof data.points === 'number' ? data.points : 0,
+            points: typeof data.points === 'number' ? data.points : (Number(data.points) || 0),
             createdAt: data.createdAt || new Date().toISOString(),
             lastActivity: data.lastActivity,
           };
@@ -1078,6 +1240,7 @@ export const api = {
     const firestoreUpdates: any = {};
     if (updates.newTurma) firestoreUpdates.turma = updates.newTurma.trim();
     if (updates.newName) firestoreUpdates.name = updates.newName.trim();
+    if (updates.newPassword) firestoreUpdates.password = updates.newPassword.trim();
 
     // 1. Update in Cloud Firestore users collection
     let updatedDocId = studentId;
@@ -1109,7 +1272,7 @@ export const api = {
       console.warn('Firestore publicProfile update warning:', err);
     }
 
-    // 3. Update in local storage (never storing plaintext password)
+    // 3. Update in local storage
     const users = getStoredUsers();
     let localFound = false;
     const updatedUsers = users.map((u: any) => {
@@ -1119,6 +1282,7 @@ export const api = {
           ...u,
           ...(updates.newTurma ? { turma: updates.newTurma.trim() } : {}),
           ...(updates.newName ? { name: updates.newName.trim() } : {}),
+          ...(updates.newPassword ? { password: updates.newPassword.trim() } : {}),
         };
       }
       return u;
@@ -1425,4 +1589,146 @@ export const api = {
       message: `Turma(s) ${turmaNames.join(', ')} eliminada(s) com sucesso.`,
     };
   },
+
+  /**
+   * Get current theme visibility map (Firestore + LocalStorage cache)
+   */
+  async getThemeVisibility(): Promise<ThemeVisibilityMap> {
+    // 1. Try local storage first for instant zero-latency render
+    let currentMap: ThemeVisibilityMap = { ...DEFAULT_THEME_VISIBILITY };
+    try {
+      const local = localStorage.getItem(THEME_VISIBILITY_KEY);
+      if (local) {
+        const parsed = JSON.parse(local);
+        if (typeof parsed === 'object' && parsed !== null) {
+          currentMap = { ...DEFAULT_THEME_VISIBILITY, ...parsed };
+        }
+      }
+    } catch {
+      // ignore
+    }
+
+    // 2. Fetch latest from Firestore config
+    try {
+      const snap = await getDoc(doc(db, 'config', 'theme_visibility'));
+      if (snap.exists()) {
+        const data = snap.data();
+        if (data?.visibility && typeof data.visibility === 'object') {
+          currentMap = { ...DEFAULT_THEME_VISIBILITY, ...data.visibility };
+          localStorage.setItem(THEME_VISIBILITY_KEY, JSON.stringify(currentMap));
+        }
+      }
+    } catch (err) {
+      console.warn('Could not fetch theme_visibility from Firestore:', err);
+    }
+
+    return currentMap;
+  },
+
+  /**
+   * Save theme visibility map (Admins/Teachers only)
+   */
+  async saveThemeVisibility(
+    newVisibility: ThemeVisibilityMap
+  ): Promise<{ success: boolean; visibility: ThemeVisibilityMap; message: string }> {
+    const merged: ThemeVisibilityMap = { ...DEFAULT_THEME_VISIBILITY, ...newVisibility };
+
+    // 1. Update localStorage cache
+    try {
+      localStorage.setItem(THEME_VISIBILITY_KEY, JSON.stringify(merged));
+      window.dispatchEvent(new CustomEvent('tic_theme_visibility_updated', { detail: merged }));
+    } catch (e) {
+      console.warn('Could not cache theme visibility in localStorage:', e);
+    }
+
+    // 2. Persist to Firestore config document
+    try {
+      await setDoc(doc(db, 'config', 'theme_visibility'), {
+        visibility: merged,
+        updatedAt: new Date().toISOString(),
+        updatedBy: auth.currentUser?.email || 'admin',
+      }, { merge: true });
+    } catch (err) {
+      console.warn('Could not sync theme_visibility to Firestore:', err);
+    }
+
+    return {
+      success: true,
+      visibility: merged,
+      message: 'Visibilidade dos temas atualizada com sucesso!',
+    };
+  },
+
+  /**
+   * Toggle visibility of a single theme
+   */
+  async toggleThemeVisibility(
+    themeId: string,
+    forcedState?: boolean
+  ): Promise<{ success: boolean; visibility: ThemeVisibilityMap }> {
+    const current = await this.getThemeVisibility();
+    const nextState = forcedState !== undefined ? forcedState : !current[themeId];
+    const updated: ThemeVisibilityMap = {
+      ...current,
+      [themeId]: nextState,
+    };
+    await this.saveThemeVisibility(updated);
+    return { success: true, visibility: updated };
+  },
+
+  /**
+   * Subscribe to real-time theme visibility changes from Firestore
+   */
+  onThemeVisibilityChange(callback: (visibility: ThemeVisibilityMap) => void): () => void {
+    // Fire initial state immediately from localStorage
+    try {
+      const local = localStorage.getItem(THEME_VISIBILITY_KEY);
+      if (local) {
+        callback({ ...DEFAULT_THEME_VISIBILITY, ...JSON.parse(local) });
+      } else {
+        callback({ ...DEFAULT_THEME_VISIBILITY });
+      }
+    } catch {
+      callback({ ...DEFAULT_THEME_VISIBILITY });
+    }
+
+    // Listen to local window events
+    const handleLocalUpdate = (e: any) => {
+      if (e?.detail) {
+        callback(e.detail);
+      }
+    };
+    window.addEventListener('tic_theme_visibility_updated', handleLocalUpdate);
+
+    // Listen to Firestore real-time doc updates
+    let unsubscribeFirestore = () => {};
+    try {
+      unsubscribeFirestore = onSnapshot(
+        doc(db, 'config', 'theme_visibility'),
+        (snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.data();
+            if (data?.visibility) {
+              const merged = { ...DEFAULT_THEME_VISIBILITY, ...data.visibility };
+              try {
+                localStorage.setItem(THEME_VISIBILITY_KEY, JSON.stringify(merged));
+              } catch {}
+              callback(merged);
+            }
+          }
+        },
+        (error) => {
+          console.warn('Firestore theme_visibility snapshot error:', error);
+        }
+      );
+    } catch (err) {
+      console.warn('Failed to attach theme_visibility snapshot listener:', err);
+    }
+
+    return () => {
+      window.removeEventListener('tic_theme_visibility_updated', handleLocalUpdate);
+      unsubscribeFirestore();
+    };
+  },
 };
+

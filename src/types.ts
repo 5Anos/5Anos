@@ -184,3 +184,11 @@ export interface StudentRanking {
   isCurrentUser?: boolean;
 }
 
+export type ThemeVisibilityMap = Record<string, boolean>;
+
+export interface ThemeVisibilityDoc {
+  visibility: ThemeVisibilityMap;
+  updatedAt?: string;
+  updatedBy?: string;
+}
+

@@ -22,11 +22,11 @@ import { CopyOrCreditGame } from './components/games/CopyOrCreditGame';
 import { GenericChallengeGame } from './components/games/GenericChallengeGame';
 import { GenericHtmlGameRunner } from './components/games/GenericHtmlGameRunner';
 
-import { api } from './services/api';
-import { User, ActivityProgress, UserAchievement, PointTransaction, Language } from './types';
+import { api, isUserAdmin, DEFAULT_THEME_VISIBILITY } from './services/api';
+import { User, ActivityProgress, UserAchievement, PointTransaction, Language, ThemeVisibilityMap } from './types';
 import { ALL_THEMES } from './data/allThemesData';
 import { translations } from './i18n/translations';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Lock, ArrowLeft } from 'lucide-react';
 
 type ViewMode = 'dashboard' | 'theme' | 'module' | 'challenge' | 'progress';
 
@@ -36,6 +36,9 @@ export default function App() {
   const [achievements, setAchievements] = useState<UserAchievement[]>([]);
   const [pointsHistory, setPointsHistory] = useState<PointTransaction[]>([]);
   const [language, setLanguage] = useState<Language>('pt');
+
+  // Theme Visibility State
+  const [themeVisibility, setThemeVisibility] = useState<ThemeVisibilityMap>(DEFAULT_THEME_VISIBILITY);
 
   // Navigation State
   const [currentView, setCurrentView] = useState<ViewMode>('dashboard');
@@ -54,9 +57,11 @@ export default function App() {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [leaderboardModalOpen, setLeaderboardModalOpen] = useState(false);
   const [adminModalOpen, setAdminModalOpen] = useState(false);
+  const [adminInitialTab, setAdminInitialTab] = useState<'students' | 'turmas' | 'themes' | 'danger'>('students');
   const [toastMessage, setToastMessage] = useState<{ title: string; subtitle?: string } | null>(null);
 
   const t = translations[language];
+  const isAdmin = user ? isUserAdmin(user.email, user.role) : false;
 
   // Helper to resolve theme by id or legacy name
   const resolveTheme = (idOrAlias: string) => {
@@ -91,7 +96,7 @@ export default function App() {
   const allModules = ALL_THEMES.flatMap((th) => th.modules);
   const currentModule = activeModuleId ? allModules.find((m) => m.id === activeModuleId) : null;
 
-  // Auto-load session on mount and listen to Firebase Auth
+  // Auto-load session and theme visibility on mount, and listen to real-time changes
   useEffect(() => {
     async function loadUser() {
       try {
@@ -109,8 +114,24 @@ export default function App() {
     }
     loadUser();
 
+    // Load initial theme visibility
+    async function loadVisibility() {
+      try {
+        const map = await api.getThemeVisibility();
+        setThemeVisibility(map);
+      } catch {
+        // fallback to default
+      }
+    }
+    loadVisibility();
+
+    // Real-time theme visibility sync listener across all connected devices
+    const unsubVisibility = api.onThemeVisibilityChange((newMap) => {
+      setThemeVisibility(newMap);
+    });
+
     // Firebase Auth listener
-    const unsubscribe = api.onAuthChange(async (firebaseLoggedUser) => {
+    const unsubscribeAuth = api.onAuthChange(async (firebaseLoggedUser) => {
       if (firebaseLoggedUser) {
         setUser(firebaseLoggedUser);
         try {
@@ -125,9 +146,33 @@ export default function App() {
     });
 
     return () => {
-      if (typeof unsubscribe === 'function') unsubscribe();
+      if (typeof unsubVisibility === 'function') unsubVisibility();
+      if (typeof unsubscribeAuth === 'function') unsubscribeAuth();
     };
   }, []);
+
+  const handleToggleThemeVisibility = async (themeId: string) => {
+    try {
+      const res = await api.toggleThemeVisibility(themeId);
+      const nextMap = res.visibility;
+      setThemeVisibility(nextMap);
+      const isNowVisible = nextMap[themeId] !== false;
+      const th = ALL_THEMES.find((t) => t.id === themeId);
+      const thTitle = th ? `Tema ${th.number}: ${th.title[language]}` : themeId;
+      showToast(
+        isNowVisible
+          ? (language === 'pt' ? `✅ ${thTitle} agora VISÍVEL para alunos!` : `✅ ${thTitle} is now visible to students!`)
+          : (language === 'pt' ? `🔒 ${thTitle} agora OCULTO / BLOQUEADO para alunos.` : `🔒 ${thTitle} is now hidden for students.`)
+      );
+    } catch (err: any) {
+      showToast('Erro', err?.message || 'Erro ao alterar visibilidade.');
+    }
+  };
+
+  const handleOpenAdminWithTab = (tab: 'students' | 'turmas' | 'themes' | 'danger') => {
+    setAdminInitialTab(tab);
+    setAdminModalOpen(true);
+  };
 
   const handleLanguageChange = (newLang: Language) => {
     setLanguage(newLang);
@@ -596,13 +641,16 @@ export default function App() {
             progressList={progressList}
             achievements={achievements}
             language={language}
+            themeVisibility={themeVisibility}
             onNavigateTheme={navigateToTheme}
             onNavigateProgress={() => {
               setCurrentView('progress');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onOpenAuth={() => setAuthModalOpen(true)}
-            onOpenAdmin={() => setAdminModalOpen(true)}
+            onOpenAdmin={() => handleOpenAdminWithTab('students')}
+            onOpenAdminWithTab={handleOpenAdminWithTab}
+            onToggleThemeVisibility={handleToggleThemeVisibility}
             onOpenLeaderboard={handleOpenLeaderboard}
             onPointsAwarded={(updatedUser, updatedPoints, updatedAchievements) => {
               if (updatedUser) {
@@ -623,30 +671,64 @@ export default function App() {
           />
         )}
 
-        {/* VIEW 2: Dynamic Theme Overview for all 6 Themes */}
+        {/* VIEW 2: Dynamic Theme Overview for all 7 Themes */}
         {currentView === 'theme' && (
-          <ThemeView
-            theme={currentTheme}
-            progressList={progressList}
-            language={language}
-            initialTab={activeThemeTab}
-            onBack={() => {
-              setCurrentView('dashboard');
-              setActiveThemeTab('content');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            onOpenModule={(modId) => {
-              setActiveModuleId(modId);
-              setCurrentView('module');
-              setActiveThemeTab('content');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            onOpenChallenge={(chalId) => {
-              setActiveChallengeId(chalId);
-              setCurrentView('challenge');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-          />
+          !isAdmin && themeVisibility[currentTheme.id] === false ? (
+            <div className="max-w-2xl mx-auto my-12 p-8 bg-white rounded-3xl border border-slate-200 shadow-xl text-center space-y-4 animate-in zoom-in-95 duration-200">
+              <div className="w-16 h-16 rounded-3xl bg-amber-100 text-amber-600 border border-amber-200 flex items-center justify-center mx-auto text-3xl shadow-inner">
+                🔒
+              </div>
+              <span className="px-3 py-1 rounded-full text-xs font-black bg-amber-50 text-amber-800 border border-amber-200">
+                {language === 'pt' ? 'Tema Bloqueado pela Professora' : 'Topic Locked by Teacher'}
+              </span>
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+                {currentTheme.title[language]}
+              </h2>
+              <p className="text-sm text-slate-600 leading-relaxed max-w-md mx-auto">
+                {language === 'pt'
+                  ? 'A Professora Carla ainda não desbloqueou este tema para a turma. Fica atento às próximas aulas de TIC para acederes a este conteúdo e aos desafios práticos!'
+                  : 'This topic has not been unlocked yet. Stay tuned for upcoming classes!'}
+              </p>
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCurrentView('dashboard');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-colors cursor-pointer"
+                >
+                  {language === 'pt' ? '← Voltar aos Temas Disponíveis' : '← Back to Available Topics'}
+                </button>
+              </div>
+            </div>
+          ) : (
+            <ThemeView
+              theme={currentTheme}
+              progressList={progressList}
+              language={language}
+              initialTab={activeThemeTab}
+              isAdmin={isAdmin}
+              isLockedForStudents={themeVisibility[currentTheme.id] === false}
+              onToggleVisibility={handleToggleThemeVisibility}
+              onBack={() => {
+                setCurrentView('dashboard');
+                setActiveThemeTab('content');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              onOpenModule={(modId) => {
+                setActiveModuleId(modId);
+                setCurrentView('module');
+                setActiveThemeTab('content');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              onOpenChallenge={(chalId) => {
+                setActiveChallengeId(chalId);
+                setCurrentView('challenge');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            />
+          )
         )}
 
         {/* VIEW 3: Pedagogical Content Reader */}
@@ -753,6 +835,7 @@ export default function App() {
         onClose={() => setAdminModalOpen(false)}
         currentUser={user}
         language={language}
+        initialTab={adminInitialTab}
       />
     </div>
   );

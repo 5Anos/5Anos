@@ -15,6 +15,7 @@ import {
   AlertCircle,
   Edit,
   Lock,
+  Unlock,
   KeyRound,
   Eye,
   EyeOff,
@@ -27,17 +28,25 @@ import {
   CheckSquare,
   Square,
   ShieldAlert,
+  BookOpen,
+  Sparkles,
+  Check,
+  ToggleLeft,
+  ToggleRight,
+  ListOrdered,
 } from 'lucide-react';
-import { User, Language } from '../types';
-import { api, isUserAdmin } from '../services/api';
+import { User, Language, ThemeVisibilityMap } from '../types';
+import { api, isUserAdmin, DEFAULT_THEME_VISIBILITY } from '../services/api';
 import { getTurmasList } from '../data/turmasData';
 import { exportStudentsToExcel, exportStudentsToCSV } from '../utils/exportUtils';
+import { ALL_THEMES } from '../data/allThemesData';
 
 interface AdminPanelModalProps {
   isOpen: boolean;
   onClose: () => void;
   currentUser: User | null;
   language: Language;
+  initialTab?: 'students' | 'turmas' | 'themes' | 'danger';
 }
 
 interface ConfirmDialogState {
@@ -55,13 +64,18 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   onClose,
   currentUser,
   language,
+  initialTab = 'students',
 }) => {
-  const [activeTab, setActiveTab] = useState<'students' | 'turmas' | 'danger'>('students');
+  const [activeTab, setActiveTab] = useState<'students' | 'turmas' | 'themes' | 'danger'>('students');
   const [students, setStudents] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedTurma, setSelectedTurma] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [feedbackMsg, setFeedbackMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  // Theme Visibility State
+  const [themeVisibility, setThemeVisibility] = useState<ThemeVisibilityMap>(DEFAULT_THEME_VISIBILITY);
+  const [togglingThemeId, setTogglingThemeId] = useState<string | null>(null);
 
   // Turmas local list state (for reactive updates upon creation/deletion)
   const [turmasList, setTurmasList] = useState<string[]>([]);
@@ -85,15 +99,19 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   const [confirmDialog, setConfirmDialog] = useState<ConfirmDialogState | null>(null);
   const [actionLoading, setActionLoading] = useState(false);
 
-  // Load Turmas and Students whenever modal opens
+  // Load Turmas, Students and Theme Visibility whenever modal opens
   useEffect(() => {
     if (isOpen) {
+      if (initialTab) {
+        setActiveTab(initialTab);
+      }
       setTurmasList(getTurmasList());
       loadStudents();
+      loadThemeVisibility();
       setSelectedStudentIds(new Set());
       setFeedbackMsg(null);
     }
-  }, [isOpen]);
+  }, [isOpen, initialTab]);
 
   // Keyboard shortcut to close
   useEffect(() => {
@@ -128,6 +146,85 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   const refreshTurmas = () => {
     setTurmasList(getTurmasList());
   };
+
+  const loadThemeVisibility = async () => {
+    try {
+      const map = await api.getThemeVisibility();
+      setThemeVisibility(map);
+    } catch (err) {
+      console.error('Failed to load theme visibility:', err);
+    }
+  };
+
+  const handleToggleTheme = async (themeId: string, currentVal: boolean) => {
+    setTogglingThemeId(themeId);
+    const nextVal = !currentVal;
+    const nextMap: ThemeVisibilityMap = { ...themeVisibility, [themeId]: nextVal };
+    setThemeVisibility(nextMap);
+
+    const themeObj = ALL_THEMES.find((t) => t.id === themeId);
+    const themeName = themeObj ? `Tema ${themeObj.number}: ${themeObj.title.pt}` : themeId;
+
+    try {
+      await api.saveThemeVisibility(nextMap);
+      showToast(
+        'success',
+        nextVal
+          ? (language === 'pt' ? `✅ ${themeName} agora VISÍVEL e desbloqueado para os alunos!` : `✅ ${themeName} is now VISIBLE to students!`)
+          : (language === 'pt' ? `🔒 ${themeName} agora OCULTO / BLOQUEADO para os alunos.` : `🔒 ${themeName} is now HIDDEN for students.`)
+      );
+    } catch (err: any) {
+      showToast('error', err?.message || 'Erro ao atualizar visibilidade do tema.');
+      // Revert on error
+      setThemeVisibility(themeVisibility);
+    } finally {
+      setTogglingThemeId(null);
+    }
+  };
+
+  const handleSetAllThemes = async (visible: boolean) => {
+    const nextMap: ThemeVisibilityMap = {};
+    ALL_THEMES.forEach((t) => {
+      nextMap[t.id] = visible;
+    });
+    setThemeVisibility(nextMap);
+
+    try {
+      await api.saveThemeVisibility(nextMap);
+      showToast(
+        'success',
+        visible
+          ? (language === 'pt' ? '🌟 Todos os 7 temas foram DESBLOQUEADOS e estão visíveis para os alunos!' : '🌟 All 7 themes unlocked!')
+          : (language === 'pt' ? '🔒 Todos os temas foram OCULTADOS aos alunos.' : '🔒 All themes hidden.')
+      );
+    } catch (err: any) {
+      showToast('error', err?.message || 'Erro ao atualizar temas.');
+    }
+  };
+
+  const handleSetThemesUpTo = async (themeNumber: number) => {
+    const nextMap: ThemeVisibilityMap = {};
+    ALL_THEMES.forEach((t) => {
+      nextMap[t.id] = t.number <= themeNumber;
+    });
+    setThemeVisibility(nextMap);
+
+    try {
+      await api.saveThemeVisibility(nextMap);
+      showToast(
+        'success',
+        language === 'pt'
+          ? `🎯 Temas do 1 ao ${themeNumber} agora DESBLOQUEADOS para os alunos (Temas ${themeNumber + 1 > 7 ? 'Nenhum' : `${themeNumber + 1} a 7`} bloqueados).`
+          : `🎯 Themes 1 to ${themeNumber} are now visible!`
+      );
+    } catch (err: any) {
+      showToast('error', err?.message || 'Erro ao atualizar temas.');
+    }
+  };
+
+  const visibleThemesCount = useMemo(() => {
+    return ALL_THEMES.filter((t) => themeVisibility[t.id] !== false).length;
+  }, [themeVisibility]);
 
   // Edit single student
   const openEditModal = (student: User) => {
@@ -489,6 +586,25 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
               <span>{language === 'pt' ? 'Gestão de Turmas' : 'Class Management'}</span>
               <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-200 text-slate-700 font-black">
                 {turmasList.length}
+              </span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('themes')}
+              className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                activeTab === 'themes'
+                  ? 'bg-white text-indigo-700 shadow-xs border border-slate-200'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+              }`}
+            >
+              <BookOpen className="w-4 h-4 text-indigo-600" />
+              <span>{language === 'pt' ? 'Visibilidade dos Temas' : 'Theme Visibility'}</span>
+              <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-black ${
+                visibleThemesCount === 7
+                  ? 'bg-emerald-100 text-emerald-800'
+                  : 'bg-amber-100 text-amber-800'
+              }`}>
+                {visibleThemesCount}/7
               </span>
             </button>
 
@@ -936,7 +1052,228 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
           </div>
         )}
 
-        {/* TAB 3: LIMPEZA & REDEFINIÇÃO GLOBAL (ZONA DE PERIGO) */}
+        {/* TAB: VISIBILIDADE DOS TEMAS (Controlo de Ritmo de Aprendizagem) */}
+        {activeTab === 'themes' && (
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
+            {/* Guide & Notice Card */}
+            <div className="p-5 sm:p-6 rounded-3xl bg-linear-to-r from-indigo-900 via-indigo-950 to-slate-900 text-white shadow-md border border-indigo-700/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="flex items-start gap-3.5">
+                <div className="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-400/40 flex items-center justify-center text-amber-300 shrink-0 text-xl shadow-inner">
+                  📚
+                </div>
+                <div className="space-y-1 max-w-2xl">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                      {language === 'pt' ? 'Controlo Pedagógico & Ritmo de Aulas' : 'Pedagogical Pacing Control'}
+                    </span>
+                    <span className="text-xs text-indigo-300 font-mono">
+                      {currentUser?.email}
+                    </span>
+                  </div>
+                  <h3 className="text-base sm:text-lg font-black text-white">
+                    {language === 'pt'
+                      ? 'Ocultar ou Mostrar Temas aos Alunos'
+                      : 'Show or Hide Themes for Students'}
+                  </h3>
+                  <p className="text-xs text-indigo-200 leading-relaxed">
+                    {language === 'pt'
+                      ? 'Como Administradora/Professora, podes controlar o ritmo de aprendizagem libertando cada tema à medida que avanças nas aulas. Os temas marcados como Ocultos ficam bloqueados aos alunos com a indicação "Em breve nas próximas aulas!".'
+                      : 'Control learning pacing by unlocking each theme as you progress in classes. Hidden themes appear locked to students.'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Status Pill */}
+              <div className="bg-white/10 backdrop-blur-xs border border-white/15 px-4 py-3 rounded-2xl text-center shrink-0 w-full md:w-auto">
+                <div className="text-2xl font-black text-amber-300">
+                  {visibleThemesCount} <span className="text-xs text-white/70 font-normal">/ {ALL_THEMES.length} visíveis</span>
+                </div>
+                <div className="text-[11px] text-indigo-200 font-semibold mt-0.5">
+                  {visibleThemesCount === ALL_THEMES.length
+                    ? (language === 'pt' ? 'Todos Desbloqueados' : 'All Unlocked')
+                    : (language === 'pt' ? `${ALL_THEMES.length - visibleThemesCount} tema(s) em espera` : `${ALL_THEMES.length - visibleThemesCount} locked`)}
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Action Presets */}
+            <div className="p-4 sm:p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  <Sparkles className="w-4 h-4 text-amber-500" />
+                  <span>{language === 'pt' ? 'Ações Rápidas de Configuração' : 'Quick Presets'}</span>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleSetAllThemes(true)}
+                  className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Eye className="w-3.5 h-3.5" />
+                  <span>{language === 'pt' ? '🌟 Desbloquear Todos (7 Temas)' : 'Unlock All (7 Themes)'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleSetThemesUpTo(1)}
+                  className="px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Lock className="w-3.5 h-3.5 text-amber-600" />
+                  <span>{language === 'pt' ? '🔒 Apenas Tema 1 (Início de Ano)' : 'Only Theme 1 (Start of Year)'}</span>
+                </button>
+
+                <div className="h-6 w-px bg-slate-200 hidden sm:block mx-1" />
+
+                <span className="text-xs text-slate-500 font-medium">
+                  {language === 'pt' ? 'Desbloquear até ao:' : 'Unlock up to:'}
+                </span>
+
+                {[2, 3, 4, 5, 6].map((num) => (
+                  <button
+                    key={num}
+                    type="button"
+                    onClick={() => handleSetThemesUpTo(num)}
+                    className="px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50 text-indigo-900 font-bold text-xs transition-colors cursor-pointer"
+                  >
+                    Tema {num}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 7 Themes List with Interactive Toggles */}
+            <div className="space-y-3.5">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-black text-slate-900 flex items-center gap-2">
+                  <ListOrdered className="w-4 h-4 text-indigo-600" />
+                  <span>{language === 'pt' ? 'Lista de Temas Curriculares (7 Temas)' : 'Curriculum Themes (7 Themes)'}</span>
+                </h4>
+                <span className="text-xs text-slate-500">
+                  {language === 'pt' ? 'Clique no interruptor para alterar a visibilidade em tempo real' : 'Click toggle to change in real-time'}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 gap-3.5">
+                {ALL_THEMES.map((theme) => {
+                  const isVisible = themeVisibility[theme.id] !== false;
+                  const isToggling = togglingThemeId === theme.id;
+                  const totalActivities = theme.modules.length + theme.challenges.length;
+
+                  return (
+                    <div
+                      key={theme.id}
+                      className={`p-4 sm:p-5 rounded-2xl border transition-all duration-200 ${
+                        isVisible
+                          ? 'bg-white border-emerald-300 shadow-xs hover:border-emerald-400'
+                          : 'bg-slate-50/80 border-slate-200 hover:border-slate-300 opacity-90'
+                      }`}
+                    >
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        {/* Theme Info */}
+                        <div className="flex items-start gap-3.5 max-w-xl">
+                          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shadow-xs shrink-0 ${
+                            isVisible
+                              ? 'bg-emerald-50 border border-emerald-200 text-emerald-900'
+                              : 'bg-slate-200 border border-slate-300 text-slate-500'
+                          }`}>
+                            {theme.icon}
+                          </div>
+
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className={`text-[11px] font-black px-2.5 py-0.5 rounded-full border ${
+                                isVisible
+                                  ? 'bg-emerald-100 text-emerald-900 border-emerald-300'
+                                  : 'bg-slate-200 text-slate-700 border-slate-300'
+                              }`}>
+                                Tema {theme.number}
+                              </span>
+
+                              {isVisible ? (
+                                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                                  <Eye className="w-3 h-3 text-emerald-600" />
+                                  <span>{language === 'pt' ? 'Visível para Alunos' : 'Visible to Students'}</span>
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                                  <Lock className="w-3 h-3 text-amber-600" />
+                                  <span>{language === 'pt' ? 'Oculto / Bloqueado' : 'Hidden / Locked'}</span>
+                                </span>
+                              )}
+                            </div>
+
+                            <h5 className={`text-base font-bold leading-tight ${
+                              isVisible ? 'text-slate-900' : 'text-slate-700'
+                            }`}>
+                              {theme.title[language]}
+                            </h5>
+
+                            <p className="text-xs text-slate-500 line-clamp-1">
+                              {theme.tagline[language]}
+                            </p>
+
+                            <div className="flex items-center gap-3 pt-1 text-[11px] text-slate-400">
+                              <span>📖 {theme.lessons?.length || 0} lições</span>
+                              <span>•</span>
+                              <span>🎮 {theme.challenges.length} jogos & desafios</span>
+                              <span>•</span>
+                              <span>🎯 Quiz final ({theme.finalQuiz?.length || 15} perguntas)</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Toggle Action Control */}
+                        <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end pt-3 sm:pt-0 border-t sm:border-t-0 border-slate-200 shrink-0">
+                          <div className="text-right hidden sm:block">
+                            <div className={`text-xs font-bold ${isVisible ? 'text-emerald-700' : 'text-slate-500'}`}>
+                              {isVisible
+                                ? (language === 'pt' ? 'Tema Ativo' : 'Active Theme')
+                                : (language === 'pt' ? 'Tema Bloqueado' : 'Locked Theme')}
+                            </div>
+                            <div className="text-[10px] text-slate-400">
+                              {isVisible
+                                ? (language === 'pt' ? 'Alunos acedem livremente' : 'Students have access')
+                                : (language === 'pt' ? 'Alunos veem "Em breve"' : 'Shows "Coming soon"')}
+                            </div>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => handleToggleTheme(theme.id, isVisible)}
+                            disabled={isToggling}
+                            className={`px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 transition-all cursor-pointer shadow-xs disabled:opacity-50 ${
+                              isVisible
+                                ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                                : 'bg-slate-800 hover:bg-slate-900 text-white'
+                            }`}
+                          >
+                            {isToggling ? (
+                              <RefreshCw className="w-4 h-4 animate-spin" />
+                            ) : isVisible ? (
+                              <>
+                                <Eye className="w-4 h-4" />
+                                <span>{language === 'pt' ? 'Visível (Desbloqueado)' : 'Visible'}</span>
+                              </>
+                            ) : (
+                              <>
+                                <Lock className="w-4 h-4 text-amber-400" />
+                                <span>{language === 'pt' ? 'Ocultar aos Alunos' : 'Hidden'}</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 4: LIMPEZA & REDEFINIÇÃO GLOBAL (ZONA DE PERIGO) */}
         {activeTab === 'danger' && (
           <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5">
             <div className="p-4 bg-amber-50 rounded-2xl border border-amber-200 flex items-start gap-3 text-amber-900 text-xs sm:text-sm">

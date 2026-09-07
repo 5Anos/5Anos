@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Gamepad2, ArrowLeft, CheckCircle2, Circle, Clock, Play, ChevronRight, ChevronLeft, Sparkles, Trophy, Award, Zap } from 'lucide-react';
+import { BookOpen, Gamepad2, ArrowLeft, CheckCircle2, Circle, Clock, Play, ChevronRight, ChevronLeft, Sparkles, Trophy, Award, Zap, Lock, Eye, AlertCircle } from 'lucide-react';
 import { ThemeDefinition, ActivityProgress, Language } from '../types';
 import { translations } from '../i18n/translations';
 import { ThemeIllustration } from './illustrations/ThemeIllustrations';
@@ -16,6 +16,9 @@ interface ThemeViewProps {
   theme: ThemeDefinition;
   progressList: ActivityProgress[];
   language: Language;
+  isAdmin?: boolean;
+  isLockedForStudents?: boolean;
+  onToggleVisibility?: (themeId: string) => void;
   onBack: () => void;
   onOpenModule: (moduleId: string) => void;
   onOpenChallenge: (challengeId: string) => void;
@@ -26,6 +29,9 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
   theme,
   progressList,
   language,
+  isAdmin = false,
+  isLockedForStudents = false,
+  onToggleVisibility,
   onBack,
   onOpenModule,
   onOpenChallenge,
@@ -80,13 +86,57 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
     <div className="space-y-6 sm:space-y-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 animate-in fade-in duration-200">
       {/* Back Button & Header */}
       <div>
-        <button
-          onClick={onBack}
-          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 mb-4 px-3.5 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>{language === 'pt' ? 'Voltar ao Início' : 'Back to Home'}</span>
-        </button>
+        <div className="flex items-center justify-between gap-3 mb-4">
+          <button
+            onClick={onBack}
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 px-3.5 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>{language === 'pt' ? 'Voltar ao Início' : 'Back to Home'}</span>
+          </button>
+
+          {isAdmin && isLockedForStudents && onToggleVisibility && (
+            <button
+              onClick={() => onToggleVisibility(theme.id)}
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3.5 py-2 rounded-xl transition-colors cursor-pointer shadow-2xs"
+            >
+              <Eye className="w-4 h-4 text-emerald-600" />
+              <span>{language === 'pt' ? 'Desbloquear para Alunos' : 'Unlock for Students'}</span>
+            </button>
+          )}
+        </div>
+
+        {/* Teacher Preview Banner if Theme is Hidden */}
+        {isAdmin && isLockedForStudents && (
+          <div className="mb-4 p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-950 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold shrink-0">
+                🔒
+              </div>
+              <div>
+                <span className="text-xs font-black uppercase tracking-wider text-amber-800">
+                  {language === 'pt' ? 'Modo de Pré-visualização da Professora' : 'Teacher Preview Mode'}
+                </span>
+                <p className="text-xs sm:text-sm font-medium text-amber-900 mt-0.5">
+                  {language === 'pt'
+                    ? 'Este tema está atualmente OCULTO aos alunos. Podes explorar as lições, simulações e jogos livremente.'
+                    : 'This theme is currently hidden from students. You can explore and test freely.'}
+                </p>
+              </div>
+            </div>
+
+            {onToggleVisibility && (
+              <button
+                type="button"
+                onClick={() => onToggleVisibility(theme.id)}
+                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shrink-0 shadow-xs flex items-center gap-1.5 cursor-pointer transition-colors"
+              >
+                <Eye className="w-3.5 h-3.5" />
+                <span>{language === 'pt' ? 'Tornar Visível para os Alunos' : 'Make Visible to Students'}</span>
+              </button>
+            )}
+          </div>
+        )}
 
         <div
           className={`p-6 sm:p-8 md:p-10 rounded-[2.5rem] text-white shadow-xl relative overflow-hidden bg-gradient-to-br ${getBannerGradient(

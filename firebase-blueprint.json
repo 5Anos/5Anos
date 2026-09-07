@@ -28,6 +28,17 @@
       },
       "required": ["list"]
     },
+    "ThemeVisibilityConfig": {
+      "title": "ThemeVisibilityConfig",
+      "description": "Teacher controlled visibility flags for pedagogical themes",
+      "type": "object",
+      "properties": {
+        "visibility": { "type": "object" },
+        "updatedAt": { "type": "string" },
+        "updatedBy": { "type": "string" }
+      },
+      "required": ["visibility"]
+    },
     "UserProgress": {
       "title": "UserProgress",
       "description": "Activity progress and quiz scores",
@@ -83,6 +94,10 @@
     "/config/turmas": {
       "schema": "TurmasConfig",
       "description": "School class list configuration"
+    },
+    "/config/theme_visibility": {
+      "schema": "ThemeVisibilityConfig",
+      "description": "Pedagogical theme visibility settings controlled by teacher"
     },
     "/users/{userId}/progress/{activityId}": {
       "schema": "UserProgress",

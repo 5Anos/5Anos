@@ -497,7 +497,7 @@ const KNOWN_ACTIVITY_MAPPINGS: Record<
   },
   'quiz-final-tema7': {
     themeId: 'direitos-autor',
-    title: { pt: 'Quiz Final: Direitos de Autor e Fontes', en: 'Final Quiz: Copyright & Sources' },
+    title: { pt: 'Quiz Final: Direitos de Autor', en: 'Final Quiz: Copyright' },
     icon: '🏆',
     type: 'quiz',
   },
