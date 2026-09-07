@@ -14,6 +14,10 @@ import referenciasFontes from '../assets/images/referencias_fontes_3d_1788539928
 import quizGameTrophy from '../assets/images/quiz_game_trophy_3d_1788539991745.jpg';
 import boyAvatarImg from '../assets/images/tic_boy_avatar_1788537870929.jpg';
 import girlAvatarImg from '../assets/images/tic_girl_avatar_1788537889222.jpg';
+import copyrightKidsBanner from '../assets/images/copyright_kids_banner_1788807163232.jpg';
+import citationBlocksArt from '../assets/images/citation_blocks_art_1788807180640.jpg';
+import ccLicensingArt from '../assets/images/cc_licensing_art_1788807200633.jpg';
+import plagiarismKidsArt from '../assets/images/plagiarism_kids_art_1788807229222.jpg';
 
 export const THEME_IMAGES: Record<string, string> = {
   'tic-sociedade': ticSocietyHero,
@@ -21,8 +25,8 @@ export const THEME_IMAGES: Record<string, string> = {
   'palavras-passe': passwordsSecurity,
   'correio-eletronico': emailCommunication,
   'navegar-internet': internetBrowsing,
-  'direitos-autor': copyrightAuthors,
-  'referencias-fontes': referenciasFontes,
+  'direitos-autor': copyrightKidsBanner,
+  'referencias-fontes': citationBlocksArt,
   // Backward compatibility alias
   'seguranca-digital': passwordsSecurity,
 };
@@ -65,14 +69,15 @@ export const THEME_STEP_IMAGES: Record<string, string[]> = {
     cyberSafetyShield,
   ],
   'direitos-autor': [
-    copyrightAuthors,
-    girlAvatarImg,
-    referenciasFontes,
-    copyrightAuthors,
-    referenciasFontes,
+    copyrightKidsBanner,
+    ccLicensingArt,
+    ccLicensingArt,
+    plagiarismKidsArt,
+    citationBlocksArt,
+    citationBlocksArt,
   ],
   'referencias-fontes': [
-    referenciasFontes,
+    citationBlocksArt,
     internetBrowsing,
     boyAvatarImg,
     referenciasFontes,

@@ -11,6 +11,7 @@ import { PasswordStrengthTester } from './PasswordStrengthTester';
 import { InteractiveEmailExplorer } from './InteractiveEmailExplorer';
 import { ErgonomicsBreakTimer } from './ErgonomicsBreakTimer';
 import { DigitalFootprintSimulator } from './DigitalFootprintSimulator';
+import { CitationSimulator } from './CitationSimulator';
 
 interface ThemeViewProps {
   theme: ThemeDefinition;
@@ -300,6 +301,19 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                     {/* Interactive Email Elements Activity */}
                     <InteractiveEmailExplorer />
                   </div>
+                ) : theme.id === 'direitos-autor' && currentStepIndex === 5 ? (
+                  <div className="space-y-6">
+                    {/* Content Body */}
+                    <div
+                      className="text-sm sm:text-base text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"
+                      dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
+                    />
+
+                    {/* Interactive APA 7 Citation Simulator */}
+                    <div className="w-full">
+                      <CitationSimulator language={language} />
+                    </div>
+                  </div>
                 ) : (
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     <div className="lg:col-span-7 space-y-4">
@@ -423,6 +437,41 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
               <span>{theme.challenges.length} {language === 'pt' ? 'Atividades Disponíveis' : 'Activities Available'}</span>
             </div>
           </div>
+
+          {theme.id === 'direitos-autor' && (
+            <div className="mb-6">
+              <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-amber-500 via-amber-600 to-orange-600 text-white shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4 border border-amber-400/40">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-3xl shadow-inner shrink-0">
+                    🎓
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-300 text-amber-950">
+                      {language === 'pt' ? 'Ferramenta & Jogo Interativo' : 'Interactive Tool & Game'}
+                    </span>
+                    <h3 className="text-lg font-black text-white mt-1">
+                      {language === 'pt' ? 'Simulador de Citações APA 7 (Sem "Consultado em")' : 'APA 7 Citation Simulator (Without "Accessed on")'}
+                    </h3>
+                    <p className="text-xs text-amber-100 font-medium max-w-xl mt-0.5">
+                      {language === 'pt'
+                        ? 'Aprende a citar páginas web, notícias (ex.: Rosa Soares no Público), livros e vídeos sem erros! Inclui o minijogo "Detetive de Citações".'
+                        : 'Learn to cite web pages, news articles, books, and videos without outdated formulas! Includes the "Citation Detective" mini-game.'}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    setActiveTab('content');
+                    setCurrentStepIndex(5);
+                  }}
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white text-amber-900 font-black text-sm hover:bg-amber-50 transition-all shadow-md flex items-center justify-center gap-2 shrink-0 cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4 text-amber-600" />
+                  <span>{language === 'pt' ? 'Abrir Simulador' : 'Open Simulator'}</span>
+                </button>
+              </div>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {theme.challenges.map((chal) => {
