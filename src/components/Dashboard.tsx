@@ -43,10 +43,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
 }) => {
   const t = translations[language];
   const isAdmin = user ? isUserAdmin(user.email, user.role) : false;
-  const [lockedNoticeModal, setLockedNoticeModal] = useState<string | null>(null);
 
-  // Calculate statistics across all themes
-  const totalActivities = ALL_THEMES.reduce(
+  // Only display unlocked themes for students, or all 7 themes for the teacher
+  const displayedThemes = ALL_THEMES.filter(
+    (theme) => isAdmin || themeVisibility[theme.id] !== false
+  );
+
+  // Calculate statistics across visible themes
+  const totalActivities = displayedThemes.reduce(
     (acc, theme) => acc + theme.modules.length + theme.challenges.length,
     0
   );
@@ -196,7 +200,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 {language === 'pt' ? 'Temas de Aprendizagem' : 'Learning Themes'}
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
-                {language === 'pt' ? '7 Temas Curriculares de Tecnologias de Informação e Comunicação' : '7 Curriculum Topics'}
+                {isAdmin
+                  ? (language === 'pt' ? '7 Temas Curriculares de Tecnologias de Informação e Comunicação' : '7 Curriculum Topics')
+                  : (language === 'pt'
+                      ? `${displayedThemes.length} ${displayedThemes.length === 1 ? 'Tema Curricular Disponível' : 'Temas Curriculares Disponíveis'}`
+                      : `${displayedThemes.length} Available Curriculum Topics`)}
               </p>
             </div>
             {isAdmin && (
@@ -207,9 +215,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
             )}
           </div>
 
-          {/* 7 Theme Cards Grid */}
+          {/* Theme Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {ALL_THEMES.map((theme) => {
+            {displayedThemes.map((theme) => {
               const isVisibleForStudents = themeVisibility[theme.id] !== false;
               const themeActivitiesCount = theme.modules.length + theme.challenges.length;
               const themeCompletedCount = progressList.filter(
@@ -218,22 +226,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
               const themePct = themeActivitiesCount > 0 ? Math.min(100, Math.round((themeCompletedCount / themeActivitiesCount) * 100)) : 0;
               const colorInfo = getThemeColor(theme.number);
 
-              // Click handler
-              const handleCardClick = () => {
-                if (isAdmin || isVisibleForStudents) {
-                  onNavigateTheme(theme.id);
-                } else {
-                  setLockedNoticeModal(theme.title[language] || `Tema ${theme.number}`);
-                }
-              };
-
               return (
                 <div
                   key={theme.id}
-                  onClick={handleCardClick}
+                  onClick={() => onNavigateTheme(theme.id)}
                   className={`bg-white rounded-[2rem] border transition-all duration-200 flex flex-col justify-between cursor-pointer group relative overflow-hidden ${
-                    !isVisibleForStudents && !isAdmin
-                      ? 'border-slate-300 shadow-xs bg-slate-50/70 hover:border-slate-400'
+                    isAdmin && !isVisibleForStudents
+                      ? 'border-amber-300 bg-amber-50/20 shadow-xs hover:border-amber-400'
                       : `border-slate-200 shadow-xs hover:shadow-md ${colorInfo.hoverBorder}`
                   } p-5 sm:p-6`}
                 >
@@ -244,26 +243,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
                         src={getThemeImage(theme.id)}
                         alt={theme.title[language]}
                         referrerPolicy="no-referrer"
-                        className={`w-full h-full object-cover transition-transform duration-500 ${
-                          !isVisibleForStudents && !isAdmin ? 'grayscale-[60%] blur-[0.5px] opacity-75' : 'group-hover:scale-105'
-                        }`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent opacity-70 group-hover:opacity-50 transition-opacity" />
-
-                      {/* Locked Overlay Badge for Students */}
-                      {!isVisibleForStudents && !isAdmin && (
-                        <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px] flex flex-col items-center justify-center text-center p-4">
-                          <div className="w-10 h-10 rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center shadow-lg mb-2">
-                            <Lock className="w-5 h-5" />
-                          </div>
-                          <span className="text-xs font-black text-white px-2.5 py-1 rounded-lg bg-black/60 border border-white/20">
-                            {language === 'pt' ? 'Bloqueado pela Professora' : 'Locked by Teacher'}
-                          </span>
-                          <span className="text-[10px] text-amber-200 font-medium mt-1">
-                            {language === 'pt' ? 'Disponível em breve nas aulas' : 'Coming soon in class'}
-                          </span>
-                        </div>
-                      )}
 
                       {/* Admin Theme Toggle Ribbon */}
                       {isAdmin && (
@@ -286,12 +268,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             {isVisibleForStudents ? (
                               <>
                                 <Eye className="w-3 h-3" />
-                                <span>{language === 'pt' ? 'Visível' : 'Visible'}</span>
+                                <span>{language === 'pt' ? 'Visível aos Alunos' : 'Visible to Students'}</span>
                               </>
                             ) : (
                               <>
                                 <Lock className="w-3 h-3 text-amber-400" />
-                                <span>{language === 'pt' ? 'Oculto' : 'Hidden'}</span>
+                                <span>{language === 'pt' ? 'Oculto aos Alunos' : 'Hidden from Students'}</span>
                               </>
                             )}
                           </button>
@@ -308,7 +290,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                         {!isVisibleForStudents && isAdmin && (
                           <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 flex items-center gap-1">
                             <Lock className="w-2.5 h-2.5" />
-                            {language === 'pt' ? 'Oculto a Alunos' : 'Hidden'}
+                            {language === 'pt' ? 'Oculto na Turma' : 'Hidden in Class'}
                           </span>
                         )}
                       </div>
@@ -316,11 +298,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                     </div>
 
                     {/* Title */}
-                    <h3 className={`text-base sm:text-lg font-bold leading-snug ${
-                      !isVisibleForStudents && !isAdmin
-                        ? 'text-slate-600'
-                        : 'text-slate-900 group-hover:text-indigo-600 transition-colors'
-                    }`}>
+                    <h3 className="text-base sm:text-lg font-bold leading-snug text-slate-900 group-hover:text-indigo-600 transition-colors">
                       {theme.title[language]}
                     </h3>
 
@@ -332,80 +310,29 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
                   {/* Progress & Action Button */}
                   <div className="pt-3 border-t border-slate-100 mt-4">
-                    {isVisibleForStudents || isAdmin ? (
-                      <>
-                        <div className="flex items-center justify-between text-xs mb-1.5 font-medium text-slate-500">
-                          <span>{language === 'pt' ? 'Progresso' : 'Progress'}</span>
-                          <span className="font-bold text-slate-700">{themePct}%</span>
-                        </div>
-                        <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                          <div
-                            className={`h-full rounded-full transition-all duration-500 ${colorInfo.bar}`}
-                            style={{ width: `${themePct}%` }}
-                          />
-                        </div>
-                        <div className="mt-3 flex items-center justify-between text-xs font-bold text-indigo-600 group-hover:text-indigo-700">
-                          <span>
-                            {isAdmin && !isVisibleForStudents
-                              ? (language === 'pt' ? 'Pré-visualizar Tema (Professora)' : 'Preview Topic')
-                              : (language === 'pt' ? 'Explorar o Tema' : 'Explore Topic')}
-                          </span>
-                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </>
-                    ) : (
-                      <div className="py-1">
-                        <div className="flex items-center justify-between text-xs font-bold text-slate-400">
-                          <span className="flex items-center gap-1">
-                            <Lock className="w-3.5 h-3.5 text-amber-500" />
-                            {language === 'pt' ? 'Em Espera para as Próximas Aulas' : 'Waiting for upcoming classes'}
-                          </span>
-                          <span className="text-[11px] text-amber-600 font-semibold bg-amber-50 px-2 py-0.5 rounded-full">
-                            {language === 'pt' ? 'Em Breve' : 'Soon'}
-                          </span>
-                        </div>
-                      </div>
-                    )}
+                    <div className="flex items-center justify-between text-xs mb-1.5 font-medium text-slate-500">
+                      <span>{language === 'pt' ? 'Progresso' : 'Progress'}</span>
+                      <span className="font-bold text-slate-700">{themePct}%</span>
+                    </div>
+                    <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full transition-all duration-500 ${colorInfo.bar}`}
+                        style={{ width: `${themePct}%` }}
+                      />
+                    </div>
+                    <div className="mt-3 flex items-center justify-between text-xs font-bold text-indigo-600 group-hover:text-indigo-700">
+                      <span>
+                        {isAdmin && !isVisibleForStudents
+                          ? (language === 'pt' ? 'Pré-visualizar Tema (Professora)' : 'Preview Topic')
+                          : (language === 'pt' ? 'Explorar o Tema' : 'Explore Topic')}
+                      </span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </div>
                 </div>
               );
             })}
           </div>
-
-          {/* Locked Notice Dialog for Students */}
-          {lockedNoticeModal && (
-            <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200">
-              <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 text-center space-y-4 animate-in zoom-in-95 duration-200">
-                <div className="w-16 h-16 rounded-3xl bg-amber-100 text-amber-600 border border-amber-200 flex items-center justify-center mx-auto shadow-inner text-2xl">
-                  🔒
-                </div>
-
-                <div className="space-y-1.5">
-                  <span className="px-3 py-1 rounded-full text-xs font-black bg-amber-50 text-amber-800 border border-amber-200">
-                    {language === 'pt' ? 'Conteúdo em Espera' : 'Locked Content'}
-                  </span>
-                  <h3 className="text-lg font-black text-slate-900 mt-2">
-                    {lockedNoticeModal}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pt-1">
-                    {language === 'pt'
-                      ? 'Este tema ainda não foi disponibilizado pela Professora Carla. Fica atento às próximas aulas de TIC para desbloquear este conteúdo e realizar as atividades!'
-                      : 'This theme is not yet available. Stay tuned for upcoming classes!'}
-                  </p>
-                </div>
-
-                <div className="pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setLockedNoticeModal(null)}
-                    className="w-full py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-colors cursor-pointer"
-                  >
-                    {language === 'pt' ? 'Entendido, voltar aos Temas' : 'Got it, back to Themes'}
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Guest Notice */}
           {!user && (

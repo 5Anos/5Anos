@@ -151,6 +151,13 @@ export default function App() {
     };
   }, []);
 
+  // If active theme is locked and user is a student, automatically return to dashboard
+  useEffect(() => {
+    if (!isAdmin && currentView === 'theme' && themeVisibility[currentTheme.id] === false) {
+      setCurrentView('dashboard');
+    }
+  }, [isAdmin, currentView, currentTheme.id, themeVisibility]);
+
   const handleToggleThemeVisibility = async (themeId: string) => {
     try {
       const res = await api.toggleThemeVisibility(themeId);
@@ -673,36 +680,7 @@ export default function App() {
 
         {/* VIEW 2: Dynamic Theme Overview for all 7 Themes */}
         {currentView === 'theme' && (
-          !isAdmin && themeVisibility[currentTheme.id] === false ? (
-            <div className="max-w-2xl mx-auto my-12 p-8 bg-white rounded-3xl border border-slate-200 shadow-xl text-center space-y-4 animate-in zoom-in-95 duration-200">
-              <div className="w-16 h-16 rounded-3xl bg-amber-100 text-amber-600 border border-amber-200 flex items-center justify-center mx-auto text-3xl shadow-inner">
-                🔒
-              </div>
-              <span className="px-3 py-1 rounded-full text-xs font-black bg-amber-50 text-amber-800 border border-amber-200">
-                {language === 'pt' ? 'Tema Bloqueado pela Professora' : 'Topic Locked by Teacher'}
-              </span>
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900">
-                {currentTheme.title[language]}
-              </h2>
-              <p className="text-sm text-slate-600 leading-relaxed max-w-md mx-auto">
-                {language === 'pt'
-                  ? 'A Professora Carla ainda não desbloqueou este tema para a turma. Fica atento às próximas aulas de TIC para acederes a este conteúdo e aos desafios práticos!'
-                  : 'This topic has not been unlocked yet. Stay tuned for upcoming classes!'}
-              </p>
-              <div className="pt-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setCurrentView('dashboard');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className="px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-colors cursor-pointer"
-                >
-                  {language === 'pt' ? '← Voltar aos Temas Disponíveis' : '← Back to Available Topics'}
-                </button>
-              </div>
-            </div>
-          ) : (
+          !isAdmin && themeVisibility[currentTheme.id] === false ? null : (
             <ThemeView
               theme={currentTheme}
               progressList={progressList}
