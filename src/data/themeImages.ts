@@ -71,7 +71,6 @@ export const THEME_STEP_IMAGES: Record<string, string[]> = {
   'direitos-autor': [
     copyrightKidsBanner,
     ccLicensingArt,
-    ccLicensingArt,
     plagiarismKidsArt,
     citationBlocksArt,
     citationBlocksArt,

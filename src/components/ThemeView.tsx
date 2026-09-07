@@ -301,7 +301,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                     {/* Interactive Email Elements Activity */}
                     <InteractiveEmailExplorer />
                   </div>
-                ) : theme.id === 'direitos-autor' && currentStepIndex === 5 ? (
+                ) : theme.id === 'direitos-autor' && (currentLesson.eyebrow.pt.includes('Norma APA') || currentStepIndex === lessons.length - 1) ? (
                   <div className="space-y-6">
                     {/* Content Body */}
                     <div
