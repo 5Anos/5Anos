@@ -8,8 +8,7 @@ import { SitPostureInfographicPT } from './SitPostureInfographicPT';
 import { DosDontsPostureInfographicPT } from './DosDontsPostureInfographicPT';
 import { PhishingMessageSimulator } from './PhishingMessageSimulator';
 import { PasswordStrengthTester } from './PasswordStrengthTester';
-import { EmailComposerSimulator } from './EmailComposerSimulator';
-import { WebSearchReliabilitySimulator } from './WebSearchReliabilitySimulator';
+import { InteractiveEmailExplorer } from './InteractiveEmailExplorer';
 import { ErgonomicsBreakTimer } from './ErgonomicsBreakTimer';
 import { DigitalFootprintSimulator } from './DigitalFootprintSimulator';
 
@@ -55,9 +54,9 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
       case 5:
         return 'from-indigo-900 via-purple-900 to-slate-900';
       case 6:
-        return 'from-amber-900 via-orange-950 to-slate-900';
+        return 'from-sky-900 via-blue-950 to-slate-900';
       case 7:
-        return 'from-teal-900 via-cyan-950 to-slate-900';
+        return 'from-amber-900 via-orange-950 to-slate-900';
       default:
         return 'from-indigo-950 via-slate-900 to-blue-950';
     }
@@ -246,6 +245,11 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                       <SitPostureInfographicPT />
                     </div>
                   </div>
+                ) : theme.id === 'correio-eletronico' && (currentLesson.eyebrow.pt === 'Exemplo' || currentStepIndex === 2) ? (
+                  <div className="space-y-6">
+                    {/* Interactive Email Elements Activity */}
+                    <InteractiveEmailExplorer />
+                  </div>
                 ) : (
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     <div className="lg:col-span-7 space-y-4">
@@ -264,10 +268,6 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                         <DigitalFootprintSimulator />
                       ) : theme.id === 'palavras-passe' && currentStepIndex === 3 ? (
                         <PasswordStrengthTester />
-                      ) : theme.id === 'correio-eletronico' && (currentStepIndex === 2 || currentStepIndex === 4) ? (
-                        <EmailComposerSimulator />
-                      ) : (theme.id === 'navegar-internet' || theme.id === 'pesquisa-informacao') && (currentStepIndex === 1 || currentStepIndex === 3) ? (
-                        <WebSearchReliabilitySimulator />
                       ) : theme.id === 'ergonomia' && currentStepIndex === 3 ? (
                         <ErgonomicsBreakTimer />
                       ) : (

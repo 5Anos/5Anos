@@ -394,28 +394,26 @@ export const themePalavrasPasseData: ThemeDefinition = {
       }
     },
     {
-      id: 'jogo-pass-order',
+      id: 'jogo-pass-builder-interactive',
       themeId: 'palavras-passe',
       number: 3,
-      title: { pt: '🧩 Cria uma palavra-passe segura', en: '🧩 Build a Secure Password' },
-      shortDesc: { pt: 'Ordena os passos para criar uma chave forte e segura.', en: 'Order the steps to build a strong password.' },
+      title: { pt: '🧩 Constrói uma Palavra-passe Segura', en: '🧩 Build a Secure Password' },
+      shortDesc: { pt: 'Escolhe carateres e experimenta criar uma palavra-passe que cumpra todas as regras de segurança.', en: 'Choose characters and build a password meeting all safety rules through experimentation.' },
       icon: '🧩',
       durationMinutes: 4,
       points: 20,
-      type: 'order_sequence',
+      type: 'password_builder',
       gameData: {
-        type: 'order',
-        title: 'Cria uma palavra-passe segura',
+        type: 'password_builder',
+        title: 'Constrói uma Palavra-passe Segura',
         icon: '🧩',
         xp: 20,
-        desc: 'Coloca os critérios de robustez pela ordem ideal.',
+        desc: 'Seleciona os carateres para construir uma palavra-passe segura que cumpra todas as regras de proteção.',
         data: {
-          items: [
-            'Usar um comprimento mínimo de 12 carateres',
-            'Misturar letras maiúsculas e minúsculas',
-            'Incluir números e símbolos especiais (!, #, $)',
-            'Evitar dados pessoais como datas ou nomes'
-          ]
+          lowercase: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
+          uppercase: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
+          numbers: ['1', '2', '3', '4', '5', '6', '7', '8'],
+          symbols: ['@', '#', '$', '%', '&', '*', '!']
         }
       }
     },

@@ -375,30 +375,30 @@ export const themeErgonomiaData: ThemeDefinition = {
         title: 'Escolhe a melhor posição',
         icon: '🎯',
         xp: 20,
-        desc: 'Responde às perguntas de escolha múltipla sobre ergonomia e descanso visual.',
+        desc: 'Analisa as posições e seleciona a opção correta para a saúde postural e visual.',
         data: {
           questions: [
             {
-              q: 'O que dita a regra 20-20-20 para proteger a visão?',
+              q: 'Qual é a postura corporal correta ao trabalhar sentado em frente ao computador?',
               opts: [
-                'A cada 20 minutos, olhar para algo a 20 pés (6 metros) de distância durante 20 segundos',
-                'Jogar videojogos 20 horas por dia com 20 minutos de pausa',
-                'Comprar 20 óculos de sol por 20 euros',
-                'Piscar os olhos 20 vezes por segundo'
+                'Costas direitas apoiadas na cadeira, pés bem assentes no chão e topo do ecrã ao nível dos olhos',
+                'Costas curvadas para a frente, pés pendurados no ar e pescoço dobrado para baixo',
+                'Sentar em cima de uma perna dobrada com a cadeira muito baixa',
+                'Deitar na cadeira com a cabeça muito abaixo do nível da mesa'
               ],
               c: 0,
-              e: 'A regra 20-20-20 relaxa os músculos oculares e previne a secura nos olhos.'
+              e: 'Manter a coluna apoiada, pés assentes a 90° e o topo do ecrã ao nível dos olhos previne dores e cansaço.'
             },
             {
-              q: 'Qual é a distância recomendada entre os olhos e o ecrã do computador?',
+              q: 'A que distância aproximada deve estar o ecrã do computador em relação aos teus olhos?',
               opts: [
-                'Cerca de 50 a 70 centímetros (um braço estendido)',
-                'Colar o nariz a 2 centímetros do vidro',
-                'A 5 metros de distância de costas voltadas',
-                'Exatamente a 3 centímetros'
+                'Cerca de 50 a 70 centímetros (aproximadamente a distância de um braço esticado)',
+                'A 10 centímetros, quase colado ao nariz',
+                'A 2 metros de distância na outra ponta da sala',
+                'A 5 centímetros para conseguir ler letras minúsculas sem óculos'
               ],
               c: 0,
-              e: 'Um braço de distância protege a visão e evita reflexos incómodos.'
+              e: 'A distância de 50 a 70 cm (comprimento de 1 braço) é a ideal para proteger os olhos e evitar fadiga visual.'
             }
           ]
         }
@@ -431,35 +431,9 @@ export const themeErgonomiaData: ThemeDefinition = {
       }
     },
     {
-      id: 'jogo-ergo-order',
-      themeId: 'ergonomia',
-      number: 4,
-      title: { pt: '📦 Organiza a secretária ergonómica', en: '📦 Organize Ergonomic Desk' },
-      shortDesc: { pt: 'Ordena os passos para arrumar o teu posto de trabalho.', en: 'Order the steps to set up your workstation.' },
-      icon: '📦',
-      durationMinutes: 4,
-      points: 20,
-      type: 'order_sequence',
-      gameData: {
-        type: 'order',
-        title: 'Organiza a secretária ergonómica',
-        icon: '📦',
-        xp: 20,
-        desc: 'Coloca os passos de arrumação ergonómica na ordem ideal.',
-        data: {
-          items: [
-            'Ajustar a altura da cadeira para os pés assentarem no chão',
-            'Posicionar o monitor à distância de um braço',
-            'Colocar o teclado e rato perto sem esticar os braços',
-            'Ligar a luz ambiente adequada sem reflexos no ecrã'
-          ]
-        }
-      }
-    },
-    {
       id: 'quiz-final-tema2',
       themeId: 'ergonomia',
-      number: 5,
+      number: 4,
       title: { pt: '🏆 Quiz de Aprendizagem: Ergonomia', en: '🏆 Learning Quiz: Ergonomics' },
       shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 2.', en: 'Comprehensive final assessment on Topic 2.' },
       icon: '🏆',

@@ -69,6 +69,7 @@ export const THEME_STEP_IMAGES: Record<string, string[]> = {
     girlAvatarImg,
     referenciasFontes,
     copyrightAuthors,
+    referenciasFontes,
   ],
   'referencias-fontes': [
     referenciasFontes,

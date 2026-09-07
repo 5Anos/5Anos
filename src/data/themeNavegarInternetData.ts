@@ -30,15 +30,6 @@ export const themeNavegarInternetData: ThemeDefinition = {
       icon: '🌐',
     },
     {
-      eyebrow: { pt: 'Como funciona?', en: 'How it works' },
-      h: { pt: 'Fazer uma boa pesquisa', en: 'Conducting effective searches' },
-      body: {
-        pt: 'Para pesquisar bem na Internet:<ul><li>Usa palavras-chave curtas e específicas, em vez de frases muito longas.</li><li>Compara vários resultados antes de confiar apenas no primeiro.</li><li>Verifica sempre a origem da informação (quem escreveu, que site é).</li><li>Desconfia de títulos muito exagerados ou sensacionalistas.</li></ul>',
-        en: 'To research effectively online:<ul><li>Use concise, specific keywords rather than full-length conversational questions.</li><li>Compare multiple search results before trusting the top link.</li><li>Always verify the author and publication source.</li><li>Be cautious of sensationalist or exaggerated headlines.</li></ul>',
-      },
-      icon: '🔍',
-    },
-    {
       eyebrow: { pt: 'Atenção!', en: 'Attention!' },
       h: { pt: 'Nem tudo o que está online é verdade', en: 'Not everything online is true' },
       body: {

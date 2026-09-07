@@ -24,28 +24,28 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       eyebrow: { pt: 'Vamos descobrir', en: "Let's discover" },
       h: { pt: 'O que é o correio eletrónico?', en: 'What is email?' },
       body: {
-        pt: 'O correio eletrónico (email) é um serviço que permite enviar e receber mensagens através da Internet, usando um endereço próprio — por exemplo, <strong>nome@exemplo.com</strong>.<br><br>É muito usado na escola, no trabalho e para comunicar de forma mais formal do que numa rede social.',
-        en: 'Email is an online service that allows sending and receiving messages over the Internet using a unique address — for instance, <strong>name@example.com</strong>.<br><br>It is widely used in school, work, and for more formal communication than social media.',
+        pt: 'O correio eletrónico (email) é um serviço que permite enviar e receber mensagens através da Internet, usando um endereço próprio — por exemplo, <strong>nome@exemplo.com</strong>.<br><br>É muito usado na escola, no trabalho e para comunicar de forma mais formal do que numa rede social.<br><br><strong>História e Origem:</strong><br>• Primeiros testes: início da década de 1960.<br>• Em 1971, <strong>Ray Tomlinson</strong> enviou a primeira mensagem eletrónica entre computadores.<br>• Foi ele quem introduziu o uso do símbolo <strong>@</strong> para separar o nome do utilizador do domínio.',
+        en: 'Email is an online service that allows sending and receiving messages over the Internet using a unique address — for instance, <strong>name@example.com</strong>.<br><br>It is widely used in school, work, and for more formal communication than social media.<br><br><strong>History and Origins:</strong><br>• Early experiments: beginning of the 1960s.<br>• In 1971, <strong>Ray Tomlinson</strong> sent the first electronic message between computers.<br>• He introduced the use of the <strong>@</strong> symbol to separate the username from the domain name.',
       },
       icon: '✉️',
     },
     {
-      eyebrow: { pt: 'Como funciona?', en: 'How it works' },
-      h: { pt: 'A caixa de correio', en: 'The mailbox structure' },
-      body: {
-        pt: 'Uma conta de email tem normalmente:<ul><li><strong>Caixa de entrada</strong> — mensagens recebidas.</li><li><strong>Enviadas</strong> — mensagens que já enviaste.</li><li><strong>Rascunhos</strong> — mensagens que ainda estás a escrever.</li><li><strong>Spam</strong> — mensagens indesejadas ou suspeitas.</li><li><strong>Anexos</strong> — ficheiros que envias ou recebes junto com a mensagem.</li></ul>',
-        en: 'An email account typically features:<ul><li><strong>Inbox</strong> — received messages.</li><li><strong>Sent</strong> — messages you have sent.</li><li><strong>Drafts</strong> — unfinished messages in progress.</li><li><strong>Spam / Junk</strong> — unwanted or suspicious messages.</li><li><strong>Attachments</strong> — files sent or received alongside the message.</li></ul>',
-      },
-      icon: '📥',
-    },
-    {
-      eyebrow: { pt: 'Regras', en: 'Rules' },
+      eyebrow: { pt: 'Elementos', en: 'Elements' },
       h: { pt: 'As partes de uma mensagem', en: 'Parts of an email message' },
       body: {
         pt: 'Uma mensagem de email bem escrita tem:<ul><li>O <strong>destinatário</strong> (para quem escreves)</li><li>O <strong>assunto</strong> (o tema resumido)</li><li>Uma <strong>saudação</strong> educada (ex.: <em>Caro Professor...</em>)</li><li>O <strong>corpo da mensagem</strong> (o conteúdo claro e objetivo)</li><li>Uma <strong>despedida</strong> (ex.: <em>Com os melhores cumprimentos...</em>)</li><li>A tua <strong>assinatura</strong> (nome e turma).</li></ul>',
         en: 'A well-crafted email message includes:<ul><li>The <strong>recipient</strong> (who you are writing to)</li><li>The <strong>subject line</strong> (a concise summary)</li><li>A polite <strong>greeting</strong> (e.g., <em>Dear Teacher...</em>)</li><li>The <strong>message body</strong> (clear and structured content)</li><li>A courteous <strong>sign-off</strong> (e.g., <em>Best regards...</em>)</li><li>Your <strong>signature</strong> (name and class).</li></ul>',
       },
       icon: '📝',
+    },
+    {
+      eyebrow: { pt: 'Exemplo', en: 'Example' },
+      h: { pt: 'Exemplo prático de uma mensagem', en: 'Practical email message example' },
+      body: {
+        pt: 'Vê como todos os elementos se organizam num email bem estruturado:<br><br><div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs sm:text-sm font-mono space-y-1.5 text-slate-800 shadow-2xs"><div><strong class="text-indigo-900">Para:</strong> professor.silva@escola.pt</div><div><strong class="text-indigo-900">Assunto:</strong> Dúvida sobre o trabalho de TIC - 5.º A</div><div class="pt-2 text-slate-700 font-sans">Caro Professor Silva,</div><div class="text-slate-700 font-sans leading-relaxed">Gostaria de saber se o trabalho sobre segurança na Internet pode incluir imagens desenhadas por nós.<br>Obrigado pela sua ajuda.</div><div class="pt-2 text-slate-700 font-sans">Com os melhores cumprimentos,</div><div class="font-bold text-slate-900 font-sans">Maria Santos, 5.º A — N.º 14</div></div>',
+        en: 'See how all elements are organized in a well-structured email:<br><br><div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs sm:text-sm font-mono space-y-1.5 text-slate-800 shadow-2xs"><div><strong class="text-indigo-900">To:</strong> teacher.silva@school.edu</div><div><strong class="text-indigo-900">Subject:</strong> Question about ICT Project - Class 5A</div><div class="pt-2 text-slate-700 font-sans">Dear Mr. Silva,</div><div class="text-slate-700 font-sans leading-relaxed">I would like to ask if our project on Internet safety can include our own hand-drawn illustrations.<br>Thank you for your guidance.</div><div class="pt-2 text-slate-700 font-sans">Best regards,</div><div class="font-bold text-slate-900 font-sans">Maria Santos, Class 5A — No. 14</div></div>',
+      },
+      icon: '✉️',
     },
     {
       eyebrow: { pt: 'Atenção!', en: 'Attention!' },
@@ -57,13 +57,13 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       icon: '⚠️',
     },
     {
-      eyebrow: { pt: 'As Pausas', en: 'The Breaks' },
+      eyebrow: { pt: 'Não te Esqueças!', en: "Don't Forget!" },
       h: { pt: 'Escrever com respeito', en: 'Writing with respect and clarity' },
       body: {
         pt: 'Ao escreveres um email — a um professor, colega ou familiar — usa linguagem clara, educada e evita mensagens ofensivas.<br><br>Evita escrever com TODAS AS LETRAS MAIÚSCULAS (na Internet, equivale a gritar!) e relê sempre a mensagem antes de clicar em "Enviar". Um bom email transmite respeito por quem o vai ler.',
         en: 'When writing an email to a teacher, classmate, or family member, use clear, polite phrasing and avoid offensive wording.<br><br>Avoid typing in ALL CAPS (which represents shouting online) and always proofread before hitting "Send". A respectful email leaves a positive impression.',
       },
-      icon: '🤝',
+      icon: '💡',
     },
   ],
   modules: [

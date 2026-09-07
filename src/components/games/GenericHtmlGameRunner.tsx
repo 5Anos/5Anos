@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { ArrowLeft, CheckCircle2, RotateCcw } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, RotateCcw, ShieldCheck, Check, X, KeyRound, Delete, Sparkles } from 'lucide-react';
 import { Language } from '../../types';
 
 interface GenericHtmlGameRunnerProps {
   gameData: {
-    type: 'tf' | 'mc' | 'match' | 'order';
+    type: 'tf' | 'mc' | 'match' | 'order' | 'password_builder' | 'builder';
     title: string;
     icon: string;
     xp: number;
@@ -59,8 +59,80 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
   const [orderChecked, setOrderChecked] = useState(false);
   const [completed, setCompleted] = useState(false);
 
+  // Password Builder State
+  const [builderPassword, setBuilderPassword] = useState('');
+  const [builderSubmitted, setBuilderSubmitted] = useState(false);
+
   const type = gameData.type;
   const data = gameData.data;
+
+  // Validate rules for password builder
+  const validatePasswordRules = (pwd: string) => {
+    const hasMinLen = pwd.length >= 8;
+    const hasUpper = /[A-Z]/.test(pwd);
+    const hasLower = /[a-z]/.test(pwd);
+    const hasNum = /[0-9]/.test(pwd);
+    const hasSym = /[@#$%&*!^()_+\-=[\]{};':"\\|,.<>/?]/.test(pwd);
+
+    const pwdLower = pwd.toLowerCase();
+    const obviousSequences = ['12345678', '1234567', 'abcdefgh', 'abcdefg', 'password', 'qwerty', '87654321', 'hgfedcba', '1234', 'abcd'];
+    const hasObviousSeq = obviousSequences.some((seq) => pwdLower.includes(seq));
+
+    const distinctChars = new Set(pwd.split('')).size;
+    const hasOnlyRepeated = pwd.length >= 8 && distinctChars <= 2;
+
+    const personalTerms = ['maria', 'tobi', 'martim', 'joao', 'pedro', 'ana', 'escola', 'gato', 'cao', 'admin', 'user'];
+    const hasPersonalInfo = personalTerms.some((term) => pwdLower.includes(term));
+
+    const allValid =
+      hasMinLen &&
+      hasUpper &&
+      hasLower &&
+      hasNum &&
+      hasSym &&
+      !hasObviousSeq &&
+      !hasOnlyRepeated &&
+      !hasPersonalInfo;
+
+    return {
+      hasMinLen,
+      hasUpper,
+      hasLower,
+      hasNum,
+      hasSym,
+      noObviousSeq: !hasObviousSeq,
+      noRepeated: !hasOnlyRepeated,
+      noPersonalInfo: !hasPersonalInfo,
+      allValid,
+    };
+  };
+
+  const builderRules = validatePasswordRules(builderPassword);
+
+  const handleAppendChar = (char: string) => {
+    if (builderPassword.length < 24) {
+      setBuilderPassword((prev) => prev + char);
+      setBuilderSubmitted(false);
+    }
+  };
+
+  const handleBackspace = () => {
+    setBuilderPassword((prev) => prev.slice(0, -1));
+    setBuilderSubmitted(false);
+  };
+
+  const handleClearBuilder = () => {
+    setBuilderPassword('');
+    setBuilderSubmitted(false);
+  };
+
+  const handleBuilderSubmit = () => {
+    setBuilderSubmitted(true);
+    if (builderRules.allValid) {
+      setCompleted(true);
+      onFinish(10, 10, 100);
+    }
+  };
 
   // TF Handler
   const handleTfSelect = (idx: number, val: boolean) => {
@@ -415,6 +487,181 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {/* 5. PASSWORD BUILDER INTERACTIVE GAME */}
+        {(type === 'password_builder' || type === 'builder') && !completed && (
+          <div className="space-y-6">
+            {/* Pedagogical Note / Multiple Answers Banner */}
+            <div className="p-3.5 rounded-2xl bg-indigo-50/80 border border-indigo-200/80 text-xs text-indigo-950 flex items-start gap-2.5 shadow-2xs">
+              <Sparkles className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+              <div>
+                <p className="font-bold text-indigo-900 mb-0.5">
+                  {language === 'pt' ? 'Múltiplas Soluções Possíveis!' : 'Multiple Valid Solutions!'}
+                </p>
+                <p className="text-indigo-800 leading-relaxed text-[11.5px]">
+                  {language === 'pt'
+                    ? 'Não existe uma resposta única pré-definida. Podes construir qualquer combinação com as opções abaixo — desde que cumpra todas as regras de segurança!'
+                    : 'There is no single predefined answer. You can create any combination with the options below as long as it satisfies all security rules!'}
+                </p>
+              </div>
+            </div>
+
+            {/* Password Display / Workspace */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-slate-900 text-white shadow-md space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <KeyRound className="w-3.5 h-3.5 text-indigo-400" />
+                  {language === 'pt' ? 'A tua palavra-passe em construção:' : 'Your password in construction:'}
+                </span>
+                <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                  {builderPassword.length} {language === 'pt' ? 'carateres' : 'characters'}
+                </span>
+              </div>
+
+              {/* Password Text Container */}
+              <div className="p-3.5 sm:p-4 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center justify-between min-h-[56px] gap-2">
+                <div className="font-mono text-lg sm:text-2xl font-black tracking-widest text-emerald-400 break-all select-all">
+                  {builderPassword || (
+                    <span className="text-slate-600 text-sm font-sans font-normal tracking-normal italic">
+                      {language === 'pt' ? 'Clica nos carateres abaixo para adicionar...' : 'Click the characters below to add...'}
+                    </span>
+                  )}
+                </div>
+                {builderPassword.length > 0 && (
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <button
+                      onClick={handleBackspace}
+                      title={language === 'pt' ? 'Apagar último caracter' : 'Delete last character'}
+                      className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white transition-colors cursor-pointer text-xs font-bold flex items-center gap-1"
+                    >
+                      <Delete className="w-4 h-4" />
+                      <span className="hidden sm:inline">{language === 'pt' ? 'Apagar' : 'Delete'}</span>
+                    </button>
+                    <button
+                      onClick={handleClearBuilder}
+                      title={language === 'pt' ? 'Limpar tudo' : 'Clear all'}
+                      className="px-2.5 py-2 rounded-lg bg-rose-950/60 hover:bg-rose-900 border border-rose-800/50 text-rose-300 text-xs font-bold transition-colors cursor-pointer"
+                    >
+                      {language === 'pt' ? 'Limpar' : 'Clear'}
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Character Selection Trays */}
+            <div className="space-y-4">
+              {/* Lowercase */}
+              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">
+                    🔤 {language === 'pt' ? 'Letras minúsculas' : 'Lowercase letters'}
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-400">a - h</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].map((char) => (
+                    <button
+                      key={`lower-${char}`}
+                      onClick={() => handleAppendChar(char)}
+                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white hover:bg-indigo-50 border border-slate-300 hover:border-indigo-500 font-mono font-bold text-base sm:text-lg text-slate-800 hover:text-indigo-600 shadow-2xs active:scale-95 transition-all cursor-pointer flex items-center justify-center"
+                    >
+                      {char}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Uppercase */}
+              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">
+                    🔠 {language === 'pt' ? 'Letras maiúsculas' : 'Uppercase letters'}
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-400">A - H</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].map((char) => (
+                    <button
+                      key={`upper-${char}`}
+                      onClick={() => handleAppendChar(char)}
+                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white hover:bg-indigo-50 border border-slate-300 hover:border-indigo-500 font-mono font-black text-base sm:text-lg text-indigo-950 hover:text-indigo-600 shadow-2xs active:scale-95 transition-all cursor-pointer flex items-center justify-center"
+                    >
+                      {char}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Numbers */}
+              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">
+                    🔢 {language === 'pt' ? 'Números' : 'Numbers'}
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-400">1 - 8</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {['1', '2', '3', '4', '5', '6', '7', '8'].map((char) => (
+                    <button
+                      key={`num-${char}`}
+                      onClick={() => handleAppendChar(char)}
+                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-500 font-mono font-black text-base sm:text-lg text-emerald-900 hover:text-emerald-700 shadow-2xs active:scale-95 transition-all cursor-pointer flex items-center justify-center"
+                    >
+                      {char}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Symbols */}
+              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">
+                    ⚡ {language === 'pt' ? 'Símbolos' : 'Symbols'}
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-400">@ # $ % & * !</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {['@', '#', '$', '%', '&', '*', '!'].map((char) => (
+                    <button
+                      key={`sym-${char}`}
+                      onClick={() => handleAppendChar(char)}
+                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white hover:bg-purple-50 border border-slate-300 hover:border-purple-500 font-mono font-black text-base sm:text-lg text-purple-900 hover:text-purple-700 shadow-2xs active:scale-95 transition-all cursor-pointer flex items-center justify-center"
+                    >
+                      {char}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Error banner on failed submission without giving away specific checklist answers */}
+            {builderSubmitted && !builderRules.allValid && (
+              <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-xs sm:text-sm text-rose-900 font-bold text-center animate-in fade-in">
+                {language === 'pt'
+                  ? '✗ A palavra-passe construída ainda não cumpre todos os critérios de uma palavra-passe segura. Lembra-te das boas práticas de segurança e tenta novamente!'
+                  : '✗ The created password does not meet all security criteria yet. Remember the strong password best practices and try again!'}
+              </div>
+            )}
+
+            {/* Submit Action */}
+            <div className="pt-2">
+              <button
+                onClick={handleBuilderSubmit}
+                disabled={builderPassword.length === 0}
+                className={`w-full py-4 rounded-2xl font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                  builderPassword.length > 0
+                    ? 'bg-indigo-600 hover:bg-indigo-700 text-white hover:shadow-lg active:scale-[0.99]'
+                    : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                }`}
+              >
+                <KeyRound className="w-5 h-5" />
+                <span>{language === 'pt' ? 'Submeter e Validar Palavra-passe' : 'Submit and Validate Password'}</span>
+              </button>
+            </div>
           </div>
         )}
 

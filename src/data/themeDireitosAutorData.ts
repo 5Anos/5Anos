@@ -4,64 +4,64 @@ export const themeDireitosAutorData: ThemeDefinition = {
   id: 'direitos-autor',
   number: 7,
   title: {
-    pt: 'Direitos de Autor',
-    en: 'Copyright',
+    pt: 'Direitos de Autor e Fontes',
+    en: 'Copyright and Sources',
   },
   tagline: {
-    pt: 'Aprende a respeitar os autores e os conteúdos que encontras na Internet.',
-    en: 'Learn to respect creators and the content you find online.',
+    pt: 'Aprende a respeitar os criadores, evitar o plágio, usar licenças livres e citar fontes corretamente.',
+    en: 'Learn to respect creators, avoid plagiarism, use open licenses, and cite sources accurately.',
   },
   intro: {
-    pt: 'Quando escreves um texto, tiras uma fotografia ou compões uma música, essa criação é tua e pertence-te por lei! Da mesma forma, tudo o que encontramos na Internet pertence a alguém. Aprende o que é o copyright ©, como usar licenças livres (Creative Commons) e como evitar o plágio nos teus trabalhos.',
-    en: 'When you write an essay, take a picture, or make music, it belongs to you by law! Similarly, everything online was made by someone. Discover copyright ©, Creative Commons, and how to avoid plagiarism in school work.',
+    pt: 'Quando escreves um texto, tiras uma fotografia ou compões uma música, essa criação é tua e pertence-te por lei! Da mesma forma, tudo o que encontramos na Internet pertence a alguém. Aprende o que é o copyright ©, como funcionam as licenças Creative Commons, como evitar o plágio e como construir a lista de referências bibliográficas no final dos teus trabalhos escolares.',
+    en: 'When you write an essay, take a photo, or compose music, that creation belongs to you by law! Similarly, everything on the web belongs to someone. Discover copyright ©, Creative Commons, how to avoid plagiarism, and how to build accurate bibliographic references.',
   },
   icon: '©️',
   illustrationKey: 'direitos-autor',
   accentColor: 'amber',
-  badgeCount: 2,
+  badgeCount: 3,
   lessons: [
     {
       eyebrow: { pt: 'Vamos descobrir', en: "Let's discover" },
       h: { pt: 'O que são direitos de autor?', en: 'What is copyright?' },
       body: {
-        pt: 'Os direitos de autor protegem o trabalho criado por uma pessoa — como textos, imagens, vídeos, músicas ou outros trabalhos digitais. Quem cria uma obra é o autor, e tem o direito de decidir como ela pode ser usada por outras pessoas.',
-        en: 'Copyright protects original creative works created by an individual—such as texts, photographs, videos, music, and digital artwork. The creator is the author and holds the legal right to decide how their creation can be utilized by others.',
+        pt: 'Os direitos de autor protegem o trabalho criado por uma pessoa — como textos, imagens, vídeos, músicas ou outros trabalhos digitais. Quem cria uma obra é o autor, e tem o direito moral e legal de decidir como ela pode ser usada por outras pessoas.<br><br>O símbolo universal <strong>©</strong> (Copyright) alerta para a proteção legal das obras criativas.',
+        en: 'Copyright protects original creative works created by an individual—such as texts, photographs, videos, music, and digital artwork. The creator is the author and holds the legal right to decide how their creation can be utilized by others.<br><br>The universal <strong>©</strong> symbol alerts everyone to legal creative protection.',
       },
       icon: '©️',
     },
     {
-      eyebrow: { pt: 'Atenção!', en: 'Attention!' },
+      eyebrow: { pt: 'O que é o Plágio?', en: 'What is Plagiarism?' },
       h: { pt: 'Encontrar não é o mesmo que poder copiar', en: 'Finding is not the same as being allowed to copy' },
       body: {
-        pt: 'Encontrar uma imagem, texto ou música na Internet não significa que sejas livre de copiar e usar sem quaisquer regras. Muitos conteúdos só podem ser usados com autorização do autor ou indicando corretamente a fonte.',
-        en: 'Locating a photo, article, or audio track on Google or social media does not grant automatic permission to copy and reuse it arbitrarily. Most online content requires author permission or explicit attribution.',
-      },
-      icon: '⚠️',
-    },
-    {
-      eyebrow: { pt: 'Exemplo', en: 'Example' },
-      h: { pt: 'Um trabalho escolar', en: 'A school assignment' },
-      body: {
-        pt: '<em>"Encontraste uma imagem na Internet para um trabalho. O que deves fazer?"</em> O correto é verificar se podes usá-la (por exemplo, se é de utilização livre) e, sempre que possível, indicar a fonte de onde a retiraste.',
-        en: '<em>"You found a great picture online for your school presentation. What should you do?"</em> Always check its usage license (e.g. Creative Commons or free-to-use) and clearly cite the source where you retrieved it.',
-      },
-      icon: '📝',
-    },
-    {
-      eyebrow: { pt: 'Vamos pensar', en: "Let's think" },
-      h: { pt: 'O que é o plágio?', en: 'What is plagiarism?' },
-      body: {
-        pt: 'Plágio é copiar o trabalho de outra pessoa e apresentá-lo como se fosse teu, sem indicar o autor original. É uma falta de respeito pelo trabalho de quem criou o conteúdo e deve sempre ser evitado.',
-        en: 'Plagiarism is copying someone else’s work and presenting it as your own creation without acknowledging the original author. It disrespects the creator’s hard work and is considered unethical.',
+        pt: 'Encontrar uma imagem, texto ou música na Internet não significa que sejas livre de copiar e apresentar como se fosse tua. <strong>Plágio</strong> é copiar a obra de outra pessoa sem indicar quem é o autor original.<br><br>Fazer apenas "Copiar e Colar" (Ctrl+C e Ctrl+V) num trabalho escolar é uma falta grave. O correto é ler, compreender e explicar a ideia <em>com as tuas próprias palavras</em> (parafrasear), indicando sempre a fonte.',
+        en: 'Finding an image, article, or track online does not grant permission to copy and claim it as your own. <strong>Plagiarism</strong> is copying another person’s work without attributing the author.<br><br>Mindless "Copy & Paste" in school work is a serious breach of academic honesty. The right approach is to understand and synthesize in <em>your own words</em> while citing the source.',
       },
       icon: '🚫',
     },
     {
-      eyebrow: { pt: 'Sabias que...?', en: 'Did you know...?' },
-      h: { pt: 'Indicar a fonte é um sinal de respeito', en: 'Citing sources shows digital citizenship' },
+      eyebrow: { pt: 'Licenças Livres', en: 'Open Licenses' },
+      h: { pt: 'Creative Commons e Domínio Público', en: 'Creative Commons and Public Domain' },
       body: {
-        pt: 'Sempre que usares um texto, imagem ou ideia de outra pessoa num trabalho escolar, deves indicar de onde veio. Isso mostra respeito pelo autor e torna o teu trabalho mais correto e credível.',
-        en: 'Whenever you reference another person’s writing, illustration, or concept in a school report, citing the author elevates your credibility and demonstrates authentic digital integrity.',
+        pt: 'Existem licenças que permitem aos autores partilhar as suas criações com regras claras para reutilização:<ul><li><strong>Creative Commons (CC):</strong> Permite usar imagens, textos ou músicas desde que cumpras as condições (ex.: indicar o nome do autor com a licença <em>CC-BY</em>).</li><li><strong>Domínio Público:</strong> Obras cujos direitos de autor já expiraram (geralmente 70 anos após a morte do autor) e que podem ser utilizadas livremente por todos.</li></ul>',
+        en: 'Open licenses allow creators to share their work with transparent rules for reuse:<ul><li><strong>Creative Commons (CC):</strong> Allows using pictures, texts, or audio as long as you follow conditions (e.g. giving credit under <em>CC-BY</em>).</li><li><strong>Public Domain:</strong> Works whose copyright has expired (typically 70 years after the creator’s passing) and are free for everyone to use.</li></ul>',
+      },
+      icon: '⚖️',
+    },
+    {
+      eyebrow: { pt: 'Citar e Referenciar', en: 'Citing & Referencing' },
+      h: { pt: 'A fórmula da citação escolar', en: 'The student citation formula' },
+      body: {
+        pt: 'Dar crédito aos autores é essencial. Uma boa referência bibliográfica no 5.º ano deve conter os 4 elementos essenciais:<ul><li><strong>Autor ou Organização:</strong> Quem produziu a obra (ex.: <em>SeguraNet</em>, <em>DGE</em>, <em>José Saramago</em>).</li><li><strong>Título:</strong> O nome da página, artigo ou livro consultado.</li><li><strong>Endereço Web (URL):</strong> O link direto para a página na Internet.</li><li><strong>Data de Consulta:</strong> O dia em que acedeste à informação (ex.: <em>Consultado em 15/02/2026</em>).</li></ul>',
+        en: 'Giving credit is essential. A solid 5th-grade bibliographic reference must include 4 core elements:<ul><li><strong>Author or Organization:</strong> Who created the work (e.g., <em>SeguraNet</em>, <em>DGE</em>).</li><li><strong>Title:</strong> Name of the visited page, article, or book.</li><li><strong>Web Address (URL):</strong> The direct link to the web page.</li><li><strong>Access Date:</strong> The date you accessed the information.</li></ul>',
+      },
+      icon: '📚',
+    },
+    {
+      eyebrow: { pt: 'Exemplo Prático', en: 'Practical Example' },
+      h: { pt: 'Como citar corretamente no teu trabalho', en: 'How to cite correctly in your project' },
+      body: {
+        pt: 'Vê como se organiza uma referência bibliográfica correta:<br><br><div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs sm:text-sm font-mono space-y-1.5 text-slate-800 shadow-2xs"><div><strong class="text-amber-900">Exemplo de Site da Internet:</strong></div><div class="text-slate-700 font-sans pl-2">SeguraNet (2024). <em>Guia de Segurança Digital para Jovens</em>. Disponível em: https://www.seguranet.pt (Consultado em 10/02/2026).</div><div class="pt-2"><strong class="text-amber-900">Exemplo de Livro Escolar:</strong></div><div class="text-slate-700 font-sans pl-2">Silva, Ana (2023). <em>Descobrir as TIC 5</em>. Lisboa: Porto Editora.</div></div><br><strong>⚠️ Atenção:</strong> Nunca coloques apenas "Google" ou "Internet" na bibliografia! O Google é apenas o motor de busca, não o autor do conteúdo.',
+        en: 'See how a proper citation is structured:<br><br><div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs sm:text-sm font-mono space-y-1.5 text-slate-800 shadow-2xs"><div><strong class="text-amber-900">Website Reference Example:</strong></div><div class="text-slate-700 font-sans pl-2">SeguraNet (2024). <em>Digital Safety Guide for Youth</em>. Available at: https://www.seguranet.pt (Accessed Feb 10, 2026).</div><div class="pt-2"><strong class="text-amber-900">Book Reference Example:</strong></div><div class="text-slate-700 font-sans pl-2">Silva, Ana (2023). <em>Discovering ICT 5</em>. Lisbon: Porto Editora.</div></div><br><strong>⚠️ Note:</strong> Never write just "Google" or "Internet" in your bibliography! Google is only the search engine, not the author.',
       },
       icon: '💡',
     },
@@ -83,29 +83,29 @@ export const themeDireitosAutorData: ThemeDefinition = {
       explanation: {
         pt: [
           'Os Direitos de Autor (Copyright, assinalado pelo símbolo ©) são um conjunto de direitos legais que protegem quem cria uma obra original (livros, pinturas, fotografias, músicas, vídeos, jogos ou textos).',
-          'Direito Moral: o criador tem sempre o direito de ser reconhecido como o autor daquela obra (a autoria nunca se perde nem se apaga).',
-          'Direito de Utilização: ninguém pode copiar, vender, alterar ou publicar a obra de outra pessoa sem autorização ou uma licença adequada.',
-          'Estar online NÃO significa estar livre de direitos de autor: é necessária autorização ou uma licença adequada. (Podem existir exceções na lei para fins educativos e de ensino em contexto de sala de aula, dependendo da legislação).',
+          'Direito Moral: o criador tem sempre o direito inalienável de ser reconhecido como o autor daquela obra (a autoria nunca se perde nem se apaga).',
+          'Direito Patrimonial / de Utilização: ninguém pode copiar, vender, alterar ou publicar a obra de outra pessoa sem autorização ou uma licença adequada.',
+          'Estar online NÃO significa estar livre de direitos de autor: é necessária autorização ou uma licença adequada para usar qualquer conteúdo.',
         ],
         en: [
           'Copyright (marked by ©) legally protects original creative works (books, art, photos, music, code, texts).',
           'Moral Rights: creators always retain the right to be recognized and credited as the authentic author.',
           'Usage Rights: nobody can copy, sell, alter, or re-publish someone else’s work without authorization or a suitable license.',
-          'Being online DOES NOT mean it is free of copyright: authorization or an adequate license is required. (Exceptions in the law may exist for classroom educational purposes, depending on legislation).',
+          'Being online DOES NOT mean it is free of copyright: authorization or an adequate license is required.',
         ],
       },
       example: {
         title: {
-          pt: 'A fotografia do pássaro no jardim',
-          en: 'The garden bird photo',
+          pt: 'A fotografia do pássaro no rio',
+          en: 'The river bird photo',
         },
         scenario: {
-          pt: 'O Afonso tirou uma fotografia fantástica a um guarda-rios no rio Tejo e publicou-a no seu blogue escolar. Um colega de outra escola copiou a fotografia e colocou-a num concurso dizendo que tinha sido ele a tirá-la.',
-          en: 'Afonso took a breathtaking photograph of a kingfisher on the Tagus river and posted it to his school blog. A student from another school submitted it to a photo contest claiming ownership.',
+          pt: 'O Afonso tirou uma fotografia fantástica a um guarda-rios no rio Tejo e publicou-a no seu blogue escolar. Um colega copiou a foto e colocou-a num concurso dizendo que tinha sido ele a tirá-la.',
+          en: 'Afonso took a breathtaking photograph of a kingfisher on the Tagus river and posted it to his school blog. A student submitted it to a photo contest claiming ownership.',
         },
         tip: {
-          pt: 'Isto é uma infração grave aos Direitos de Autor. O colega devia ter pedido autorização ao Afonso e dado o devido crédito como fotógrafo!',
-          en: 'This is a serious copyright violation. The student should have requested permission and credited Afonso as photographer!',
+          pt: 'Isto é uma infração aos Direitos de Autor. O colega devia ter pedido autorização ao Afonso e dado o devido crédito como fotógrafo!',
+          en: 'This is a copyright violation. The student should have requested permission and credited Afonso as photographer!',
         },
       },
       funFact: {
@@ -171,13 +171,13 @@ export const themeDireitosAutorData: ThemeDefinition = {
       explanation: {
         pt: [
           'Plágio é o ato de copiar o trabalho, texto, ideias ou palavras de outra pessoa e apresentá-los como se fossem teus, sem indicar quem é o verdadeiro autor.',
-          'Fazer simplesmente "Copiar e Colar" (Ctrl+C e Ctrl+V) da Wikipédia para um trabalho da escola é plágio e é uma falta grave.',
+          'Fazer simplesmente "Copiar e Colar" (Ctrl+C e Ctrl+V) da Wikipédia ou de outro site para um trabalho da escola é plágio e é uma falta grave.',
           'Como fazer corretamente? Lê a informação com atenção, compreende o significado e escreve um resumo COM AS TUAS PRÓPRIAS PALAVRAS (isto chama-se parafrasear).',
           'Se quiseres copiar uma frase exata do autor, coloca-a entre aspas (" ") e indica logo a seguir o nome do autor e o livro ou site de onde a retiraste.',
         ],
         en: [
           'Plagiarism is presenting someone else’s work, text, or ideas as your own without giving credit.',
-          'Doing a mindless "Copy & Paste" (Ctrl+C and Ctrl+V) from Wikipedia into your assignment is plagiarism and unacceptable.',
+          'Doing a mindless "Copy & Paste" (Ctrl+C and Ctrl+V) into your assignment is plagiarism and unacceptable.',
           'The right way: read the text, understand the concept, and write explanations IN YOUR OWN WORDS (paraphrasing).',
           'If you use exact words, enclose them in quotation marks (" ") and credit the author and source immediately.',
         ],
@@ -189,7 +189,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
         },
         scenario: {
           pt: 'A Inês estava a fazer um trabalho sobre D. Afonso Henriques. Encontrou um parágrafo interessante num livro. Leu-o com atenção e escreveu: "Segundo o historiador José Mattoso, o primeiro rei de Portugal enfrentou grandes batalhas para unir o território".',
-          en: 'Inês was doing a project on King Afonso Henriques. She read an insightful paragraph in a book, synthesized it, and credited: "According to historian José Mattoso, Portugal’s first king fought hard to unite territory".',
+          en: 'Inês was doing a project on King Afonso Henriques. She read an insightful paragraph, synthesized it, and credited: "According to historian José Mattoso, Portugal’s first king fought hard to unite territory".',
         },
         tip: {
           pt: 'A Inês utilizou as suas próprias palavras e indicou o historiador. Mostrou que estudou a sério e não cometeu plágio!',
@@ -248,91 +248,357 @@ export const themeDireitosAutorData: ThemeDefinition = {
       themeId: 'direitos-autor',
       number: 3,
       title: {
-        pt: 'Licenças Creative Commons (CC) e Recursos Livres',
-        en: 'Creative Commons (CC) Licenses and Open Resources',
+        pt: 'Licenças Livres e Creative Commons (CC)',
+        en: 'Open Licenses and Creative Commons (CC)',
       },
       shortDesc: {
-        pt: 'Como encontrar imagens, sons e vídeos que os autores autorizam a usar.',
-        en: 'How to find images, sounds, and videos that creators permit us to use.',
+        pt: 'Como usar imagens, músicas e textos legalmente com licenças abertas.',
+        en: 'How to use images, music, and text legally with open licenses.',
       },
-      icon: '🎨',
+      icon: '⚖️',
       explanation: {
         pt: [
-          'Existem muitos criadores que partilham obras com regras claras através das licenças Creative Commons (CC).',
-          '• CC BY (Atribuição): exige dar crédito ao autor original.',
-          '• CC BY-NC (Não Comercial): não permite a utilização para fins comerciais ou com fins lucrativos.',
-          '• CC BY-ND (Sem Derivações): não permite alterações nem a criação de obras derivadas.',
-          '• CC BY-SA (Partilha nos Mesmos Termos): exige partilhar novas versões sob a mesma licença.',
-          '• Domínio Público: obras cujos direitos de autor já caducaram ou foram doadas à humanidade.',
-          '• Imagens com Licença Aberta: "gratuita para ver" não significa "livre de direitos". Devemos procurar imagens sob licenças abertas (ex.: Wikimedia Commons) e respeitar sempre as condições de atribuição.',
+          'Nem tudo na Internet tem todos os direitos reservados. Muitos autores querem partilhar as suas criações e usam Licenças Creative Commons (CC).',
+          'CC-BY (Atribuição): Podes usar, modificar e partilhar a imagem ou música, desde que dês o CRÉDITO ao autor original.',
+          'CC-NC (Não Comercial): Podes usar a obra livremente para estudar ou na escola, mas NUNCA para vender ou ganhar dinheiro.',
+          'CC-SA (Partilha nos Mesmos Termos): Se alterares a obra, tens de partilhar o resultado final com a mesma licença livre.',
+          'Domínio Público (CC0): Obras sem direitos patrimoniais (ou cujo autor abdicou deles), que qualquer pessoa pode usar livremente.',
         ],
         en: [
-          'Many creators share their work with clear rules using Creative Commons (CC) licenses.',
-          '• CC BY (Attribution): requires giving proper credit to the author.',
-          '• CC BY-NC (Non-Commercial): prohibits commercial or profitable use.',
-          '• CC BY-ND (No Derivatives): forbids altering or building derivative works upon the original.',
-          '• CC BY-SA (Share Alike): requires sharing adaptations under the exact same license.',
-          '• Public Domain: works whose copyright expired or were dedicated freely to humanity.',
-          '• Open Licensed Images: "free to view" does not mean "free of copyright". Look for images with clear open reuse licenses (e.g. Wikimedia Commons).',
+          'Not everything online has all rights reserved. Many authors wish to share creations under Creative Commons (CC) licenses.',
+          'CC-BY (Attribution): You may use and adapt the work as long as you give credit to the original creator.',
+          'CC-NC (Non-Commercial): You can use the creation for education, but never for commercial gain.',
+          'CC-SA (Share-Alike): If you modify the work, you must share it under the exact same open license.',
+          'Public Domain (CC0): Works without economic copyright that anyone can freely adapt and use.',
         ],
       },
       example: {
         title: {
-          pt: 'A ilustração para o trabalho de Ciências',
-          en: 'Illustration for Science homework',
+          pt: 'A música para o vídeo de Ciências da Madalena',
+          en: 'Madalena’s Science video background music',
         },
         scenario: {
-          pt: 'O Vasco precisava de uma imagem do Sistema Solar para a capa do trabalho. Procurou no Wikimedia Commons e encontrou uma fotografia da NASA com licença pública.',
-          en: 'Vasco needed a Solar System picture for his assignment cover. He looked on Wikimedia Commons and found a NASA photo in the public domain.',
+          pt: 'A Madalena precisava de uma música de fundo para o vídeo sobre o Sistema Solar. Em vez de usar uma música protegida da rádio, foi a um banco de sons com licença CC-BY.',
+          en: 'Madalena needed background music for her Solar System presentation. Instead of pirating radio hits, she downloaded CC-BY licensed audio.',
         },
         tip: {
-          pt: 'O Vasco colocou a imagem na capa e escreveu por baixo: "Imagem: NASA / Wikimedia Commons (Domínio Público)". Trabalho exemplar!',
-          en: 'Vasco placed it on the cover with the caption: "Image: NASA / Wikimedia Commons (Public Domain)". Exemplary work!',
+          pt: 'A Madalena colocou nos créditos finais do vídeo: "Música: Solar Journey por Kevin MacLeod (Licença CC-BY)". Ficou perfeito e 100% legal!',
+          en: 'Madalena included in the video credits: "Music: Solar Journey by Kevin MacLeod (Licensed under CC-BY)". Fully legal and credited!',
         },
       },
       funFact: {
-        pt: 'Sabias que grande parte das fotografias astronómicas criadas diretamente pela NASA está no Domínio Público e pode ser usada em trabalhos escolares? Só é preciso ter atenção a materiais de instituições parceiras ou ao logótipo oficial da NASA, que têm regras de proteção próprias.',
-        en: 'Did you know that most astronomical imagery produced directly by NASA is in the Public Domain and can be used in school projects? Exceptions include partner institutions’ material and the NASA insignia, which have distinct protections.',
+        pt: 'Sabias que plataformas famosas como o Wikimedia Commons, o Unsplash e o Freesound têm milhões de fotografias, sons e ilustrações gratuitas prontas a usar em trabalhos escolares?',
+        en: 'Did you know platforms like Wikimedia Commons, Unsplash, and Freesound offer millions of free assets ready for school projects?',
       },
       thinkAboutIt: {
         question: {
-          pt: 'Se uma fotografia não tiver escrito nenhum aviso nem nenhum símbolo, ela tem direitos de autor?',
-          en: 'If a photograph online has no visible notice or symbol, is it copyrighted?',
+          pt: 'Porque é que as licenças Creative Commons ajudam o mundo inteiro a partilhar conhecimento de forma mais rápida e justa?',
+          en: 'Why do Creative Commons licenses help the entire world share knowledge faster and more fairly?',
         },
         clue: {
-          pt: 'A proteção da lei é automática a partir do momento em que a obra é criada.',
-          en: 'Legal copyright protection is automatic from the instant of creation.',
+          pt: 'Pensa no tempo que poupas se não tiveres de enviar uma carta ao autor a pedir autorização.',
+          en: 'Think of the time saved by not having to mail individual permission requests.',
         },
         reflection: {
-          pt: 'SIM! Por lei, toda a criação original está automaticamente protegida por Direitos de Autor, mesmo que o criador não tenha colocado o símbolo ©. Se tiveres dúvidas, deves sempre pedir autorização ou procurar uma alternativa com licença livre.',
-          en: 'YES! All original creations are automatically protected by copyright upon creation, even without a visible © mark.',
+          pt: 'Porque definem regras claras e automáticas de utilização! Quem precisa de uma imagem para estudar sabe logo o que pode e não pode fazer, sem burocracia.',
+          en: 'Because they set immediate, transparent terms! Students know instantly what is permitted without red tape.',
         },
       },
       quizQuestions: [
         {
           id: 'q-copy-3',
           question: {
-            pt: 'O que significa a licença Creative Commons com a sigla "BY" (Atribuição)?',
-            en: 'What does a Creative Commons license with "BY" (Attribution) require?',
+            pt: 'O que deves fazer quando utilizas uma fotografia com a licença Creative Commons "CC-BY"?',
+            en: 'What must you do when using a photograph with a "CC-BY" Creative Commons license?',
           },
           options: {
             pt: [
-              'Podes utilizar a obra livremente, desde que dês o devido crédito ao autor original',
-              'É proibido olhar para a imagem',
-              'Tens de pagar mil euros cada vez que abres a página',
-              'A obra só pode ser vista durante a noite',
+              'Dar o devido crédito indicando o nome do autor original e a fonte',
+              'Pagar 50 euros ao criador da fotografia',
+              'Apagar a fotografia logo após 5 minutos',
+              'Pedir autorização ao diretor da escola por escrito',
             ],
             en: [
-              'You may use the work freely, provided you give appropriate credit to the creator',
-              'It is forbidden to look at the image',
-              'You must pay a thousand euros per view',
-              'The work can only be seen at night',
+              'Give proper credit by attributing the original author and source',
+              'Pay 50 euros to the photographer',
+              'Delete the photo after 5 minutes',
+              'Ask the school principal in writing',
             ],
           },
           correctIndex: 0,
           explanation: {
-            pt: 'Excelente! A licença CC-BY permite a reutilização com a condição obrigatória de citar o criador original.',
-            en: 'Excellent! CC-BY allows reuse on the condition that creator attribution is provided.',
+            pt: 'Exato! A sigla BY significa "Atribuição" — deves sempre creditar o autor original.',
+            en: 'Exactly! BY stands for Attribution—you must always credit the author.',
+          },
+        },
+      ],
+    },
+    {
+      id: 'ref-avaliar-fiabilidade',
+      themeId: 'direitos-autor',
+      number: 4,
+      title: {
+        pt: 'Como Avaliar a Fiabilidade das Fontes',
+        en: 'How to Evaluate Source Credibility and Trustworthiness',
+      },
+      shortDesc: {
+        pt: 'A regra dos 4 elementos: Autor, Data, Fonte e Objetivo.',
+        en: 'The 4-element rule: Author, Date, Source, and Purpose.',
+      },
+      icon: '🔎',
+      explanation: {
+        pt: [
+          'Qualquer pessoa pode criar um site ou publicar um vídeo na Internet a dizer disparates. Antes de usares uma informação num trabalho da escola, deves fazer o teste dos 4 elementos:',
+          '1. Quem é o AUTOR? O autor está identificado com nome real? É um especialista, professor, cientista ou instituição reconhecida (ex.: universidade, ministério, museu)?',
+          '2. Qual é a DATA? A informação é recente ou já tem 15 anos e está desatualizada?',
+          '3. Qual é a FONTE? O site pertence a uma entidade oficial (.gov.pt, .edu, .pt) ou é um blogue anónimo com publicidade enganosa a piscar?',
+          '4. Qual é o OBJETIVO? O artigo quer ensinar com factos neutros ou quer vender um produto ou espalhar boatos?',
+        ],
+        en: [
+          'Anyone can launch a website or upload a video stating falsehoods. Before using facts in a school report, apply the 4-element test:',
+          '1. Who is the AUTHOR? Is there an identified real author? Are they a teacher, scientist, or recognized institution?',
+          '2. What is the DATE? Is the knowledge up to date or 15 years old and obsolete?',
+          '3. What is the SOURCE? Does the domain belong to an official body (.gov.pt, .edu, .pt) or an anonymous ad-heavy blog?',
+          '4. What is the PURPOSE? Does it educate neutrally or attempt to sell products and spread bias?',
+        ],
+      },
+      example: {
+        title: {
+          pt: 'A notícia do tubarão no rio Douro',
+          en: 'The shark in the Douro river rumor',
+        },
+        scenario: {
+          pt: 'O Tiago viu numa rede social um vídeo a dizer que apareceu um tubarão branco gigante no rio Douro. O site chamava-se "noticias-bombasticas-loucas.xyz" e não tinha autor nem data.',
+          en: 'Tiago saw a social media video claiming a great white shark was spotted in the Douro river. The site was called "crazy-explosive-news.xyz" with no author or date.',
+        },
+        tip: {
+          pt: 'O Tiago pesquisou nos sites da Marinha Portuguesa e dos jornais de referência nacionais: não havia notícia nenhuma! Era uma fake news inventada para ganhar visualizações.',
+          en: 'Tiago checked official maritime portals: zero reports! It was a fabricated hoax crafted for clickbait views.',
+        },
+      },
+      funFact: {
+        pt: 'Sabias que informação falsa ou enganadora pode espalhar-se rapidamente, especialmente quando provoca emoções fortes (como medo ou surpresa)? Pensar criticamente é o teu superpoder!',
+        en: 'Did you know that false information spreads rapidly when it triggers strong emotions? Critical thinking is your digital superpower!',
+      },
+      thinkAboutIt: {
+        question: {
+          pt: 'Porque é que a Wikipédia pode ser um bom ponto de partida para pesquisar, mas não deves copiar o texto diretamente sem verificar as fontes?',
+          en: 'Why can Wikipedia be a great starting point, but you shouldn’t cite it without checking original sources?',
+        },
+        clue: {
+          pt: 'Pensa em quem pode editar artigos na Wikipédia e nas referências no fundo da página.',
+          en: 'Think of who can edit Wikipedia articles and the references at the bottom.',
+        },
+        reflection: {
+          pt: 'Porque qualquer voluntário pode editar artigos! O melhor da Wikipédia é a lista de fontes e referências no final de cada artigo, que te leva às páginas científicas e oficiais originais.',
+          en: 'Because articles are community-edited. Use Wikipedia to find original authoritative links at the bottom!',
+        },
+      },
+      quizQuestions: [
+        {
+          id: 'q-ref-1',
+          question: {
+            pt: 'Qual destes critérios NÃO é um bom indicador de que um site na Internet é fiável e seguro para pesquisares?',
+            en: 'Which of these criteria is NOT a good indicator of web credibility?',
+          },
+          options: {
+            pt: [
+              'O site ter títulos sensacionalistas cheios de pontos de exclamação e não ter autor identificado',
+              'Pertencer a uma universidade, museu, ministério ou centro de investigação conhecido',
+              'Indicar claramente o nome e as qualificações do autor do artigo',
+              'Apresentar a data recente em que o artigo foi escrito e revisto',
+            ],
+            en: [
+              'The site displaying clickbait sensationalist headlines with no author identified',
+              'Belonging to an accredited university, museum, ministry, or research center',
+              'Clearly showing author credentials and full name',
+              'Providing a recent date of publication and review',
+            ],
+          },
+          correctIndex: 0,
+          explanation: {
+            pt: 'Correto! Títulos exagerados e ausência de autor são sinais claros de que a fonte não é de confiança.',
+            en: 'Correct! Exaggerated headlines and missing authors are red flags for unreliable information.',
+          },
+        },
+      ],
+    },
+    {
+      id: 'ref-como-construir-referencias',
+      themeId: 'direitos-autor',
+      number: 5,
+      title: {
+        pt: 'Como Construir as Referências Bibliográficas',
+        en: 'How to Build Bibliographic Reference Lists',
+      },
+      shortDesc: {
+        pt: 'A estrutura padrão: Autor, Título, Link e Data de Acesso.',
+        en: 'Standard format: Author, Title, Link, and Access Date.',
+      },
+      icon: '📝',
+      explanation: {
+        pt: [
+          'No final de qualquer trabalho escolar, deves incluir uma secção chamada "Referências Bibliográficas" ou "Bibliografia".',
+          'Esta secção lista todas as fontes que leste e consultaste para elaborar o teu trabalho.',
+          'Como citar uma página da Internet no 5.º ano? Usa a seguinte estrutura:',
+          '• AUTOR ou ENTIDADE: Quem escreveu (ex.: Ciência Viva, DGE, SeguraNet)',
+          '• (ANO / DATA): Ano de publicação (se existir)',
+          '• TÍTULO: Nome do artigo ou página visitada',
+          '• DISPONÍVEL EM: O endereço web (URL completo)',
+          '• CONSULTADO EM: O dia, mês e ano em que visitaste a página',
+        ],
+        en: [
+          'At the end of every school project, include a section named "Bibliographic References" or "Bibliography".',
+          'This section lists all sources read and consulted to build your project.',
+          'Standard 5th-grade citation formula: Author/Organization + (Year) + Title + Available at (URL) + Accessed on (Date).',
+        ],
+      },
+      example: {
+        title: {
+          pt: 'A referência perfeita da Sofia',
+          en: 'Sofia’s model web reference',
+        },
+        scenario: {
+          pt: 'A Sofia pesquisou sobre o clima no portal do IPMA para o trabalho de Geografia do 5.º ano.',
+          en: 'Sofia researched climate on the IPMA portal for 5th-grade Geography.',
+        },
+        tip: {
+          pt: 'Escreveu no final: "IPMA — Instituto Português do Mar e da Atmosfera. O Clima em Portugal Continental. Disponível em: https://www.ipma.pt. Consultado em 10 de fevereiro de 2026." Nota máxima dada pelo professor!',
+          en: 'She formatted: "IPMA — Portuguese Institute for Sea and Atmosphere. Climate in Mainland Portugal. Available at: https://www.ipma.pt. Accessed Feb 10, 2026." Full marks from the teacher!',
+        },
+      },
+      funFact: {
+        pt: 'Sabias que existem normas internacionais rigorosas para escrever referências (como a norma APA ou a norma portuguesa NP 405) utilizadas por cientistas e investigadores do mundo inteiro?',
+        en: 'Did you know there are strict international formatting standards (like APA or NP 405) used by scientists worldwide to maintain research rigor?',
+      },
+      thinkAboutIt: {
+        question: {
+          pt: 'Porque é que nunca deves colocar na bibliografia apenas a palavra "Google"?',
+          en: 'Why should you never write just the word "Google" in your bibliography?',
+        },
+        clue: {
+          pt: 'O Google é o motor de busca que te levou ao site, não foi quem escreveu o texto.',
+          en: 'Google is the search engine that helped you find the site, not the author of the text.',
+        },
+        reflection: {
+          pt: 'O Google é apenas a ferramenta de pesquisa, como se fosse o autocarro que te leva à biblioteca! Quem escreveu o conteúdo foi o autor ou a entidade da página visitada.',
+          en: 'Google is just the vehicle driving you to the library! The content was authored by the host organization of the visited page.',
+        },
+      },
+      quizQuestions: [
+        {
+          id: 'q-ref-2',
+          question: {
+            pt: 'Porque é fundamental indicar a "Data de Acesso" ou "Consultado em..." ao citar um site da Internet?',
+            en: 'Why is it crucial to state the "Access Date" when referencing an online article?',
+          },
+          options: {
+            pt: [
+              'Porque as páginas da Internet podem ser alteradas, atualizadas ou apagadas com o passar do tempo',
+              'Porque o computador precisa dessa data para acertar o relógio',
+              'Porque é uma regra obrigatória apenas para quem usa óculos',
+              'Não tem qualquer utilidade real',
+            ],
+            en: [
+              'Because online web pages can be modified, updated, or removed over time',
+              'Because the computer needs it to synchronize system clocks',
+              'Because it only applies to students wearing glasses',
+              'It has zero actual utility',
+            ],
+          },
+          correctIndex: 0,
+          explanation: {
+            pt: 'Excelente! A data de acesso comprova como estava a página no dia exato em que realizaste a tua pesquisa.',
+            en: 'Spot on! The access date establishes exactly what content existed on the day of research.',
+          },
+        },
+      ],
+    },
+    {
+      id: 'ref-fact-checking-fake-news',
+      themeId: 'direitos-autor',
+      number: 6,
+      title: {
+        pt: 'Combater a Desinformação e Notícias Falsas',
+        en: 'Combating Misinformation and Fake News',
+      },
+      shortDesc: {
+        pt: 'Como cruzar informação entre 3 fontes diferentes e não cair em boatos.',
+        en: 'How to cross-reference 3 different sources and stop rumors.',
+      },
+      icon: '📰',
+      explanation: {
+        pt: [
+          'A Desinformação é a partilha deliberada de mentiras ou meias-verdades para enganar, assustar ou manipular as pessoas.',
+          'Regra de Ouro da Confirmação: se leres uma notícia extraordinária ou chocante, NUNCA a partilhes de imediato!',
+          'Cruzamento de Fontes: procura a mesma notícia em pelo menos mais dois sites sérios e conhecidos (ex.: jornais de referência, canais de notícias nacionais, páginas científicas).',
+          'Se a notícia só existe naquele blogue estranho e em mais lado nenhum do mundo, é quase garantido que é FALSA.',
+          'Imagens e Vídeos Manipulados: tem cuidado com imagens geradas por IA ou vídeos tirados fora de contexto.',
+        ],
+        en: [
+          'Misinformation is the dissemination of false rumors to mislead or alarm.',
+          'Golden Rule of Verification: when encountering shocking claims, NEVER share immediately!',
+          'Source Triangulation: cross-reference the claim across at least two other reputable quality portals.',
+          'If the story appears only on that strange blog, it is almost certainly FAKE.',
+        ],
+      },
+      example: {
+        title: {
+          pt: 'O boato do fecho das escolas em Portugal',
+          en: 'The school closure rumor in Portugal',
+        },
+        scenario: {
+          pt: 'Circulou uma imagem de WhatsApp a dizer: "O Ministério da Educação cancelou as aulas durante todo o mês que vem!". Tinha erros ortográficos e letras maiúsculas gigantes.',
+          en: 'A WhatsApp screenshot circulated: "Ministry of Education cancels classes all next month!". It was full of spelling typos and capital letters.',
+        },
+        tip: {
+          pt: 'Os alunos foram ao site oficial da DGE (dge.mec.pt) e aos jornais diários: não havia nada! Era uma mentira inventada para criar confusão.',
+          en: 'Students visited the official education portal: zero announcements! It was a hoax made to cause panic.',
+        },
+      },
+      funFact: {
+        pt: 'Sabias que existem agências profissionais de checagem de factos (como o Polígrafo em Portugal) dedicadas a investigar se as notícias virais na Internet são verdadeiras ou falsas?',
+        en: 'Did you know fact-checking agencies dedicate full teams to investigating viral web claims?',
+      },
+      thinkAboutIt: {
+        question: {
+          pt: 'O que deves fazer quando recebes no telemóvel uma mensagem alarmista que diz "Partilha com todos os teus contactos antes que apaguem"?',
+          en: 'What should you do when receiving an alarmist chain message saying "Share with everyone before it gets deleted"?',
+        },
+        clue: {
+          pt: 'As mensagens em cadeia usam a urgência e o medo para enganar.',
+          en: 'Chain messages exploit panic and urgency to deceive.',
+        },
+        reflection: {
+          pt: 'PARAR e NÃO partilhar! Mensagens com pedidos de partilha em massa urgente são quase sempre esquemas, vírus ou boatos falsos.',
+          en: 'STOP and DO NOT share! Urgent mass-sharing appeals are almost always scams, malware, or hoaxes.',
+        },
+      },
+      quizQuestions: [
+        {
+          id: 'q-ref-3',
+          question: {
+            pt: 'O que significa a expressão "Cruzamento de Fontes"?',
+            en: 'What does "Triangulating / Cross-referencing Sources" mean?',
+          },
+          options: {
+            pt: [
+              'Verificar se a mesma informação é confirmada por dois ou três sites independentes e credíveis',
+              'Desenhar uma cruz com uma caneta vermelha em cima do ecrã',
+              'Copiar o texto para quatro documentos diferentes',
+              'Desligar o monitor do computador duas vezes',
+            ],
+            en: [
+              'Verifying if the same fact is confirmed by two or three independent reputable websites',
+              'Drawing a cross with a red pen on the monitor',
+              'Copying text into four distinct documents',
+              'Turning off the display twice',
+            ],
+          },
+          correctIndex: 0,
+          explanation: {
+            pt: 'Excelente! Se várias entidades sérias e independentes confirmam o mesmo facto, a informação é muito mais segura.',
+            en: 'Spot on! Independent corroboration is the golden benchmark of factual verification.',
           },
         },
       ],
@@ -340,132 +606,137 @@ export const themeDireitosAutorData: ThemeDefinition = {
   ],
   challenges: [
     {
-      id: 'jogo-copy-tf',
+      id: 'jogo-copy-match',
       themeId: 'direitos-autor',
       number: 1,
-      title: { pt: '⚡ Verdadeiro ou Falso: Direitos de Autor', en: '⚡ True or False: Copyright' },
-      shortDesc: { pt: 'Distingue regras sobre cópia de imagens e textos na web.', en: 'Distinguish rules on copying images and texts on the web.' },
-      icon: '⚡',
-      durationMinutes: 3,
-      points: 15,
-      type: 'true_false',
+      title: { pt: '🃏 Correspondência de Licenças e Termos', en: '🃏 Licenses & Terms Match' },
+      shortDesc: { pt: 'Liga cada símbolo de direitos de autor ao seu significado correto.', en: 'Match copyright symbols to their authentic meanings.' },
+      icon: '🃏',
+      durationMinutes: 4,
+      points: 20,
+      type: 'match_pairs',
       gameData: {
-        type: 'tf',
-        title: 'Verdadeiro ou Falso: Direitos de Autor',
-        icon: '⚡',
-        xp: 15,
-        desc: 'Classifica as afirmações sobre autoria, plágio e licenças Creative Commons.',
+        type: 'pairs',
+        title: 'Correspondência de Licenças e Termos',
+        icon: '🃏',
+        xp: 20,
+        desc: 'Encontra os pares correspondentes entre símbolos e regras de utilização.',
         data: {
-          items: [
-            { s: 'Tudo o que aparece no Google Imagens pode ser copiado e usado livremente em trabalhos escolares.', a: false, e: 'Incorreto! A maioria das imagens tem direitos de autor protegidos.' },
-            { s: 'O plágio consiste em apresentar o trabalho de outra pessoa como se fosse nosso.', a: true, e: 'Correto! Plágio é uma forma de roubo intelectual e é proibido.' },
-            { s: 'As licenças Creative Commons permitem partilhar obras com regras claras definidas pelo autor.', a: true, e: 'Correto! Facilitam a reutilização legal e ética de conteúdos.' }
+          pairs: [
+            { left: 'Símbolo ©', right: 'Todos os direitos reservados ao autor' },
+            { left: 'Licença CC-BY', right: 'Uso livre com atribuição do autor' },
+            { left: 'Licença CC-NC', right: 'Uso proibido para fins comerciais' },
+            { left: 'Domínio Público', right: 'Obra livre de direitos patrimoniais' }
           ]
         }
       }
     },
     {
-      id: 'jogo-copy-mc',
+      id: 'jogo-copy-true-false',
       themeId: 'direitos-autor',
       number: 2,
-      title: { pt: '🖼️ Posso usar esta imagem?', en: '🖼️ Can I Use This Image?' },
-      shortDesc: { pt: 'Identifica boas práticas ao utilizar conteúdos criados por terceiros.', en: 'Identify good practices when using content created by others.' },
-      icon: '🖼️',
-      durationMinutes: 4,
-      points: 20,
-      type: 'copy_or_create',
+      title: { pt: '⚖️ Detetive de Plágio & Respeito', en: '⚖️ Plagiarism & Respect Detective' },
+      shortDesc: { pt: 'Classifica situações escolares como Plágio ou Utilização Correta.', en: 'Classify school scenarios as Plagiarism or Proper Attribution.' },
+      icon: '⚖️',
+      durationMinutes: 5,
+      points: 25,
+      type: 'true_false',
       gameData: {
-        type: 'mc',
-        title: 'Posso usar esta imagem?',
-        icon: '🖼️',
-        xp: 20,
-        desc: 'Responde às perguntas sobre a utilização legítima de fotografias e textos.',
+        type: 'true_false',
+        title: 'Detetive de Plágio & Respeito',
+        icon: '⚖️',
+        xp: 25,
+        desc: 'Decide se a afirmação representa uma conduta correta ou uma infração de plágio.',
         data: {
           questions: [
             {
-              q: 'O que deves fazer se quiseres incluir uma fotografia fantástica encontrada num site num trabalho escolar?',
-              opts: [
-                'Pedir autorização ao autor ou usar imagens com licença Creative Commons indicando a fonte',
-                'Descarregar sem dizer nada e fingir que foste tu a tirar a foto',
-                'Apagar a imagem e não colocar ilustrações no trabalho',
-                'Mudar a cor da foto para ninguém reconhecer'
-              ],
-              c: 0,
-              e: 'Citar sempre o autor e verificar a licença garante o respeito pelos direitos de criação.'
+              statement: 'Fazer "Copiar e Colar" de um artigo da Wikipédia sem citar a fonte é plágio.',
+              isTrue: true,
+              explanation: 'Verdade! Copiar diretamente sem referenciar o autor é plágio e é incorreto.'
             },
             {
-              q: 'O que significa a sigla CC-BY numa obra?',
-              opts: [
-                'Atribuição obrigatória do autor original ao reutilizar',
-                'Proibição total de copiar',
-                'Compra garantida',
-                'Cópia clandestina'
-              ],
-              c: 0,
-              e: 'BY significa "Attribution" (Atribuição) — podes usar se indicares o nome do criador.'
+              statement: 'Ler um texto, resumi-lo por palavras próprias e indicar o autor no final é a forma correta de investigar.',
+              isTrue: true,
+              explanation: 'Verdade! Parafrasear e citar a fonte demonstra verdadeiro estudo e respeito.'
+            },
+            {
+              statement: 'Se uma imagem aparecer no motor de busca Google, significa que não tem dono e posso usá-la como quiser.',
+              isTrue: false,
+              explanation: 'Falso! As imagens continuam protegidas por direitos de autor, deves verificar a licença.'
+            },
+            {
+              statement: 'Escrever na bibliografia apenas "Fonte: Google" é uma referência completa e correta.',
+              isTrue: false,
+              explanation: 'Falso! O Google é apenas o motor de busca, deves citar a página e o autor real.'
             }
           ]
         }
       }
     },
     {
-      id: 'jogo-copy-match',
+      id: 'jogo-ref-classify',
       themeId: 'direitos-autor',
       number: 3,
-      title: { pt: '🔗 Tipo de Licença', en: '🔗 Copyright License Match' },
-      shortDesc: { pt: 'Associa cada símbolo Creative Commons à respetiva regra.', en: 'Match each Creative Commons symbol to its rule.' },
-      icon: '🔗',
-      durationMinutes: 4,
-      points: 20,
-      type: 'match_pairs',
+      title: { pt: '🛡️ Classificador de Fiabilidade de Fontes', en: '🛡️ Source Credibility Classifier' },
+      shortDesc: { pt: 'Separa sites e publicações fiáveis de fontes suspeitas.', en: 'Separate trustworthy portals from suspicious rumor sources.' },
+      icon: '🛡️',
+      durationMinutes: 5,
+      points: 25,
+      type: 'reliable_sources',
       gameData: {
-        type: 'match',
-        title: 'Tipo de Licença',
-        icon: '🔗',
-        xp: 20,
-        desc: 'Associa cada símbolo de licença à sua permissão correta.',
+        type: 'classify',
+        title: 'Classificador de Fiabilidade de Fontes',
+        icon: '🛡️',
+        xp: 25,
+        desc: 'Arrasta cada elemento para a categoria correta: Fiável ou Suspeito.',
         data: {
-          pairs: [
-            { left: 'BY (Atribuição)', right: 'Mencionar sempre o autor original' },
-            { left: 'NC (Não Comercial)', right: 'Não pode ser usada para fins lucrativos' },
-            { left: 'ND (Sem Obras Derivadas)', right: 'Não podes modificar ou alterar a obra' },
-            { left: 'SA (Partilha Igual)', right: 'Novas obras devem ter a mesma licença' }
+          categories: [
+            { id: 'confiavel', label: 'Fonte Fiável / Credível' },
+            { id: 'suspeito', label: 'Fonte Suspeita / Boato' }
+          ],
+          items: [
+            { text: 'Site oficial do Ministério da Educação (.gov.pt)', categoryId: 'confiavel' },
+            { text: 'Portal de uma universidade reconhecida (.edu / .pt)', categoryId: 'confiavel' },
+            { text: 'Blogue anónimo sem autor identificado e sem datas', categoryId: 'suspeito' },
+            { text: 'Mensagem de WhatsApp urgente a dizer "Partilha já com todos!"', categoryId: 'suspeito' },
+            { text: 'Artigo assinado por biólogo marinho do Oceanário de Lisboa', categoryId: 'confiavel' },
+            { text: 'Site cheio de anúncios a piscar e títulos em maiúsculas gigantes', categoryId: 'suspeito' }
           ]
         }
       }
     },
     {
-      id: 'jogo-copy-order',
+      id: 'jogo-ref-order',
       themeId: 'direitos-autor',
       number: 4,
-      title: { pt: '📦 Como citar corretamente', en: '📦 Proper Citation Order' },
-      shortDesc: { pt: 'Ordena os elementos de uma citação bibliográfica escolar.', en: 'Order the elements of a school bibliographic citation.' },
+      title: { pt: '📦 Passos de Verificação de Factos e Citação', en: '📦 Fact-Checking & Citing Steps Order' },
+      shortDesc: { pt: 'Ordena os passos lógicos para investigar uma notícia e citá-la no teu trabalho.', en: 'Order steps to investigate information and cite it correctly.' },
       icon: '📦',
       durationMinutes: 4,
       points: 20,
       type: 'order_sequence',
       gameData: {
         type: 'order',
-        title: 'Como citar corretamente',
+        title: 'Passos de Verificação de Factos e Citação',
         icon: '📦',
         xp: 20,
-        desc: 'Coloca os dados de uma referência bibliográfica na ordem padrão.',
+        desc: 'Coloca os passos de checagem e citação na ordem lógica ideal.',
         data: {
           items: [
-            'Nome do autor (Apelido, Nome)',
-            'Título da obra ou artigo em itálico',
-            'Data de publicação ou consulta',
-            'Endereço web (URL) ou editora'
+            'Ler a notícia ou artigo inteiro e não ficar apenas pelo título chamativo',
+            'Verificar quem é o autor, a data e se a instituição é credível',
+            'Cruzar a informação com outros sites sérios e independentes',
+            'Resumir com palavras próprias e registar a referência bibliográfica completa'
           ]
         }
       }
     },
     {
-      id: 'quiz-final-tema6',
+      id: 'quiz-final-tema7',
       themeId: 'direitos-autor',
       number: 5,
-      title: { pt: '🏆 Quiz de Aprendizagem: Direitos de Autor', en: '🏆 Learning Quiz: Copyright' },
-      shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 6.', en: 'Comprehensive final assessment on Topic 6.' },
+      title: { pt: '🏆 Quiz de Aprendizagem: Direitos de Autor e Fontes', en: '🏆 Learning Quiz: Copyright & Sources' },
+      shortDesc: { pt: 'Avaliação final abrangente sobre Direitos de Autor, Licenças e Referências.', en: 'Comprehensive final assessment on Copyright, Licenses, and Sources.' },
       icon: '🏆',
       durationMinutes: 10,
       points: 50,
@@ -476,27 +747,27 @@ export const themeDireitosAutorData: ThemeDefinition = {
     {
       id: 'copy-q1',
       question: {
-        pt: 'O que são Direitos de Autor?',
-        en: 'What is Copyright?',
+        pt: 'O que são Direitos de Autor (Copyright ©)?',
+        en: 'What is Copyright ©?',
       },
       options: {
         pt: [
-          'A proteção legal garantida a quem cria uma obra original intelectual ou artística',
-          'Um imposto especial para comprar computadores novos',
-          'A permissão para copiar qualquer livro sem autorização',
-          'Uma aplicação para editar fotografias no telemóvel',
+          'A proteção legal que garante ao criador o reconhecimento e o direito de decidir como a sua obra é usada',
+          'Uma licença para poder copiar qualquer livro sem pagar',
+          'Um vírus informático que apaga trabalhos escolares',
+          'Um tipo de letra especial para escrever títulos',
         ],
         en: [
-          'Legal protection granted to creators of original intellectual or artistic works',
-          'A special tax on computer hardware',
-          'Permission to copy any book freely without consent',
-          'A mobile photo editing application',
+          'Statutory legal protection ensuring creators recognition and rights over how works are used',
+          'A permission slip to copy books without payment',
+          'A computer virus that erases school papers',
+          'A special font designed for headings',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Os direitos de autor protegem as obras originais e garantem que o esforço do criador é reconhecido.',
-        en: 'Copyright protects creators’ intellectual and artistic creations and their right to attribution.',
+        pt: 'Os Direitos de Autor protegem as obras originais e garantem o respeito pelo esforço de quem as criou.',
+        en: 'Copyright safeguards creative endeavors and honors original author contributions.',
       },
     },
     {
@@ -604,289 +875,81 @@ export const themeDireitosAutorData: ThemeDefinition = {
       },
     },
     {
-      id: 'copy-q6',
+      id: 'ref-q1',
       question: {
-        pt: 'O que significa uma obra estar no "Domínio Público"?',
-        en: 'What does it mean for a work to be in the "Public Domain"?',
+        pt: 'Porque deves incluir uma lista de Referências Bibliográficas no final dos teus trabalhos escolares?',
+        en: 'Why should you include a list of Bibliographic References at the end of school projects?',
       },
       options: {
         pt: [
-          'Que os direitos de autor patrimoniais expiraram (ou foram cedidos) e a obra pode ser usada livremente',
-          'Que a obra foi confiscada pela polícia',
-          'Que a obra está trancada num museu subterrâneo',
-          'Que a obra só pode ser lida em jardins públicos',
+          'Para demonstrar que pesquisaste em fontes sérias, valorizar os autores e permitir ao professor verificar a informação',
+          'Para o trabalho ter mais páginas e parecer mais pesado',
+          'Porque a impressora só funciona se tiver essa folha',
+          'Para gastar mais tinta e papel',
         ],
         en: [
-          'That economic copyright has expired (or was waived) so the work is free for all to use',
-          'That the work was seized by authorities',
-          'That it is locked in an underground bunker',
-          'That it can only be read in public parks',
+          'To demonstrate research in reliable sources, credit authors, and allow teachers to verify facts',
+          'To inflate page counts and make reports heavier',
+          'Because printers refuse to print without that page',
+          'To use more paper and ink',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Obras no domínio público (como os contos de Hans Christian Andersen ou pinturas de Da Vinci) são património comum.',
-        en: 'Public domain works (e.g., Andersen’s fairy tales or Da Vinci paintings) are free cultural heritage.',
+        pt: 'A bibliografia comprova a seriedade da investigação e respeita os autores consultados.',
+        en: 'Bibliographies validate scholarly rigor and honor original sources.',
       },
     },
     {
-      id: 'copy-q7',
+      id: 'ref-q2',
       question: {
-        pt: 'Qual é a regra quando queres citar uma frase EXATA de um autor no teu trabalho escolar?',
-        en: 'What is the rule when you want to quote an author’s EXACT sentence in school work?',
+        pt: 'Escrever apenas "Fonte: Google" ou "Fonte: Internet" no final do trabalho é considerado:',
+        en: 'Writing merely "Source: Google" or "Source: Internet" at the end of a report is considered:',
       },
       options: {
         pt: [
-          'Colocar a frase entre aspas (" ") e indicar o nome do autor e o livro ou site de onde foi retirada',
-          'Escrever a frase em letras garrafais sem aspas dizendo que a inventaste',
-          'Mudar a cor da letra para vermelho sem indicar o autor',
-          'Não dizer nada a ninguém',
+          'Incorreto e insuficiente, porque o Google é apenas um motor de busca e não o autor do conteúdo',
+          'A melhor forma possível de citar',
+          'Um procedimento exemplar que merece nota 20',
+          'Obrigatório pelas regras de todas as escolas',
         ],
         en: [
-          'Enclose the quote in quotation marks (" ") and cite the author and source details',
-          'Write the sentence in all-caps pretending you created it',
-          'Change text color to red without attributing the author',
-          'Say nothing to anyone',
+          'Incorrect and insufficient, because Google is merely a search engine, not the content creator',
+          'The ideal way to cite sources',
+          'An exemplary citation worthy of top grades',
+          'Mandatory under school rules',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Usar aspas e identificar o autor é o método correto e respeitoso de fazer uma citação.',
-        en: 'Using quotation marks and attributing the source is the accepted ethical standard.',
+        pt: 'Deves citar o site e o autor da página concreta onde leste a informação, nunca o motor de busca.',
+        en: 'Always cite the specific destination page and author, not the search engine.',
       },
     },
     {
-      id: 'copy-q8',
+      id: 'ref-q3',
       question: {
-        pt: 'Se tirares uma fotografia com o teu telemóvel a uma paisagem bonita, quem é o dono dos direitos de autor dessa foto?',
-        en: 'If you snap a photo of a beautiful landscape with your phone, who owns the copyright?',
+        pt: 'Qual destas extensões de domínio de site transmite habitualmente MAIOR fiabilidade institucional em Portugal?',
+        en: 'Which website domain extension typically indicates HIGHEST institutional credibility in Portugal?',
       },
       options: {
         pt: [
-          'Tu! Tu és o autor da fotografia e os direitos pertencem-te automaticamente',
-          'A empresa que fabricou o telemóvel',
-          'O dono da montanha fotografada',
-          'O presidente da câmara municipal',
+          '.gov.pt (governo/estado) ou .edu / .pt de universidades e centros científicos',
+          '.xyz.biz',
+          '.click.free',
+          '.download-gratis.cc',
         ],
         en: [
-          'You! You took the photo and copyright belongs to you automatically',
-          'The smartphone manufacturer',
-          'The owner of the photographed mountain',
-          'The local city mayor',
+          '.gov.pt (government/state) or accredited educational institutions',
+          '.xyz.biz',
+          '.click.free',
+          '.download-gratis.cc',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Quem cria a obra é o seu autor original e titular dos direitos.',
-        en: 'The creator of an original photograph automatically holds copyright ownership.',
-      },
-    },
-    {
-      id: 'copy-q9',
-      question: {
-        pt: 'O que significa a sigla "NC" numa licença Creative Commons?',
-        en: 'What does the "NC" acronym indicate in a Creative Commons license?',
-      },
-      options: {
-        pt: [
-          'Não Comercial (Non-Commercial) — a obra não pode ser utilizada com fins lucrativos de venda',
-          'Não Copiar nunca',
-          'Novo Conteúdo escolar',
-          'Número de Contacto obrigatório',
-        ],
-        en: [
-          'Non-Commercial — the work cannot be used for commercial profit or sale',
-          'Never Copy',
-          'New Classroom Content',
-          'Necessary Contact number',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'A cláusula NC proíbe a exploração comercial da obra por terceiros.',
-        en: 'The NC clause restricts commercial exploitation of the licensed work.',
-      },
-    },
-    {
-      id: 'copy-q10',
-      question: {
-        pt: 'Copiar um trabalho feito por um colega no ano anterior e entregá-lo com o teu nome é considerado:',
-        en: 'Submitting a project made by an older peer as your own work is considered:',
-      },
-      options: {
-        pt: [
-          'Plágio e fraude académica, com direito a penalização na nota e processo disciplinar',
-          'Uma atitude muito inteligente para poupar tempo',
-          'Uma boa ideia recomendada pelos professores',
-          'Trabalho de equipa à distância',
-        ],
-        en: [
-          'Plagiarism and academic fraud, leading to grade penalties and disciplinary measures',
-          'A clever time-saving technique',
-          'A practice endorsed by teachers',
-          'Remote asynchronous teamwork',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'Entregar o trabalho de outro como se fosse teu constitui plágio e viola a integridade escolar.',
-        en: 'Submitting another’s work constitutes severe academic dishonesty.',
-      },
-    },
-    {
-      id: 'copy-q11',
-      question: {
-        pt: 'Onde podes encontrar imagens sob licenças abertas ou com autorização clara de reutilização para os teus trabalhos da escola?',
-        en: 'Where can you find images under open licenses or with clear reuse authorization for your school projects?',
-      },
-      options: {
-        pt: [
-          'Em repositórios de licenças abertas como Wikimedia Commons, verificando sempre os termos da licença',
-          'Em sites piratas cheios de vírus e pop-ups',
-          'Tirando capturas de ecrã das redes sociais de desconhecidos sem pedir autorização',
-          'Copiando qualquer imagem encontrada no Google sem verificar a licença',
-        ],
-        en: [
-          'In open-licensed repositories like Wikimedia Commons, checking the license terms',
-          'On suspicious piracy portals full of viruses',
-          'Taking screenshots of strangers’ personal social accounts without permission',
-          'Copying any image found on Google without checking its license',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'Repositórios com licenças abertas disponibilizam imagens com condições claras de reutilização. Lembra-te: estar online ou ser gratuita para ver não significa ser livre de direitos de autor!',
-        en: 'Open repositories provide images with clear reuse terms. Remember: being free to view online does not mean free of copyright!',
-      },
-    },
-    {
-      id: 'copy-q12',
-      question: {
-        pt: 'Porque é importante dar crédito aos autores quando usamos o seu trabalho?',
-        en: 'Why is it important to credit creators when using their work?',
-      },
-      options: {
-        pt: [
-          'Porque valoriza o esforço do criador, cumpre a lei e demonstra honestidade e rigor no nosso trabalho',
-          'Porque o computador bloqueia se não escreveres o nome do autor',
-          'Para o trabalho ficar com mais páginas para imprimir',
-          'Não tem qualquer importância real',
-        ],
-        en: [
-          'Because it honors creator effort, respects the law, and proves academic honesty',
-          'Because the computer crashes if author names are missing',
-          'To inflate the page count for printing',
-          'It has no genuine value',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'Dar crédito demonstra respeito ético e valoriza o trabalho intelectual de quem criou.',
-        en: 'Attribution reflects ethical digital citizenship and intellectual integrity.',
-      },
-    },
-    {
-      id: 'copy-q13',
-      question: {
-        pt: 'Se fizeres um desenho inspirado num estilo de um pintor famoso, isso é plágio?',
-        en: 'If you draw an illustration inspired by a famous painter’s style, is that plagiarism?',
-      },
-      options: {
-        pt: [
-          'Não! Inspirar-se no estilo ou na técnica é perfeitamente legítimo, desde que a obra seja criada por ti',
-          'Sim, é crime desenhar com cores parecidas',
-          'Sim, tens de pagar ao pintor antes de pegar nos lápis',
-          'Não podes fazer desenhos nenhuns',
-        ],
-        en: [
-          'No! Being inspired by an artistic style or technique is legitimate, provided your artwork is original',
-          'Yes, using similar colors is illegal',
-          'Yes, you must pay royalties before holding colored pencils',
-          'You are never allowed to make drawings',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'As ideias e estilos não são patenteados; a lei protege a expressão concreta e original da obra.',
-        en: 'Ideas, concepts, and general styles are not monopolized; copyright protects concrete original expression.',
-      },
-    },
-    {
-      id: 'copy-q14',
-      question: {
-        pt: 'O que deves colocar por baixo de uma fotografia que utilizas no teu trabalho escolar?',
-        en: 'What should you place beneath a photograph used in your school presentation?',
-      },
-      options: {
-        pt: [
-          'Uma legenda identificando o autor, o título da imagem e a fonte ou licença',
-          'Uma declaração a dizer que a fotografia foi tirada por ti',
-          'Uma piada inventada sobre a fotografia',
-          'Deixar em branco para ninguém saber de onde veio',
-        ],
-        en: [
-          'A caption identifying author, image title, and source repository or license',
-          'A false claim stating you took the picture',
-          'A joke about the picture',
-          'Leave it blank so nobody knows the origin',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'A legenda identifica a proveniência da imagem e cumpre os requisitos de atribuição.',
-        en: 'A caption provides clear attribution and documents source provenance.',
-      },
-    },
-    {
-      id: 'copy-q15',
-      question: {
-        pt: 'Fazer o download de jogos ou filmes protegidos através de sites piratas é:',
-        en: 'Downloading copyrighted games or movies from pirate sites is:',
-      },
-      options: {
-        pt: [
-          'Ilegal, viola os direitos de autor e coloca o teu computador em risco sério de vírus',
-          'Um procedimento completamente seguro e incentivado pelas autoridades',
-          'A forma correta de apoiar os criadores de jogos',
-          'Obrigatório para todos os utilizadores da Internet',
-        ],
-        en: [
-          'Illegal, violates copyright laws, and exposes your computer to serious malware',
-          'A completely safe procedure encouraged by authorities',
-          'The proper way to support video game studios',
-          'Mandatory for all internet users',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'A pirataria prejudica os autores e os ficheiros distribuídos trazem frequentemente malware prejudicial.',
-        en: 'Piracy harms content creators and frequently distributes malicious trojans and ransomware.',
-      },
-    },
-    {
-      id: 'copy-q16',
-      question: {
-        pt: 'Qual é o lema do bom cidadão digital em relação aos Direitos de Autor?',
-        en: 'What is the motto of a good digital citizen regarding Copyright?',
-      },
-      options: {
-        pt: [
-          'Respeitar os criadores, usar recursos livres legalmente, parafrasear e citar sempre as fontes!',
-          'Copiar tudo o que encontrar e assinar com o meu nome',
-          'Apagar todos os créditos dos autores originais',
-          'Nunca ler nenhum livro',
-        ],
-        en: [
-          'Respect creators, use open resources legally, paraphrase, and always credit sources!',
-          'Copy everything encountered and sign my own name',
-          'Erase author credits everywhere',
-          'Never read any book',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'Respeito, uso legal de licenças e citação de fontes são os pilares da cidadania digital.',
-        en: 'Respect, lawful reuse, and proper citation are the cornerstones of digital citizenship.',
+        pt: 'Domínios .gov e universitários são regulados e pertencem a entidades públicas e de investigação.',
+        en: '.gov and educational domains are regulated and belong to accredited public institutions.',
       },
     },
   ],
