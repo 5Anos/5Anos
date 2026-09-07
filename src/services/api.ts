@@ -78,26 +78,22 @@ function getStoredUsers(): any[] {
     }
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed)) {
-      // Purge any passwords, legacy demo accounts and ensure admin/teacher accounts never hold a student turma
+      // Purge any passwords, legacy demo accounts and ensure admin/teacher accounts never appear in stored students
       let hasChanges = false;
       const cleaned = parsed
         .filter(
           (u: any) =>
             !u?.id?.startsWith('demo-') &&
             u?.email !== 'joao.silva@escola.pt' &&
-            u?.email !== 'leonor.martins@escola.pt'
+            u?.email !== 'leonor.martins@escola.pt' &&
+            !isUserAdmin(u?.email, u?.role) &&
+            u?.role !== 'admin' &&
+            u?.role !== 'teacher'
         )
         .map((u: any) => {
           if ('password' in u) {
             delete u.password;
             hasChanges = true;
-          }
-          if (isUserAdmin(u?.email, u?.role)) {
-            if (u.turma) {
-              delete u.turma;
-              u.role = 'admin';
-              hasChanges = true;
-            }
           }
           return u;
         });
@@ -938,41 +934,88 @@ export const api = {
 
   /**
    * Get Class/Turma Rankings with Gamification metrics
+   * Authoritative source is Cloud Firestore 'users' collection.
+   * Admins and Teachers are 100% strictly excluded from class student rosters.
+   * Any orphaned documents in publicProfiles or stale localStorage cache are purged.
    */
   async getTurmaRankings(): Promise<TurmaRanking[]> {
     const defaultTurmas = getTurmasList();
-    const storedUsers = getStoredUsers();
-    
-    const userMap = new Map<string, any>();
-    storedUsers.forEach((u: any) => userMap.set(u.id, u));
+    const studentMap = new Map<string, { id: string; publicId: string; turma: string; points: number }>();
+    const validStudentDocIds = new Set<string>();
+    let firestoreConnected = false;
 
-    // Try fetching latest public profiles from Firestore if available
     try {
-      const q = query(collection(db, 'publicProfiles'), orderBy('points', 'desc'), limit(300));
+      const q = query(collection(db, 'users'), limit(500));
       const snap = await getDocs(q);
+      firestoreConnected = true;
+
       snap.forEach((docSnap) => {
         const d = docSnap.data();
-        if (d.id) {
-          const existing = userMap.get(d.id) || {};
-          userMap.set(d.id, {
-            ...existing,
-            id: d.id,
-            publicId: d.publicId || existing.publicId || 'Estudante_TIC',
-            turma: d.turma || existing.turma || '5.º A',
-            points: d.points ?? existing.points ?? 0,
+        const emailNorm = String(d.email || d['email '] || '').toLowerCase().trim();
+        const isAdmin = isUserAdmin(emailNorm, d.role);
+
+        if (isAdmin) {
+          // If teacher doc has an accidental turma or doc in publicProfiles, clean it up
+          if (d.turma) {
+            updateDoc(doc(db, 'users', docSnap.id), { turma: null, role: 'admin' }).catch(() => {});
+          }
+          deleteDoc(doc(db, 'publicProfiles', docSnap.id)).catch(() => {});
+          return;
+        }
+
+        const studentTurma = (d.turma ? String(d.turma).trim() : '');
+        if (studentTurma) {
+          validStudentDocIds.add(docSnap.id);
+          studentMap.set(docSnap.id, {
+            id: docSnap.id,
+            publicId: d.publicId || 'Estudante_TIC',
+            turma: studentTurma,
+            points: typeof d.points === 'number' ? d.points : (Number(d.points) || 0),
           });
         }
       });
-    } catch {
-      // offline or rule error, use local map
+
+      // Cleanup orphan documents in publicProfiles that are not in valid students
+      try {
+        const pubSnap = await getDocs(query(collection(db, 'publicProfiles'), limit(300)));
+        pubSnap.forEach((pubDoc) => {
+          if (!validStudentDocIds.has(pubDoc.id)) {
+            deleteDoc(doc(db, 'publicProfiles', pubDoc.id)).catch(() => {});
+          }
+        });
+      } catch {
+        // ignore
+      }
+
+      // Purge any students from localStorage that were deleted in Firestore
+      const local = getStoredUsers();
+      const cleanedLocal = local.filter((u: any) => validStudentDocIds.has(u.id));
+      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(cleanedLocal));
+    } catch (err) {
+      console.warn('Firestore offline fallback in getTurmaRankings:', err);
     }
 
-    const allUsers = Array.from(userMap.values());
+    // Only if Firestore was completely offline/unreachable, fallback to local users
+    if (!firestoreConnected) {
+      const storedUsers = getStoredUsers();
+      storedUsers.forEach((u: any) => {
+        if (!isUserAdmin(u.email, u.role) && u.role !== 'admin' && u.role !== 'teacher' && u.turma) {
+          studentMap.set(u.id, {
+            id: u.id,
+            publicId: u.publicId || 'Estudante_TIC',
+            turma: String(u.turma).trim(),
+            points: typeof u.points === 'number' ? u.points : 0,
+          });
+        }
+      });
+    }
 
-    // Gather unique turmas (combining default turmas and any registered student turmas)
+    const allStudents = Array.from(studentMap.values());
+
+    // Gather unique turmas
     const turmaSet = new Set<string>(defaultTurmas);
-    allUsers.forEach((u) => {
-      if (u.turma && typeof u.turma === 'string') {
+    allStudents.forEach((u) => {
+      if (u.turma) {
         turmaSet.add(u.turma.trim());
       }
     });
@@ -980,14 +1023,13 @@ export const api = {
     const allTurmaNames = Array.from(turmaSet);
 
     const result: TurmaRanking[] = allTurmaNames.map((turmaName) => {
-      const turmaStudents = allUsers.filter(
-        (u) => (u.turma || '5.º A').toLowerCase().trim() === turmaName.toLowerCase().trim()
+      const turmaStudents = allStudents.filter(
+        (u) => u.turma.toLowerCase().trim() === turmaName.toLowerCase().trim()
       );
       const totalPoints = turmaStudents.reduce((sum, u) => sum + (u.points || 0), 0);
       const studentCount = turmaStudents.length;
       const avgPoints = studentCount > 0 ? Math.round(totalPoints / studentCount) : 0;
 
-      // Sort all students in this turma by points descending
       const allStudentsInTurma = [...turmaStudents]
         .sort((a, b) => (b.points || 0) - (a.points || 0))
         .map((s) => ({
@@ -1008,7 +1050,16 @@ export const api = {
         avgPoints,
         studentCount,
         completedActivities: Math.round(totalPoints / 15),
-        topBadge: avgPoints >= 100 ? '🥇 Turma Ouro' : avgPoints >= 50 ? '🥈 Turma Prata' : avgPoints > 0 ? '🥉 Turma Bronze' : '⭐ Estreante',
+        topBadge:
+          studentCount === 0
+            ? '⭐ Sem Alunos'
+            : avgPoints >= 100
+            ? '🥇 Turma Ouro'
+            : avgPoints >= 50
+            ? '🥈 Turma Prata'
+            : avgPoints > 0
+            ? '🥉 Turma Bronze'
+            : '⭐ Estreante',
         topStudents,
         allStudents: allStudentsInTurma,
       };
@@ -1021,34 +1072,54 @@ export const api = {
 
   /**
    * Get Individual Student Rankings (using safe public Nicknames)
+   * Excludes all Admin / Teacher accounts.
    */
   async getStudentRankings(currentUserId?: string): Promise<StudentRanking[]> {
-    const storedUsers = getStoredUsers();
-    const userMap = new Map<string, any>();
-    storedUsers.forEach((u: any) => userMap.set(u.id, u));
+    const studentMap = new Map<string, any>();
+    let firestoreConnected = false;
 
     try {
-      const q = query(collection(db, 'publicProfiles'), orderBy('points', 'desc'), limit(300));
+      const q = query(collection(db, 'users'), limit(500));
       const snap = await getDocs(q);
+      firestoreConnected = true;
+
       snap.forEach((docSnap) => {
         const d = docSnap.data();
-        if (d.id) {
-          const existing = userMap.get(d.id) || {};
-          userMap.set(d.id, {
-            ...existing,
-            id: d.id,
-            publicId: d.publicId || existing.publicId || 'Estudante_TIC',
-            turma: d.turma || existing.turma || '5.º A',
-            points: d.points ?? existing.points ?? 0,
+        const emailNorm = String(d.email || d['email '] || '').toLowerCase().trim();
+        const isAdmin = isUserAdmin(emailNorm, d.role);
+        if (isAdmin) return;
+
+        studentMap.set(docSnap.id, {
+          id: docSnap.id,
+          publicId: d.publicId || 'Estudante_TIC',
+          turma: d.turma ? String(d.turma).trim() : '5.º A',
+          points: typeof d.points === 'number' ? d.points : (Number(d.points) || 0),
+          email: emailNorm,
+          role: 'student',
+        });
+      });
+    } catch {
+      // offline fallback
+    }
+
+    if (!firestoreConnected) {
+      const storedUsers = getStoredUsers();
+      storedUsers.forEach((u: any) => {
+        if (!isUserAdmin(u.email, u.role) && u.role !== 'admin' && u.role !== 'teacher') {
+          studentMap.set(u.id, {
+            id: u.id,
+            publicId: u.publicId || 'Estudante_TIC',
+            turma: u.turma || '5.º A',
+            points: u.points || 0,
+            email: (u.email || '').toLowerCase().trim(),
+            role: 'student',
           });
         }
       });
-    } catch {
-      // quiet fallback
     }
 
-    const sortedUsers = Array.from(userMap.values())
-      .filter((u) => !isUserAdmin(u.email, u.role) && u.role !== 'admin')
+    const sortedUsers = Array.from(studentMap.values())
+      .filter((u) => !isUserAdmin(u.email, u.role) && u.role !== 'admin' && u.role !== 'teacher')
       .sort((a, b) => (b.points || 0) - (a.points || 0));
 
     return sortedUsers.map((u, index) => ({
@@ -1064,17 +1135,22 @@ export const api = {
   },
 
   /**
-   * Fetch all registered students from Cloud Firestore and local storage
+   * Fetch all registered students from Cloud Firestore
    * For the Administrator / Teacher reserved area with real names, emails, and points.
    * NOTE: Administrators / Teachers are excluded from student rosters.
+   * When Firestore is online, deleted students are NEVER re-added from localStorage.
    */
   async getAllStudentsForAdmin(): Promise<User[]> {
     const studentMap = new Map<string, User>();
+    let firestoreConnected = false;
+    const validStudentEmails = new Set<string>();
 
     // 1. Fetch from Firestore users collection
     try {
       const q = query(collection(db, 'users'), limit(500));
       const snap = await getDocs(q);
+      firestoreConnected = true;
+
       snap.forEach((docSnap) => {
         const data = docSnap.data();
         const rawEmail = data.email || data['email '] || '';
@@ -1082,12 +1158,14 @@ export const api = {
         if (emailNorm) {
           const isAdmin = isUserAdmin(emailNorm, data.role);
           if (isAdmin) {
-            // If admin has legacy turma in Firestore, clean it up silently
+            // Clean up admin legacy fields if present
             if (data.turma) {
-              setDoc(doc(db, 'users', docSnap.id), { turma: null }, { merge: true }).catch(() => {});
+              updateDoc(doc(db, 'users', docSnap.id), { turma: null, role: 'admin' }).catch(() => {});
             }
+            deleteDoc(doc(db, 'publicProfiles', docSnap.id)).catch(() => {});
             return; // Admins are not students
           }
+          validStudentEmails.add(emailNorm);
           const u: User = {
             id: docSnap.id,
             name: data.name || 'Estudante',
@@ -1103,21 +1181,26 @@ export const api = {
           studentMap.set(emailNorm, u);
         }
       });
+
+      // Synchronize local storage: remove any deleted students
+      const local = getStoredUsers();
+      const filteredLocal = local.filter((u: any) => {
+        const norm = String(u.email || '').toLowerCase().trim();
+        return validStudentEmails.has(norm);
+      });
+      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(filteredLocal));
     } catch (err) {
       console.warn('Could not query users collection for admin:', err);
     }
 
-    // 2. Fetch from local storage and merge (preserving newest/highest score)
-    const localUsers = getStoredUsers();
-    localUsers.forEach((data: any) => {
-      if (data.email) {
-        const emailNorm = String(data.email).toLowerCase().trim();
-        const isAdmin = isUserAdmin(emailNorm, data.role);
-        if (isAdmin) {
-          return; // Admins are not students
-        }
-        const existing = studentMap.get(emailNorm);
-        if (!existing) {
+    // 2. Only if Firestore is completely offline/unreachable, fallback to local storage
+    if (!firestoreConnected) {
+      const localUsers = getStoredUsers();
+      localUsers.forEach((data: any) => {
+        if (data.email) {
+          const emailNorm = String(data.email).toLowerCase().trim();
+          const isAdmin = isUserAdmin(emailNorm, data.role);
+          if (isAdmin) return;
           studentMap.set(emailNorm, {
             id: data.id || `local-${emailNorm}`,
             name: data.name || 'Estudante',
@@ -1130,11 +1213,9 @@ export const api = {
             createdAt: data.createdAt || new Date().toISOString(),
             lastActivity: data.lastActivity,
           });
-        } else if (typeof data.points === 'number' && data.points > (existing.points || 0)) {
-          existing.points = data.points;
         }
-      }
-    });
+      });
+    }
 
     return Array.from(studentMap.values()).sort((a, b) => {
       const turmaA = a.turma || '5.º A';
