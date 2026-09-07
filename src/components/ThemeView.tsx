@@ -7,6 +7,11 @@ import { getThemeImage, getThemeStepImage, getChallengeImage } from '../data/the
 import { SitPostureInfographicPT } from './SitPostureInfographicPT';
 import { DosDontsPostureInfographicPT } from './DosDontsPostureInfographicPT';
 import { PhishingMessageSimulator } from './PhishingMessageSimulator';
+import { PasswordStrengthTester } from './PasswordStrengthTester';
+import { EmailComposerSimulator } from './EmailComposerSimulator';
+import { WebSearchReliabilitySimulator } from './WebSearchReliabilitySimulator';
+import { ErgonomicsBreakTimer } from './ErgonomicsBreakTimer';
+import { DigitalFootprintSimulator } from './DigitalFootprintSimulator';
 
 interface ThemeViewProps {
   theme: ThemeDefinition;
@@ -255,6 +260,16 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                     <div className="lg:col-span-5 flex flex-col items-center">
                       {theme.id === 'seguranca' && currentStepIndex === 3 ? (
                         <PhishingMessageSimulator />
+                      ) : (theme.id === 'seguranca' || theme.id === 'seguranca-digital') && currentStepIndex === 4 ? (
+                        <DigitalFootprintSimulator />
+                      ) : theme.id === 'palavras-passe' && currentStepIndex === 1 ? (
+                        <PasswordStrengthTester />
+                      ) : theme.id === 'correio-eletronico' && (currentStepIndex === 2 || currentStepIndex === 4) ? (
+                        <EmailComposerSimulator />
+                      ) : (theme.id === 'navegar-internet' || theme.id === 'pesquisa-informacao') && (currentStepIndex === 1 || currentStepIndex === 3) ? (
+                        <WebSearchReliabilitySimulator />
+                      ) : theme.id === 'ergonomia' && currentStepIndex === 3 ? (
+                        <ErgonomicsBreakTimer />
                       ) : (
                         <div className="w-full rounded-2xl overflow-hidden border-2 border-indigo-100 shadow-md bg-slate-50 relative group">
                           <img
