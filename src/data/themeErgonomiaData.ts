@@ -39,7 +39,7 @@ export const themeErgonomiaData: ThemeDefinition = {
       icon: '🧍',
     },
     {
-      eyebrow: { pt: 'Sabias que...?', en: 'Did you know...?' },
+      eyebrow: { pt: 'Iluminação', en: 'Lighting' },
       h: { pt: 'A iluminação também conta', en: 'Lighting matters too' },
       body: {
         pt: 'Uma sala com boa iluminação, sem reflexos fortes no ecrã, ajuda a proteger os olhos e evita dores de cabeça. Evita trabalhar num quarto totalmente escuro apenas com a luz do ecrã.',
@@ -48,7 +48,7 @@ export const themeErgonomiaData: ThemeDefinition = {
       icon: '💡',
     },
     {
-      eyebrow: { pt: 'Vamos pensar', en: "Let's think" },
+      eyebrow: { pt: 'As Pausas', en: 'The Breaks' },
       h: { pt: 'A importância das pausas', en: 'The importance of breaks' },
       body: {
         pt: 'Ficar sentado e imóvel durante muito tempo não é saudável. A cada 30 a 40 minutos, é recomendável levantar, esticar as pernas e os braços e descansar os olhos, olhando para longe durante alguns segundos.',

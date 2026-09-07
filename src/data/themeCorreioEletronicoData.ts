@@ -39,7 +39,7 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       icon: '📥',
     },
     {
-      eyebrow: { pt: 'Exemplo', en: 'Example' },
+      eyebrow: { pt: 'Regras', en: 'Rules' },
       h: { pt: 'As partes de uma mensagem', en: 'Parts of an email message' },
       body: {
         pt: 'Uma mensagem de email bem escrita tem:<ul><li>O <strong>destinatário</strong> (para quem escreves)</li><li>O <strong>assunto</strong> (o tema resumido)</li><li>Uma <strong>saudação</strong> educada (ex.: <em>Caro Professor...</em>)</li><li>O <strong>corpo da mensagem</strong> (o conteúdo claro e objetivo)</li><li>Uma <strong>despedida</strong> (ex.: <em>Com os melhores cumprimentos...</em>)</li><li>A tua <strong>assinatura</strong> (nome e turma).</li></ul>',
@@ -57,7 +57,7 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       icon: '⚠️',
     },
     {
-      eyebrow: { pt: 'Vamos pensar', en: "Let's think" },
+      eyebrow: { pt: 'As Pausas', en: 'The Breaks' },
       h: { pt: 'Escrever com respeito', en: 'Writing with respect and clarity' },
       body: {
         pt: 'Ao escreveres um email — a um professor, colega ou familiar — usa linguagem clara, educada e evita mensagens ofensivas.<br><br>Evita escrever com TODAS AS LETRAS MAIÚSCULAS (na Internet, equivale a gritar!) e relê sempre a mensagem antes de clicar em "Enviar". Um bom email transmite respeito por quem o vai ler.',

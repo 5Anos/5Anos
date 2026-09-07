@@ -30,7 +30,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
       icon: '🔐',
     },
     {
-      eyebrow: { pt: 'Atenção!', en: 'Attention!' },
+      eyebrow: { pt: 'Regras', en: 'Rules' },
       h: { pt: 'Características de uma palavra-passe segura', en: 'Traits of a strong password' },
       body: {
         pt: 'Uma boa palavra-passe deve ser longa e difícil de adivinhar:<ul><li>Ter um bom comprimento (pelo menos 10 a 12 caracteres).</li><li>Pode misturar letras maiúsculas, minúsculas, números e símbolos, ou formar uma frase difícil de adivinhar.</li><li>Não conter o teu nome, data de nascimento ou dados pessoais óbvios.</li><li>Não ser uma sequência simples, como "123456" ou "abcdef".</li><li>Ser diferente para cada conta que uses.</li></ul>',
@@ -40,28 +40,19 @@ export const themePalavrasPasseData: ThemeDefinition = {
     },
     {
       eyebrow: { pt: 'Sabias que...?', en: 'Did you know...?' },
-      h: { pt: 'Usar dados pessoais é arriscado', en: 'Using personal data is risky' },
+      h: { pt: 'Cuidados essenciais com as palavras-passe', en: 'Essential password care' },
       body: {
-        pt: 'Palavras-passe como o teu nome, a tua data de nascimento ou o nome do teu animal de estimação são fáceis de descobrir para quem te conhece um pouco — por isso são consideradas fracas, mesmo que pareçam difíceis de adivinhar.',
-        en: 'Passcodes featuring your first name, birthday, or pet’s name are remarkably easy for acquaintances to guess. Consequently, cybersecurity experts classify them as weak, no matter how clever they seem.',
+        pt: '<strong>Não partilhes as tuas palavras-passe:</strong> Não partilhes as tuas palavras-passe com amigos ou colegas. Se precisares de ajuda com uma conta ou se te esqueceres do acesso, fala com os teus pais ou com o teu professor.<br><br><strong>Uma conta, uma palavra-passe:</strong> Se usares a mesma palavra-passe em todas as contas e alguém a descobrir num sítio menos seguro, pode aceder a todas as tuas contas. Por isso, o ideal é ter palavras-passe diferentes para cada serviço.',
+        en: '<strong>Do not share your passwords:</strong> Do not share your passwords with friends or classmates. If you need help with an account or forget your access, speak with your parents or your teacher.<br><br><strong>One account, one password:</strong> If you use the same password across all accounts and someone discovers it in a less secure place, they can access all your accounts. Therefore, it is best to have different passwords for each service.',
       },
       icon: '⚠️',
     },
     {
-      eyebrow: { pt: 'Vamos pensar', en: "Let's think" },
-      h: { pt: 'Não partilhes as tuas palavras-passe', en: 'Do not share your passwords' },
+      eyebrow: { pt: 'Truques', en: 'Tricks & Tips' },
+      h: { pt: 'Truques para criar palavras-passe seguras', en: 'Tricks to create strong passwords' },
       body: {
-        pt: 'Não partilhes as tuas palavras-passe com amigos ou colegas. Se precisares de ajuda com uma conta ou se te esqueceres do acesso, fala com os teus pais ou com o teu professor.',
-        en: 'Do not share your passwords with classmates or friends. If you need help with an account or forget your access, speak with a responsible adult or your teacher.',
-      },
-      icon: '🤫',
-    },
-    {
-      eyebrow: { pt: 'Exemplo', en: 'Example' },
-      h: { pt: 'Uma conta, uma palavra-passe', en: 'One account, one unique key' },
-      body: {
-        pt: 'Se usares a mesma palavra-passe em todas as contas e alguém a descobrir num sítio menos seguro, pode aceder a todas as tuas contas. Por isso, o ideal é ter palavras-passe diferentes para cada serviço.',
-        en: 'If you reuse the same password everywhere and one service gets compromised, attackers gain instant access to all your accounts. Using unique passcodes safeguards the rest of your digital presence.',
+        pt: 'Usa a técnica das <strong>frases-chave</strong> ou combina uma palavra favorita com números e símbolos (@, _, !, #).<br><br>Por exemplo: juntar <em>"Robotica"</em> + <em>"@"</em> + <em>"_"</em> + <em>"2026"</em> cria uma palavra-passe poderosa e fácil de memorizar: <strong>Robotica@_2026</strong>!<br><br>Nunca anotes as palavras-passe num papel colado ao monitor do computador.',
+        en: 'Use the <strong>passphrase</strong> method or combine a favorite word with numbers and symbols (@, _, !, #).<br><br>For instance: combining <em>"Robotics"</em> + <em>"@"</em> + <em>"_"</em> + <em>"2026"</em> builds a powerful yet memorable key: <strong>Robotics@_2026</strong>!<br><br>Never leave your passwords written on sticky notes stuck to your monitor.',
       },
       icon: '🔑',
     },

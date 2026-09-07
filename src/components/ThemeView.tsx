@@ -262,7 +262,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                         <PhishingMessageSimulator />
                       ) : (theme.id === 'seguranca' || theme.id === 'seguranca-digital') && currentStepIndex === 4 ? (
                         <DigitalFootprintSimulator />
-                      ) : theme.id === 'palavras-passe' && currentStepIndex === 1 ? (
+                      ) : theme.id === 'palavras-passe' && (currentStepIndex === 1 || currentStepIndex === 3) ? (
                         <PasswordStrengthTester />
                       ) : theme.id === 'correio-eletronico' && (currentStepIndex === 2 || currentStepIndex === 4) ? (
                         <EmailComposerSimulator />
