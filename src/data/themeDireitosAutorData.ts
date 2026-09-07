@@ -21,7 +21,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
   badgeCount: 3,
   lessons: [
     {
-      eyebrow: { pt: 'A Tua Ideia Tem Valor', en: 'Your Ideas Matter' },
+      eyebrow: { pt: 'Vamos Descobrir', en: "Let's Discover" },
       h: { pt: 'O que são Direitos de Autor?', en: 'What are Copyrights?' },
       body: {
         pt: 'Já imaginaste se passasses horas a fazer um desenho incrível de artes, a escrever uma história divertida ou a criar um nível novo num jogo... e outro colega apagasse o teu nome e dissesse que foi ele que fez tudo?<br><br>Não seria nada justo! É exatamente para evitar isso que existem os <strong>Direitos de Autor</strong>.<br><br>Em Portugal, a lei e a <strong>Constituição da República Portuguesa (artigo 42.º)</strong> protegem quem cria obras originais através do <strong>Código do Direito de Autor (CDADC)</strong>. O símbolo <strong>©</strong> (Copyright) avisa que a criação tem dono e que todos os direitos estão reservados!',
@@ -30,13 +30,13 @@ export const themeDireitosAutorData: ThemeDefinition = {
       icon: '📜',
     },
     {
-      eyebrow: { pt: 'Etiquetas na Internet', en: 'Internet Badges' },
+      eyebrow: { pt: 'Imagens', en: 'Images' },
       h: { pt: 'Copyright, Copyleft e Royalty Free', en: 'Copyright, Copyleft & Royalty Free' },
       body: {
         pt: 'Quando estás a pesquisar na Internet para um trabalho da escola, repara na classificação dos conteúdos:<ul><li><strong>Copyright © (Todos os direitos reservados):</strong> É como uma porta fechada à chave! Não podes copiar nem utilizar sem pedires autorização prévia ao autor.</li><li><strong>Copyleft:</strong> É como uma porta aberta à partilha! Podes usar e partilhar a obra à vontade, desde que não seja para fins comerciais (não podes vender).</li><li><strong>Royalty Free:</strong> Obras que podes usar livremente depois de adquirir uma licença prévia.</li></ul>',
         en: 'When researching online for school projects, look at content licenses:<ul><li><strong>Copyright ©:</strong> All rights reserved. Needs prior permission.</li><li><strong>Copyleft:</strong> Free to use and share, strictly non-commercial.</li><li><strong>Royalty Free:</strong> Usable after getting a prior license.</li></ul>',
       },
-      icon: '🏷️',
+      icon: '🖼️',
     },
     {
       eyebrow: { pt: 'Sê Original!', en: 'Be Original!' },
@@ -57,10 +57,10 @@ export const themeDireitosAutorData: ThemeDefinition = {
       icon: '✍️',
     },
     {
-      eyebrow: { pt: 'Norma APA (7.ª Edição)', en: 'APA 7th Edition' },
-      h: { pt: 'Como Construir Referências Bibliográficas (Sem "Consultado em")', en: 'How to Build References (Without "Accessed on")' },
+      eyebrow: { pt: 'Norma APA (7º ed)', en: 'APA (7th ed)' },
+      h: { pt: 'Como Construir Referências Bibliográficas', en: 'How to Build Bibliographical References' },
       body: {
-        pt: 'No final do teu trabalho escolar, deves colocar uma lista com as <strong>Referências Bibliográficas</strong> por ordem alfabética do apelido do autor.<br><br><div class="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200 text-xs sm:text-sm font-sans space-y-2.5 text-slate-800 shadow-2xs"><div><strong class="text-indigo-900">🌐 Exemplo de Notícia / Página Web (Norma APA 7.ª ed.):</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Soares, Rosa. (2021, dezembro 6). Portugal volta a ter duas escolas no top 30 europeu do Financial Times. <em>Público</em>. https://www.publico.pt/2021/12/06/economia/noticia/portugal-volta-duas-escolas-negocios-top-30-europeu-financial-times-1987488</div><div><strong class="text-indigo-900">📖 Exemplo de Livro:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900">Ribeiro, N. (2007). <em>Multimédia e Tecnologias Interactivas</em> (4.ª ed.). FCA - Editora de Informática. <span class="text-slate-500 font-sans">(A edição só se indica a partir da 2.ª edição).</span></div><div><strong class="text-indigo-900">🖼️ Exemplo de Imagem ou Fotografia:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Coelho, J. (2021). <em>Gerações</em> [Fotografia]. Olhares. https://olhares.com/geracoes-foto10344803.html</div><div><strong class="text-indigo-900">🎥 Exemplo de Vídeo Educativo:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Aceleração Digital com Fernando Tannure. (2017, abril 14). <em>Primeiros Passos Canva | Tutorial Canva em Português #01</em> [Vídeo]. YouTube. https://www.youtube.com/watch?v=3LVBzoaM2f8</div></div><p class="pt-2 text-xs font-bold text-amber-900">👇 Experimenta agora mesmo construir e testar referências no nosso <strong>Simulador Interativo APA 7</strong> logo abaixo!</p>',
+        pt: 'No final do teu trabalho escolar, deves colocar uma lista com as <strong>Referências Bibliográficas</strong> por ordem alfabética do apelido do autor.<br><br><div class="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200 text-xs sm:text-sm font-sans space-y-2.5 text-slate-800 shadow-2xs"><div><strong class="text-indigo-900">🌐 Exemplo de Notícia / Página Web (Norma APA 7.ª ed.):</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Soares, R. (2021, dezembro 6). Portugal volta a ter duas escolas no top 30 europeu do Financial Times. <em>Público</em>. https://www.publico.pt/2021/12/06/economia/noticia/portugal-volta-duas-escolas-negocios-top-30-europeu-financial-times-1987488</div><div><strong class="text-indigo-900">📖 Exemplo de Livro:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900">Ribeiro, N. (2007). <em>Multimédia e Tecnologias Interactivas</em> (4.ª ed.). FCA - Editora de Informática. <span class="text-slate-500 font-sans">(A edição só se indica a partir da 2.ª edição).</span></div><div><strong class="text-indigo-900">🖼️ Exemplo de Imagem ou Fotografia:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Coelho, J. (2021). <em>Gerações</em> [Fotografia]. Olhares. https://olhares.com/geracoes-foto10344803.html</div><div><strong class="text-indigo-900">🎥 Exemplo de Vídeo Educativo:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Aceleração Digital com Fernando Tannure. (2017, abril 14). <em>Primeiros Passos Canva | Tutorial Canva em Português #01</em> [Vídeo]. YouTube. https://www.youtube.com/watch?v=3LVBzoaM2f8</div></div><p class="pt-2 text-xs font-bold text-amber-900">👇 Experimenta agora mesmo construir e testar referências no nosso <strong>Simulador Interativo APA 7</strong> logo abaixo!</p>',
         en: 'References list sources alphabetically at the end. Try building citations in the simulator below!',
       },
       icon: '📚',
@@ -346,7 +346,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
           'A lista de referências bibliográficas fornece a informação completa sobre as obras consultadas no final do documento.',
           'Organiza-se por ordem alfabética do apelido do primeiro autor. A primeira linha alinha à esquerda e as restantes iniciam-se com avanço à direita.',
           'Livro: Ribeiro, N. (2007). Multimédia e Tecnologias Interactivas. (4.ª ed.). Lisboa: FCA - Editora de Informática. (A edição só se indica a partir da 2.ª edição).',
-          'Página Web (Norma APA 7.ª ed.): Soares, Rosa. (2021, dezembro 6). Portugal volta a ter duas escolas no top 30 europeu do Financial Times. Público. https://www.publico.pt/2021/12/06/economia/noticia/portugal-volta-duas-escolas-negocios-top-30-europeu-financial-times-1987488 (ATENÇÃO: Não se escreve "Consultado em...").',
+          'Página Web (Norma APA 7.ª ed.): Soares, R. (2021, dezembro 6). Portugal volta a ter duas escolas no top 30 europeu do Financial Times. Público. https://www.publico.pt/2021/12/06/economia/noticia/portugal-volta-duas-escolas-negocios-top-30-europeu-financial-times-1987488 (ATENÇÃO: Não se escreve "Consultado em...").',
           'Notas especiais: Sem autor (o título passa para primeiro); Sem data (n.d.); Mais de um autor (usam-se vírgulas e "&" antes do último).',
         ],
         en: [
@@ -535,7 +535,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
         desc: 'Organiza os elementos na sequência correta da norma APA.',
         data: {
           items: [
-            'Apelido e iniciais do autor (ex.: Soares, Rosa.)',
+            'Apelido e iniciais do autor (ex.: Soares, R.)',
             'Data de publicação entre parênteses (ex.: 2021, dezembro 6).',
             'Título do artigo ou página web em letras normais',
             'Nome do jornal ou site em itálico (ex.: Público.)',

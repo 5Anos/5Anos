@@ -32,7 +32,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
 
   // Form Fields
   const [authorLastName, setAuthorLastName] = useState('Soares');
-  const [authorFirstName, setAuthorFirstName] = useState('Rosa');
+  const [authorFirstName, setAuthorFirstName] = useState('R.');
   const [isOrganization, setIsOrganization] = useState(false);
   const [orgName, setOrgName] = useState('');
 
@@ -62,9 +62,9 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
     setCopied(false);
 
     if (type === 'website') {
-      // Exemplo real do utilizador: Rosa Soares no jornal Público
+      // Exemplo real: Soares, R. no jornal Público
       setAuthorLastName('Soares');
-      setAuthorFirstName('Rosa');
+      setAuthorFirstName('R.');
       setYear('2021');
       setMonthDay('dezembro 6');
       setTitle('Portugal volta a ter duas escolas no top 30 europeu do Financial Times');
@@ -114,7 +114,8 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
     const last = authorLastName.trim();
     const first = authorFirstName.trim();
     if (last && first) {
-      return `${last}, ${first}.`;
+      const formattedFirst = first.endsWith('.') ? first : `${first}.`;
+      return `${last}, ${formattedFirst}`;
     }
     if (last) return `${last}.`;
     if (first) return `${first}.`;
@@ -377,13 +378,13 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
                 </div>
                 <div className="sm:col-span-6">
                   <label className="block text-[11px] font-bold text-slate-600 mb-1">
-                    Nome Próprio ou Inicial (Ex: Rosa, N.)
+                    Inicial do Autor (Ex: R., N.)
                   </label>
                   <input
                     type="text"
                     value={authorFirstName}
                     onChange={(e) => setAuthorFirstName(e.target.value)}
-                    placeholder="Rosa"
+                    placeholder="R."
                     className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                   />
                 </div>

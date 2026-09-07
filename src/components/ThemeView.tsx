@@ -237,7 +237,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                           {idx + 1}
                         </span>
                         {lesson.icon && <span className="text-sm">{lesson.icon}</span>}
-                        <span className="truncate max-w-[200px] sm:max-w-none">
+                        <span className="whitespace-nowrap">
                           {lesson.eyebrow[language]}
                         </span>
                       </button>
@@ -454,7 +454,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                     </h3>
                     <p className="text-xs text-amber-100 font-medium max-w-xl mt-0.5">
                       {language === 'pt'
-                        ? 'Aprende a citar páginas web, notícias (ex.: Rosa Soares no Público), livros e vídeos sem erros! Inclui o minijogo "Detetive de Citações".'
+                        ? 'Aprende a citar páginas web, notícias (ex.: Soares, R. no Público), livros e vídeos sem erros! Inclui o minijogo "Detetive de Citações".'
                         : 'Learn to cite web pages, news articles, books, and videos without outdated formulas! Includes the "Citation Detective" mini-game.'}
                     </p>
                   </div>
