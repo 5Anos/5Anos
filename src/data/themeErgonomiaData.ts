@@ -258,10 +258,10 @@ export const themeErgonomiaData: ThemeDefinition = {
       icon: '⏱️',
       explanation: {
         pt: [
-          'O corpo humano não foi feito para estar sentado e imóvel durante horas a fio.',
+          'O corpo precisa de movimento e de pausas, por isso não é aconselhável permanecer sentado na mesma posição durante muito tempo.',
           'Pausas Periódicas: a cada 45 a 60 minutos, levanta-te da cadeira durante 5 minutos para esticar as pernas, beber um copo de água e mover os braços.',
           'Exercício do Pescoço: roda suavemente a cabeça para a esquerda e para a direita, e inclina a orelha em direção ao ombro devagar.',
-          'Exercício dos Pulsos: estica os braços para a frente e flete os pulsos para cima e para baixo suavemente para prevenir tendinites.',
+          'Exercício dos Pulsos: estica os braços para a frente e movimenta suavemente os pulsos para cima e para baixo, sem forçar.',
           'Regra 20-20-20: é uma estratégia para fazer pausas e reduzir o esforço visual durante períodos prolongados diante de um ecrã (olhar para longe durante 20 segundos a cada 20 minutos).',
         ],
         en: [
@@ -327,8 +327,8 @@ export const themeErgonomiaData: ThemeDefinition = {
           },
           correctIndex: 0,
           explanation: {
-            pt: 'Correto! Fazer uma pequena pausa a cada 45-60 minutos revitaliza o corpo e a mente.',
-            en: 'Correct! A small break every 45–60 minutes revitalizes your body and mind.',
+            pt: 'Correto! Fazer pausas regulares ajuda a descansar o corpo e a manter a concentração.',
+            en: 'Correct! Taking regular breaks helps rest the body and maintain focus.',
           },
         },
       ],
@@ -569,8 +569,8 @@ export const themeErgonomiaData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Um apoio de pés (ou uma caixa firme) garante que a parte de trás das coxas não fica comprimida.',
-        en: 'A footrest ensures feet are supported, preventing poor circulation in the thighs.',
+        pt: 'Um apoio de pés pode ajudar a encontrar uma posição mais confortável para as pernas.',
+        en: 'A footrest can help find a more comfortable position for the legs.',
       },
     },
     {
@@ -647,8 +647,8 @@ export const themeErgonomiaData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Usar um suporte para elevar o ecrã e ligar rato e teclado externos previne o curvamento da coluna.',
-        en: 'Elevating the display to eye level with separate peripherals prevents slouching.',
+        pt: 'Usar um suporte para elevar o ecrã e, quando possível, um teclado e rato externos pode ajudar a manter uma posição mais confortável.',
+        en: 'Using a stand to raise the screen and, when possible, an external keyboard and mouse can help maintain a more comfortable position.',
       },
     },
     {

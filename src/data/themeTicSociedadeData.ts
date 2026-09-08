@@ -375,8 +375,8 @@ export const themeTicSociedadeData: ThemeDefinition = {
           },
           correctIndex: 0,
           explanation: {
-            pt: 'Excelente! O equilíbrio entre o mundo digital e a vida real garante um sono reparador e energia para aprender.',
-            en: 'Excellent! Balancing digital time with offline life ensures restful sleep and sharp focus.',
+            pt: 'Excelente! O equilíbrio entre o tempo passado com tecnologia e outras atividades pode ajudar a descansar melhor e a manter a energia para aprender.',
+            en: 'Excellent! Balancing screen time with other activities can help you rest better and maintain energy to learn.',
           },
         },
       ],

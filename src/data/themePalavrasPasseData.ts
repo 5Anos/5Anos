@@ -12,8 +12,8 @@ export const themePalavrasPasseData: ThemeDefinition = {
     en: 'Learn how to create and safeguard strong passwords.',
   },
   intro: {
-    pt: 'A tua palavra-passe é a chave que protege a tua vida digital: mensagens, fotografias, trabalhos da escola e jogos! Aprende a construir palavras-passe fortes e difíceis de adivinhar combinando comprimento, letras, números e símbolos, e descobre por que motivo não deves partilhar as tuas palavras-passe com colegas ou amigos.',
-    en: 'Your password is the key to your digital identity: messages, photos, school work, and games! Learn how to forge strong and hard-to-guess passwords, and why passwords should stay private and not be shared with peers.',
+    pt: 'A tua palavra-passe é a chave que protege a tua vida digital: mensagens, fotografias, trabalhos da escola e jogos! Aprende a criar palavras-passe longas e difíceis de adivinhar e descobre por que motivo não deves partilhar as tuas palavras-passe com colegas ou amigos.',
+    en: 'Your password is the key to your digital identity: messages, photos, school work, and games! Learn how to create long and hard-to-guess passwords, and why passwords should stay private and not be shared with peers.',
   },
   icon: '🔐',
   illustrationKey: 'palavras-passe',
@@ -188,8 +188,8 @@ export const themePalavrasPasseData: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Sabias que serviços legítimos e plataformas escolares NUNCA te pedem a palavra-passe por email, telefone ou mensagem? Se alguém te pedir, deves desconfiar de imediato.',
-        en: 'Did you know legitimate services and school portals NEVER ask for your password via email, phone, or message? Anyone requesting it should be treated with suspicion.',
+        pt: 'Não partilhes a tua palavra-passe por email, telefone ou mensagem. Se alguém te pedir a palavra-passe, confirma a situação com um adulto ou através do contacto oficial do serviço.',
+        en: 'Do not share your password via email, phone, or message. If someone asks for your password, verify the situation with an adult or through the official contact of the service.',
       },
       thinkAboutIt: {
         question: {
@@ -339,7 +339,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
         title: 'Qual é a mais segura?',
         icon: '🔑',
         xp: 20,
-        desc: 'Escolhe qual das seguintes opções constitui uma palavra-passe verdadeiramente segura.',
+        desc: 'Escolhe a palavra-passe mais difícil de adivinhar.',
         data: {
           questions: [
             {
@@ -816,8 +816,8 @@ export const themePalavrasPasseData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Bom comprimento, carateres variados, contas com chaves únicas e privacidade garantem a melhor proteção!',
-        en: 'Good length, variety, unique keys per account, and privacy ensure the best protection!',
+        pt: 'Uma palavra-passe longa e difícil de adivinhar, diferente das utilizadas noutras contas, ajuda a proteger melhor as tuas contas.',
+        en: 'A long and hard-to-guess password, different from those used in other accounts, helps better protect your accounts.',
       },
     },
   ],

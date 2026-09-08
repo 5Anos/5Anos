@@ -227,8 +227,8 @@ export const themeSegurancaData: ThemeDefinition = {
       eyebrow: { pt: 'Sabias que...?', en: 'Did you know...?' },
       h: { pt: 'A tua pegada digital', en: 'Your digital footprint' },
       body: {
-        pt: 'Tudo o que publicas, comentas ou partilhas online deixa um rasto chamado pegada digital. Mesmo depois de apagares algo, pode já ter sido visto ou guardado por outras pessoas — por isso, é importante pensar bem antes de publicar.',
-        en: 'Everything you post, comment, or share online leaves a trail called a digital footprint. Even after deleting something, it may have already been seen or saved by others — so it is important to think carefully before posting.',
+        pt: 'A nossa atividade na Internet pode deixar uma pegada digital. Mesmo depois de apagares algo, pode já ter sido visto ou guardado por outras pessoas. Por isso, é importante pensar antes de publicar ou partilhar.',
+        en: 'Our activity on the Internet can leave a digital footprint. Even after deleting something, it may have already been seen or saved by others. Therefore, it is important to think before posting or sharing.',
       },
       icon: '👣',
     },

@@ -169,8 +169,8 @@ export const DAILY_TIC_FACTS: DailyTicFact[] = [
       en: 'The very first website in history is still online today!'
     },
     teaser: {
-      pt: 'Criado em 1991 por Tim Berners-Lee, o primeiro site ainda pode ser visitado no CERN.',
-      en: 'Created in 1991 by Tim Berners-Lee, the first website is still accessible.'
+      pt: 'O primeiro website foi criado no CERN por Tim Berners-Lee. A World Wide Web foi inventada em 1989.',
+      en: 'The first website was created at CERN by Tim Berners-Lee. The World Wide Web was invented in 1989.'
     },
     description: {
       pt: 'A 6 de agosto de 1991, o cientista britânico Tim Berners-Lee colocou online a primeira página da World Wide Web no seu computador NeXT no laboratório CERN na Suíça. A página explicava o que era a Web e como criar hiperligações.',
@@ -295,8 +295,8 @@ export const DAILY_TIC_FACTS: DailyTicFact[] = [
     icon: '🎨',
     badgeColor: 'pink',
     title: {
-      pt: 'Imagens no Google não são gratuitas: procura por Creative Commons!',
-      en: 'Google images are not free by default: use Creative Commons!'
+      pt: 'As imagens encontradas no Google não são automaticamente livres para reutilização. Verifica sempre os direitos de autor e as condições de utilização.',
+      en: 'Images found on Google are not automatically free for reuse. Always check copyrights and usage conditions.'
     },
     teaser: {
       pt: 'Tirar uma foto do Google para um trabalho pode violar a lei de Direitos de Autor.',
@@ -347,8 +347,8 @@ export const DAILY_TIC_FACTS: DailyTicFact[] = [
     icon: '🕵️',
     badgeColor: 'rose',
     title: {
-      pt: 'Cuidado com o Phishing: os bancos e jogos nunca te pedem a password!',
-      en: 'Beware of Phishing: real services never ask for your password!'
+      pt: 'Cuidado com o phishing: não partilhes a tua palavra-passe por email ou mensagem. Se alguém te pedir, confirma o pedido através de um canal oficial.',
+      en: 'Beware of phishing: do not share your password via email or message. If someone asks for it, verify the request through an official channel.'
     },
     teaser: {
       pt: '"Phishing" vem da palavra inglesa "pescar" (fishing): é uma armadilha para roubar contas.',

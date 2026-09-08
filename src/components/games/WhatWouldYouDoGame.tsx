@@ -76,8 +76,8 @@ const DILEMMAS: Dilemma[] = [
         },
         isBest: false,
         feedback: {
-          pt: '❌ Não deves! Uma palavra-passe é estritamente pessoal e intransmissível. Se ele fizer algo indevido na tua conta, a responsabilidade será tua.',
-          en: '❌ Never! Passwords are strictly personal. Anything done on your account is attributed to you.',
+          pt: '❌ Não deves! A tua palavra-passe é pessoal e não deve ser partilhada. Se outra pessoa utilizar a tua conta, podes ter problemas e perder o controlo da conta.',
+          en: '❌ You shouldn\'t! Your password is personal and should not be shared. If someone else uses your account, you could face issues and lose control of the account.',
         },
       },
       {

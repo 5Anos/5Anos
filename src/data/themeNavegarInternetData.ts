@@ -183,8 +183,8 @@ export const themeNavegarInternetData: ThemeDefinition = {
           en: 'Leonor wanted to study Iberian lynx diet in Portugal. Instead of typing "what does the wild cat eat in the forest", she searched: "lince ibérico" alimentação Portugal.',
         },
         tip: {
-          pt: 'Com palavras-chave precisas, os primeiros resultados foram logo de sites oficiais de conservação da natureza com dados exatos!',
-          en: 'With precise keywords, top results came straight from official wildlife conservation portals!',
+          pt: 'Com palavras-chave mais precisas, foi mais fácil encontrar resultados relacionados com o que procurava.',
+          en: 'With more precise keywords, it was easier to find results related to what was needed.',
         },
       },
       funFact: {
@@ -250,7 +250,7 @@ export const themeNavegarInternetData: ThemeDefinition = {
       explanation: {
         pt: [
           'Na Internet, nem tudo o que brilha ou promete prémios é verdade.',
-          'Janelas de Aviso e Prémios Falsos: se aparecer um ecrã a dizer "Parabéns, és o visitante número 1 000 000 e ganhaste um telemóvel!", é 100% FRAUDE! Fecha logo a janela.',
+          'Janelas de Aviso e Prémios Falsos: uma mensagem inesperada a dizer que ganhaste um prémio pode ser uma tentativa de fraude. Não cliques e fecha a janela.',
           'Phishing: são sites ou mensagens fraudulentas que imitam páginas conhecidas para tentar roubar os teus dados ou a tua palavra-passe.',
           'Links Suspeitos: antes de clicares num link, passa o cursor do rato por cima sem carregar para ver o endereço real no canto inferior do ecrã.',
           'Descarregamentos (Downloads): nunca faças download de ficheiros (.exe, .scr, .zip) enviados por desconhecidos ou vindos de sites ilegais.',
@@ -273,8 +273,8 @@ export const themeNavegarInternetData: ThemeDefinition = {
           en: 'Martim saw a flashing banner: "Click here to download the new game free!". Before clicking, he noticed the strange URL full of random numbers ending in ".ru.xyz".',
         },
         tip: {
-          pt: 'O Martim fechou a página de imediato e avisou o professor. Era uma tentativa de instalar um vírus (malware)!',
-          en: 'Martim immediately closed the tab and told his teacher. It was a virus download attempt!',
+          pt: 'O Martim fechou a página de imediato e avisou o professor. A página podia estar a tentar instalar software malicioso.',
+          en: 'Martim immediately closed the page and notified his teacher. The page might have been attempting to install malicious software.',
         },
       },
       funFact: {
@@ -388,9 +388,9 @@ export const themeNavegarInternetData: ThemeDefinition = {
         desc: 'Classifica as afirmações sobre a segurança e pesquisa online.',
         data: {
           items: [
-            { s: 'Tudo o que está publicado na Internet é sempre 100% verdadeiro.', a: false, e: 'Incorreto! Existem muitas notícias falsas (fake news) e informações erradas.' },
+            { s: 'Tudo o que está publicado na Internet é sempre 100% verdadeiro.', a: false, e: 'Incorreto! Na Internet existem informações verdadeiras, falsas ou incompletas. É importante verificar as fontes.' },
             { s: 'Os motores de busca ajudam-nos a encontrar páginas através de palavras-chave.', a: true, e: 'Correto! Google, Bing ou DuckDuckGo indexam milhares de milhões de páginas web.' },
-            { s: 'Deves pedir autorização aos pais antes de descarregar ficheiros ou aplicações desconhecidas.', a: true, e: 'Correto! Previne a instalação de vírus e software malicioso.' }
+            { s: 'Deves pedir autorização aos pais antes de descarregar ficheiros ou aplicações desconhecidas.', a: true, e: 'Correto! Pedir ajuda a um adulto antes de instalar uma aplicação desconhecida ajuda a evitar riscos.' }
           ]
         }
       }
