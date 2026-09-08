@@ -60,8 +60,8 @@ export const themeDireitosAutorData: ThemeDefinition = {
       eyebrow: { pt: 'Norma APA (7º ed)', en: 'APA (7th ed)' },
       h: { pt: 'Como Construir Referências Bibliográficas', en: 'How to Build Bibliographical References' },
       body: {
-        pt: 'No final do teu trabalho escolar, deves colocar uma lista com as <strong>Referências Bibliográficas</strong> por ordem alfabética do apelido do autor.<br><br><div class="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200 text-xs sm:text-sm font-sans space-y-2.5 text-slate-800 shadow-2xs"><div><strong class="text-indigo-900">🌐 Exemplo de Notícia / Página Web (Norma APA 7.ª ed.):</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Soares, R. (2021, dezembro 6). Portugal volta a ter duas escolas no top 30 europeu do Financial Times. <em>Público</em>. <a href="https://www.publico.pt/2021/12/06/economia/noticia/portugal-volta-duas-escolas-negocios-top-30-europeu-financial-times-1987488" target="_blank" rel="noopener noreferrer" class="underline text-indigo-700 hover:text-indigo-900">https://www.publico.pt/2021/12/06/economia/noticia/portugal-volta-duas-escolas-negocios-top-30-europeu-financial-times-1987488</a></div><div><strong class="text-indigo-900">📖 Exemplo de Livro:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900">Ribeiro, N. (2007). <em>Multimédia e Tecnologias Interactivas</em> (4.ª ed.). FCA - Editora de Informática. <span class="text-slate-500 font-sans">(A edição só se indica a partir da 2.ª edição; não se indica a cidade).</span></div><div><strong class="text-indigo-900">🖼️ Exemplo de Imagem ou Fotografia:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Coelho, J. (2021). <em>Gerações</em> [Fotografia]. Olhares. <a href="https://olhares.com/geracoes-foto10344803.html" target="_blank" rel="noopener noreferrer" class="underline text-indigo-700 hover:text-indigo-900">https://olhares.com/geracoes-foto10344803.html</a></div><div><strong class="text-indigo-900">🎥 Exemplo de Vídeo Educativo:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Aceleração Digital com Fernando Tannure. (2017, abril 14). <em>Primeiros Passos Canva | Tutorial Canva em Português #01</em> [Vídeo]. YouTube. <a href="https://www.youtube.com/watch?v=3LVBzoaM2f8" target="_blank" rel="noopener noreferrer" class="underline text-indigo-700 hover:text-indigo-900">https://www.youtube.com/watch?v=3LVBzoaM2f8</a></div></div><p class="pt-2 text-xs font-bold text-amber-900">👇 Experimenta agora mesmo construir e testar referências no nosso <strong>Simulador Interativo APA 7</strong> logo abaixo!</p>',
-        en: 'References list sources alphabetically at the end. Try building citations in the simulator below!',
+        pt: 'A APA 7.ª edição é um conjunto de regras para apresentar citações e referências de forma organizada.<br><br>Quando utilizas informação de outra fonte, indica de onde veio. Uma referência pode incluir, por exemplo, o autor, o título e a fonte onde encontraste a informação.<br><br>No final do teu trabalho escolar, deves colocar uma lista com as <strong>Referências Bibliográficas</strong> por ordem alfabética do apelido do autor.<br><br><div class="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200 text-xs sm:text-sm font-sans space-y-2.5 text-slate-800 shadow-2xs"><div><strong class="text-indigo-900">🌐 Exemplo de Notícia / Página Web (Norma APA 7.ª ed.):</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Soares, R. (2021, dezembro 6). Portugal volta a ter duas escolas no top 30 europeu do Financial Times. <em>Público</em>. <a href="https://www.publico.pt/2021/12/06/economia/noticia/portugal-volta-duas-escolas-negocios-top-30-europeu-financial-times-1987488" target="_blank" rel="noopener noreferrer" class="underline text-indigo-700 hover:text-indigo-900">https://www.publico.pt/2021/12/06/economia/noticia/portugal-volta-duas-escolas-negocios-top-30-europeu-financial-times-1987488</a></div><div><strong class="text-indigo-900">📖 Exemplo de Livro:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900">Ribeiro, N. (2007). <em>Multimédia e Tecnologias Interactivas</em> (4.ª ed.). FCA - Editora de Informática. <span class="text-slate-500 font-sans">(A edição só se indica a partir da 2.ª edição; não se indica a cidade).</span></div><div><strong class="text-indigo-900">🖼️ Exemplo de Imagem ou Fotografia:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Coelho, J. (2021). <em>Gerações</em> [Fotografia]. Olhares. <a href="https://olhares.com/geracoes-foto10344803.html" target="_blank" rel="noopener noreferrer" class="underline text-indigo-700 hover:text-indigo-900">https://olhares.com/geracoes-foto10344803.html</a></div><div><strong class="text-indigo-900">🎥 Exemplo de Vídeo Educativo:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Aceleração Digital com Fernando Tannure. (2017, abril 14). <em>Primeiros Passos Canva | Tutorial Canva em Português #01</em> [Vídeo]. YouTube. <a href="https://www.youtube.com/watch?v=3LVBzoaM2f8" target="_blank" rel="noopener noreferrer" class="underline text-indigo-700 hover:text-indigo-900">https://www.youtube.com/watch?v=3LVBzoaM2f8</a></div></div><p class="pt-2 text-xs font-bold text-amber-900">👇 Experimenta agora mesmo construir e testar referências no nosso <strong>Simulador Interativo APA 7</strong> logo abaixo!</p>',
+        en: 'APA 7th edition is a set of rules to present citations and references clearly. When you use information from another source, indicate where it came from. A reference can include the author, title, and source.',
       },
       icon: '📚',
     },
@@ -191,8 +191,8 @@ export const themeDireitosAutorData: ThemeDefinition = {
           en: 'Ana needed an illustration and selected a CC-BY-NC licensed graphic for school work.',
         },
         tip: {
-          pt: 'Como o trabalho era escolar e sem fins lucrativos, a Ana pôde usá-la perfeitamente, desde que indicasse o autor!',
-          en: 'Since it was non-commercial school work, Ana could use it by crediting the author!',
+          pt: 'A licença permite determinados usos não comerciais. Antes de a utilizares, verifica as condições da licença e indica o autor.',
+          en: 'The license allows certain non-commercial uses. Before using it, check the license terms and credit the author.',
         },
       },
       funFact: {
@@ -343,15 +343,17 @@ export const themeDireitosAutorData: ThemeDefinition = {
       icon: '📚',
       explanation: {
         pt: [
-          'A lista de referências bibliográficas fornece a informação completa sobre as obras consultadas no final do documento.',
-          'Organiza-se por ordem alfabética do apelido do primeiro autor. A primeira linha alinha à esquerda e as restantes iniciam-se com avanço à direita.',
-          'Livro (APA 7.ª ed.): Ribeiro, N. (2007). Multimédia e Tecnologias Interactivas (4.ª ed.). FCA - Editora de Informática. (Nota: Na APA 7.ª ed., omite-se a localização/cidade da editora; a edição só se indica a partir da 2.ª edição).',
-          'Página Web (APA 7.ª ed.): Soares, R. (2021, dezembro 6). Portugal volta a ter duas escolas no top 30 europeu do Financial Times. Público. https://www.publico.pt/2021/12/06/economia/noticia/portugal-volta-duas-escolas-negocios-top-30-europeu-financial-times-1987488 (Termina no link direto; data de consulta apenas é usada em conteúdos dinâmicos sem versão estável).',
-          'Notas especiais: Sem autor (o título passa para primeiro); Sem data (n.d.); Mais de um autor (usam-se vírgulas e "&" antes do último).',
+          'A APA 7.ª edição é um conjunto de regras para apresentar citações e referências de forma organizada.',
+          'Quando utilizas informação de outra fonte, indica de onde veio. Uma referência pode incluir, por exemplo, o autor, o título e a fonte onde encontraste a informação.',
+          'A lista de referências bibliográficas fornece a informação completa sobre as obras consultadas no final do documento, organizada por ordem alfabética do apelido do primeiro autor.',
+          'Livro (APA 7.ª ed.): Ribeiro, N. (2007). Multimédia e Tecnologias Interactivas (4.ª ed.). FCA - Editora de Informática.',
+          'Página Web (APA 7.ª ed.): Soares, R. (2021, dezembro 6). Portugal volta a ter duas escolas no top 30 europeu do Financial Times. Público. https://www.publico.pt/2021/12/06/economia/noticia/portugal-volta-duas-escolas-negocios-top-30-europeu-financial-times-1987488',
         ],
         en: [
+          'APA 7th edition is a set of rules to present citations and references clearly.',
+          'When using information from another source, indicate where it came from. A reference can include the author, title, and source.',
           'References list works consulted at the end, alphabetically by author surname.',
-          'Books (no publisher city in APA 7) and web pages (direct links without access dates unless volatile).',
+          'Books and web pages formatted according to APA 7th edition standards.',
         ],
       },
       example: {
@@ -369,8 +371,8 @@ export const themeDireitosAutorData: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Na norma APA 7.ª edição, a expressão "Consultado em" já não se utiliza para páginas web normais, sendo necessária apenas para páginas digitais que mudam com frequência ao longo do tempo (como na Wikipédia).',
-        en: 'In APA 7th edition, "Accessed on" is no longer used for standard web pages, being reserved only for dynamic resources that frequently change over time (such as wikis).',
+        pt: 'Na APA 7.ª edição, a data de consulta só é indicada em alguns casos, sobretudo quando o conteúdo pode mudar ao longo do tempo.',
+        en: 'In APA 7th edition, the retrieval date is only indicated in specific cases, mainly when the content is likely to change over time.',
       },
       thinkAboutIt: {
         question: {
@@ -437,7 +439,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
           pairs: [
             { left: 'Símbolo © (Copyright)', right: 'Assinala a titularidade dos direitos de autor' },
             { left: 'Copyleft', right: 'Obras derivadas devem ser partilhadas sob a mesma licença' },
-            { left: 'Licença CC-BY', right: 'Uso livre com atribuição obrigatória do autor' },
+            { left: 'Licença CC-BY', right: 'Permite determinados usos da obra, desde que seja dada atribuição ao autor e sejam respeitadas as condições da licença.' },
             { left: 'Royalty Free', right: 'Uso sem pagamento de direitos por cada utilização' }
           ]
         }

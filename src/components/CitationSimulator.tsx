@@ -278,7 +278,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
             <span>Regra da Norma APA (7.ª edição):</span>
           </span>
           <p className="text-amber-900 leading-relaxed font-medium">
-            Em páginas e notícias da Internet com data fixa, coloca-se habitualmente o endereço web (URL) no final da referência. A data de consulta (&quot;Consultado em...&quot;) só é indicada em recursos digitais cujo conteúdo se altera com frequência ao longo do tempo (como na Wikipédia).
+            Na APA 7.ª edição, a data de consulta só é indicada em alguns casos, sobretudo quando o conteúdo pode mudar ao longo do tempo.
           </p>
         </div>
       </div>
@@ -512,7 +512,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
         {/* Real-Time Visual Lego Blocks Preview */}
         <div>
           <span className="block text-xs font-black uppercase tracking-wider text-slate-700 mb-2.5">
-            🧩 3. Vê como os blocos se unem na norma APA (7.ª edição):
+            🧩 3. Exemplo de uma referência de página Web em APA 7: Autor → Data → Título → Fonte → URL:
           </span>
 
           <div className="flex flex-wrap items-center gap-2 p-4 bg-slate-100 rounded-2xl border border-slate-200">
@@ -635,13 +635,13 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
           </div>
 
           <p className="text-xs sm:text-sm text-amber-900 font-medium">
-            Clica nas peças pela ordem correta da norma APA (7.ª edição) para ganhares a medalha de Mestre das Referências:
+            Exemplo de uma referência de página Web em APA 7: Autor → Data → Título → Fonte → URL. Clica nas peças pela ordem correta para ganhares a medalha de Mestre das Referências:
           </p>
 
           {gameError && (
             <div className="p-2.5 rounded-xl bg-rose-100 border border-rose-300 text-rose-800 text-xs font-bold flex items-center gap-2 animate-shake">
               <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
-              <span>Ups! Essa não é a peça seguinte. Lembra-te: Autor ➔ Data ➔ Título ➔ Fonte ➔ Link. Tenta de novo!</span>
+              <span>Ups! Essa não é a peça seguinte. Lembra-te: Autor ➔ Data ➔ Título ➔ Fonte ➔ URL. Tenta de novo!</span>
             </div>
           )}
 
@@ -678,7 +678,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
           {gameCompleted && (
             <div className="pt-2 flex items-center justify-between">
               <p className="text-xs sm:text-sm font-black text-emerald-900">
-                Parabéns! Aprendeste a ordem correta da APA 7. Os teus trabalhos nunca mais terão plágio!
+                Parabéns! Aprendeste a organizar uma referência. Indicar as fontes ajuda a evitar o plágio.
               </p>
               <button
                 type="button"

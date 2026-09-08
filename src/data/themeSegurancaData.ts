@@ -128,11 +128,11 @@ export const themeSegurancaData: ThemeDefinition = {
       icon: '🤝',
       explanation: {
         pt: [
-          'Ciberbullying é quando alguém usa a Internet ou dispositivos para intimidar, insultar ou humilhar outra pessoa repetidamente.',
+          'Ciberbullying é o uso de meios digitais para intimidar, insultar, humilhar, ameaçar ou magoar outra pessoa.',
           'Antes de publicar algo, pensa: "Diria isto à pessoa olhos nos olhos?" O respeito online é fundamental.',
         ],
         en: [
-          'Cyberbullying is when someone uses the Internet or devices to repeatedly intimidate, insult, or humiliate someone.',
+          'Cyberbullying is the use of digital media to intimidate, insult, humiliate, threaten, or hurt another person.',
           'Before posting something, think: "Would I say this face to face?" Online respect is essential.',
         ],
       },
@@ -175,8 +175,8 @@ export const themeSegurancaData: ThemeDefinition = {
         tip: { pt: 'Se tens dúvidas sobre uma publicação, é melhor não publicar.', en: 'If in doubt about a post, it\'s better not to post.' },
       },
       funFact: {
-        pt: 'A pegada digital acompanha-nos ao longo dos anos e pode ser consultada por escolas ou futuros empregadores.',
-        en: 'Your digital footprint follows you over the years and can be viewed by schools or future employers.',
+        pt: 'Algumas informações podem permanecer disponíveis durante muito tempo, por isso devemos pensar antes de publicar ou partilhar.',
+        en: 'Some information can remain available for a long time, so we should always think before posting or sharing.',
       },
       thinkAboutIt: {
         question: { pt: 'Como gostarias que fosse a tua pegada digital no futuro?', en: 'How would you like your digital footprint to look in the future?' },
@@ -209,8 +209,8 @@ export const themeSegurancaData: ThemeDefinition = {
       eyebrow: { pt: 'Ciberbullying', en: 'Cyberbullying' },
       h: { pt: 'Ciberbullying e respeito', en: 'Cyberbullying and respect' },
       body: {
-        pt: 'Ciberbullying é quando alguém usa a Internet ou os dispositivos para intimidar, insultar ou humilhar outra pessoa repetidamente.<br><br>Antes de publicar um comentário, uma fotografia ou uma mensagem, pensa: "Diria isto à pessoa olhos nos olhos?" Se a resposta for não, talvez não devas publicar.<br><br><em>"Um colega publicou uma fotografia de outra pessoa sem autorização."</em> Isto não é correto — devemos sempre pedir autorização antes de partilhar imagens de outras pessoas.',
-        en: 'Cyberbullying is when someone uses the Internet or devices to repeatedly intimidate, insult, or humiliate someone.<br><br>Before posting a comment, photo, or message, think: "Would I say this to the person face to face?" If the answer is no, maybe you shouldn\'t post it.',
+        pt: 'Ciberbullying é o uso de meios digitais para intimidar, insultar, humilhar, ameaçar ou magoar outra pessoa.<br><br>Antes de publicar um comentário, uma fotografia ou uma mensagem, pensa: "Diria isto à pessoa olhos nos olhos?" Se a resposta for não, talvez não devas publicar.<br><br><em>"Um colega publicou uma fotografia de outra pessoa sem autorização."</em> Isto não é correto — devemos sempre pedir autorização antes de partilhar imagens de outras pessoas.',
+        en: 'Cyberbullying is the use of digital media to intimidate, insult, humiliate, threaten, or hurt another person.<br><br>Before posting a comment, photo, or message, think: "Would I say this to the person face to face?" If the answer is no, maybe you shouldn\'t post it.',
       },
       icon: '🤝',
     },
@@ -429,8 +429,8 @@ export const themeSegurancaData: ThemeDefinition = {
       id: 'seg-q3',
       question: { pt: 'O que é o ciberbullying?', en: 'What is cyberbullying?' },
       options: {
-        pt: ['Intimidar ou humilhar alguém repetidamente através da Internet', 'Uma discussão construtiva num fórum de turma', 'Um teste de velocidade de ligação à rede', 'Um filtro de proteção de conteúdos impróprios'],
-        en: ['Intimidating or humiliating someone repeatedly over the Internet', 'A constructive discussion in a class forum', 'A network speed measurement test', 'A protection filter against inappropriate content']
+        pt: ['O uso de meios digitais para intimidar, insultar, humilhar, ameaçar ou magoar outra pessoa', 'Uma discussão construtiva num fórum de turma', 'Um teste de velocidade de ligação à rede', 'Um filtro de proteção de conteúdos impróprios'],
+        en: ['Using digital media to intimidate, insult, humiliate, threaten, or hurt someone', 'A constructive discussion in a class forum', 'A network speed measurement test', 'A protection filter against inappropriate content']
       },
       correctIndex: 0,
       explanation: { pt: 'O ciberbullying causa dano real a outras pessoas.', en: 'Cyberbullying causes real harm to other people.' }

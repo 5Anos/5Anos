@@ -105,8 +105,8 @@ export const themeTicSociedadeData: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Sabias que o primeiro computador eletrónico da história (o ENIAC, em 1946) pesava cerca de 30 toneladas e ocupava uma sala inteira de 167 m²? Hoje, um pequeno smartphone no teu bolso é milhares de vezes mais rápido!',
-        en: 'Did you know the first electronic computer (ENIAC, in 1946) weighed about 30 tons and occupied an entire 167 m² room? Today, the smartphone in your pocket is thousands of times faster!',
+        pt: 'Sabias que computadores antigos como o ENIAC (em 1946) pesavam cerca de 30 toneladas e ocupavam uma sala inteira de 167 m²? Hoje, um pequeno smartphone no teu bolso é milhares de vezes mais rápido!',
+        en: 'Did you know early computers like the ENIAC (in 1946) weighed about 30 tons and occupied an entire 167 m² room? Today, the smartphone in your pocket is thousands of times faster!',
       },
       thinkAboutIt: {
         question: {
@@ -210,8 +210,8 @@ export const themeTicSociedadeData: ThemeDefinition = {
           en: 'A medical appointment',
         },
         scenario: {
-          pt: 'A médica da Maria acede ao historial de vacinas num computador seguro, prescreve a receita por SMS e envia o pedido de análises diretamente para o laboratório.',
-          en: 'Maria’s doctor opens vaccination records on a secure computer, issues an e-prescription by SMS, and transmits lab test requests automatically.',
+          pt: 'A médica da Maria acede ao historial de vacinas num computador seguro. A médica prescreve a receita eletronicamente e o utente pode receber por SMS a informação necessária para a utilizar.',
+          en: 'Maria’s doctor opens vaccination records on a secure computer. The doctor prescribes the medication electronically and the patient can receive the necessary details by SMS to use it.',
         },
         tip: {
           pt: 'Graças às TIC na saúde, não se perdem papéis e os médicos conhecem todo o historial do doente num clique.',
@@ -232,8 +232,8 @@ export const themeTicSociedadeData: ThemeDefinition = {
           en: 'Think about what would happen if emergency 112 calls were interrupted.',
         },
         reflection: {
-          pt: 'Porque lidam com vidas humanas! Por isso, estes serviços têm sempre geradores de energia de emergência e computadores suplentes de reserva.',
-          en: 'Because human lives are at stake! That is why emergency services have backup generators and redundant servers.',
+          pt: 'Como lidam com situações importantes, estes serviços precisam de sistemas preparados para continuar a funcionar mesmo quando surgem problemas.',
+          en: 'Because they deal with critical situations, these services need systems prepared to keep working even when problems arise.',
         },
       },
       quizQuestions: [
@@ -565,8 +565,8 @@ export const themeTicSociedadeData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'As receitas eletrónicas por SMS e os registos no computador dos hospitais são exemplos claros de TIC.',
-        en: 'E-prescriptions via SMS and computerized health records are prime examples of health ICT.',
+        pt: 'As receitas eletrónicas e os registos clínicos digitais são exemplos da utilização das TIC na saúde.',
+        en: 'Electronic prescriptions and digital health records are examples of ICT use in healthcare.',
       },
     },
     {
@@ -643,8 +643,8 @@ export const themeTicSociedadeData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'O GPS recebe sinais de vários satélites em órbita para determinar com exatidão a nossa posição na Terra.',
-        en: 'GPS calculates coordinates by timing signals from orbiting satellites.',
+        pt: 'O GPS utiliza sinais de satélites para ajudar a determinar a localização de um dispositivo.',
+        en: 'GPS uses satellite signals to help determine a device’s location.',
       },
     },
     {
@@ -721,8 +721,8 @@ export const themeTicSociedadeData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'A regra 20-20-20 ajuda os músculos oculares a relaxar, prevenindo a fadiga visual provocada pelos ecrãs.',
-        en: 'The 20-20-20 rule relaxes ciliary eye muscles, mitigating digital eye strain.',
+        pt: 'É uma estratégia para fazer pausas e reduzir o esforço visual durante períodos prolongados diante de um ecrã.',
+        en: 'It is a strategy to take breaks and reduce visual strain during prolonged periods in front of a screen.',
       },
     },
     {

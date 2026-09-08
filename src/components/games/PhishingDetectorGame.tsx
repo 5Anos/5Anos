@@ -42,8 +42,8 @@ export const PhishingDetectorGame: React.FC<PhishingDetectorGameProps> = ({ lang
       id: 4,
       name: { pt: 'Pedido de Dados Confidenciais', en: 'Request for Sensitive Credentials' },
       explanation: {
-        pt: 'Nenhuma entidade legítima ou professor pede a tua palavra-passe por email ou mensagem.',
-        en: 'No legitimate organization or teacher will ever ask for your password via email.',
+        pt: 'Não deves partilhar a tua palavra-passe por email ou mensagem, mesmo que alguém diga ser professor ou representante de um serviço. Se tiveres dúvidas, confirma a situação por um canal oficial.',
+        en: 'You should never share your password by email or message, even if someone claims to be a teacher or service representative. If in doubt, confirm through an official channel.',
       },
     },
   ];

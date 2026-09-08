@@ -75,8 +75,8 @@ export const theme2Data: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'O primeiro email da história foi enviado em 1971 por um engenheiro chamado Ray Tomlinson. Foi ele quem escolheu o símbolo "@" no teclado porque quase ninguém o utilizava na altura!',
-        en: 'The very first email was sent in 1971 by engineer Ray Tomlinson. He chose the "@" symbol on the keyboard because almost nobody was using it back then!',
+        pt: 'Em 1971, Ray Tomlinson desenvolveu um sistema que permitia enviar mensagens entre computadores numa rede e utilizou o símbolo @ nos endereços de email.',
+        en: 'In 1971, Ray Tomlinson developed a system allowing messages between networked computers and introduced the @ symbol in email addresses.',
       },
       thinkAboutIt: {
         question: {

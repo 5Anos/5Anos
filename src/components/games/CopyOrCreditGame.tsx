@@ -61,8 +61,8 @@ const SCENARIOS: Scenario[] = [
     },
     isCorrectBehavior: false,
     explanation: {
-      pt: '❌ Violação de Direitos de Autor! Fotografias têm direitos de autor reservados. Não se pode usar a imagem de outrem sem autorização ou sem verificar as condições de utilização.',
-      en: '❌ Copyright Infringement! Photographs have reserved copyrights. You cannot use someone else’s picture without permission or checking its terms of use.',
+      pt: '❌ Violação de Direitos de Autor! Uma fotografia pode estar protegida por direitos de autor. Antes de a utilizares num trabalho, verifica se tens autorização ou se existe uma licença que permita essa utilização.',
+      en: '❌ Copyright Infringement! A photograph may be protected by copyright. Before using it in a project, check if you have permission or if a license allows that use.',
     },
     bestPracticeTip: {
       pt: 'Ao utilizar uma imagem, indica a sua autoria e a fonte onde foi encontrada, respeitando as condições de utilização. Podes filtrar por licenças Creative Commons e verificar o que cada licença permite.',

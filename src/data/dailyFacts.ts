@@ -199,8 +199,8 @@ export const DAILY_TIC_FACTS: DailyTicFact[] = [
       en: 'Every 20 minutes, look at something 20 feet away for 20 seconds.'
     },
     description: {
-      pt: 'Quando usamos ecrãs durante muito tempo, tendemos a piscar os olhos menos vezes, o que pode provocar cansaço ou secura ocular. Fazer pausas regulares ajuda a descansar a visão. Uma boa recomendação é a cada 20 minutos olhar para um objeto a cerca de 6 metros de distância durante 20 segundos.',
-      en: 'When looking at screens for long periods, we tend to blink less frequently, which can cause eye strain. Regular pauses help rest your vision.'
+      pt: 'Quando usamos ecrãs durante muito tempo, tendemos a piscar os olhos menos vezes, o que pode provocar cansaço ou secura ocular. A regra 20-20-20 é uma estratégia para fazer pausas e reduzir o esforço visual durante períodos prolongados diante de um ecrã (a cada 20 minutos, olhar para longe durante 20 segundos).',
+      en: 'When looking at screens for long periods, we tend to blink less frequently, which can cause eye strain. The 20-20-20 rule is a strategy to take breaks and reduce visual strain during prolonged periods in front of a screen.',
     },
     whyItMatters: {
       pt: 'Relaxa os músculos oculares e ajuda a prevenir o cansaço após períodos de estudo ou utilização do computador.',

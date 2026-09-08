@@ -100,8 +100,8 @@ export const themeNavegarInternetData: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Sabias que a primeira página da World Wide Web foi criada por Tim Berners-Lee em 1991 no CERN (Suíça) e ainda hoje continua ativa e acessível online?',
-        en: 'Did you know the very first website on the World Wide Web was created by Tim Berners-Lee in 1991 at CERN (Switzerland) and is still live today?',
+        pt: 'A World Wide Web foi inventada por Tim Berners-Lee no CERN em 1989. O primeiro website foi criado no CERN e, em 1991, o software da Web começou a ser divulgado.',
+        en: 'The World Wide Web was invented by Tim Berners-Lee at CERN in 1989. The first website was created at CERN, and in 1991, the Web software began to be released.',
       },
       thinkAboutIt: {
         question: {
@@ -161,14 +161,14 @@ export const themeNavegarInternetData: ThemeDefinition = {
       icon: '🔎',
       explanation: {
         pt: [
-          'Os motores de busca (como o Google, Bing ou DuckDuckGo) são computadores gigantescos que analisam milhões de páginas para encontrar as melhores respostas.',
-          'Escolher boas palavras-chave: em vez de escreveres frases longas como "olá eu queria saber qual é a capital de Portugal se faz favor", deves escrever termos essenciais: capital Portugal.',
+          'Os motores de pesquisa ajudam a encontrar páginas na Web através das palavras que escrevemos na pesquisa.',
+          'Escolhe palavras-chave importantes e específicas que ajudem o motor de pesquisa a perceber o que procuras.',
           'Uso de aspas (" "): quando procuras uma expressão exata (como o título de um poema ou um nome próprio), coloca entre aspas: "Os Lusíadas" Camões.',
           'Filtros de pesquisa: podes filtrar os resultados por Imagens, Notícias, Vídeos ou limitar a data ao último ano para ter informação recente.',
         ],
         en: [
-          'Search engines index billions of pages to retrieve the most relevant information.',
-          'Choosing smart keywords: avoid conversational phrases; use core search terms: capital Portugal.',
+          'Search engines help find pages on the Web through the words we enter in the search.',
+          'Choose important and specific keywords that help the search engine understand what you are looking for.',
           'Exact quotes (" "): use quotes around phrases to find exact wording: "Os Lusíadas" Camões.',
           'Search filters: narrow by Images, News, Videos, or date ranges for current findings.',
         ],
@@ -439,10 +439,10 @@ export const themeNavegarInternetData: ThemeDefinition = {
         desc: 'Coloca os passos de investigação digital pela ordem recomendada.',
         data: {
           items: [
-            'Definir claramente o tema e o objetivo da pesquisa',
-            'Escolher palavras-chave precisas no motor de busca',
-            'Comparar a informação encontrada em pelo menos dois sites oficiais',
-            'Registar as fontes e o autor para colocar na bibliografia'
+            'Definir o tema e o objetivo',
+            'Escolher palavras-chave',
+            'Comparar informação de mais do que uma fonte credível',
+            'Registar as fontes utilizadas'
           ]
         }
       }
@@ -676,7 +676,7 @@ export const themeNavegarInternetData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Verificar se a imagem é de uso livre (Creative Commons ou domínio público) e guardar a fonte para citar',
+          'Verificar se a licença permite utilizar a imagem e guardar a fonte para a indicar no trabalho.',
           'Fazer download de qualquer fotografia e dizer que foste tu que a desenhaste',
           'Copiar imagens com marcas de água e assinaturas de fotógrafos sem indicar o autor',
           'Alterar a extensão do ficheiro para contornar os direitos de autor',
@@ -846,8 +846,8 @@ export const themeNavegarInternetData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'O comando site: limita a pesquisa exclusivamente aos sites pertencentes àquele domínio ou extensão. Lembra-te: .pt identifica o domínio de topo de Portugal, mas não garante por si só que a informação seja verdadeira. Deves avaliar sempre a instituição, o autor, a data e o conteúdo.',
-        en: 'The site: operator restricts results exclusively to the specified top-level or specific domain. Remember: .pt identifies Portugal’s country code domain, but does not guarantee on its own that the content is accurate. Always verify author, date, and institution.',
+        pt: 'O operador site: pode ser utilizado para limitar os resultados a um determinado site ou domínio. Lembra-te: .pt identifica o domínio de topo de Portugal, mas não garante por si só que a informação seja verdadeira. Deves avaliar sempre a instituição, o autor, a data e o conteúdo.',
+        en: 'The site: operator can be used to limit results to a specific website or domain. Remember: .pt identifies Portugal’s country code domain, but does not guarantee on its own that the content is accurate. Always verify author, date, and institution.',
       },
     },
     {

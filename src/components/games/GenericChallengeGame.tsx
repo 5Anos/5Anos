@@ -158,8 +158,8 @@ export const CHALLENGE_DATA: Record<string, {
         },
         correctIndex: 0,
         explanation: {
-          pt: 'A licença CC-BY permite qualquer uso desde que seja dada atribuição (crédito) ao autor original.',
-          en: 'CC-BY grants permission provided the original author is duly credited.',
+          pt: 'A licença CC-BY permite determinados usos e adaptações, desde que seja dada atribuição ao autor e sejam respeitadas as condições da licença.',
+          en: 'CC-BY allows certain uses and adaptations, provided the author is attributed and the license terms are respected.',
         },
       },
     ],

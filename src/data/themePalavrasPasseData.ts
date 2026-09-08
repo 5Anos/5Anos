@@ -33,8 +33,8 @@ export const themePalavrasPasseData: ThemeDefinition = {
       eyebrow: { pt: 'Regras', en: 'Rules' },
       h: { pt: 'Características de uma palavra-passe segura', en: 'Traits of a strong password' },
       body: {
-        pt: 'Uma boa palavra-passe deve ser longa e difícil de adivinhar:<ul><li>Ter um bom comprimento (pelo menos 10 a 12 caracteres).</li><li>Pode misturar letras maiúsculas, minúsculas, números e símbolos, ou formar uma frase difícil de adivinhar.</li><li>Não conter o teu nome, data de nascimento ou dados pessoais óbvios.</li><li>Não ser uma sequência simples, como "123456" ou "abcdef".</li><li>Ser diferente para cada conta que uses.</li></ul>',
-        en: 'A robust password should be long and hard to guess:<ul><li>Have good length (at least 10 to 12 characters).</li><li>Mix uppercase and lowercase letters, numbers, and symbols, or use a memorable passphrase.</li><li>Avoid your name, birthdate, or obvious personal details.</li><li>Never use predictable patterns like "123456" or "abcdef".</li><li>Be unique across different online accounts.</li></ul>',
+        pt: 'Uma boa palavra-passe deve ser longa e difícil de adivinhar:<ul><li>Quanto mais longa e difícil de adivinhar for uma palavra-passe, melhor.</li><li>Não existe uma combinação obrigatória de letras, números e símbolos. O mais importante é que a palavra-passe seja longa e difícil de adivinhar.</li><li>Evita palavras-passe curtas, previsíveis ou baseadas em informações pessoais (como o teu nome ou data de nascimento).</li><li>Não ser uma sequência simples, como "123456" ou "abcdef".</li><li>Ser diferente para cada conta que uses.</li></ul>',
+        en: 'A robust password should be long and hard to guess:<ul><li>The longer and harder to guess a password is, the better.</li><li>There is no mandatory combination of letters, numbers, and symbols. The most important thing is that the password is long and hard to guess.</li><li>Avoid short, predictable passwords or passwords based on personal information (such as your name or birthdate).</li><li>Never use predictable patterns like "123456" or "abcdef".</li><li>Be unique across different online accounts.</li></ul>',
       },
       icon: '🛡️',
     },
@@ -67,22 +67,22 @@ export const themePalavrasPasseData: ThemeDefinition = {
         en: 'The Anatomy of a Strong Password',
       },
       shortDesc: {
-        pt: 'Comprimento adequado, variedade de carateres e palavras difíceis de adivinhar.',
-        en: 'Good length, character variety, and hard-to-guess combinations.',
+        pt: 'Quanto mais longa e difícil de adivinhar for uma palavra-passe, melhor.',
+        en: 'The longer and harder to guess a password is, the better.',
       },
       icon: '🛡️',
       explanation: {
         pt: [
           'Uma palavra-passe fraca é como deixar a porta de casa aberta: programas automáticos ou terceiros conseguem adivinhá-la com facilidade.',
-          'Regra 1 — Comprimento Adequado: deve ter pelo menos 10 a 12 carateres. Quanto mais comprida, muito mais difícil é de ser adivinhada.',
-          'Regra 2 — Variedade e Criatividade: podes juntar letras MAIÚSCULAS (A-Z), letras minúsculas (a-z), algarismos (0-9) e símbolos especiais (!, #, $, %, @, *), ou criar uma frase-passe com várias palavras.',
-          'O que NUNCA usar: palavras do dicionário simples (como "chocolate" ou "amor"), sequências óbvias ("123456" ou "qwerty") ou informações pessoais (como o teu nome, a tua data de nascimento ou o nome do teu animal de estimação).',
+          'Regra 1 — Comprimento: Quanto mais longa e difícil de adivinhar for uma palavra-passe, melhor.',
+          'Regra 2 — Variedade e Criatividade: Não existe uma combinação obrigatória de letras, números e símbolos. O mais importante é que a palavra-passe seja longa e difícil de adivinhar.',
+          'O que NUNCA usar: Evita palavras-passe curtas, previsíveis ou baseadas em informações pessoais (como o teu nome, a tua data de nascimento, sequências óbvias "123456" ou palavras simples do dicionário).',
         ],
         en: [
           'A weak password is like leaving your front door unlocked: automated tools can easily guess it.',
-          'Rule 1 — Length: at least 10 to 12 characters. Longer passwords are substantially harder to guess.',
-          'Rule 2 — Character Variety: combine UPPERCASE (A-Z), lowercase (a-z), numbers (0-9), and symbols, or use a memorable passphrase.',
-          'What NEVER to use: common dictionary words, obvious keyboard patterns ("123456", "qwerty"), or personal info (birthday, pet name).',
+          'Rule 1 — Length: The longer and harder to guess a password is, the better.',
+          'Rule 2 — Creativity: There is no mandatory combination of letters, numbers, and symbols. The most important thing is that the password is long and hard to guess.',
+          'What NEVER to use: Avoid short, predictable passwords or passwords based on personal information (such as your name, birthdate, obvious sequences like "123456", or simple dictionary words).',
         ],
       },
       example: {
@@ -91,17 +91,17 @@ export const themePalavrasPasseData: ThemeDefinition = {
           en: 'Mariana’s passphrase technique',
         },
         scenario: {
-          pt: 'A Mariana quer criar uma palavra-passe fácil de memorizar mas difícil de adivinhar. Escolheu uma frase pessoal e criativa: "O vento forte soprava 7 nuvens azuis!".',
-          en: 'Mariana wants a memorable yet unguessable password. She picked an imaginative sentence: "O vento forte soprava 7 nuvens azuis!".',
+          pt: 'A Mariana quer criar uma palavra-passe fácil de memorizar mas difícil de adivinhar. Pensou numa frase pessoal: "O vento forte soprava nuvens azuis".',
+          en: 'Mariana wants a memorable yet hard-to-guess password. She thought of a personal sentence: "O vento forte soprava nuvens azuis".',
         },
         tip: {
-          pt: 'Pegou nas primeiras letras de cada palavra e juntou os números e o ponto de exclamação: "Ovfs7na!". Tem bom comprimento, maiúsculas, minúsculas, número e símbolo, sem dados pessoais óbvios!',
-          en: 'She combined the initial letter of each word plus the number and exclamation mark: "Ovfs7na!". It has good length and variety without obvious personal facts!',
+          pt: 'A Mariana optou por uma frase-passe longa ("vento-soprava-nuvens-azuis"), fácil de memorizar para ela e muito difícil de ser adivinhada por terceiros. Evita palavras-passe curtas, previsíveis ou baseadas em informações pessoais.',
+          en: 'Mariana opted for a long passphrase ("vento-soprava-nuvens-azuis"), memorable to her and very hard for anyone else to guess. Avoid short, predictable passwords or passwords based on personal information.',
         },
       },
       funFact: {
-        pt: 'Sabias que sequências simples ou palavras do dicionário são testadas quase instantaneamente por computadores, enquanto uma palavra-passe longa e com diferentes tipos de carateres é muito mais difícil de adivinhar?',
-        en: 'Did you know simple sequences or dictionary words are tested very quickly by computers, whereas long and varied passphrases are much harder to uncover?',
+        pt: 'Sabias que sequências simples ou palavras do dicionário são testadas muito rapidamente por computadores, enquanto uma palavra-passe longa e difícil de adivinhar oferece uma proteção muito superior?',
+        en: 'Did you know simple sequences or dictionary words are tested very quickly by computers, whereas a long, hard-to-guess password offers far superior protection?',
       },
       thinkAboutIt: {
         question: {
@@ -121,27 +121,27 @@ export const themePalavrasPasseData: ThemeDefinition = {
         {
           id: 'q-pass-1',
           question: {
-            pt: 'Qual destas palavras-passe é a mais ROBUSTA e segura?',
-            en: 'Which of the following is the STRONGEST and most secure password?',
+            pt: 'Qual destas opções representa a palavra-passe mais segura e difícil de adivinhar?',
+            en: 'Which option represents the safest and hardest to guess password?',
           },
           options: {
             pt: [
-              'K#9mP!x7$Lq2',
+              'vento-soprava-nuvens-azuis',
               '12345678',
-              'portugal2026',
+              'joao2015',
               'palavrapasse',
             ],
             en: [
-              'K#9mP!x7$Lq2',
+              'vento-soprava-nuvens-azuis',
               '12345678',
-              'portugal2026',
+              'joao2015',
               'palavrapasse',
             ],
           },
           correctIndex: 0,
           explanation: {
-            pt: 'Exato! "K#9mP!x7$Lq2" tem mais de 10 carateres, mistura maiúsculas, minúsculas, números e símbolos sem palavras óbvias.',
-            en: 'Exactly! "K#9mP!x7$Lq2" combines uppercase, lowercase, numbers, and special symbols over 10 characters.',
+            pt: 'Correto! Uma frase-passe longa e difícil de adivinhar é muito mais segura do que sequências previsíveis, palavras comuns ou dados pessoais.',
+            en: 'Correct! A long, hard-to-guess passphrase is far more secure than predictable sequences, common words, or personal information.',
           },
         },
       ],
@@ -345,13 +345,13 @@ export const themePalavrasPasseData: ThemeDefinition = {
             {
               q: 'Qual destas palavras-passe é a mais difícil de adivinhar por um pirata informático?',
               opts: [
-                'B!9q$L7m#zP2',
+                'vento-soprava-nuvens-azuis',
                 '12345678',
                 'maria2014',
                 'palavrapasse'
               ],
               c: 0,
-              e: 'Misturar bom comprimento com maiúsculas, minúsculas, números e símbolos cria uma combinação muito forte e difícil de adivinhar.'
+              e: 'Uma frase-passe longa e imprevisível é muito mais segura e difícil de adivinhar do que sequências simples ou informações pessoais.'
             },
             {
               q: 'Porque é que não deves usar a tua data de nascimento ou o nome do teu animal de estimação como palavra-passe?',
@@ -435,9 +435,9 @@ export const themePalavrasPasseData: ThemeDefinition = {
         desc: 'Associa corretamente cada palavra-passe à respetiva classificação.',
         data: {
           pairs: [
-            { left: 'password123', right: 'Extremamente fraca e vulnerável' },
-            { left: 'Aka7#mP9$kL2', right: 'Forte e altamente segura' },
-            { left: 'futebol2024', right: 'Fácil de adivinhar por dicionário' },
+            { left: 'password123', right: 'Extremamente previsível e vulnerável' },
+            { left: 'vento-soprava-nuvens-azuis', right: 'Longa e difícil de adivinhar' },
+            { left: 'futebol2024', right: 'Curta, previsível e baseada em dados comuns' },
             { left: 'Usar gestor de palavras-passe', right: 'Prática recomendada para guardar chaves' }
           ]
         }
@@ -456,58 +456,6 @@ export const themePalavrasPasseData: ThemeDefinition = {
     },
   ],
   finalQuiz: [
-    {
-      id: 'pass-q1',
-      question: {
-        pt: 'Qual é o comprimento mínimo recomendado para uma palavra-passe considerada segura?',
-        en: 'What is the recommended minimum length for a secure password?',
-      },
-      options: {
-        pt: [
-          'Pelo menos 10 a 12 carateres',
-          'Exatamente 4 letras minúsculas',
-          'Apenas 6 números sequenciais',
-          'Não importa o comprimento, desde que seja uma palavra comum',
-        ],
-        en: [
-          'At least 10 to 12 characters',
-          'Exactly 4 lowercase letters',
-          'Only 6 sequential numbers',
-          'Length does not matter as long as it is a common word',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'Palavras-passe com 10 ou mais carateres oferecem grande resistência contra tentativas automáticas de adivinhação.',
-        en: 'Passwords of 10+ characters provide strong resistance against automated brute-force attacks.',
-      },
-    },
-    {
-      id: 'pass-q2',
-      question: {
-        pt: 'Quais os 4 tipos de carateres que devem ser misturados numa palavra-passe forte?',
-        en: 'What 4 character types should be combined in a strong password?',
-      },
-      options: {
-        pt: [
-          'Maiúsculas, minúsculas, números e símbolos especiais (!, #, $, %)',
-          'Apenas letras minúsculas do abecedário',
-          'Apenas algarismos de 1 a 9',
-          'Apenas emojis coloridos',
-        ],
-        en: [
-          'Uppercase, lowercase, numbers, and special symbols (!, #, $, %)',
-          'Only lowercase letters',
-          'Only numbers 1 through 9',
-          'Only colored emojis',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'A diversidade entre maiúsculas, minúsculas, números e símbolos torna a palavra-passe muito mais resistente.',
-        en: 'Combining distinct character classes dramatically expands password strength.',
-      },
-    },
     {
       id: 'pass-q3',
       question: {

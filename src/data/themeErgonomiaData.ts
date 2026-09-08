@@ -262,7 +262,7 @@ export const themeErgonomiaData: ThemeDefinition = {
           'Pausas Periódicas: a cada 45 a 60 minutos, levanta-te da cadeira durante 5 minutos para esticar as pernas, beber um copo de água e mover os braços.',
           'Exercício do Pescoço: roda suavemente a cabeça para a esquerda e para a direita, e inclina a orelha em direção ao ombro devagar.',
           'Exercício dos Pulsos: estica os braços para a frente e flete os pulsos para cima e para baixo suavemente para prevenir tendinites.',
-          'Descanso dos Olhos: pestaneja várias vezes conscientemente e olha para uma árvore ou para o céu pela janela.',
+          'Regra 20-20-20: é uma estratégia para fazer pausas e reduzir o esforço visual durante períodos prolongados diante de um ecrã (olhar para longe durante 20 segundos a cada 20 minutos).',
         ],
         en: [
           'The human body is designed for movement, not staying frozen in a chair for hours.',
@@ -424,8 +424,8 @@ export const themeErgonomiaData: ThemeDefinition = {
           pairs: [
             { left: 'Pescoço dorido a olhar para baixo', right: 'Elevar o ecrã ao nível dos olhos' },
             { left: 'Olhos secos e cansados', right: 'Aplicar a regra 20-20-20 e pestanejar' },
-            { left: 'Pulsos doridos no teclado', right: 'Manter os punhos direitos e apoio almofadado' },
-            { left: 'Fadiga geral ao fim de horas', right: 'Fazer pausas e caminhar a cada 45 minutos' }
+            { left: 'Pulsos doridos no teclado', right: 'Manter os punhos numa posição confortável e evitar tensão.' },
+            { left: 'Fadiga geral ao fim de horas', right: 'Fazer pausas regulares e mudar de posição.' }
           ]
         }
       }
@@ -803,8 +803,8 @@ export const themeErgonomiaData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Levantar e caminhar durante alguns minutos estimula a circulação e reoxigena o cérebro.',
-        en: 'Standing and walking for a few minutes reactivates circulation and reoxygenates the brain.',
+        pt: 'Levantar e caminhar durante alguns minutos ajuda a descansar o corpo e a evitar permanecer demasiado tempo na mesma posição.',
+        en: 'Standing and walking for a few minutes helps rest the body and avoids staying in the same position for too long.',
       },
     },
     {

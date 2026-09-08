@@ -14,55 +14,53 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
   const [completedChallenges, setCompletedChallenges] = useState<number[]>([]);
   const t = translations[language];
 
-  // Analysis of mock password according to modern standards (length, passphrases, variety)
-  const isLongEnough = mockPassword.length >= 12;
+  // Analysis of mock password according to modern standards (length, hard to guess, no personal data, no predictable patterns)
+  const isLong = mockPassword.length >= 12;
   const wordCount = mockPassword.trim().split(/[\s\-_.]+/).filter((w) => w.length >= 2).length;
   const isPassphrase = wordCount >= 3 && mockPassword.length >= 14;
-  const hasNoObviousSequences = !/12345|qwerty|abcdef|password/i.test(mockPassword);
-  const hasMixedChars = (/[A-Z]/.test(mockPassword) ? 1 : 0) +
-                        (/[0-9]/.test(mockPassword) ? 1 : 0) +
-                        (/[^A-Za-z0-9]/.test(mockPassword) ? 1 : 0) >= 1;
+  const distinctChars = new Set(mockPassword.split('')).size;
+  
+  const hasNoObviousSequences = !/12345|qwerty|abcdef|password|87654|asdfgh/i.test(mockPassword) && !/^(.)\1+$/.test(mockPassword);
+  const personalTerms = /maria|martim|joao|pedro|ana|escola|benfica|porto|sporting|2010|2011|2012|2013|2014|2015|2016|2024|2025|2026/i;
+  const hasNoPersonalInfo = !personalTerms.test(mockPassword);
+  const hasNoPredictablePatterns = hasNoObviousSequences;
+  const isHardToGuess = (isPassphrase || (mockPassword.length >= 10 && distinctChars >= 5)) && hasNoObviousSequences && hasNoPersonalInfo;
 
-  // Modern evaluation: length or passphrase is king!
+  // Modern evaluation: length, unpredictability, no personal info
   let strengthLabel = { pt: 'Precisa de melhorar', en: 'Needs improvement' };
   let strengthColor = 'bg-amber-400';
   let strengthScore = 35;
 
-  if (isPassphrase && hasNoObviousSequences) {
-    strengthLabel = { pt: 'Excelente (Frase-passe robusta)', en: 'Excellent (Strong Passphrase)' };
+  const criteriaMetCount = [
+    isLong,
+    isHardToGuess,
+    hasNoPersonalInfo,
+    hasNoPredictablePatterns,
+  ].filter(Boolean).length;
+
+  if (criteriaMetCount === 4) {
+    strengthLabel = { pt: 'Excelente e muito segura', en: 'Excellent and very secure' };
     strengthColor = 'bg-emerald-500';
     strengthScore = 100;
-  } else if (isLongEnough && hasNoObviousSequences && hasMixedChars) {
-    strengthLabel = { pt: 'Muito boa e longa', en: 'Very good and long' };
+  } else if (criteriaMetCount === 3) {
+    strengthLabel = { pt: 'Boa (Bastante segura)', en: 'Good (Quite secure)' };
     strengthColor = 'bg-emerald-500';
-    strengthScore = 95;
-  } else if (isLongEnough && hasNoObviousSequences) {
-    strengthLabel = { pt: 'Boa (Bom comprimento)', en: 'Good (Good length)' };
-    strengthColor = 'bg-blue-500';
-    strengthScore = 75;
-  } else if (mockPassword.length >= 8 && hasNoObviousSequences) {
-    strengthLabel = { pt: 'Média (Aumenta o comprimento)', en: 'Medium (Increase length)' };
+    strengthScore = 80;
+  } else if (criteriaMetCount === 2) {
+    strengthLabel = { pt: 'Média (Torna-a mais longa e imprevisível)', en: 'Medium (Make it longer and unguessable)' };
     strengthColor = 'bg-amber-500';
     strengthScore = 55;
   } else {
-    strengthLabel = { pt: 'Fraca ou curta', en: 'Weak or short' };
+    strengthLabel = { pt: 'Fraca ou previsível', en: 'Weak or predictable' };
     strengthColor = 'bg-rose-500';
     strengthScore = 25;
   }
-
-  // Criteria met count
-  const criteriaMetCount = [
-    isLongEnough,
-    hasNoObviousSequences,
-    hasMixedChars,
-    mockPassword.length >= 12 || isPassphrase,
-  ].filter(Boolean).length;
 
   // Pre-configured training samples for student to test
   const testSamples = [
     { label: '123456', hint: { pt: 'Demasiado curta, previsível e fácil de adivinhar', en: 'Too short, predictable, and easy to guess' } },
     { label: 'qwerty', hint: { pt: 'Sequência óbvia no teclado', en: 'Obvious keyboard row sequence' } },
-    { label: 'Escola2024!', hint: { pt: 'Fórmula previsível (palavra comum + ano + símbolo); preferível mais longa', en: 'Predictable formula (common word + year + symbol); longer is better' } },
+    { label: 'joao2015', hint: { pt: 'Previsível e baseada em dados pessoais óbvios', en: 'Predictable and based on obvious personal data' } },
     { label: 'cavalo-amarelo-corre-depressa', hint: { pt: 'Excelente frase-passe! Longa, fácil de memorizar e difícil de adivinhar', en: 'Excellent passphrase! Long, memorable, and hard to guess' } },
   ];
 
@@ -153,42 +151,42 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
         {/* Requirements Checklist */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           <div className={`p-3 rounded-xl border flex items-center gap-2.5 text-xs font-semibold ${
-            isLongEnough ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
+            isLong ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
           }`}>
-            {isLongEnough ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
+            {isLong ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
             <div>
-              <p>{language === 'pt' ? 'Comprimento (12+ carateres)' : 'Length (12+ characters)'}</p>
-              <p className="text-[10px] opacity-75 font-normal">{language === 'pt' ? '⭐ Critério principal de segurança' : '⭐ Primary security criterion'}</p>
+              <p>{language === 'pt' ? 'Longa' : 'Long'}</p>
+              <p className="text-[10px] opacity-75 font-normal">{language === 'pt' ? 'Quanto mais longa for, melhor' : 'The longer it is, the better'}</p>
             </div>
           </div>
 
           <div className={`p-3 rounded-xl border flex items-center gap-2.5 text-xs font-semibold ${
-            isPassphrase ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
+            isHardToGuess ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
           }`}>
-            {isPassphrase ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
+            {isHardToGuess ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
             <div>
-              <p>{language === 'pt' ? 'Frase-passe (várias palavras)' : 'Passphrase (multiple words)'}</p>
-              <p className="text-[10px] opacity-75 font-normal">{language === 'pt' ? 'Fácil de lembrar, difícil de adivinhar' : 'Easy to remember, hard to guess'}</p>
+              <p>{language === 'pt' ? 'Difícil de adivinhar' : 'Hard to guess'}</p>
+              <p className="text-[10px] opacity-75 font-normal">{language === 'pt' ? 'Frase-passe ou termos imprevisíveis' : 'Passphrase or unpredictable words'}</p>
             </div>
           </div>
 
           <div className={`p-3 rounded-xl border flex items-center gap-2.5 text-xs font-semibold ${
-            hasNoObviousSequences ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
+            hasNoPersonalInfo ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
           }`}>
-            {hasNoObviousSequences ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
+            {hasNoPersonalInfo ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
             <div>
-              <p>{language === 'pt' ? 'Sem sequências previsíveis' : 'No predictable sequences'}</p>
-              <p className="text-[10px] opacity-75 font-normal">{language === 'pt' ? 'Sem 12345, qwerty ou dados óbvios' : 'No 12345, qwerty or obvious data'}</p>
+              <p>{language === 'pt' ? 'Sem informação pessoal óbvia' : 'No obvious personal info'}</p>
+              <p className="text-[10px] opacity-75 font-normal">{language === 'pt' ? 'Sem nomes, anos ou dados conhecidos' : 'No names, years, or personal facts'}</p>
             </div>
           </div>
 
           <div className={`p-3 rounded-xl border flex items-center gap-2.5 text-xs font-semibold ${
-            hasMixedChars ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
+            hasNoPredictablePatterns ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
           }`}>
-            {hasMixedChars ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
+            {hasNoPredictablePatterns ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
             <div>
-              <p>{language === 'pt' ? 'Variedade (opcional)' : 'Variety (optional)'}</p>
-              <p className="text-[10px] opacity-75 font-normal">{language === 'pt' ? 'Maiúsculas, números ou símbolos' : 'Uppercase, numbers, or symbols'}</p>
+              <p>{language === 'pt' ? 'Sem padrões muito previsíveis' : 'No predictable patterns'}</p>
+              <p className="text-[10px] opacity-75 font-normal">{language === 'pt' ? 'Sem 12345, qwerty ou repetições' : 'No 12345, qwerty, or repeats'}</p>
             </div>
           </div>
         </div>

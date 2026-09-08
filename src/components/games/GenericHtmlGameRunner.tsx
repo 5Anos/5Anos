@@ -66,40 +66,30 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
   const type = gameData.type;
   const data = gameData.data;
 
-  // Validate rules for password builder
+  // Validate rules for password builder (focusing on length, hard to guess, no personal data, no predictable patterns)
   const validatePasswordRules = (pwd: string) => {
-    const hasMinLen = pwd.length >= 8;
-    const hasUpper = /[A-Z]/.test(pwd);
-    const hasLower = /[a-z]/.test(pwd);
-    const hasNum = /[0-9]/.test(pwd);
-    const hasSym = /[@#$%&*!^()_+\-=[\]{};':"\\|,.<>/?]/.test(pwd);
-
+    const isLong = pwd.length >= 8;
     const pwdLower = pwd.toLowerCase();
-    const obviousSequences = ['12345678', '1234567', 'abcdefgh', 'abcdefg', 'password', 'qwerty', '87654321', 'hgfedcba', '1234', 'abcd'];
+    const obviousSequences = ['12345678', '1234567', 'abcdefgh', 'abcdefg', 'password', 'qwerty', '87654321', 'hgfedcba', '1234', 'abcd', '1111', '0000'];
     const hasObviousSeq = obviousSequences.some((seq) => pwdLower.includes(seq));
 
     const distinctChars = new Set(pwd.split('')).size;
-    const hasOnlyRepeated = pwd.length >= 8 && distinctChars <= 2;
+    const hasOnlyRepeated = pwd.length >= 6 && distinctChars <= 2;
 
     const personalTerms = ['maria', 'tobi', 'martim', 'joao', 'pedro', 'ana', 'escola', 'gato', 'cao', 'admin', 'user'];
     const hasPersonalInfo = personalTerms.some((term) => pwdLower.includes(term));
+    const isHardToGuess = distinctChars >= 4 && pwd.length >= 8 && !hasObviousSeq;
 
     const allValid =
-      hasMinLen &&
-      hasUpper &&
-      hasLower &&
-      hasNum &&
-      hasSym &&
+      isLong &&
+      isHardToGuess &&
       !hasObviousSeq &&
       !hasOnlyRepeated &&
       !hasPersonalInfo;
 
     return {
-      hasMinLen,
-      hasUpper,
-      hasLower,
-      hasNum,
-      hasSym,
+      hasMinLen: isLong,
+      isHardToGuess,
       noObviousSeq: !hasObviousSeq,
       noRepeated: !hasOnlyRepeated,
       noPersonalInfo: !hasPersonalInfo,

@@ -50,13 +50,13 @@ export const theme1Data: ThemeDefinition = {
         pt: [
           'Estar seguro no mundo digital significa saber utilizar a tecnologia sem colocar em risco as tuas informações pessoais, os teus aparelhos ou o teu bem-estar.',
           'Um dispositivo seguro precisa de três cuidados essenciais: um código ou padrão de bloqueio de ecrã, um sistema operativo sempre atualizado e um antivírus ativo para evitar programas prejudiciais (malware).',
-          'A tua palavra-passe é a chave digital da tua vida online. Nunca deves utilizar palavras óbvias como "123456" ou o teu nome próprio. Uma palavra-passe forte junta letras maiúsculas, minúsculas, números e símbolos especiais.',
+          'A tua palavra-passe é a chave digital da tua vida online. Quanto mais longa e difícil de adivinhar for uma palavra-passe, melhor. Evita palavras-passe curtas, previsíveis ou baseadas em informações pessoais.',
           'Lembra-te: a tua palavra-passe é secreta e pessoal. Apenas os teus pais ou encarregados de educação podem conhecê-la para te ajudar a estar seguro!',
         ],
         en: [
           'Being safe in the digital world means knowing how to use technology without putting your personal information, devices, or wellbeing at risk.',
           'A secure device requires three essential safeguards: a screen lock PIN or pattern, an up-to-date operating system, and an active antivirus to prevent malicious software (malware).',
-          'Your password is the digital key to your online life. Never use obvious words like "123456" or your first name. A strong password combines uppercase and lowercase letters, numbers, and special symbols.',
+          'Your password is the digital key to your online life. The longer and harder to guess a password is, the better. Avoid short, predictable passwords or passwords based on personal information.',
           'Remember: your password is private. Only your parents or guardians may know it to help keep you safe!',
         ],
       },

@@ -24,8 +24,8 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       eyebrow: { pt: 'Vamos descobrir', en: "Let's discover" },
       h: { pt: 'O que é o correio eletrónico?', en: 'What is email?' },
       body: {
-        pt: 'O correio eletrónico (email) é um serviço que permite enviar e receber mensagens através da Internet, usando um endereço próprio — por exemplo, <strong>nome@exemplo.com</strong>.<br><br>É muito usado na escola, no trabalho e para comunicar de forma mais formal do que numa rede social.<br><br><strong>História e Origem:</strong><br>• Primeiros testes: início da década de 1960.<br>• Em 1971, <strong>Ray Tomlinson</strong> enviou a primeira mensagem eletrónica entre computadores.<br>• Foi ele quem introduziu o uso do símbolo <strong>@</strong> para separar o nome do utilizador do domínio.',
-        en: 'Email is an online service that allows sending and receiving messages over the Internet using a unique address — for instance, <strong>name@example.com</strong>.<br><br>It is widely used in school, work, and for more formal communication than social media.<br><br><strong>History and Origins:</strong><br>• Early experiments: beginning of the 1960s.<br>• In 1971, <strong>Ray Tomlinson</strong> sent the first electronic message between computers.<br>• He introduced the use of the <strong>@</strong> symbol to separate the username from the domain name.',
+        pt: 'O correio eletrónico (email) é um serviço que permite enviar e receber mensagens através da Internet, usando um endereço próprio — por exemplo, <strong>nome@exemplo.com</strong>.<br><br>É muito usado na escola, no trabalho e para comunicar de forma mais formal do que numa rede social.<br><br><strong>História e Origem:</strong><br>• Em 1971, <strong>Ray Tomlinson</strong> desenvolveu um sistema que permitia enviar mensagens entre computadores numa rede e utilizou o símbolo <strong>@</strong> nos endereços de email.',
+        en: 'Email is an online service that allows sending and receiving messages over the Internet using a unique address — for instance, <strong>name@example.com</strong>.<br><br>It is widely used in school, work, and for more formal communication than social media.<br><br><strong>History and Origins:</strong><br>• In 1971, <strong>Ray Tomlinson</strong> developed a system allowing messages between networked computers and introduced the <strong>@</strong> symbol in email addresses.',
       },
       icon: '✉️',
     },
@@ -109,8 +109,8 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Sabias que o primeiro email foi enviado em 1971 por Ray Tomlinson? Foi ele quem escolheu o símbolo "@" para separar o utilizador do computador!',
-        en: 'Did you know the first email was sent in 1971 by Ray Tomlinson? He picked the "@" symbol to separate the user from the machine!',
+        pt: 'Em 1971, Ray Tomlinson desenvolveu um sistema que permitia enviar mensagens entre computadores numa rede e utilizou o símbolo @ nos endereços de email.',
+        en: 'In 1971, Ray Tomlinson developed a system allowing messages between networked computers and introduced the @ symbol in email addresses.',
       },
       thinkAboutIt: {
         question: {
@@ -173,13 +173,17 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
           'Netiqueta no Email: saudação cordial, frases respeitosas, evitar CAPS LOCK e incluir assinatura.',
           'Diferença entre Para, Cc (Com conhecimento) e Bcc (Cópia oculta): use Bcc para proteger a privacidade dos contactos de várias pessoas.',
           'Alerta Phishing: emails a oferecer prémios falsos, a pedir palavras-passe ou com links estranhos.',
-          'Nunca abrir anexos de remetentes desconhecidos com extensões executáveis (.exe, .zip suspeitos).',
+          'Não abras anexos inesperados ou suspeitos, sobretudo quando vêm de remetentes desconhecidos.',
+          'Um ficheiro .EXE é executável, ou seja, pode iniciar um programa. Um ficheiro deste tipo que chegue inesperadamente deve ser tratado com especial cuidado.',
+          'Um ficheiro .ZIP é um arquivo comprimido que pode conter vários ficheiros. Se vier de uma origem desconhecida, deve ser tratado com cuidado.',
         ],
         en: [
           'Email Netiquette: polite greeting, respectful tone, avoiding all caps, and signing your name.',
           'To vs Cc vs Bcc: use Bcc to safeguard the privacy of recipients in group emails.',
           'Phishing awareness: fake prize notifications, urgent credential requests, and suspicious links.',
-          'Never open untrusted attachments with executable extensions (.exe, strange archives).',
+          'Do not open unexpected or suspicious attachments, especially when they come from unknown senders.',
+          'An .EXE file is executable, meaning it can launch a program. Such a file arriving unexpectedly must be treated with special care.',
+          'A .ZIP file is a compressed archive that can contain multiple files. If it comes from an unknown source, it must be handled with caution.',
         ],
       },
       example: {
@@ -334,7 +338,7 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
         data: {
           items: [
             { s: 'Escrever uma mensagem inteira em LETRAS MAIÚSCULAS equivale a estar a gritar.', a: true, e: 'Correto na etiqueta digital! Escrever em maiúsculas transmite agressividade.' },
-            { s: 'Devemos abrir sempre qualquer anexo enviado por um endereço desconhecido.', a: false, e: 'Incorreto! Anexos desconhecidos podem conter vírus ou ransomware.' },
+            { s: 'Devemos abrir sempre qualquer anexo enviado por um endereço desconhecido.', a: false, e: 'Anexos inesperados podem conter ficheiros perigosos. Não os abras sem confirmar com um adulto.' },
             { s: 'O assunto do email deve resumir claramente o conteúdo da mensagem.', a: true, e: 'Correto! Ajuda o destinatário a perceber do que se trata antes de abrir.' }
           ]
         }
