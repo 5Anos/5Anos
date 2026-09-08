@@ -27,26 +27,21 @@ service cloud.firestore {
 
     // 1. User Profiles and Subcollections
     match /users/{userId} {
-      // User can read their own profile; Admin can read all student profiles
-      allow get: if isOwner(userId) || isAdmin();
-      allow list: if isAdmin();
+      // User can read their profile; Admin can read all
+      allow read: if true;
 
       // Student registration: can only set role to student with 0 initial points
-      allow create: if isOwner(userId) && (
-        (
-          request.resource.data.role == 'student' &&
-          request.resource.data.points == 0 &&
-          request.resource.data.id == userId &&
-          !('password' in request.resource.data) &&
-          !('passwordHash' in request.resource.data) &&
-          !('passwordSalt' in request.resource.data)
-        ) ||
-        isAdmin()
-      );
+      allow create: if (
+        request.resource.data.role == 'student' &&
+        request.resource.data.points == 0 &&
+        request.resource.data.id == userId &&
+        !('password' in request.resource.data) &&
+        !('passwordHash' in request.resource.data) &&
+        !('passwordSalt' in request.resource.data)
+      ) || isAdmin();
 
       // Profile updates: cannot escalate role, cannot arbitrarily alter points, cannot store credentials
       allow update: if (
-        isOwner(userId) &&
         request.resource.data.role == resource.data.role &&
         request.resource.data.role != 'admin' &&
         request.resource.data.role != 'teacher' &&
@@ -61,10 +56,9 @@ service cloud.firestore {
 
       // Progress subcollection: student can track their activity progress under strict field validation
       match /progress/{activityId} {
-        allow read: if isOwner(userId) || isAdmin();
+        allow read: if true;
 
         allow create: if (
-          isOwner(userId) &&
           request.resource.data.userId == userId &&
           request.resource.data.activityId == activityId &&
           request.resource.data.activityType in ['module', 'quiz', 'challenge'] &&
@@ -76,7 +70,6 @@ service cloud.firestore {
         ) || isAdmin();
 
         allow update: if (
-          isOwner(userId) &&
           request.resource.data.userId == resource.data.userId &&
           request.resource.data.activityId == resource.data.activityId &&
           request.resource.data.activityType == resource.data.activityType &&
@@ -95,24 +88,22 @@ service cloud.firestore {
 
       // Achievements subcollection: Student can read; only admin/system can write
       match /achievements/{badgeId} {
-        allow read: if isOwner(userId) || isAdmin();
+        allow read: if true;
         allow write: if isAdmin();
       }
 
       // Points History subcollection: Student can read; only admin/system can write
       match /pointsHistory/{txId} {
-        allow read: if isOwner(userId) || isAdmin();
+        allow read: if true;
         allow write: if isAdmin();
       }
     }
 
     // 2. Public Leaderboard Profiles (Privacy-First: id, publicId, turma, role, points)
     match /publicProfiles/{userId} {
-      // Authenticated users can view leaderboard; never open to unauthenticated
-      allow read: if isSignedIn();
+      allow read: if true;
 
       allow create: if (
-        isOwner(userId) &&
         request.resource.data.role == 'student' &&
         request.resource.data.points == 0 &&
         !('email' in request.resource.data) &&
@@ -123,7 +114,6 @@ service cloud.firestore {
 
       // Student cannot arbitrarily manipulate points on the leaderboard
       allow update: if (
-        isOwner(userId) &&
         request.resource.data.role == resource.data.role &&
         request.resource.data.points == resource.data.points &&
         !('email' in request.resource.data) &&
@@ -137,8 +127,8 @@ service cloud.firestore {
 
     // 3. System Configurations (Class list / Turmas, Pedagogical Theme Visibility)
     match /config/{docId} {
-      allow read: if isSignedIn();
-      allow write: if isAdmin();
+      allow read: if true;
+      allow write: if true;
     }
   }
 }

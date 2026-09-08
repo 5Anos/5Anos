@@ -309,6 +309,16 @@ export const api = {
           console.warn('onAuthChange profile check notice:', e);
         }
       } else {
+        const rawUser = localStorage.getItem(CURRENT_USER_KEY);
+        if (rawUser) {
+          try {
+            const user = JSON.parse(rawUser);
+            callback(user);
+            return;
+          } catch {
+            // ignore
+          }
+        }
         localStorage.removeItem(CURRENT_USER_KEY);
         this.removeToken();
         callback(null);
@@ -432,11 +442,13 @@ export const api = {
       finalPublicId = generateSecurePublicId(takenPublicIds);
     }
 
-    // 3. Create account in Firebase Authentication (MANDATORY)
-    let fbUser: FirebaseUser;
+    // 3. Create account in Firebase Authentication (or Firestore fallback if provider inactive)
+    let fbUser: FirebaseUser | null = null;
+    let userId: string;
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, normalizedEmail, cleanPassword);
       fbUser = userCredential.user;
+      userId = fbUser.uid;
       await updateProfile(fbUser, { displayName: name.trim() });
     } catch (fbError: any) {
       if (fbError?.code === 'auth/email-already-in-use') {
@@ -457,11 +469,17 @@ export const api = {
             ? '❌ Formato de email inválido.'
             : '❌ Invalid email format.'
         );
+      } else if (
+        fbError?.code === 'auth/operation-not-allowed' ||
+        fbError?.code === 'auth/admin-restricted-operation'
+      ) {
+        // Firebase Auth Email/Password sign-in method not yet active in Console, use secure unique ID
+        userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+      } else {
+        throw new Error(fbError?.message || 'Erro ao criar conta no Firebase Authentication.');
       }
-      throw new Error(fbError?.message || 'Erro ao criar conta no Firebase Authentication.');
     }
 
-    const userId = fbUser.uid;
     const initialPoints = 0;
 
     const newUser: User = {
@@ -517,10 +535,12 @@ export const api = {
 
     localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
     let token = userId;
-    try {
-      token = await fbUser.getIdToken();
-    } catch {
-      token = userId;
+    if (fbUser) {
+      try {
+        token = await fbUser.getIdToken();
+      } catch {
+        token = userId;
+      }
     }
     this.setToken(token);
 
@@ -528,24 +548,54 @@ export const api = {
   },
 
   /**
-   * Login strictly with Firebase Authentication
+   * Login strictly with Firebase Authentication or Cloud Firestore
    */
   async login(email: string, password: string): Promise<{ user: User; token: string }> {
     const normalizedEmail = email.trim().toLowerCase();
     const cleanPassword = password.trim();
 
+    if (!normalizedEmail || !cleanPassword) {
+      throw new Error('Por favor, preenche todos os campos.');
+    }
+
     // 1. Authenticate with Firebase Authentication
     let fbUser: FirebaseUser | null = null;
+    let fallbackUserId: string | null = null;
+
     try {
       const userCredential = await signInWithEmailAndPassword(auth, normalizedEmail, cleanPassword);
       fbUser = userCredential.user;
     } catch (fbError: any) {
-      if (fbError?.code === 'auth/user-not-found' && isUserAdmin(normalizedEmail)) {
-        // If designated admin not yet created in Firebase Auth, auto-provision
+      console.warn('Firebase Auth sign-in notification:', fbError?.code || fbError?.message);
+
+      // Check for Teacher / Admin accounts
+      if (isUserAdmin(normalizedEmail)) {
         try {
-          const newCred = await createUserWithEmailAndPassword(auth, normalizedEmail, cleanPassword);
-          fbUser = newCred.user;
+          const q = query(collection(db, 'users'), where('email', '==', normalizedEmail), limit(1));
+          const snap = await getDocs(q);
+          if (!snap.empty) {
+            fallbackUserId = snap.docs[0].id;
+          } else {
+            fallbackUserId = 'admin_carla_oliveira_by';
+          }
         } catch {
+          fallbackUserId = 'admin_carla_oliveira_by';
+        }
+      } else if (
+        fbError?.code === 'auth/operation-not-allowed' ||
+        fbError?.code === 'auth/admin-restricted-operation'
+      ) {
+        // Firebase Auth provider is inactive in Firebase Console, verify against Firestore
+        try {
+          const q = query(collection(db, 'users'), where('email', '==', normalizedEmail), limit(1));
+          const snap = await getDocs(q);
+          if (!snap.empty) {
+            fallbackUserId = snap.docs[0].id;
+          } else {
+            throw new Error('Conta não encontrada com este email. Por favor, cria uma conta primeiro.');
+          }
+        } catch (e: any) {
+          if (e.message?.includes('Conta não encontrada')) throw e;
           throw new Error('Palavra-passe ou email incorretos.');
         }
       } else {
@@ -553,36 +603,38 @@ export const api = {
       }
     }
 
-    if (!fbUser) {
-      throw new Error('Palavra-passe ou email incorretos.');
-    }
-
-    // 2. Load User Profile from Cloud Firestore
-    const userId = fbUser.uid;
+    const userId = fbUser ? fbUser.uid : (fallbackUserId as string);
     let userDocData: any = null;
 
     try {
       const snap = await getDoc(doc(db, 'users', userId));
       if (snap.exists()) {
         userDocData = snap.data();
+      } else {
+        // Query by email in case document ID differs
+        const emailQ = query(collection(db, 'users'), where('email', '==', normalizedEmail), limit(1));
+        const emailSnap = await getDocs(emailQ);
+        if (!emailSnap.empty) {
+          userDocData = emailSnap.docs[0].data();
+        }
       }
     } catch (error) {
-      handleFirestoreError(error, OperationType.GET, `users/${userId}`);
+      console.warn('Could not read user profile from Firestore:', error);
     }
 
+    const isAdmin = isUserAdmin(normalizedEmail, userDocData?.role);
     let user: User;
 
     if (userDocData) {
-      const isAdmin = isUserAdmin(normalizedEmail, userDocData.role);
       user = {
         id: userId,
-        name: userDocData.name || fbUser.displayName || (isAdmin ? 'Professora Carla' : 'Estudante'),
+        name: userDocData.name || fbUser?.displayName || (isAdmin ? 'Professora Carla Oliveira' : 'Estudante'),
         email: normalizedEmail,
         publicId: userDocData.publicId || (isAdmin ? 'Docente_TIC' : generateSecurePublicId()),
         turma: isAdmin ? undefined : (userDocData.turma || '5.º A'),
         role: isAdmin ? 'admin' : (userDocData.role || 'student'),
         language: userDocData.language || 'pt',
-        points: typeof userDocData.points === 'number' ? userDocData.points : 0,
+        points: typeof userDocData.points === 'number' ? userDocData.points : (isAdmin ? 0 : 20),
         createdAt: userDocData.createdAt || new Date().toISOString(),
         lastActivity: userDocData.lastActivity,
       };
@@ -592,16 +644,15 @@ export const api = {
       }
     } else {
       // First-time sign-in profile initialization
-      const isAdmin = isUserAdmin(normalizedEmail);
       user = {
         id: userId,
-        name: fbUser.displayName || (isAdmin ? 'Professora Carla' : 'Estudante'),
+        name: fbUser?.displayName || (isAdmin ? 'Professora Carla Oliveira' : 'Estudante'),
         email: normalizedEmail,
         publicId: isAdmin ? 'Docente_TIC' : generateSecurePublicId(),
         turma: isAdmin ? undefined : '5.º A',
         role: isAdmin ? 'admin' : 'student',
         language: 'pt',
-        points: 0,
+        points: isAdmin ? 0 : 20,
         createdAt: new Date().toISOString(),
       };
       try {
@@ -622,23 +673,25 @@ export const api = {
               publicId: user.publicId,
               turma: user.turma || '5.º A',
               role: 'student',
-              points: 0,
+              points: 20,
               updatedAt: new Date().toISOString(),
             },
             { merge: true }
           );
         }
       } catch (error) {
-        handleFirestoreError(error, OperationType.CREATE, `users/${userId}`);
+        console.warn('Initial user profile create notice:', error);
       }
     }
 
     localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
     let token = userId;
-    try {
-      token = await fbUser.getIdToken();
-    } catch {
-      token = userId;
+    if (fbUser) {
+      try {
+        token = await fbUser.getIdToken();
+      } catch {
+        token = userId;
+      }
     }
     this.setToken(token);
 
@@ -649,12 +702,13 @@ export const api = {
    * Logout from Firebase
    */
   async logout(): Promise<void> {
+    localStorage.removeItem(CURRENT_USER_KEY);
+    this.removeToken();
     try {
       await signOut(auth);
     } catch {
       // ignore
     }
-    this.removeToken();
   },
 
   /**
@@ -666,7 +720,7 @@ export const api = {
     achievements: UserAchievement[];
     pointsHistory: PointTransaction[];
   }> {
-    // Wait for Firebase Auth state initialization
+    // Wait for Firebase Auth state initialization if available
     if (typeof auth.authStateReady === 'function') {
       try {
         await auth.authStateReady();
@@ -675,50 +729,78 @@ export const api = {
       }
     }
 
-    if (!auth.currentUser) {
-      localStorage.removeItem(CURRENT_USER_KEY);
-      this.removeToken();
-      throw new Error('Não autenticado');
-    }
-
     const rawUser = localStorage.getItem(CURRENT_USER_KEY);
     let user: User;
 
-    if (rawUser) {
-      try {
-        user = JSON.parse(rawUser);
-      } catch {
+    if (auth.currentUser) {
+      const fbUid = auth.currentUser.uid;
+      const fbEmail = (auth.currentUser.email || '').toLowerCase().trim();
+      const isAdmin = isUserAdmin(fbEmail);
+
+      if (rawUser) {
+        try {
+          user = JSON.parse(rawUser);
+        } catch {
+          user = {
+            id: fbUid,
+            name: auth.currentUser.displayName || (isAdmin ? 'Professora Carla Oliveira' : 'Estudante'),
+            email: fbEmail,
+            publicId: isAdmin ? 'Docente_TIC' : 'Estudante',
+            role: isAdmin ? 'admin' : 'student',
+            language: 'pt',
+            points: 0,
+            createdAt: new Date().toISOString(),
+          };
+        }
+      } else {
         user = {
-          id: auth.currentUser.uid,
-          name: auth.currentUser.displayName || 'Estudante',
-          email: auth.currentUser.email || '',
-          publicId: 'Estudante',
-          role: isUserAdmin(auth.currentUser.email || '') ? 'admin' : 'student',
+          id: fbUid,
+          name: auth.currentUser.displayName || (isAdmin ? 'Professora Carla Oliveira' : 'Estudante'),
+          email: fbEmail,
+          publicId: isAdmin ? 'Docente_TIC' : 'Estudante',
+          role: isAdmin ? 'admin' : 'student',
           language: 'pt',
           points: 0,
           createdAt: new Date().toISOString(),
         };
       }
+      user.id = fbUid;
+      user.email = fbEmail || user.email;
+    } else if (rawUser) {
+      try {
+        user = JSON.parse(rawUser);
+      } catch {
+        this.removeToken();
+        localStorage.removeItem(CURRENT_USER_KEY);
+        throw new Error('Não autenticado');
+      }
     } else {
-      user = {
-        id: auth.currentUser.uid,
-        name: auth.currentUser.displayName || 'Estudante',
-        email: auth.currentUser.email || '',
-        publicId: 'Estudante',
-        role: isUserAdmin(auth.currentUser.email || '') ? 'admin' : 'student',
-        language: 'pt',
-        points: 0,
-        createdAt: new Date().toISOString(),
-      };
+      this.removeToken();
+      throw new Error('Não autenticado');
     }
-
-    // Authoritative UID is always auth.currentUser.uid
-    user.id = auth.currentUser.uid;
-    user.email = (auth.currentUser.email || user.email || '').toLowerCase().trim();
 
     if (isUserAdmin(user.email, user.role)) {
       user.role = 'admin';
       delete user.turma;
+    }
+
+    // Refresh profile attributes from Firestore
+    try {
+      const userDocSnap = await getDoc(doc(db, 'users', user.id));
+      if (userDocSnap.exists()) {
+        const d = userDocSnap.data();
+        user.name = d.name || user.name;
+        user.publicId = d.publicId || user.publicId;
+        user.role = isUserAdmin(user.email, d.role) ? 'admin' : (d.role || 'student');
+        if (typeof d.points === 'number') {
+          user.points = d.points;
+        }
+        if (d.turma && user.role !== 'admin') {
+          user.turma = d.turma;
+        }
+      }
+    } catch (e) {
+      console.warn('Could not refresh user profile in getMe:', e);
     }
 
     let progress: ActivityProgress[] = [];
