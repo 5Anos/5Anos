@@ -3,28 +3,24 @@ import { KeyRound, ShieldCheck, ShieldAlert, Sparkles, Wand2, Eye, EyeOff, Check
 
 export const PasswordStrengthTester: React.FC = () => {
   // Generator Inputs
-  const [favoriteWord, setFavoriteWord] = useState('Robotica');
-  const [favoriteNumber, setFavoriteNumber] = useState('2026');
-  const [symbolChoice, setSymbolChoice] = useState('@');
+  const [favoriteWord, setFavoriteWord] = useState('Nebulosa');
+  const [favoriteNumber, setFavoriteNumber] = useState('83');
+  const [symbolChoice, setSymbolChoice] = useState('#');
   const [useUnderscore, setUseUnderscore] = useState(true);
 
   // Main test password state
-  const [password, setPassword] = useState('R0b0t1ca@_2026');
+  const [password, setPassword] = useState('kX9#mP2$vL7q');
   const [showPassword, setShowPassword] = useState(true);
   const [copied, setCopied] = useState(false);
 
   // Function to create password from student's inputs
   const handleGenerateFromInputs = () => {
     const word = favoriteWord.trim() || 'Estudo';
-    const num = favoriteNumber.trim() || '5';
-    const sym = symbolChoice || '@';
+    const num = favoriteNumber.trim() || '57';
+    const sym = symbolChoice || '#';
     const sep = useUnderscore ? '_' : '';
 
-    // Transform word smartly (leetspeak: o -> 0, a -> 4 or keep cap)
-    // E.g. Word with capitalized first letter, leet substitution, symbol, underscore and number
     let transformedWord = word.charAt(0).toUpperCase() + word.slice(1);
-    
-    // Create password variations
     const generated = `${transformedWord}${sym}${sep}${num}`;
     setPassword(generated);
   };
@@ -50,33 +46,33 @@ export const PasswordStrengthTester: React.FC = () => {
 
   let strengthLabel = 'Muito Fraca';
   let strengthColor = 'bg-red-500';
-  let crackTime = 'Menos de 1 segundo';
+  let resistanceLabel = 'Muito baixa (muito fácil de adivinhar)';
   let scorePercent = 20;
 
   if (password.length === 0) {
-    strengthLabel = 'Escreve ou gera uma palavra-passe...';
+    strengthLabel = 'Escreve ou testa uma palavra-passe...';
     strengthColor = 'bg-slate-300';
-    crackTime = '---';
+    resistanceLabel = '---';
     scorePercent = 0;
   } else if (password.toLowerCase().includes('123456') || password.toLowerCase().includes('password') || password.length < 6) {
-    strengthLabel = 'Muito Fraca (Vulnerável)';
+    strengthLabel = 'Muito Fraca (Padrão previsível / Curta)';
     strengthColor = 'bg-red-500';
-    crackTime = 'Instantâneo (0.01 seg)';
+    resistanceLabel = 'Vulnerável a ferramentas automáticas';
     scorePercent = 15;
-  } else if (criteriaCount <= 2) {
+  } else if (criteriaCount <= 2 || password.length < 8) {
     strengthLabel = 'Fraca';
     strengthColor = 'bg-amber-500';
-    crackTime = 'Alguns minutos a horas';
+    resistanceLabel = 'Baixa resistência';
     scorePercent = 40;
   } else if (criteriaCount <= 4) {
-    strengthLabel = 'Boa / Média';
+    strengthLabel = 'Boa / Moderada';
     strengthColor = 'bg-blue-500';
-    crackTime = 'Meses a anos';
+    resistanceLabel = 'Resistência moderada';
     scorePercent = 75;
   } else {
-    strengthLabel = 'Super Segura! 🛡️';
+    strengthLabel = 'Forte e Resistente 🛡️';
     strengthColor = 'bg-emerald-500';
-    crackTime = 'Centenas de anos!';
+    resistanceLabel = 'Elevada resistência a ataques';
     scorePercent = 100;
   }
 
@@ -179,24 +175,24 @@ export const PasswordStrengthTester: React.FC = () => {
 
         {/* Quick Suggestion Pills */}
         <div className="flex flex-wrap items-center gap-1.5 pt-1">
-          <span className="text-[10px] text-slate-500 font-bold">Ideias rápidas:</span>
+          <span className="text-[10px] text-slate-500 font-bold">Ideias de termos:</span>
           <button
-            onClick={() => handleApplyPreset('Estrela', '2026', '@')}
+            onClick={() => handleApplyPreset('Nebulosa', '83', '#')}
             className="text-[10px] px-2 py-0.5 bg-slate-100 hover:bg-indigo-100 text-slate-700 hover:text-indigo-800 rounded-md font-medium cursor-pointer transition-colors"
           >
-            ⭐ Estrela@_2026
+            🌌 Nebulosa#_83
           </button>
           <button
-            onClick={() => handleApplyPreset('Galaxia', '88', '#')}
+            onClick={() => handleApplyPreset('Cascata', '47', '$')}
             className="text-[10px] px-2 py-0.5 bg-slate-100 hover:bg-indigo-100 text-slate-700 hover:text-indigo-800 rounded-md font-medium cursor-pointer transition-colors"
           >
-            🌌 Galaxia#_88
+            🌊 Cascata$_47
           </button>
           <button
-            onClick={() => handleApplyPreset('Futebol', '10', '!')}
+            onClick={() => handleApplyPreset('Horizonte', '92', '&')}
             className="text-[10px] px-2 py-0.5 bg-slate-100 hover:bg-indigo-100 text-slate-700 hover:text-indigo-800 rounded-md font-medium cursor-pointer transition-colors"
           >
-            ⚽ Futebol!_10
+            🏔️ Horizonte&_92
           </button>
         </div>
 
@@ -206,7 +202,7 @@ export const PasswordStrengthTester: React.FC = () => {
           className="w-full py-2 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-xs cursor-pointer active:scale-98 transition-all"
         >
           <Sparkles className="w-4 h-4 text-amber-300" />
-          Construir Palavra-Passe Segura com as minhas escolhas
+          Construir Palavra-Passe com as minhas escolhas
         </button>
       </div>
 
@@ -259,9 +255,12 @@ export const PasswordStrengthTester: React.FC = () => {
           />
         </div>
         <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1">
-          <span>Tempo estimado p/ Hacker:</span>
-          <span className="font-bold text-slate-800">{crackTime}</span>
+          <span>Resistência a ataques:</span>
+          <span className="font-bold text-slate-800">{resistanceLabel}</span>
         </div>
+        <p className="text-[10px] text-slate-400 leading-tight">
+          * A resistência real depende do método de ataque, do algoritmo e do armazenamento da palavra-passe.
+        </p>
       </div>
 
       {/* Criteria Checklist */}

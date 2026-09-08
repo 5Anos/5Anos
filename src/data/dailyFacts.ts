@@ -311,8 +311,8 @@ export const DAILY_TIC_FACTS: DailyTicFact[] = [
       en: 'Respecting authorship is key to ethical digital citizenship.'
     },
     funFact: {
-      pt: 'A licença "CC-BY" significa que podes usar a imagem livremente, desde que escrevas o nome do autor original (dar atribuição)!',
-      en: 'A CC-BY license lets you freely share and adapt work as long as you credit the original creator!'
+      pt: 'A licença "CC-BY" permite partilhar e adaptar a obra, desde que seja dada a devida atribuição ao autor original!',
+      en: 'A CC-BY license allows sharing and adapting work, provided appropriate credit is given to the author!'
     }
   },
   {

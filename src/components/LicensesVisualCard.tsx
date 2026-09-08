@@ -70,24 +70,24 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
     {
       id: 'copyright' as const,
       title: 'Copyright (©)',
-      subtitle: language === 'pt' ? 'Todos os direitos reservados' : 'All rights reserved',
-      badge: language === 'pt' ? 'Autorização Necessária' : 'Permission Required',
+      subtitle: language === 'pt' ? 'Proteção por direito de autor' : 'Copyright protection',
+      badge: language === 'pt' ? 'Verificar Autorização' : 'Check Permission',
       badgeClass: 'bg-amber-100 text-amber-900 border-amber-300',
       borderClass: 'border-amber-200 hover:border-amber-400 hover:shadow-amber-100',
       bgGlow: 'from-amber-50/40 to-white',
       accentColor: 'text-amber-600',
       icon: ShieldAlert,
-      statusLabel: language === 'pt' ? 'Pedir Autorização' : 'Ask Permission',
+      statusLabel: language === 'pt' ? 'Regra Geral: Autorização' : 'General Rule: Permission',
       statusClass: 'text-amber-800 font-extrabold bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200',
       StatusIcon: AlertCircle,
       desc:
         language === 'pt'
-          ? 'Normalmente é necessária autorização para utilizar a imagem.'
-          : 'Permission is usually required before you can use the image.',
+          ? 'Indica a existência de direitos de autor. A utilização da obra requer normalmente autorização prévia, exceto nas situações permitidas pela lei (como breves citações).'
+          : 'Indicates copyright protection. Use generally requires prior authorization, except where permitted by law (such as short quotations).',
       rule:
         language === 'pt'
-          ? 'Se uma imagem tiver Copyright, pede autorização antes de a utilizares num trabalho escolar ou procura uma alternativa livre.'
-          : 'If an image has Copyright, ask for permission before using it in school work or find a free alternative.',
+          ? 'Antes de usares a obra num trabalho escolar, verifica se precisas de autorização ou se a utilização se enquadra nas exceções legais (como citar a fonte).'
+          : 'Before using the work, check if permission is required or if your use fits legal exceptions (such as citing sources).',
       metafor: language === 'pt' ? 'Porta Fechada 🔑' : 'Locked Door 🔑',
     },
     {

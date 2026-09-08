@@ -816,8 +816,8 @@ export const theme3Data: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Sabias que existem licenças chamadas Creative Commons (CC) criadas para que fotógrafos e cientistas possam partilhar as suas imagens e textos livremente com estudantes, desde que seja dado o devido crédito ao criador?',
-        en: 'Did you know that Creative Commons (CC) licenses exist so photographers and scientists can share images and articles freely with students, provided credit is given?',
+        pt: 'Sabias que as licenças Creative Commons (CC) permitem que os criadores indiquem previamente as condições sob as quais as suas obras podem ser partilhadas e reutilizadas?',
+        en: 'Did you know that Creative Commons (CC) licenses allow creators to state in advance the terms under which their works can be shared and reused?',
       },
       thinkAboutIt: {
         question: {

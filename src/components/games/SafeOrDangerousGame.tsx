@@ -32,13 +32,13 @@ const SCENARIOS: Scenario[] = [
   {
     id: 2,
     text: {
-      pt: 'Criar uma palavra-passe misturando letras maiúsculas, minúsculas, números e um símbolo (ex: "Gato#Verde_2026!").',
-      en: 'Creating a password mixing uppercase, lowercase, numbers, and symbols (e.g. "Green#Cat_2026!").',
+      pt: 'Criar uma palavra-passe longa e imprevisível, misturando diferentes tipos de carateres sem usar dados pessoais óbvios.',
+      en: 'Creating a long and unpredictable password mixing different character types without using obvious personal data.',
     },
     isSafe: true,
     explanation: {
-      pt: '✅ Seguro! Uma palavra-passe longa e com tipos de caracteres variados é extremamente difícil de adivinhar ou quebrar.',
-      en: '✅ Safe! A long password with diverse character types is exceptionally hard to guess or brute-force.',
+      pt: '✅ Seguro! Uma palavra-passe longa, imprevisível e com variedade de carateres oferece grande resistência contra tentativas de adivinhação.',
+      en: '✅ Safe! A long, unpredictable password with varied character types provides strong resistance against automated guessing.',
     },
   },
   {

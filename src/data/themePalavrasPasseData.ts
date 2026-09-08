@@ -49,10 +49,10 @@ export const themePalavrasPasseData: ThemeDefinition = {
     },
     {
       eyebrow: { pt: 'Truques', en: 'Tricks & Tips' },
-      h: { pt: 'Truques para criar palavras-passe seguras', en: 'Tricks to create strong passwords' },
+      h: { pt: 'Como criar palavras-passe seguras', en: 'How to create secure passwords' },
       body: {
-        pt: 'Usa a técnica das <strong>frases-chave</strong> ou combina uma palavra favorita com números e símbolos (@, _, !, #, *).<br><br>Por exemplo: juntar <em>"Robotica"</em> + <em>"@"</em> + <em>"_"</em> + <em>"2026"</em> cria uma palavra-passe poderosa e fácil de memorizar: <strong>Robotica@_2026</strong>!<br><br>Nunca anotes as palavras-passe num papel colado ao monitor do computador.<br><br><hr class="border-purple-200 my-3"><br><strong>UMA CONTA, UMA PALAVRA-PASSE</strong><br><br>Pensa numa coisa de que gostas ➔ transforma-a numa palavra-passe!<br><br><div class="overflow-x-auto my-3"><table class="w-full text-xs text-left border-collapse border border-purple-200 rounded-lg bg-white shadow-xs"><thead><tr class="bg-purple-100/70 text-purple-950 font-bold border-b border-purple-200"><th class="p-2">💭 Lembro-me de...</th><th class="p-2">🔐 Posso criar...</th></tr></thead><tbody class="divide-y divide-purple-100 text-slate-700"><tr><td class="p-2">🎬 A Vida é Bela</td><td class="p-2 font-mono font-bold text-purple-700">AVeBela*2020</td></tr><tr><td class="p-2">🦁 O Rei Leão</td><td class="p-2 font-mono font-bold text-purple-700">OReiLeao*2022</td></tr><tr><td class="p-2">❄️ Frozen</td><td class="p-2 font-mono font-bold text-purple-700">Frozen*2019</td></tr><tr><td class="p-2">🚗 Os Carros são rápidos</td><td class="p-2 font-mono font-bold text-purple-700">OCsr*2021</td></tr><tr><td class="p-2">🧙 Harry Potter</td><td class="p-2 font-mono font-bold text-purple-700">HPotter*2023</td></tr><tr><td class="p-2">🐭 O Mickey é divertido</td><td class="p-2 font-mono font-bold text-purple-700">OMeD*2020</td></tr><tr><td class="p-2">⚽ Eu gosto de futebol</td><td class="p-2 font-mono font-bold text-purple-700">EGdf*2024</td></tr><tr><td class="p-2">🐶 O meu cão é feliz</td><td class="p-2 font-mono font-bold text-purple-700">OmceF*2022</td></tr></tbody></table></div><strong>🧠 A ideia é simples:</strong><br>Frase / coisa de que gosto ➔ letras + número + símbolo ➔ 🔐 <strong>palavra-passe</strong><br><br><strong>🤫 E não te esqueças!</strong><ul><li>A palavra-passe é secreta.</li><li>Uma conta = uma palavra-passe diferente.</li></ul>',
-        en: 'Use the <strong>passphrase</strong> method or combine a favorite word with numbers and symbols (@, _, !, #, *).<br><br>For instance: combining <em>"Robotics"</em> + <em>"@"</em> + <em>"_"</em> + <em>"2026"</em> builds a powerful yet memorable key: <strong>Robotics@_2026</strong>!<br><br>Never leave your passwords written on sticky notes stuck to your monitor.<br><br><hr class="border-purple-200 my-3"><br><strong>ONE ACCOUNT, ONE PASSWORD</strong><br><br>Think of something you like ➔ turn it into a password!<br><br><div class="overflow-x-auto my-3"><table class="w-full text-xs text-left border-collapse border border-purple-200 rounded-lg bg-white shadow-xs"><thead><tr class="bg-purple-100/70 text-purple-950 font-bold border-b border-purple-200"><th class="p-2">💭 I remember...</th><th class="p-2">🔐 I can create...</th></tr></thead><tbody class="divide-y divide-purple-100 text-slate-700"><tr><td class="p-2">🎬 Life is Beautiful</td><td class="p-2 font-mono font-bold text-purple-700">AVeBela*2020</td></tr><tr><td class="p-2">🦁 The Lion King</td><td class="p-2 font-mono font-bold text-purple-700">OReiLeao*2022</td></tr><tr><td class="p-2">❄️ Frozen</td><td class="p-2 font-mono font-bold text-purple-700">Frozen*2019</td></tr><tr><td class="p-2">🚗 Cars are fast</td><td class="p-2 font-mono font-bold text-purple-700">OCsr*2021</td></tr><tr><td class="p-2">🧙 Harry Potter</td><td class="p-2 font-mono font-bold text-purple-700">HPotter*2023</td></tr><tr><td class="p-2">🐭 Mickey is fun</td><td class="p-2 font-mono font-bold text-purple-700">OMeD*2020</td></tr><tr><td class="p-2">⚽ I like football</td><td class="p-2 font-mono font-bold text-purple-700">EGdf*2024</td></tr><tr><td class="p-2">🐶 My dog is happy</td><td class="p-2 font-mono font-bold text-purple-700">OmceF*2022</td></tr></tbody></table></div><strong>🧠 The idea is simple:</strong><br>Sentence / favorite thing ➔ letters + number + symbol ➔ 🔐 <strong>password</strong><br><br><strong>🤫 And remember!</strong><ul><li>The password is secret.</li><li>One account = one different password.</li></ul>',
+        pt: 'Uma palavra-passe deve ser longa, difícil de adivinhar e única para cada serviço.<br><br>Podes usar a técnica da <strong>frase-passe</strong> (juntar palavras que façam sentido para ti mas sejam imprevisíveis para os outros) ou combinar letras, números e símbolos sem padrões óbvios.<br><br><hr class="border-purple-200 my-3"><br><strong>REGRAS DE OURO:</strong><ul><li><strong>O comprimento é fundamental:</strong> palavras-passe longas oferecem muito maior resistência a tentativas de adivinhação.</li><li><strong>Sem informação pessoal previsível:</strong> nunca uses nomes de familiares, alcunhas, nomes de animais, datas de aniversário ou anos.</li><li><strong>Não reutilizar:</strong> usa uma palavra-passe diferente para cada conta e serviço.</li><li><strong>Segredo absoluto:</strong> não partilhes a palavra-passe com colegas nem a deixes visível em notas coladas ao ecrã.</li><li><strong>Autenticação multifator (2FA):</strong> ativa esta camada adicional de segurança sempre que o serviço a disponibilizar.</li></ul>',
+        en: 'A password should be long, hard to guess, and unique to each service.<br><br>You can use the <strong>passphrase</strong> method (combining words meaningful to you but unpredictable to others) or combine letters, numbers, and symbols without obvious patterns.<br><br><hr class="border-purple-200 my-3"><br><strong>GOLDEN RULES:</strong><ul><li><strong>Length is essential:</strong> longer passwords provide significantly greater resistance against guessing.</li><li><strong>No predictable personal data:</strong> never use family names, nicknames, pet names, birthdates, or years.</li><li><strong>Do not reuse:</strong> use a different password for every account and service.</li><li><strong>Keep it secret:</strong> do not share passwords with peers or stick them on notes near screens.</li><li><strong>Multi-factor authentication (2FA):</strong> enable this extra layer of security whenever available.</li></ul>',
       },
       icon: '🔑',
     },
@@ -91,12 +91,12 @@ export const themePalavrasPasseData: ThemeDefinition = {
           en: 'Mariana’s passphrase technique',
         },
         scenario: {
-          pt: 'A Mariana quer criar uma palavra-passe fácil de memorizar mas muito forte. Escolheu a frase: "O meu gato Tobias adora peixe em 2026!".',
-          en: 'Mariana wants a memorable yet strong password. She picked the sentence: "O meu gato Tobias adora peixe em 2026!".',
+          pt: 'A Mariana quer criar uma palavra-passe fácil de memorizar mas difícil de adivinhar. Escolheu uma frase pessoal e criativa: "O vento forte soprava 7 nuvens azuis!".',
+          en: 'Mariana wants a memorable yet unguessable password. She picked an imaginative sentence: "O vento forte soprava 7 nuvens azuis!".',
         },
         tip: {
-          pt: 'Pegou nas iniciais de cada palavra e juntou os números e o ponto de exclamação: "OmgTa!pe26". Tem 10 carateres, maiúsculas, minúsculas, número e símbolo!',
-          en: 'She took the first letter of each word plus numbers and exclamation: "OmgTa!pe26". 10 chars with varied cases, numbers, and symbols!',
+          pt: 'Pegou nas primeiras letras de cada palavra e juntou os números e o ponto de exclamação: "Ovfs7na!". Tem bom comprimento, maiúsculas, minúsculas, número e símbolo, sem dados pessoais óbvios!',
+          en: 'She combined the initial letter of each word plus the number and exclamation mark: "Ovfs7na!". It has good length and variety without obvious personal facts!',
         },
       },
       funFact: {
@@ -164,7 +164,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
           'A regra fundamental: não partilhes as tuas palavras-passe com amigos ou colegas. Se precisares de ajuda com uma conta, pede apoio aos teus pais ou encarregados de educação ou ao teu professor!',
           'Nunca apontar em papéis colados no monitor (post-its): qualquer pessoa que passe pela tua secretária pode ver a tua palavra-passe.',
           'Palavras-passe diferentes para contas diferentes: se usares a mesma palavra-passe no jogo e no teu email escolar, se o jogo sofrer um ataque, o invasor poderá aceder a outras contas.',
-          'Autenticação de Dois Fatores (2FA): é uma camada extra que pede uma confirmação adicional (como um código enviado para o telemóvel) além da palavra-passe. Mesmo que alguém descubra a tua palavra-passe, não consegue entrar facilmente!',
+          'Autenticação de Dois Fatores (2FA): acrescenta uma camada adicional de segurança, pedindo uma confirmação suplementar (como um código enviado para o telemóvel ou gerado por uma aplicação) além da palavra-passe.',
         ],
         en: [
           'The golden rule: do not share passwords with classmates or friends. If you need help with an account, ask your parents or your teacher!',
@@ -582,8 +582,8 @@ export const themePalavrasPasseData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'A 2FA combina algo que sabes (palavra-passe) com algo que tens (telemóvel), garantindo máxima proteção.',
-        en: '2FA combines something you know (password) with something you possess (device token).',
+        pt: 'A 2FA combina algo que sabes (palavra-passe) com algo que tens (como um telemóvel ou código de verificação), acrescentando uma camada adicional de segurança.',
+        en: '2FA combines something you know (password) with something you possess (device code), adding an extra layer of security.',
       },
     },
     {

@@ -152,7 +152,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
     return `${s}.`;
   };
 
-  // Clean URL string (strictly no "Consultado em")
+  // URL string
   const getCleanUrl = (): string => {
     return url.trim();
   };
@@ -171,7 +171,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
     }
 
     if (sourceType === 'website') {
-      // Artigo web: fonte/jornal em itálico ou regular, link no fim sem 'Consultado em'
+      // Artigo web: fonte/jornal em itálico ou regular, link no fim
       return cleanUrl
         ? `${author} ${date} ${tit}. ${src} ${cleanUrl}`
         : `${author} ${date} ${tit}. ${src}`;
@@ -199,7 +199,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
     { id: 2, label: '2.º Quando? (Data entre parênteses)', color: 'bg-emerald-500 text-white' },
     { id: 3, label: '3.º O quê? (Título da obra)', color: 'bg-purple-500 text-white' },
     { id: 4, label: '4.º Onde? (Jornal, Site ou Editora)', color: 'bg-amber-500 text-white' },
-    { id: 5, label: '5.º Link direto (URL sem "Consultado em")', color: 'bg-cyan-600 text-white' },
+    { id: 5, label: '5.º Endereço web (URL direto da página)', color: 'bg-cyan-600 text-white' },
   ];
 
   const handlePuzzleClick = (id: number) => {
@@ -268,17 +268,17 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
         </div>
       </div>
 
-      {/* CRITICAL RULE HIGHLIGHT: NO "Consultado em" */}
+      {/* APA 7 RULE HIGHLIGHT */}
       <div className="mx-4 sm:mx-6 mt-6 p-4 rounded-2xl bg-amber-50 border-2 border-amber-300 text-amber-950 flex items-start gap-3.5 shadow-2xs">
         <div className="w-8 h-8 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-black text-lg shrink-0 mt-0.5">
           💡
         </div>
         <div className="text-xs sm:text-sm space-y-1">
           <span className="font-black text-amber-900 uppercase tracking-wide flex items-center gap-1.5">
-            <span>Regra de Ouro da Norma APA (7.ª edição):</span>
+            <span>Regra da Norma APA (7.ª edição):</span>
           </span>
           <p className="text-amber-900 leading-relaxed font-medium">
-            Nas páginas da Internet, <strong>JÁ NÃO SE ESCREVE</strong> &quot;Consultado em...&quot; nem a data de consulta! Coloca-se diretamente o endereço web (URL) no final da referência.
+            Em páginas e notícias da Internet com data fixa, coloca-se habitualmente o endereço web (URL) no final da referência. A data de consulta (&quot;Consultado em...&quot;) só é indicada em recursos digitais cujo conteúdo se altera com frequência ao longo do tempo (como na Wikipédia).
           </p>
         </div>
       </div>
@@ -496,7 +496,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
           {sourceType !== 'book' && (
             <div>
               <label className="block text-[11px] font-bold text-slate-600 mb-1">
-                🔗 Link Web direto (URL com https:// - Repara que NÃO leva &quot;Consultado em&quot;!)
+                🔗 Endereço Web direto (URL com https://)
               </label>
               <input
                 type="url"
@@ -599,9 +599,14 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
               <span>{getSourceString()} </span>
             )}
             {getCleanUrl() && (
-              <span className="text-cyan-300 underline underline-offset-2 break-all">
+              <a
+                href={getCleanUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-cyan-300 underline underline-offset-2 break-all hover:text-cyan-100 transition-colors"
+              >
                 {getCleanUrl()}
-              </span>
+              </a>
             )}
           </div>
 

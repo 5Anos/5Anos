@@ -414,7 +414,7 @@ const KNOWN_ACTIVITY_MAPPINGS: Record<
   'copy-o-que-sao': {
     themeId: 'direitos-autor',
     title: { pt: 'O que são Direitos de Autor e Propriedade Intelectual', en: 'What is Copyright & Intellectual Property' },
-    shortDesc: { pt: 'Módulo 1: O símbolo © e a proteção das obras originais', en: 'Module 1: The © symbol and protecting creative works' },
+    shortDesc: { pt: 'Módulo 1: Proteção legal e direitos sobre as obras originais', en: 'Module 1: Legal protection and rights over original works' },
     icon: '©️',
     type: 'module',
   },

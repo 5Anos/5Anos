@@ -183,13 +183,13 @@ export const CHALLENGE_DATA: Record<string, {
         },
         options: {
           pt: [
-            'ANTUNES, Carlos (2023). As Aves de Portugal. Ciência Hoje. Consultado em [Data]',
+            'ANTUNES, Carlos (2023). As Aves de Portugal. Ciência Hoje. https://cienciahoje.pt/aves',
             'Pesquisei no Google ontem à tarde',
             'www.google.pt',
             'Um senhor chamado Carlos escreveu numa página da internet',
           ],
           en: [
-            'ANTUNES, Carlos (2023). Birds of Portugal. Science Today. Retrieved [Date]',
+            'ANTUNES, Carlos (2023). Birds of Portugal. Science Today. https://sciencetoday.pt/birds',
             'I found it on Google yesterday',
             'www.google.com',
             'Some guy named Carlos wrote a webpage',
@@ -197,8 +197,8 @@ export const CHALLENGE_DATA: Record<string, {
         },
         correctIndex: 0,
         explanation: {
-          pt: 'Uma referência completa inclui Autor, Ano, Título da obra, Nome da fonte e Data de consulta.',
-          en: 'A valid bibliographic citation requires Author, Year, Title, Source, and Access Date.',
+          pt: 'Uma referência bibliográfica inclui Autor, Ano, Título da obra, Nome da fonte e o respetivo endereço web (URL).',
+          en: 'A valid bibliographic citation requires Author, Year, Title, Source, and URL.',
         },
       },
     ],

@@ -12,7 +12,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
     en: 'Learn to protect creations, avoid plagiarism, use Creative Commons licenses, and build APA 7th edition references.',
   },
   intro: {
-    pt: 'Os Direitos de Autor são um Direito Fundamental consagrado na Constituição da República Portuguesa que protege as obras intelectuais. Aprende o que é o copyright, copyleft, royalty free, as 6 licenças Creative Commons, como citar e parafrasear, e como construir referências bibliográficas corretas de acordo com a norma APA (7.ª edição), sem fórmulas antiquadas como "Consultado em".',
+    pt: 'Os Direitos de Autor são um Direito Fundamental consagrado na Constituição da República Portuguesa que protege as obras intelectuais. Aprende o que é o copyright, copyleft, royalty free, as 6 licenças Creative Commons, como citar e parafrasear, e como construir referências bibliográficas corretas de acordo com a norma APA (7.ª edição).',
     en: 'Copyright is a fundamental right protecting intellectual property. Learn copyright, copyleft, royalty free, the 6 Creative Commons licenses, citing vs paraphrasing, and APA 7th edition reference formatting.',
   },
   icon: '©️',
@@ -24,8 +24,8 @@ export const themeDireitosAutorData: ThemeDefinition = {
       eyebrow: { pt: 'Vamos Descobrir', en: "Let's Discover" },
       h: { pt: 'O que são Direitos de Autor?', en: 'What are Copyrights?' },
       body: {
-        pt: 'Já imaginaste se passasses horas a fazer um desenho incrível de artes, a escrever uma história divertida ou a criar um nível novo num jogo... e outro colega apagasse o teu nome e dissesse que foi ele que fez tudo?<br><br>Não seria nada justo! É exatamente para evitar isso que existem os <strong>Direitos de Autor</strong>.<br><br>Em Portugal, a lei e a <strong>Constituição da República Portuguesa (artigo 42.º)</strong> protegem quem cria obras originais através do <strong>Código do Direito de Autor (CDADC)</strong>. O símbolo <strong>©</strong> (Copyright) avisa que a criação tem dono e que todos os direitos estão reservados!',
-        en: 'Imagine creating an awesome drawing, story, or video game level, and someone copied it claiming it was theirs! That is why Copyright exists: to protect creators under the Portuguese Constitution and CDADC. The © symbol means all rights reserved!',
+        pt: 'Já imaginaste se passasses horas a fazer um desenho incrível de artes, a escrever uma história divertida ou a criar um nível novo num jogo... e outro colega apagasse o teu nome e dissesse que foi ele que fez tudo?<br><br>Não seria nada justo! É exatamente para evitar isso que existem os <strong>Direitos de Autor</strong>.<br><br>Em Portugal, a lei e a <strong>Constituição da República Portuguesa (artigo 42.º)</strong> protegem quem cria obras originais através do <strong>Código do Direito de Autor (CDADC)</strong>. O direito de autor nasce com a própria criação da obra, independentemente de registo ou da presença do símbolo <strong>©</strong> (Copyright), que serve para identificar o titular e avisar que a obra está protegida.',
+        en: 'Imagine creating an awesome drawing, story, or video game level, and someone copied it claiming it was theirs! That is why Copyright exists: to protect creators under the Portuguese Constitution and CDADC. Copyright protection exists upon creation, and the © symbol identifies the rights holder.',
       },
       icon: '📜',
     },
@@ -51,8 +51,8 @@ export const themeDireitosAutorData: ThemeDefinition = {
       eyebrow: { pt: 'Técnicas de Escrita', en: 'Writing Techniques' },
       h: { pt: 'Citar e Parafrasear (com José Saramago)', en: 'Citing & Paraphrasing' },
       body: {
-        pt: 'Podes usar informações que pesquisaste nos teus trabalhos escolares! Para seres justo, usa estas duas técnicas:<ul><li><strong>Citar (com aspas « »):</strong> Escreves as palavras exatas do autor, pões entre aspas e dizes quem é o autor.<br><em>Exemplo:</em> Como escreveu o autor José Saramago (2008): "Fisicamente, habitamos um espaço, mas, sentimentalmente, somos habitados por uma memória".</li><li><strong>Parafrasear (por palavras tuas):</strong> Expliques a ideia do autor com o teu próprio vocabulário (sem aspas), indicando na mesma o autor.<br><em>Exemplo:</em> Em 2008, Saramago explicou que vivemos num espaço físico, mas são as memórias do coração que vivem em nós.</li></ul>',
-        en: '<strong>Citing:</strong> Quoting exact words in quotation marks with author credit. <strong>Paraphrasing:</strong> Explaining an author’s idea in your own words without quotation marks.',
+        pt: 'Podes usar informações que pesquisaste nos teus trabalhos escolares! Para seres justo, usa estas duas técnicas:<ul><li><strong>Citar (com aspas « »):</strong> Escreves as palavras exatas do autor, pões entre aspas e dizes quem é o autor, ano e localização (quando aplicável).<br><em>Exemplo:</em> Como escreveu José Saramago (2008, p. 15): "Fisicamente, habitamos um espaço, mas, sentimentalmente, somos habitados por uma memória".</li><li><strong>Parafrasear (por palavras tuas):</strong> Explicas a ideia do autor com o teu próprio vocabulário (sem aspas), indicando na mesma o autor e o ano.<br><em>Exemplo:</em> Em 2008, Saramago explicou que vivemos num espaço físico, mas são as memórias do coração que vivem em nós.</li></ul>',
+        en: '<strong>Citing:</strong> Quoting exact words in quotation marks with author credit and page number when applicable. <strong>Paraphrasing:</strong> Explaining an author’s idea in your own words without quotation marks.',
       },
       icon: '✍️',
     },
@@ -60,7 +60,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
       eyebrow: { pt: 'Norma APA (7º ed)', en: 'APA (7th ed)' },
       h: { pt: 'Como Construir Referências Bibliográficas', en: 'How to Build Bibliographical References' },
       body: {
-        pt: 'No final do teu trabalho escolar, deves colocar uma lista com as <strong>Referências Bibliográficas</strong> por ordem alfabética do apelido do autor.<br><br><div class="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200 text-xs sm:text-sm font-sans space-y-2.5 text-slate-800 shadow-2xs"><div><strong class="text-indigo-900">🌐 Exemplo de Notícia / Página Web (Norma APA 7.ª ed.):</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Soares, R. (2021, dezembro 6). Portugal volta a ter duas escolas no top 30 europeu do Financial Times. <em>Público</em>. https://www.publico.pt/2021/12/06/economia/noticia/portugal-volta-duas-escolas-negocios-top-30-europeu-financial-times-1987488</div><div><strong class="text-indigo-900">📖 Exemplo de Livro:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900">Ribeiro, N. (2007). <em>Multimédia e Tecnologias Interactivas</em> (4.ª ed.). FCA - Editora de Informática. <span class="text-slate-500 font-sans">(A edição só se indica a partir da 2.ª edição).</span></div><div><strong class="text-indigo-900">🖼️ Exemplo de Imagem ou Fotografia:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Coelho, J. (2021). <em>Gerações</em> [Fotografia]. Olhares. https://olhares.com/geracoes-foto10344803.html</div><div><strong class="text-indigo-900">🎥 Exemplo de Vídeo Educativo:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Aceleração Digital com Fernando Tannure. (2017, abril 14). <em>Primeiros Passos Canva | Tutorial Canva em Português #01</em> [Vídeo]. YouTube. https://www.youtube.com/watch?v=3LVBzoaM2f8</div></div><p class="pt-2 text-xs font-bold text-amber-900">👇 Experimenta agora mesmo construir e testar referências no nosso <strong>Simulador Interativo APA 7</strong> logo abaixo!</p>',
+        pt: 'No final do teu trabalho escolar, deves colocar uma lista com as <strong>Referências Bibliográficas</strong> por ordem alfabética do apelido do autor.<br><br><div class="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200 text-xs sm:text-sm font-sans space-y-2.5 text-slate-800 shadow-2xs"><div><strong class="text-indigo-900">🌐 Exemplo de Notícia / Página Web (Norma APA 7.ª ed.):</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Soares, R. (2021, dezembro 6). Portugal volta a ter duas escolas no top 30 europeu do Financial Times. <em>Público</em>. <a href="https://www.publico.pt/2021/12/06/economia/noticia/portugal-volta-duas-escolas-negocios-top-30-europeu-financial-times-1987488" target="_blank" rel="noopener noreferrer" class="underline text-indigo-700 hover:text-indigo-900">https://www.publico.pt/2021/12/06/economia/noticia/portugal-volta-duas-escolas-negocios-top-30-europeu-financial-times-1987488</a></div><div><strong class="text-indigo-900">📖 Exemplo de Livro:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900">Ribeiro, N. (2007). <em>Multimédia e Tecnologias Interactivas</em> (4.ª ed.). FCA - Editora de Informática. <span class="text-slate-500 font-sans">(A edição só se indica a partir da 2.ª edição; não se indica a cidade).</span></div><div><strong class="text-indigo-900">🖼️ Exemplo de Imagem ou Fotografia:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Coelho, J. (2021). <em>Gerações</em> [Fotografia]. Olhares. <a href="https://olhares.com/geracoes-foto10344803.html" target="_blank" rel="noopener noreferrer" class="underline text-indigo-700 hover:text-indigo-900">https://olhares.com/geracoes-foto10344803.html</a></div><div><strong class="text-indigo-900">🎥 Exemplo de Vídeo Educativo:</strong></div><div class="pl-2 font-mono text-xs bg-white p-2 rounded-xl border border-amber-200/60 leading-relaxed text-slate-900 break-all">Aceleração Digital com Fernando Tannure. (2017, abril 14). <em>Primeiros Passos Canva | Tutorial Canva em Português #01</em> [Vídeo]. YouTube. <a href="https://www.youtube.com/watch?v=3LVBzoaM2f8" target="_blank" rel="noopener noreferrer" class="underline text-indigo-700 hover:text-indigo-900">https://www.youtube.com/watch?v=3LVBzoaM2f8</a></div></div><p class="pt-2 text-xs font-bold text-amber-900">👇 Experimenta agora mesmo construir e testar referências no nosso <strong>Simulador Interativo APA 7</strong> logo abaixo!</p>',
         en: 'References list sources alphabetically at the end. Try building citations in the simulator below!',
       },
       icon: '📚',
@@ -85,12 +85,12 @@ export const themeDireitosAutorData: ThemeDefinition = {
           'Os Direitos de Autor são um Direito Fundamental consagrado na Constituição da República Portuguesa (artigo 42.º), que protege as obras ou criações intelectuais.',
           'Rege-se pelo Código do Direito de Autor e dos Direitos Conexos (CDADC), publicado pelo Decreto-Lei n.º 63/85, de 14 de março.',
           'A proteção é reconhecida em todos os países da União Europeia, na Convenção de Berna e nos países membros do Tratado OMPI (Organização Mundial da Propriedade Intelectual).',
-          'O símbolo © (Copyright) significa que todos os direitos estão reservados e exige autorização prévia do autor para qualquer cópia.',
+          'O direito de autor nasce com a criação da obra, independentemente de formalidades. O símbolo © (Copyright) assinala a titularidade dos direitos, requerendo habitualmente autorização para utilização, com as exceções previstas na lei (como o direito de citação).',
         ],
         en: [
           'Copyright is a fundamental right in the Portuguese Constitution protecting intellectual works under CDADC.',
           'Recognized across the EU, Bern Convention, and WIPO.',
-          'The © symbol denotes all rights reserved.',
+          'Copyright exists upon creation; the © symbol identifies the author, and use generally requires permission subject to statutory exceptions.',
         ],
       },
       example: {
@@ -169,16 +169,16 @@ export const themeDireitosAutorData: ThemeDefinition = {
       icon: '🏷️',
       explanation: {
         pt: [
-          'Copyright: Todos os direitos reservados. Necessidade de autorização prévia para utilização.',
-          'Copyleft: Imagens e obras que podem ser utilizadas, desde que não o sejam para fins comerciais.',
-          'Royalty Free: Imagens que podem ser utilizadas desde que seja adquirida previamente uma licença de utilização.',
-          'Creative Commons (CC): Entidade sem fins lucrativos criada para promover a partilha de obras com regras claras (Atribuição BY, Uso não-comercial NC, Compartilhamento pela mesma licença SA, Não a obras derivadas ND).',
+          'Copyright: Protege a obra intelectual original. A sua utilização requer habitualmente autorização prévia do autor, salvo exceções legais (como o direito de citação para fins educativos).',
+          'Copyleft: Princípio de licenciamento que permite utilizar, modificar e redistribuir a obra, exigindo que as obras derivadas sejam partilhadas sob os mesmos termos de licença.',
+          'Royalty Free: Modalidade onde a obra pode ser utilizada sem necessidade de pagar direitos por cada utilização, mediante o cumprimento dos termos da licença.',
+          'Creative Commons (CC): Entidade sem fins lucrativos que disponibiliza licenças padronizadas com condições modulares (Atribuição BY, Uso Não Comercial NC, Partilha com a Mesma Licença SA, Sem Derivações ND).',
         ],
         en: [
-          'Copyright: All rights reserved.',
-          'Copyleft: Free usage except for commercial purposes.',
-          'Royalty Free: Usable upon acquiring a prior license.',
-          'Creative Commons: Open sharing framework with 4 conditions (BY, NC, SA, ND).',
+          'Copyright: Protects original works; use typically requires author permission subject to statutory exceptions.',
+          'Copyleft: Allows using, modifying, and sharing provided derivative works retain the same license.',
+          'Royalty Free: Usable without per-use royalty fees, subject to terms.',
+          'Creative Commons: Open standardized licensing framework with conditions (BY, NC, SA, ND).',
         ],
       },
       example: {
@@ -205,12 +205,12 @@ export const themeDireitosAutorData: ThemeDefinition = {
           en: 'What is the difference between Copyright and Copyleft?',
         },
         clue: {
-          pt: 'Pensa nas restrições comerciais e de partilha.',
-          en: 'Think of commercial restrictions and sharing.',
+          pt: 'Pensa na liberdade de modificar e na regra de partilha sob a mesma licença.',
+          en: 'Think of modification freedom and sharing under the same license terms.',
         },
         reflection: {
-          pt: 'O Copyright reserva todos os direitos ao autor, enquanto o Copyleft permite a utilização livre desde que sem fins lucrativos.',
-          en: 'Copyright reserves all rights, whereas Copyleft allows free use provided it is non-commercial.',
+          pt: 'Enquanto o Copyright tradicional reserva habitualmente os direitos ao autor, o Copyleft autoriza a reutilização e modificação da obra, exigindo que as versões derivadas sejam partilhadas sob a mesma licença.',
+          en: 'While traditional copyright typically reserves rights to the creator, Copyleft authorizes reuse and modification, requiring derivative works to be distributed under identical license terms.',
         },
       },
       quizQuestions: [
@@ -258,13 +258,13 @@ export const themeDireitosAutorData: ThemeDefinition = {
       explanation: {
         pt: [
           'Plágio é assumir a autoria de uma obra ou trabalho sem termos sido nós a realizar o mesmo (ex.: entregar trabalho feito por outro, copiar da net, entregar o mesmo trabalho em disciplinas diferentes).',
-          'Citar: Utilizar as palavras/frases exatas do documento consultado, colocando-as entre aspas e indicando o autor. Exemplo: Como referido por Saramago (2008) "Fisicamente, habitamos um espaço, mas, sentimentalmente, somos habitados por uma memória".',
-          'Parafrasear: Utilizar a ideia do autor, mas escrevendo por palavras nossas, não sendo necessárias as aspas. Exemplo: Em 2008, Saramago dizia que vivemos num espaço físico, mas sentimentalmente são as memórias que habitam em nós.',
+          'Citar: Utilizar as palavras/frases exatas do documento consultado, colocando-as entre aspas e indicando o autor, o ano e a localização (página). Exemplo: Como referido por Saramago (2008, p. 15): "Fisicamente, habitamos um espaço, mas, sentimentalmente, somos habitados por uma memória".',
+          'Parafrasear: Utilizar a ideia do autor, mas escrevendo por palavras nossas, não sendo necessárias as aspas, mantendo a indicação do autor e ano. Exemplo: Em 2008, Saramago explicava que vivemos num espaço físico, mas sentimentalmente são as memórias que habitam em nós.',
         ],
         en: [
           'Plagiarism is passing off another’s work as your own.',
-          'Citing: Exact words in quotes with author credit.',
-          'Paraphrasing: Expressing author ideas in your own words without quotes.',
+          'Citing: Exact words in quotes with author credit and page number.',
+          'Paraphrasing: Expressing author ideas in your own words with citation.',
         ],
       },
       example: {
@@ -345,13 +345,13 @@ export const themeDireitosAutorData: ThemeDefinition = {
         pt: [
           'A lista de referências bibliográficas fornece a informação completa sobre as obras consultadas no final do documento.',
           'Organiza-se por ordem alfabética do apelido do primeiro autor. A primeira linha alinha à esquerda e as restantes iniciam-se com avanço à direita.',
-          'Livro: Ribeiro, N. (2007). Multimédia e Tecnologias Interactivas. (4.ª ed.). Lisboa: FCA - Editora de Informática. (A edição só se indica a partir da 2.ª edição).',
-          'Página Web (Norma APA 7.ª ed.): Soares, R. (2021, dezembro 6). Portugal volta a ter duas escolas no top 30 europeu do Financial Times. Público. https://www.publico.pt/2021/12/06/economia/noticia/portugal-volta-duas-escolas-negocios-top-30-europeu-financial-times-1987488 (ATENÇÃO: Não se escreve "Consultado em...").',
+          'Livro (APA 7.ª ed.): Ribeiro, N. (2007). Multimédia e Tecnologias Interactivas (4.ª ed.). FCA - Editora de Informática. (Nota: Na APA 7.ª ed., omite-se a localização/cidade da editora; a edição só se indica a partir da 2.ª edição).',
+          'Página Web (APA 7.ª ed.): Soares, R. (2021, dezembro 6). Portugal volta a ter duas escolas no top 30 europeu do Financial Times. Público. https://www.publico.pt/2021/12/06/economia/noticia/portugal-volta-duas-escolas-negocios-top-30-europeu-financial-times-1987488 (Termina no link direto; data de consulta apenas é usada em conteúdos dinâmicos sem versão estável).',
           'Notas especiais: Sem autor (o título passa para primeiro); Sem data (n.d.); Mais de um autor (usam-se vírgulas e "&" antes do último).',
         ],
         en: [
           'References list works consulted at the end, alphabetically by author surname.',
-          'Books, web pages (APA 7th edition without "Accessed on"), images, and videos formatted strictly.',
+          'Books (no publisher city in APA 7) and web pages (direct links without access dates unless volatile).',
         ],
       },
       example: {
@@ -369,8 +369,8 @@ export const themeDireitosAutorData: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Na norma APA 7.ª edição, a menção "Consultado em" foi totalmente retirada das referências de páginas web porque os links permanentes (DOI / URL) dispensam essa indicação!',
-        en: 'In APA 7th edition, "Accessed on" was completely dropped because persistent URLs make access dates redundant unless content is volatile!',
+        pt: 'Na norma APA 7.ª edição, a expressão "Consultado em" já não se utiliza para páginas web normais, sendo necessária apenas para páginas digitais que mudam com frequência ao longo do tempo (como na Wikipédia).',
+        en: 'In APA 7th edition, "Accessed on" is no longer used for standard web pages, being reserved only for dynamic resources that frequently change over time (such as wikis).',
       },
       thinkAboutIt: {
         question: {
@@ -435,10 +435,10 @@ export const themeDireitosAutorData: ThemeDefinition = {
         desc: 'Encontra os pares correspondentes entre símbolos e regras de utilização.',
         data: {
           pairs: [
-            { left: 'Símbolo © (Copyright)', right: 'Todos os direitos reservados ao autor' },
-            { left: 'Copyleft', right: 'Uso livre desde que não seja para fins comerciais' },
+            { left: 'Símbolo © (Copyright)', right: 'Assinala a titularidade dos direitos de autor' },
+            { left: 'Copyleft', right: 'Obras derivadas devem ser partilhadas sob a mesma licença' },
             { left: 'Licença CC-BY', right: 'Uso livre com atribuição obrigatória do autor' },
-            { left: 'Royalty Free', right: 'Uso mediante aquisição prévia de licença' }
+            { left: 'Royalty Free', right: 'Uso sem pagamento de direitos por cada utilização' }
           ]
         }
       }
@@ -591,13 +591,13 @@ export const themeDireitosAutorData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'No endereço web (URL), sem nunca incluir a expressão "Consultado em..."',
+          'No endereço web (URL), sem incluir a data de consulta (salvo para páginas que mudem frequentemente)',
           'Com a frase "Consultado em 2026"',
           'Com a assinatura do diretor da escola',
           'Com o símbolo de ponto final e cifrão',
         ],
         en: [
-          'With the URL, without ever including "Consulted on / Accessed on"',
+          'With the URL, without an access date (unless the page content is dynamic and changes frequently)',
           'With the phrase "Accessed in 2026"',
           'With the school principal signature',
           'With a currency symbol',
@@ -605,8 +605,8 @@ export const themeDireitosAutorData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Excelente! A norma APA 7.ª edição removeu completamente a expressão "Consultado em" para páginas web.',
-        en: 'Spot on! APA 7th edition dropped access dates for web pages.',
+        pt: 'Excelente! Na norma APA 7.ª edição as referências de páginas web comuns terminam diretamente no URL, dispensando a data de consulta.',
+        en: 'Spot on! In APA 7th edition, regular web references end directly with the URL without access dates.',
       },
     },
     {
@@ -638,27 +638,27 @@ export const themeDireitosAutorData: ThemeDefinition = {
     {
       id: 'copy-q4',
       question: {
-        pt: 'Qual é a diferença entre Copyright e Copyleft?',
-        en: 'What is the difference between Copyright and Copyleft?',
+        pt: 'Qual é o princípio fundamental do Copyleft?',
+        en: 'What is the core principle of Copyleft?',
       },
       options: {
         pt: [
-          'Copyright reserva todos os direitos; Copyleft permite a utilização livre desde que não seja para fins comerciais',
-          'Copyleft é apenas para canhotos',
-          'Copyright não protege livros',
-          'São exatamente iguais',
+          'Permite utilizar e modificar a obra, exigindo que as obras derivadas sejam partilhadas sob a mesma licença',
+          'Proibir qualquer pessoa de partilhar a obra',
+          'Obrigar ao pagamento de uma mensalidade para descarregar o ficheiro',
+          'Ser uma licença exclusiva para pessoas canhotas',
         ],
         en: [
-          'Copyright reserves all rights; Copyleft allows free use as long as non-commercial',
-          'Copyleft is only for left-handed people',
-          'Copyright does not protect books',
-          'They are identical',
+          'Allows using and modifying the work, requiring derivative works to be shared under the same license',
+          'Prohibits anyone from sharing the work',
+          'Requires paying a monthly fee to download the file',
+          'Is an exclusive license for left-handed people',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Exato! O Copyright restringe todas as cópias sem autorização, enquanto o Copyleft permite uso livre não comercial.',
-        en: 'Exact! Copyright restricts unauthorized copies, whereas Copyleft allows free non-commercial use.',
+        pt: 'Correto! O princípio central do Copyleft é a reciprocidade de partilha (Share-Alike): quem modifica e redistribui a obra deve manter a mesma licença.',
+        en: 'Correct! The core principle of Copyleft is share-alike reciprocity: derivative works must be distributed under the same license.',
       },
     },
     {

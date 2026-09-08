@@ -464,7 +464,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                       {language === 'pt' ? 'Ferramenta & Jogo Interativo' : 'Interactive Tool & Game'}
                     </span>
                     <h3 className="text-lg font-black text-white mt-1">
-                      {language === 'pt' ? 'Simulador de Citações APA 7 (Sem "Consultado em")' : 'APA 7 Citation Simulator (Without "Accessed on")'}
+                      {language === 'pt' ? 'Simulador de Citações APA (7.ª edição)' : 'APA (7th ed) Citation Simulator'}
                     </h3>
                     <p className="text-xs text-amber-100 font-medium max-w-xl mt-0.5">
                       {language === 'pt'

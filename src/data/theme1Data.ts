@@ -75,8 +75,8 @@ export const theme1Data: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Sabias que um computador moderno demora menos de 1 segundo a descobrir uma palavra-passe com 6 letras vulgares (como "escola"), mas pode demorar mais de 300 anos se tiver 12 caracteres misturando maiúsculas, números e símbolos?',
-        en: 'Did you know that a modern computer takes less than 1 second to crack a common 6-letter password (like "school"), but could take over 300 years if it has 12 characters mixing uppercase, numbers, and symbols?',
+        pt: 'Sabias que palavras-passe curtas ou com palavras vulgares (como "escola") são testadas e descobertas muito rapidamente por ferramentas automáticas, enquanto palavras-passe compridas e difíceis de adivinhar oferecem uma resistência muito superior?',
+        en: 'Did you know that short passwords or common dictionary words (like "school") are tested and cracked very quickly by automated tools, while long, hard-to-guess passwords provide much higher resistance?',
       },
       thinkAboutIt: {
         question: {
@@ -100,13 +100,13 @@ export const theme1Data: ThemeDefinition = {
             en: 'Which of the following passwords is the most secure to protect an account?',
           },
           options: {
-            pt: ['12345678', 'mariasilva2014', 'Sol#Brilhante_98', 'password'],
-            en: ['12345678', 'mariasilva2014', 'Bright#Sun_98', 'password'],
+            pt: ['12345678', 'mariasilva2014', 'kX9#mP2$vL7q', 'password'],
+            en: ['12345678', 'mariasilva2014', 'kX9#mP2$vL7q', 'password'],
           },
           correctIndex: 2,
           explanation: {
-            pt: 'Muito bem! "Sol#Brilhante_98" mistura letras maiúsculas, minúsculas, número e símbolos especiais como "#" e "_".',
-            en: 'Well done! "Bright#Sun_98" combines uppercase, lowercase, numbers, and special symbols like "#" and "_".',
+            pt: 'Muito bem! Esta palavra-passe é comprida, difícil de adivinhar, não contém dados pessoais previsíveis e combina diferentes tipos de carateres.',
+            en: 'Well done! This password has good length, is hard to guess, contains no predictable personal details, and combines distinct characters.',
           },
         },
         {
@@ -633,8 +633,8 @@ export const theme1Data: ThemeDefinition = {
           },
           correctIndex: 1,
           explanation: {
-            pt: 'Exato! As licenças Creative Commons permitem a partilha legal de obras para fins educativos.',
-            en: 'Exactly! Creative Commons licenses allow legal sharing of creative works for education.',
+            pt: 'Exato! As licenças Creative Commons permitem utilizar a obra de acordo com as condições específicas definidas pelo autor (como indicar a autoria).',
+            en: 'Exactly! Creative Commons licenses allow using the work according to the specific terms set by the author (such as giving credit).',
           },
         },
       ],
