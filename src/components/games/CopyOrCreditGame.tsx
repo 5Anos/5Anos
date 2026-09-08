@@ -27,12 +27,12 @@ const SCENARIOS: Scenario[] = [
     },
     isCorrectBehavior: false,
     explanation: {
-      pt: '❌ Plágio! Copiar texto de outra pessoa e apresentar como criação própria é plágio, mesmo mudando uma ou duas palavras avulsas.',
-      en: '❌ Plagiarism! Copying someone else’s text and claiming it as your own is plagiarism, even if you swap a couple of random words.',
+      pt: '❌ Plágio! Copiar um texto e apresentá-lo como teu, mesmo alterando algumas palavras, é plágio. Deves compreender a informação, explicá-la com as tuas palavras e indicar a fonte.',
+      en: '❌ Plagiarism! Copying text and presenting it as your own, even changing a few words, is plagiarism. You should understand the information, explain it in your own words, and cite the source.',
     },
     bestPracticeTip: {
-      pt: 'O Afonso deve ler a Wikipédia, compreender a história do castelo e escrever um resumo com as suas próprias palavras, indicando no fim: "Fonte: Wikipédia".',
-      en: 'Afonso should read Wikipedia, understand the history, and summarize in his own words with: "Source: Wikipedia".',
+      pt: 'O Afonso deve ler a fonte, compreender o tema e escrever um resumo por palavras próprias, identificando a origem da informação.',
+      en: 'Afonso should read the source, comprehend the topic, write a summary in his own words, and cite the origin.',
     },
   },
   {
@@ -44,12 +44,12 @@ const SCENARIOS: Scenario[] = [
     },
     isCorrectBehavior: true,
     explanation: {
-      pt: '✅ Atitude Exemplar! A Carolina parafraseou a matéria (mostrando que compreendeu) e deu o devido crédito à instituição científica.',
-      en: '✅ Exemplary Conduct! Carolina paraphrased the material (proving understanding) and properly credited the scientific institution.',
+      pt: '✅ Atitude Exemplar! A Carolina explicou a matéria com as suas próprias palavras e deu o devido crédito à instituição científica.',
+      en: '✅ Exemplary Conduct! Carolina explained the material in her own words and properly credited the scientific institution.',
     },
     bestPracticeTip: {
-      pt: 'Parafrasear e citar as fontes de consulta é a regra de ouro dos bons trabalhos escolares!',
-      en: 'Paraphrasing and citing source links is the golden rule of great schoolwork!',
+      pt: 'Explicar por palavras próprias e indicar as fontes de consulta é essencial para um trabalho escolar rigoroso e honesto.',
+      en: 'Explaining in your own words and citing reference sources is essential for rigorous, honest schoolwork.',
     },
   },
   {
@@ -61,12 +61,12 @@ const SCENARIOS: Scenario[] = [
     },
     isCorrectBehavior: false,
     explanation: {
-      pt: '❌ Violação de Direitos de Autor! Fotografias têm direitos de autor reservados. Não se pode usar a imagem de outrem sem autorização ou sem licença que o permita.',
-      en: '❌ Copyright Infringement! Photographs have reserved copyrights. You cannot use someone’s picture without permission or a suitable license.',
+      pt: '❌ Violação de Direitos de Autor! Fotografias têm direitos de autor reservados. Não se pode usar a imagem de outrem sem autorização ou sem verificar as condições de utilização.',
+      en: '❌ Copyright Infringement! Photographs have reserved copyrights. You cannot use someone else’s picture without permission or checking its terms of use.',
     },
     bestPracticeTip: {
-      pt: 'O Diogo devia procurar imagens em bancos de licença livre (Creative Commons, Unsplash, Wikimedia) e indicar sempre: "Foto por: Nome do Autor".',
-      en: 'Diogo should search open-license repositories (Creative Commons, Unsplash, Wikimedia) and state: "Photo by: Author Name".',
+      pt: 'Ao utilizar uma imagem, indica a sua autoria e a fonte onde foi encontrada, respeitando as condições de utilização. Podes filtrar por licenças Creative Commons e verificar o que cada licença permite.',
+      en: 'When using an image, indicate its authorship and source, respecting its terms of use. You can filter by Creative Commons licenses and check what each allows.',
     },
   },
   {
@@ -78,12 +78,12 @@ const SCENARIOS: Scenario[] = [
     },
     isCorrectBehavior: true,
     explanation: {
-      pt: '✅ Perfeito! Trata-se de uma citação direta devidamente identificada com aspas e atribuição do autor.',
-      en: '✅ Perfect! This is a direct quotation properly demarcated with quotation marks and author attribution.',
+      pt: '✅ Perfeito! Ao incluir uma citação direta de um autor, coloca o texto entre aspas e identifica a autoria da frase.',
+      en: '✅ Perfect! When including a direct quotation from an author, place text inside quotation marks and identify authorship.',
     },
     bestPracticeTip: {
-      pt: 'Citações curtas entre aspas valorizam o trabalho e demonstram grande respeito pelo autor original.',
-      en: 'Short quotes inside quotation marks elevate your report and show great respect for the original creator.',
+      pt: 'Citações diretas entre aspas identificam fielmente as palavras do autor e atribuem a devida autoria.',
+      en: 'Direct quotations in quotation marks faithfully represent the author words with proper credit.',
     },
   },
   {
@@ -95,12 +95,12 @@ const SCENARIOS: Scenario[] = [
     },
     isCorrectBehavior: false,
     explanation: {
-      pt: '❌ Fraude e Plágio Grave! Apagar o nome do autor real de um trabalho escolar para fingir autoria é uma falta grave de ética.',
-      en: '❌ Severe Fraud and Plagiarism! Erasing the real creator’s name on a school assignment to claim authorship is a serious ethical violation.',
+      pt: '❌ Plágio! Apagar o nome do autor de um trabalho escolar para fingir autoria própria não é aceitável.',
+      en: '❌ Plagiarism! Erasing the creator’s name on a school assignment to pretend it is yours is unacceptable.',
     },
     bestPracticeTip: {
-      pt: 'Um trabalho feito com as tuas próprias mãos e ideias, mesmo simples, tem mil vezes mais valor do que copiar o trabalho de outros.',
-      en: 'Work done with your own hands and thoughts, however humble, holds a thousand times more value than stealing other people’s efforts.',
+      pt: 'Fazer o teu próprio trabalho permite-te aprender e desenvolver capacidades, além de ser a atitude correta e honesta.',
+      en: 'Doing your own work allows you to learn and develop skills, in addition to being the right and honest path.',
     },
   },
   {

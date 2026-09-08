@@ -388,15 +388,15 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       options: {
         pt: [
           'Um serviço que permite enviar e receber mensagens através da Internet',
-          'Um jogo online de cartas colecionáveis',
-          'Um vírus de computador que apaga ficheiros',
-          'Um programa para desenhar ilustrações 3D',
+          'Um protocolo exclusivo para transferir ficheiros de áudio e vídeo em direto',
+          'Um navegador Web utilizado para consultar páginas multimédia',
+          'Um sistema de armazenamento que guarda apenas ficheiros comprimidos',
         ],
         en: [
           'A service for sending and receiving messages across the Internet',
-          'An online collectible card game',
-          'A computer virus that deletes files',
-          'A software for rendering 3D illustrations',
+          'A protocol dedicated strictly to live streaming audio and video',
+          'A web browser used to display multimedia web pages',
+          'A cloud storage system holding exclusively compressed files',
         ],
       },
       correctIndex: 0,
@@ -466,15 +466,15 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       options: {
         pt: [
           'Porque na comunicação digital isso equivale a gritar e é considerado indelicado',
-          'Porque o computador desliga-se automaticamente',
-          'Porque a mensagem não é entregue ao destinatário',
-          'Porque gasta mais bateria no telemóvel',
+          'Porque os servidores de correio rejeitam mensagens em maiúsculas',
+          'Porque impede o envio de qualquer documento em anexo',
+          'Porque torna o tamanho da mensagem demasiado pesado para a rede',
         ],
         en: [
           'Because in online etiquette typing in ALL CAPS is equivalent to shouting',
-          'Because the computer will automatically shut down',
-          'Because the message cannot be delivered',
-          'Because it drains phone battery faster',
+          'Because mail servers reject all-uppercase messages',
+          'Because it prevents any documents from being attached',
+          'Because it makes the file size too heavy for the network',
         ],
       },
       correctIndex: 0,

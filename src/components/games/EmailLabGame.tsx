@@ -22,15 +22,16 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
 
   const t = translations[language];
 
-  // Validation rules
+  // Validation rules (flexible pedagogical standards)
   const validTo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to.trim());
-  const validSubject = subject.trim().length >= 5 && !subject.toUpperCase().includes('URGENTE');
-  const validGreeting = greeting.trim().length >= 5;
+  const validSubject = subject.trim().length >= 3;
+  const validGreeting = greeting.trim().length >= 3;
   const isNotShouting = !body.split('').filter((c) => /[A-Z]/.test(c)).length ||
-                        (body.split('').filter((c) => /[A-Z]/.test(c)).length / (body.length || 1)) < 0.35;
-  const validSignoffAndSignature = signoff.trim().length >= 4 && signature.trim().length >= 3;
+                        (body.split('').filter((c) => /[A-Z]/.test(c)).length / (body.length || 1)) < 0.4;
+  const validBody = body.trim().length >= 10 && isNotShouting;
+  const validSignoffOrSignature = signoff.trim().length >= 3 || signature.trim().length >= 3;
 
-  const validCount = [validTo, validSubject, validGreeting, isNotShouting, validSignoffAndSignature].filter(Boolean).length;
+  const validCount = [validTo, validSubject, validGreeting, validBody, validSignoffOrSignature].filter(Boolean).length;
 
   const handleSend = () => {
     setSentSuccess(true);
@@ -215,22 +216,22 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
               </div>
 
               <div className={`p-3 rounded-xl border text-xs flex items-start gap-2 ${
-                isNotShouting ? 'bg-emerald-50 border-emerald-200 text-emerald-950' : 'bg-rose-50 border-rose-200 text-rose-950'
+                validBody ? 'bg-emerald-50 border-emerald-200 text-emerald-950' : 'bg-rose-50 border-rose-200 text-rose-950'
               }`}>
-                {isNotShouting ? <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> : <AlertCircle className="w-4 h-4 text-rose-500 shrink-0" />}
+                {validBody ? <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> : <AlertCircle className="w-4 h-4 text-rose-500 shrink-0" />}
                 <div>
-                  <p className="font-bold">{language === 'pt' ? 'Tom calmo (sem MAIÚSCULAS)' : 'Calm tone (no shouting CAPS)'}</p>
-                  <p className="text-[11px] text-slate-500">{language === 'pt' ? 'Escrever tudo em maiúsculas equivale a gritar' : 'All caps equals shouting online'}</p>
+                  <p className="font-bold">{language === 'pt' ? 'Mensagem com conteúdo relevante' : 'Relevant body message'}</p>
+                  <p className="text-[11px] text-slate-500">{language === 'pt' ? 'Texto claro e em tom calmo' : 'Clear text in a calm tone'}</p>
                 </div>
               </div>
 
               <div className={`p-3 rounded-xl border text-xs flex items-start gap-2 ${
-                validSignoffAndSignature ? 'bg-emerald-50 border-emerald-200 text-emerald-950' : 'bg-slate-50 border-slate-200 text-slate-500'
+                validSignoffOrSignature ? 'bg-emerald-50 border-emerald-200 text-emerald-950' : 'bg-slate-50 border-slate-200 text-slate-500'
               }`}>
-                {validSignoffAndSignature ? <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> : <AlertCircle className="w-4 h-4 text-slate-400 shrink-0" />}
+                {validSignoffOrSignature ? <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> : <AlertCircle className="w-4 h-4 text-slate-400 shrink-0" />}
                 <div>
-                  <p className="font-bold">{language === 'pt' ? 'Despedida e identificação' : 'Closing & Identification'}</p>
-                  <p className="text-[11px] text-slate-500">{language === 'pt' ? 'Indica o teu nome e turma' : 'Includes your name and class'}</p>
+                  <p className="font-bold">{language === 'pt' ? 'Despedida ou identificação' : 'Closing or Identification'}</p>
+                  <p className="text-[11px] text-slate-500">{language === 'pt' ? 'Uma despedida educada ou assinatura' : 'A polite closing or signature'}</p>
                 </div>
               </div>
             </div>

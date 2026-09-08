@@ -119,8 +119,8 @@ export const SitPostureInfographicPT: React.FC = () => {
         <line x1="202" y1="214" x2="120" y2="175" stroke="#059669" strokeWidth="2" />
         <circle cx="202" cy="214" r="4" fill="#059669" />
         <rect x="6" y="158" width="136" height="34" rx="9" fill="#d1fae5" stroke="#10b981" strokeWidth="1.5" filter="url(#badgeShadow)" />
-        <text x="74" y="172" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#064e3b">Cotovelos e mãos</text>
-        <text x="74" y="185" textAnchor="middle" fontSize="10" fontWeight="600" fill="#047857">alinhados a ~90°</text>
+        <text x="74" y="172" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#064e3b">Braços e antebraços</text>
+        <text x="74" y="185" textAnchor="middle" fontSize="10" fontWeight="600" fill="#047857">apoiados com conforto</text>
       </g>
 
       {/* 3. Costas direitas */}

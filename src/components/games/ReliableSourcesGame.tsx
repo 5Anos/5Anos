@@ -59,8 +59,8 @@ const CASES: SourceCase[] = [
       en: 'All-caps sensationalist headline, excessive exclamation marks (!!!), anonymous author, prize bait, and weird domain (.xyz).',
     },
     explanation: {
-      pt: '🔴 Falsa e Perigosa! Notícia falsa evidente (fake news) com táticas de clickbait para enganar leitores com anúncios fraudulentos.',
-      en: '🔴 Fake and Dangerous! Clear fake news with clickbait tactics aimed at misleading readers with scam ads.',
+      pt: '🔴 Informação Falsa! Notícia falsa evidente criada para enganar o público ou gerar cliques (clickbait) com anúncios fraudulentos.',
+      en: '🔴 False Information! Obvious fake content created to mislead the public or generate clicks with scam ads.',
     },
   },
   {
@@ -85,13 +85,13 @@ const CASES: SourceCase[] = [
   },
   {
     id: 4,
-    title: 'A Batalha de São Mamede e as origens da nacionalidade portuguesa',
+    title: 'A Batalha de São Mamede e o processo de independência',
     url: 'https://ensina.rtp.pt/artigo/batalha-de-sao-mamede-guimaraes',
     author: 'RTP Ensina — Arquivo Histórico e Educativo',
     date: 'Revisão pedagógica de 2023',
     snippet: {
-      pt: 'A 24 de junho de 1128, nas imediações do Castelo de Guimarães, confrontaram-se as forças de Afonso Henriques e os partidários de D. Teresa e Fernão Peres de Trava, marcando o nascimento de Portugal.',
-      en: 'On June 24, 1128, near Guimarães Castle, forces led by Afonso Henriques fought partisans of Queen Teresa and Fernão Peres de Trava, marking the birth of Portugal.',
+      pt: 'A Batalha de São Mamede ocorreu em 24 de junho de 1128, perto de Guimarães, e teve um papel importante no processo que levou à formação do Reino de Portugal.',
+      en: 'The Battle of São Mamede occurred on June 24, 1128, near Guimarães, and played a major role in the process leading to the formation of the Kingdom of Portugal.',
     },
     correctVerdict: 'reliable',
     detectiveTip: {

@@ -409,8 +409,8 @@ export const themeSegurancaData: ThemeDefinition = {
       id: 'seg-q1',
       question: { pt: 'O que é o phishing?', en: 'What is phishing?' },
       options: {
-        pt: ['Uma técnica para enganar pessoas e roubar dados', 'Um tipo de jogo online', 'Um programa antivírus', 'Uma rede social'],
-        en: ['A technique to trick people and steal data', 'A type of online game', 'An antivirus program', 'A social network']
+        pt: ['Uma técnica para enganar pessoas e roubar dados e credenciais', 'Um protocolo para acelerar descargas na Web', 'Um serviço de cópias de segurança na nuvem', 'Um formato de ficheiro de compressão de dados'],
+        en: ['A technique to trick people and steal data and credentials', 'A protocol to accelerate web downloads', 'A cloud-based backup service', 'A compressed data file format']
       },
       correctIndex: 0,
       explanation: { pt: 'O phishing tenta enganar as pessoas para obter dados pessoais.', en: 'Phishing attempts to trick people to obtain personal data.' }
@@ -429,8 +429,8 @@ export const themeSegurancaData: ThemeDefinition = {
       id: 'seg-q3',
       question: { pt: 'O que é o ciberbullying?', en: 'What is cyberbullying?' },
       options: {
-        pt: ['Intimidar ou humilhar alguém repetidamente através da Internet', 'Um jogo educativo', 'Uma forma de estudar online', 'Um tipo de rede Wi-Fi'],
-        en: ['Intimidating or humiliating someone repeatedly over the Internet', 'An educational game', 'A way to study online', 'A type of Wi-Fi network']
+        pt: ['Intimidar ou humilhar alguém repetidamente através da Internet', 'Uma discussão construtiva num fórum de turma', 'Um teste de velocidade de ligação à rede', 'Um filtro de proteção de conteúdos impróprios'],
+        en: ['Intimidating or humiliating someone repeatedly over the Internet', 'A constructive discussion in a class forum', 'A network speed measurement test', 'A protection filter against inappropriate content']
       },
       correctIndex: 0,
       explanation: { pt: 'O ciberbullying causa dano real a outras pessoas.', en: 'Cyberbullying causes real harm to other people.' }
@@ -449,8 +449,8 @@ export const themeSegurancaData: ThemeDefinition = {
       id: 'seg-q5',
       question: { pt: 'O que é a pegada digital?', en: 'What is the digital footprint?' },
       options: {
-        pt: ['O rasto que deixamos das nossas ações online', 'Um tipo de vírus informático', 'Uma aplicação de exercício físico', 'Um jogo de aventura'],
-        en: ['The trail we leave of our online actions', 'A type of computer virus', 'A fitness app', 'An adventure game']
+        pt: ['O rasto que deixamos das nossas ações, pesquisas e publicações online', 'O espaço em disco ocupado pelo sistema operativo', 'O histórico de comandos introduzidos na consola', 'A capacidade máxima de transferência do router'],
+        en: ['The trail we leave of our online actions, searches, and posts', 'The disk space occupied by the operating system', 'The command history recorded in the terminal', 'The maximum transfer capacity of the router']
       },
       correctIndex: 0,
       explanation: { pt: 'Tudo o que publicamos ou partilhamos deixa um rasto digital.', en: 'Everything we publish or share leaves a digital trail.' }
@@ -469,8 +469,8 @@ export const themeSegurancaData: ThemeDefinition = {
       id: 'seg-q7',
       question: { pt: 'Redes Wi-Fi públicas podem ser:', en: 'Public Wi-Fi networks can be:' },
       options: {
-        pt: ['menos seguras para dados pessoais', 'sempre totalmente seguras', 'impossíveis de usar', 'iguais às redes de casa em segurança'],
-        en: ['less secure for personal data', 'always totally secure', 'impossible to use', 'equal to home networks in security']
+        pt: ['menos seguras para o tráfego de dados e informações pessoais', 'sempre totalmente seguras em qualquer circunstância', 'protegidas automaticamente por cifra militar', 'iguais às redes privadas de casa em nível de segurança'],
+        en: ['less secure for data traffic and personal information', 'always fully secure under all circumstances', 'automatically protected by military-grade encryption', 'identical to private home networks in security level']
       },
       correctIndex: 0,
       explanation: { pt: 'É preciso ter mais cuidado com dados pessoais em redes públicas.', en: 'You need to be extra careful with personal data on public networks.' }
@@ -499,8 +499,8 @@ export const themeSegurancaData: ThemeDefinition = {
       id: 'seg-q10',
       question: { pt: 'Antes de publicar algo online devemos pensar se:', en: 'Before publishing something online we should think if:' },
       options: {
-        pt: ['respeita os outros e a nós próprios', 'tem muitos emojis', 'é curto ou longo', 'tem cores bonitas'],
-        en: ['it respects others and ourselves', 'it has many emojis', 'it is short or long', 'it has nice colors']
+        pt: ['respeita os outros e a nós próprios', 'vai obter um elevado número de reações e partilhas', 'está redigido exclusivamente na nossa língua materna', 'foi publicado no horário de maior tráfego da rede'],
+        en: ['it respects others and ourselves', 'it will gain a high volume of reactions and shares', 'it is drafted exclusively in our native language', 'it was published during peak network traffic hours']
       },
       correctIndex: 0,
       explanation: { pt: 'O respeito deve guiar tudo o que publicamos.', en: 'Respect should guide everything we publish.' }
@@ -539,8 +539,8 @@ export const themeSegurancaData: ThemeDefinition = {
       id: 'seg-q14',
       question: { pt: 'Uma consequência possível de más ações online é:', en: 'A possible consequence of bad online actions is:' },
       options: {
-        pt: ['magoar outras pessoas de forma real', 'não ter qualquer efeito', 'ser sempre esquecido de imediato', 'tornar-se invisível para sempre'],
-        en: ['hurting other people in a real way', 'having no effect at all', 'being forgotten immediately', 'becoming invisible forever']
+        pt: ['magoar outras pessoas de forma real e manchar a nossa pegada digital', 'ficar restrita apenas ao computador onde a mensagem foi escrita', 'ser esquecida e apagada automaticamente pelos servidores em poucas horas', 'desaparecer de imediato sem deixar qualquer vestígio em rede'],
+        en: ['hurting other people in a real way and harming our digital footprint', 'remaining confined strictly to the computer where it was typed', 'being forgotten and automatically deleted by servers within hours', 'disappearing immediately without leaving any network trace']
       },
       correctIndex: 0,
       explanation: { pt: 'As ações online têm consequências reais para as outras pessoas.', en: 'Online actions have real consequences for other people.' }

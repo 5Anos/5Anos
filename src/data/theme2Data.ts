@@ -132,8 +132,18 @@ export const theme2Data: ThemeDefinition = {
             en: 'A major advantage of email compared to traditional paper letters is:',
           },
           options: {
-            pt: ['Chegar quase instantaneamente a qualquer parte do mundo', 'Ser obrigatório imprimir em papel', 'Precisar sempre de selos dos correios', 'Só funcionar de manhã'],
-            en: ['Arriving almost instantaneously anywhere across the globe', 'Being mandatory to print on paper', 'Always requiring physical postage stamps', 'Only working in the morning'],
+            pt: [
+              'Chegar quase instantaneamente a qualquer parte do mundo',
+              'Exigir que o destinatário tenha o computador ligado no momento do envio',
+              'Impedir o envio de qualquer documento em anexo',
+              'Garantir que a mensagem é lida de imediato pelo destinatário',
+            ],
+            en: [
+              'Arriving almost instantaneously anywhere across the globe',
+              'Requiring the recipient computer to be turned on when sending',
+              'Preventing any attached documents from being sent',
+              'Guaranteeing the message is read immediately by the recipient',
+            ],
           },
           correctIndex: 0,
           explanation: {
@@ -258,8 +268,8 @@ export const theme2Data: ThemeDefinition = {
             en: 'Where can you verify if an assignment you submitted to your teacher was truly dispatched?',
           },
           options: {
-            pt: ['Na pasta "Enviados"', 'Na reciclagem do computador', 'Nas fotografias', 'No histórico do YouTube'],
-            en: ['In the "Sent" folder', 'In the computer recycling bin', 'In the photo album', 'In the YouTube history'],
+            pt: ['Na pasta "Enviados"', 'Na pasta "Rascunhos"', 'Na pasta de "Spam"', 'Na lista de contactos do correio'],
+            en: ['In the "Sent" folder', 'In the "Drafts" folder', 'In the "Spam" folder', 'In your email contacts list'],
           },
           correctIndex: 0,
           explanation: {
@@ -372,8 +382,8 @@ export const theme2Data: ThemeDefinition = {
             en: 'What should appear in the signature block of an email sent by a student?',
           },
           options: {
-            pt: ['O nome de um super-herói', 'O nome completo do aluno, número e turma', 'Apenas emojis engraçados', 'A lista dos amigos'],
-            en: ['A superhero nickname', 'The student full name, number, and class', 'Just funny emojis', 'A list of best friends'],
+            pt: ['A palavra-passe da conta de correio eletrónico', 'O nome completo do aluno, número e turma', 'O código de acesso ao router da escola', 'O endereço de IP da rede doméstica'],
+            en: ['The email account password', 'The student full name, number, and class', 'The school router network passcode', 'The home network IP address'],
           },
           correctIndex: 1,
           explanation: {
@@ -480,8 +490,8 @@ export const theme2Data: ThemeDefinition = {
             en: 'Which universal icon is used in most email programs to attach a file?',
           },
           options: {
-            pt: ['Um clipe de papel (📎)', 'Uma tesoura (✂️)', 'Uma borracha', 'Um carro'],
-            en: ['A paperclip (📎)', 'Scissors (✂️)', 'An eraser', 'A car'],
+            pt: ['Um clipe de papel (📎)', 'Uma lupa de pesquisa (🔍)', 'Um cadeado de segurança (🔒)', 'Uma roda dentada de definições (⚙️)'],
+            en: ['A paperclip (📎)', 'A search magnifying glass (🔍)', 'A security padlock (🔒)', 'A settings gear (⚙️)'],
           },
           correctIndex: 0,
           explanation: {
@@ -512,8 +522,8 @@ export const theme2Data: ThemeDefinition = {
             en: 'What should you do if you receive an unexpected attachment from an unrecognized address?',
           },
           options: {
-            pt: ['Não abrir o anexo, apagar o email e pedir ajuda a um adulto', 'Abrir imediatamente para ver o que tem dentro', 'Descarregar para todos os computadores da escola', 'Mudar a tua palavra-passe para o nome do ficheiro'],
-            en: ['Do not open the attachment, delete the email, and seek guidance from an adult', 'Open it immediately to check the contents', 'Download it to all computers at school', 'Change your password to the filename'],
+            pt: ['Não abrir o anexo, apagar o email e pedir ajuda a um adulto', 'Abrir imediatamente para ver o que tem dentro', 'Reencaminhar a mensagem para todos os colegas para perguntar se conhecem', 'Guardar o ficheiro na pasta pessoal sem verificar com antivírus'],
+            en: ['Do not open the attachment, delete the email, and seek guidance from an adult', 'Open it immediately to check the contents', 'Forward the message to all classmates to ask if they recognize it', 'Save the file to your personal folder without scanning with antivirus'],
           },
           correctIndex: 0,
           explanation: {
@@ -620,8 +630,8 @@ export const theme2Data: ThemeDefinition = {
             en: 'What should you do if an email asks you to click a link and re-enter your password?',
           },
           options: {
-            pt: ['Introduzir a palavra-passe depressa', 'Nunca introduzir a palavra-passe, desconfiar e alertar um adulto', 'Enviar a palavra-passe do teu colega', 'Reencaminhar para as redes sociais'],
-            en: ['Enter the password quickly', 'Never enter your password, be suspicious, and tell an adult', 'Send your friend’s password', 'Forward to social media'],
+            pt: ['Introduzir a palavra-passe depressa', 'Nunca introduzir a palavra-passe, desconfiar e alertar um adulto', 'Responder à mensagem perguntando se o pedido é mesmo verdadeiro', 'Clicar no link utilizando uma janela de navegação anónima'],
+            en: ['Enter the password quickly', 'Never enter your password, be suspicious, and tell an adult', 'Reply to the message asking if the request is real', 'Click the link using an incognito browsing window'],
           },
           correctIndex: 1,
           explanation: {
@@ -636,8 +646,18 @@ export const theme2Data: ThemeDefinition = {
             en: 'How can you preview where a link in an email truly leads before clicking it?',
           },
           options: {
-            pt: ['Passar o cursor do rato por cima do link (sem clicar) para ver o endereço no canto inferior do ecrã', 'Carregar várias vezes seguidas com força', 'Desligar o monitor', 'Tirar uma fotografia'],
-            en: ['Hover the mouse cursor over the link (without clicking) to preview the destination URL at the bottom', 'Click it repeatedly with force', 'Turn off the screen', 'Take a snapshot'],
+            pt: [
+              'Passar o cursor do rato por cima do link (sem clicar) para ver o endereço no canto inferior do ecrã',
+              'Clicar com o botão direito e formatar o texto em itálico',
+              'Mover a mensagem para a pasta de Rascunhos',
+              'Desativar as notificações da aplicação de correio',
+            ],
+            en: [
+              'Hover the mouse cursor over the link (without clicking) to preview the destination URL at the bottom',
+              'Right-click and format the text in italics',
+              'Move the message to the Drafts folder',
+              'Turn off email app notifications',
+            ],
           },
           correctIndex: 0,
           explanation: {
@@ -730,8 +750,8 @@ export const theme2Data: ThemeDefinition = {
             en: 'In Internet language, what does writing an entire sentence in CAPITAL LETTERS signify?',
           },
           options: {
-            pt: ['Que estás a sussurrar', 'Que estás a gritar com o interlocutor', 'Que a bateria do computador está cheia', 'Que a mensagem é secreta'],
-            en: ['That you are whispering', 'That you are shouting at the recipient', 'That your battery is full', 'That the message is top secret'],
+            pt: ['Que estás a enviar um anexo com prioridade alta', 'Que estás a gritar com o interlocutor', 'Que a mensagem foi cifrada com palavra-passe', 'Que a mensagem foi enviada em modo de rascunho'],
+            en: ['That you are sending a high-priority attachment', 'That you are shouting at the recipient', 'That the message was encrypted with a password', 'That the message was dispatched in draft mode'],
           },
           correctIndex: 1,
           explanation: {
@@ -746,8 +766,8 @@ export const theme2Data: ThemeDefinition = {
             en: 'What should you do with "chain letters" prompting you to forward them to 10 friends?',
           },
           options: {
-            pt: ['Reenviar logo a toda a escola', 'Apagar a mensagem e não dar seguimento', 'Imprimir em papel', 'Publicar no jornal'],
-            en: ['Forward them to the entire school', 'Delete the message and do not forward it', 'Print them on paper', 'Publish in the paper'],
+            pt: ['Reenviar de imediato a todos os contactos da escola', 'Apagar a mensagem e não dar seguimento', 'Guardar na pasta de Rascunhos para enviar mais tarde', 'Responder a pedir a confirmação de entrega'],
+            en: ['Forward immediately to all school contacts', 'Delete the message and do not forward it', 'Save in Drafts to dispatch later', 'Reply requesting delivery receipt'],
           },
           correctIndex: 1,
           explanation: {
@@ -762,8 +782,18 @@ export const theme2Data: ThemeDefinition = {
             en: 'Before clicking the "Send" button, what is the best practice advised by netiquette?',
           },
           options: {
-            pt: ['Reler o texto com calma, verificar o destinatário e certificar que o tom é educado', 'Fechar os olhos e carregar depressa', 'Desligar o cabo de rede', 'Mudar o tipo de letra cinco vezes'],
-            en: ['Reread the text calmly, verify the recipient, and ensure the tone is polite', 'Close your eyes and click hurriedly', 'Unplug the network cord', 'Change the font five times'],
+            pt: [
+              'Reler o texto com calma, verificar o destinatário e certificar que o tom é educado',
+              'Adicionar o maior número possível de pontos de exclamação no assunto',
+              'Colocar todos os colegas da turma no campo Bcc sem autorização',
+              'Alterar todo o texto da mensagem para letras maiúsculas',
+            ],
+            en: [
+              'Reread the text calmly, verify the recipient, and ensure the tone is polite',
+              'Add as many exclamation marks as possible in the subject line',
+              'Place all classmates into the Bcc field without authorization',
+              'Change the entire email text into capital letters',
+            ],
           },
           correctIndex: 0,
           explanation: {
@@ -864,8 +894,8 @@ export const theme2Data: ThemeDefinition = {
         en: 'Which of the following components cannot be omitted in a valid email address?',
       },
       options: {
-        pt: ['O símbolo arroba (@)', 'O número de telemóvel', 'A palavra "secreto"', 'Um emoji'],
-        en: ['The at symbol (@)', 'The mobile phone number', 'The word "secret"', 'An emoji'],
+        pt: ['O símbolo arroba (@)', 'O protocolo "https://"', 'A indicação "www." no início', 'O número de telefone do remetente'],
+        en: ['The at symbol (@)', 'The "https://" protocol', 'The "www." prefix', 'The sender phone number'],
       },
       correctIndex: 0,
       explanation: {
@@ -880,8 +910,18 @@ export const theme2Data: ThemeDefinition = {
         en: 'What is the purpose of the "Drafts" folder?',
       },
       options: {
-        pt: ['Para guardar mensagens que foram apagadas', 'Para guardar automaticamente mensagens iniciadas mas ainda não expedidas', 'Para guardar ficheiros de música', 'Para guardar fotografias de perfil'],
-        en: ['To hold discarded messages', 'To automatically preserve messages started but not yet dispatched', 'To store music files', 'To hold profile photos'],
+        pt: [
+          'Para guardar mensagens que foram apagadas da Caixa de Entrada',
+          'Para guardar automaticamente mensagens iniciadas mas ainda não expedidas',
+          'Para filtrar mensagens identificadas como spam pelos servidores',
+          'Para criar cópias de segurança de anexos transferidos',
+        ],
+        en: [
+          'To store messages deleted from the Inbox',
+          'To automatically preserve messages started but not yet dispatched',
+          'To filter incoming messages identified as spam by servers',
+          'To back up downloaded email attachments',
+        ],
       },
       correctIndex: 1,
       explanation: {
@@ -896,8 +936,18 @@ export const theme2Data: ThemeDefinition = {
         en: 'Why should you never draft an entire email in all capital letters?',
       },
       options: {
-        pt: ['Porque as letras maiúsculas gastam a tinta do ecrã', 'Porque na etiqueta da Internet equivale a gritar com a outra pessoa', 'Porque o computador bloqueia de imediato', 'Porque os professores não sabem ler maiúsculas'],
-        en: ['Because capital letters drain screen ink', 'Because in netiquette it is interpreted as shouting at the recipient', 'Because the computer crashes immediately', 'Because teachers cannot read capitals'],
+        pt: [
+          'Porque impede o envio de ficheiros em anexo',
+          'Porque na etiqueta da Internet equivale a gritar com a outra pessoa',
+          'Porque os servidores de correio rejeitam textos em maiúsculas',
+          'Porque reduz a velocidade de envio da mensagem na rede',
+        ],
+        en: [
+          'Because it prevents attached files from sending',
+          'Because in netiquette it is interpreted as shouting at the recipient',
+          'Because mail servers reject all-uppercase text',
+          'Because it slows down message transmission across the network',
+        ],
       },
       correctIndex: 1,
       explanation: {
@@ -928,8 +978,18 @@ export const theme2Data: ThemeDefinition = {
         en: 'What should you do if you receive an email purporting to be from your bank or school requesting your password?',
       },
       options: {
-        pt: ['Responder com a palavra-passe para não ter problemas', 'Reconhecer que é phishing, não partilhar nada e avisar um adulto responsável', 'Enviar uma fotografia do teu cartão de estudante', 'Inscrever o teu amigo'],
-        en: ['Reply with the password to avoid trouble', 'Recognize it as phishing, share nothing, and tell a responsible adult', 'Send a snapshot of your student ID', 'Sign up your friend'],
+        pt: [
+          'Responder com a palavra-passe para não ter problemas com a conta',
+          'Reconhecer que é phishing, não partilhar nada e avisar um adulto responsável',
+          'Reencaminhar o email para todos os colegas da turma',
+          'Clicar no link fornecido e inserir uma palavra-passe incorreta de propósito',
+        ],
+        en: [
+          'Reply with the password to avoid account suspension issues',
+          'Recognize it as phishing, share nothing, and tell a responsible adult',
+          'Forward the email to all classmates in school',
+          'Click the link and deliberately enter an incorrect password',
+        ],
       },
       correctIndex: 1,
       explanation: {

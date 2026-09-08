@@ -180,7 +180,7 @@ export const DosDontsPostureInfographicPT: React.FC = () => {
           </li>
           <li className="flex items-start gap-2">
             <span className="text-emerald-600 font-bold shrink-0">✓</span>
-            <span><strong>Ombros relaxados</strong> e cotovelos a ~90°.</span>
+            <span><strong>Ombros relaxados</strong> e braços apoiados confortavelmente.</span>
           </li>
           <li className="flex items-start gap-2">
             <span className="text-emerald-600 font-bold shrink-0">✓</span>

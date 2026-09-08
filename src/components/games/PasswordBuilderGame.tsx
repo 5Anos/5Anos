@@ -10,43 +10,60 @@ interface PasswordBuilderGameProps {
 }
 
 export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ language, onBack, onFinish }) => {
-  const [mockPassword, setMockPassword] = useState('Gato#Verde_2026!');
+  const [mockPassword, setMockPassword] = useState('cavalo-amarelo-corre-depressa');
   const [completedChallenges, setCompletedChallenges] = useState<number[]>([]);
   const t = translations[language];
 
-  // Analysis of mock password
-  const hasMinLength = mockPassword.length >= 10;
-  const hasUppercase = /[A-Z]/.test(mockPassword);
-  const hasLowercase = /[a-z]/.test(mockPassword);
-  const hasNumbers = /[0-9]/.test(mockPassword);
-  const hasSymbols = /[^A-Za-z0-9]/.test(mockPassword);
+  // Analysis of mock password according to modern standards (length, passphrases, variety)
+  const isLongEnough = mockPassword.length >= 12;
+  const wordCount = mockPassword.trim().split(/[\s\-_.]+/).filter((w) => w.length >= 2).length;
+  const isPassphrase = wordCount >= 3 && mockPassword.length >= 14;
+  const hasNoObviousSequences = !/12345|qwerty|abcdef|password/i.test(mockPassword);
+  const hasMixedChars = (/[A-Z]/.test(mockPassword) ? 1 : 0) +
+                        (/[0-9]/.test(mockPassword) ? 1 : 0) +
+                        (/[^A-Za-z0-9]/.test(mockPassword) ? 1 : 0) >= 1;
 
-  const criteriaCount = [hasMinLength, hasUppercase, hasLowercase, hasNumbers, hasSymbols].filter(Boolean).length;
-
+  // Modern evaluation: length or passphrase is king!
   let strengthLabel = { pt: 'Precisa de melhorar', en: 'Needs improvement' };
   let strengthColor = 'bg-amber-400';
-  let strengthScore = 30;
+  let strengthScore = 35;
 
-  if (criteriaCount === 5) {
-    strengthLabel = { pt: 'Muito boa', en: 'Very good' };
+  if (isPassphrase && hasNoObviousSequences) {
+    strengthLabel = { pt: 'Excelente (Frase-passe robusta)', en: 'Excellent (Strong Passphrase)' };
     strengthColor = 'bg-emerald-500';
     strengthScore = 100;
-  } else if (criteriaCount >= 3) {
-    strengthLabel = { pt: 'Boa', en: 'Good' };
+  } else if (isLongEnough && hasNoObviousSequences && hasMixedChars) {
+    strengthLabel = { pt: 'Muito boa e longa', en: 'Very good and long' };
+    strengthColor = 'bg-emerald-500';
+    strengthScore = 95;
+  } else if (isLongEnough && hasNoObviousSequences) {
+    strengthLabel = { pt: 'Boa (Bom comprimento)', en: 'Good (Good length)' };
     strengthColor = 'bg-blue-500';
-    strengthScore = 70;
+    strengthScore = 75;
+  } else if (mockPassword.length >= 8 && hasNoObviousSequences) {
+    strengthLabel = { pt: 'Média (Aumenta o comprimento)', en: 'Medium (Increase length)' };
+    strengthColor = 'bg-amber-500';
+    strengthScore = 55;
   } else {
-    strengthLabel = { pt: 'Precisa de melhorar', en: 'Needs improvement' };
-    strengthColor = 'bg-amber-400';
-    strengthScore = 35;
+    strengthLabel = { pt: 'Fraca ou curta', en: 'Weak or short' };
+    strengthColor = 'bg-rose-500';
+    strengthScore = 25;
   }
 
-  // Pre-configured training samples for student to test (strictly avoiding personal info, clubs or birth years)
+  // Criteria met count
+  const criteriaMetCount = [
+    isLongEnough,
+    hasNoObviousSequences,
+    hasMixedChars,
+    mockPassword.length >= 12 || isPassphrase,
+  ].filter(Boolean).length;
+
+  // Pre-configured training samples for student to test
   const testSamples = [
     { label: '123456', hint: { pt: 'Demasiado curta, previsível e fácil de adivinhar', en: 'Too short, predictable, and easy to guess' } },
-    { label: 'qwerty', hint: { pt: 'Sequência de teclas óbvia no teclado', en: 'Obvious keyboard row sequence' } },
-    { label: 'castelo99', hint: { pt: 'Faltam símbolos, maiúsculas e maior comprimento', en: 'Lacks symbols, uppercase letters, and length' } },
-    { label: 'Sol_Amarelo#58', hint: { pt: 'Frase memorável e variada, sem dados pessoais óbvios', en: 'Memorable varied phrase without obvious personal details' } },
+    { label: 'qwerty', hint: { pt: 'Sequência óbvia no teclado', en: 'Obvious keyboard row sequence' } },
+    { label: 'Escola2024!', hint: { pt: 'Fórmula previsível (palavra comum + ano + símbolo); preferível mais longa', en: 'Predictable formula (common word + year + symbol); longer is better' } },
+    { label: 'cavalo-amarelo-corre-depressa', hint: { pt: 'Excelente frase-passe! Longa, fácil de memorizar e difícil de adivinhar', en: 'Excellent passphrase! Long, memorable, and hard to guess' } },
   ];
 
   const handleFinish = () => {
@@ -136,38 +153,43 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
         {/* Requirements Checklist */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           <div className={`p-3 rounded-xl border flex items-center gap-2.5 text-xs font-semibold ${
-            hasMinLength ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
+            isLongEnough ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
           }`}>
-            {hasMinLength ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
-            <span>{language === 'pt' ? 'Mínimo 10 caracteres' : 'Minimum 10 characters'}</span>
+            {isLongEnough ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
+            <div>
+              <p>{language === 'pt' ? 'Comprimento (12+ carateres)' : 'Length (12+ characters)'}</p>
+              <p className="text-[10px] opacity-75 font-normal">{language === 'pt' ? '⭐ Critério principal de segurança' : '⭐ Primary security criterion'}</p>
+            </div>
           </div>
 
           <div className={`p-3 rounded-xl border flex items-center gap-2.5 text-xs font-semibold ${
-            hasUppercase ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
+            isPassphrase ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
           }`}>
-            {hasUppercase ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
-            <span>{language === 'pt' ? 'Letras maiúsculas (A-Z)' : 'Uppercase letters (A-Z)'}</span>
+            {isPassphrase ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
+            <div>
+              <p>{language === 'pt' ? 'Frase-passe (várias palavras)' : 'Passphrase (multiple words)'}</p>
+              <p className="text-[10px] opacity-75 font-normal">{language === 'pt' ? 'Fácil de lembrar, difícil de adivinhar' : 'Easy to remember, hard to guess'}</p>
+            </div>
           </div>
 
           <div className={`p-3 rounded-xl border flex items-center gap-2.5 text-xs font-semibold ${
-            hasLowercase ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
+            hasNoObviousSequences ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
           }`}>
-            {hasLowercase ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
-            <span>{language === 'pt' ? 'Letras minúsculas (a-z)' : 'Lowercase letters (a-z)'}</span>
+            {hasNoObviousSequences ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
+            <div>
+              <p>{language === 'pt' ? 'Sem sequências previsíveis' : 'No predictable sequences'}</p>
+              <p className="text-[10px] opacity-75 font-normal">{language === 'pt' ? 'Sem 12345, qwerty ou dados óbvios' : 'No 12345, qwerty or obvious data'}</p>
+            </div>
           </div>
 
           <div className={`p-3 rounded-xl border flex items-center gap-2.5 text-xs font-semibold ${
-            hasNumbers ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
+            hasMixedChars ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
           }`}>
-            {hasNumbers ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
-            <span>{language === 'pt' ? 'Números (0-9)' : 'Numbers (0-9)'}</span>
-          </div>
-
-          <div className={`p-3 rounded-xl border flex items-center gap-2.5 text-xs font-semibold sm:col-span-2 ${
-            hasSymbols ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-500'
-          }`}>
-            {hasSymbols ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
-            <span>{language === 'pt' ? 'Símbolos especiais (! @ # $ % & * _)' : 'Special symbols (! @ # $ % & * _)'}</span>
+            {hasMixedChars ? <Check className="w-4 h-4 text-emerald-600" /> : <X className="w-4 h-4 text-slate-400" />}
+            <div>
+              <p>{language === 'pt' ? 'Variedade (opcional)' : 'Variety (optional)'}</p>
+              <p className="text-[10px] opacity-75 font-normal">{language === 'pt' ? 'Maiúsculas, números ou símbolos' : 'Uppercase, numbers, or symbols'}</p>
+            </div>
           </div>
         </div>
 
@@ -194,9 +216,9 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
         {/* Completion button */}
         <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
           <span className="text-xs text-slate-500 font-medium">
-            {criteriaCount === 5
-              ? (language === 'pt' ? '🎉 Muito bem! Esta combinação cumpre os 5 critérios educativos.' : '🎉 Well done! This combination meets all 5 educational criteria.')
-              : (language === 'pt' ? 'Dica: junta 5 critérios educativos para explorar a classificação máxima.' : 'Tip: combine 5 educational criteria to explore the highest rating.')}
+            {criteriaMetCount >= 3
+              ? (language === 'pt' ? '🎉 Muito bem! Esta combinação cumpre os critérios recomendados.' : '🎉 Well done! This combination meets recommended guidelines.')
+              : (language === 'pt' ? 'Dica: aumenta o comprimento ou usa uma frase-passe com várias palavras.' : 'Tip: increase length or use a multi-word passphrase.')}
           </span>
 
           <button

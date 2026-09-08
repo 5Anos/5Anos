@@ -132,8 +132,18 @@ export const theme1Data: ThemeDefinition = {
             en: 'What is the purpose of an antivirus program on a device?',
           },
           options: {
-            pt: ['Para limpar o pó do ecrã', 'Para acelerar a ligação à Internet', 'Para detetar e bloquear programas maliciosos que possam danificar o sistema', 'Para desenhar imagens'],
-            en: ['To clean dust off the screen', 'To speed up the internet connection', 'To detect and block malicious software that could harm the system', 'To draw pictures'],
+            pt: [
+              'Para comprimir ficheiros de texto no disco rígido',
+              'Para acelerar a velocidade da ligação à Internet',
+              'Para detetar e bloquear programas maliciosos que possam danificar o sistema',
+              'Para criar cópias de segurança de páginas da Web',
+            ],
+            en: [
+              'To compress plain text files on disk',
+              'To speed up the internet connection',
+              'To detect and block malicious software that could harm the system',
+              'To back up visited web pages',
+            ],
           },
           correctIndex: 2,
           explanation: {
@@ -256,8 +266,18 @@ export const theme1Data: ThemeDefinition = {
             en: 'What is the main precaution when connecting a phone to a free public Wi-Fi network?',
           },
           options: {
-            pt: ['Não ver vídeos', 'Não introduzir palavras-passe importantes nem dados pessoais', 'Desligar o som do telemóvel', 'Usar sempre auscultadores'],
-            en: ['Do not watch videos', 'Do not enter sensitive passwords or personal data', 'Turn off the phone ringtone', 'Always wear headphones'],
+            pt: [
+              'Não descarregar ficheiros de vídeo',
+              'Não introduzir palavras-passe confidenciais nem aceder a contas privadas',
+              'Não alterar as definições de idioma do teclado',
+              'Não abrir ficheiros em formato PDF',
+            ],
+            en: [
+              'Do not stream video files',
+              'Do not enter sensitive passwords or access private accounts',
+              'Do not adjust keyboard language settings',
+              'Do not open PDF documents',
+            ],
           },
           correctIndex: 1,
           explanation: {
@@ -364,8 +384,8 @@ export const theme1Data: ThemeDefinition = {
             en: 'What should you check before posting a photo of yourself online or on social media?',
           },
           options: {
-            pt: ['Se tem muitos filtros bonitos', 'Se não revela a tua escola, morada ou detalhes privados teus ou de outros', 'Se tens mais de 100 seguidores', 'Se foi tirada com luz do sol'],
-            en: ['If it has many pretty filters', 'That it does not reveal your school, address, or private details of you or others', 'If you have over 100 followers', 'If it was taken in sunlight'],
+            pt: ['Se tem muitos filtros bonitos', 'Se não revela a tua escola, morada ou detalhes privados teus ou de outros', 'Se a imagem tem legendas em várias línguas', 'Se o ficheiro ocupa menos de 10 megabytes'],
+            en: ['If it has many pretty filters', 'That it does not reveal your school, address, or private details of you or others', 'If the image has subtitles in multiple languages', 'If the file takes up less than 10 megabytes'],
           },
           correctIndex: 1,
           explanation: {
@@ -380,8 +400,18 @@ export const theme1Data: ThemeDefinition = {
             en: 'Why is it risky to leave phone location sharing always turned on publicly?',
           },
           options: {
-            pt: ['Porque gasta um bocadinho de bateria', 'Porque pessoas desconhecidas podem saber exatamente onde estás a cada momento', 'Porque deixa as fotografias a preto e branco', 'Não tem perigo nenhum'],
-            en: ['Because it consumes battery', 'Because strangers could track exactly where you are in real time', 'Because it turns photos black and white', 'There is no danger at all'],
+            pt: [
+              'Porque impede a instalação de novas aplicações',
+              'Porque pessoas desconhecidas podem saber exatamente onde estás a cada momento',
+              'Porque desativa automaticamente o antivírus do aparelho',
+              'Não tem qualquer implicação na segurança ou privacidade',
+            ],
+            en: [
+              'Because it blocks the installation of new apps',
+              'Because strangers could track exactly where you are in real time',
+              'Because it automatically deactivates device antivirus',
+              'It has zero implications for security or privacy',
+            ],
           },
           correctIndex: 1,
           explanation: {
@@ -488,8 +518,18 @@ export const theme1Data: ThemeDefinition = {
             en: 'What does your "digital footprint" represent?',
           },
           options: {
-            pt: ['O tamanho dos teus sapatos nos jogos', 'O rasto e histórico de publicações, comentários e ações que deixas na Internet', 'A marca do teu dedo no ecrã do tablet', 'A velocidade do computador'],
-            en: ['Your shoe size in video games', 'The trail and history of posts, comments, and actions you leave on the Internet', 'The fingerprint smudge on a tablet screen', 'The computer speed'],
+            pt: [
+              'O espaço em bytes ocupado pelo sistema operativo no disco rígido',
+              'O rasto e histórico de publicações, comentários e ações que deixas na Internet',
+              'A capacidade total da memória RAM do computador',
+              'A velocidade máxima da ligação à rede em megabits por segundo',
+            ],
+            en: [
+              'The storage space occupied by the operating system on the hard disk',
+              'The trail and history of posts, comments, and actions you leave on the Internet',
+              'The total capacity of the device RAM memory',
+              'The maximum connection speed across the network in megabits per second',
+            ],
           },
           correctIndex: 1,
           explanation: {
@@ -596,8 +636,18 @@ export const theme1Data: ThemeDefinition = {
             en: 'What does committing "plagiarism" mean in a school assignment?',
           },
           options: {
-            pt: ['Escrever com letra feia', 'Copiar ideias ou textos de outra pessoa apresentando-os como sendo seus', 'Esquecer-se do estojo na escola', 'Fazer perguntas ao professor'],
-            en: ['Messy handwriting', 'Copying someone else’s ideas or texts and presenting them as your own', 'Forgetting your pencil case at school', 'Asking questions to the teacher'],
+            pt: [
+              'Utilizar um corretor ortográfico automático no processador de texto',
+              'Copiar ideias ou textos de outra pessoa apresentando-os como sendo seus',
+              'Guardar um ficheiro de texto com uma extensão incorreta',
+              'Comprimir imagens para ocuparem menos memória no trabalho',
+            ],
+            en: [
+              'Using an automated spell checker in a word processor',
+              'Copying someone else’s ideas or texts and presenting them as your own',
+              'Saving a text file with an incorrect file extension',
+              'Compressing images so they take up less storage space in the project',
+            ],
           },
           correctIndex: 1,
           explanation: {
@@ -612,8 +662,18 @@ export const theme1Data: ThemeDefinition = {
             en: 'What should you include at the end of a research project when using web articles and images?',
           },
           options: {
-            pt: ['Uma lista de fontes e referências bibliográficas com os autores e sites consultados', 'Apenas a palavra "Fim"', 'A lista dos teus videojogos preferidos', 'Nada'],
-            en: ['A list of sources and references crediting the authors and websites consulted', 'Just the word "The End"', 'A list of your favorite video games', 'Nothing'],
+            pt: [
+              'Uma lista de fontes e referências bibliográficas com os autores e sites consultados',
+              'Apenas a lista com o nome dos alunos que pesquisaram os artigos',
+              'O comprovativo de compra da licença do processador de texto',
+              'A declaração do motor de busca utilizado para realizar a pesquisa',
+            ],
+            en: [
+              'A list of sources and references crediting the authors and websites consulted',
+              'Only a list of student names who searched for articles',
+              'Proof of purchase for the word processor license',
+              'A declaration of the search engine used for the queries',
+            ],
           },
           correctIndex: 0,
           explanation: {
@@ -628,8 +688,18 @@ export const theme1Data: ThemeDefinition = {
             en: 'Can images with a "Creative Commons" license be used in school assignments?',
           },
           options: {
-            pt: ['Nunca, são proibidas na escola', 'Sim, desde que respeites as regras da licença (como dar crédito ao autor)', 'Apenas se pagares 50 euros', 'Apenas em computadores antigos'],
-            en: ['Never, they are banned in school', 'Yes, as long as you follow the license rules (such as crediting the author)', 'Only if you pay 50 euros', 'Only on old computers'],
+            pt: [
+              'Nunca, todas as obras na Internet têm sempre direitos reservados totais',
+              'Sim, desde que respeites as regras da licença (como dar crédito ao autor)',
+              'Apenas se o autor for contactado por carta registada antes da entrega',
+              'Apenas se o trabalho escolar for publicado num jornal de âmbito nacional',
+            ],
+            en: [
+              'Never, all web works always have full all-rights-reserved restrictions',
+              'Yes, as long as you follow the license rules (such as crediting the author)',
+              'Only if the author is contacted by registered mail before submission',
+              'Only if the school project is published in a national newspaper',
+            ],
           },
           correctIndex: 1,
           explanation: {
@@ -730,8 +800,8 @@ export const theme1Data: ThemeDefinition = {
         en: 'Which of these actions helps keep your phone or tablet safe from malware?',
       },
       options: {
-        pt: ['Instalar jogos a partir de sites desconhecidos', 'Manter o sistema operativo e as aplicações sempre atualizados', 'Nunca desligar o aparelho', 'Partilhar a palavra-passe com toda a gente'],
-        en: ['Installing games from unverified websites', 'Keeping the operating system and apps updated', 'Never powering off the device', 'Sharing your password with everyone'],
+        pt: ['Instalar jogos a partir de sites desconhecidos', 'Manter o sistema operativo e as aplicações sempre atualizados', 'Desativar as definições de proteção do navegador', 'Partilhar a palavra-passe com terceiros'],
+        en: ['Installing games from unverified websites', 'Keeping the operating system and apps updated', 'Disabling browser protection settings', 'Sharing your password with third parties'],
       },
       correctIndex: 1,
       explanation: {
@@ -762,8 +832,18 @@ export const theme1Data: ThemeDefinition = {
         en: 'How do you recognize a website with an encrypted connection in your browser bar?',
       },
       options: {
-        pt: ['Tem o endereço a piscar a vermelho', 'Começa por "https://" e tem o ícone de um cadeado fechado', 'Tem muitas fotografias coloridas', 'O ecrã fica mais brilhante'],
-        en: ['The address flashes red', 'It begins with "https://" and shows a closed padlock icon', 'It has many colorful images', 'The screen becomes brighter'],
+        pt: [
+          'Tem a terminação ".exe" no final do endereço',
+          'Começa por "https://" e tem o ícone de um cadeado fechado ou indicação de segurança',
+          'Abre automaticamente uma janela de transferência de ficheiros',
+          'Desativa o histórico de navegação de todo o sistema',
+        ],
+        en: [
+          'It has the ".exe" file extension at the end of the address',
+          'It begins with "https://" and shows a closed padlock icon or security indicator',
+          'It automatically pops up a file download window',
+          'It disables the browsing history across the entire system',
+        ],
       },
       correctIndex: 1,
       explanation: {
@@ -778,8 +858,18 @@ export const theme1Data: ThemeDefinition = {
         en: 'What should you do when using an image from the Internet in an ICT school presentation?',
       },
       options: {
-        pt: ['Dizer que foste tu que a desenhaste', 'Dar o devido crédito ao autor e indicar a fonte de onde a retiraste', 'Mudar a cor da foto para ninguém notar', 'Não fazer nada'],
-        en: ['Claim you drew it yourself', 'Properly credit the author and cite the source where you found it', 'Change the photo color so no one notices', 'Do nothing'],
+        pt: [
+          'Dizer que foste tu que a desenhaste originalmente',
+          'Dar o devido crédito ao autor e indicar a fonte de onde a retiraste',
+          'Inverter a imagem horizontalmente para eliminar os direitos de autor',
+          'Converter a imagem num ficheiro de texto sem autorização',
+        ],
+        en: [
+          'Claim you created and drew it originally yourself',
+          'Properly credit the author and cite the source where you found it',
+          'Flip the image horizontally to erase copyright claims',
+          'Convert the graphic into a raw text document without permission',
+        ],
       },
       correctIndex: 1,
       explanation: {

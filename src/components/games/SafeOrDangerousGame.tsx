@@ -20,73 +20,73 @@ const SCENARIOS: Scenario[] = [
   {
     id: 1,
     text: {
-      pt: 'Ligar o telemóvel à rede Wi-Fi gratuita do café para verificar a conta bancária da família ou introduzir palavras-passe importantes.',
-      en: 'Connecting your phone to a free cafe Wi-Fi network to check family bank accounts or enter important passwords.',
+      pt: 'O João recebeu um email a dizer que ganhou um telemóvel e tem de clicar num link.',
+      en: 'João received an email claiming he won a smartphone and needs to click a link.',
     },
     isSafe: false,
     explanation: {
-      pt: '⚠️ Perigoso! Redes Wi-Fi públicas sem palavra-passe podem ser intercetadas por terceiros. Nunca realizes operações confidenciais numa rede aberta.',
-      en: '⚠️ Dangerous! Public open Wi-Fi can be intercepted by hackers. Never perform sensitive activities on an open network.',
+      pt: '⚠️ Perigoso! Mensagens que prometem ofertas inesperadas ou prémios fáceis e pedem cliques em ligações são frequentemente tentativas de engano.',
+      en: '⚠️ Dangerous! Messages promising unexpected gifts or easy prizes and requesting link clicks are often deceptive attempts.',
     },
   },
   {
     id: 2,
     text: {
-      pt: 'Criar uma palavra-passe longa e imprevisível, misturando diferentes tipos de carateres sem usar dados pessoais óbvios.',
-      en: 'Creating a long and unpredictable password mixing different character types without using obvious personal data.',
+      pt: 'A Leonor usa a mesma palavra-passe no email, no jogo e na rede social.',
+      en: 'Leonor uses the exact same password across email, gaming, and social media.',
     },
-    isSafe: true,
+    isSafe: false,
     explanation: {
-      pt: '✅ Seguro! Uma palavra-passe longa, imprevisível e com variedade de carateres oferece grande resistência contra tentativas de adivinhação.',
-      en: '✅ Safe! A long, unpredictable password with varied character types provides strong resistance against automated guessing.',
+      pt: '⚠️ Perigoso! Utilizar a mesma palavra-passe em vários serviços aumenta o risco: se uma conta for descoberta, as outras também podem ficar vulneráveis.',
+      en: '⚠️ Dangerous! Using the same password across multiple services increases risk: if one account is exposed, others become vulnerable.',
     },
   },
   {
     id: 3,
     text: {
-      pt: 'Publicar nas redes sociais uma fotografia do teu primeiro dia de aulas onde se vê claramente a morada e o logótipo da tua escola.',
-      en: 'Posting a photo of your first day of school showing your home address and school uniform badge clearly.',
+      pt: 'A Maria aceitou um pedido de amizade de alguém que não conhece.',
+      en: 'Maria accepted a friend request from someone she does not know.',
     },
     isSafe: false,
     explanation: {
-      pt: '⚠️ Perigoso! Esta informação revela onde estás e onde estudas todos os dias. Dados de localização pessoal devem ser mantidos privados.',
-      en: '⚠️ Dangerous! This exposes your location and daily routine. Personal location details must always remain private.',
+      pt: '⚠️ Perigoso! Adicionar pessoas desconhecidas pode expor as tuas informações pessoais a quem não conheces.',
+      en: '⚠️ Dangerous! Adding unknown individuals can expose personal details to people you do not know.',
     },
   },
   {
     id: 4,
     text: {
-      pt: 'Antes de iniciar sessão na plataforma escolar, verificar o endereço completo (URL), confirmar que é o domínio oficial da escola e verificar a ligação HTTPS protegida.',
-      en: 'Before logging into your school platform, verifying the full web address (URL), confirming it is the official school domain, and verifying the secure HTTPS connection.',
+      pt: 'O Pedro tem o computador sempre atualizado.',
+      en: 'Pedro keeps his computer operating system and apps updated.',
     },
     isSafe: true,
     explanation: {
-      pt: '✅ Atitude Segura e Prudente! Verificar o endereço completo, o domínio oficial e o HTTPS em conjunto garante que estás no site verdadeiro. Lembra-te: o HTTPS cifra a comunicação, mas não prova por si só que o site é legítimo (sites falsos de phishing também podem ter HTTPS)!',
-      en: '✅ Safe and Prudent! Checking the full URL, official domain, and HTTPS together ensures you are on the legitimate site. Remember: HTTPS encrypts data transmission, but does not prove on its own that a site is authentic (phishing sites can also use HTTPS)!',
+      pt: '✅ Seguro! As atualizações corrigem falhas de segurança conhecidas e ajudam a manter o dispositivo mais protegido.',
+      en: '✅ Safe! Updates patch known security flaws and help keep devices protected.',
     },
   },
   {
     id: 5,
     text: {
-      pt: 'Um jogador desconhecido num jogo online pede para falar contigo no WhatsApp e oferece 1000 moedas virtuais em troca de uma fotografia tua.',
-      en: 'An unknown gamer in an online game asks to chat on WhatsApp and offers 1,000 game coins in exchange for a photo of you.',
+      pt: 'A Rita descarregou um jogo de um site estranho porque era grátis.',
+      en: 'Rita downloaded a game from an unknown strange website because it was free.',
     },
     isSafe: false,
     explanation: {
-      pt: '⚠️ Perigoso! Nunca partilhes fotografias nem te mudes para aplicações privadas com estranhos. Recusa, bloqueia e avisa um adulto de confiança.',
-      en: '⚠️ Dangerous! Never send photos or move to private messaging apps with strangers. Block them and tell an adult immediately.',
+      pt: '⚠️ Perigoso! Descarregar ficheiros de páginas desconhecidas pode instalar programas prejudiciais no dispositivo.',
+      en: '⚠️ Dangerous! Downloading files from unknown pages can install harmful programs on the device.',
     },
   },
   {
     id: 6,
     text: {
-      pt: 'Indicar a fonte e o nome do autor de uma imagem que encontraste na Internet ao colocá-la no trabalho escolar de TIC.',
-      en: 'Crediting the author and source URL of an image found online when using it in an ICT school project.',
+      pt: 'O Tiago usa uma palavra-passe com o seu nome e ano de nascimento.',
+      en: 'Tiago uses a password containing his own name and birth year.',
     },
-    isSafe: true,
+    isSafe: false,
     explanation: {
-      pt: '✅ Seguro e exemplar! Respeitas os direitos de autor, evitas o plágio e demonstras honestidade intelectual.',
-      en: '✅ Safe and exemplary! You respect copyright, prevent plagiarism, and uphold academic integrity.',
+      pt: '⚠️ Perigoso! Informações pessoais conhecidas ou fáceis de adivinhar tornam uma palavra-passe mais fraca.',
+      en: '⚠️ Dangerous! Known or easily guessable personal information weakens password security.',
     },
   },
 ];

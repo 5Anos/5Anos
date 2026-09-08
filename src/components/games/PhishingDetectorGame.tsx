@@ -77,8 +77,8 @@ export const PhishingDetectorGame: React.FC<PhishingDetectorGameProps> = ({ lang
         </h1>
         <p className="text-sm text-slate-600 mt-1">
           {language === 'pt'
-            ? 'Inspeciona este falso email alarmista e descobre os 4 indícios de fraude digital.'
-            : 'Inspect this simulated alarmist email and reveal the 4 red flags of phishing fraud.'}
+            ? 'O phishing é uma técnica em que alguém tenta enganar os utilizadores para obter informações pessoais ou palavras-passe, fazendo-se passar por uma entidade de confiança. Inspeciona este exemplo e descobre os 4 indícios de fraude.'
+            : 'Phishing is a technique where fraudsters deceive users to obtain personal information or credentials by posing as a trusted entity. Inspect this simulated email to find 4 red flags.'}
         </p>
       </div>
 
