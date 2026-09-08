@@ -21,7 +21,7 @@ import {
   updateDoc,
   deleteField,
 } from 'firebase/firestore';
-import { auth, db } from '../firebase';
+import { auth, db, OperationType, handleFirestoreError } from '../firebase';
 import {
   User,
   ActivityProgress,
@@ -430,8 +430,8 @@ export const api = {
       finalPublicId = generateSecurePublicId(takenPublicIds);
     }
 
-    // 3. Attempt Firebase Authentication (if email/password provider is enabled)
-    let fbUser: FirebaseUser | null = null;
+    // 3. Create account in Firebase Authentication (MANDATORY)
+    let fbUser: FirebaseUser;
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, normalizedEmail, cleanPassword);
       fbUser = userCredential.user;
@@ -443,13 +443,24 @@ export const api = {
             ? '❌ Já existe uma conta associada a este email. Por favor, faz login.'
             : '❌ An account is already registered with this email. Please log in.'
         );
+      } else if (fbError?.code === 'auth/weak-password') {
+        throw new Error(
+          language === 'pt'
+            ? '❌ A palavra-passe é demasiado fraca. Usa pelo menos 6 caracteres.'
+            : '❌ Password is too weak. Please use at least 6 characters.'
+        );
+      } else if (fbError?.code === 'auth/invalid-email') {
+        throw new Error(
+          language === 'pt'
+            ? '❌ Formato de email inválido.'
+            : '❌ Invalid email format.'
+        );
       }
-      // If auth/operation-not-allowed or auth/admin-restricted-operation, catch it and continue seamlessly with Firestore!
-      console.info('Firebase Auth sign-in method not active, creating account directly in Cloud Firestore.');
+      throw new Error(fbError?.message || 'Erro ao criar conta no Firebase Authentication.');
     }
 
-    const userId = fbUser?.uid || `user_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-    const initialPoints = 20;
+    const userId = fbUser.uid;
+    const initialPoints = 0;
 
     const newUser: User = {
       id: userId,
@@ -476,42 +487,38 @@ export const api = {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-    await setDoc(doc(db, 'users', userId), userPayload, { merge: true });
+    try {
+      await setDoc(doc(db, 'users', userId), userPayload, { merge: true });
+    } catch (error) {
+      handleFirestoreError(error, OperationType.CREATE, `users/${userId}`);
+    }
 
-    // 5. Record welcome points in pointsHistory audit log
-    const welcomeTx: PointTransaction = {
-      id: `pt-welcome-${Date.now()}`,
-      userId,
-      amount: initialPoints,
-      reason: 'Boas-vindas à plataforma TIC 5!',
-      timestamp: new Date().toISOString(),
-    };
-    await setDoc(doc(db, 'users', userId, 'pointsHistory', welcomeTx.id), welcomeTx);
-
-    // 6. If student, register in publicProfiles for the leaderboard
+    // 5. If student, register in publicProfiles for the leaderboard (0 initial points)
     if (!isAdmin) {
-      await setDoc(
-        doc(db, 'publicProfiles', userId),
-        {
-          id: userId,
-          publicId: finalPublicId,
-          turma: finalTurma,
-          role: 'student',
-          points: initialPoints,
-          updatedAt: new Date().toISOString(),
-        },
-        { merge: true }
-      );
+      try {
+        await setDoc(
+          doc(db, 'publicProfiles', userId),
+          {
+            id: userId,
+            publicId: finalPublicId,
+            turma: finalTurma,
+            role: 'student',
+            points: initialPoints,
+            updatedAt: new Date().toISOString(),
+          },
+          { merge: true }
+        );
+      } catch (error) {
+        handleFirestoreError(error, OperationType.CREATE, `publicProfiles/${userId}`);
+      }
     }
 
     localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
     let token = userId;
-    if (fbUser) {
-      try {
-        token = await fbUser.getIdToken();
-      } catch {
-        token = userId;
-      }
+    try {
+      token = await fbUser.getIdToken();
+    } catch {
+      token = userId;
     }
     this.setToken(token);
 
@@ -519,7 +526,7 @@ export const api = {
   },
 
   /**
-   * Login with Firebase Authentication and Cloud Firestore fallback
+   * Login strictly with Firebase Authentication
    */
   async login(email: string, password: string): Promise<{ user: User; token: string }> {
     const normalizedEmail = email.trim().toLowerCase();
@@ -527,123 +534,109 @@ export const api = {
 
     // 1. Authenticate with Firebase Authentication
     let fbUser: FirebaseUser | null = null;
-    let authFailedExplicitly = false;
     try {
       const userCredential = await signInWithEmailAndPassword(auth, normalizedEmail, cleanPassword);
       fbUser = userCredential.user;
     } catch (fbError: any) {
-      if (
-        fbError?.code === 'auth/wrong-password' ||
-        fbError?.code === 'auth/invalid-credential'
-      ) {
-        authFailedExplicitly = true;
-      } else if (fbError?.code === 'auth/user-not-found') {
-        // If designated admin, try creating account in Firebase Auth
-        if (isUserAdmin(normalizedEmail)) {
-          try {
-            const newCred = await createUserWithEmailAndPassword(auth, normalizedEmail, cleanPassword);
-            fbUser = newCred.user;
-          } catch {
-            // continue
-          }
+      if (fbError?.code === 'auth/user-not-found' && isUserAdmin(normalizedEmail)) {
+        // If designated admin not yet created in Firebase Auth, auto-provision
+        try {
+          const newCred = await createUserWithEmailAndPassword(auth, normalizedEmail, cleanPassword);
+          fbUser = newCred.user;
+        } catch {
+          throw new Error('Palavra-passe ou email incorretos.');
         }
+      } else {
+        throw new Error('Palavra-passe ou email incorretos.');
       }
     }
 
-    if (authFailedExplicitly) {
+    if (!fbUser) {
       throw new Error('Palavra-passe ou email incorretos.');
     }
 
     // 2. Load User Profile from Cloud Firestore
-    let userId = fbUser?.uid;
+    const userId = fbUser.uid;
     let userDocData: any = null;
 
-    if (userId) {
+    try {
       const snap = await getDoc(doc(db, 'users', userId));
       if (snap.exists()) {
         userDocData = snap.data();
       }
-    }
-
-    // If not found by uid (or fbUser is null), look up by email in Firestore
-    if (!userDocData) {
-      const emailQuery = query(collection(db, 'users'), where('email', '==', normalizedEmail));
-      const emailSnap = await getDocs(emailQuery);
-
-      if (!emailSnap.empty) {
-        const docSnap = emailSnap.docs[0];
-        userId = docSnap.id;
-        userDocData = docSnap.data();
-      }
-    }
-
-    // Purge any legacy password or passwordHash from Firestore document
-    if (userId && (userDocData?.passwordHash || userDocData?.password)) {
-      updateDoc(doc(db, 'users', userId), {
-        passwordHash: deleteField(),
-        password: deleteField(),
-      }).catch(() => {});
+    } catch (error) {
+      handleFirestoreError(error, OperationType.GET, `users/${userId}`);
     }
 
     let user: User;
 
-    if (userDocData && userId) {
+    if (userDocData) {
       const isAdmin = isUserAdmin(normalizedEmail, userDocData.role);
       user = {
         id: userId,
-        name: userDocData.name || fbUser?.displayName || (isAdmin ? 'Professora Carla' : 'Estudante'),
+        name: userDocData.name || fbUser.displayName || (isAdmin ? 'Professora Carla' : 'Estudante'),
         email: normalizedEmail,
         publicId: userDocData.publicId || (isAdmin ? 'Docente_TIC' : generateSecurePublicId()),
         turma: isAdmin ? undefined : (userDocData.turma || '5.º A'),
         role: isAdmin ? 'admin' : (userDocData.role || 'student'),
         language: userDocData.language || 'pt',
-        points: typeof userDocData.points === 'number' ? userDocData.points : 20,
+        points: typeof userDocData.points === 'number' ? userDocData.points : 0,
         createdAt: userDocData.createdAt || new Date().toISOString(),
         lastActivity: userDocData.lastActivity,
       };
 
       if (isAdmin) {
         delete user.turma;
-        deleteDoc(doc(db, 'publicProfiles', userId)).catch(() => {});
       }
     } else {
-      // Check if it's the designated teacher/admin
+      // First-time sign-in profile initialization
       const isAdmin = isUserAdmin(normalizedEmail);
-      if (isAdmin) {
-        // Teacher logging in: create teacher account in Firestore (NO passwords stored)
-        userId = userId || 'admin_carla_oliveira';
-        user = {
-          id: userId,
-          name: 'Professora Carla',
-          email: normalizedEmail,
-          publicId: 'Docente_TIC',
-          role: 'admin',
-          language: 'pt',
-          points: 100,
-          createdAt: new Date().toISOString(),
-        };
+      user = {
+        id: userId,
+        name: fbUser.displayName || (isAdmin ? 'Professora Carla' : 'Estudante'),
+        email: normalizedEmail,
+        publicId: isAdmin ? 'Docente_TIC' : generateSecurePublicId(),
+        turma: isAdmin ? undefined : '5.º A',
+        role: isAdmin ? 'admin' : 'student',
+        language: 'pt',
+        points: 0,
+        createdAt: new Date().toISOString(),
+      };
+      try {
         await setDoc(
           doc(db, 'users', userId),
           {
             ...user,
-            turma: null,
+            turma: isAdmin ? null : (user.turma || '5.º A'),
             updatedAt: new Date().toISOString(),
           },
           { merge: true }
         );
-      } else {
-        throw new Error('Não existe conta associada a este email.');
+        if (!isAdmin) {
+          await setDoc(
+            doc(db, 'publicProfiles', userId),
+            {
+              id: userId,
+              publicId: user.publicId,
+              turma: user.turma || '5.º A',
+              role: 'student',
+              points: 0,
+              updatedAt: new Date().toISOString(),
+            },
+            { merge: true }
+          );
+        }
+      } catch (error) {
+        handleFirestoreError(error, OperationType.CREATE, `users/${userId}`);
       }
     }
 
     localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
     let token = userId;
-    if (fbUser) {
-      try {
-        token = await fbUser.getIdToken();
-      } catch {
-        token = userId;
-      }
+    try {
+      token = await fbUser.getIdToken();
+    } catch {
+      token = userId;
     }
     this.setToken(token);
 
@@ -694,8 +687,8 @@ export const api = {
       if (!snap.empty) {
         progress = snap.docs.map((d) => d.data() as ActivityProgress);
       }
-    } catch {
-      progress = JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY + user.id) || '[]');
+    } catch (error) {
+      handleFirestoreError(error, OperationType.LIST, `users/${user.id}/progress`);
     }
 
     // 2. Fetch live user achievements from Firestore
@@ -706,7 +699,7 @@ export const api = {
         achievements = snap.docs.map((d) => d.data() as UserAchievement);
       }
     } catch {
-      achievements = JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + user.id) || '[]');
+      // achievements can also be derived from progress
     }
 
     // 3. Fetch points history from Firestore
@@ -718,22 +711,56 @@ export const api = {
         pointsHistory.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
       }
     } catch {
-      pointsHistory = JSON.parse(localStorage.getItem(POINTS_STORAGE_KEY + user.id) || '[]');
+      // points history can be empty
     }
 
-    // 4. Fetch up to date user points from Firestore
+    // 4. Calculate verified points dynamically from progress
+    let calculatedPoints = 0;
+    for (const p of progress) {
+      if (p.status === 'completed') {
+        if (p.activityType === 'quiz') {
+          calculatedPoints += (p.bestPercentage ?? p.percentage ?? 100) >= 80 ? 30 : (p.bestPercentage ?? p.percentage ?? 100) >= 50 ? 20 : 15;
+        } else if (p.activityType === 'challenge') {
+          calculatedPoints += 25;
+        } else {
+          calculatedPoints += 15;
+        }
+      }
+    }
+
+    // Derive badges dynamically
+    const eligibleBadges = evaluateEligibleBadges(progress, calculatedPoints, new Set());
+    const badgeBonus = eligibleBadges.reduce((acc, b) => acc + b.bonus, 0);
+    const totalVerifiedPoints = calculatedPoints + badgeBonus;
+
+    // 5. Fetch stored points if any from Firestore
     try {
       const userDoc = await getDoc(doc(db, 'users', user.id));
       if (userDoc.exists()) {
         const d = userDoc.data();
-        if (typeof d.points === 'number') {
-          user.points = d.points;
-          localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-        }
+        const storedPoints = typeof d.points === 'number' ? d.points : 0;
+        user.points = Math.max(storedPoints, totalVerifiedPoints);
+      } else {
+        user.points = totalVerifiedPoints;
       }
     } catch {
-      // ignore
+      user.points = totalVerifiedPoints;
     }
+
+    // Combine any stored achievements with derived ones
+    const badgeIdSet = new Set(achievements.map((a) => a.badgeId));
+    for (const eb of eligibleBadges) {
+      if (!badgeIdSet.has(eb.badgeId)) {
+        achievements.push({
+          userId: user.id,
+          badgeId: eb.badgeId,
+          unlockedAt: new Date().toISOString(),
+        });
+        badgeIdSet.add(eb.badgeId);
+      }
+    }
+
+    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
 
     return { user, progress, achievements, pointsHistory };
   },
@@ -910,27 +937,23 @@ export const api = {
       setDoc(doc(db, 'users', userId, 'pointsHistory', badgeTx.id), badgeTx).catch(() => {});
     }
 
-    // 4. Sync Progress, User, and PublicProfile to Cloud Firestore
+    // 4. Sync Progress and User Activity to Cloud Firestore
     try {
       await setDoc(doc(db, 'users', userId, 'progress', payload.activityId), existing, { merge: true });
-      await setDoc(
-        doc(db, 'users', userId),
-        {
-          points: user.points,
-          lastActivity: user.lastActivity,
-          updatedAt: new Date().toISOString(),
-        },
-        { merge: true }
-      );
 
-      if (!isUserAdmin(user.email, user.role)) {
+      const userUpdatePayload: any = {
+        lastActivity: user.lastActivity,
+        updatedAt: new Date().toISOString(),
+      };
+      if (isUserAdmin(user.email, user.role)) {
+        userUpdatePayload.points = user.points;
+      }
+      await setDoc(doc(db, 'users', userId), userUpdatePayload, { merge: true });
+
+      if (isUserAdmin(user.email, user.role)) {
         await setDoc(
           doc(db, 'publicProfiles', userId),
           {
-            id: userId,
-            publicId: user.publicId,
-            turma: user.turma || '5.º A',
-            role: 'student',
             points: user.points,
             updatedAt: new Date().toISOString(),
           },
@@ -938,7 +961,7 @@ export const api = {
         );
       }
     } catch (err) {
-      console.warn('⚠️ Firestore sync warning in saveProgress:', err);
+      console.warn('⚠️ Firestore sync notice in saveProgress:', err);
     }
 
     // Cache to localStorage
@@ -991,17 +1014,16 @@ export const api = {
 
     // Sync to Firestore
     try {
-      await setDoc(
-        doc(db, 'users', userId),
-        {
-          points: user.points,
-          lastActivity: user.lastActivity,
-          updatedAt: new Date().toISOString(),
-        },
-        { merge: true }
-      );
+      const userUpdatePayload: any = {
+        lastActivity: user.lastActivity,
+        updatedAt: new Date().toISOString(),
+      };
+      if (isUserAdmin(user.email, user.role)) {
+        userUpdatePayload.points = user.points;
+      }
+      await setDoc(doc(db, 'users', userId), userUpdatePayload, { merge: true });
 
-      if (!isUserAdmin(user.email, user.role)) {
+      if (isUserAdmin(user.email, user.role)) {
         await setDoc(
           doc(db, 'publicProfiles', userId),
           {

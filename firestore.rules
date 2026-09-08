@@ -31,57 +31,113 @@ service cloud.firestore {
       allow get: if isOwner(userId) || isAdmin();
       allow list: if isAdmin();
 
-      // Student registration: can only set role to student (unless admin), initial points <= 20
+      // Student registration: can only set role to student with 0 initial points
       allow create: if isOwner(userId) && (
-        (request.resource.data.role == 'student' && (!('points' in request.resource.data) || request.resource.data.points <= 20)) ||
+        (
+          request.resource.data.role == 'student' &&
+          request.resource.data.points == 0 &&
+          request.resource.data.id == userId &&
+          !('password' in request.resource.data) &&
+          !('passwordHash' in request.resource.data) &&
+          !('passwordSalt' in request.resource.data)
+        ) ||
         isAdmin()
       );
 
-      // Updates: student cannot self-escalate role, admin can update all
+      // Profile updates: cannot escalate role, cannot arbitrarily alter points, cannot store credentials
       allow update: if (
         isOwner(userId) &&
         request.resource.data.role == resource.data.role &&
-        (!('email' in request.resource.data) || request.resource.data.email == resource.data.email)
+        request.resource.data.role != 'admin' &&
+        request.resource.data.role != 'teacher' &&
+        request.resource.data.points == resource.data.points &&
+        (!('email' in request.resource.data) || request.resource.data.email == resource.data.email) &&
+        !('password' in request.resource.data) &&
+        !('passwordHash' in request.resource.data) &&
+        !('passwordSalt' in request.resource.data)
       ) || isAdmin();
 
       allow delete: if isAdmin();
 
-      // Progress subcollection: student can only read/write their own progress
+      // Progress subcollection: student can track their activity progress under strict field validation
       match /progress/{activityId} {
         allow read: if isOwner(userId) || isAdmin();
-        allow write: if isOwner(userId) || isAdmin();
+
+        allow create: if (
+          isOwner(userId) &&
+          request.resource.data.userId == userId &&
+          request.resource.data.activityId == activityId &&
+          request.resource.data.activityType in ['module', 'quiz', 'challenge'] &&
+          request.resource.data.status in ['completed', 'in_progress'] &&
+          request.resource.data.attempts >= 1 &&
+          !('points' in request.resource.data) &&
+          (!('percentage' in request.resource.data) || (request.resource.data.percentage >= 0 && request.resource.data.percentage <= 100)) &&
+          (!('bestPercentage' in request.resource.data) || (request.resource.data.bestPercentage >= 0 && request.resource.data.bestPercentage <= 100))
+        ) || isAdmin();
+
+        allow update: if (
+          isOwner(userId) &&
+          request.resource.data.userId == resource.data.userId &&
+          request.resource.data.activityId == resource.data.activityId &&
+          request.resource.data.activityType == resource.data.activityType &&
+          request.resource.data.status in ['completed', 'in_progress'] &&
+          request.resource.data.attempts >= resource.data.attempts &&
+          !('points' in request.resource.data) &&
+          (!('percentage' in request.resource.data) || (request.resource.data.percentage >= 0 && request.resource.data.percentage <= 100)) &&
+          (!('bestPercentage' in request.resource.data) || (
+            request.resource.data.bestPercentage >= resource.data.bestPercentage &&
+            request.resource.data.bestPercentage <= 100
+          ))
+        ) || isAdmin();
+
+        allow delete: if isAdmin();
       }
 
-      // Achievements subcollection
+      // Achievements subcollection: Student can read; only admin/system can write
       match /achievements/{badgeId} {
         allow read: if isOwner(userId) || isAdmin();
-        allow write: if isOwner(userId) || isAdmin();
+        allow write: if isAdmin();
       }
 
-      // Points History subcollection
+      // Points History subcollection: Student can read; only admin/system can write
       match /pointsHistory/{txId} {
         allow read: if isOwner(userId) || isAdmin();
-        allow write: if isOwner(userId) || isAdmin();
+        allow write: if isAdmin();
       }
     }
 
     // 2. Public Leaderboard Profiles (Privacy-First: id, publicId, turma, role, points)
     match /publicProfiles/{userId} {
-      // Any authenticated user can read leaderboard profiles
+      // Authenticated users can view leaderboard; never open to unauthenticated
       allow read: if isSignedIn();
 
-      // A student can update their own public record without exposing private data
-      allow write: if (
+      allow create: if (
         isOwner(userId) &&
+        request.resource.data.role == 'student' &&
+        request.resource.data.points == 0 &&
         !('email' in request.resource.data) &&
         !('password' in request.resource.data) &&
-        !('passwordHash' in request.resource.data)
+        !('passwordHash' in request.resource.data) &&
+        !('passwordSalt' in request.resource.data)
       ) || isAdmin();
+
+      // Student cannot arbitrarily manipulate points on the leaderboard
+      allow update: if (
+        isOwner(userId) &&
+        request.resource.data.role == resource.data.role &&
+        request.resource.data.points == resource.data.points &&
+        !('email' in request.resource.data) &&
+        !('password' in request.resource.data) &&
+        !('passwordHash' in request.resource.data) &&
+        !('passwordSalt' in request.resource.data)
+      ) || isAdmin();
+
+      allow delete: if isAdmin();
     }
 
     // 3. System Configurations (Class list / Turmas, Pedagogical Theme Visibility)
     match /config/{docId} {
-      allow read: if true;
+      allow read: if isSignedIn();
       allow write: if isAdmin();
     }
   }
