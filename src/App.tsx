@@ -142,6 +142,11 @@ export default function App() {
         } catch {
           // ignore
         }
+      } else {
+        setUser(null);
+        setProgressList([]);
+        setAchievements([]);
+        setPointsHistory([]);
       }
     });
 

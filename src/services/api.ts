@@ -309,6 +309,8 @@ export const api = {
           console.warn('onAuthChange profile check notice:', e);
         }
       } else {
+        localStorage.removeItem(CURRENT_USER_KEY);
+        this.removeToken();
         callback(null);
       }
     });
@@ -664,13 +666,56 @@ export const api = {
     achievements: UserAchievement[];
     pointsHistory: PointTransaction[];
   }> {
-    const rawUser = localStorage.getItem(CURRENT_USER_KEY);
-    if (!rawUser) {
-      this.removeToken();
-      throw new Error('Sessão expirada');
+    // Wait for Firebase Auth state initialization
+    if (typeof auth.authStateReady === 'function') {
+      try {
+        await auth.authStateReady();
+      } catch {
+        // ignore
+      }
     }
 
-    const user: User = JSON.parse(rawUser);
+    if (!auth.currentUser) {
+      localStorage.removeItem(CURRENT_USER_KEY);
+      this.removeToken();
+      throw new Error('Não autenticado');
+    }
+
+    const rawUser = localStorage.getItem(CURRENT_USER_KEY);
+    let user: User;
+
+    if (rawUser) {
+      try {
+        user = JSON.parse(rawUser);
+      } catch {
+        user = {
+          id: auth.currentUser.uid,
+          name: auth.currentUser.displayName || 'Estudante',
+          email: auth.currentUser.email || '',
+          publicId: 'Estudante',
+          role: isUserAdmin(auth.currentUser.email || '') ? 'admin' : 'student',
+          language: 'pt',
+          points: 0,
+          createdAt: new Date().toISOString(),
+        };
+      }
+    } else {
+      user = {
+        id: auth.currentUser.uid,
+        name: auth.currentUser.displayName || 'Estudante',
+        email: auth.currentUser.email || '',
+        publicId: 'Estudante',
+        role: isUserAdmin(auth.currentUser.email || '') ? 'admin' : 'student',
+        language: 'pt',
+        points: 0,
+        createdAt: new Date().toISOString(),
+      };
+    }
+
+    // Authoritative UID is always auth.currentUser.uid
+    user.id = auth.currentUser.uid;
+    user.email = (auth.currentUser.email || user.email || '').toLowerCase().trim();
+
     if (isUserAdmin(user.email, user.role)) {
       user.role = 'admin';
       delete user.turma;
@@ -688,7 +733,7 @@ export const api = {
         progress = snap.docs.map((d) => d.data() as ActivityProgress);
       }
     } catch (error) {
-      handleFirestoreError(error, OperationType.LIST, `users/${user.id}/progress`);
+      console.warn(`Notice fetching progress for ${user.id}:`, error);
     }
 
     // 2. Fetch live user achievements from Firestore
