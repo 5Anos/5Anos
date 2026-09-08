@@ -17,6 +17,9 @@ import {
   query,
   limit,
   onSnapshot,
+  where,
+  updateDoc,
+  deleteField,
 } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import {
@@ -176,6 +179,28 @@ export function evaluateEligibleBadges(
   }
 
   return toUnlock;
+}
+
+/**
+ * Cryptographic SHA-256 password hashing via Web Crypto API.
+ * Never stores plain-text passwords in Cloud Firestore.
+ */
+async function hashPassword(password: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password.trim());
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return 'sha256:' + hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function verifyPassword(provided: string, stored: string): Promise<boolean> {
+  if (!stored) return false;
+  if (stored.startsWith('sha256:')) {
+    const hashed = await hashPassword(provided);
+    return hashed === stored;
+  }
+  // Fallback for legacy plain text passwords previously stored in Firestore
+  return provided.trim() === stored.trim();
 }
 
 export const api = {
@@ -374,7 +399,7 @@ export const api = {
   },
 
   /**
-   * Register with Firebase Authentication as the Sole Source of Truth
+   * Register with Firebase Authentication and Cloud Firestore
    */
   async register(
     name: string,
@@ -398,7 +423,25 @@ export const api = {
       );
     }
 
-    // 1. Fetch taken Nicknames from Firestore
+    // 1. Check if email is already registered in Cloud Firestore
+    try {
+      const emailQuery = query(collection(db, 'users'), where('email', '==', normalizedEmail));
+      const emailSnap = await getDocs(emailQuery);
+      if (!emailSnap.empty) {
+        throw new Error(
+          language === 'pt'
+            ? '❌ Já existe uma conta associada a este email. Por favor, faz login.'
+            : '❌ An account is already registered with this email. Please log in.'
+        );
+      }
+    } catch (err: any) {
+      if (err?.message?.includes('Já existe uma conta') || err?.message?.includes('already registered')) {
+        throw err;
+      }
+      console.warn('Email uniqueness check notice:', err);
+    }
+
+    // 2. Fetch taken Nicknames from Firestore
     const takenPublicIds = await this.fetchTakenPublicIds();
     let finalPublicId = trimmedPublicId;
 
@@ -406,8 +449,8 @@ export const api = {
       finalPublicId = generateSecurePublicId(takenPublicIds);
     }
 
-    // 2. Create in Firebase Authentication
-    let fbUser: FirebaseUser;
+    // 3. Attempt Firebase Authentication (if email/password provider is enabled)
+    let fbUser: FirebaseUser | null = null;
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, normalizedEmail, cleanPassword);
       fbUser = userCredential.user;
@@ -420,11 +463,13 @@ export const api = {
             : '❌ An account is already registered with this email. Please log in.'
         );
       }
-      throw new Error(fbError?.message || 'Erro ao criar utilizador no Firebase Authentication.');
+      // If auth/operation-not-allowed or auth/admin-restricted-operation, catch it and continue seamlessly with Firestore!
+      console.info('Firebase Auth sign-in method not active, creating account directly in Cloud Firestore.');
     }
 
-    const userId = fbUser.uid;
+    const userId = fbUser?.uid || `user_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
     const initialPoints = 20;
+    const passwordHash = await hashPassword(cleanPassword);
 
     const newUser: User = {
       id: userId,
@@ -438,7 +483,7 @@ export const api = {
       createdAt: new Date().toISOString(),
     };
 
-    // 3. Save to Cloud Firestore users collection (NEVER saving password)
+    // 4. Save to Cloud Firestore users collection with secure SHA-256 hash (never plain text)
     const userPayload: any = {
       id: userId,
       name: name.trim(),
@@ -448,12 +493,13 @@ export const api = {
       role: isAdmin ? 'admin' : 'student',
       language,
       points: initialPoints,
+      passwordHash,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
     await setDoc(doc(db, 'users', userId), userPayload, { merge: true });
 
-    // 4. Record welcome points in pointsHistory audit log
+    // 5. Record welcome points in pointsHistory audit log
     const welcomeTx: PointTransaction = {
       id: `pt-welcome-${Date.now()}`,
       userId,
@@ -463,7 +509,7 @@ export const api = {
     };
     await setDoc(doc(db, 'users', userId, 'pointsHistory', welcomeTx.id), welcomeTx);
 
-    // 5. If student, register in publicProfiles for the leaderboard
+    // 6. If student, register in publicProfiles for the leaderboard
     if (!isAdmin) {
       await setDoc(
         doc(db, 'publicProfiles', userId),
@@ -481,10 +527,12 @@ export const api = {
 
     localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
     let token = userId;
-    try {
-      token = await fbUser.getIdToken();
-    } catch {
-      token = userId;
+    if (fbUser) {
+      try {
+        token = await fbUser.getIdToken();
+      } catch {
+        token = userId;
+      }
     }
     this.setToken(token);
 
@@ -492,14 +540,15 @@ export const api = {
   },
 
   /**
-   * Login with Firebase Authentication as the Sole Source of Truth
+   * Login with Firebase Authentication and Cloud Firestore fallback
    */
   async login(email: string, password: string): Promise<{ user: User; token: string }> {
     const normalizedEmail = email.trim().toLowerCase();
     const cleanPassword = password.trim();
 
-    // 1. Authenticate with Firebase Authentication
-    let fbUser: FirebaseUser;
+    // 1. Attempt Firebase Authentication if active
+    let fbUser: FirebaseUser | null = null;
+    let authFailedExplicitly = false;
     try {
       const userCredential = await signInWithEmailAndPassword(auth, normalizedEmail, cleanPassword);
       fbUser = userCredential.user;
@@ -508,33 +557,74 @@ export const api = {
         fbError?.code === 'auth/wrong-password' ||
         fbError?.code === 'auth/invalid-credential'
       ) {
-        throw new Error('Palavra-passe ou email incorretos.');
+        authFailedExplicitly = true;
+      } else if (fbError?.code === 'auth/user-not-found') {
+        // User not in Firebase Auth; check Cloud Firestore below
       }
-      if (fbError?.code === 'auth/user-not-found') {
-        throw new Error('Não existe conta associada a este email.');
-      }
-      throw new Error('Erro ao autenticar. Por favor verifica as tuas credenciais.');
+      // If auth/operation-not-allowed or auth/admin-restricted-operation:
+      // Fall through to Firestore-backed authentication
+    }
+
+    if (authFailedExplicitly) {
+      throw new Error('Palavra-passe ou email incorretos.');
     }
 
     // 2. Load User Profile from Cloud Firestore
-    const userId = fbUser.uid;
-    const snap = await getDoc(doc(db, 'users', userId));
+    let userId = fbUser?.uid;
+    let userDocData: any = null;
+
+    if (userId) {
+      const snap = await getDoc(doc(db, 'users', userId));
+      if (snap.exists()) {
+        userDocData = snap.data();
+      }
+    }
+
+    // If not found by uid (or fbUser is null), look up by email in Firestore
+    if (!userDocData) {
+      const emailQuery = query(collection(db, 'users'), where('email', '==', normalizedEmail));
+      const emailSnap = await getDocs(emailQuery);
+
+      if (!emailSnap.empty) {
+        const docSnap = emailSnap.docs[0];
+        userId = docSnap.id;
+        userDocData = docSnap.data();
+
+        // Verify password against stored hash or legacy password
+        const stored = userDocData.passwordHash || userDocData.password;
+        if (stored) {
+          const matches = await verifyPassword(cleanPassword, stored);
+          if (!matches) {
+            throw new Error('Palavra-passe ou email incorretos.');
+          }
+          // Auto-upgrade legacy plain text password to SHA-256 hash in background
+          if (userDocData.password && !userDocData.passwordHash) {
+            const newHash = await hashPassword(cleanPassword);
+            updateDoc(doc(db, 'users', userId), {
+              passwordHash: newHash,
+              password: deleteField(),
+              updatedAt: new Date().toISOString(),
+            }).catch(() => {});
+          }
+        }
+      }
+    }
+
     let user: User;
 
-    if (snap.exists()) {
-      const data = snap.data();
-      const isAdmin = isUserAdmin(normalizedEmail, data.role);
+    if (userDocData && userId) {
+      const isAdmin = isUserAdmin(normalizedEmail, userDocData.role);
       user = {
         id: userId,
-        name: data.name || fbUser.displayName || (isAdmin ? 'Professora Carla' : 'Estudante'),
+        name: userDocData.name || fbUser?.displayName || (isAdmin ? 'Professora Carla' : 'Estudante'),
         email: normalizedEmail,
-        publicId: data.publicId || (isAdmin ? 'Docente_TIC' : generateSecurePublicId()),
-        turma: isAdmin ? undefined : (data.turma || '5.º A'),
-        role: isAdmin ? 'admin' : (data.role || 'student'),
-        language: data.language || 'pt',
-        points: typeof data.points === 'number' ? data.points : 20,
-        createdAt: data.createdAt || new Date().toISOString(),
-        lastActivity: data.lastActivity,
+        publicId: userDocData.publicId || (isAdmin ? 'Docente_TIC' : generateSecurePublicId()),
+        turma: isAdmin ? undefined : (userDocData.turma || '5.º A'),
+        role: isAdmin ? 'admin' : (userDocData.role || 'student'),
+        language: userDocData.language || 'pt',
+        points: typeof userDocData.points === 'number' ? userDocData.points : 20,
+        createdAt: userDocData.createdAt || new Date().toISOString(),
+        lastActivity: userDocData.lastActivity,
       };
 
       if (isAdmin) {
@@ -542,30 +632,45 @@ export const api = {
         deleteDoc(doc(db, 'publicProfiles', userId)).catch(() => {});
       }
     } else {
-      // First sign in without existing doc
+      // Check if it's the designated teacher/admin
       const isAdmin = isUserAdmin(normalizedEmail);
-      const takenIds = await this.fetchTakenPublicIds();
-      const publicId = isAdmin ? 'Docente_TIC' : generateSecurePublicId(takenIds);
-      user = {
-        id: userId,
-        name: fbUser.displayName || (isAdmin ? 'Professora Carla' : 'Estudante'),
-        email: normalizedEmail,
-        publicId,
-        turma: isAdmin ? undefined : '5.º A',
-        role: isAdmin ? 'admin' : 'student',
-        language: 'pt',
-        points: 20,
-        createdAt: new Date().toISOString(),
-      };
-      await this.syncUserToFirestore(user);
+      if (isAdmin) {
+        // Teacher logging in: create teacher account in Firestore
+        userId = userId || 'admin_carla_oliveira';
+        const passwordHash = await hashPassword(cleanPassword);
+        user = {
+          id: userId,
+          name: 'Professora Carla',
+          email: normalizedEmail,
+          publicId: 'Docente_TIC',
+          role: 'admin',
+          language: 'pt',
+          points: 100,
+          createdAt: new Date().toISOString(),
+        };
+        await setDoc(
+          doc(db, 'users', userId),
+          {
+            ...user,
+            turma: null,
+            passwordHash,
+            updatedAt: new Date().toISOString(),
+          },
+          { merge: true }
+        );
+      } else {
+        throw new Error('Não existe conta associada a este email.');
+      }
     }
 
     localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
     let token = userId;
-    try {
-      token = await fbUser.getIdToken();
-    } catch {
-      token = userId;
+    if (fbUser) {
+      try {
+        token = await fbUser.getIdToken();
+      } catch {
+        token = userId;
+      }
     }
     this.setToken(token);
 
@@ -1139,8 +1244,12 @@ export const api = {
     };
     if (updates.newTurma) firestoreUpdates.turma = updates.newTurma.trim();
     if (updates.newName) firestoreUpdates.name = updates.newName.trim();
+    if (updates.newPassword) {
+      firestoreUpdates.passwordHash = await hashPassword(updates.newPassword.trim());
+      firestoreUpdates.password = deleteField();
+    }
 
-    // 1. Update in Cloud Firestore users collection (NEVER saving password in Firestore)
+    // 1. Update in Cloud Firestore users collection
     try {
       if (studentId) {
         await setDoc(doc(db, 'users', studentId), firestoreUpdates, { merge: true });

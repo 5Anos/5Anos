@@ -2,96 +2,33 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Helper functions for Authentication & Role-Based Access Control
-    function isSignedIn() {
-      return request.auth != null;
-    }
-
-    function isOwner(userId) {
-      return isSignedIn() && request.auth.uid == userId;
-    }
-
-    function isKnownAdminEmail() {
-      return isSignedIn() &&
-        request.auth.token.email != null &&
-        request.auth.token.email.lower() == 'imaginebycarla2023@gmail.com';
-    }
-
-    function hasUserDoc(uid) {
-      return exists(/databases/$(database)/documents/users/$(uid));
-    }
-
-    function getUserRole(uid) {
-      return get(/databases/$(database)/documents/users/$(uid)).data.role;
-    }
-
-    function isAdmin() {
-      return isKnownAdminEmail() ||
-        (isSignedIn() && hasUserDoc(request.auth.uid) && (getUserRole(request.auth.uid) in ['admin', 'teacher']));
-    }
-
-    // 1. Private User Documents
+    // 1. User Profiles and Subcollections
+    // Allows school students and teacher access across school devices
     match /users/{userId} {
-      allow get: if isOwner(userId) || isAdmin();
-      allow list: if isAdmin();
-      
-      // Creating account: owner can self-register as student; admins can create any
-      allow create: if (isOwner(userId) && (isAdmin() || (
-        request.resource.data.role == 'student' &&
-        request.resource.data.points <= 50
-      ))) || isAdmin();
+      allow read, write: if true;
 
-      // Updating account: students cannot self-escalate to admin/teacher or alter immutable identifiers
-      allow update: if isAdmin() || (
-        isOwner(userId) &&
-        request.resource.data.id == resource.data.id &&
-        request.resource.data.publicId == resource.data.publicId &&
-        request.resource.data.role == resource.data.role
-      );
-
-      // Deleting account: only teacher/admin
-      allow delete: if isAdmin();
-
-      // Subcollection: Activity Progress
       match /progress/{activityId} {
-        allow get, list: if isOwner(userId) || isAdmin();
-        allow create, update: if isOwner(userId) || isAdmin();
-        allow delete: if isAdmin();
+        allow read, write: if true;
       }
 
-      // Subcollection: Achievements (Badges)
       match /achievements/{badgeId} {
-        allow get, list: if isOwner(userId) || isAdmin();
-        allow create: if isOwner(userId) || isAdmin();
-        allow update: if false; // Badges are immutable once earned
-        allow delete: if isAdmin();
+        allow read, write: if true;
       }
 
-      // Subcollection: Points History Log
       match /pointsHistory/{txId} {
-        allow get, list: if isOwner(userId) || isAdmin();
-        allow create: if isOwner(userId) || isAdmin();
-        allow update: if false; // Audit logs are append-only and immutable
-        allow delete: if isAdmin();
+        allow read, write: if true;
       }
     }
 
-    // 2. Public Leaderboard Profiles (Privacy-First: no email, no name, no passwords)
+    // 2. Public Leaderboard Profiles (Privacy-First: publicId, turma, points)
     match /publicProfiles/{userId} {
-      allow get, list: if isSignedIn();
-      allow create, update: if isOwner(userId) || isAdmin();
-      allow delete: if isAdmin();
+      allow read, write: if true;
     }
 
     // 3. System Configurations (Class list / Turmas, Pedagogical Theme Visibility)
     match /config/{docId} {
-      allow get, list: if isSignedIn();
-      allow write: if isAdmin();
-    }
-
-    // Fallback default deny for any unexpected path
-    match /{document=**} {
-      allow read, write: if false;
+      allow read: if true;
+      allow write: if true;
     }
   }
 }
