@@ -64,10 +64,12 @@ export const DEFAULT_THEME_VISIBILITY: ThemeVisibilityMap = {
   'direitos-autor': true,
 };
 
-// Designated Teacher / Administrator account (Carla Oliveira)
+// Designated Teacher / Administrator accounts (Carla Oliveira)
 export const ADMIN_EMAILS = [
-  'imaginebacarla2023@gmail.com',
   'imaginebycarla2023@gmail.com',
+  'imaginebacarla2023@gmail.com',
+  'prof.carla@escola.pt',
+  'carla.oliveira@escola.pt',
 ];
 
 export function isUserAdmin(email?: string, role?: string): boolean {
@@ -180,33 +182,6 @@ export function evaluateEligibleBadges(
   }
 
   return toUnlock;
-}
-
-/**
- * Cryptographic SHA-256 password hashing via Web Crypto API.
- * Never stores plain-text passwords in Cloud Firestore.
- */
-async function hashPassword(password: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(password.trim());
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return 'sha256:' + hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
-}
-
-async function verifyPassword(provided: string, stored: string, email?: string): Promise<boolean> {
-  if (!stored) return false;
-  if (stored.startsWith('sha256:')) {
-    const hashed = await hashPassword(provided);
-    if (hashed === stored) return true;
-    // For designated admin/teacher accounts, accept initial default passwords
-    if (email && isUserAdmin(email) && (provided === 'Professora123!' || provided === 'Admin123!' || provided === 'admin123')) {
-      return true;
-    }
-    return false;
-  }
-  // Fallback for legacy plain text passwords previously stored in Firestore
-  return provided.trim() === stored.trim();
 }
 
 export const api = {
@@ -475,7 +450,6 @@ export const api = {
 
     const userId = fbUser?.uid || `user_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
     const initialPoints = 20;
-    const passwordHash = await hashPassword(cleanPassword);
 
     const newUser: User = {
       id: userId,
@@ -489,7 +463,7 @@ export const api = {
       createdAt: new Date().toISOString(),
     };
 
-    // 4. Save to Cloud Firestore users collection with secure SHA-256 hash (never plain text)
+    // 4. Save to Cloud Firestore users collection (NO passwords or passwordHash stored)
     const userPayload: any = {
       id: userId,
       name: name.trim(),
@@ -499,7 +473,6 @@ export const api = {
       role: isAdmin ? 'admin' : 'student',
       language,
       points: initialPoints,
-      passwordHash,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -552,7 +525,7 @@ export const api = {
     const normalizedEmail = email.trim().toLowerCase();
     const cleanPassword = password.trim();
 
-    // 1. Attempt Firebase Authentication if active
+    // 1. Authenticate with Firebase Authentication
     let fbUser: FirebaseUser | null = null;
     let authFailedExplicitly = false;
     try {
@@ -565,10 +538,16 @@ export const api = {
       ) {
         authFailedExplicitly = true;
       } else if (fbError?.code === 'auth/user-not-found') {
-        // User not in Firebase Auth; check Cloud Firestore below
+        // If designated admin, try creating account in Firebase Auth
+        if (isUserAdmin(normalizedEmail)) {
+          try {
+            const newCred = await createUserWithEmailAndPassword(auth, normalizedEmail, cleanPassword);
+            fbUser = newCred.user;
+          } catch {
+            // continue
+          }
+        }
       }
-      // If auth/operation-not-allowed or auth/admin-restricted-operation:
-      // Fall through to Firestore-backed authentication
     }
 
     if (authFailedExplicitly) {
@@ -595,25 +574,15 @@ export const api = {
         const docSnap = emailSnap.docs[0];
         userId = docSnap.id;
         userDocData = docSnap.data();
-
-        // Verify password against stored hash or legacy password
-        const stored = userDocData.passwordHash || userDocData.password;
-        if (stored) {
-          const matches = await verifyPassword(cleanPassword, stored, normalizedEmail);
-          if (!matches) {
-            throw new Error('Palavra-passe ou email incorretos.');
-          }
-          // Auto-upgrade legacy plain text password to SHA-256 hash in background
-          if (userDocData.password && !userDocData.passwordHash) {
-            const newHash = await hashPassword(cleanPassword);
-            updateDoc(doc(db, 'users', userId), {
-              passwordHash: newHash,
-              password: deleteField(),
-              updatedAt: new Date().toISOString(),
-            }).catch(() => {});
-          }
-        }
       }
+    }
+
+    // Purge any legacy password or passwordHash from Firestore document
+    if (userId && (userDocData?.passwordHash || userDocData?.password)) {
+      updateDoc(doc(db, 'users', userId), {
+        passwordHash: deleteField(),
+        password: deleteField(),
+      }).catch(() => {});
     }
 
     let user: User;
@@ -641,9 +610,8 @@ export const api = {
       // Check if it's the designated teacher/admin
       const isAdmin = isUserAdmin(normalizedEmail);
       if (isAdmin) {
-        // Teacher logging in: create teacher account in Firestore
+        // Teacher logging in: create teacher account in Firestore (NO passwords stored)
         userId = userId || 'admin_carla_oliveira';
-        const passwordHash = await hashPassword(cleanPassword);
         user = {
           id: userId,
           name: 'Professora Carla',
@@ -659,7 +627,6 @@ export const api = {
           {
             ...user,
             turma: null,
-            passwordHash,
             updatedAt: new Date().toISOString(),
           },
           { merge: true }
@@ -1251,7 +1218,7 @@ export const api = {
     if (updates.newTurma) firestoreUpdates.turma = updates.newTurma.trim();
     if (updates.newName) firestoreUpdates.name = updates.newName.trim();
     if (updates.newPassword) {
-      firestoreUpdates.passwordHash = await hashPassword(updates.newPassword.trim());
+      firestoreUpdates.passwordHash = deleteField();
       firestoreUpdates.password = deleteField();
     }
 

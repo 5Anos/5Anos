@@ -100,8 +100,8 @@ export const themeNavegarInternetData: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Sabias que a primeira página da Internet de sempre foi criada por Tim Berners-Lee em 1991 no CERN (Suíça) e ainda hoje continua ativa e acessível online?',
-        en: 'Did you know the very first website ever made was created by Tim Berners-Lee in 1991 at CERN (Switzerland) and is still live today?',
+        pt: 'Sabias que a primeira página da World Wide Web foi criada por Tim Berners-Lee em 1991 no CERN (Suíça) e ainda hoje continua ativa e acessível online?',
+        en: 'Did you know the very first website on the World Wide Web was created by Tim Berners-Lee in 1991 at CERN (Switzerland) and is still live today?',
       },
       thinkAboutIt: {
         question: {
@@ -188,8 +188,8 @@ export const themeNavegarInternetData: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Sabias que o Google processa mais de 8 mil milhões e meio de pesquisas todos os dias em todo o mundo? Isso equivale a cerca de 99 000 pesquisas a cada segundo!',
-        en: 'Did you know Google processes over 8.5 billion searches every day worldwide? That is roughly 99,000 queries every second!',
+        pt: 'Sabias que são realizadas milhares de milhões de pesquisas todos os dias nos motores de busca em todo o mundo para encontrar informação?',
+        en: 'Did you know that billions of searches are conducted every day on search engines worldwide to find information?',
       },
       thinkAboutIt: {
         question: {
@@ -269,7 +269,7 @@ export const themeNavegarInternetData: ThemeDefinition = {
           en: 'Martim’s fake free game',
         },
         scenario: {
-          pt: 'O Martim viu um anúncio com letras a piscar: "Clica aqui para baixar o jogo novo grátis!". Quando ia clicar, reparou que o endereço do site era uma sequência estranha cheia de números e terminava em ".ru.xyz".',
+          pt: 'O Martim viu um anúncio com letras a piscar: "Clica aqui para descarregar o jogo novo grátis!". Quando ia clicar, reparou que o endereço do site era uma sequência estranha cheia de números e terminava em ".ru.xyz".',
           en: 'Martim saw a flashing banner: "Click here to download the new game free!". Before clicking, he noticed the strange URL full of random numbers ending in ".ru.xyz".',
         },
         tip: {
@@ -780,13 +780,13 @@ export const themeNavegarInternetData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Um modo onde o navegador não guarda o histórico nem os cookies naquele computador',
+          'Um modo que limita o armazenamento local do histórico e de cookies da sessão naquele dispositivo',
           'Um fato invisível que te torna invisível para toda a polícia na rua',
           'Um método para nunca pagar a conta da Internet em casa',
           'Um modo que desativa a eletricidade da escola',
         ],
         en: [
-          'A mode where the browser does not save local history or cookies on that device',
+          'A mode that restricts local saving of browsing history and session cookies on that device',
           'An invisibility cloak hiding you from real-world authorities',
           'A trick to avoid paying for home broadband',
           'A switch that turns off school power',
@@ -794,8 +794,8 @@ export const themeNavegarInternetData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'A navegação privada não grava histórico nem cookies no dispositivo local, embora os sites continuem a ver a ligação.',
-        en: 'Incognito mode doesn’t retain browsing history or cookies locally once closed.',
+        pt: 'A navegação privada limita o armazenamento local do histórico e de dados da sessão no dispositivo, embora os sites visitados continuem a identificar a ligação e não proporcione anonimato total.',
+        en: 'Incognito mode restricts local storage of history and session data on the device, but does not provide complete anonymity on the Internet.',
       },
     },
     {

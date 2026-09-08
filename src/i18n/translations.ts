@@ -4,8 +4,8 @@ export const translations = {
     appSubtitle: 'Aventura Digital de Tecnologias de Informação e Comunicação',
     gradeLabel: '5.º Ano de Escolaridade (10–11 anos)',
     teacherName: 'Professora Carla Oliveira',
-    aiDisclaimer: 'Website criado com recurso a Inteligência Artificial | Textos e conteúdos revistos pela Professora Carla Oliveira @2026',
-    footerAiDisclaimer: 'Website criado com recurso a Inteligência Artificial',
+    aiDisclaimer: 'Textos e conteúdos revistos pela Professora Carla Oliveira @2026',
+    footerAiDisclaimer: 'Plataforma Pedagógica Digital',
     footerReviewedBy: 'Textos e conteúdos revistos pela Professora Carla Oliveira',
     footerCopyright: '© 2026',
 
@@ -120,8 +120,8 @@ export const translations = {
     appSubtitle: 'Digital Adventure for Information and Communication Technologies',
     gradeLabel: '5th Grade (Ages 10–11)',
     teacherName: 'Teacher Carla Oliveira',
-    aiDisclaimer: 'Website created with Artificial Intelligence | Texts and content reviewed by Teacher Carla Oliveira @2026',
-    footerAiDisclaimer: 'Website created with Artificial Intelligence',
+    aiDisclaimer: 'Texts and content reviewed by Teacher Carla Oliveira @2026',
+    footerAiDisclaimer: 'Digital Educational Platform',
     footerReviewedBy: 'Texts and content reviewed by Teacher Carla Oliveira',
     footerCopyright: '© 2026',
 

@@ -2,33 +2,87 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'imaginebycarla2023@gmail.com' ||
+        request.auth.token.email == 'imaginebacarla2023@gmail.com' ||
+        request.auth.token.email == 'prof.carla@escola.pt' ||
+        request.auth.token.email == 'carla.oliveira@escola.pt'
+      );
+    }
+
+    // Default deny all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
     // 1. User Profiles and Subcollections
-    // Allows school students and teacher access across school devices
     match /users/{userId} {
-      allow read, write: if true;
+      // User can read their own profile; Admin can read all student profiles
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isAdmin();
 
+      // Student registration: can only set role to student (unless admin), initial points <= 20
+      allow create: if isOwner(userId) && (
+        (request.resource.data.role == 'student' && (!('points' in request.resource.data) || request.resource.data.points <= 20)) ||
+        isAdmin()
+      );
+
+      // Updates: student cannot self-escalate role, admin can update all
+      allow update: if (
+        isOwner(userId) &&
+        request.resource.data.role == resource.data.role &&
+        (!('email' in request.resource.data) || request.resource.data.email == resource.data.email)
+      ) || isAdmin();
+
+      allow delete: if isAdmin();
+
+      // Progress subcollection: student can only read/write their own progress
       match /progress/{activityId} {
-        allow read, write: if true;
+        allow read: if isOwner(userId) || isAdmin();
+        allow write: if isOwner(userId) || isAdmin();
       }
 
+      // Achievements subcollection
       match /achievements/{badgeId} {
-        allow read, write: if true;
+        allow read: if isOwner(userId) || isAdmin();
+        allow write: if isOwner(userId) || isAdmin();
       }
 
+      // Points History subcollection
       match /pointsHistory/{txId} {
-        allow read, write: if true;
+        allow read: if isOwner(userId) || isAdmin();
+        allow write: if isOwner(userId) || isAdmin();
       }
     }
 
-    // 2. Public Leaderboard Profiles (Privacy-First: publicId, turma, points)
+    // 2. Public Leaderboard Profiles (Privacy-First: id, publicId, turma, role, points)
     match /publicProfiles/{userId} {
-      allow read, write: if true;
+      // Any authenticated user can read leaderboard profiles
+      allow read: if isSignedIn();
+
+      // A student can update their own public record without exposing private data
+      allow write: if (
+        isOwner(userId) &&
+        !('email' in request.resource.data) &&
+        !('password' in request.resource.data) &&
+        !('passwordHash' in request.resource.data)
+      ) || isAdmin();
     }
 
     // 3. System Configurations (Class list / Turmas, Pedagogical Theme Visibility)
     match /config/{docId} {
       allow read: if true;
-      allow write: if true;
+      allow write: if isAdmin();
     }
   }
 }

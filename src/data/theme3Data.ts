@@ -52,13 +52,13 @@ export const theme3Data: ThemeDefinition = {
           'Navegar na Internet é como dar um passeio pelas ruas da cidade: vais vendo montras, vídeos e páginas por curiosidade ou entretenimento, sem um destino fixo.',
           'Pesquisar informação é muito diferente: é como ter uma missão ou um mapa do tesouro! Tens uma dúvida concreta ou um tema de trabalho escolar e vais à procura de respostas exatas, verdadeiras e úteis.',
           'Quando um professor de TIC, História ou Ciências pede uma investigação sobre, por exemplo, "os castelos de Portugal" ou "a energia solar", precisas de definir primeiro o que queres descobrir: Quem? Quando? Onde? Como? e Porquê?',
-          'Ter um objetivo claro antes de começar evita perderes horas em páginas sem interesse e garante que a informação que recolhes é rigorosa e valiosa para a tua aprendizagem.',
+          'Ter um objetivo claro antes de começar evita perderes horas em páginas sem interesse e ajuda a encontrar informação com maior probabilidade de rigor e utilidade para a tua aprendizagem.',
         ],
         en: [
           'Surfing the Internet is like walking through city streets: you look at shop windows, videos, and pages out of curiosity, with no fixed destination.',
           'Searching for information is very different: it is like having a mission or a treasure map! You have a specific question or a school assignment topic and set out to find exact, true, and useful answers.',
           'When a teacher in ICT, History, or Science asks for research on topics like "castles of Portugal" or "solar energy", you must first define what you need: Who? When? Where? How? and Why?',
-          'Having a clear goal before starting prevents wasting hours on irrelevant websites and ensures the information you gather is accurate and valuable for your learning.',
+          'Having a clear goal before starting avoids wasting hours on irrelevant websites and helps you gather more reliable and valuable information for your learning.',
         ],
       },
       example: {
@@ -85,12 +85,12 @@ export const theme3Data: ThemeDefinition = {
           en: 'If you need to know at what temperature water freezes for Science class, is it better to open social media and ask strangers or do a targeted search on a scientific website?',
         },
         clue: {
-          pt: 'Pensa em qual das opções te garante uma resposta cientificamente comprovada e rápida.',
-          en: 'Think about which option guarantees a scientifically proven, fast answer.',
+          pt: 'Pensa em qual das opções te dá acesso a fontes mais rigorosas e credíveis.',
+          en: 'Think about which option gives you access to more reliable and credible sources.',
         },
         reflection: {
-          pt: 'Uma pesquisa orientada num site educacional ou enciclopédia garante um facto científico comprovado (0 °C ao nível do mar). Nas redes sociais, qualquer pessoa pode responder com piadas ou erros!',
-          en: 'A targeted search on an educational site or encyclopedia guarantees a proven scientific fact (0 °C at sea level). On social media, anyone could answer with jokes or mistakes!',
+          pt: 'Uma pesquisa orientada num recurso educativo credível ou enciclopédia reconhecida permite aceder a informação mais rigorosa (0 °C ao nível do mar). Nas redes sociais, qualquer pessoa pode responder com brincadeiras ou erros!',
+          en: 'A targeted search on a credible educational resource or recognized encyclopedia provides more rigorous information (0 °C at sea level). On social media, anyone can answer with jokes or mistakes!',
         },
       },
       quizQuestions: [
@@ -194,13 +194,13 @@ export const theme3Data: ThemeDefinition = {
           'O que é um motor de busca na Internet;',
           'Como funcionam em três passos simples: rastreio, indexação e classificação;',
           'Exemplos populares (Google, Microsoft Bing, DuckDuckGo);',
-          'Motores de busca seguros e adaptados a crianças e jovens (como o Kiddle).',
+          'Motores de busca adaptados a crianças e jovens com filtros de conteúdos (como o Kiddle).',
         ],
         en: [
           'What an Internet search engine is;',
           'How they work in three simple steps: crawling, indexing, and ranking;',
           'Popular examples (Google, Microsoft Bing, DuckDuckGo);',
-          'Kid-safe search engines designed for young learners (like Kiddle).',
+          'Search engines adapted for young learners with content filters (like Kiddle).',
         ],
       },
       explanation: {
@@ -208,13 +208,13 @@ export const theme3Data: ThemeDefinition = {
           'Um motor de busca (ou motor de pesquisa) é um programa informático sofisticado criado para encontrar páginas da Web relacionadas com as palavras que o utilizador escreve.',
           'Como funciona nos bastidores? Primeiro, programas automáticos chamados "aranhas" ou robôs rastreadores (crawlers) percorrem constantemente a Web a ler milhões de páginas. Em seguida, organizam tudo num gigantesco índice (como um catálogo da biblioteca). Quando fazes uma pesquisa, o motor consulta o índice e apresenta os resultados mais relevantes numa fração de segundo!',
           'Entre os motores mais utilizados estão o Google, o Microsoft Bing e o DuckDuckGo (conhecido por valorizar a privacidade do utilizador).',
-          'Para alunos do 5.º ano, existem também motores educativos concebidos especialmente para crianças, como o Kiddle, que filtram conteúdos impróprios e apresentam explicações com imagens claras e letras maiores.',
+          'Para alunos do 5.º ano, existem também motores educativos concebidos com filtros de conteúdo adequados a crianças, como o Kiddle, que apresentam explicações com imagens claras e letras maiores.',
         ],
         en: [
           'A search engine is a sophisticated computer software designed to locate web pages matching the words a user types.',
           'How does it work behind the scenes? First, automated programs called "spiders" or web crawlers constantly traverse the web reading millions of pages. Next, they store and organize everything in a massive index (like a library catalog). When you search, the engine queries this index and ranks the most relevant results in a fraction of a second!',
           'Among the most popular engines are Google, Microsoft Bing, and DuckDuckGo (known for prioritizing privacy).',
-          'For 5th-grade students, there are also kid-friendly educational search engines, like Kiddle, which filter out inappropriate content and present results with clear illustrations and larger text.',
+          'For 5th-grade students, there are also search engines equipped with child-friendly content filters, like Kiddle, which present results with clear illustrations and larger text.',
         ],
       },
       example: {
@@ -227,13 +227,13 @@ export const theme3Data: ThemeDefinition = {
           en: 'Think of a search engine as a lightning-fast librarian who read every book in the world before you even arrived. When you ask "Where does the Iberian lynx live?", it does not run into the woods that second: it opens the right drawer in its catalog and shows you pre-indexed pages!',
         },
         tip: {
-          pt: 'Se estiveres a pesquisar na escola ou em casa para um trabalho escolar, experimenta o Kiddle (kiddle.co) para encontrar explicações seguras e ilustradas.',
-          en: 'If researching at school or at home for school projects, try Kiddle (kiddle.co) to find safe and illustrated explanations.',
+          pt: 'Se estiveres a pesquisar na escola ou em casa para um trabalho escolar, experimenta o Kiddle (kiddle.co) para encontrar resultados com filtros orientados para estudantes.',
+          en: 'If researching at school or at home for school projects, try Kiddle (kiddle.co) to find filtered results tailored for students.',
         },
       },
       funFact: {
-        pt: 'O Google realiza mais de 99.000 pesquisas por cada segundo que passa! Num único dia, são mais de 8,5 mil milhões de pesquisas em todo o planeta.',
-        en: 'Google processes over 99,000 searches every single second! In a single day, that is over 8.5 billion searches across the globe.',
+        pt: 'Sabias que todos os dias são realizadas milhares de milhões de pesquisas nos motores de busca em todo o mundo para encontrar respostas a dúvidas e trabalhos escolares?',
+        en: 'Did you know that billions of queries are executed every day on search engines across the globe to answer questions and school assignments?',
       },
       thinkAboutIt: {
         question: {
@@ -278,8 +278,8 @@ export const theme3Data: ThemeDefinition = {
           },
           correctIndex: 0,
           explanation: {
-            pt: 'Correto! O Kiddle é um motor de busca visual e seguro concebido para crianças em idade escolar.',
-            en: 'Correct! Kiddle is a safe, visual search engine designed specifically for school-aged children.',
+            pt: 'Correto! O Kiddle é um motor de busca visual com filtros de conteúdos orientados para crianças e estudantes.',
+            en: 'Correct! Kiddle is a visual search engine equipped with content filters tailored for young students.',
           },
         },
         {
@@ -368,8 +368,8 @@ export const theme3Data: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Sabias que cerca de 15% das pesquisas feitas todos os dias no Google são pesquisas completamente novas, que nunca ninguém no mundo tinha feito antes?',
-        en: 'Did you know that about 15% of searches performed every day on Google are completely brand new searches that nobody in the world had ever typed before?',
+        pt: 'Sabias que todos os dias os motores de busca recebem milhões de pesquisas com termos e combinações inéditas, refletindo novas dúvidas e acontecimentos no mundo?',
+        en: 'Did you know that every day search engines receive millions of queries with novel terms and combinations, reflecting emerging questions and global events?',
       },
       thinkAboutIt: {
         question: {
@@ -972,8 +972,8 @@ export const theme3Data: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Sabias que o excesso de separadores abertos no navegador gasta muita memória RAM do computador e pode fazer com que a bateria do portátil se esgote duas vezes mais rápido?',
-        en: 'Did you know that having dozens of open tabs consumes huge amounts of computer RAM and can drain a laptop battery twice as fast?',
+        pt: 'Sabias que um número excessivo de separadores abertos consome recursos da memória e do processador, podendo reduzir significativamente a autonomia da bateria do portátil?',
+        en: 'Did you know that having too many open tabs consumes computer memory and processor resources, significantly reducing laptop battery life?',
       },
       thinkAboutIt: {
         question: {
@@ -1028,8 +1028,8 @@ export const theme3Data: ThemeDefinition = {
           },
           correctIndex: 0,
           explanation: {
-            pt: 'Perfeito! Ctrl + D é o atalho rápido universal para criar um marcador no navegador.',
-            en: 'Perfect! Ctrl + D is the universal shortcut to bookmark a page in your browser.',
+            pt: 'Perfeito! Ctrl + D (ou Cmd + D no Mac) é o atalho comum na maioria dos navegadores para adicionar um marcador.',
+            en: 'Perfect! Ctrl + D (or Cmd + D on Mac) is the common shortcut in most browsers to add a bookmark.',
           },
         },
         {
@@ -1300,8 +1300,8 @@ export const theme3Data: ThemeDefinition = {
       },
       correctIndex: 1,
       explanation: {
-        pt: 'Correto! Instituições científicas reconhecidas garantem rigor, autoria qualificada e dados comprovados.',
-        en: 'Correct! Recognized scientific bodies ensure rigorous, qualified authorship and verified facts.',
+        pt: 'Correto! Instituições científicas reconhecidas apresentam habitualmente maior probabilidade de rigor, autoria qualificada e dados fundamentados.',
+        en: 'Correct! Recognized scientific bodies are more likely to provide rigor, qualified authorship, and evidence-based facts.',
       },
     },
     {
