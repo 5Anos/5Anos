@@ -403,7 +403,7 @@ export const DAILY_TIC_FACTS: DailyTicFact[] = [
       en: 'AI doesn’t think like a human: it predicts the next most likely word!'
     },
     teaser: {
-      pt: 'Modelos de linguagem como o Gemini usam matemática e probabilidades com base em milhões de textos.',
+      pt: 'Modelos de linguagem de inteligência artificial usam matemática e probabilidades com base em milhões de textos.',
       en: 'Large language models use math and patterns from billions of text examples.'
     },
     description: {

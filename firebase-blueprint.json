@@ -16,7 +16,7 @@
         "createdAt": { "type": "string" },
         "updatedAt": { "type": "string" }
       },
-      "required": ["id", "name", "email", "publicId", "turma", "points", "language", "createdAt"]
+      "required": ["id", "name", "email", "publicId", "points", "language", "createdAt"]
     },
     "TurmasConfig": {
       "title": "TurmasConfig",
@@ -70,6 +70,19 @@
       },
       "required": ["userId", "badgeId", "unlockedAt"]
     },
+    "PointTransactionDoc": {
+      "title": "PointTransactionDoc",
+      "description": "Audit log of points earned by student",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "amount": { "type": "number" },
+        "reason": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "userId", "amount", "reason", "timestamp"]
+    },
     "PublicLeaderboardProfile": {
       "title": "PublicLeaderboardProfile",
       "description": "Public anonymous leaderboard profile with minimal non-sensitive data for student privacy",
@@ -106,6 +119,10 @@
     "/users/{userId}/achievements/{badgeId}": {
       "schema": "UserAchievementDoc",
       "description": "User unlocked badges"
+    },
+    "/users/{userId}/pointsHistory/{txId}": {
+      "schema": "PointTransactionDoc",
+      "description": "Points transaction history log"
     }
   }
 }

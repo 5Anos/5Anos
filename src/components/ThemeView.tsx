@@ -12,6 +12,7 @@ import { InteractiveEmailExplorer } from './InteractiveEmailExplorer';
 import { ErgonomicsBreakTimer } from './ErgonomicsBreakTimer';
 import { DigitalFootprintSimulator } from './DigitalFootprintSimulator';
 import { CitationSimulator } from './CitationSimulator';
+import { LicensesVisualCard } from './LicensesVisualCard';
 
 interface ThemeViewProps {
   theme: ThemeDefinition;
@@ -314,6 +315,19 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                       <CitationSimulator language={language} />
                     </div>
                   </div>
+                ) : theme.id === 'direitos-autor' && currentStepIndex === 1 ? (
+                  <div className="space-y-8 w-full max-w-5xl mx-auto">
+                    {/* Centered intro text */}
+                    <div
+                      className="text-base sm:text-lg text-slate-700 leading-relaxed text-center max-w-3xl mx-auto font-medium"
+                      dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
+                    />
+
+                    {/* Official License Symbols Cards taking full center width */}
+                    <div className="w-full">
+                      <LicensesVisualCard language={language} />
+                    </div>
+                  </div>
                 ) : (
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     <div className="lg:col-span-7 space-y-4">
@@ -427,7 +441,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                 </h2>
                 <p className="text-xs sm:text-sm text-amber-100 font-medium mt-0.5">
                   {language === 'pt'
-                    ? 'Ganha pontos XP, desbloqueia insígnias e testa as tuas habilidades neste tema!'
+                    ? 'Ganha pontos XP, desbloqueia medalhas e testa as tuas habilidades neste tema!'
                     : 'Earn XP points, unlock badges, and test your skills in this topic!'}
                 </p>
               </div>

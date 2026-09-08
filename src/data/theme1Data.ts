@@ -715,7 +715,7 @@ export const theme1Data: ThemeDefinition = {
         en: 'Final Quiz — Digital Safety Master',
       },
       shortDesc: {
-        pt: 'Avalia tudo o que aprendeste no Tema 1, ganha a insígnia de Guardião Digital e acumula pontos!',
+        pt: 'Avalia tudo o que aprendeste no Tema 1, ganha a medalha de Guardião Digital e acumula pontos!',
         en: 'Test everything you learned in Theme 1, earn the Digital Guardian badge, and gain points!',
       },
       icon: 'Award',

@@ -140,13 +140,13 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                 ? `Parabéns pela tua dedicação, ${user.name}!`
                 : `Great job on your progress, ${user.name}!`
               : language === 'pt'
-              ? 'Explora, joga e ganha insígnias digitais!'
+              ? 'Explora, joga e ganha medalhas digitais!'
               : 'Explore, play and earn digital badges!'}
           </h2>
 
           <p className="text-xs sm:text-sm text-indigo-100 leading-relaxed font-medium">
             {language === 'pt'
-              ? 'Continua a responder aos quizzes e a completar desafios para encher o teu troféu de pontos e desbloquear todas as insígnias!'
+              ? 'Continua a responder aos quizzes e a completar desafios para encher o teu troféu de pontos e desbloquear todas as medalhas!'
               : 'Keep answering quizzes and completing challenges to fill your trophy with points and unlock all badges!'}
           </p>
 
@@ -157,7 +157,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
             </div>
             <div className="px-3.5 py-1.5 rounded-xl bg-white/15 backdrop-blur-md border border-white/20 text-xs font-extrabold flex items-center gap-1.5">
               <Award className="w-4 h-4 text-purple-300" />
-              <span>{achievements.length} Insígnias Desbloqueadas</span>
+              <span>{achievements.length} Medalhas Desbloqueadas</span>
             </div>
           </div>
         </div>
@@ -221,7 +221,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
             <Award className="w-6 h-6" />
             <span>{achievements.length}</span>
           </div>
-          <p className="mt-1 text-xs text-slate-500 font-medium">de {BADGES.length} insígnias totais</p>
+          <p className="mt-1 text-xs text-slate-500 font-medium">de {BADGES.length} medalhas totais</p>
         </div>
 
         <div className="p-6 rounded-[2rem] bg-white border border-slate-200 shadow-xs">

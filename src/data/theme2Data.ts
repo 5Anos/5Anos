@@ -849,7 +849,7 @@ export const theme2Data: ThemeDefinition = {
         en: 'Final Quiz — Email Master',
       },
       shortDesc: {
-        pt: 'Mostra o teu domínio sobre emails seguros, netiqueta e pastas, ganha a insígnia Mestre do Email e soma pontos!',
+        pt: 'Mostra o teu domínio sobre emails seguros, netiqueta e pastas, ganha a medalha Mestre do Email e soma pontos!',
         en: 'Showcase your mastery of email safety, netiquette, and folders, earn the Email Master badge, and gain points!',
       },
       icon: 'Award',

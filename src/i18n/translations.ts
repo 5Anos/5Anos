@@ -30,7 +30,7 @@ export const translations = {
     overallProgress: 'Progresso Global',
     completedActivities: 'Atividades Concluídas',
     pointsEarned: 'Pontos Ganhos',
-    unlockedBadges: 'Insígnias',
+    unlockedBadges: 'Medalhas',
     achievements: 'Conquistas',
     bestScore: 'Melhor Resultado',
     exploreThemes: 'Os Seis Grandes Temas de TIC',
@@ -83,9 +83,9 @@ export const translations = {
 
     // Progress page
     myProgressTitle: 'O Meu Progresso Escolar',
-    myProgressSubtitle: 'Acompanha a tua evolução, pontos acumulados, insígnias conquistadas e histórico de tentativas.',
+    myProgressSubtitle: 'Acompanha a tua evolução, pontos acumulados, medalhas conquistadas e histórico de tentativas.',
     themeProgress: 'Progresso por Tema',
-    badgesCollection: 'Galeria de Conquistas e Insígnias',
+    badgesCollection: 'Galeria de Conquistas e Medalhas',
     unlockedAtDate: 'Desbloqueada em {date}',
     lockedBadge: 'Bloqueada — cumpre o objetivo para desbloquear',
     activityHistory: 'Histórico de Atividades',

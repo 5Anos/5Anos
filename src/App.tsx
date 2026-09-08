@@ -261,7 +261,7 @@ export default function App() {
           showToast(
             language === 'pt' ? '🎖️ Nova Conquista Desbloqueada!' : '🎖️ New Achievement Unlocked!',
             language === 'pt'
-              ? `Ganhaste ${newBadgesCount} nova(s) insígnia(s). Consulta no teu progresso!`
+              ? `Ganhaste ${newBadgesCount} nova(s) medalha(s). Consulta no teu progresso!`
               : `You earned ${newBadgesCount} new badge(s). View in your progress tab!`
           );
         } else {

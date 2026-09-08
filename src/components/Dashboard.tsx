@@ -411,7 +411,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
               onClick={onNavigateProgress}
               className="mt-4 text-xs font-bold text-indigo-600 hover:text-indigo-700 text-center cursor-pointer transition-colors"
             >
-              {language === 'pt' ? 'Ver todas as insígnias →' : 'View all badges →'}
+              {language === 'pt' ? 'Ver todas as medalhas →' : 'View all badges →'}
             </button>
           </div>
         </div>

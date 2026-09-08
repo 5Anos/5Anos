@@ -33,8 +33,8 @@ export const themeDireitosAutorData: ThemeDefinition = {
       eyebrow: { pt: 'Imagens', en: 'Images' },
       h: { pt: 'Copyright, Copyleft e Royalty Free', en: 'Copyright, Copyleft & Royalty Free' },
       body: {
-        pt: 'Quando estás a pesquisar na Internet para um trabalho da escola, repara na classificação dos conteúdos:<ul><li><strong>Copyright © (Todos os direitos reservados):</strong> É como uma porta fechada à chave! Não podes copiar nem utilizar sem pedires autorização prévia ao autor.</li><li><strong>Copyleft:</strong> É como uma porta aberta à partilha! Podes usar e partilhar a obra à vontade, desde que não seja para fins comerciais (não podes vender).</li><li><strong>Royalty Free:</strong> Obras que podes usar livremente depois de adquirir uma licença prévia.</li></ul>',
-        en: 'When researching online for school projects, look at content licenses:<ul><li><strong>Copyright ©:</strong> All rights reserved. Needs prior permission.</li><li><strong>Copyleft:</strong> Free to use and share, strictly non-commercial.</li><li><strong>Royalty Free:</strong> Usable after getting a prior license.</li></ul>',
+        pt: 'Quando estás a pesquisar na Internet para um trabalho da escola, repara sempre na classificação e nas regras dos conteúdos. Cada tipo de licença tem um símbolo oficial que te indica o que podes ou não fazer:',
+        en: 'When searching online for school projects, always pay attention to content licensing and rules. Each type of license has an official symbol indicating what you can and cannot do:',
       },
       icon: '🖼️',
     },

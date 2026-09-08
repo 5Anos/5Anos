@@ -221,7 +221,7 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
   const challenge = CHALLENGE_DATA[challengeId] || {
     title: { pt: 'Desafio Prático', en: 'Practical Challenge' },
     instructions: {
-      pt: 'Responde às situações com rigor e atenção para ganhares pontos e insígnias!',
+      pt: 'Responde às situações com rigor e atenção para ganhares pontos e medalhas!',
       en: 'Answer each scenario with attention to detail to unlock badges and points!',
     },
     questions: [
