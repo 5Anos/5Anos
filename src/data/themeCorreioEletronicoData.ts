@@ -362,11 +362,11 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       }
     },
     {
-      id: 'quiz-final-tema4',
+      id: 'quiz-final-tema5',
       themeId: 'correio-eletronico',
       number: 5,
       title: { pt: '🏆 Quiz de Aprendizagem: Correio Eletrónico (10 Questões)', en: '🏆 Learning Quiz: Email (10 Questions)' },
-      shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas sobre o Tema 4.', en: 'Comprehensive final assessment with 10 questions on Topic 4.' },
+      shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas sobre o Tema 5.', en: 'Comprehensive final assessment with 10 questions on Topic 5.' },
       icon: '🏆',
       durationMinutes: 10,
       points: 100,

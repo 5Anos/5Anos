@@ -2278,6 +2278,88 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
 
               {/* Student Themes Breakdown Content */}
               <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-slate-50">
+                {/* Top Summary Stats for Student */}
+                {(() => {
+                  const sProgress = progressMap[detailStudent.id] || progressMap[detailStudent.email] || [];
+                  let totalCurricularXP = 0;
+                  let completedChallengesCount = 0;
+                  let completedQuizzesCount = 0;
+
+                  ALL_THEMES.forEach((theme) => {
+                    const breakdown = getStudentThemeBreakdown(detailStudent, sProgress, theme);
+                    totalCurricularXP += breakdown.totalPoints;
+                    completedChallengesCount += breakdown.challenges.filter((c) => c.completed).length;
+                    if (breakdown.quiz.completed) completedQuizzesCount++;
+                  });
+
+                  const tipsAndBonusXP = Math.max(0, (detailStudent.points ?? 0) - totalCurricularXP);
+                  const globalPercent = Math.round((totalCurricularXP / 3500) * 100);
+
+                  return (
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                      <div className="p-3 bg-white rounded-2xl border border-slate-200 shadow-2xs flex flex-col justify-between">
+                        <div className="flex items-center justify-between text-slate-500 mb-1">
+                          <span className="text-[10px] font-bold uppercase tracking-wider">
+                            {language === 'pt' ? 'Total Global (XP)' : 'Total Global XP'}
+                          </span>
+                          <Award className="w-4 h-4 text-amber-500" />
+                        </div>
+                        <div className="text-xl font-black text-indigo-700">
+                          {detailStudent.points ?? 0} <span className="text-xs font-semibold text-slate-400">XP</span>
+                        </div>
+                        <div className="text-[10px] text-slate-500 mt-0.5">
+                          {language === 'pt' ? 'Acumulado com bónus e dicas' : 'Includes daily bonuses'}
+                        </div>
+                      </div>
+
+                      <div className="p-3 bg-white rounded-2xl border border-slate-200 shadow-2xs flex flex-col justify-between">
+                        <div className="flex items-center justify-between text-slate-500 mb-1">
+                          <span className="text-[10px] font-bold uppercase tracking-wider">
+                            {language === 'pt' ? 'Temas Curriculares' : 'Curricular XP'}
+                          </span>
+                          <TrendingUp className="w-4 h-4 text-emerald-600" />
+                        </div>
+                        <div className="text-xl font-black text-emerald-700">
+                          {totalCurricularXP} <span className="text-xs font-semibold text-slate-400">/ 3500 XP</span>
+                        </div>
+                        <div className="text-[10px] text-emerald-600 font-semibold mt-0.5">
+                          {globalPercent}% {language === 'pt' ? 'aproveitamento' : 'achievement'}
+                        </div>
+                      </div>
+
+                      <div className="p-3 bg-white rounded-2xl border border-slate-200 shadow-2xs flex flex-col justify-between">
+                        <div className="flex items-center justify-between text-slate-500 mb-1">
+                          <span className="text-[10px] font-bold uppercase tracking-wider">
+                            {language === 'pt' ? 'Dicas Diárias & Bónus' : 'Daily Tips & Bonus'}
+                          </span>
+                          <Sparkles className="w-4 h-4 text-sky-500" />
+                        </div>
+                        <div className="text-xl font-black text-sky-600">
+                          +{tipsAndBonusXP} <span className="text-xs font-semibold text-slate-400">XP</span>
+                        </div>
+                        <div className="text-[10px] text-sky-700 font-semibold mt-0.5">
+                          {language === 'pt' ? '50 pts acerto / 25 pts leitura' : '50 pts correct / 25 pts read'}
+                        </div>
+                      </div>
+
+                      <div className="p-3 bg-white rounded-2xl border border-slate-200 shadow-2xs flex flex-col justify-between">
+                        <div className="flex items-center justify-between text-slate-500 mb-1">
+                          <span className="text-[10px] font-bold uppercase tracking-wider">
+                            {language === 'pt' ? 'Atividades Feitas' : 'Completed Activities'}
+                          </span>
+                          <CheckCircle2 className="w-4 h-4 text-indigo-600" />
+                        </div>
+                        <div className="text-xl font-black text-slate-900">
+                          {completedChallengesCount + completedQuizzesCount} <span className="text-xs font-semibold text-slate-400">/ 35</span>
+                        </div>
+                        <div className="text-[10px] text-slate-500 mt-0.5">
+                          {completedChallengesCount}/28 {language === 'pt' ? 'desafios' : 'challenges'} • {completedQuizzesCount}/7 {language === 'pt' ? 'quizzes' : 'quizzes'}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
+
                 {ALL_THEMES.map((theme) => {
                   const sProgress = progressMap[detailStudent.id] || progressMap[detailStudent.email] || [];
                   const breakdown = getStudentThemeBreakdown(detailStudent, sProgress, theme);

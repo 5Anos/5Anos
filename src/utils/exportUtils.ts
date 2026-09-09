@@ -242,7 +242,10 @@ export function exportThemeScoresToExcel(
 
     const maxAllThemes = ALL_THEMES.length * 500; // 3500
     const globalPercent = maxAllThemes > 0 ? Math.round((totalThemeSum / maxAllThemes) * 100) : 0;
+    const tipsAndBonusXP = Math.max(0, (student.points ?? 0) - totalThemeSum);
 
+    rowObj['Pontos Temas Curriculares (0-3500 XP)'] = totalThemeSum;
+    rowObj['Pontos Dicas & Bónus (XP)'] = tipsAndBonusXP;
     rowObj['Desafios Concluídos (/28)'] = totalCompletedChallenges;
     rowObj['Quizzes Concluídos (/7)'] = totalCompletedQuizzes;
     rowObj['Média de Aproveitamento (%)'] = `${globalPercent}%`;
@@ -258,11 +261,13 @@ export function exportThemeScoresToExcel(
     { wch: 28 }, // Nome
     { wch: 32 }, // Email
     { wch: 18 }, // ID Público
-    { wch: 20 }, // Pontos Totais
+    { wch: 20 }, // Pontos Globais
     ...ALL_THEMES.map(() => ({ wch: 22 })),
-    { wch: 24 }, // Desafios
-    { wch: 22 }, // Quizzes
-    { wch: 24 }, // Média
+    { wch: 26 }, // Pontos Curriculares
+    { wch: 24 }, // Pontos Dicas & Bónus
+    { wch: 22 }, // Desafios Concluídos
+    { wch: 20 }, // Quizzes Concluídos
+    { wch: 24 }, // Média Aproveitamento
     { wch: 26 }, // Classificação
   ];
   XLSX.utils.book_append_sheet(workbook, summarySheet, 'Resumo Geral');
