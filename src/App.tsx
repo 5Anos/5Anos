@@ -19,6 +19,7 @@ import { KeywordMasterGame } from './components/games/KeywordMasterGame';
 import { ReliableSourcesGame } from './components/games/ReliableSourcesGame';
 import { SearchOperatorsGame } from './components/games/SearchOperatorsGame';
 import { CopyOrCreditGame } from './components/games/CopyOrCreditGame';
+import { ErgonomicsPostureGame } from './components/games/ErgonomicsPostureGame';
 import { GenericChallengeGame } from './components/games/GenericChallengeGame';
 import { GenericHtmlGameRunner } from './components/games/GenericHtmlGameRunner';
 
@@ -579,6 +580,27 @@ export default function App() {
               maxScore,
               percentage,
               activityTitle: language === 'pt' ? 'Copiar ou Criar? Direitos e Plágio' : 'Copy or Create? Copyright & Plagiarism',
+            });
+          }}
+        />
+      );
+    }
+
+    if (activeChallengeId === 'desafio-corrige-postura') {
+      return (
+        <ErgonomicsPostureGame
+          language={language}
+          onBack={returnToGames}
+          onFinish={(score, maxScore, percentage) => {
+            handleSaveProgress({
+              activityId: 'desafio-corrige-postura',
+              activityType: 'challenge',
+              themeId: currentTheme.id,
+              status: 'completed',
+              score,
+              maxScore,
+              percentage,
+              activityTitle: language === 'pt' ? 'Simulador: Corrige a Postura do Aluno!' : 'Simulator: Fix the Student Posture!',
             });
           }}
         />

@@ -274,7 +274,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
         en: 'Digital Citizenship, Screen Time and Cyberbullying Prevention',
       },
       shortDesc: {
-        pt: 'Equilíbrio digital, respeito pelos colegas online e o que fazer perante o cyberbullying.',
+        pt: 'Equilíbrio digital, respeito pelos colegas online e o que fazer perante o ciberbullying.',
         en: 'Digital balance, online respect, and how to counter cyberbullying.',
       },
       icon: '⚖️',
@@ -330,12 +330,12 @@ export const themeTicSociedadeData: ThemeDefinition = {
         {
           id: 'q-cuidados-1',
           question: {
-            pt: 'Se receberes mensagens ofensivas ou presenciares cyberbullying num grupo, qual é o procedimento correto?',
+            pt: 'Se receberes mensagens ofensivas ou presenciares ciberbullying num grupo, qual é o procedimento correto?',
             en: 'If you receive abusive messages or witness cyberbullying in a group, what is the right procedure?',
           },
           options: {
             pt: [
-              'Não responder, guardar provas (printscreen), bloquear o utilizador e contar a um adulto de confiança',
+              'Não responder, guardar provas (captura de ecrã), bloquear o utilizador e contar a um adulto de confiança',
               'Responder com insultos ainda piores para tentar assustar a outra pessoa',
               'Partilhar as mensagens com toda a gente na escola para gozarem todos juntos',
               'Apagar tudo a correr e esconder o telemóvel dos pais sem dizer nada',
@@ -349,7 +349,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
           },
           correctIndex: 0,
           explanation: {
-            pt: 'Perfeito! Guardar provas, bloquear e avisar um adulto é a forma mais eficaz e segura de resolver o cyberbullying.',
+            pt: 'Perfeito! Guardar provas, bloquear e avisar um adulto é a forma mais eficaz e segura de resolver o ciberbullying.',
             en: 'Spot on! Saving evidence, blocking the user, and notifying a trusted adult effectively resolves cyberbullying.',
           },
         },
@@ -429,7 +429,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
           items: [
             { s: 'As TIC apenas servem para jogar videojogos nos tempos livres.', a: false, e: 'As TIC são usadas na saúde, transportes, educação, comércio e muito mais!' },
             { s: 'O comércio eletrónico permite comprar produtos pela Internet com entrega em casa.', a: true, e: 'Correto! É a compra e venda de bens através de redes digitais.' },
-            { s: 'A Linha Internet Segura é um serviço gratuito para apoiar em casos de cyberbullying.', a: true, e: 'Correto! O número 800 21 90 90 é confidencial e gratuito em Portugal.' }
+            { s: 'A Linha Internet Segura é um serviço gratuito para apoiar em casos de ciberbullying.', a: true, e: 'Correto! O número 800 21 90 90 é confidencial e gratuito em Portugal.' }
           ]
         }
       }
@@ -464,15 +464,15 @@ export const themeTicSociedadeData: ThemeDefinition = {
               e: 'Os computadores e robôs ajudam os médicos a diagnosticar e operar com enorme precisão.'
             },
             {
-              q: 'O que deves fazer se presenciares cyberbullying num chat de turma?',
+              q: 'Como é que as TIC ajudam uma pessoa que precisa de falar com a família noutro país?',
               opts: [
-                'Guardar provas (printscreen), não responder e avisar um adulto',
-                'Juntar-te ao grupo para responder com ofensas semelhantes',
-                'Ignorar a situação para evitar ser também alvo de comentários',
-                'Fingir que não viste nada e reencaminhar a mensagem a outros colegas'
+                'Através de videochamadas e mensagens instantâneas pela Internet em tempo real',
+                'Apenas através de cartas escritas à mão enviadas por barco',
+                'As TIC não permitem qualquer tipo de comunicação internacional',
+                'Obrigando a viajar fisicamente para poder ver ou ouvir a outra pessoa'
               ],
               c: 0,
-              e: 'Nunca reencaminhes nem participes. Guarda provas e pede ajuda a um adulto de confiança!'
+              e: 'As TIC aproximam as pessoas! Com videochamadas e mensagens, podemos comunicar instantaneamente com qualquer parte do mundo.'
             }
           ]
         }
@@ -520,27 +520,27 @@ export const themeTicSociedadeData: ThemeDefinition = {
     {
       id: 'soc-q1',
       question: {
-        pt: 'O que significa exatamente a sigla TIC?',
-        en: 'What does the acronym ICT stand for?',
+        pt: 'As TIC englobam três elementos fundamentais no nosso dia a dia. Quais são?',
+        en: 'What three core elements do ICT combine in our daily lives?',
       },
       options: {
         pt: [
-          'Tecnologias da Informação e Comunicação',
-          'Telefones da Internet e Computadores',
-          'Técnicas de Instalação de Cabos',
-          'Tecnologias de Impressão e Cópia',
+          'A informação, as redes de comunicação e as tecnologias (como computadores e telemóveis)',
+          'Apenas os comandos e os discos dos videojogos',
+          'Exclusivamente a eletricidade e os cabos de uma sala de aula',
+          'Apenas o papel e as canetas usados no escritório',
         ],
         en: [
-          'Information and Communication Technologies',
-          'Internet Telephones and Computers',
-          'Cable Installation Techniques',
-          'Printing and Copy Technologies',
+          'Information, communication networks, and technologies (such as computers and phones)',
+          'Only controllers and video game disks',
+          'Exclusively electrical power and classroom cables',
+          'Only paper and pens used in office environments',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'TIC significa Tecnologias da Informação e Comunicação, englobando computadores, redes e comunicações.',
-        en: 'ICT stands for Information and Communication Technologies.',
+        pt: 'As TIC reúnem a informação, a capacidade de comunicar e os dispositivos tecnológicos para resolver tarefas do dia a dia.',
+        en: 'ICT brings together information, communication capacity, and digital devices to solve daily challenges.',
       },
     },
     {
@@ -702,27 +702,27 @@ export const themeTicSociedadeData: ThemeDefinition = {
     {
       id: 'soc-q8',
       question: {
-        pt: 'Qual é a chamada "Regra 20-20-20" recomendada para utilizadores de computadores?',
-        en: 'What is the "20-20-20 Rule" recommended for computer users?',
+        pt: 'Para manteres um estilo de vida saudável e equilibrado com a tecnologia, o que deves fazer?',
+        en: 'To maintain a healthy, balanced lifestyle with technology, what should you do?',
       },
       options: {
         pt: [
-          'A cada 20 minutos de ecrã, olhar para longe (6 metros) durante pelo menos 20 segundos',
-          'Fazer 20 minutos de exercício físico intenso a cada 20 horas de estudo',
-          'Pestanejar 20 vezes consecutivas de 20 em 20 segundos',
-          'Manter o monitor ligado a 20 centímetros dos olhos durante 20 minutos',
+          'Equilibrar o tempo de ecrã com desporto, brincadeiras ao ar livre, estudo e sono descansado',
+          'Usar o telemóvel na cama até de madrugada porque ajuda a adormecer mais depressa',
+          'Comer sempre com o telemóvel ou tablet à frente para não perder tempo',
+          'Passar todo o fim de semana a jogar online sem conversar com a família',
         ],
         en: [
-          'Every 20 minutes, look at an object 20 feet (6m) away for 20 seconds',
-          'Do 20 minutes of intense workouts every 20 study hours',
-          'Blink 20 times continuously every 20 seconds',
-          'Keep the monitor 20 centimetres from your eyes for 20 minutes',
+          'Balance screen time with sports, outdoor play, school study, and restful sleep',
+          'Use smartphones late in bed because it supposedly induces faster sleep',
+          'Always eat meals watching screens to save time',
+          'Spend all weekend gaming online without talking to family',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'É uma estratégia para fazer pausas e reduzir o esforço visual durante períodos prolongados diante de um ecrã.',
-        en: 'It is a strategy to take breaks and reduce visual strain during prolonged periods in front of a screen.',
+        pt: 'O equilíbrio saudável entre a tecnologia e outras atividades diárias (sono, desporto e família) é fundamental para o bem-estar.',
+        en: 'Healthy balance between digital devices and offline activities is vital for physical and mental well-being.',
       },
     },
     {

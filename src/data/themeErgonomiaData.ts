@@ -218,27 +218,27 @@ export const themeErgonomiaData: ThemeDefinition = {
         {
           id: 'q-ergo-2',
           question: {
-            pt: 'A que distância aproximada deve estar o ecrã dos teus olhos?',
-            en: 'Approximately how far should the screen be from your eyes?',
+            pt: 'Como podes verificar rapidamente se estás à distância correta do monitor?',
+            en: 'How can you quickly check if you are at the correct distance from the monitor?',
           },
           options: {
             pt: [
-              'À distância de um braço esticado (cerca de 50 a 70 cm)',
-              'A 10 centímetros, quase encostado ao nariz',
-              'A 4 metros de distância no outro canto da sala',
-              'Colado à testa para ver melhor os detalhes',
+              'Esticar o braço para a frente: o ecrã deve ficar à distância de um braço esticado',
+              'Encostar a cabeça à secretária e olhar para cima',
+              'Aproximar o rosto até tocar com o queixo no ecrã',
+              'Afastar a cadeira até não conseguir ler o texto',
             ],
             en: [
-              'About an arm’s length away (roughly 50 to 70 cm)',
-              '10 centimeters away, nearly touching your nose',
-              '4 meters away across the room',
-              'Pressed against your forehead',
+              'Stretch your arm forward: the screen should be about an arm’s length away',
+              'Rest your head on the desk and look upward',
+              'Bring your face forward until your chin touches the screen',
+              'Push your chair back until you cannot read the text',
             ],
           },
           correctIndex: 0,
           explanation: {
-            pt: 'Excelente! A distância recomendada é o comprimento de um braço, entre 50 e 70 centímetros.',
-            en: 'Excellent! The recommended distance is an arm’s length, between 50 and 70 cm.',
+            pt: 'Excelente! A distância de um braço esticado (cerca de 50 a 70 cm) é a forma mais simples de verificar se estás bem posicionado.',
+            en: 'Excellent! An arm’s length (about 50 to 70 cm) is the easiest way to ensure proper viewing distance.',
           },
         },
       ],
@@ -336,9 +336,28 @@ export const themeErgonomiaData: ThemeDefinition = {
   ],
   challenges: [
     {
-      id: 'jogo-ergo-tf',
+      id: 'desafio-corrige-postura',
       themeId: 'ergonomia',
       number: 1,
+      title: { pt: '🧍 Simulador: Corrige a Postura do Aluno!', en: '🧍 Simulator: Fix the Student\'s Posture!' },
+      shortDesc: { pt: 'Pega nas partes do corpo e do equipamento e posiciona o aluno com ergonomia perfeita.', en: 'Adjust body parts and equipment to sit the student with perfect ergonomics.' },
+      icon: '🪑',
+      durationMinutes: 4,
+      points: 25,
+      type: 'what_would_you_do',
+      gameData: {
+        type: 'posture_simulator',
+        title: 'Simulador: Corrige a Postura do Aluno!',
+        icon: '🪑',
+        xp: 25,
+        desc: 'Ajusta a cabeça, costas, ecrã, braços e pés para garantir a postura ergonómica ideal.',
+        data: {}
+      }
+    },
+    {
+      id: 'jogo-ergo-tf',
+      themeId: 'ergonomia',
+      number: 2,
       title: { pt: '🪑 Postura correta ou incorreta?', en: '🪑 Correct or Incorrect Posture?' },
       shortDesc: { pt: 'Avalia posturas corporais ao utilizar computadores e tablets.', en: 'Evaluate body posture when using computers and tablets.' },
       icon: '🪑',
@@ -390,15 +409,15 @@ export const themeErgonomiaData: ThemeDefinition = {
               e: 'Manter a coluna apoiada, pés assentes a 90° e o topo do ecrã ao nível dos olhos previne dores e cansaço.'
             },
             {
-              q: 'A que distância aproximada deve estar o ecrã do computador em relação aos teus olhos?',
+              q: 'O que ensina a "Regra 20-20-20" para descansar os olhos ao computador?',
               opts: [
-                'Cerca de 50 a 70 centímetros (aproximadamente a distância de um braço esticado)',
-                'A 10 centímetros, quase colado ao nariz',
-                'A 2 metros de distância na outra ponta da sala',
-                'A 5 centímetros para conseguir ler letras minúsculas sem óculos'
+                'A cada 20 minutos, olhar para longe (cerca de 6 metros) durante 20 segundos',
+                'Jogar 20 minutos seguidos de olhos fechados',
+                'Pestanejar 20 vezes sem parar de 20 em 20 segundos',
+                'Estar 20 horas seguidas ao computador e depois dormir 20 horas'
               ],
               c: 0,
-              e: 'A distância de 50 a 70 cm (comprimento de 1 braço) é a ideal para proteger os olhos e evitar fadiga visual.'
+              e: 'Excelente! A regra 20-20-20 ajuda os músculos dos olhos a relaxar e evita o cansaço visual.'
             }
           ]
         }
@@ -576,8 +595,8 @@ export const themeErgonomiaData: ThemeDefinition = {
     {
       id: 'ergo-q6',
       question: {
-        pt: 'De onde deve vir preferencialmente a luz natural numa sala de estudo para não encandear?',
-        en: 'Where should natural window light ideally come from in a study room?',
+        pt: 'De que lado deve vir a luz natural para não dar luz diretamente aos olhos?',
+        en: 'From which side should natural light come to avoid shining directly into your eyes?',
       },
       options: {
         pt: [

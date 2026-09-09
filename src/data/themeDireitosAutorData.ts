@@ -614,27 +614,27 @@ export const themeDireitosAutorData: ThemeDefinition = {
     {
       id: 'copy-q3',
       question: {
-        pt: 'O que caracteriza a prática de "Parafrasear" num trabalho escolar?',
-        en: 'What characterizes "Paraphrasing" in school work?',
+        pt: 'O que significa quando uma obra, imagem ou livro se encontra no "Domínio Público"?',
+        en: 'What does it mean when a work, image, or book enters the "Public Domain"?',
       },
       options: {
         pt: [
-          'Utilizar a ideia do autor, mas escrevendo por palavras nossas, sem ser necessária cópia exata nem aspas',
-          'Copiar integralmente um parágrafo sem indicar a fonte ou o autor original',
-          'Resumir um texto alterando apenas a ordem das frases sem citar a origem',
-          'Traduzir um texto palavra por palavra de outra língua sem referenciar a publicação original',
+          'Que os direitos de autor já expiraram e a obra pode ser utilizada e partilhada livremente por todos',
+          'Que a obra pertence exclusivamente a uma empresa multinacional privada',
+          'Que é obrigatório pagar uma taxa mensal em dinheiro para poder ler ou ver a obra',
+          'Que a obra só pode ser consultada presencialmente num museu nacional',
         ],
         en: [
-          'Using the author idea in our own words without exact copying or quotation marks',
-          'Copying an entire paragraph without referencing the original source or author',
-          'Summarizing text by rearranging sentences without citing origins',
-          'Translating text word for word from another language without referencing the source',
+          'That copyright has expired and the work can be freely used and shared by everyone',
+          'That the work belongs exclusively to a private multinational corporation',
+          'That paying a monthly cash fee is mandatory to view or read the work',
+          'That the work can only be viewed in person at a national museum',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Perfeito! Parafrasear é expressar a ideia com o nosso próprio vocabulário, citando sempre a fonte.',
-        en: 'Perfect! Paraphrasing expresses concepts in your voice while citing sources.',
+        pt: 'Em Portugal, as obras entram em domínio público 70 anos após a morte do autor, podendo ser usadas livremente para estudar, criar e partilhar!',
+        en: 'In Portugal, works enter the public domain 70 years after the author’s death, allowing free study, creation, and reuse.',
       },
     },
     {

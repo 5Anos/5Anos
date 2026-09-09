@@ -6,6 +6,7 @@ import { ThemeIllustration } from './illustrations/ThemeIllustrations';
 import { getThemeImage, getThemeStepImage, getChallengeImage } from '../data/themeImages';
 import { SitPostureInfographicPT } from './SitPostureInfographicPT';
 import { DosDontsPostureInfographicPT } from './DosDontsPostureInfographicPT';
+import { PostureCorrectionSimulator } from './PostureCorrectionSimulator';
 import { PhishingMessageSimulator } from './PhishingMessageSimulator';
 import { PasswordStrengthTester } from './PasswordStrengthTester';
 import { InteractiveEmailExplorer } from './InteractiveEmailExplorer';
@@ -292,8 +293,13 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                       dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
                     />
 
-                    {/* Infographic placed below text */}
-                    <div className="w-full max-w-3xl mx-auto">
+                    {/* Interactive Posture Correction Simulator */}
+                    <div className="w-full">
+                      <PostureCorrectionSimulator language={language} />
+                    </div>
+
+                    {/* Infographic placed below */}
+                    <div className="w-full max-w-3xl mx-auto pt-2">
                       <SitPostureInfographicPT />
                     </div>
                   </div>

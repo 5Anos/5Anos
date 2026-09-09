@@ -281,33 +281,33 @@ export const themeSegurancaData: ThemeDefinition = {
           questions: [
             {
               q: 'Recebes uma mensagem a dizer que ganhaste um prémio e pedem a tua palavra-passe. O que fazes?',
-              opts: ['Não respondo e aviso um adulto', 'Envio a palavra-passe imediatamente', 'Reencaminho a mensagem a todos os amigos', 'Clico no link para confirmar'],
+              opts: ['Não respondo e aviso logo um adulto de confiança', 'Envio a palavra-passe imediatamente', 'Reencaminho a mensagem a todos os amigos', 'Clico no link para confirmar'],
               c: 0,
-              e: 'Pedidos de palavras-passe são um forte sinal de fraude.'
+              e: 'Nunca partilhes palavras-passe! Pedidos de palavras-passe são sempre uma tentativa de burla.'
             },
             {
-              q: 'Um link parece estranho e vem de um remetente desconhecido. Deves:',
-              opts: ['Evitar clicar no link', 'Clicar para ver o que é', 'Partilhar com colegas', 'Guardar o link para depois'],
+              q: 'Porque é importante manter o antivírus e as atualizações do computador em dia?',
+              opts: ['Para proteger o computador contra novos vírus e falhas de segurança', 'Para o computador gastar a bateria mais depressa', 'Apenas para mudar a imagem de fundo do ecrã', 'Não tem qualquer utilidade prática'],
               c: 0,
-              e: 'Links suspeitos nunca devem ser abertos.'
+              e: 'As atualizações corrigem falhas de segurança e garantem que o antivírus reconhece novas ameaças.'
             },
             {
-              q: 'Qual destes é um sinal de possível fraude?',
-              opts: ['Pedido urgente de dados pessoais', 'Uma mensagem de um professor conhecido sobre trabalhos de casa', 'Um convite de um familiar para o jantar', 'Uma notificação normal da escola'],
+              q: 'Qual destes é um sinal típico de uma tentativa de burla ou fraude digital?',
+              opts: ['Mensagens com pedidos urgentes de dados pessoais ou dinheiro sob ameaça', 'Um aviso do professor no Teams ou Classroom sobre um trabalho', 'Um email da biblioteca a avisar do prazo de devolução de um livro', 'Uma mensagem da família a combinar a hora de jantar'],
               c: 0,
-              e: 'Urgência e pedidos de dados são sinais típicos de phishing.'
+              e: 'O sentido de urgência e o pedido de dados confidenciais são os sinais mais comuns de fraude digital.'
             },
             {
-              q: 'Uma mensagem promete um prémio incrível se clicares num link. O mais provável é:',
-              opts: ['Ser uma tentativa de fraude', 'Ser sempre verdade', 'Ser um prémio da escola', 'Ser enviada por um amigo'],
+              q: 'Se uma pessoa desconhecida na Internet te pedir para ligares a câmara ou enviares fotos tuas, como deves reagir?',
+              opts: ['Recusar de imediato, fechar a conversa e avisar logo os pais ou um professor', 'Ligar a câmara para mostrar o teu quarto e ser simpático', 'Enviar uma fotografia com a camisola da tua escola', 'Pedir à pessoa que envie primeiro uma fotografia dela'],
               c: 0,
-              e: 'Promessas exageradas são um sinal clássico de fraude online.'
+              e: 'Nunca partilhes imagens nem ligues a câmara a desconhecidos! Avisa logo um adulto de confiança.'
             },
             {
-              q: 'O que deves fazer se não tens a certeza se uma mensagem é segura?',
-              opts: ['Pedir ajuda a um adulto de confiança', 'Responder com os teus dados', 'Reencaminhar para todos os contactos', 'Ignorar e continuar a usar o mesmo site'],
+              q: 'O que deves fazer se não tens a certeza se uma mensagem ou ficheiro recebido é seguro?',
+              opts: ['Pedir ajuda a um adulto de confiança antes de abrir', 'Abrir imediatamente para ver se acontece alguma coisa', 'Reencaminhar para todos os contactos da turma', 'Ignorar e continuar a navegar sem verificar'],
               c: 0,
-              e: 'Pedir ajuda é sempre a atitude mais segura.'
+              e: 'Pedir ajuda a um adulto de confiança é sempre a atitude mais segura!'
             }
           ]
         }
@@ -457,13 +457,13 @@ export const themeSegurancaData: ThemeDefinition = {
     },
     {
       id: 'seg-q6',
-      question: { pt: 'Se receberes uma mensagem suspeita, deves:', en: 'If you receive a suspicious message, you should:' },
+      question: { pt: 'Quais destas informações NUNCA deves partilhar com desconhecidos na Internet ou em jogos online?', en: 'Which of these information should you NEVER share with strangers on the Internet or in online games?' },
       options: {
-        pt: ['Falar com um adulto de confiança', 'Ignorar sempre sem dizer a ninguém', 'Responder com dados pessoais', 'Reencaminhar para toda a turma'],
-        en: ['Talk to a trusted adult', 'Always ignore without telling anyone', 'Reply with personal data', 'Forward to the whole class']
+        pt: ['A tua morada de casa, número de telemóvel e o nome da tua escola', 'A tua cor favorita e o teu desporto preferido', 'O nome do teu herói ou personagem de banda desenhada', 'O título de um livro que estás a ler na escola'],
+        en: ['Your home address, phone number, and school name', 'Your favorite color and preferred sport', 'The name of your comic book hero', 'The title of a book you are reading in school']
       },
       correctIndex: 0,
-      explanation: { pt: 'Pedir ajuda a um adulto é a atitude mais segura.', en: 'Asking an adult for help is the safest attitude.' }
+      explanation: { pt: 'A morada, os contactos e a escola são dados pessoais privados que te identificam e nunca devem ser partilhados.', en: 'Address, contacts, and school are private identifiers that must never be revealed to strangers.' }
     },
     {
       id: 'seg-q7',
@@ -547,13 +547,13 @@ export const themeSegurancaData: ThemeDefinition = {
     },
     {
       id: 'seg-q15',
-      question: { pt: 'Qual é a atitude mais correta perante um link suspeito?', en: 'What is the most correct attitude towards a suspicious link?' },
+      question: { pt: 'Se alguém que conheceste online te pedir para manter a conversa em segredo dos teus pais, o que deves fazer?', en: 'If someone you met online asks you to keep the conversation secret from your parents, what should you do?' },
       options: {
-        pt: ['Não clicar e verificar com um adulto', 'Clicar para satisfazer a curiosidade', 'Enviar a um amigo para ele testar', 'Guardar para abrir mais tarde'],
-        en: ['Do not click and verify with an adult', 'Click to satisfy curiosity', 'Send to a friend to test', 'Save to open later']
+        pt: ['Desconfiar de imediato e contar logo aos teus pais ou a um professor', 'Guardar o segredo para não estragar a amizade no jogo', 'Pedir à pessoa que envie primeiro a morada dela', 'Desligar o ecrã mas continuar a falar às escondidas'],
+        en: ['Be suspicious immediately and tell your parents or a teacher right away', 'Keep the secret so you do not harm the gaming friendship', 'Ask the person to send their address first', 'Turn off the screen but keep talking in secret']
       },
       correctIndex: 0,
-      explanation: { pt: 'A prudência é sempre a melhor opção perante links suspeitos.', en: 'Caution is always the best option for suspicious links.' }
+      explanation: { pt: 'Ninguém com boas intenções pede a uma criança para guardar segredos dos pais. Se isso acontecer, avisa sempre um adulto!', en: 'Nobody with good intentions asks a child to keep secrets from their parents. Always notify a trusted adult!' }
     }
   ]
 };

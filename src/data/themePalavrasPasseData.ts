@@ -33,8 +33,8 @@ export const themePalavrasPasseData: ThemeDefinition = {
       eyebrow: { pt: 'Regras', en: 'Rules' },
       h: { pt: 'Características de uma palavra-passe segura', en: 'Traits of a strong password' },
       body: {
-        pt: 'Uma boa palavra-passe deve ser longa e difícil de adivinhar:<ul><li>Quanto mais longa e difícil de adivinhar for uma palavra-passe, melhor.</li><li>Não existe uma combinação obrigatória de letras, números e símbolos. O mais importante é que a palavra-passe seja longa e difícil de adivinhar.</li><li>Evita palavras-passe curtas, previsíveis ou baseadas em informações pessoais (como o teu nome ou data de nascimento).</li><li>Não ser uma sequência simples, como "123456" ou "abcdef".</li><li>Ser diferente para cada conta que uses.</li></ul>',
-        en: 'A robust password should be long and hard to guess:<ul><li>The longer and harder to guess a password is, the better.</li><li>There is no mandatory combination of letters, numbers, and symbols. The most important thing is that the password is long and hard to guess.</li><li>Avoid short, predictable passwords or passwords based on personal information (such as your name or birthdate).</li><li>Never use predictable patterns like "123456" or "abcdef".</li><li>Be unique across different online accounts.</li></ul>',
+        pt: 'Uma boa palavra-passe deve ser longa e difícil de adivinhar:<ul><li>Ter um bom comprimento.</li><li>Pode misturar letras maiúsculas, minúsculas, números e símbolos, ou formar uma frase difícil de adivinhar.</li><li>Não conter o teu nome, data de nascimento ou dados pessoais óbvios.</li><li>Não ser uma sequência simples, como "123456" ou "abcdef".</li><li>Ser diferente para cada conta que uses.</li></ul>',
+        en: 'A strong password should be long and hard to guess:<ul><li>Have good length.</li><li>Can mix uppercase, lowercase letters, numbers, and symbols, or form a phrase that is hard to guess.</li><li>Not contain your name, birthdate, or obvious personal information.</li><li>Not be a simple sequence, like "123456" or "abcdef".</li><li>Be different for each account you use.</li></ul>',
       },
       icon: '🛡️',
     },
@@ -745,27 +745,27 @@ export const themePalavrasPasseData: ThemeDefinition = {
     {
       id: 'pass-q14',
       question: {
-        pt: 'Porque é que nunca deves partilhar a tua palavra-passe num chat de grupo com colegas da turma?',
-        en: 'Why should you never share your password in a class group chat?',
+        pt: 'Se te esqueceres da palavra-passe da tua conta escolar, o que deves fazer?',
+        en: 'If you forget the password for your school account, what should you do?',
       },
       options: {
         pt: [
-          'Porque fica gravada no histórico da conversa e qualquer membro do grupo ou intruso pode usá-la',
-          'Porque a aplicação bloqueia mensagens que contenham algarismos',
-          'Porque converte a palavra-passe num ficheiro multimédia público',
-          'Não tem qualquer perigo se o grupo tiver apenas colegas da turma',
+          'Pedir ajuda ao teu professor de TIC ou ao responsável pelo sistema da escola para a redefinir',
+          'Tentar adivinhar 500 vezes seguidas até bloquear o computador',
+          'Criar uma conta nova com um nome falso para não teres de admitir que te esqueceste',
+          'Pedir a palavra-passe emprestada a um colega e usar a conta dele durante as aulas',
         ],
         en: [
-          'Because it remains in the chat log accessible to every group member or phone snooper',
-          'Because the application blocks messages containing numbers',
-          'Because it converts the password into a public multimedia file',
-          'It poses zero risk as long as the group only contains classmates',
+          'Ask your ICT teacher or the school IT administrator to reset it safely',
+          'Try guessing 500 times in a row until the machine locks up',
+          'Create a fake-named new account to avoid admitting you forgot it',
+          'Borrow a classmate’s password and use their account during class',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'As mensagens em grupo podem ser lidas por muitas pessoas e ficam gravadas nos telemóveis de todos.',
-        en: 'Chat messages are stored permanently on every participant’s device and can easily leak.',
+        pt: 'Quando te esqueces da palavra-passe da escola, o procedimento seguro e correto é falar com o professor para pedir a sua recuperação.',
+        en: 'When you forget your school password, the safe procedure is contacting your teacher to request a secure reset.',
       },
     },
     {

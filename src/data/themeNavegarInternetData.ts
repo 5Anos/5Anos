@@ -356,15 +356,15 @@ export const themeNavegarInternetData: ThemeDefinition = {
               e: 'Usar palavras-chave diretas e específicas ajuda o motor de busca a encontrar exatamente o que precisas.'
             },
             {
-              q: 'O que indica a presença de HTTPS num endereço web?',
+              q: 'Se precisares de pesquisar a expressão exata "D. Afonso Henriques" sem que as palavras surjam separadas, como deves escrever no motor de busca?',
               opts: [
-                'Que a ligação entre o teu computador e o site é cifrada e protegida em trânsito',
-                'Que o site tem jogos grátis garantidos',
-                'Que ganhaste um prémio por visitar a página',
-                'Que o computador está bloqueado'
+                '"D. Afonso Henriques" (entre aspas)',
+                'D. Afonso Henriques!!! (com três pontos de exclamação)',
+                '[D. Afonso Henriques] (entre parênteses retos)',
+                'Escrever as palavras todas em maiúsculas'
               ],
               c: 0,
-              e: 'O protocolo HTTPS cifra os dados transmitidos. Não garante, no entanto, que todas as informações do site sejam verdadeiras.'
+              e: 'Ao colocares uma expressão entre aspas ("exemplo"), o motor de busca procura apenas as páginas onde essas palavras surgem exatamente juntas e por essa ordem!'
             }
           ]
         }
@@ -567,27 +567,27 @@ export const themeNavegarInternetData: ThemeDefinition = {
     {
       id: 'net-q5',
       question: {
-        pt: 'O que é o Phishing na Internet?',
-        en: 'What is Phishing on the Internet?',
+        pt: 'Ao fazer uma pesquisa para um trabalho escolar, como podes avaliar se a informação de uma página web é de confiança?',
+        en: 'When researching for a school project, how can you evaluate if web page information is reliable?',
       },
       options: {
         pt: [
-          'Uma fraude em que criminosos criam páginas ou mensagens falsas para roubar dados e palavras-passe',
-          'Um programa para comprimir ficheiros pesados e poupar espaço',
-          'Uma atualização do sistema operativo para melhorar o desempenho',
-          'Uma ferramenta do navegador para guardar marcadores e histórico',
+          'Verificar quem é o autor, a data do artigo e comparar a informação com outras fontes fidedignas',
+          'Acreditar de imediato no primeiro resultado que surgir no topo do motor de busca',
+          'Confirmar apenas se a página tem muitas imagens coloridas e vídeos engraçados',
+          'Copiar todo o texto sem ler, porque tudo na Internet é sempre 100% verdadeiro',
         ],
         en: [
-          'A cyber scam where fake pages or messages attempt to steal passwords and personal info',
-          'A program used to compress heavy files to save disk space',
-          'An operating system update designed to enhance performance',
-          'A browser tool used to store bookmarks and browsing history',
+          'Check who the author is, the article date, and compare data across trusted sources',
+          'Immediately trust the very first search result at the top of the search engine',
+          'Only check whether the web page features colorful graphics and funny videos',
+          'Copy the entire text without reading, since everything on the web is 100% true',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Phishing é a tentativa enganosa de obter informações confidenciais fingindo ser uma entidade de confiança.',
-        en: 'Phishing is social engineering where scammers impersonate trusted entities to capture credentials.',
+        pt: 'Pensamento crítico é essencial: devemos sempre verificar a autoria, a data e comparar dados com enciclopédias ou páginas institucionais.',
+        en: 'Critical thinking is vital: always verify authorship, publishing date, and cross-reference with trustworthy references.',
       },
     },
     {
