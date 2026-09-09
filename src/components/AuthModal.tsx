@@ -84,6 +84,28 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
     }
   };
 
+  const getFriendlyErrorMessage = (err: unknown, defaultMsg: string): string => {
+    if (err instanceof Error) {
+      if (err.message.startsWith('{') && err.message.includes('"error"')) {
+        try {
+          const parsed = JSON.parse(err.message);
+          if (parsed.error && typeof parsed.error === 'string') {
+            if (parsed.error.includes('permission') || parsed.error.includes('insufficient permissions')) {
+              return language === 'pt'
+                ? 'Erro de acesso à base de dados. Por favor, recarrega a página e tenta novamente.'
+                : 'Database access notice. Please refresh and try again.';
+            }
+            return parsed.error;
+          }
+        } catch {
+          // fallback
+        }
+      }
+      return err.message;
+    }
+    return defaultMsg;
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
@@ -98,7 +120,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         onClose();
       }, 500);
     } catch (err: unknown) {
-      setErrorMsg(err instanceof Error ? err.message : 'Erro ao iniciar sessão.');
+      setErrorMsg(getFriendlyErrorMessage(err, language === 'pt' ? 'Erro ao iniciar sessão.' : 'Sign in error.'));
     } finally {
       setLoading(false);
     }
@@ -147,7 +169,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         onClose();
       }, 600);
     } catch (err: unknown) {
-      setErrorMsg(err instanceof Error ? err.message : 'Erro ao criar conta.');
+      setErrorMsg(getFriendlyErrorMessage(err, language === 'pt' ? 'Erro ao criar conta.' : 'Registration error.'));
     } finally {
       setLoading(false);
     }
