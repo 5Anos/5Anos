@@ -451,8 +451,8 @@ export const themeNavegarInternetData: ThemeDefinition = {
       id: 'quiz-final-tema5',
       themeId: 'navegar-internet',
       number: 5,
-      title: { pt: '🏆 Quiz de Aprendizagem: Navegar na Internet', en: '🏆 Learning Quiz: Internet Browsing' },
-      shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 5.', en: 'Comprehensive final assessment on Topic 5.' },
+      title: { pt: '🏆 Quiz de Aprendizagem: Navegar na Internet (10 Questões)', en: '🏆 Learning Quiz: Internet Browsing (10 Questions)' },
+      shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas sobre o Tema 5.', en: 'Comprehensive final assessment with 10 questions on Topic 5.' },
       icon: '🏆',
       durationMinutes: 10,
       points: 100,
@@ -770,110 +770,6 @@ export const themeNavegarInternetData: ThemeDefinition = {
       explanation: {
         pt: 'Avisar imediatamente um adulto de confiança garante apoio e permite reportar a situação com segurança.',
         en: 'Informing a trusted adult ensures protection and allows proper reporting of harmful content.',
-      },
-    },
-    {
-      id: 'net-q13',
-      question: {
-        pt: 'O que é o modo de navegação anónima ou privada?',
-        en: 'What is private / incognito browsing mode?',
-      },
-      options: {
-        pt: [
-          'Um modo que limita o armazenamento local do histórico e de cookies da sessão naquele dispositivo',
-          'Um modo que impede totalmente que os sites identifiquem a tua ligação à rede',
-          'Uma funcionalidade que elimina automaticamente vírus do computador',
-          'Uma opção que desativa permanentemente as ligações de rede do dispositivo',
-        ],
-        en: [
-          'A mode that restricts local saving of browsing history and session cookies on that device',
-          'A mode that prevents websites entirely from recognizing your network connection',
-          'A feature that automatically removes viruses from the computer',
-          'An option that permanently disables the device network connections',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'A navegação privada limita o armazenamento local do histórico e de dados da sessão no dispositivo, embora os sites visitados continuem a identificar a ligação e não proporcione anonimato total.',
-        en: 'Incognito mode restricts local storage of history and session data on the device, but does not provide complete anonymity on the Internet.',
-      },
-    },
-    {
-      id: 'net-q14',
-      question: {
-        pt: 'Qual é a melhor atitude ao usar uma rede Wi-Fi pública e aberta (num café ou praça)?',
-        en: 'What is the safest behavior on a public, open Wi-Fi network (at a café or square)?',
-      },
-      options: {
-        pt: [
-          'Não aceder a contas bancárias nem inserir dados pessoais sensíveis',
-          'Fazer pagamentos bancários e partilhar códigos ou palavras-passe confidenciais',
-          'Desativar as definições de segurança do navegador para a página abrir mais depressa',
-          'Partilhar a palavra-passe do teu correio com utilizadores da mesma rede',
-        ],
-        en: [
-          'Avoid accessing bank accounts or typing sensitive credentials',
-          'Execute bank transfers and share payment PINs',
-          'Disable browser security warnings so web pages load faster',
-          'Share your email password with other users on the network',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'Redes abertas podem ser intercetadas por terceiros, pelo que não deves realizar operações confidenciais nelas.',
-        en: 'Unsecured public Wi-Fi traffic can be intercepted, so avoid sensitive transactions.',
-      },
-    },
-    {
-      id: 'net-q15',
-      question: {
-        pt: 'O que é um operador de pesquisa como "site:.pt" no Google?',
-        en: 'What is a search operator like "site:.pt" in Google?',
-      },
-      options: {
-        pt: [
-          'Um filtro que limita os resultados de pesquisa apenas a sites com domínio de Portugal',
-          'Um operador que exclui todos os resultados com domínios portugueses',
-          'Um comando para medir a velocidade de descarregamento da ligação',
-          'Uma instrução para guardar uma cópia do site no disco do computador',
-        ],
-        en: [
-          'A filter that limits results strictly to websites from Portugal',
-          'An operator excluding all Portuguese domain results',
-          'A command to test network download speeds',
-          'An instruction to save a local mirror of the website on disk',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'O operador site: pode ser utilizado para limitar os resultados a um determinado site ou domínio. Lembra-te: .pt identifica o domínio de topo de Portugal, mas não garante por si só que a informação seja verdadeira. Deves avaliar sempre a instituição, o autor, a data e o conteúdo.',
-        en: 'The site: operator can be used to limit results to a specific website or domain. Remember: .pt identifies Portugal’s country code domain, but does not guarantee on its own that the content is accurate. Always verify author, date, and institution.',
-      },
-    },
-    {
-      id: 'net-q16',
-      question: {
-        pt: 'O que é a linha SeguraNet em Portugal?',
-        en: 'What is the SeguraNet initiative in Portugal?',
-      },
-      options: {
-        pt: [
-          'Um projeto oficial do Ministério da Educação que promove a utilização segura e informada da Internet nas escolas',
-          'Um fornecedor comercial de serviços de acesso à Internet por cabo e fibra',
-          'Uma aplicação de mensagens instantâneas para redes sociais',
-          'Uma marca de computadores portáteis distribuídos pelas escolas',
-        ],
-        en: [
-          'An official Ministry of Education project promoting safe and aware Internet use in schools',
-          'A commercial Internet service provider for fiber and cable',
-          'An instant messaging mobile application for social networks',
-          'A commercial laptop brand distributed to schools',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'O SeguraNet apoia alunos, professores e famílias na utilização esclarecida e protegida do mundo digital.',
-        en: 'SeguraNet supports students, educators, and families in navigating online spaces securely.',
       },
     },
   ],

@@ -447,8 +447,8 @@ export const themePalavrasPasseData: ThemeDefinition = {
       id: 'quiz-final-tema3',
       themeId: 'palavras-passe',
       number: 5,
-      title: { pt: '🏆 Quiz de Aprendizagem: Palavras-passe', en: '🏆 Learning Quiz: Passwords' },
-      shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 3.', en: 'Comprehensive final assessment on Topic 3.' },
+      title: { pt: '🏆 Quiz de Aprendizagem: Palavras-passe (10 Questões)', en: '🏆 Learning Quiz: Passwords (10 Questions)' },
+      shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas sobre o Tema 3.', en: 'Comprehensive final assessment with 10 questions on Topic 3.' },
       icon: '🏆',
       durationMinutes: 10,
       points: 100,
@@ -714,110 +714,6 @@ export const themePalavrasPasseData: ThemeDefinition = {
       explanation: {
         pt: 'Uma frase como "O_meu_gato_tem_99_vidas!" é simples de lembrar e tem altíssima segurança.',
         en: 'Passphrases provide high entropy with superior human memorability.',
-      },
-    },
-    {
-      id: 'pass-q13',
-      question: {
-        pt: 'O que deves fazer se usares o computador de um colega ou da biblioteca escolar?',
-        en: 'What should you do when using a classmate’s PC or school library computer?',
-      },
-      options: {
-        pt: [
-          'Não selecionar a opção "Lembrar palavra-passe" e terminar a sessão (Logout) ao terminar',
-          'Guardar a palavra-passe no navegador para facilitar o próximo utilizador',
-          'Deixar a janela aberta e ir embora a correr',
-          'Mudar o fundo do ambiente de trabalho para uma fotografia tua',
-        ],
-        en: [
-          'Uncheck "Remember password" and always log out when done',
-          'Save the password in the public browser for the next person',
-          'Leave tabs wide open and walk away',
-          'Change the desktop wallpaper to your selfie',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'Terminar sessão impede que quem use o computador a seguir tenha acesso aos teus dados.',
-        en: 'Logging out and declining browser credential storage prevents unauthorized session hijacking.',
-      },
-    },
-    {
-      id: 'pass-q14',
-      question: {
-        pt: 'Se te esqueceres da palavra-passe da tua conta escolar, o que deves fazer?',
-        en: 'If you forget the password for your school account, what should you do?',
-      },
-      options: {
-        pt: [
-          'Pedir ajuda ao teu professor de TIC ou ao responsável pelo sistema da escola para a redefinir',
-          'Tentar adivinhar 500 vezes seguidas até bloquear o computador',
-          'Criar uma conta nova com um nome falso para não teres de admitir que te esqueceste',
-          'Pedir a palavra-passe emprestada a um colega e usar a conta dele durante as aulas',
-        ],
-        en: [
-          'Ask your ICT teacher or the school IT administrator to reset it safely',
-          'Try guessing 500 times in a row until the machine locks up',
-          'Create a fake-named new account to avoid admitting you forgot it',
-          'Borrow a classmate’s password and use their account during class',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'Quando te esqueces da palavra-passe da escola, o procedimento seguro e correto é falar com o professor para pedir a sua recuperação.',
-        en: 'When you forget your school password, the safe procedure is contacting your teacher to request a secure reset.',
-      },
-    },
-    {
-      id: 'pass-q15',
-      question: {
-        pt: 'Se o teu professor de TIC te pedir para demonstrares um trabalho no computador da sala, o que deves fazer com a tua palavra-passe?',
-        en: 'If your ICT teacher asks you to present work on the classroom projector, what should you do with your password?',
-      },
-      options: {
-        pt: [
-          'Escrevê-la com cuidado sem a dizer em voz alta, verificando que o ecrã não a revela em texto legível',
-          'Ditar a palavra-passe em voz alta para o colega ao lado a escrever',
-          'Partilhar temporariamente a palavra-passe no chat da turma',
-          'Desativar a proteção por palavra-passe da tua conta escolar',
-        ],
-        en: [
-          'Type it quietly without reciting aloud, ensuring the screen does not display plain text',
-          'Dictate the password aloud for a peer to type it in',
-          'Share the password temporarily in the class chat',
-          'Disable password protection on your school account',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'Nunca deves verbalizar nem projetar palavras-passe para a sala de aula.',
-        en: 'Never verbalize or project private credentials in public spaces.',
-      },
-    },
-    {
-      id: 'pass-q16',
-      question: {
-        pt: 'Qual é o resumo fundamental da segurança de palavras-passe?',
-        en: 'What is the ideal summary of password safety?',
-      },
-      options: {
-        pt: [
-          'Comprida, difícil de adivinhar, diferente para cada conta e não partilhada com colegas!',
-          'Curta, fácil, igual em tudo e partilhada com todos os amigos',
-          '1234 em todas as contas da escola',
-          'Não ter palavras-passe nenhumas',
-        ],
-        en: [
-          'Long, hard to guess, unique for every service, and not shared with peers!',
-          'Short, simple, reused everywhere, and shared with friends',
-          '1234 across every school account',
-          'Using zero passwords anywhere',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'Uma palavra-passe longa e difícil de adivinhar, diferente das utilizadas noutras contas, ajuda a proteger melhor as tuas contas.',
-        en: 'A long and hard-to-guess password, different from those used in other accounts, helps better protect your accounts.',
       },
     },
   ],

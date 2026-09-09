@@ -455,20 +455,20 @@ export const themeTicSociedadeData: ThemeDefinition = {
       themeId: 'tic-sociedade',
       number: 4,
       title: {
-        pt: '🏆 Avaliação Final: TIC na Sociedade (15 Questões)',
-        en: '🏆 Final Quiz: ICT in Society (15 Questions)',
+        pt: '🏆 Avaliação Final: TIC na Sociedade (10 Questões)',
+        en: '🏆 Final Quiz: ICT in Society (10 Questions)',
       },
       shortDesc: {
-        pt: 'Testa todos os teus conhecimentos com 15 perguntas rigorosas e educativas sobre as TIC na Sociedade. Vale 100 XP!',
-        en: 'Test your mastery with 15 pedagogical questions covering all Theme 1 concepts. Worth 100 XP!',
+        pt: 'Testa todos os teus conhecimentos com 10 perguntas rigorosas e educativas sobre as TIC na Sociedade. Vale 100 XP!',
+        en: 'Test your mastery with 10 pedagogical questions covering all Theme 1 concepts. Worth 100 XP!',
       },
-      durationMinutes: 12,
+      durationMinutes: 10,
       type: 'final_quiz',
       icon: '🏆',
     },
   ],
   finalQuiz: [
-    // EXACTLY 15 COMPREHENSIVE PEDAGOGICAL QUESTIONS (PT & EN)
+    // EXACTLY 10 TOP PEDAGOGICAL QUESTIONS (PT & EN)
     {
       id: 'fq-tic-1',
       question: {
@@ -654,58 +654,6 @@ export const themeTicSociedadeData: ThemeDefinition = {
     {
       id: 'fq-tic-8',
       question: {
-        pt: 'Qual é a sequência correta das etapas de uma compra no comércio eletrónico?',
-        en: 'What is the correct sequence of stages in an e-commerce online purchase?',
-      },
-      options: {
-        pt: [
-          'Escolher o produto ➔ Fazer encomenda ➔ Efetuar pagamento ➔ Preparação no armazém ➔ Transporte por GPS ➔ Entrega ao cliente.',
-          'Entrega em casa ➔ Escolher produto na loja física ➔ Devolver embalagem ➔ Pagar em dinheiro.',
-          'Transporte de carrinha ➔ Pagar na fábrica ➔ Escolher o produto depois de receber ➔ Criar o site.',
-          'Embalar em casa ➔ Enviar para a loja online ➔ Escolher produto num catálogo de papel.',
-        ],
-        en: [
-          'Choose product ➔ Place order ➔ Complete payment ➔ Warehouse packing ➔ GPS transport ➔ Customer delivery.',
-          'Home delivery ➔ Choose item in physical store ➔ Return box ➔ Pay with coins.',
-          'Courier transport ➔ Factory payment ➔ Choose item after delivery ➔ Build website.',
-          'Pack at home ➔ Send to online shop ➔ Pick item from paper catalog.',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'O comércio eletrónico segue um circuito organizado onde as TIC apoiam a pesquisa, o pagamento seguro, a gestão de stock e o rastreio por GPS.',
-        en: 'E-commerce follows a structured pipeline where ICT supports searching, encrypted checkout, warehouse management, and GPS parcel tracking.',
-      },
-    },
-    {
-      id: 'fq-tic-9',
-      question: {
-        pt: 'O computador ENIAC (em 1946) ocupava uma sala inteira. Hoje existem supercomputadores na ciência. O que é um supercomputador?',
-        en: 'The ENIAC computer (1946) occupied an entire hall. Today supercomputers exist in science. What is a supercomputer?',
-      },
-      options: {
-        pt: [
-          'É um computador ultra-poderoso capaz de realizar biliões de cálculos por segundo para previsões meteorológicas e investigação científica.',
-          'É um telemóvel comum com uma capa protetora de plástico muito resistente.',
-          'É um computador portátil antigo que apenas tem jogos de cartas instalados.',
-          'É uma impressora gigante capaz de imprimir jornais em poucos segundos.',
-        ],
-        en: [
-          'An ultra-powerful machine capable of trillions of calculations per second for climate and scientific research.',
-          'A standard mobile phone inside a heavy-duty protective plastic case.',
-          'An obsolete laptop used solely for card games.',
-          'A giant industrial printer printing newspapers in seconds.',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'Supercomputadores processam quantidades gigantescas de dados climáticos e científicos que computadores comuns levariam anos a calcular.',
-        en: 'Supercomputers process massive computational models for climate forecasting and scientific discovery.',
-      },
-    },
-    {
-      id: 'fq-tic-10',
-      question: {
         pt: 'A Ana recebe mensagens repetidas e desagradáveis num grupo de conversação. O que deve fazer perante esta situação de cyberbullying?',
         en: 'Ana receives repeated hurtful messages in a group chat. What should she do regarding this cyberbullying situation?',
       },
@@ -730,59 +678,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
       },
     },
     {
-      id: 'fq-tic-11',
-      question: {
-        pt: 'Como pode a Linha Internet Segura (800 21 90 90) ajudar uma criança ou jovem em Portugal?',
-        en: 'How can the Safe Internet Helpline (800 21 90 90) help a child or youth in Portugal?',
-      },
-      options: {
-        pt: [
-          'É um serviço telefónico gratuito e confidencial que aconselha e apoia em dúvidas, problemas ou ofensas online.',
-          'É uma loja que vende peças de computador e repara telemóveis avariados.',
-          'É uma linha telefónica exclusiva para marcar faltas às aulas de TIC na escola.',
-          'É um programa de rádio sobre videojogos infantis e desenhos animados.',
-        ],
-        en: [
-          'It is a free and confidential helpline providing guidance and support for online safety issues, doubts, and cyberbullying.',
-          'It is a commercial store that sells computer parts and repairs broken phones.',
-          'It is a hotline for registering student school absences.',
-          'It is a radio show broadcasting cartoons and video game reviews.',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'A Linha Internet Segura (800 21 90 90) oferece atendimento confidencial e gratuito para esclarecer dúvidas e apoiar em situações de risco na Internet.',
-        en: 'The Safe Internet Helpline (800 21 90 90) offers free, anonymous counseling for digital safety concerns.',
-      },
-    },
-    {
-      id: 'fq-tic-12',
-      question: {
-        pt: 'O que é a "pegada digital" de uma pessoa na Internet?',
-        en: 'What is a person’s "digital footprint" on the Internet?',
-      },
-      options: {
-        pt: [
-          'O conjunto de informações, publicações, registos e pesquisas que ficam associados à nossa atividade online.',
-          'A marca deixada pelo dedo no ecrã tátil do telemóvel quando este está sujo.',
-          'O número de passos que damos enquanto caminhamos a olhar para o telemóvel.',
-          'A marca do sapato que deixamos no chão da sala de aula de TIC.',
-        ],
-        en: [
-          'The trail of data, posts, searches, and activity records linked to our digital identity online.',
-          'The fingerprint mark left on a dirty smartphone touchscreen.',
-          'The number of physical steps taken while looking at a phone.',
-          'The shoeprint left on the floor of the computer lab.',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'A pegada digital é o rasto permanente que deixamos com as nossas ações online, pelo que devemos ser responsáveis com a nossa privacidade.',
-        en: 'Your digital footprint is the lasting trail created by online activity, making privacy protection crucial.',
-      },
-    },
-    {
-      id: 'fq-tic-13',
+      id: 'fq-tic-9',
       question: {
         pt: 'O Pedro jogou no telemóvel até às 2h da manhã e acordou cansado. Qual é a melhor recomendação para um uso saudável das TIC?',
         en: 'Pedro played mobile games until 2 AM and woke up exhausted. What is the healthiest recommendation for ICT usage?',
@@ -808,33 +704,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
       },
     },
     {
-      id: 'fq-tic-14',
-      question: {
-        pt: 'O Guilherme está na sala de aula ao lado do seu colega de mesa e quer pedir-lhe uma borracha. O que deve fazer?',
-        en: 'Guilherme is seated beside his desk classmate and needs an eraser. What should he do?',
-      },
-      options: {
-        pt: [
-          'Falar diretamente com o colega cara a cara, porque a tecnologia só deve ser usada quando é realmente necessária.',
-          'Enviar uma mensagem por chat com um vídeo explicativo sobre o formato da borracha.',
-          'Criar uma página Web com um formulário de requisição de materiais.',
-          'Enviar um email formal com aviso de receção para o colega que está ao seu lado.',
-        ],
-        en: [
-          'Talk directly to the classmate face-to-face, because technology should be used when genuinely needed.',
-          'Send a chat message with an explanatory video about the eraser.',
-          'Build a website with an online supply requisition form.',
-          'Send a formal certified email to the peer seated right next to him.',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'A conversa presencial direta é a melhor escolha quando estamos juntos. A tecnologia deve ser usada com critério e inteligência.',
-        en: 'Direct face-to-face communication is best when seated together. Tech should be used thoughtfully.',
-      },
-    },
-    {
-      id: 'fq-tic-15',
+      id: 'fq-tic-10',
       question: {
         pt: 'Em casa da Sofia há um telemóvel antigo e cabos avariados que já ninguém usa. O que se deve fazer a este lixo eletrónico?',
         en: 'Sofia has an old broken phone and cables in a drawer. What should be done with this electronic waste (e-waste)?',

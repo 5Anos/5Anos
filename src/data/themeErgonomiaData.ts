@@ -501,8 +501,8 @@ export const themeErgonomiaData: ThemeDefinition = {
       id: 'quiz-final-tema2',
       themeId: 'ergonomia',
       number: 4,
-      title: { pt: '🏆 Quiz de Aprendizagem: Ergonomia', en: '🏆 Learning Quiz: Ergonomics' },
-      shortDesc: { pt: 'Avaliação final abrangente com 15 perguntas sobre o Tema 2.', en: 'Comprehensive final assessment with 15 questions on Topic 2.' },
+      title: { pt: '🏆 Quiz de Aprendizagem: Ergonomia (10 Questões)', en: '🏆 Learning Quiz: Ergonomics (10 Questions)' },
+      shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas sobre o Tema 2.', en: 'Comprehensive final assessment with 10 questions on Topic 2.' },
       icon: '🏆',
       durationMinutes: 10,
       points: 100,
@@ -721,32 +721,6 @@ export const themeErgonomiaData: ThemeDefinition = {
     {
       id: 'ergo-q9',
       question: {
-        pt: 'Qual destas afirmações sobre a organização da secretária de estudo é a mais adequada?',
-        en: 'Which statement about study desk organization is the most appropriate?',
-      },
-      options: {
-        pt: [
-          'A secretária deve ter espaço livre para os cadernos e antebraços, e espaço desimpedido por baixo para as pernas',
-          'A secretária deve estar cheia de caixas por baixo para não conseguires esticar as pernas',
-          'O teclado deve ficar encostado à borda sem qualquer espaço de apoio para as mãos',
-          'O monitor deve ficar colocado num canto distante onde seja preciso torcer o pescoço para ver',
-        ],
-        en: [
-          'The desk should have clear space for notebooks and forearms, and open space underneath for legs',
-          'The area under the desk should be packed with boxes so legs cannot move',
-          'The keyboard should sit on the very edge leaving zero hand support space',
-          'The monitor should sit in a far corner forcing the neck to twist sideways',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'Uma secretária organizada e desimpedida permite movimentar os braços e as pernas com liberdade e conforto.',
-        en: 'An organized, clutter-free desk allows arms and legs to move freely and comfortably.',
-      },
-    },
-    {
-      id: 'ergo-q10',
-      question: {
         pt: 'O sol está a provocar um reflexo forte no ecrã do computador do Pedro. Qual é a melhor solução?',
         en: 'Sunlight is causing harsh glare on Pedro’s computer screen. What is the best solution?',
       },
@@ -771,33 +745,7 @@ export const themeErgonomiaData: ThemeDefinition = {
       },
     },
     {
-      id: 'ergo-q11',
-      question: {
-        pt: 'Porque é que não devemos utilizar o computador num quarto totalmente às escuras apenas com o brilho do ecrã?',
-        en: 'Why should we avoid using a computer in total darkness with only the screen light?',
-      },
-      options: {
-        pt: [
-          'Porque a diferença de luminosidade entre o ecrã brilhante e o quarto escuro causa grande cansaço visual',
-          'Porque a bateria do computador descarrega duas vezes mais rápido no escuro',
-          'Porque a câmara do computador desliga-se automaticamente sem luz ambiente',
-          'Porque o teclado perde a cor das letras quando não há iluminação',
-        ],
-        en: [
-          'Because the extreme contrast between the bright screen and the dark room causes intense visual strain',
-          'Because the computer battery drains twice as fast in the dark',
-          'Because the computer webcam automatically shuts off without ambient light',
-          'Because key lettering fades away when there is no lighting',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'O contraste excessivo entre o ecrã e o quarto escuro obriga os olhos a um esforço contínuo, podendo provocar cansaço e dores de cabeça.',
-        en: 'High contrast between screen and dark surroundings strains the eyes continually, often causing fatigue and headaches.',
-      },
-    },
-    {
-      id: 'ergo-q12',
+      id: 'ergo-q10',
       question: {
         pt: 'Durante uma sessão prolongada de estudo ao computador, o que é recomendado fazer a cada 30 a 40 minutos?',
         en: 'During a prolonged study session on the computer, what is recommended every 30 to 40 minutes?',
@@ -820,84 +768,6 @@ export const themeErgonomiaData: ThemeDefinition = {
       explanation: {
         pt: 'Levantar e mexer o corpo estimula a circulação, relaxa os músculos e descansar os olhos olhando para longe previne a fadiga visual.',
         en: 'Standing up stimulates blood flow, relaxes muscles, and looking into the distance prevents ocular fatigue.',
-      },
-    },
-    {
-      id: 'ergo-q13',
-      question: {
-        pt: 'A Leonor precisa de usar o computador portátil durante várias horas para fazer um projeto escolar. O que pode ajudá-la?',
-        en: 'Leonor needs to use her laptop for several hours on a school project. What can help her?',
-      },
-      options: {
-        pt: [
-          'Usar um suporte para elevar o ecrã à altura dos olhos e, se possível, ligar um teclado e rato externos',
-          'Trabalhar deitada na cama de barriga para baixo com o portátil no chão',
-          'Pousar o portátil nas pernas e dobrar a cabeça até encostar ao queixo',
-          'Segurar o portátil no ar com uma só mão enquanto digita com a outra',
-        ],
-        en: [
-          'Use a stand to raise the screen to eye level and, if possible, connect an external keyboard and mouse',
-          'Work lying face down on the bed with the laptop on the floor',
-          'Rest the laptop on her lap and bend her head until her chin touches her chest',
-          'Hold the laptop in the air with one hand while typing with the other',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'Elevar o portátil com um suporte e utilizar teclado e rato externos permite manter uma postura tão confortável como num computador de secretária.',
-        en: 'Raising the laptop with a stand and using external peripherals maintains comfortable desk posture.',
-      },
-    },
-    {
-      id: 'ergo-q14',
-      question: {
-        pt: 'O Diogo passa muito tempo a olhar para o telemóvel com a cabeça inclinada para baixo ("Pescoço de Texto"). O que deve fazer?',
-        en: 'Diogo spends a lot of time looking down at his smartphone ("Text Neck"). What should he do?',
-      },
-      options: {
-        pt: [
-          'Elevar o telemóvel até próximo do nível dos olhos para manter a cabeça e o pescoço direitos',
-          'Inclinar ainda mais o pescoço para a frente para ficar mais perto do ecrã',
-          'Pousar o telemóvel nos joelhos e dobrar as costas completamente',
-          'Apertar o telemóvel entre o ombro e a orelha enquanto envia mensagens',
-        ],
-        en: [
-          'Bring the phone up closer to eye level to keep head and neck straight',
-          'Tilt the neck even further forward to get closer to the display',
-          'Rest the phone on his knees and bend his back completely',
-          'Clamp the phone between shoulder and ear while sending messages',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'Trazer o telemóvel até à altura dos olhos evita que o peso da cabeça sobrecarregue os músculos do pescoço.',
-        en: 'Bringing the phone up to eye level prevents head weight from straining neck muscles.',
-      },
-    },
-    {
-      id: 'ergo-q15',
-      question: {
-        pt: 'O Pedro tem a cadeira muito alta com os pés pendurados, o ecrã pousado muito baixo e está há 2 horas sem se levantar. Qual é o plano de correção ergonómica mais completo?',
-        en: 'Pedro has his chair too high with dangling feet, the monitor placed too low, and has sat for 2 hours without moving. What is the most complete ergonomic fix plan?',
-      },
-      options: {
-        pt: [
-          'Colocar um apoio de pés, elevar o monitor com um suporte e fazer uma pausa para levantar e esticar o corpo',
-          'Desligar o computador imediatamente e nunca mais fazer trabalhos escolares',
-          'Apenas trocar de cadeira sem alterar a altura do ecrã nem apoiar os pés',
-          'Continuar na mesma posição até terminar o trabalho e só descansar no dia seguinte',
-        ],
-        en: [
-          'Place a footrest, raise the monitor with a stand, and take an active break to stand and stretch',
-          'Shut down the computer permanently and never do schoolwork again',
-          'Just swap chairs without adjusting screen height or supporting feet',
-          'Stay in the same posture until work is finished and only rest the next day',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'Excelente! Resolver em conjunto o apoio dos pés, a altura do ecrã e realizar pausas ativas garante um ambiente de estudo verdadeiramente saudável e ergonómico.',
-        en: 'Excellent! Addressing foot support, screen height, and taking active breaks together creates a truly healthy and ergonomic study environment.',
       },
     },
   ],

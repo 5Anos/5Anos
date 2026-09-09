@@ -365,8 +365,8 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       id: 'quiz-final-tema4',
       themeId: 'correio-eletronico',
       number: 5,
-      title: { pt: '🏆 Quiz de Aprendizagem: Correio Eletrónico', en: '🏆 Learning Quiz: Email' },
-      shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 4.', en: 'Comprehensive final assessment on Topic 4.' },
+      title: { pt: '🏆 Quiz de Aprendizagem: Correio Eletrónico (10 Questões)', en: '🏆 Learning Quiz: Email (10 Questions)' },
+      shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas sobre o Tema 4.', en: 'Comprehensive final assessment with 10 questions on Topic 4.' },
       icon: '🏆',
       durationMinutes: 10,
       points: 100,
@@ -502,6 +502,136 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       explanation: {
         pt: 'Um email para um professor deve ser bem estruturado: assunto com o tema do trabalho, saudação cortês, ficheiro anexado e a tua identificação.',
         en: 'An email to a teacher requires proper structure: a clear subject, respectful greeting, attached file, and student identification.',
+      },
+    },
+    {
+      id: 'email-q6',
+      question: {
+        pt: 'Para que serve o campo "Assunto" (Subject) numa mensagem de email?',
+        en: 'What is the purpose of the "Subject" field in an email message?',
+      },
+      options: {
+        pt: [
+          'Para resumir numa frase curta o tema principal da mensagem',
+          'Para escrever a palavra-passe da tua conta de correio',
+          'Para colocar a lista de todos os teus amigos',
+          'Para guardar o histórico de conversas do ano anterior',
+        ],
+        en: [
+          'To summarize the main topic of the message in a short phrase',
+          'To type the password of your email account',
+          'To insert the full list of all your friends',
+          'To store the conversation history of the previous year',
+        ],
+      },
+      correctIndex: 0,
+      explanation: {
+        pt: 'O assunto ajuda o destinatário a perceber imediatamente sobre o que trata a mensagem.',
+        en: 'The subject line helps the recipient immediately understand what the message is about.',
+      },
+    },
+    {
+      id: 'email-q7',
+      question: {
+        pt: 'Porque deves usar o campo Bcc (Cópia Oculta) ao enviar um email para muitas pessoas?',
+        en: 'Why should you use the Bcc (Blind Carbon Copy) field when emailing multiple people?',
+      },
+      options: {
+        pt: [
+          'Para proteger a privacidade, impedindo que os destinatários vejam os endereços de email uns dos outros',
+          'Para o email chegar mais rápido ao destino',
+          'Para traduzir o texto automaticamente para várias línguas',
+          'Para apagar o email do computador do destinatário após ser lido',
+        ],
+        en: [
+          'To protect privacy by preventing recipients from seeing each other’s email addresses',
+          'To make the email arrive faster at its destination',
+          'To translate the text automatically into multiple languages',
+          'To delete the email from the recipient’s computer after being read',
+        ],
+      },
+      correctIndex: 0,
+      explanation: {
+        pt: 'O Bcc protege a privacidade de todos os contactos e evita a partilha indesejada de endereços.',
+        en: 'Bcc preserves contact privacy and prevents unwanted disclosure of addresses.',
+      },
+    },
+    {
+      id: 'email-q8',
+      question: {
+        pt: 'O que é o Spam no correio eletrónico?',
+        en: 'What is Spam in email?',
+      },
+      options: {
+        pt: [
+          'Mensagens de publicidade não solicitadas ou lixo eletrónico enviadas em massa',
+          'Um email importante enviado pelo teu professor da escola',
+          'O ficheiro de imagem que envias em anexo',
+          'A pasta onde guardas os teus contactos favoritos',
+        ],
+        en: [
+          'Unsolicited advertising or junk mail sent out in bulk',
+          'An important email sent by your school teacher',
+          'The image file you send as an attachment',
+          'The address book where you store favorite contacts',
+        ],
+      },
+      correctIndex: 0,
+      explanation: {
+        pt: 'O spam é lixo eletrónico enviado para muitas pessoas sem estas terem pedido.',
+        en: 'Spam is junk email broadcast to many recipients without consent.',
+      },
+    },
+    {
+      id: 'email-q9',
+      question: {
+        pt: 'O que deves fazer se receberes um email de um desconhecido com um link a pedir a tua palavra-passe?',
+        en: 'What should you do if you receive an email from a stranger with a link asking for your password?',
+      },
+      options: {
+        pt: [
+          'Não clicar, não responder e avisar de imediato os pais ou o professor',
+          'Clicar logo no link para ver do que se trata',
+          'Responder ao email a dar a palavra-passe',
+          'Reencaminhar a mensagem para todos os teus colegas',
+        ],
+        en: [
+          'Do not click, do not reply, and inform parents or teacher right away',
+          'Click the link immediately to see what it is',
+          'Reply to the email providing the password',
+          'Forward the message to all your classmates',
+        ],
+      },
+      correctIndex: 0,
+      explanation: {
+        pt: 'Nunca deves fornecer palavras-passe por email. Trata-se de phishing (tentativa de roubo de dados).',
+        en: 'Never give passwords via email. It is a phishing attack attempting to steal credentials.',
+      },
+    },
+    {
+      id: 'email-q10',
+      question: {
+        pt: 'Qual é a regra mais importante de segurança no uso do email?',
+        en: 'What is the most important security rule when using email?',
+      },
+      options: {
+        pt: [
+          'Nunca partilhar palavras-passe, desconfiar de links e anexos desconhecidos e terminar sempre sessão',
+          'Usar sempre a mesma palavra-passe da escola em todos os jogos',
+          'Abrir todos os ficheiros anexados sem verificar quem os enviou',
+          'Responder a todas as mensagens de estranhos para fazer novos amigos',
+        ],
+        en: [
+          'Never share passwords, distrust unknown links/attachments, and always log out',
+          'Always reuse the school password for every online game',
+          'Open all attached files without checking the sender',
+          'Reply to all emails from strangers to make new friends',
+        ],
+      },
+      correctIndex: 0,
+      explanation: {
+        pt: 'Manter a palavra-passe secreta, desconfiar de estranhos e terminar a sessão protegem a tua conta.',
+        en: 'Keeping passwords secret, distrusting strangers, and logging out keep your account secure.',
       },
     },
   ],

@@ -190,7 +190,7 @@ export const FreeMediaBanks: React.FC<{ language: 'pt' | 'en' }> = ({ language }
 
   const filteredBanks = MEDIA_BANKS.filter((bank) => {
     const matchesCategory =
-      selectedCategory === 'all' || bank.category === selectedCategory || (bank.category === 'all' && selectedCategory !== 'all');
+      selectedCategory === 'all' || bank.category === selectedCategory;
     const matchesSearch =
       bank.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       bank.description[language].toLowerCase().includes(searchQuery.toLowerCase()) ||

@@ -396,8 +396,8 @@ export const themeSegurancaData: ThemeDefinition = {
       id: 'quiz-final-seguranca',
       themeId: 'seguranca',
       number: 5,
-      title: { pt: '🏆 Quiz de Aprendizagem: Segurança e Respeito', en: '🏆 Learning Quiz: Security and Respect' },
-      shortDesc: { pt: 'Avaliação final abrangente sobre o Tema de Segurança.', en: 'Comprehensive final assessment on Security.' },
+      title: { pt: '🏆 Quiz de Aprendizagem: Segurança e Respeito (10 Questões)', en: '🏆 Learning Quiz: Security and Respect (10 Questions)' },
+      shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas sobre o Tema de Segurança.', en: 'Comprehensive final assessment with 10 questions on Security.' },
       icon: '🏆',
       durationMinutes: 10,
       points: 100,
@@ -477,16 +477,6 @@ export const themeSegurancaData: ThemeDefinition = {
     },
     {
       id: 'seg-q8',
-      question: { pt: 'Um sinal comum de phishing é:', en: 'A common sign of phishing is:' },
-      options: {
-        pt: ['pedidos urgentes de dados pessoais', 'uma mensagem de um familiar sobre o jantar', 'um aviso normal da escola', 'um link partilhado por um professor conhecido'],
-        en: ['urgent requests for personal data', 'a message from a family member about dinner', 'a normal school notice', 'a link shared by a known teacher']
-      },
-      correctIndex: 0,
-      explanation: { pt: 'Urgência e pedidos de dados pessoais são sinais de alerta.', en: 'Urgency and requests for personal data are warning signs.' }
-    },
-    {
-      id: 'seg-q9',
       question: { pt: 'Se um colega for vítima de ciberbullying, deves:', en: 'If a peer is a victim of cyberbullying, you should:' },
       options: {
         pt: ['apoiá-lo e avisar um adulto', 'ignorar a situação', 'juntar-te às mensagens ofensivas', 'partilhar a conversa para toda a escola'],
@@ -496,27 +486,7 @@ export const themeSegurancaData: ThemeDefinition = {
       explanation: { pt: 'Apoiar a vítima e envolver um adulto ajuda a resolver a situação.', en: 'Supporting the victim and involving an adult helps resolve the situation.' }
     },
     {
-      id: 'seg-q10',
-      question: { pt: 'Antes de publicar algo online devemos pensar se:', en: 'Before publishing something online we should think if:' },
-      options: {
-        pt: ['respeita os outros e a nós próprios', 'vai obter um elevado número de reações e partilhas', 'está redigido exclusivamente na nossa língua materna', 'foi publicado no horário de maior tráfego da rede'],
-        en: ['it respects others and ourselves', 'it will gain a high volume of reactions and shares', 'it is drafted exclusively in our native language', 'it was published during peak network traffic hours']
-      },
-      correctIndex: 0,
-      explanation: { pt: 'O respeito deve guiar tudo o que publicamos.', en: 'Respect should guide everything we publish.' }
-    },
-    {
-      id: 'seg-q11',
-      question: { pt: 'Qual destas é uma boa prática de segurança digital?', en: 'Which of these is a good digital safety practice?' },
-      options: {
-        pt: ['Não partilhar dados pessoais com desconhecidos', 'Partilhar a palavra-passe com amigos', 'Aceitar todos os pedidos de contacto', 'Clicar em qualquer link recebido'],
-        en: ['Do not share personal data with strangers', 'Share password with friends', 'Accept all contact requests', 'Click on any link received']
-      },
-      correctIndex: 0,
-      explanation: { pt: 'Nunca devemos partilhar dados pessoais com desconhecidos.', en: 'We should never share personal data with strangers.' }
-    },
-    {
-      id: 'seg-q12',
+      id: 'seg-q9',
       question: { pt: 'Um ficheiro enviado por um desconhecido deve ser:', en: 'A file sent by a stranger should be:' },
       options: {
         pt: ['ignorado e reportado a um adulto', 'aberto imediatamente', 'reencaminhado a amigos', 'guardado sem verificação'],
@@ -526,27 +496,7 @@ export const themeSegurancaData: ThemeDefinition = {
       explanation: { pt: 'Ficheiros desconhecidos podem conter riscos.', en: 'Unknown files may contain risks.' }
     },
     {
-      id: 'seg-q13',
-      question: { pt: 'O respeito nos ambientes digitais significa:', en: 'Respect in digital environments means:' },
-      options: {
-        pt: ['tratar os outros como gostarias de ser tratado', 'poder dizer o que quiseres sem consequências', 'ignorar sempre os sentimentos dos outros', 'publicar tudo sem pensar'],
-        en: ['treating others as you would like to be treated', 'being able to say whatever you want without consequences', 'always ignoring others\' feelings', 'publishing everything without thinking']
-      },
-      correctIndex: 0,
-      explanation: { pt: 'O respeito online é tão importante como no mundo real.', en: 'Online respect is as important as in the real world.' }
-    },
-    {
-      id: 'seg-q14',
-      question: { pt: 'Uma consequência possível de más ações online é:', en: 'A possible consequence of bad online actions is:' },
-      options: {
-        pt: ['magoar outras pessoas de forma real e manchar a nossa pegada digital', 'ficar restrita apenas ao computador onde a mensagem foi escrita', 'ser esquecida e apagada automaticamente pelos servidores em poucas horas', 'desaparecer de imediato sem deixar qualquer vestígio em rede'],
-        en: ['hurting other people in a real way and harming our digital footprint', 'remaining confined strictly to the computer where it was typed', 'being forgotten and automatically deleted by servers within hours', 'disappearing immediately without leaving any network trace']
-      },
-      correctIndex: 0,
-      explanation: { pt: 'As ações online têm consequências reais para as outras pessoas.', en: 'Online actions have real consequences for other people.' }
-    },
-    {
-      id: 'seg-q15',
+      id: 'seg-q10',
       question: { pt: 'Se alguém que conheceste online te pedir para manter a conversa em segredo dos teus pais, o que deves fazer?', en: 'If someone you met online asks you to keep the conversation secret from your parents, what should you do?' },
       options: {
         pt: ['Desconfiar de imediato e contar logo aos teus pais ou a um professor', 'Guardar o segredo para não estragar a amizade no jogo', 'Pedir à pessoa que envie primeiro a morada dela', 'Desligar o ecrã mas continuar a falar às escondidas'],
