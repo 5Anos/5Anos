@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, RotateCcw, ShieldCheck, Check, X, KeyRound, Delete, Sparkles } from 'lucide-react';
+import { PostureCorrectionSimulator } from '../PostureCorrectionSimulator';
 import { Language } from '../../types';
 
 interface GenericHtmlGameRunnerProps {
   gameData: {
-    type: 'tf' | 'mc' | 'match' | 'order' | 'password_builder' | 'builder';
+    type: 'tf' | 'mc' | 'match' | 'order' | 'password_builder' | 'builder' | 'posture_simulator' | string;
     title: string;
     icon: string;
     xp: number;
@@ -652,6 +653,19 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                 <span>{language === 'pt' ? 'Submeter e Validar Palavra-passe' : 'Submit and Validate Password'}</span>
               </button>
             </div>
+          </div>
+        )}
+
+        {/* 6. POSTURE SIMULATOR */}
+        {type === 'posture_simulator' && (
+          <div className="pt-2">
+            <PostureCorrectionSimulator
+              language={language}
+              onComplete={() => {
+                setCompleted(true);
+                onFinish(100, 100, 100);
+              }}
+            />
           </div>
         )}
 

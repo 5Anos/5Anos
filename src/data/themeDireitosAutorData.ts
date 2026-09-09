@@ -30,13 +30,13 @@ export const themeDireitosAutorData: ThemeDefinition = {
       icon: '📜',
     },
     {
-      eyebrow: { pt: 'Imagens', en: 'Images' },
-      h: { pt: 'Copyright, Copyleft e Royalty Free', en: 'Copyright, Copyleft & Royalty Free' },
+      eyebrow: { pt: 'Licenças', en: 'Licenses' },
+      h: { pt: 'Licenças: O que podes fazer?', en: 'Licenses: What can you do?' },
       body: {
-        pt: 'Quando estás a pesquisar na Internet para um trabalho da escola, repara sempre na classificação e nas regras dos conteúdos. Cada tipo de licença tem um símbolo oficial que te indica o que podes ou não fazer:',
-        en: 'When searching online for school projects, always pay attention to content licensing and rules. Each type of license has an official symbol indicating what you can and cannot do:',
+        pt: 'Nem tudo o que encontras na Internet pode ser usado livremente. Observa o símbolo da licença e descobre o que é permitido no teu trabalho escolar:',
+        en: 'Not everything you find on the Internet can be used freely. Look at the license symbol and discover what is allowed for your school project:',
       },
-      icon: '🖼️',
+      icon: '⚖️',
     },
     {
       eyebrow: { pt: 'Sê Original!', en: 'Be Original!' },

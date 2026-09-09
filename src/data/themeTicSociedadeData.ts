@@ -30,40 +30,13 @@ export const themeTicSociedadeData: ThemeDefinition = {
       icon: '💡',
     },
     {
-      eyebrow: { pt: 'TIC na Escola', en: 'ICT at School' },
-      h: { pt: 'Como a tecnologia ajuda a aprender?', en: 'How does tech aid learning?' },
+      eyebrow: { pt: 'Aplicação das TIC', en: 'ICT Applications' },
+      h: { pt: 'As TIC na Escola, Saúde, Transportes, Comércio e Ambiente', en: 'ICT in School, Health, Transport, Commerce & Environment' },
       body: {
-        pt: 'Na escola, as TIC estão presentes em muitos momentos:<br><ul><li><strong>Plataformas digitais:</strong> para aceder a trabalhos e avisos dos professores.</li><li><strong>Catálogo da biblioteca:</strong> para pesquisar livros disponíveis em segundos.</li><li><strong>Quadros interativos:</strong> para ver vídeos, simulações científicas e mapas.</li><li><strong>Caderneta digital:</strong> para as famílias acompanharem as presenças e notas.</li></ul><br>🤔 <em>Pensamento Crítico:</em> Se queres pedir uma borracha ao colega sentado ao teu lado, não precisas de tecnologia — falar cara a cara é sempre melhor!',
-        en: 'At school, ICT assists in many daily workflows:<br><ul><li><strong>Digital platforms:</strong> access assignments and teacher notices.</li><li><strong>Library catalog:</strong> find available books in seconds.</li><li><strong>Interactive whiteboards:</strong> watch educational simulations and maps.</li><li><strong>Digital student portal:</strong> track attendance and grades.</li></ul><br>🤔 <em>Critical Insight:</em> If you need an eraser from your desk classmate, speak face-to-face — tech is only needed when useful!',
+        pt: 'As Tecnologias da Informação e Comunicação estão presentes nos momentos mais importantes da sociedade moderna. Em cada setor, cumprem uma missão essencial:<br><br><ul><li><strong>🏫 Escola e Estudo:</strong> Plataformas digitais (trabalhos e avisos), catálogos da biblioteca em segundos, quadros interativos e caderneta digital escolar.</li><li><strong>🩺 Saúde e Medicina:</strong> Processos clínicos eletrónicos acessíveis em qualquer hospital, consultas por telemedicina e robôs cirúrgicos de precisão (que auxiliam os cirurgiões humanos, sem os substituir).</li><li><strong>🚗 Transportes e Mobilidade:</strong> O sistema <em>GPS</em> recebe dados de satélites no espaço para calcular o trajeto mais rápido e indicar horários de transportes públicos em tempo real.</li><li><strong>💳 Comércio e Pagamentos:</strong> Pagamentos <em>Contactless (NFC)</em> por aproximação de ondas curtas e o circuito de 6 etapas das compras online (escolha, encomenda, pagamento seguro, armazém, envio por GPS e entrega).</li><li><strong>🌾 Agricultura, Indústria e Ambiente:</strong> Sensores de humidade de solo (IoT) que poupam milhares de litros de água, robôs industriais e satélites de previsão meteorológica.</li></ul>',
+        en: 'ICT powers the most vital sectors of our society:<br><br><ul><li><strong>🏫 School & Study:</strong> Digital platforms, instant library catalogs, interactive smartboards, and online student records.</li><li><strong>🩺 Healthcare & Medicine:</strong> Electronic health records, remote telemedicine, and precision surgical robotic tools (assisting, never replacing doctors).</li><li><strong>🚗 Transport & Mobility:</strong> Satellite GPS for turn-by-turn routing and real-time public transit schedules.</li><li><strong>💳 Commerce & Payments:</strong> Tap-to-pay Contactless (NFC) radio waves and the 6-stage e-commerce pipeline.</li><li><strong>🌾 Agriculture, Industry & Environment:</strong> IoT soil moisture sensors saving water, industrial robotics, and climate monitoring satellites.</li></ul>',
       },
-      icon: '🏫',
-    },
-    {
-      eyebrow: { pt: 'Saúde e Transportes', en: 'Health & Transport' },
-      h: { pt: 'Salvar vidas e orientar caminhos com GPS', en: 'Saving lives & GPS navigation' },
-      body: {
-        pt: 'As TIC revolucionaram áreas fundamentais da sociedade:<br><ul><li><strong>Saúde e Telemedicina:</strong> Médicos consultam pacientes à distância e utilizam processos clínicos eletrónicos. Os robôs cirúrgicos apoiam operações com máxima precisão (como ferramentas de auxílio, nunca substituindo os médicos humanos).</li><li><strong>Transportes e GPS:</strong> O <em>GPS</em> recebe sinais de satélites no espaço para calcular caminhos e evitar engarrafamentos.</li></ul>',
-        en: 'ICT revolutionized vital sectors of our society:<br><ul><li><strong>Healthcare & Telemedicine:</strong> Doctors provide remote consultations and use electronic records. Surgical robots assist precision operations as surgeon-guided tools.</li><li><strong>Transport & GPS:</strong> <em>GPS</em> receives satellite signals to guide routes and avoid traffic.</li></ul>',
-      },
-      icon: '🩺',
-    },
-    {
-      eyebrow: { pt: 'Comércio e Contactless', en: 'Commerce & Contactless' },
-      h: { pt: 'Pagamentos rápidos por aproximação (NFC) e compras online', en: 'Tap-to-pay (NFC) & online shopping' },
-      body: {
-        pt: 'Quando pagamos algo aproximando o cartão ou o telemóvel do terminal de pagamento (TPA), estamos a usar a tecnologia <strong>Contactless (NFC - Near Field Communication)</strong>, que comunica por ondas de rádio de curto alcance sem inserir o cartão.<br><br>📦 <strong>As 6 Fases da Compra Online:</strong><br>1. Escolher o produto ➔ 2. Fazer encomenda ➔ 3. Pagamento seguro ➔ 4. Preparação no armazém ➔ 5. Transporte por GPS ➔ 6. Entrega ao cliente.<br><br>💡 <em>Lembra-te:</em> Comprar nas lojas tradicionais do teu bairro ajuda a economia local e poupa embalagens!',
-        en: 'Tapping a card or phone on a payment terminal uses <strong>Contactless (NFC - Near Field Communication)</strong> radio waves.<br><br>📦 <strong>The 6 Online Shopping Stages:</strong><br>1. Browse ➔ 2. Place order ➔ 3. Secure payment ➔ 4. Warehouse packing ➔ 5. GPS delivery ➔ 6. Customer delivery.<br><br>💡 <em>Tip:</em> Shopping at local neighborhood stores supports the community and cuts packaging waste!',
-      },
-      icon: '💳',
-    },
-    {
-      eyebrow: { pt: 'Ambiente e Indústria', en: 'Environment & Industry' },
-      h: { pt: 'Sensores inteligentes e a Internet das Coisas (IoT)', en: 'Smart sensors & Internet of Things (IoT)' },
-      body: {
-        pt: '• <strong>Sensores de solo:</strong> Na agricultura, medem a humidade da terra e só ligam a rega quando necessário, poupando milhares de litros de água.<br>• <strong>IoT (Internet das Coisas):</strong> Aparelhos do dia a dia ligados em rede a comunicar dados.<br>• <strong>Satélites e Ambiente:</strong> Ajudam a prever tempestades, monitorizar florestas e combater a poluição.',
-        en: '• <strong>Soil sensors:</strong> Trigger precision irrigation only when moisture drops, conserving water.<br>• <strong>IoT (Internet of Things):</strong> Everyday devices networked to share data.<br>• <strong>Satellites & Climate:</strong> Track storms, monitor forests, and fight environmental pollution.',
-      },
-      icon: '🌾',
+      icon: '🌐',
     },
     {
       eyebrow: { pt: 'História e Evolução', en: 'History & Evolution' },
@@ -174,14 +147,14 @@ export const themeTicSociedadeData: ThemeDefinition = {
       themeId: 'tic-sociedade',
       number: 2,
       title: {
-        pt: 'As TIC na Saúde, Transportes, Comércio e Ambiente',
-        en: 'ICT in Healthcare, Transport, Commerce & Environment',
+        pt: 'Aplicação das TIC na Sociedade',
+        en: 'ICT Applications in Society',
       },
       shortDesc: {
-        pt: 'Compreende como o GPS, a telemedicina, os pagamentos contactless (NFC) e os sensores IoT transformam a sociedade.',
-        en: 'Explore how GPS, telemedicine, contactless NFC payments, and IoT sensors reshape society.',
+        pt: 'Compreende como a escola, a saúde, os transportes (GPS), os pagamentos contactless (NFC) e os sensores IoT transformam o nosso quotidiano.',
+        en: 'Explore how school, health, GPS transport, contactless NFC payments, and IoT sensors transform our daily lives.',
       },
-      icon: '🏥',
+      icon: '🌐',
       explanation: {
         pt: [
           'Na saúde, as TIC permitem teleconsultas à distância e auxiliam cirurgiões com robôs de alta precisão.',
@@ -446,25 +419,9 @@ export const themeTicSociedadeData: ThemeDefinition = {
       icon: '💡',
     },
     {
-      id: 'desafio-tic-ajuda-escola',
-      themeId: 'tic-sociedade',
-      number: 2,
-      title: {
-        pt: '🏫 Atividade de Criação: Ajuda a Escola a Resolver um Problema!',
-        en: '🏫 Creative Activity: Help the School Solve a Problem!',
-      },
-      shortDesc: {
-        pt: 'Escolhe um desafio real da tua escola, desenha a tua solução inovadora, seleciona as TIC certas e recebe o teu Diploma de Inventor TIC!',
-        en: 'Pick a school challenge, design your tech idea, select ICT tools, and earn your ICT Innovator Diploma!',
-      },
-      durationMinutes: 7,
-      type: 'copy_or_create',
-      icon: '🏫',
-    },
-    {
       id: 'desafio-tic-seguranca-cyberbullying',
       themeId: 'tic-sociedade',
-      number: 3,
+      number: 2,
       title: {
         pt: '🛡️ Guardião Digital: Cyberbullying (5 Passos) & Linha 800 21 90 90',
         en: '🛡️ Digital Guardian: Cyberbullying (5 Steps) & Helpline',
@@ -480,7 +437,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
     {
       id: 'desafio-tic-pegada-ecra-lixo',
       themeId: 'tic-sociedade',
-      number: 4,
+      number: 3,
       title: {
         pt: '🌍 Publicarias Isto? Pegada Digital, Tempo de Ecrã & Lixo Eletrónico',
         en: '🌍 Would You Post This? Footprint, Screen Time & E-Waste',
@@ -494,25 +451,9 @@ export const themeTicSociedadeData: ThemeDefinition = {
       icon: '🌍',
     },
     {
-      id: 'desafio-tic-compra-online',
-      themeId: 'tic-sociedade',
-      number: 5,
-      title: {
-        pt: '📦 Como Chega uma Compra Online & Pagamentos Contactless (NFC)',
-        en: '📦 How Online Orders Work & Contactless NFC Payments',
-      },
-      shortDesc: {
-        pt: 'Explora o circuito de 6 passos de uma compra online, descobre como o contactless (NFC) funciona e reflete sobre o comércio local.',
-        en: 'Explore the 6-step e-commerce pipeline, understand contactless NFC payments, and reflect on local commerce.',
-      },
-      durationMinutes: 6,
-      type: 'order_sequence',
-      icon: '📦',
-    },
-    {
       id: 'quiz-final-tema1',
       themeId: 'tic-sociedade',
-      number: 6,
+      number: 4,
       title: {
         pt: '🏆 Avaliação Final: TIC na Sociedade (15 Questões)',
         en: '🏆 Final Quiz: ICT in Society (15 Questions)',

@@ -336,45 +336,48 @@ export const themeErgonomiaData: ThemeDefinition = {
   ],
   challenges: [
     {
-      id: 'desafio-corrige-postura',
-      themeId: 'ergonomia',
-      number: 1,
-      title: { pt: '🧍 Simulador: Corrige a Postura do Aluno!', en: '🧍 Simulator: Fix the Student\'s Posture!' },
-      shortDesc: { pt: 'Pega nas partes do corpo e do equipamento e posiciona o aluno com ergonomia perfeita.', en: 'Adjust body parts and equipment to sit the student with perfect ergonomics.' },
-      icon: '🪑',
-      durationMinutes: 4,
-      points: 100,
-      type: 'what_would_you_do',
-      gameData: {
-        type: 'posture_simulator',
-        title: 'Simulador: Corrige a Postura do Aluno!',
-        icon: '🪑',
-        xp: 100,
-        desc: 'Ajusta a cabeça, costas, ecrã, braços e pés para garantir a postura ergonómica ideal.',
-        data: {}
-      }
-    },
-    {
       id: 'jogo-ergo-tf',
       themeId: 'ergonomia',
-      number: 2,
-      title: { pt: '🪑 Postura correta ou incorreta?', en: '🪑 Correct or Incorrect Posture?' },
-      shortDesc: { pt: 'Avalia posturas corporais ao utilizar computadores e tablets.', en: 'Evaluate body posture when using computers and tablets.' },
+      number: 1,
+      title: { pt: '🪑 Postura e Hábitos: Verdadeiro ou Falso?', en: '🪑 Posture and Habits: True or False?' },
+      shortDesc: { pt: 'Avalia afirmações práticas sobre a organização do espaço, postura e hábitos saudáveis ao computador.', en: 'Evaluate practical statements about workspace organization, posture, and healthy habits.' },
       icon: '🪑',
       durationMinutes: 4,
       points: 100,
       type: 'true_false',
       gameData: {
         type: 'tf',
-        title: 'Postura correta ou incorreta?',
+        title: 'Postura e Hábitos: Verdadeiro ou Falso?',
         icon: '🪑',
         xp: 100,
-        desc: 'Classifica as afirmações sobre a saúde postural em frente aos ecrãs.',
+        desc: 'Analisa cada situação do dia a dia e decide se a atitude é ergonómica e saudável.',
         data: {
           items: [
-            { s: 'Os pés devem estar bem apoiados no chão ou num apoio, com os joelhos a 90 graus.', a: true, e: 'Correto! Os pés apoiados evitam tensão na zona lombar.' },
-            { s: 'Podemos usar o portátil deitado na cama de barriga para baixo durante horas.', a: false, e: 'Incorreto! Causa dores intensas no pescoço, costas e pulsos.' },
-            { s: 'O topo do monitor deve ficar ao nível dos olhos ou ligeiramente abaixo.', a: true, e: 'Correto! Previne a fadiga cervical e mantém a cabeça direita.' }
+            {
+              s: 'Se os pés não chegarem ao chão quando a cadeira está ajustada à mesa, é melhor deixá-los pendurados no ar durante todo o tempo de estudo.',
+              a: false,
+              e: 'Pés sem apoio aumentam o cansaço nas pernas e na zona lombar. Deves usar um apoio de pés ou regular a cadeira.'
+            },
+            {
+              s: 'Quando estás a trabalhar ao computador durante muito tempo, fazer pequenas pausas para levantar, esticar o corpo e descansar os olhos ajuda a manter a concentração.',
+              a: true,
+              e: 'Boa escolha! Pausas regulares de 3 a 5 minutos relaxam os músculos e previnem o cansaço visual e mental.'
+            },
+            {
+              s: 'Se o monitor estiver demasiado baixo e tiveres de inclinar o pescoço para baixo, deves elevar o ecrã com um suporte firme até o topo ficar ao nível dos olhos.',
+              a: true,
+              e: 'Excelente! O topo do monitor ao nível dos olhos permite que o pescoço e a cabeça fiquem numa posição natural e confortável.'
+            },
+            {
+              s: 'Trabalhar num quarto completamente às escuras, com apenas o brilho do monitor aceso, é uma boa ideia porque evita distrações.',
+              a: false,
+              e: 'O contraste excessivo entre o ecrã muito brilhante e o ambiente escuro força os olhos e pode provocar fadiga e dores de cabeça.'
+            },
+            {
+              s: 'Ao escrever no teclado e utilizar o rato, os pulsos devem ficar direitos e alinhados numa linha contínua com os antebraços.',
+              a: true,
+              e: 'Correto! Manter os pulsos numa posição neutra e alinhada evita dobrar as articulações e reduz o esforço nos tendões.'
+            }
           ]
         }
       }
@@ -383,41 +386,85 @@ export const themeErgonomiaData: ThemeDefinition = {
       id: 'jogo-ergo-mc',
       themeId: 'ergonomia',
       number: 2,
-      title: { pt: '🎯 Escolhe a melhor posição', en: '🎯 Choose the Best Position' },
-      shortDesc: { pt: 'Seleciona as recomendações ergonómicas para evitar lesões.', en: 'Select ergonomic recommendations to prevent injuries.' },
+      title: { pt: '🎯 Detetive da Ergonomia: O que Farias?', en: '🎯 Ergonomics Detective: What Would You Do?' },
+      shortDesc: { pt: 'Resolve situações reais do dia a dia e escolhe a melhor decisão ergonómica para cada estudante.', en: 'Solve real everyday situations and pick the best ergonomic choice for each student.' },
       icon: '🎯',
-      durationMinutes: 4,
+      durationMinutes: 5,
       points: 100,
       type: 'what_would_you_do',
       gameData: {
         type: 'mc',
-        title: 'Escolhe a melhor posição',
+        title: 'Detetive da Ergonomia: O que Farias?',
         icon: '🎯',
         xp: 100,
-        desc: 'Analisa as posições e seleciona a opção correta para a saúde postural e visual.',
+        desc: 'Observa o problema de cada aluno e escolhe a solução mais adequada para melhorar o seu conforto.',
         data: {
           questions: [
             {
-              q: 'Qual é a postura corporal correta ao trabalhar sentado em frente ao computador?',
+              q: 'O Miguel está sentado na secretária a fazer um trabalho de TIC. Como a cadeira foi subida para alcançar a mesa, os pés dele ficam pendurados no ar sem tocar no chão. O que deveria fazer?',
               opts: [
-                'Costas direitas apoiadas na cadeira, pés bem assentes no chão e topo do ecrã ao nível dos olhos',
-                'Costas curvadas para a frente, pés pendurados no ar e pescoço dobrado para baixo',
-                'Sentar em cima de uma perna dobrada com a cadeira muito baixa',
-                'Deitar na cadeira com a cabeça muito abaixo do nível da mesa'
+                'Colocar um apoio de pés (ou uma caixa firme) para manter os pés bem assentes e estáveis',
+                'Cruzar as pernas por baixo da cadeira e continuar a trabalhar sem apoio',
+                'Baixar a cadeira até ao chão, mesmo que os braços fiquem muito abaixo da mesa',
+                'Sentar-se na ponta da cadeira com o corpo inclinado para a frente'
               ],
               c: 0,
-              e: 'Manter a coluna apoiada, pés assentes a 90° e o topo do ecrã ao nível dos olhos previne dores e cansaço.'
+              e: 'Excelente! Um apoio de pés permite manter os joelhos num ângulo confortável e a coluna bem apoiada no encosto.'
             },
             {
-              q: 'O que ensina a "Regra 20-20-20" para descansar os olhos ao computador?',
+              q: 'A Ana está a usar o computador, mas o monitor está muito baixo. Para conseguir ler, ela passa o tempo todo com o queixo encostado ao peito e o pescoço inclinado. O que pode fazer?',
               opts: [
-                'A cada 20 minutos, olhar para longe (cerca de 6 metros) durante 20 segundos',
-                'Jogar 20 minutos seguidos de olhos fechados',
-                'Pestanejar 20 vezes sem parar de 20 em 20 segundos',
-                'Estar 20 horas seguidas ao computador e depois dormir 20 horas'
+                'Elevar o monitor com um suporte até que o topo do ecrã fique ao nível dos olhos',
+                'Baixar a cadeira até o queixo encostar à secretária',
+                'Inclinar todo o tronco para a frente e aproximar a cara do ecrã',
+                'Continuar na mesma posição e apenas aumentar o brilho do ecrã'
               ],
               c: 0,
-              e: 'Excelente! A regra 20-20-20 ajuda os músculos dos olhos a relaxar e evita o cansaço visual.'
+              e: 'Muito bem! Elevar o monitor alinha o olhar na horizontal e evita forçar o pescoço para baixo.'
+            },
+            {
+              q: 'O Tomás senta-se tão perto do monitor que quase consegue tocar-lhe com o nariz enquanto estuda e joga. Qual é a recomendação mais adequada?',
+              opts: [
+                'Afastar o ecrã para cerca de um braço esticado de distância (cerca de 50 a 70 cm)',
+                'Aproximar-se ainda mais e usar óculos de sol dentro de casa',
+                'Manter o monitor encostado ao teclado e inclinar a cabeça para trás',
+                'Tocar no ecrã continuamente para medir a temperatura do vidro'
+              ],
+              c: 0,
+              e: 'Boa escolha! A distância aproximada de um braço esticado protege a vista do cansaço e permite ver todo o conteúdo com nitidez.'
+            },
+            {
+              q: 'Ao escrever no teclado, a Inês apoia a base das palmas no bordo afiado da mesa e dobra os pulsos muito para cima. O que pode fazer para melhorar?',
+              opts: [
+                'Manter os pulsos direitos e alinhados com os antebraços, com espaço livre na secretária',
+                'Escrever apenas com uma mão e manter a outra dobrada atrás das costas',
+                'Dobrar os pulsos ainda mais para cima para pressionar as teclas com mais força',
+                'Apoiar todo o peso do peito sobre o teclado enquanto escreve'
+              ],
+              c: 0,
+              e: 'Exato! Pulsos direitos e alinhados numa linha reta reduzem a tensão nas articulações ao digitar.'
+            },
+            {
+              q: 'O sol da tarde está a bater na janela atrás das costas do Pedro, criando um reflexo muito brilhante no monitor que não o deixa ler. O que deve fazer?',
+              opts: [
+                'Ajustar a cortina ou mudar a orientação do monitor para que a luz venha de lado',
+                'Apagar todas as luzes da sala e trabalhar no escuro total',
+                'Aumentar o brilho do monitor no máximo e colar a cara ao vidro',
+                'Trabalhar de olhos semicerrados forçando a visão'
+              ],
+              c: 0,
+              e: 'Boa decisão! A luz natural deve vir de lado para iluminar o espaço sem provocar reflexos diretos no monitor.'
+            },
+            {
+              q: 'A Leonor costuma estudar horas seguidas com o computador portátil deitado na cama de barriga para baixo. O que poderia fazer para um estudo mais confortável e saudável?',
+              opts: [
+                'Trabalhar numa secretária com cadeira adequada, mantendo o portátil elevado e com bom apoio',
+                'Continuar na cama de barriga para baixo mas colocar uma almofada alta no queixo',
+                'Pousar o portátil no tapete do chão e olhar para ele de pé',
+                'Estudar deitada de lado a segurar o portátil com uma mão no ar'
+              ],
+              c: 0,
+              e: 'Excelente! Estudar numa secretária com cadeira e mesa adequadas protege a coluna, pescoço e braços durante o estudo prolongado.'
             }
           ]
         }
@@ -427,24 +474,25 @@ export const themeErgonomiaData: ThemeDefinition = {
       id: 'jogo-ergo-match',
       themeId: 'ergonomia',
       number: 3,
-      title: { pt: '🔗 Problema e Solução', en: '🔗 Problem and Solution' },
-      shortDesc: { pt: 'Associa cada hábito incorreto à sua solução ergonómica.', en: 'Match each incorrect habit to its ergonomic solution.' },
+      title: { pt: '🔗 Problema e Solução Ergonómica', en: '🔗 Ergonomic Problem and Solution' },
+      shortDesc: { pt: 'Associa cada situação desconfortável à solução prática recomendada.', en: 'Match each uncomfortable situation to its recommended practical solution.' },
       icon: '🔗',
       durationMinutes: 4,
       points: 100,
       type: 'match_pairs',
       gameData: {
         type: 'match',
-        title: 'Problema e Solução',
+        title: 'Problema e Solução Ergonómica',
         icon: '🔗',
         xp: 100,
-        desc: 'Associa o problema postural à respetiva recomendação de saúde.',
+        desc: 'Associa cada problema postural à sua melhor solução prática.',
         data: {
           pairs: [
-            { left: 'Pescoço dorido a olhar para baixo', right: 'Elevar o ecrã ao nível dos olhos' },
-            { left: 'Olhos secos e cansados', right: 'Aplicar a regra 20-20-20 e pestanejar' },
-            { left: 'Pulsos doridos no teclado', right: 'Manter os punhos numa posição confortável e evitar tensão.' },
-            { left: 'Fadiga geral ao fim de horas', right: 'Fazer pausas regulares e mudar de posição.' }
+            { left: 'Pés ficam pendurados sem apoio', right: 'Usar um apoio de pés ou regular a cadeira' },
+            { left: 'Ecrã demasiado baixo a forçar o pescoço', right: 'Elevar o monitor até ao nível dos olhos' },
+            { left: 'Sol no monitor a criar reflexos fortes', right: 'Ajustar a cortina e orientar a luz de lado' },
+            { left: 'Pulsos muito dobrados a escrever no teclado', right: 'Manter mãos e pulsos alinhados com os braços' },
+            { left: 'Mais de 40 minutos seguidos ao computador', right: 'Fazer uma pausa de 3 a 5 min para esticar o corpo' }
           ]
         }
       }
@@ -454,7 +502,7 @@ export const themeErgonomiaData: ThemeDefinition = {
       themeId: 'ergonomia',
       number: 4,
       title: { pt: '🏆 Quiz de Aprendizagem: Ergonomia', en: '🏆 Learning Quiz: Ergonomics' },
-      shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 2.', en: 'Comprehensive final assessment on Topic 2.' },
+      shortDesc: { pt: 'Avaliação final abrangente com 15 perguntas sobre o Tema 2.', en: 'Comprehensive final assessment with 15 questions on Topic 2.' },
       icon: '🏆',
       durationMinutes: 10,
       points: 100,
@@ -465,417 +513,391 @@ export const themeErgonomiaData: ThemeDefinition = {
     {
       id: 'ergo-q1',
       question: {
-        pt: 'O que estuda a Ergonomia no contexto das TIC?',
-        en: 'What does Ergonomics study in the context of ICT?',
+        pt: 'O que estuda a Ergonomia no contexto da utilização dos computadores e tecnologias?',
+        en: 'What does Ergonomics study in the context of computer and technology use?',
       },
       options: {
         pt: [
-          'A adaptação dos equipamentos e do ambiente de trabalho ao corpo humano com conforto e saúde',
-          'A velocidade de ligação dos cabos de fibra ótica da Internet',
-          'O preço dos computadores nas lojas comerciais',
-          'A programação de jogos de ação em código binário',
+          'A organização do espaço, dos equipamentos e da nossa posição para trabalhar com conforto e saúde',
+          'A velocidade com que os computadores conseguem descarregar ficheiros da Internet',
+          'O preço dos monitores e teclados nas lojas de informática',
+          'A programação de jogos digitais e aplicações para telemóvel',
         ],
         en: [
-          'Adapting equipment and workspace to the human body for health and comfort',
-          'Fiber optic Internet speed',
-          'Computer pricing in electronics stores',
-          'Coding action games in binary code',
+          'The organization of space, equipment, and our body posture to work comfortably and healthily',
+          'The speed at which computers download files from the Internet',
+          'The cost of monitors and keyboards in electronics stores',
+          'The programming of digital games and mobile applications',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'A ergonomia estuda a melhor relação entre o corpo humano e as ferramentas de trabalho.',
-        en: 'Ergonomics optimizes the relationship between the human body and workspace tools.',
+        pt: 'A ergonomia estuda a melhor relação entre o nosso corpo e as ferramentas de trabalho para evitar desconforto e cansaço.',
+        en: 'Ergonomics studies the optimal relationship between our body and workspace tools to prevent fatigue and strain.',
       },
     },
     {
       id: 'ergo-q2',
       question: {
-        pt: 'Que ângulo aproximado devem formar os cotovelos e os joelhos ao sentar na secretária?',
-        en: 'What approximate angle should elbows and knees form when seated at a desk?',
+        pt: 'Qual é a postura corporal mais adequada quando estás sentado a estudar ao computador?',
+        en: 'What is the most appropriate body posture when seated studying at a computer?',
       },
       options: {
         pt: [
-          'Um ângulo de cerca de 90 graus',
-          'Um ângulo agudo de 15 graus',
-          'Completamente esticados a 180 graus no ar',
-          'Qualquer posição serve, mesmo todo torcido',
+          'Costas direitas bem apoiadas no encosto da cadeira, ombros descontraídos e pés assentes',
+          'Corpo inclinado para a frente com o peito encostado à borda da mesa',
+          'Tronco escorregado na cadeira com a cabeça muito abaixo do nível da mesa',
+          'Sentar em cima de uma perna dobrada com a coluna inclinada para o lado',
         ],
         en: [
-          'An angle of approximately 90 degrees',
-          'A tight 15-degree acute angle',
-          'Fully extended at 180 degrees in the air',
-          'Any twisted pose is fine',
+          'Back straight and firmly supported by the chair backrest, relaxed shoulders, and feet flat',
+          'Body leaning forward with chest pressed against the desk edge',
+          'Torso sliding down the chair with head well below desk level',
+          'Sitting on one folded leg with spine tilted sideways',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Uma posição próxima dos 90° pode ajudar a manter uma postura confortável e neutra.',
-        en: 'A position close to 90 degrees can help maintain a comfortable and neutral posture.',
+        pt: 'Manter as costas direitas e apoiadas, os ombros relaxados e os pés assentes garante uma posição estável e confortável.',
+        en: 'Keeping back supported, shoulders relaxed, and feet flat ensures a stable and comfortable posture.',
       },
     },
     {
       id: 'ergo-q3',
       question: {
-        pt: 'Onde deve ficar o topo do ecrã do monitor em relação aos teus olhos?',
-        en: 'Where should the top bezel of the monitor be relative to your eyes?',
+        pt: 'Que posição de referência devem manter os braços e cotovelos em relação à mesa de trabalho?',
+        en: 'What reference position should arms and elbows maintain relative to the study desk?',
       },
       options: {
         pt: [
-          'Ao nível dos olhos ou ligeiramente abaixo da linha horizontal de visão',
-          'Muito acima da cabeça para teres de olhar para o teto',
-          'No chão debaixo da secretária',
-          'Colado ao queixo',
+          'Cotovelos dobrados num ângulo confortável próximo de 90 graus, com os antebraços nivelados com a mesa',
+          'Braços totalmente esticados para cima com os ombros levantados até às orelhas',
+          'Cotovelos muito abaixo do nível da secretária tendo de puxar as mãos para cima',
+          'Braços cruzados sobre o teclado enquanto tentas escrever com os dedos',
         ],
         en: [
-          'At eye level or slightly below the horizontal line of sight',
-          'Far above head height forcing you to look up at the ceiling',
-          'On the floor under the desk',
-          'Resting on your chin',
+          'Elbows bent at a comfortable angle close to 90 degrees, with forearms level with the desk',
+          'Arms fully stretched upwards with shoulders raised up to the ears',
+          'Elbows far below desk height forcing hands to reach upward',
+          'Arms crossed over the keyboard while attempting to type with fingers',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'O topo ao nível dos olhos permite olhar suavemente para baixo sem forçar o pescoço.',
-        en: 'Keeping the top edge at eye level allows a natural downward gaze without neck hyperextension.',
+        pt: 'Manter os cotovelos num ângulo próximo dos 90 graus permite apoiar os antebraços sem forçar os ombros.',
+        en: 'Keeping elbows close to a 90-degree angle allows forearms to rest naturally without tensing shoulders.',
       },
     },
     {
       id: 'ergo-q4',
       question: {
-        pt: 'Qual é a distância recomendada entre os teus olhos e o ecrã do computador?',
-        en: 'What is the recommended viewing distance from eyes to screen?',
+        pt: 'O Miguel ajustou a cadeira para ficar à altura da mesa, mas os pés ficaram pendurados no ar. O que deve fazer?',
+        en: 'Miguel adjusted his chair to desk height, but his feet are dangling in the air. What should he do?',
       },
       options: {
         pt: [
-          'Entre 50 e 70 centímetros (o comprimento aproximado de um braço esticado)',
-          'Entre 15 e 20 centímetros para ler melhor os detalhes',
-          'A mais de 1,5 metros independentemente do tamanho do ecrã',
-          'A mesma distância que usas para ler no telemóvel na mão',
+          'Utilizar um apoio de pés estável para que a planta dos pés fique bem apoiada',
+          'Deixar os pés a balançar no ar durante as horas de trabalho',
+          'Enrolar os pés à volta das rodas da cadeira para prender as pernas',
+          'Baixar a cadeira até ao chão, mesmo que os braços fiquem numa posição desconfortável',
         ],
         en: [
-          'Between 50 and 70 centimeters (approx. an arm’s length)',
-          'Between 15 and 20 centimeters to view fine details closer',
-          'Over 1.5 meters away regardless of screen size',
-          'The same distance used for reading on a handheld phone',
+          'Use a stable footrest so the soles of his feet rest firmly supported',
+          'Leave feet swinging in the air throughout study hours',
+          'Wrap feet around the chair wheels to lock the legs',
+          'Lower the chair to the floor, even if arms end up in an uncomfortable position',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Manter uma distância próxima de um braço esticado (cerca de 50 a 70 cm) ajuda a manter uma leitura confortável sem forçar os olhos.',
-        en: 'An approximate arm’s length distance (about 50 to 70 cm) helps maintain comfortable viewing without straining eyes.',
+        pt: 'Um apoio de pés permite que os pés fiquem assentes, melhorando a estabilidade e o conforto das pernas e da zona lombar.',
+        en: 'A footrest ensures feet remain supported, improving stability and comfort for legs and lumbar region.',
       },
     },
     {
       id: 'ergo-q5',
       question: {
-        pt: 'O que deves fazer se os teus pés não chegarem ao chão quando a cadeira está regulada à altura da mesa?',
-        en: 'What should you do if your feet do not touch the floor with the chair adjusted to desk height?',
+        pt: 'Quais são as características mais importantes de uma cadeira adequada para estudar ao computador?',
+        en: 'What are the most important features of a good study chair for computer work?',
       },
       options: {
         pt: [
-          'Utilizar um apoio de pés para que fiquem bem assentes e nivelados',
-          'Cruzar as pernas por baixo da coxa para elevar o corpo',
-          'Baixar a cadeira mesmo que os cotovelos fiquem abaixo da mesa',
-          'Inclinar todo o tronco para a frente apoiando o peito no tampo da secretária',
+          'Ter altura regulável, encosto com apoio para as costas e estabilidade no assento',
+          'Ser um banco rígido sem encosto para obrigar o corpo a não descansar',
+          'Ser um sofá tão mole que o corpo afunde completamente para dentro',
+          'Ter um assento inclinado para a frente que faça o aluno escorregar',
         ],
         en: [
-          'Use a footrest so your feet rest firmly and flat',
-          'Cross legs underneath the thighs to lift the body',
-          'Lower the chair even if elbows fall below desk level',
-          'Lean the torso forward resting the chest on the desk',
+          'Adjustable height, supportive backrest for the spine, and a stable seat base',
+          'A rigid backless stool forcing the body to stay unsupported',
+          'A deep soft couch where the body sinks completely',
+          'A forward-sloping seat causing the student to slide off',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Um apoio de pés pode ajudar a encontrar uma posição mais confortável para as pernas.',
-        en: 'A footrest can help find a more comfortable position for the legs.',
+        pt: 'Uma cadeira com altura regulável e apoio para as costas permite adaptar a posição à altura da mesa e do utilizador.',
+        en: 'A chair with adjustable height and backrest adapts to the desk height and the student size.',
       },
     },
     {
       id: 'ergo-q6',
       question: {
-        pt: 'De que lado deve vir a luz natural para não dar luz diretamente aos olhos?',
-        en: 'From which side should natural light come to avoid shining directly into your eyes?',
+        pt: 'A Ana reparou que o monitor está muito baixo e passa o tempo a dobrar o pescoço para baixo. Onde deve ficar o topo do ecrã?',
+        en: 'Ana noticed her monitor is too low and she keeps bending her neck down. Where should the top of the screen be?',
       },
       options: {
         pt: [
-          'De lado em relação ao posto de trabalho e ao ecrã',
-          'Exatamente atrás do ecrã, a bater nos teus olhos',
-          'Exatamente atrás das tuas costas, a refletir no ecrã como um espelho',
-          'Diretamente por cima do teclado com um foco muito concentrado',
+          'Aproximadamente ao nível dos olhos (ou ligeiramente abaixo), para olhar em frente sem dobrar o pescoço',
+          'Muito acima da linha da cabeça, obrigando a olhar sempre para o teto',
+          'Pousado diretamente no tampo da mesa sem qualquer suporte',
+          'Ao nível dos joelhos para ler enquanto olha para o chão',
         ],
         en: [
-          'From the side relative to the desk and monitor',
-          'Directly behind the screen, shining right into your eyes',
-          'Directly behind your back, reflecting off the monitor glass',
-          'Directly above the keyboard with an intense narrow spotlight',
+          'Approximately at eye level (or slightly below), allowing forward gaze without bending the neck',
+          'Far above head level, forcing the user to constantly look up at the ceiling',
+          'Resting directly flat on the desk with no elevation',
+          'At knee level for reading while looking down at the floor',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'A luz vinda de lado ilumina o espaço sem criar reflexos diretos nem encandear o utilizador.',
-        en: 'Side lighting illuminates the desk without causing direct glare or reflections on the screen.',
+        pt: 'O topo do ecrã ao nível dos olhos mantém o pescoço e a cabeça numa linha natural e confortável.',
+        en: 'Positioning the top of the monitor at eye level keeps head and neck in a natural, neutral alignment.',
       },
     },
     {
       id: 'ergo-q7',
       question: {
-        pt: 'Porque é prejudicial estudar ou jogar no computador no escuro absoluto?',
-        en: 'Why is it harmful to study or play on a computer in total darkness?',
+        pt: 'Qual é a distância recomendada entre os teus olhos e o ecrã do monitor?',
+        en: 'What is the recommended viewing distance between your eyes and the monitor?',
       },
       options: {
         pt: [
-          'Porque o forte contraste entre o ecrã brilhante e o quarto escuro causa grande fadiga visual',
-          'Porque a luz azul do monitor danifica os circuitos internos do aparelho',
-          'Porque o sensor da câmara web fica permanentemente desativado',
-          'Não tem qualquer efeito na visão ou no cansaço do estudante',
+          'A distância aproximada de um braço esticado (cerca de 45 a 70 centímetros)',
+          'Menos de 15 centímetros, quase a tocar com o nariz no vidro',
+          'Mais de 2 metros de distância em qualquer tamanho de monitor',
+          'A distância não tem qualquer importância para a saúde dos olhos',
         ],
         en: [
-          'Because the extreme contrast between bright screen and dark room causes severe eye strain',
-          'Because blue light harms the internal circuits of the computer',
-          'Because the webcam light sensor becomes permanently disabled',
-          'There is no effect on student eyesight or fatigue',
+          'Approximately an arm’s length away (about 45 to 70 centimeters)',
+          'Less than 15 centimeters, almost touching the glass with your nose',
+          'More than 2 meters away regardless of monitor size',
+          'Distance has no importance for eye health',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'A pupila tem de dilatar e contrair constantemente, provocando cansaço e dores de cabeça.',
-        en: 'The pupil struggles with extreme brightness contrast, inducing ocular fatigue and headaches.',
+        pt: 'Manter a distância de um braço esticado (45 a 70 cm) permite ler sem esforço e protege a vista do cansaço excessivo.',
+        en: 'Maintaining an arm’s length distance (45 to 70 cm) ensures effortless reading while protecting eyes from strain.',
       },
     },
     {
       id: 'ergo-q8',
       question: {
-        pt: 'O que deves fazer quando usas um computador portátil durante várias horas seguidas?',
-        en: 'What should you do when using a laptop for several consecutive hours?',
+        pt: 'Como devem estar os pulsos e as mãos enquanto estás a escrever no teclado e a usar o rato?',
+        en: 'How should wrists and hands be positioned while typing on the keyboard and using the mouse?',
       },
       options: {
         pt: [
-          'Elevar o portátil com um suporte e utilizar um teclado e rato externos',
-          'Pousar o portátil no colo em cima das pernas dobradas na cama',
-          'Deitar de barriga para baixo no tapete com o pescoço dobrado para trás',
-          'Segurar o portátil com uma só mão no ar',
+          'Direitos e alinhados numa linha contínua com os antebraços, sem dobras forçadas',
+          'Muito dobrados para trás em ângulo agudo contra a secretária',
+          'Torcidos para os lados ao clicar nos botões do rato',
+          'Apoiados no bordo afiado da mesa com os dedos a apontar para baixo',
         ],
         en: [
-          'Elevate the laptop with a stand and connect an external mouse and keyboard',
-          'Balance the laptop on your lap in bed with folded knees',
-          'Lie on your stomach on the rug with your neck hyperextended',
-          'Hold the laptop with one hand in the air',
+          'Straight and aligned in a continuous line with forearms, without forced bends',
+          'Bent backward sharply against the desk surface',
+          'Twisted sideways while clicking mouse buttons',
+          'Resting on the sharp table edge with fingers pointing downwards',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Usar um suporte para elevar o ecrã e, quando possível, um teclado e rato externos pode ajudar a manter uma posição mais confortável.',
-        en: 'Using a stand to raise the screen and, when possible, an external keyboard and mouse can help maintain a more comfortable position.',
+        pt: 'Manter os pulsos direitos e alinhados com os braços previne a tensão muscular e protege as articulações.',
+        en: 'Keeping wrists straight and aligned with arms prevents muscle strain and protects joints.',
       },
     },
     {
       id: 'ergo-q9',
       question: {
-        pt: 'O que significa o termo "Pescoço de Texto" (Text Neck)?',
-        en: 'What does the term "Text Neck" mean?',
+        pt: 'Qual destas afirmações sobre a organização da secretária de estudo é a mais adequada?',
+        en: 'Which statement about study desk organization is the most appropriate?',
       },
       options: {
         pt: [
-          'A dor e tensão muscular causada por inclinar a cabeça para a frente e para baixo para o telemóvel',
-          'Uma nova gola de camisola com símbolos do teclado',
-          'Um acessório para pendurar computadores ao pescoço',
-          'Uma massagem relaxante feita por robôs',
+          'A secretária deve ter espaço livre para os cadernos e antebraços, e espaço desimpedido por baixo para as pernas',
+          'A secretária deve estar cheia de caixas por baixo para não conseguires esticar as pernas',
+          'O teclado deve ficar encostado à borda sem qualquer espaço de apoio para as mãos',
+          'O monitor deve ficar colocado num canto distante onde seja preciso torcer o pescoço para ver',
         ],
         en: [
-          'Pain and muscle strain caused by constantly tilting your head down at a smartphone',
-          'A new sweater collar with keyboard keys',
-          'A strap for hanging desktop towers around the neck',
-          'A relaxing massage given by robots',
+          'The desk should have clear space for notebooks and forearms, and open space underneath for legs',
+          'The area under the desk should be packed with boxes so legs cannot move',
+          'The keyboard should sit on the very edge leaving zero hand support space',
+          'The monitor should sit in a far corner forcing the neck to twist sideways',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Inclinar a cabeça para baixo multiplica a força exercida sobre as vértebras cervicais.',
-        en: 'Bending the head downward multiplies the mechanical load on cervical vertebrae.',
+        pt: 'Uma secretária organizada e desimpedida permite movimentar os braços e as pernas com liberdade e conforto.',
+        en: 'An organized, clutter-free desk allows arms and legs to move freely and comfortably.',
       },
     },
     {
       id: 'ergo-q10',
       question: {
-        pt: 'Como deves segurar o telemóvel para proteger a tua postura?',
-        en: 'How should you hold your phone to protect your posture?',
+        pt: 'O sol está a provocar um reflexo forte no ecrã do computador do Pedro. Qual é a melhor solução?',
+        en: 'Sunlight is causing harsh glare on Pedro’s computer screen. What is the best solution?',
       },
       options: {
         pt: [
-          'Elevar os braços para que o ecrã fique à altura dos olhos, sem baixar a cabeça',
-          'Pousá-lo no joelho e dobrar o pescoço a 90 graus',
-          'Segurá-lo deitado de lado no chão',
-          'Apertá-lo entre a orelha e o ombro enquanto escreves',
+          'Ajustar a cortina da janela ou orientar o ecrã para que a luz natural venha de lado',
+          'Apagar todas as lâmpadas e continuar a trabalhar no escuro absoluto',
+          'Aumentar o brilho do monitor no máximo e colar o rosto ao ecrã',
+          'Continuar a estudar sem fazer nada mesmo sem conseguir ler',
         ],
         en: [
-          'Bring the device up towards eye level instead of bending your neck down',
-          'Rest it on your knee and bend your neck down 90 degrees',
-          'Hold it while lying sideways on the floor',
-          'Clamp it between your ear and shoulder while typing',
+          'Adjust the window curtain or reposition the screen so natural light comes from the side',
+          'Turn off all lamps and continue working in total darkness',
+          'Turn monitor brightness to maximum and glue face to the screen',
+          'Continue studying without doing anything despite unreadable text',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Trazer o telemóvel até aos olhos mantém o pescoço direito e relaxado.',
-        en: 'Bringing the phone up to your eyes keeps your cervical spine neutral and relaxed.',
+        pt: 'A luz deve vir preferencialmente de lado, evitando reflexos diretos no monitor e protegendo a visão de encandeamentos.',
+        en: 'Light should ideally come from the side, avoiding direct screen reflections and shielding eyes from glare.',
       },
     },
     {
       id: 'ergo-q11',
       question: {
-        pt: 'Qual é a posição correta dos pulsos enquanto utilizas o teclado e o rato?',
-        en: 'What is the correct wrist position when using keyboard and mouse?',
+        pt: 'Porque é que não devemos utilizar o computador num quarto totalmente às escuras apenas com o brilho do ecrã?',
+        en: 'Why should we avoid using a computer in total darkness with only the screen light?',
       },
       options: {
         pt: [
-          'Direitos e alinhados com os antebraços, sem dobras forçadas para cima ou para baixo',
-          'Derrubados e dobrados para trás em ângulo reto',
-          'Torcidos de lado a forçar as articulações',
-          'Apertados com elásticos rígidos',
+          'Porque a diferença de luminosidade entre o ecrã brilhante e o quarto escuro causa grande cansaço visual',
+          'Porque a bateria do computador descarrega duas vezes mais rápido no escuro',
+          'Porque a câmara do computador desliga-se automaticamente sem luz ambiente',
+          'Porque o teclado perde a cor das letras quando não há iluminação',
         ],
         en: [
-          'Straight and aligned with forearms, without forced upward or downward bends',
-          'Bent backward at sharp right angles',
-          'Twisted sideways straining joints',
-          'Tied with tight elastic bands',
+          'Because the extreme contrast between the bright screen and the dark room causes intense visual strain',
+          'Because the computer battery drains twice as fast in the dark',
+          'Because the computer webcam automatically shuts off without ambient light',
+          'Because key lettering fades away when there is no lighting',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Manter os pulsos direitos numa linha contínua com os antebraços evita inflamações (tendinites).',
-        en: 'Keeping wrists straight aligned with forearms prevents tendon inflammation.',
+        pt: 'O contraste excessivo entre o ecrã e o quarto escuro obriga os olhos a um esforço contínuo, podendo provocar cansaço e dores de cabeça.',
+        en: 'High contrast between screen and dark surroundings strains the eyes continually, often causing fatigue and headaches.',
       },
     },
     {
       id: 'ergo-q12',
       question: {
-        pt: 'O que deves fazer com frequência aos teus olhos durante o trabalho ao computador?',
-        en: 'What should you do frequently with your eyes while working at a computer?',
+        pt: 'Durante uma sessão prolongada de estudo ao computador, o que é recomendado fazer a cada 30 a 40 minutos?',
+        en: 'During a prolonged study session on the computer, what is recommended every 30 to 40 minutes?',
       },
       options: {
         pt: [
-          'Pestanejar conscientemente e olhar para longe pela janela para lubrificar a vista',
-          'Manter os olhos o mais abertos possível durante 10 minutos sem pestanejar',
-          'Esfregar com força os olhos com as mãos sujas',
-          'Aproximar o rosto a 2 cm do ecrã',
+          'Fazer uma pequena pausa de 3 a 5 minutos, levantar, esticar o corpo e olhar para longe para descansar os olhos',
+          'Continuar a olhar fixamente para o ecrã sem pestanejar para terminar mais rápido',
+          'Apenas trocar de mão no rato sem levantar da cadeira durante várias horas',
+          'Reiniciar o computador para forçar o corpo a esperar sentado',
         ],
         en: [
-          'Blink intentionally and look into the distance to keep eyes moist',
-          'Keep eyes wide open for 10 minutes without blinking',
-          'Rub eyes vigorously with unwashed hands',
-          'Bring your face 2 cm away from the screen',
+          'Take a short 3 to 5 minute break, stand up, stretch the body, and look at a distant point to rest eyes',
+          'Keep staring fixedly at the screen without blinking to finish faster',
+          'Just switch hands on the mouse without leaving the chair for hours',
+          'Reboot the computer to force yourself to wait seated',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Pestanejar espalha a lágrima natural e olhar para longe relaxa o músculo de focagem.',
-        en: 'Blinking spreads tear film and looking into the distance relaxes the focusing muscle.',
+        pt: 'Levantar e mexer o corpo estimula a circulação, relaxa os músculos e descansar os olhos olhando para longe previne a fadiga visual.',
+        en: 'Standing up stimulates blood flow, relaxes muscles, and looking into the distance prevents ocular fatigue.',
       },
     },
     {
       id: 'ergo-q13',
       question: {
-        pt: 'Como deve ser a cadeira ideal para estudar ao computador?',
-        en: 'What should an ideal study chair look like?',
+        pt: 'A Leonor precisa de usar o computador portátil durante várias horas para fazer um projeto escolar. O que pode ajudá-la?',
+        en: 'Leonor needs to use her laptop for several hours on a school project. What can help her?',
       },
       options: {
         pt: [
-          'Com altura regulável, encosto ergonómico com apoio lombar e assento estável',
-          'Um banco de madeira rígido sem encosto nem regulação',
-          'Um sofá muito mole onde o corpo afunda e fica todo curvado',
-          'Um banquinho com apenas duas pernas instáveis',
+          'Usar um suporte para elevar o ecrã à altura dos olhos e, se possível, ligar um teclado e rato externos',
+          'Trabalhar deitada na cama de barriga para baixo com o portátil no chão',
+          'Pousar o portátil nas pernas e dobrar a cabeça até encostar ao queixo',
+          'Segurar o portátil no ar com uma só mão enquanto digita com a outra',
         ],
         en: [
-          'Adjustable height, ergonomic backrest with lumbar support, and stable base',
-          'A rigid wooden backless stool',
-          'A deep sinking couch where you hunch and sink',
-          'An unstable two-legged stool',
+          'Use a stand to raise the screen to eye level and, if possible, connect an external keyboard and mouse',
+          'Work lying face down on the bed with the laptop on the floor',
+          'Rest the laptop on her lap and bend her head until her chin touches her chest',
+          'Hold the laptop in the air with one hand while typing with the other',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Uma cadeira regulável com apoio lombar permite ajustar a altura aos joelhos e proteger as costas.',
-        en: 'An adjustable chair with lumbar contour accommodates height and protects the spine.',
+        pt: 'Elevar o portátil com um suporte e utilizar teclado e rato externos permite manter uma postura tão confortável como num computador de secretária.',
+        en: 'Raising the laptop with a stand and using external peripherals maintains comfortable desk posture.',
       },
     },
     {
       id: 'ergo-q14',
       question: {
-        pt: 'O que deves fazer a cada 45 a 60 minutos de estudo ao computador?',
-        en: 'What should you do every 45 to 60 minutes of studying on a computer?',
+        pt: 'O Diogo passa muito tempo a olhar para o telemóvel com a cabeça inclinada para baixo ("Pescoço de Texto"). O que deve fazer?',
+        en: 'Diogo spends a lot of time looking down at his smartphone ("Text Neck"). What should he do?',
       },
       options: {
         pt: [
-          'Fazer uma pausa de 3 a 5 minutos, levantar, esticar o corpo e beber água',
-          'Continuar a estudar sem interrupções para não quebrar a concentração',
-          'Apenas piscar os olhos duas vezes sem sair da cadeira',
-          'Reiniciar o computador para limpar a memória temporária',
+          'Elevar o telemóvel até próximo do nível dos olhos para manter a cabeça e o pescoço direitos',
+          'Inclinar ainda mais o pescoço para a frente para ficar mais perto do ecrã',
+          'Pousar o telemóvel nos joelhos e dobrar as costas completamente',
+          'Apertar o telemóvel entre o ombro e a orelha enquanto envia mensagens',
         ],
         en: [
-          'Take a 3-5 minute break, stand up, stretch your body, and drink water',
-          'Continue studying without interruption to maintain focus',
-          'Only blink twice without getting out of your chair',
-          'Restart the computer to clear temporary cache memory',
+          'Bring the phone up closer to eye level to keep head and neck straight',
+          'Tilt the neck even further forward to get closer to the display',
+          'Rest the phone on his knees and bend his back completely',
+          'Clamp the phone between shoulder and ear while sending messages',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Levantar e caminhar durante alguns minutos ajuda a descansar o corpo e a evitar permanecer demasiado tempo na mesma posição.',
-        en: 'Standing and walking for a few minutes helps rest the body and avoids staying in the same position for too long.',
+        pt: 'Trazer o telemóvel até à altura dos olhos evita que o peso da cabeça sobrecarregue os músculos do pescoço.',
+        en: 'Bringing the phone up to eye level prevents head weight from straining neck muscles.',
       },
     },
     {
       id: 'ergo-q15',
       question: {
-        pt: 'Qual destas frases sobre a secretária de estudo é VERDADEIRA?',
-        en: 'Which statement about the study desk is TRUE?',
+        pt: 'O Pedro tem a cadeira muito alta com os pés pendurados, o ecrã pousado muito baixo e está há 2 horas sem se levantar. Qual é o plano de correção ergonómica mais completo?',
+        en: 'Pedro has his chair too high with dangling feet, the monitor placed too low, and has sat for 2 hours without moving. What is the most complete ergonomic fix plan?',
       },
       options: {
         pt: [
-          'A mesa deve ter espaço livre suficiente para apoiar confortavelmente os antebraços e os cadernos',
-          'O teclado deve ficar encostado ao bordo da mesa sem qualquer espaço para os pulsos',
-          'A mesa deve ser tão alta que tenhas de levantar os braços acima dos ombros',
-          'O ecrã deve ficar encostado à beira da mesa para leitura aproximada',
+          'Colocar um apoio de pés, elevar o monitor com um suporte e fazer uma pausa para levantar e esticar o corpo',
+          'Desligar o computador imediatamente e nunca mais fazer trabalhos escolares',
+          'Apenas trocar de cadeira sem alterar a altura do ecrã nem apoiar os pés',
+          'Continuar na mesma posição até terminar o trabalho e só descansar no dia seguinte',
         ],
         en: [
-          'The desk should have clear space to comfortably rest forearms and notebooks',
-          'The keyboard should sit on the table edge leaving zero space for wrists',
-          'The desk should be so high that your arms are raised above your shoulders',
-          'The monitor should touch the front desk edge for close reading',
+          'Place a footrest, raise the monitor with a stand, and take an active break to stand and stretch',
+          'Shut down the computer permanently and never do schoolwork again',
+          'Just swap chairs without adjusting screen height or supporting feet',
+          'Stay in the same posture until work is finished and only rest the next day',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Ter espaço livre permite apoiar os antebraços e utilizar o rato com movimentos naturais.',
-        en: 'Adequate desktop clearance allows forearm support and smooth, natural mouse movements.',
-      },
-    },
-    {
-      id: 'ergo-q16',
-      question: {
-        pt: 'Se sentires dores frequentes no pescoço ou nas costas após usar o computador, o que deves fazer?',
-        en: 'If you frequently experience neck or back pain after computer use, what should you do?',
-      },
-      options: {
-        pt: [
-          'Falar com os teus pais ou professor para rever e corrigir a postura e a regulação da cadeira e ecrã',
-          'Ignorar a dor e passar o dobro do tempo a jogar',
-          'Tomar comprimidos sem autorização médica e continuar torto',
-          'Deixar de fazer os trabalhos da escola para sempre',
-        ],
-        en: [
-          'Talk to parents or teachers to audit posture and adjust chair and screen ergonomics',
-          'Ignore the pain and double your gaming time',
-          'Take medications without medical guidance and keep slouching',
-          'Stop doing homework forever',
-        ],
-      },
-      correctIndex: 0,
-      explanation: {
-        pt: 'A dor é um sinal de alerta do corpo. Conversar com um adulto permite ajustar a secretária e a postura.',
-        en: 'Pain is the body’s warning signal. Reviewing workstation setup with an adult prevents chronic issues.',
+        pt: 'Excelente! Resolver em conjunto o apoio dos pés, a altura do ecrã e realizar pausas ativas garante um ambiente de estudo verdadeiramente saudável e ergonómico.',
+        en: 'Excellent! Addressing foot support, screen height, and taking active breaks together creates a truly healthy and ergonomic study environment.',
       },
     },
   ],

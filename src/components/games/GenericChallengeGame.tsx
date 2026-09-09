@@ -128,38 +128,98 @@ export const CHALLENGE_DATA: Record<string, {
   'desafio-licencas-cc': {
     title: { pt: '⚖️ O Desafio das Licenças Creative Commons', en: '⚖️ Creative Commons License Challenge' },
     instructions: {
-      pt: 'Identifica os símbolos CC e descobre como podes usar imagens e músicas nos teus trabalhos da escola.',
-      en: 'Recognize CC symbols and understand permissible uses for school projects.',
+      pt: 'Identifica os símbolos CC (BY, NC, ND, SA) e descobre como podes usar imagens e músicas nos teus trabalhos da escola.',
+      en: 'Recognize CC symbols (BY, NC, ND, SA) and understand permissible uses for school projects.',
     },
     questions: [
       {
         id: 'cc1',
         situation: {
-          pt: 'Encontraste uma imagem para o teu cartaz escolar com o símbolo CC-BY (Atribuição).',
-          en: 'You found an image with a CC-BY (Attribution) icon for your school poster.',
+          pt: 'Encontraste uma fotografia para o teu cartaz escolar com a licença CC-BY (Atribuição).',
+          en: 'You found a photograph with a CC-BY (Attribution) icon for your school poster.',
         },
         question: {
-          pt: 'O que tens obrigatoriamente de fazer para a usar legalmente?',
-          en: 'What is mandatory to use it legally?',
+          pt: 'O que tens de fazer para a utilizar legalmente no teu trabalho?',
+          en: 'What is required to use it legally in your schoolwork?',
         },
         options: {
           pt: [
-            'Indicar o nome do autor original e a fonte da imagem',
-            'Pagar uma quantia em dinheiro ao autor pelo correio',
-            'Não podes usar em circunstância alguma',
-            'Apagar a assinatura do autor com o editor de imagem',
+            'Indicar o nome do autor original e o link da fonte onde a encontraste',
+            'Pagar uma quantia em dinheiro ao autor por correio',
+            'Não podes usar de forma alguma na escola',
+            'Apagar a assinatura do autor com um editor de imagem',
           ],
           en: [
-            'Give clear credit to the author and cite the source link',
-            'Send money to the creator by post',
-            'Never use it under any circumstances',
+            'Give clear credit to the author and link to the source',
+            'Send money to the author by mail',
+            'You cannot use it in school at all',
             'Erase author signatures using image editing software',
           ],
         },
         correctIndex: 0,
         explanation: {
-          pt: 'A licença CC-BY permite determinados usos e adaptações, desde que seja dada atribuição ao autor e sejam respeitadas as condições da licença.',
-          en: 'CC-BY allows certain uses and adaptations, provided the author is attributed and the license terms are respected.',
+          pt: 'A licença CC-BY permite partilhar e adaptar a obra livremente, desde que se dê sempre o devido crédito ao autor original.',
+          en: 'CC-BY allows free sharing and adaptation as long as the original creator is properly credited.',
+        },
+      },
+      {
+        id: 'cc2',
+        situation: {
+          pt: 'Uma música instrumental tem o símbolo CC-NC (Não Comercial). Um aluno quer usar a música como fundo num vídeo para apresentar na aula de TIC.',
+          en: 'An instrumental song has the CC-NC (Non-Commercial) icon. A student wants to use it as background music for an in-class presentation.',
+        },
+        question: {
+          pt: 'O trabalho escolar é considerado um uso permitido por esta licença?',
+          en: 'Is this school presentation allowed under this license?',
+        },
+        options: {
+          pt: [
+            'Sim, porque é para fins educativos na escola e ninguém está a vender ou a lucrar com o vídeo',
+            'Não, a música só pode ser ouvida no telemóvel do autor',
+            'Só se o aluno vender o vídeo a outras turmas',
+            'Não, é proibido usar qualquer música em apresentações escolares',
+          ],
+          en: [
+            'Yes, because it is for educational classroom purposes without any financial profit or commercial sale',
+            'No, the music can only be played on the creator’s device',
+            'Only if the student sells the video to other classes',
+            'No, all music is banned from school presentations',
+          ],
+        },
+        correctIndex: 0,
+        explanation: {
+          pt: 'O símbolo "NC" (Não Comercial) proíbe a venda ou lucro comercial. A utilização para um trabalho escolar sem fins lucrativos é perfeitamente autorizada com atribuição!',
+          en: 'NC prohibits commercial exploitation. Non-profit classroom usage with proper attribution is fully compliant.',
+        },
+      },
+      {
+        id: 'cc3',
+        situation: {
+          pt: 'Encontraste um desenho com a indicação CC-ND (Sem Derivações). Queres recortar apenas uma parte da imagem e mudar a cor de fundo.',
+          en: 'You found an illustration marked CC-ND (No Derivatives). You want to crop out a section and alter its background color.',
+        },
+        question: {
+          pt: 'A licença CC-ND permite fazer esta alteração gráfica?',
+          en: 'Does the CC-ND license allow this graphical alteration?',
+        },
+        options: {
+          pt: [
+            'Não, porque "ND" significa que a imagem deve ser mantida na íntegra, sem alterações ou cortes',
+            'Sim, podes mudar tudo desde que não digas a ninguém',
+            'Sim, a licença ND obriga a mudar as cores originais',
+            'Não, obras com licença ND não podem ser vistas por crianças',
+          ],
+          en: [
+            'No, because "ND" specifies that the artwork must be used in its entirety without modifications or edits',
+            'Yes, you can edit anything as long as you keep it secret',
+            'Yes, ND mandates changing original colors',
+            'No, ND works cannot be viewed by minors',
+          ],
+        },
+        correctIndex: 0,
+        explanation: {
+          pt: 'O símbolo "ND" (No Derivatives / Sem Derivações) permite partilhar a obra original, mas proíbe que seja modificada, cortada ou remixada.',
+          en: 'ND allows sharing of original works, but strictly forbids creating altered versions or remixes.',
         },
       },
     ],
@@ -167,38 +227,68 @@ export const CHALLENGE_DATA: Record<string, {
   'desafio-montar-referencia': {
     title: { pt: '📚 Construtor de Referências Bibliográficas', en: '📚 Bibliography Citation Builder' },
     instructions: {
-      pt: 'Ordena os elementos de uma citação fiável: Autor, Ano, Título e Endereço Web.',
-      en: 'Organize the elements of an academic reference: Author, Year, Title, and Source URL.',
+      pt: 'Aprende a estruturar citações e referências fiáveis para os teus trabalhos escolares de TIC e outras disciplinas.',
+      en: 'Learn to structure reliable citations and references for your ICT projects and schoolwork.',
     },
     questions: [
       {
         id: 'ref1',
         situation: {
-          pt: 'Consultaste o artigo "As Aves de Portugal" escrito por Carlos Antunes em 2023 no site Ciência Hoje.',
-          en: 'You referenced "Birds of Portugal" by Carlos Antunes published in 2023 on Science Today.',
+          pt: 'Consultaste o artigo online "As Aves de Portugal" escrito pelo biólogo Carlos Antunes em 2023 no portal Ciência Viva.',
+          en: 'You referenced the online article "Birds of Portugal" written by Carlos Antunes in 2023 on Ciência Viva.',
         },
         question: {
-          pt: 'Qual é a estrutura correta para a bibliografia final do teu trabalho?',
-          en: 'What is the correct citation format for your bibliography?',
+          pt: 'Qual é o formato correto e completo para a Webgrafia do teu trabalho?',
+          en: 'What is the correct, complete citation for your bibliography?',
         },
         options: {
           pt: [
-            'ANTUNES, Carlos (2023). As Aves de Portugal. Ciência Hoje. https://cienciahoje.pt/aves',
-            'Pesquisei no Google ontem à tarde',
+            'ANTUNES, Carlos (2023). As Aves de Portugal. Ciência Viva. Consultado em https://cienciaviva.pt/aves',
+            'Google Imagens / Internet',
+            'Um senhor chamado Carlos escreveu numa página web',
             'www.google.pt',
-            'Um senhor chamado Carlos escreveu numa página da internet',
           ],
           en: [
-            'ANTUNES, Carlos (2023). Birds of Portugal. Science Today. https://sciencetoday.pt/birds',
-            'I found it on Google yesterday',
+            'ANTUNES, Carlos (2023). Birds of Portugal. Ciência Viva. Accessed at https://cienciaviva.pt/aves',
+            'Google Images / Internet',
+            'Some person named Carlos wrote on a site',
             'www.google.com',
-            'Some guy named Carlos wrote a webpage',
           ],
         },
         correctIndex: 0,
         explanation: {
-          pt: 'Uma referência bibliográfica inclui Autor, Ano, Título da obra, Nome da fonte e o respetivo endereço web (URL).',
-          en: 'A valid bibliographic citation requires Author, Year, Title, Source, and URL.',
+          pt: 'Uma referência bibliográfica completa contém: Autor (QUEM), Ano (QUANDO), Título (O QUÊ), Fonte/Publicação (ONDE) e o Endereço URL de acesso.',
+          en: 'A complete reference includes: Author (WHO), Year (WHEN), Title (WHAT), Publisher (WHERE), and the URL.',
+        },
+      },
+      {
+        id: 'ref2',
+        situation: {
+          pt: 'Utilizaste uma frase exata do livro de Ciências Naturais para apoiar uma explicação no teu documento de texto.',
+          en: 'You used an exact sentence from your Natural Sciences textbook in your text report.',
+        },
+        question: {
+          pt: 'Como deves apresentar essa frase no corpo do texto para evitar plágio?',
+          en: 'How should you format that exact sentence in your text to prevent plagiarism?',
+        },
+        options: {
+          pt: [
+            'Colocar o texto entre aspas ("...") e indicar imediatamente a autoria ou a página do manual',
+            'Mudar a cor da letra para amarelo para que ninguém note',
+            'Dizer que foste tu que inventaste aquela frase',
+            'Apagar o nome do autor do livro',
+          ],
+          en: [
+            'Enclose the text in quotation marks ("...") and identify the author or textbook page',
+            'Change font color to yellow so nobody notices',
+            'Claim you invented the sentence yourself',
+            'Erase the book author’s name',
+          ],
+        },
+        correctIndex: 0,
+        explanation: {
+          pt: 'As aspas ("...") indicam que se trata de uma citação textual (palavra por palavra). A identificação do autor atribui o devido mérito.',
+          en: 'Quotation marks show a direct verbatim excerpt, while attributing the author acknowledges intellectual merit.',
         },
       },
     ],

@@ -4,16 +4,30 @@ import { ThemeDefinition, ActivityProgress, Language } from '../types';
 import { translations } from '../i18n/translations';
 import { ThemeIllustration } from './illustrations/ThemeIllustrations';
 import { getThemeImage, getThemeStepImage, getChallengeImage } from '../data/themeImages';
-import { SitPostureInfographicPT } from './SitPostureInfographicPT';
 import { DosDontsPostureInfographicPT } from './DosDontsPostureInfographicPT';
 import { PostureCorrectionSimulator } from './PostureCorrectionSimulator';
+import { MonitorLightingLab } from './MonitorLightingLab';
 import { PhishingMessageSimulator } from './PhishingMessageSimulator';
 import { PasswordStrengthTester } from './PasswordStrengthTester';
+import { PasswordBattleCard } from './PasswordBattleCard';
+import { PasswordSharingDilemmas } from './PasswordSharingDilemmas';
+import { PersonalDataClassifier } from './PersonalDataClassifier';
+import { SocialMediaPrivacyLab } from './SocialMediaPrivacyLab';
+import { UrlAnatomyExplorer } from './UrlAnatomyExplorer';
+import { FakeNewsDetectorLab } from './FakeNewsDetectorLab';
+import { DownloadTrapsExplorer } from './DownloadTrapsExplorer';
+import { EmailAddressAnatomy } from './EmailAddressAnatomy';
 import { InteractiveEmailExplorer } from './InteractiveEmailExplorer';
-import { ErgonomicsBreakTimer } from './ErgonomicsBreakTimer';
+import { NetiquetteFixerLab } from './NetiquetteFixerLab';
+import { EmailAttachmentScanner } from './EmailAttachmentScanner';
+import { IntellectualPropertyExplorer } from './IntellectualPropertyExplorer';
+import { PlagiarismVsEthicsLab } from './PlagiarismVsEthicsLab';
 import { DigitalFootprintSimulator } from './DigitalFootprintSimulator';
 import { CitationSimulator } from './CitationSimulator';
 import { LicensesVisualCard } from './LicensesVisualCard';
+import { TicApplicationsExplorer } from './TicApplicationsExplorer';
+import { TicEvolutionExplorer } from './TicEvolutionExplorer';
+import { CyberbullyingActionCard } from './CyberbullyingActionCard';
 
 interface ThemeViewProps {
   theme: ThemeDefinition;
@@ -271,109 +285,103 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                   {currentLesson.h[language]}
                 </h2>
 
-                {/* Layout: Full width vertical stacking for rich comparative infographics, or 2-column layout for standard illustrations */}
-                {theme.id === 'ergonomia' && currentStepIndex === 4 ? (
-                  <div className="space-y-6">
-                    {/* Content Body */}
-                    <div
-                      className="text-sm sm:text-base text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"
-                      dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
-                    />
+                {/* Pedagogical Step Renderer: Explanation + Hands-on Interactive Lab */}
+                <div className="space-y-6 w-full">
+                  {/* Content Body Explanation */}
+                  <div
+                    className="text-sm sm:text-base text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"
+                    dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
+                  />
 
-                    {/* Infographic placed below text across full width with no scroll */}
-                    <div className="w-full">
-                      <DosDontsPostureInfographicPT />
-                    </div>
-                  </div>
-                ) : theme.id === 'ergonomia' && currentStepIndex === 1 ? (
-                  <div className="space-y-6">
-                    {/* Content Body */}
-                    <div
-                      className="text-sm sm:text-base text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"
-                      dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
-                    />
+                  {/* Interactive Pedagogical Widget matching the current step */}
+                  <div className="w-full pt-2">
+                    {/* TEMA 1: As TIC e a Sociedade */}
+                    {theme.id === 'tic-sociedade' && currentStepIndex === 1 && (
+                      <TicApplicationsExplorer language={language} />
+                    )}
+                    {theme.id === 'tic-sociedade' && currentStepIndex === 2 && (
+                      <TicEvolutionExplorer language={language} />
+                    )}
+                    {theme.id === 'tic-sociedade' && currentStepIndex === 3 && (
+                      <CyberbullyingActionCard language={language} />
+                    )}
 
-                    {/* Interactive Posture Correction Simulator */}
-                    <div className="w-full">
+                    {/* TEMA 2: Ergonomia e Bem-Estar */}
+                    {theme.id === 'ergonomia' && currentStepIndex === 1 && (
                       <PostureCorrectionSimulator language={language} />
-                    </div>
+                    )}
+                    {theme.id === 'ergonomia' && currentStepIndex === 2 && (
+                      <MonitorLightingLab language={language} />
+                    )}
+                    {theme.id === 'ergonomia' && currentStepIndex === 4 && (
+                      <DosDontsPostureInfographicPT />
+                    )}
 
-                    {/* Infographic placed below */}
-                    <div className="w-full max-w-3xl mx-auto pt-2">
-                      <SitPostureInfographicPT />
-                    </div>
-                  </div>
-                ) : theme.id === 'correio-eletronico' && (currentLesson.eyebrow.pt === 'Exemplo' || currentStepIndex === 2) ? (
-                  <div className="space-y-6">
-                    {/* Interactive Email Elements Activity */}
-                    <InteractiveEmailExplorer />
-                  </div>
-                ) : theme.id === 'direitos-autor' && (currentLesson.eyebrow.pt.includes('Norma APA') || currentStepIndex === lessons.length - 1) ? (
-                  <div className="space-y-6">
-                    {/* Content Body */}
-                    <div
-                      className="text-sm sm:text-base text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"
-                      dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
-                    />
+                    {/* TEMA 3: Palavras-passe e Autenticação */}
+                    {theme.id === 'palavras-passe' && currentStepIndex === 1 && (
+                      <PasswordBattleCard language={language} />
+                    )}
+                    {theme.id === 'palavras-passe' && currentStepIndex === 2 && (
+                      <PasswordSharingDilemmas language={language} />
+                    )}
+                    {theme.id === 'palavras-passe' && currentStepIndex === 3 && (
+                      <PasswordStrengthTester />
+                    )}
 
-                    {/* Interactive APA 7 Citation Simulator */}
-                    <div className="w-full">
-                      <CitationSimulator language={language} />
-                    </div>
-                  </div>
-                ) : theme.id === 'direitos-autor' && currentStepIndex === 1 ? (
-                  <div className="space-y-8 w-full max-w-5xl mx-auto">
-                    {/* Centered intro text */}
-                    <div
-                      className="text-base sm:text-lg text-slate-700 leading-relaxed text-center max-w-3xl mx-auto font-medium"
-                      dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
-                    />
+                    {/* TEMA 4: Segurança Digital e Privacidade */}
+                    {(theme.id === 'seguranca' || theme.id === 'seguranca-digital') && currentStepIndex === 0 && (
+                      <PersonalDataClassifier language={language} />
+                    )}
+                    {(theme.id === 'seguranca' || theme.id === 'seguranca-digital') && currentStepIndex === 1 && (
+                      <PhishingMessageSimulator />
+                    )}
+                    {(theme.id === 'seguranca' || theme.id === 'seguranca-digital') && currentStepIndex === 2 && (
+                      <SocialMediaPrivacyLab language={language} />
+                    )}
+                    {(theme.id === 'seguranca' || theme.id === 'seguranca-digital') && currentStepIndex === 4 && (
+                      <DigitalFootprintSimulator />
+                    )}
 
-                    {/* Official License Symbols Cards taking full center width */}
-                    <div className="w-full">
+                    {/* TEMA 5: Navegar e Pesquisar na Internet */}
+                    {theme.id === 'navegar-internet' && currentStepIndex === 0 && (
+                      <UrlAnatomyExplorer language={language} />
+                    )}
+                    {theme.id === 'navegar-internet' && currentStepIndex === 1 && (
+                      <FakeNewsDetectorLab language={language} />
+                    )}
+                    {theme.id === 'navegar-internet' && currentStepIndex === 2 && (
+                      <DownloadTrapsExplorer language={language} />
+                    )}
+
+                    {/* TEMA 6: Correio Eletrónico (Email) */}
+                    {theme.id === 'correio-eletronico' && currentStepIndex === 0 && (
+                      <EmailAddressAnatomy language={language} />
+                    )}
+                    {theme.id === 'correio-eletronico' && currentStepIndex === 1 && (
+                      <InteractiveEmailExplorer />
+                    )}
+                    {theme.id === 'correio-eletronico' && currentStepIndex === 2 && (
+                      <EmailAttachmentScanner language={language} />
+                    )}
+                    {theme.id === 'correio-eletronico' && currentStepIndex === 3 && (
+                      <NetiquetteFixerLab language={language} />
+                    )}
+
+                    {/* TEMA 7: Direitos de Autor e Ética Digital */}
+                    {theme.id === 'direitos-autor' && currentStepIndex === 0 && (
+                      <IntellectualPropertyExplorer language={language} />
+                    )}
+                    {theme.id === 'direitos-autor' && currentStepIndex === 1 && (
                       <LicensesVisualCard language={language} />
-                    </div>
+                    )}
+                    {theme.id === 'direitos-autor' && currentStepIndex === 2 && (
+                      <PlagiarismVsEthicsLab language={language} />
+                    )}
+                    {theme.id === 'direitos-autor' && currentStepIndex === 4 && (
+                      <CitationSimulator language={language} />
+                    )}
                   </div>
-                ) : (
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    <div className="lg:col-span-7 space-y-4">
-                      {/* Content Body */}
-                      <div
-                        className="text-sm sm:text-base text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"
-                        dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
-                      />
-                    </div>
-
-                    {/* Visual Infographic / Illustration Card per step */}
-                    <div className="lg:col-span-5 flex flex-col items-center">
-                      {theme.id === 'seguranca' && currentStepIndex === 3 ? (
-                        <PhishingMessageSimulator />
-                      ) : (theme.id === 'seguranca' || theme.id === 'seguranca-digital') && currentStepIndex === 4 ? (
-                        <DigitalFootprintSimulator />
-                      ) : theme.id === 'palavras-passe' && currentStepIndex === 3 ? (
-                        <PasswordStrengthTester />
-                      ) : theme.id === 'ergonomia' && currentStepIndex === 3 ? (
-                        <ErgonomicsBreakTimer />
-                      ) : (
-                        <div className="w-full rounded-2xl overflow-hidden border-2 border-indigo-100 shadow-md bg-slate-50 relative group">
-                          <img
-                            key={`${theme.id}-step-${currentStepIndex}`}
-                            src={currentStepImg}
-                            alt={currentLesson.h[language]}
-                            referrerPolicy="no-referrer"
-                            className="w-full h-56 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-300 animate-in fade-in"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
-                            <p className="text-white text-xs font-semibold drop-shadow-sm flex items-center gap-1.5">
-                              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                              <span>{currentLesson.eyebrow[language]}</span>
-                            </p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
+                </div>
 
                 {/* Bottom Navigation Buttons */}
                 <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -457,41 +465,6 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
               <span>{theme.challenges.length} {language === 'pt' ? 'Atividades Disponíveis' : 'Activities Available'}</span>
             </div>
           </div>
-
-          {theme.id === 'direitos-autor' && (
-            <div className="mb-6">
-              <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-amber-500 via-amber-600 to-orange-600 text-white shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4 border border-amber-400/40">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-3xl shadow-inner shrink-0">
-                    🎓
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-300 text-amber-950">
-                      {language === 'pt' ? 'Ferramenta & Jogo Interativo' : 'Interactive Tool & Game'}
-                    </span>
-                    <h3 className="text-lg font-black text-white mt-1">
-                      {language === 'pt' ? 'Simulador de Citações APA (7.ª edição)' : 'APA (7th ed) Citation Simulator'}
-                    </h3>
-                    <p className="text-xs text-amber-100 font-medium max-w-xl mt-0.5">
-                      {language === 'pt'
-                        ? 'Aprende a citar páginas web, notícias (ex.: Soares, R. no Público), livros e vídeos sem erros! Inclui o minijogo "Detetive de Citações".'
-                        : 'Learn to cite web pages, news articles, books, and videos without outdated formulas! Includes the "Citation Detective" mini-game.'}
-                    </p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => {
-                    setActiveTab('content');
-                    setCurrentStepIndex(5);
-                  }}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white text-amber-900 font-black text-sm hover:bg-amber-50 transition-all shadow-md flex items-center justify-center gap-2 shrink-0 cursor-pointer"
-                >
-                  <Sparkles className="w-4 h-4 text-amber-600" />
-                  <span>{language === 'pt' ? 'Abrir Simulador' : 'Open Simulator'}</span>
-                </button>
-              </div>
-            </div>
-          )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {theme.challenges.map((chal) => {

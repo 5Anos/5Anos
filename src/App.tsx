@@ -21,10 +21,8 @@ import { SearchOperatorsGame } from './components/games/SearchOperatorsGame';
 import { CopyOrCreditGame } from './components/games/CopyOrCreditGame';
 import { ErgonomicsPostureGame } from './components/games/ErgonomicsPostureGame';
 import { TicWhatIsTechGame } from './components/games/TicWhatIsTechGame';
-import { TicHelpSchoolGame } from './components/games/TicHelpSchoolGame';
 import { TicCyberbullyingGame } from './components/games/TicCyberbullyingGame';
 import { TicDigitalFootprintGame } from './components/games/TicDigitalFootprintGame';
-import { TicEcommerceGame } from './components/games/TicEcommerceGame';
 import { GenericChallengeGame } from './components/games/GenericChallengeGame';
 import { GenericHtmlGameRunner } from './components/games/GenericHtmlGameRunner';
 
@@ -306,29 +304,6 @@ export default function App() {
   // Render the appropriate challenge / game
   const renderChallengeComponent = () => {
     if (!activeChallengeId) return null;
-
-    const activeChallengeItem = currentTheme.challenges.find((c) => c.id === activeChallengeId);
-    if (activeChallengeItem?.gameData) {
-      return (
-        <GenericHtmlGameRunner
-          gameData={activeChallengeItem.gameData}
-          language={language}
-          onBack={returnToGames}
-          onFinish={(score, maxScore, percentage) => {
-            handleSaveProgress({
-              activityId: activeChallengeId,
-              activityType: 'challenge',
-              themeId: currentTheme.id,
-              status: 'completed',
-              score,
-              maxScore,
-              percentage,
-              activityTitle: activeChallengeItem.title[language],
-            });
-          }}
-        />
-      );
-    }
 
     // Check if it's a final quiz
     const isFinalQuiz =
@@ -636,27 +611,6 @@ export default function App() {
       );
     }
 
-    if (activeChallengeId === 'desafio-tic-ajuda-escola') {
-      return (
-        <TicHelpSchoolGame
-          language={language}
-          onBack={returnToGames}
-          onFinish={(score, maxScore, percentage) => {
-            handleSaveProgress({
-              activityId: 'desafio-tic-ajuda-escola',
-              activityType: 'challenge',
-              themeId: currentTheme.id,
-              status: 'completed',
-              score,
-              maxScore,
-              percentage,
-              activityTitle: language === 'pt' ? 'Atividade de Criação: Ajuda a Escola!' : 'Creative Activity: Help the School!',
-            });
-          }}
-        />
-      );
-    }
-
     if (activeChallengeId === 'desafio-tic-seguranca-cyberbullying') {
       return (
         <TicCyberbullyingGame
@@ -699,21 +653,24 @@ export default function App() {
       );
     }
 
-    if (activeChallengeId === 'desafio-tic-compra-online') {
+    // If challenge has structured gameData (TF, MC, Match, Order, etc.)
+    const activeChallengeItem = currentTheme.challenges.find((c) => c.id === activeChallengeId);
+    if (activeChallengeItem?.gameData) {
       return (
-        <TicEcommerceGame
+        <GenericHtmlGameRunner
+          gameData={activeChallengeItem.gameData}
           language={language}
           onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
-              activityId: 'desafio-tic-compra-online',
+              activityId: activeChallengeId,
               activityType: 'challenge',
               themeId: currentTheme.id,
               status: 'completed',
               score,
               maxScore,
               percentage,
-              activityTitle: language === 'pt' ? 'Como Chega uma Compra Online & Contactless (NFC)' : 'How Online Shopping Works & Contactless NFC',
+              activityTitle: activeChallengeItem.title[language],
             });
           }}
         />

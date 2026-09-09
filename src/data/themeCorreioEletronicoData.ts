@@ -39,15 +39,6 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       icon: '📝',
     },
     {
-      eyebrow: { pt: 'Exemplo', en: 'Example' },
-      h: { pt: 'Exemplo prático de uma mensagem', en: 'Practical email message example' },
-      body: {
-        pt: 'Vê como todos os elementos se organizam num email bem estruturado:<br><br><div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs sm:text-sm font-mono space-y-1.5 text-slate-800 shadow-2xs"><div><strong class="text-indigo-900">Para:</strong> professor.silva@escola.pt</div><div><strong class="text-indigo-900">Assunto:</strong> Dúvida sobre o trabalho de TIC - 5.º A</div><div class="pt-2 text-slate-700 font-sans">Caro Professor Silva,</div><div class="text-slate-700 font-sans leading-relaxed">Gostaria de saber se o trabalho sobre segurança na Internet pode incluir imagens desenhadas por nós.<br>Obrigado pela sua ajuda.</div><div class="pt-2 text-slate-700 font-sans">Com os melhores cumprimentos,</div><div class="font-bold text-slate-900 font-sans">Maria Santos, 5.º A — N.º 14</div></div>',
-        en: 'See how all elements are organized in a well-structured email:<br><br><div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs sm:text-sm font-mono space-y-1.5 text-slate-800 shadow-2xs"><div><strong class="text-indigo-900">To:</strong> teacher.silva@school.edu</div><div><strong class="text-indigo-900">Subject:</strong> Question about ICT Project - Class 5A</div><div class="pt-2 text-slate-700 font-sans">Dear Mr. Silva,</div><div class="text-slate-700 font-sans leading-relaxed">I would like to ask if our project on Internet safety can include our own hand-drawn illustrations.<br>Thank you for your guidance.</div><div class="pt-2 text-slate-700 font-sans">Best regards,</div><div class="font-bold text-slate-900 font-sans">Maria Santos, Class 5A — No. 14</div></div>',
-      },
-      icon: '✉️',
-    },
-    {
       eyebrow: { pt: 'Atenção!', en: 'Attention!' },
       h: { pt: 'Cuidado com mensagens suspeitas', en: 'Beware of suspicious messages' },
       body: {
