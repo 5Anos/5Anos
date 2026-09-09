@@ -283,9 +283,9 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
       challenge.questions.forEach((q, i) => {
         if (selectedAnswers[i] === q.correctIndex) correct++;
       });
-      const maxScore = challenge.questions.length * 10;
-      const score = correct * 10;
-      const percentage = Math.round((correct / challenge.questions.length) * 100);
+      const maxScore = 100;
+      const score = Math.round((correct / challenge.questions.length) * 100);
+      const percentage = score;
       onFinish(score, maxScore, percentage);
     }
   };
@@ -296,6 +296,9 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
     setShowFeedback(false);
     setCompleted(false);
   };
+
+  const correctCount = challenge.questions.filter((q, i) => selectedAnswers[i] === q.correctIndex).length;
+  const finalScore = Math.round((correctCount / challenge.questions.length) * 100);
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8 animate-in fade-in">
@@ -324,7 +327,7 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
         <div className="bg-white rounded-[2rem] border border-slate-200 shadow-xs p-6 sm:p-8 space-y-6">
           <div className="flex items-center justify-between text-xs font-bold text-slate-400">
             <span>PERGUNTA {currentIndex + 1} DE {challenge.questions.length}</span>
-            <span>+10 PTS CADA</span>
+            <span className="px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-bold border border-indigo-200">100 XP MÁXIMO</span>
           </div>
 
           {/* Scenario box */}
@@ -397,6 +400,11 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
           <h2 className="text-2xl font-black text-slate-900">
             {language === 'pt' ? 'Desafio Concluído!' : 'Challenge Completed!'}
           </h2>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 font-extrabold text-sm">
+            <span>{finalScore} / 100 Pontos</span>
+            <span>•</span>
+            <span>{correctCount} de {challenge.questions.length} Corretas</span>
+          </div>
           <p className="text-sm text-slate-600 max-w-md mx-auto">
             {language === 'pt'
               ? 'Excelente empenho! Os teus pontos foram registados no teu portfólio de aprendizagem.'

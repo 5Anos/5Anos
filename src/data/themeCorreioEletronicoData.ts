@@ -257,13 +257,13 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       shortDesc: { pt: 'Ordena os elementos fundamentais para enviar uma mensagem correta.', en: 'Order the key elements to send a proper message.' },
       icon: '✉️',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'order_sequence',
       gameData: {
         type: 'order',
         title: 'Constrói um email',
         icon: '✉️',
-        xp: 20,
+        xp: 100,
         desc: 'Coloca os campos de uma mensagem de email pela ordem correta de envio.',
         data: {
           items: [
@@ -283,13 +283,13 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       shortDesc: { pt: 'Identifica sinais de correio fraudulento e tentativas de roubo de dados.', en: 'Identify signs of fraudulent emails and data theft attempts.' },
       icon: '🎣',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'detect_phishing',
       gameData: {
         type: 'mc',
         title: 'Isto é spam ou mensagem suspeita?',
         icon: '🎣',
-        xp: 20,
+        xp: 100,
         desc: 'Responde às perguntas sobre a identificação de emails maliciosos.',
         data: {
           questions: [
@@ -327,13 +327,13 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       shortDesc: { pt: 'Testa regras de boa educação e segurança no correio eletrónico.', en: 'Test etiquette and safety rules for email.' },
       icon: '⚡',
       durationMinutes: 3,
-      points: 15,
+      points: 100,
       type: 'true_false',
       gameData: {
         type: 'tf',
         title: 'Verdadeiro ou Falso: email',
         icon: '⚡',
-        xp: 15,
+        xp: 100,
         desc: 'Classifica as afirmações sobre a utilização do correio eletrónico.',
         data: {
           items: [
@@ -352,13 +352,13 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       shortDesc: { pt: 'Associa cada componente do email à sua respetiva função.', en: 'Match each email component to its purpose.' },
       icon: '🔗',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'match_pairs',
       gameData: {
         type: 'match',
         title: 'Parte do Email',
         icon: '🔗',
-        xp: 20,
+        xp: 100,
         desc: 'Associa corretamente cada elemento do cabeçalho de email.',
         data: {
           pairs: [
@@ -378,7 +378,7 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 4.', en: 'Comprehensive final assessment on Topic 4.' },
       icon: '🏆',
       durationMinutes: 10,
-      points: 50,
+      points: 100,
       type: 'final_quiz',
     },
   ],

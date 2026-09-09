@@ -427,13 +427,13 @@ export const themeDireitosAutorData: ThemeDefinition = {
       shortDesc: { pt: 'Liga cada símbolo de direitos de autor ao seu significado correto.', en: 'Match copyright symbols to their authentic meanings.' },
       icon: '🃏',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'match_pairs',
       gameData: {
         type: 'pairs',
         title: 'Correspondência de Licenças e Termos',
         icon: '🃏',
-        xp: 20,
+        xp: 100,
         desc: 'Encontra os pares correspondentes entre símbolos e regras de utilização.',
         data: {
           pairs: [
@@ -453,13 +453,13 @@ export const themeDireitosAutorData: ThemeDefinition = {
       shortDesc: { pt: 'Classifica situações escolares como Plágio ou Prática Correta.', en: 'Classify school situations as Plagiarism or Proper Practice.' },
       icon: '⚖️',
       durationMinutes: 5,
-      points: 25,
+      points: 100,
       type: 'true_false',
       gameData: {
         type: 'true_false',
         title: 'Detetive de Plágio & Citação APA',
         icon: '⚖️',
-        xp: 25,
+        xp: 100,
         desc: 'Decide se a afirmação representa uma conduta correta ou uma infração.',
         data: {
           questions: [
@@ -495,13 +495,13 @@ export const themeDireitosAutorData: ThemeDefinition = {
       shortDesc: { pt: 'Separa sites e publicações fiáveis de fontes suspeitas.', en: 'Separate trustworthy portals from suspicious rumor sources.' },
       icon: '🛡️',
       durationMinutes: 5,
-      points: 25,
+      points: 100,
       type: 'reliable_sources',
       gameData: {
         type: 'classify',
         title: 'Classificador de Fiabilidade de Fontes',
         icon: '🛡️',
-        xp: 25,
+        xp: 100,
         desc: 'Arrasta cada elemento para a categoria correta: Fiável ou Suspeito.',
         data: {
           categories: [
@@ -527,13 +527,13 @@ export const themeDireitosAutorData: ThemeDefinition = {
       shortDesc: { pt: 'Ordena os elementos de uma referência de página web APA 7.ª ed.', en: 'Order the elements of an APA 7th ed web reference.' },
       icon: '📦',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'order_sequence',
       gameData: {
         type: 'order',
         title: 'Ordem da Referência Bibliográfica APA',
         icon: '📦',
-        xp: 20,
+        xp: 100,
         desc: 'Organiza os elementos na sequência correta da norma APA.',
         data: {
           items: [
@@ -554,7 +554,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
       shortDesc: { pt: 'Avaliação final abrangente sobre Direitos de Autor, Plágio e Norma APA.', en: 'Comprehensive final assessment on Copyright, Plagiarism, and APA.' },
       icon: '🏆',
       durationMinutes: 10,
-      points: 50,
+      points: 100,
       type: 'final_quiz',
     },
   ],

@@ -34,19 +34,27 @@ import {
   ToggleLeft,
   ToggleRight,
   ListOrdered,
+  ExternalLink,
 } from 'lucide-react';
-import { User, Language, ThemeVisibilityMap } from '../types';
+import { User, Language, ThemeVisibilityMap, ActivityProgress } from '../types';
 import { api, isUserAdmin, DEFAULT_THEME_VISIBILITY } from '../services/api';
 import { getTurmasList } from '../data/turmasData';
-import { exportStudentsToExcel, exportStudentsToCSV } from '../utils/exportUtils';
-import { ALL_THEMES } from '../data/allThemesData';
+import {
+  exportStudentsToExcel,
+  exportStudentsToCSV,
+  exportThemeScoresToExcel,
+  exportThemeScoresToCSV,
+  getStudentThemeBreakdown,
+  getQualitativeLevel,
+} from '../utils/exportUtils';
+import { ALL_THEMES, THEMES_BY_ID } from '../data/allThemesData';
 
 interface AdminPanelModalProps {
   isOpen: boolean;
   onClose: () => void;
   currentUser: User | null;
   language: Language;
-  initialTab?: 'students' | 'turmas' | 'themes' | 'danger';
+  initialTab?: 'students' | 'scores' | 'turmas' | 'themes' | 'danger';
 }
 
 interface ConfirmDialogState {
@@ -66,12 +74,18 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   language,
   initialTab = 'students',
 }) => {
-  const [activeTab, setActiveTab] = useState<'students' | 'turmas' | 'themes' | 'danger'>('students');
+  const [activeTab, setActiveTab] = useState<'students' | 'scores' | 'turmas' | 'themes' | 'danger'>('students');
   const [students, setStudents] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedTurma, setSelectedTurma] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [feedbackMsg, setFeedbackMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  // Scores by Theme & Activity Progress State
+  const [selectedThemeForScores, setSelectedThemeForScores] = useState<string>('tic-sociedade');
+  const [progressMap, setProgressMap] = useState<Record<string, ActivityProgress[]>>({});
+  const [loadingProgress, setLoadingProgress] = useState(false);
+  const [detailStudent, setDetailStudent] = useState<User | null>(null);
 
   // Theme Visibility State
   const [themeVisibility, setThemeVisibility] = useState<ThemeVisibilityMap>(DEFAULT_THEME_VISIBILITY);
@@ -131,11 +145,26 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
     }, 5000);
   };
 
+  const loadProgressForStudents = async (studentList: User[]) => {
+    if (!studentList || studentList.length === 0) return;
+    setLoadingProgress(true);
+    try {
+      const map = await api.getStudentsProgressBatch(studentList.map((s) => s.id));
+      setProgressMap((prev) => ({ ...prev, ...map }));
+    } catch (err) {
+      console.error('Failed to load student progress batch:', err);
+    } finally {
+      setLoadingProgress(false);
+    }
+  };
+
   const loadStudents = async () => {
     setLoading(true);
     try {
       const data = await api.getAllStudentsForAdmin();
       setStudents(data);
+      // Asynchronously fetch progress records for challenges and quizzes
+      loadProgressForStudents(data);
     } catch (err) {
       console.error('Failed to load students:', err);
     } finally {
@@ -510,6 +539,63 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
     showToast('success', 'Ficheiro CSV transferido com sucesso!');
   };
 
+  const handleExportThemeXLS = async () => {
+    if (filteredStudents.length === 0) return;
+    let currentMap = progressMap;
+    if (Object.keys(currentMap).length === 0 && students.length > 0) {
+      setLoadingProgress(true);
+      try {
+        currentMap = await api.getStudentsProgressBatch(students.map((s) => s.id));
+        setProgressMap(currentMap);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoadingProgress(false);
+      }
+    }
+    exportThemeScoresToExcel(filteredStudents, currentMap, selectedThemeForScores, selectedTurma);
+    showToast(
+      'success',
+      selectedThemeForScores === 'all'
+        ? (language === 'pt' ? 'Caderno Completo (7 Temas em XLS) exportado com sucesso!' : 'All 7 themes workbook exported successfully!')
+        : (language === 'pt' ? 'Pauta de desafios e quizzes do tema exportada com sucesso em XLS!' : 'Theme scores exported to XLS!')
+    );
+  };
+
+  const handleExportFull7ThemesXLS = async () => {
+    if (filteredStudents.length === 0) return;
+    let currentMap = progressMap;
+    if (Object.keys(currentMap).length === 0 && students.length > 0) {
+      setLoadingProgress(true);
+      try {
+        currentMap = await api.getStudentsProgressBatch(students.map((s) => s.id));
+        setProgressMap(currentMap);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoadingProgress(false);
+      }
+    }
+    exportThemeScoresToExcel(filteredStudents, currentMap, 'all', selectedTurma);
+    showToast(
+      'success',
+      language === 'pt'
+        ? 'Caderno Completo de Avaliação (7 Temas com Resumo Geral) exportado com sucesso em XLS!'
+        : 'All 7 themes complete assessment workbook exported to XLS!'
+    );
+  };
+
+  const handleExportThemeCSV = () => {
+    if (filteredStudents.length === 0) return;
+    if (selectedThemeForScores === 'all') {
+      handleExportFull7ThemesXLS();
+    } else {
+      const theme = THEMES_BY_ID[selectedThemeForScores] || ALL_THEMES.find((t) => t.id === selectedThemeForScores) || ALL_THEMES[0];
+      exportThemeScoresToCSV(filteredStudents, progressMap, theme, selectedTurma);
+      showToast('success', language === 'pt' ? 'Ficheiro CSV do tema exportado com sucesso!' : 'Theme CSV exported!');
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
       <div
@@ -571,6 +657,26 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
               <span>{language === 'pt' ? 'Alunos & Pautas' : 'Students & Records'}</span>
               <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-indigo-100 text-indigo-800 font-black">
                 {students.length}
+              </span>
+            </button>
+
+            <button
+              onClick={() => {
+                setActiveTab('scores');
+                if (Object.keys(progressMap).length === 0 && students.length > 0) {
+                  loadProgressForStudents(students);
+                }
+              }}
+              className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                activeTab === 'scores'
+                  ? 'bg-white text-emerald-700 shadow-xs border border-slate-200'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+              }`}
+            >
+              <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
+              <span>{language === 'pt' ? 'Desafios & Quizzes (Pauta XLS)' : 'Challenges & Quizzes (XLS)'}</span>
+              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-emerald-100 text-emerald-800 font-black">
+                XLS
               </span>
             </button>
 
@@ -725,6 +831,21 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                       <span>{language === 'pt' ? `Eliminar (${selectedStudentIds.size})` : `Delete (${selectedStudentIds.size})`}</span>
                     </button>
                   )}
+
+                  {/* Shortcut to Theme Scores XLS */}
+                  <button
+                    onClick={() => {
+                      setActiveTab('scores');
+                      if (Object.keys(progressMap).length === 0 && students.length > 0) {
+                        loadProgressForStudents(students);
+                      }
+                    }}
+                    className="px-3 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs sm:text-sm font-bold shadow-2xs transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
+                    title="Aceder à pauta de desafios e quizzes por tema"
+                  >
+                    <Award className="w-4 h-4 text-indigo-600" />
+                    <span className="hidden md:inline">{language === 'pt' ? 'Pauta por Tema' : 'Scores by Theme'}</span>
+                  </button>
 
                   {/* Export XLS */}
                   <button
@@ -885,6 +1006,18 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                             <td className="py-2.5 px-3 whitespace-nowrap text-center">
                               <div className="flex items-center justify-center gap-1.5">
                                 <button
+                                  onClick={() => {
+                                    setDetailStudent(student);
+                                    if (!progressMap[student.id]) {
+                                      loadProgressForStudents([student]);
+                                    }
+                                  }}
+                                  className="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-700 border border-emerald-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
+                                  title="Ver pauta de desafios e quizzes deste aluno"
+                                >
+                                  <FileSpreadsheet className="w-3.5 h-3.5" />
+                                </button>
+                                <button
                                   onClick={() => openEditModal(student)}
                                   className="p-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-600 hover:text-white text-indigo-700 border border-indigo-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
                                   title="Editar nome, turma ou palavra-passe"
@@ -909,6 +1042,513 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
               )}
             </div>
           </>
+        )}
+
+        {/* TAB: PAUTA DE DESAFIOS E QUIZZES POR TEMA (EXPORTAÇÃO XLS) */}
+        {activeTab === 'scores' && (
+          <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-slate-50">
+            {/* Top Toolbar */}
+            <div className="p-4 sm:p-5 bg-white border-b border-slate-200 shadow-2xs shrink-0 space-y-3.5">
+              {/* Row 1: Turmas Pills & Export Buttons */}
+              <div className="flex items-center justify-between gap-3 flex-wrap">
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500 mr-1 flex items-center gap-1">
+                    <Filter className="w-3.5 h-3.5" />
+                    {language === 'pt' ? 'Turma:' : 'Class:'}
+                  </span>
+                  <button
+                    onClick={() => setSelectedTurma('all')}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      selectedTurma === 'all'
+                        ? 'bg-emerald-600 text-white shadow-xs'
+                        : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
+                    }`}
+                  >
+                    {language === 'pt' ? 'Todas as Turmas' : 'All Classes'} ({students.length})
+                  </button>
+                  {turmasList.map((turma) => {
+                    const countInTurma = students.filter((s) => (s.turma || '').trim() === turma.trim()).length;
+                    return (
+                      <button
+                        key={turma}
+                        onClick={() => setSelectedTurma(turma)}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                          selectedTurma === turma
+                            ? 'bg-emerald-600 text-white shadow-xs'
+                            : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
+                        }`}
+                      >
+                        <span>{turma}</span>
+                        <span
+                          className={`text-[10px] px-1 py-0.2 rounded-full ${
+                            selectedTurma === turma ? 'bg-emerald-700 text-white' : 'bg-slate-100 text-slate-600'
+                          }`}
+                        >
+                          {countInTurma}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Export Buttons */}
+                <div className="flex items-center gap-2 flex-wrap">
+                  <button
+                    onClick={handleExportThemeXLS}
+                    disabled={filteredStudents.length === 0}
+                    className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shrink-0"
+                    title="Exportar pauta detalhada do tema em Excel (.xlsx)"
+                  >
+                    <FileSpreadsheet className="w-4 h-4" />
+                    <span>
+                      {selectedThemeForScores === 'all'
+                        ? (language === 'pt' ? 'Exportar Todos os Temas (XLS)' : 'Export All Themes (XLS)')
+                        : (language === 'pt' ? 'Exportar Pauta do Tema (XLS)' : 'Export Theme Scores (XLS)')}
+                    </span>
+                  </button>
+
+                  <button
+                    onClick={handleExportFull7ThemesXLS}
+                    disabled={filteredStudents.length === 0}
+                    className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shrink-0"
+                    title="Exportar caderno completo de avaliação com resumo global e 7 folhas temáticas (.xlsx)"
+                  >
+                    <Award className="w-4 h-4" />
+                    <span className="hidden sm:inline">
+                      {language === 'pt' ? 'Caderno Completo (7 Temas XLS)' : 'Master Workbook (7 Themes)'}
+                    </span>
+                  </button>
+
+                  <button
+                    onClick={handleExportThemeCSV}
+                    disabled={filteredStudents.length === 0}
+                    className="px-3 py-1.5 rounded-xl bg-slate-700 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1 cursor-pointer disabled:opacity-50 shrink-0"
+                    title="Exportar dados em formato CSV"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>CSV</span>
+                  </button>
+
+                  <button
+                    onClick={() => loadProgressForStudents(students)}
+                    disabled={loadingProgress}
+                    className="p-1.5 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 transition-colors cursor-pointer shrink-0"
+                    title="Recarregar progresso dos alunos da base de dados"
+                  >
+                    <RefreshCw className={`w-4 h-4 ${loadingProgress ? 'animate-spin text-emerald-600' : ''}`} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Row 2: Theme Selector & Search */}
+              <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 pt-2 border-t border-slate-100">
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500 mr-1 flex items-center gap-1 shrink-0">
+                    <BookOpen className="w-3.5 h-3.5" />
+                    {language === 'pt' ? 'Tema:' : 'Theme:'}
+                  </span>
+                  <button
+                    onClick={() => setSelectedThemeForScores('all')}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 ${
+                      selectedThemeForScores === 'all'
+                        ? 'bg-indigo-600 text-white shadow-xs'
+                        : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
+                    }`}
+                  >
+                    {language === 'pt' ? '🌐 Visão Global (7 Temas)' : '🌐 All Themes Overview'}
+                  </button>
+                  {ALL_THEMES.map((theme) => {
+                    const isSelected = selectedThemeForScores === theme.id;
+                    return (
+                      <button
+                        key={theme.id}
+                        onClick={() => setSelectedThemeForScores(theme.id)}
+                        className={`px-2.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 flex items-center gap-1.5 ${
+                          isSelected
+                            ? 'bg-emerald-600 text-white shadow-xs'
+                            : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
+                        }`}
+                        title={theme.title.pt}
+                      >
+                        <span
+                          className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-black ${
+                            isSelected ? 'bg-white text-emerald-700' : 'bg-slate-100 text-slate-700'
+                          }`}
+                        >
+                          {theme.number}
+                        </span>
+                        <span>{theme.title.pt.split(':')[0] || `Tema ${theme.number}`}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="relative w-full lg:w-72 shrink-0">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder={language === 'pt' ? 'Filtrar por aluno, email ou ID...' : 'Filter by student or email...'}
+                    className="w-full pl-9 pr-3 py-1.5 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
+                  />
+                </div>
+              </div>
+
+              {/* Informative Evaluation Criteria Banner */}
+              <div className="p-2.5 bg-emerald-50/80 rounded-xl border border-emerald-200 text-xs text-emerald-900 flex items-center justify-between flex-wrap gap-2">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>
+                    {language === 'pt'
+                      ? 'Critério de Avaliação: Cada desafio e quiz vale até 100 pontos (0 a 100). No Quiz de Aprendizagem, a nota oficial é a 1.ª tentativa, ficando registadas as tentativas seguintes para histórico.'
+                      : 'Evaluation Criteria: Each challenge and quiz has up to 100 points. Learning Quiz grade is from 1st attempt.'}
+                  </span>
+                </div>
+                <span className="font-bold text-[11px] bg-emerald-200/70 text-emerald-900 px-2.5 py-0.5 rounded-md">
+                  {selectedThemeForScores === 'all' ? '7 Temas × 500 = 3500 XP' : '4 Desafios + 1 Quiz = 500 XP'}
+                </span>
+              </div>
+            </div>
+
+            {/* Table Area */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-5">
+              {loadingProgress && Object.keys(progressMap).length === 0 ? (
+                <div className="p-12 text-center text-slate-500 flex flex-col items-center justify-center gap-3">
+                  <RefreshCw className="w-8 h-8 animate-spin text-emerald-600" />
+                  <p className="font-semibold text-sm">
+                    {language === 'pt'
+                      ? 'A carregar pautas e registos de atividades da base de dados...'
+                      : 'Loading activity records...'}
+                  </p>
+                </div>
+              ) : filteredStudents.length === 0 ? (
+                <div className="p-12 text-center text-slate-400 bg-white rounded-2xl border border-slate-200">
+                  <Users className="w-10 h-10 mx-auto mb-2 opacity-30 text-slate-500" />
+                  <p className="text-base font-bold text-slate-600">
+                    {language === 'pt' ? 'Nenhum aluno encontrado' : 'No students found'}
+                  </p>
+                  <p className="text-xs text-slate-400 mt-1">
+                    {language === 'pt'
+                      ? 'Verifica os filtros de turma e pesquisa selecionados.'
+                      : 'Check the class and search filters.'}
+                  </p>
+                </div>
+              ) : selectedThemeForScores !== 'all' ? (
+                // SPECIFIC THEME TABLE
+                (() => {
+                  const currentTheme =
+                    THEMES_BY_ID[selectedThemeForScores] ||
+                    ALL_THEMES.find((t) => t.id === selectedThemeForScores) ||
+                    ALL_THEMES[0];
+                  const regularChallenges = currentTheme.challenges.filter((c) => c.type !== 'final_quiz');
+
+                  return (
+                    <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
+                      <div className="p-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2 flex-wrap">
+                        <div className="flex items-center gap-2">
+                          <span className="w-6 h-6 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center">
+                            {currentTheme.number}
+                          </span>
+                          <h4 className="font-bold text-slate-800 text-sm">
+                            {currentTheme.title.pt}
+                          </h4>
+                        </div>
+                        <div className="text-xs text-slate-500">
+                          {language === 'pt'
+                            ? `A mostrar ${filteredStudents.length} aluno(s) • ${selectedTurma === 'all' ? 'Todas as Turmas' : selectedTurma}`
+                            : `Showing ${filteredStudents.length} student(s)`}
+                        </div>
+                      </div>
+
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-left text-sm border-collapse">
+                          <thead className="bg-slate-100/90 text-slate-700 text-xs font-bold uppercase tracking-wider border-b border-slate-200 sticky top-0 z-10">
+                            <tr>
+                              <th className="py-3 px-3 w-12 text-center">N.º</th>
+                              <th className="py-3 px-3 w-20">Turma</th>
+                              <th className="py-3 px-3 min-w-[160px]">Aluno</th>
+                              <th className="py-3 px-3 min-w-[190px]">Email Institucional</th>
+                              {regularChallenges.map((ch, idx) => (
+                                <th key={ch.id} className="py-3 px-3 text-center min-w-[130px]" title={ch.title.pt}>
+                                  <div className="font-bold">Desafio {idx + 1}</div>
+                                  <div className="text-[10px] text-slate-500 font-normal truncate max-w-[130px]">
+                                    {ch.title.pt}
+                                  </div>
+                                </th>
+                              ))}
+                              <th className="py-3 px-3 text-center min-w-[150px]">
+                                <div className="font-bold text-emerald-800">Quiz de Aprendizagem</div>
+                                <div className="text-[10px] text-emerald-600 font-normal">1.ª Tent. (Oficial)</div>
+                              </th>
+                              <th className="py-3 px-3 text-right min-w-[120px]">
+                                <div className="font-bold">Total Tema</div>
+                                <div className="text-[10px] text-slate-500 font-normal">Máx: 500 XP</div>
+                              </th>
+                              <th className="py-3 px-3 text-center min-w-[110px]">Aproveitamento</th>
+                              <th className="py-3 px-3 text-center w-24">Ações</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-slate-100">
+                            {filteredStudents.map((student, idx) => {
+                              const sProgress = progressMap[student.id] || progressMap[student.email] || [];
+                              const breakdown = getStudentThemeBreakdown(student, sProgress, currentTheme);
+
+                              return (
+                                <tr
+                                  key={student.id || student.email}
+                                  className="hover:bg-slate-50/80 transition-colors"
+                                >
+                                  <td className="py-2.5 px-3 text-center text-xs font-semibold text-slate-400">
+                                    {idx + 1}
+                                  </td>
+                                  <td className="py-2.5 px-3 whitespace-nowrap">
+                                    <span className="px-2 py-0.5 rounded-lg bg-indigo-50 text-indigo-700 text-xs font-bold border border-indigo-200">
+                                      {student.turma || '5.º A'}
+                                    </span>
+                                  </td>
+                                  <td className="py-2.5 px-3 whitespace-nowrap">
+                                    <div className="font-bold text-slate-900">{student.name || 'Estudante'}</div>
+                                    <div className="text-[11px] text-slate-400 font-mono">{student.publicId}</div>
+                                  </td>
+                                  <td className="py-2.5 px-3 whitespace-nowrap text-slate-600 font-mono text-xs">
+                                    {student.email}
+                                  </td>
+
+                                  {/* Regular Challenges */}
+                                  {breakdown.challenges.map((ch) => (
+                                    <td key={ch.id} className="py-2.5 px-3 text-center whitespace-nowrap">
+                                      {ch.completed || ch.score > 0 ? (
+                                        <span
+                                          className={`inline-block px-2.5 py-1 rounded-lg text-xs font-bold shadow-2xs ${
+                                            ch.score >= 90
+                                              ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                                              : ch.score >= 50
+                                              ? 'bg-indigo-100 text-indigo-800 border border-indigo-200'
+                                              : 'bg-amber-100 text-amber-800 border border-amber-200'
+                                          }`}
+                                          title={`Pontuação: ${ch.score}/100`}
+                                        >
+                                          {ch.score} / 100
+                                        </span>
+                                      ) : (
+                                        <span className="text-slate-300 font-bold">—</span>
+                                      )}
+                                    </td>
+                                  ))}
+
+                                  {/* Quiz Final */}
+                                  <td className="py-2.5 px-3 text-center whitespace-nowrap">
+                                    {breakdown.quiz.completed || breakdown.quiz.attempts > 0 ? (
+                                      <div className="inline-flex flex-col items-center">
+                                        <span
+                                          className={`px-2.5 py-1 rounded-lg text-xs font-black shadow-2xs ${
+                                            breakdown.quiz.officialScore >= 90
+                                              ? 'bg-emerald-600 text-white'
+                                              : breakdown.quiz.officialScore >= 50
+                                              ? 'bg-indigo-600 text-white'
+                                              : 'bg-amber-500 text-white'
+                                          }`}
+                                          title={`1.ª Tentativa (Oficial): ${breakdown.quiz.officialScore} pts | Melhor: ${breakdown.quiz.bestScore} pts`}
+                                        >
+                                          {breakdown.quiz.officialScore} / 100
+                                        </span>
+                                        <span className="text-[10px] text-slate-500 font-semibold mt-0.5">
+                                          {breakdown.quiz.attempts} {breakdown.quiz.attempts === 1 ? 'tentativa' : 'tentativas'}
+                                        </span>
+                                      </div>
+                                    ) : (
+                                      <span className="text-slate-300 font-bold">—</span>
+                                    )}
+                                  </td>
+
+                                  {/* Total Points */}
+                                  <td className="py-2.5 px-3 text-right whitespace-nowrap">
+                                    <span className="font-black text-indigo-700 text-sm">
+                                      {breakdown.totalPoints} XP
+                                    </span>
+                                    <span className="text-[10px] text-slate-400 block font-semibold">/ 500 XP</span>
+                                  </td>
+
+                                  {/* Percentage / Evaluation */}
+                                  <td className="py-2.5 px-3 text-center whitespace-nowrap">
+                                    <div className="inline-flex flex-col items-center">
+                                      <span
+                                        className={`px-2 py-0.5 rounded-full text-xs font-bold ${
+                                          breakdown.percentage >= 90
+                                            ? 'bg-emerald-100 text-emerald-800'
+                                            : breakdown.percentage >= 70
+                                            ? 'bg-blue-100 text-blue-800'
+                                            : breakdown.percentage >= 50
+                                            ? 'bg-indigo-100 text-indigo-800'
+                                            : breakdown.percentage > 0
+                                            ? 'bg-amber-100 text-amber-800'
+                                            : 'bg-slate-100 text-slate-500'
+                                        }`}
+                                      >
+                                        {breakdown.percentage}%
+                                      </span>
+                                      <span className="text-[9px] text-slate-400 font-medium mt-0.5">
+                                        {getQualitativeLevel(breakdown.percentage).split(' ')[0]}
+                                      </span>
+                                    </div>
+                                  </td>
+
+                                  {/* Action */}
+                                  <td className="py-2.5 px-3 text-center whitespace-nowrap">
+                                    <button
+                                      onClick={() => setDetailStudent(student)}
+                                      className="p-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-600 hover:text-white text-indigo-700 border border-indigo-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
+                                      title="Ver pauta completa dos 7 temas deste aluno"
+                                    >
+                                      <ExternalLink className="w-3.5 h-3.5" />
+                                    </button>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  );
+                })()
+              ) : (
+                // ALL THEMES OVERVIEW TABLE
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
+                  <div className="p-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2 flex-wrap">
+                    <div className="flex items-center gap-2">
+                      <span className="w-6 h-6 rounded-lg bg-indigo-600 text-white font-black text-xs flex items-center justify-center">
+                        🌐
+                      </span>
+                      <h4 className="font-bold text-slate-800 text-sm">
+                        {language === 'pt'
+                          ? 'Pauta Global: Pontuação Consolidada dos 7 Temas'
+                          : 'Consolidated Scores across all 7 Themes'}
+                      </h4>
+                    </div>
+                    <div className="text-xs text-slate-500 font-semibold">
+                      {language === 'pt' ? 'Total Máximo: 3500 XP' : 'Maximum XP: 3500 XP'}
+                    </div>
+                  </div>
+
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-sm border-collapse">
+                      <thead className="bg-slate-100/90 text-slate-700 text-xs font-bold uppercase tracking-wider border-b border-slate-200 sticky top-0 z-10">
+                        <tr>
+                          <th className="py-3 px-3 w-12 text-center">N.º</th>
+                          <th className="py-3 px-3 w-20">Turma</th>
+                          <th className="py-3 px-3 min-w-[160px]">Aluno</th>
+                          <th className="py-3 px-3 min-w-[190px]">Email Institucional</th>
+                          {ALL_THEMES.map((t) => (
+                            <th key={t.id} className="py-3 px-2 text-center min-w-[95px]" title={t.title.pt}>
+                              <div className="font-bold text-[11px]">Tema {t.number}</div>
+                              <div className="text-[9px] text-slate-400 font-normal">/ 500</div>
+                            </th>
+                          ))}
+                          <th className="py-3 px-3 text-right min-w-[120px]">
+                            <div className="font-bold">Total Geral</div>
+                            <div className="text-[10px] text-slate-500 font-normal">/ 3500 XP</div>
+                          </th>
+                          <th className="py-3 px-3 text-center min-w-[100px]">Média</th>
+                          <th className="py-3 px-3 text-center w-24">Ações</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100">
+                        {filteredStudents.map((student, idx) => {
+                          const sProgress = progressMap[student.id] || progressMap[student.email] || [];
+                          let totalSum = 0;
+
+                          return (
+                            <tr key={student.id || student.email} className="hover:bg-slate-50/80 transition-colors">
+                              <td className="py-2.5 px-3 text-center text-xs font-semibold text-slate-400">
+                                {idx + 1}
+                              </td>
+                              <td className="py-2.5 px-3 whitespace-nowrap">
+                                <span className="px-2 py-0.5 rounded-lg bg-indigo-50 text-indigo-700 text-xs font-bold border border-indigo-200">
+                                  {student.turma || '5.º A'}
+                                </span>
+                              </td>
+                              <td className="py-2.5 px-3 whitespace-nowrap">
+                                <div className="font-bold text-slate-900">{student.name || 'Estudante'}</div>
+                                <div className="text-[11px] text-slate-400 font-mono">{student.publicId}</div>
+                              </td>
+                              <td className="py-2.5 px-3 whitespace-nowrap text-slate-600 font-mono text-xs">
+                                {student.email}
+                              </td>
+
+                              {/* Themes 1 to 7 */}
+                              {ALL_THEMES.map((theme) => {
+                                const b = getStudentThemeBreakdown(student, sProgress, theme);
+                                totalSum += b.totalPoints;
+                                return (
+                                  <td key={theme.id} className="py-2.5 px-2 text-center whitespace-nowrap">
+                                    <span
+                                      className={`inline-block px-2 py-0.5 rounded-lg text-xs font-bold ${
+                                        b.totalPoints >= 450
+                                          ? 'bg-emerald-100 text-emerald-800'
+                                          : b.totalPoints >= 250
+                                          ? 'bg-indigo-50 text-indigo-800'
+                                          : b.totalPoints > 0
+                                          ? 'bg-amber-50 text-amber-800'
+                                          : 'text-slate-300'
+                                      }`}
+                                    >
+                                      {b.totalPoints > 0 ? `${b.totalPoints}` : '—'}
+                                    </span>
+                                  </td>
+                                );
+                              })}
+
+                              {/* Total Geral */}
+                              <td className="py-2.5 px-3 text-right whitespace-nowrap">
+                                <span className="font-black text-indigo-700 text-sm">
+                                  {totalSum} XP
+                                </span>
+                              </td>
+
+                              {/* Average % */}
+                              <td className="py-2.5 px-3 text-center whitespace-nowrap">
+                                {(() => {
+                                  const avgPct = Math.round((totalSum / 3500) * 100);
+                                  return (
+                                    <span
+                                      className={`px-2 py-0.5 rounded-full text-xs font-bold ${
+                                        avgPct >= 90
+                                          ? 'bg-emerald-100 text-emerald-800'
+                                          : avgPct >= 50
+                                          ? 'bg-indigo-100 text-indigo-800'
+                                          : avgPct > 0
+                                          ? 'bg-amber-100 text-amber-800'
+                                          : 'bg-slate-100 text-slate-500'
+                                      }`}
+                                    >
+                                      {avgPct}%
+                                    </span>
+                                  );
+                                })()}
+                              </td>
+
+                              {/* Actions */}
+                              <td className="py-2.5 px-3 text-center whitespace-nowrap">
+                                <button
+                                  onClick={() => setDetailStudent(student)}
+                                  className="p-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-600 hover:text-white text-indigo-700 border border-indigo-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
+                                  title="Ver detalhe individual dos 7 temas"
+                                >
+                                  <ExternalLink className="w-3.5 h-3.5" />
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         )}
 
         {/* TAB 2: GESTÃO DE TURMAS (CRIAR E ELIMINAR TURMAS) */}
@@ -1582,6 +2222,160 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                     )}
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* MODAL: FICHA DETALHADA DO ALUNO (7 TEMAS, DESAFIOS E QUIZZES) */}
+        {detailStudent && (
+          <div className="fixed inset-0 z-60 flex items-center justify-center p-3 sm:p-6 bg-slate-900/70 backdrop-blur-xs overflow-y-auto">
+            <div className="relative w-full max-w-4xl max-h-[90vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+              {/* Header */}
+              <div className="p-4 sm:p-6 bg-linear-to-r from-indigo-900 via-indigo-800 to-slate-900 text-white flex items-center justify-between border-b border-indigo-700 shrink-0">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-amber-400 font-black text-lg shadow-inner">
+                    {detailStudent.name?.charAt(0) || 'A'}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-indigo-500/30 text-indigo-200 border border-indigo-400/30">
+                        {detailStudent.turma || '5.º A'}
+                      </span>
+                      <span className="text-xs text-indigo-300 font-mono">
+                        {detailStudent.publicId}
+                      </span>
+                    </div>
+                    <h3 className="text-lg sm:text-xl font-black text-white mt-0.5">
+                      {detailStudent.name || 'Estudante'}
+                    </h3>
+                    <p className="text-xs text-slate-300 font-mono">
+                      {detailStudent.email}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setDetailStudent(null)}
+                  className="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              {/* Student Themes Breakdown Content */}
+              <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-slate-50">
+                {ALL_THEMES.map((theme) => {
+                  const sProgress = progressMap[detailStudent.id] || progressMap[detailStudent.email] || [];
+                  const breakdown = getStudentThemeBreakdown(detailStudent, sProgress, theme);
+
+                  return (
+                    <div
+                      key={theme.id}
+                      className="bg-white rounded-2xl border border-slate-200 p-4 shadow-2xs space-y-3"
+                    >
+                      <div className="flex items-center justify-between border-b border-slate-100 pb-2.5 flex-wrap gap-2">
+                        <div className="flex items-center gap-2">
+                          <span className="w-7 h-7 rounded-xl bg-indigo-600 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                            {theme.number}
+                          </span>
+                          <div>
+                            <h4 className="font-bold text-slate-900 text-sm">
+                              {theme.title.pt}
+                            </h4>
+                            <span className="text-[11px] text-slate-400">
+                              {breakdown.completedActivitiesCount} de {breakdown.totalActivitiesCount} atividades concluídas
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <span className="px-2.5 py-1 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 font-black text-xs">
+                            {breakdown.totalPoints} / 500 XP
+                          </span>
+                          <span className="px-2.5 py-1 rounded-xl bg-emerald-100 text-emerald-800 font-bold text-xs">
+                            {breakdown.percentage}%
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Challenges Grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+                        {breakdown.challenges.map((ch, chIdx) => (
+                          <div
+                            key={ch.id}
+                            className={`p-3 rounded-xl border text-xs flex flex-col justify-between gap-1.5 ${
+                              ch.completed
+                                ? 'bg-emerald-50/50 border-emerald-200 text-emerald-900'
+                                : 'bg-slate-50 border-slate-200 text-slate-600'
+                            }`}
+                          >
+                            <div>
+                              <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                                Desafio {chIdx + 1}
+                              </div>
+                              <div className="font-semibold text-slate-800 line-clamp-2 mt-0.5">
+                                {ch.title}
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-between pt-1 border-t border-slate-200/60 font-bold">
+                              <span>Pontos:</span>
+                              <span className={ch.score > 0 ? 'text-emerald-700' : 'text-slate-400'}>
+                                {ch.score} / 100
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Quiz Card */}
+                      <div className="p-3 bg-linear-to-r from-emerald-50 to-indigo-50 rounded-xl border border-emerald-200 text-xs flex items-center justify-between flex-wrap gap-2">
+                        <div className="flex items-center gap-2">
+                          <Award className="w-5 h-5 text-emerald-600 shrink-0" />
+                          <div>
+                            <div className="font-bold text-slate-800">
+                              {breakdown.quiz.title}
+                            </div>
+                            <div className="text-[11px] text-slate-500">
+                              Nota Oficial (1.ª Tentativa): <strong className="text-emerald-700 font-bold">{breakdown.quiz.officialScore} pts</strong>
+                              {breakdown.quiz.attempts > 1 && (
+                                <span className="ml-2 text-indigo-700">
+                                  (Melhor nota em {breakdown.quiz.attempts} tentativas: {breakdown.quiz.bestScore} pts)
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-1.5 font-bold">
+                          <span className="px-2.5 py-1 rounded-lg bg-emerald-600 text-white shadow-xs">
+                            {breakdown.quiz.officialScore} / 100
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Footer */}
+              <div className="p-4 bg-white border-t border-slate-200 flex items-center justify-between gap-2 shrink-0">
+                <button
+                  onClick={() => {
+                    exportThemeScoresToExcel([detailStudent], progressMap, 'all', detailStudent.turma);
+                    showToast('success', 'Caderno individual exportado com sucesso em XLS!');
+                  }}
+                  className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors cursor-pointer flex items-center gap-1.5"
+                >
+                  <FileSpreadsheet className="w-4 h-4" />
+                  <span>Exportar Pauta deste Aluno em XLS</span>
+                </button>
+                <button
+                  onClick={() => setDetailStudent(null)}
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors cursor-pointer"
+                >
+                  {language === 'pt' ? 'Fechar' : 'Close'}
+                </button>
               </div>
             </div>
           </div>

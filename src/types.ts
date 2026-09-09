@@ -31,6 +31,11 @@ export interface ActivityProgress {
   attempts: number;
   bestScore?: number;
   bestPercentage?: number;
+  firstAttemptScore?: number;
+  firstAttemptPercentage?: number;
+  firstAttemptDate?: string;
+  latestScore?: number;
+  latestPercentage?: number;
   lastUpdated: string;
 }
 

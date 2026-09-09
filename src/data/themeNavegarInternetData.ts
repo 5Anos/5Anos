@@ -334,13 +334,13 @@ export const themeNavegarInternetData: ThemeDefinition = {
       shortDesc: { pt: 'Seleciona os termos ideais para encontrar informação rápida e precisa.', en: 'Select ideal terms to find swift and accurate information.' },
       icon: '🔎',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'keywords_master',
       gameData: {
         type: 'mc',
         title: 'Escolhe as melhores palavras-chave',
         icon: '🔎',
-        xp: 20,
+        xp: 100,
         desc: 'Identifica a melhor estratégia de pesquisa na Internet para trabalhos escolares.',
         data: {
           questions: [
@@ -378,13 +378,13 @@ export const themeNavegarInternetData: ThemeDefinition = {
       shortDesc: { pt: 'Distingue factos de mitos na navegação web.', en: 'Distinguish facts from myths in web browsing.' },
       icon: '⚡',
       durationMinutes: 3,
-      points: 15,
+      points: 100,
       type: 'true_false',
       gameData: {
         type: 'tf',
         title: 'Verdadeiro ou Falso: navegar na Internet',
         icon: '⚡',
-        xp: 15,
+        xp: 100,
         desc: 'Classifica as afirmações sobre a segurança e pesquisa online.',
         data: {
           items: [
@@ -403,13 +403,13 @@ export const themeNavegarInternetData: ThemeDefinition = {
       shortDesc: { pt: 'Associa cada indício à sua avaliação de segurança.', en: 'Match each indicator to its safety rating.' },
       icon: '🔗',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'match_pairs',
       gameData: {
         type: 'match',
         title: 'Sinal de site suspeito?',
         icon: '🔗',
-        xp: 20,
+        xp: 100,
         desc: 'Associa cada pista visual ao respetivo nível de risco online.',
         data: {
           pairs: [
@@ -429,13 +429,13 @@ export const themeNavegarInternetData: ThemeDefinition = {
       shortDesc: { pt: 'Ordena os passos para realizar uma boa investigação escolar na web.', en: 'Order the steps for a thorough school web research.' },
       icon: '📦',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'order_sequence',
       gameData: {
         type: 'order',
         title: 'Desafio de pesquisa',
         icon: '📦',
-        xp: 20,
+        xp: 100,
         desc: 'Coloca os passos de investigação digital pela ordem recomendada.',
         data: {
           items: [
@@ -455,7 +455,7 @@ export const themeNavegarInternetData: ThemeDefinition = {
       shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 5.', en: 'Comprehensive final assessment on Topic 5.' },
       icon: '🏆',
       durationMinutes: 10,
-      points: 50,
+      points: 100,
       type: 'final_quiz',
     },
   ],

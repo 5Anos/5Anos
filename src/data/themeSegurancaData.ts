@@ -242,13 +242,13 @@ export const themeSegurancaData: ThemeDefinition = {
       shortDesc: { pt: 'Avalia se cada comportamento online é seguro.', en: 'Evaluate if each online behavior is safe.' },
       icon: '✅',
       durationMinutes: 4,
-      points: 15,
+      points: 100,
       type: 'true_false',
       gameData: {
         type: 'tf',
         title: 'Seguro ou perigoso?',
         icon: '✅',
-        xp: 15,
+        xp: 100,
         desc: 'Avalia se cada comportamento online é seguro.',
         data: {
           items: [
@@ -269,13 +269,13 @@ export const themeSegurancaData: ThemeDefinition = {
       shortDesc: { pt: 'Reconhece sinais de mensagens ou sites fraudulentos.', en: 'Recognize signs of fraudulent messages or websites.' },
       icon: '🕵️',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'what_would_you_do',
       gameData: {
         type: 'mc',
         title: 'Identifica o phishing',
         icon: '🕵️',
-        xp: 20,
+        xp: 100,
         desc: 'Reconhece sinais de mensagens ou sites fraudulentos.',
         data: {
           questions: [
@@ -321,13 +321,13 @@ export const themeSegurancaData: ThemeDefinition = {
       shortDesc: { pt: 'Associa cada situação à atitude mais correta.', en: 'Match each situation to the correct attitude.' },
       icon: '🧩',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'match_pairs',
       gameData: {
         type: 'match',
         title: 'Situação e Atitude Correta',
         icon: '🧩',
-        xp: 20,
+        xp: 100,
         desc: 'Associa cada situação à atitude mais correta.',
         data: {
           pairs: [
@@ -348,13 +348,13 @@ export const themeSegurancaData: ThemeDefinition = {
       shortDesc: { pt: 'Situações reais de segurança e respeito digital.', en: 'Real situations of digital safety and respect.' },
       icon: '💡',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'what_would_you_do',
       gameData: {
         type: 'mc',
         title: 'O que deves fazer?',
         icon: '💡',
-        xp: 20,
+        xp: 100,
         desc: 'Situações reais de segurança e respeito digital.',
         data: {
           questions: [
@@ -400,7 +400,7 @@ export const themeSegurancaData: ThemeDefinition = {
       shortDesc: { pt: 'Avaliação final abrangente sobre o Tema de Segurança.', en: 'Comprehensive final assessment on Security.' },
       icon: '🏆',
       durationMinutes: 10,
-      points: 50,
+      points: 100,
       type: 'final_quiz',
     },
   ],

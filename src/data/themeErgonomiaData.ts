@@ -343,13 +343,13 @@ export const themeErgonomiaData: ThemeDefinition = {
       shortDesc: { pt: 'Pega nas partes do corpo e do equipamento e posiciona o aluno com ergonomia perfeita.', en: 'Adjust body parts and equipment to sit the student with perfect ergonomics.' },
       icon: '🪑',
       durationMinutes: 4,
-      points: 25,
+      points: 100,
       type: 'what_would_you_do',
       gameData: {
         type: 'posture_simulator',
         title: 'Simulador: Corrige a Postura do Aluno!',
         icon: '🪑',
-        xp: 25,
+        xp: 100,
         desc: 'Ajusta a cabeça, costas, ecrã, braços e pés para garantir a postura ergonómica ideal.',
         data: {}
       }
@@ -362,13 +362,13 @@ export const themeErgonomiaData: ThemeDefinition = {
       shortDesc: { pt: 'Avalia posturas corporais ao utilizar computadores e tablets.', en: 'Evaluate body posture when using computers and tablets.' },
       icon: '🪑',
       durationMinutes: 4,
-      points: 15,
+      points: 100,
       type: 'true_false',
       gameData: {
         type: 'tf',
         title: 'Postura correta ou incorreta?',
         icon: '🪑',
-        xp: 15,
+        xp: 100,
         desc: 'Classifica as afirmações sobre a saúde postural em frente aos ecrãs.',
         data: {
           items: [
@@ -387,13 +387,13 @@ export const themeErgonomiaData: ThemeDefinition = {
       shortDesc: { pt: 'Seleciona as recomendações ergonómicas para evitar lesões.', en: 'Select ergonomic recommendations to prevent injuries.' },
       icon: '🎯',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'what_would_you_do',
       gameData: {
         type: 'mc',
         title: 'Escolhe a melhor posição',
         icon: '🎯',
-        xp: 20,
+        xp: 100,
         desc: 'Analisa as posições e seleciona a opção correta para a saúde postural e visual.',
         data: {
           questions: [
@@ -431,13 +431,13 @@ export const themeErgonomiaData: ThemeDefinition = {
       shortDesc: { pt: 'Associa cada hábito incorreto à sua solução ergonómica.', en: 'Match each incorrect habit to its ergonomic solution.' },
       icon: '🔗',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'match_pairs',
       gameData: {
         type: 'match',
         title: 'Problema e Solução',
         icon: '🔗',
-        xp: 20,
+        xp: 100,
         desc: 'Associa o problema postural à respetiva recomendação de saúde.',
         data: {
           pairs: [
@@ -457,7 +457,7 @@ export const themeErgonomiaData: ThemeDefinition = {
       shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 2.', en: 'Comprehensive final assessment on Topic 2.' },
       icon: '🏆',
       durationMinutes: 10,
-      points: 50,
+      points: 100,
       type: 'final_quiz',
     },
   ],

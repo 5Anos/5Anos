@@ -331,12 +331,14 @@ export default function App() {
       currentTheme.finalQuiz.some((q) => q.id.includes(activeChallengeId));
 
     if (isFinalQuiz) {
+      const existingQuizProgress = progressList.find((p) => p.activityId === activeChallengeId);
       return (
         <FinalQuizView
           themeTitle={currentTheme.title[language]}
           themeNumber={currentTheme.number}
           questions={currentTheme.finalQuiz}
           language={language}
+          existingProgress={existingQuizProgress}
           onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
@@ -345,9 +347,9 @@ export default function App() {
               themeId: currentTheme.id,
               status: 'completed',
               score,
-              maxScore,
+              maxScore: 100,
               percentage,
-              activityTitle: `${language === 'pt' ? 'Quiz Global:' : 'Master Quiz:'} ${currentTheme.title[language]}`,
+              activityTitle: `${language === 'pt' ? 'Quiz de Aprendizagem:' : 'Learning Quiz:'} ${currentTheme.title[language]}`,
             });
           }}
         />

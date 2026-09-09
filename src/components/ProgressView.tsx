@@ -452,13 +452,17 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                             <th className="py-2.5 px-4 sm:px-6">{language === 'pt' ? 'Nome da Atividade' : 'Activity Name'}</th>
                             <th className="py-2.5 px-3">{language === 'pt' ? 'Tipo' : 'Type'}</th>
                             <th className="py-2.5 px-3">{language === 'pt' ? 'Estado' : 'Status'}</th>
-                            <th className="py-2.5 px-3">{language === 'pt' ? 'Melhor Nota' : 'Best Score'}</th>
+                            <th className="py-2.5 px-3">{language === 'pt' ? 'Pontuação Registada' : 'Recorded Score'}</th>
                             <th className="py-2.5 px-3">{language === 'pt' ? 'Tentativas' : 'Attempts'}</th>
                             <th className="py-2.5 px-4 sm:px-6">{language === 'pt' ? 'Data' : 'Date'}</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
-                          {items.map((item) => (
+                          {items.map((item) => {
+                            const isFinalQuiz = item.activityType === 'quiz' || (item.meta as any).type === 'final_quiz' || item.activityId.startsWith('quiz-final');
+                            const officialQuizScore = item.firstAttemptScore ?? item.score ?? item.bestScore ?? (item.firstAttemptPercentage !== undefined ? item.firstAttemptPercentage : item.bestPercentage ?? 0);
+
+                            return (
                             <tr
                               key={item.activityId}
                               className="hover:bg-indigo-50/40 transition-colors"
@@ -486,12 +490,12 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                                   className={`inline-block text-[11px] font-bold px-2 py-0.5 rounded-md ${
                                     item.meta.type === 'module'
                                       ? 'bg-blue-50 text-blue-700 border border-blue-200/60'
-                                      : item.meta.type === 'quiz'
+                                      : isFinalQuiz
                                       ? 'bg-amber-50 text-amber-700 border border-amber-200/60'
                                       : 'bg-purple-50 text-purple-700 border border-purple-200/60'
                                   }`}
                                 >
-                                  {item.meta.typeLabel}
+                                  {isFinalQuiz ? (language === 'pt' ? 'Quiz de Aprendizagem' : 'Learning Quiz') : item.meta.typeLabel}
                                 </span>
                               </td>
 
@@ -510,20 +514,41 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                                 )}
                               </td>
 
-                              {/* Best Score */}
+                              {/* Score */}
                               <td className="py-3 px-3 whitespace-nowrap font-black">
-                                {item.bestPercentage !== undefined ? (
-                                  <span
-                                    className={
-                                      item.bestPercentage >= 70
-                                        ? 'text-emerald-600'
-                                        : item.bestPercentage >= 40
-                                        ? 'text-amber-600'
-                                        : 'text-rose-600'
-                                    }
-                                  >
-                                    {item.bestPercentage}%
-                                  </span>
+                                {isFinalQuiz ? (
+                                  <div>
+                                    <span className="text-amber-800 text-sm">
+                                      {officialQuizScore} / 100 XP
+                                    </span>
+                                    <span className="block text-[10px] text-slate-400 font-semibold">
+                                      {language === 'pt' ? '1.ª tentativa (Oficial)' : '1st attempt (Official)'}
+                                    </span>
+                                    {item.attempts > 1 && item.latestPercentage !== undefined && (
+                                      <span className="block text-[10px] text-indigo-600 font-medium">
+                                        {language === 'pt' ? `Último treino: ${item.latestPercentage}%` : `Last practice: ${item.latestPercentage}%`}
+                                      </span>
+                                    )}
+                                  </div>
+                                ) : item.bestPercentage !== undefined || item.bestScore !== undefined ? (
+                                  <div>
+                                    <span
+                                      className={
+                                        (item.bestPercentage ?? 0) >= 70
+                                          ? 'text-emerald-600 text-sm'
+                                          : (item.bestPercentage ?? 0) >= 40
+                                          ? 'text-amber-600 text-sm'
+                                          : 'text-rose-600 text-sm'
+                                      }
+                                    >
+                                      {item.bestScore ?? item.score ?? item.bestPercentage}% (100 XP máx.)
+                                    </span>
+                                    {item.bestPercentage !== undefined && (
+                                      <span className="block text-[10px] text-slate-400 font-normal">
+                                        {item.bestPercentage}% de precisão
+                                      </span>
+                                    )}
+                                  </div>
                                 ) : (
                                   <span className="text-slate-400 font-normal">—</span>
                                 )}
@@ -550,7 +575,8 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                                   : '—'}
                               </td>
                             </tr>
-                          ))}
+                          );
+                        })}
                         </tbody>
                       </table>
                     </div>
@@ -606,7 +632,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                   <th className="pb-3">{language === 'pt' ? 'Atividade' : 'Activity'}</th>
                   <th className="pb-3">{language === 'pt' ? 'Tipo' : 'Type'}</th>
                   <th className="pb-3">{language === 'pt' ? 'Estado' : 'Status'}</th>
-                  <th className="pb-3">{language === 'pt' ? 'Melhor Nota' : 'Best Score'}</th>
+                  <th className="pb-3">{language === 'pt' ? 'Pontuação Registada' : 'Recorded Score'}</th>
                   <th className="pb-3">{language === 'pt' ? 'Tentativas' : 'Attempts'}</th>
                   <th className="pb-3">{language === 'pt' ? 'Data' : 'Date'}</th>
                 </tr>
@@ -619,7 +645,11 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                       item.meta.themeId === selectedThemeFilter ||
                       item.themeId === selectedThemeFilter
                   )
-                  .map((item) => (
+                  .map((item) => {
+                    const isFinalQuiz = item.activityType === 'quiz' || (item.meta as any).type === 'final_quiz' || item.activityId.startsWith('quiz-final');
+                    const officialQuizScore = item.firstAttemptScore ?? item.score ?? item.bestScore ?? (item.firstAttemptPercentage !== undefined ? item.firstAttemptPercentage : item.bestPercentage ?? 0);
+
+                    return (
                     <tr
                       key={item.activityId}
                       className="hover:bg-slate-50/80 transition-colors"
@@ -652,7 +682,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                       {/* Type */}
                       <td className="py-3 whitespace-nowrap">
                         <span className="text-xs font-semibold text-slate-600">
-                          {item.meta.typeLabel}
+                          {isFinalQuiz ? (language === 'pt' ? 'Quiz de Aprendizagem' : 'Learning Quiz') : item.meta.typeLabel}
                         </span>
                       </td>
 
@@ -671,20 +701,36 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                         )}
                       </td>
 
-                      {/* Best Score */}
+                      {/* Score */}
                       <td className="py-3 whitespace-nowrap font-black">
-                        {item.bestPercentage !== undefined ? (
-                          <span
-                            className={
-                              item.bestPercentage >= 70
-                                ? 'text-emerald-600'
-                                : item.bestPercentage >= 40
-                                ? 'text-amber-600'
-                                : 'text-rose-600'
-                            }
-                          >
-                            {item.bestPercentage}%
-                          </span>
+                        {isFinalQuiz ? (
+                          <div>
+                            <span className="text-amber-800 text-sm">
+                              {officialQuizScore} / 100 XP
+                            </span>
+                            <span className="block text-[10px] text-slate-400 font-semibold">
+                              {language === 'pt' ? '1.ª tent. (Oficial)' : '1st att. (Official)'}
+                            </span>
+                            {item.attempts > 1 && item.latestPercentage !== undefined && (
+                              <span className="block text-[10px] text-indigo-600 font-medium">
+                                {language === 'pt' ? `Treino: ${item.latestPercentage}%` : `Practice: ${item.latestPercentage}%`}
+                              </span>
+                            )}
+                          </div>
+                        ) : item.bestPercentage !== undefined || item.bestScore !== undefined ? (
+                          <div>
+                            <span
+                              className={
+                                (item.bestPercentage ?? 0) >= 70
+                                  ? 'text-emerald-600'
+                                  : (item.bestPercentage ?? 0) >= 40
+                                  ? 'text-amber-600'
+                                  : 'text-rose-600'
+                              }
+                            >
+                              {item.bestScore ?? item.score ?? item.bestPercentage}% (100 XP máx.)
+                            </span>
+                          </div>
                         ) : (
                           <span className="text-slate-400 font-normal">—</span>
                         )}
@@ -702,7 +748,8 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                           : '—'}
                       </td>
                     </tr>
-                  ))}
+                    );
+                  })}
               </tbody>
             </table>
           </div>

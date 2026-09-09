@@ -547,10 +547,36 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                         <h3 className="text-base sm:text-lg font-black text-slate-900 group-hover:text-indigo-600 transition-colors leading-snug">
                           {chal.title[language]}
                         </h3>
-                        <span className="text-[11px] font-bold text-amber-600 flex items-center gap-1 mt-0.5">
-                          <Zap className="w-3 h-3 fill-current" />
-                          <span>+25 XP por completar</span>
-                        </span>
+                        {isFinalQuiz ? (
+                          isDone ? (
+                            <div className="mt-0.5">
+                              <span className="text-[11px] font-bold text-amber-800 flex items-center gap-1">
+                                <Zap className="w-3 h-3 fill-current text-amber-500" />
+                                <span>1.ª tentativa: {record?.firstAttemptScore ?? record?.score ?? 100} / 100 XP</span>
+                              </span>
+                              {record?.attempts && record.attempts > 1 && (
+                                <span className="text-[10px] text-slate-500 font-semibold block">
+                                  {record.attempts} tentativas realizadas
+                                </span>
+                              )}
+                            </div>
+                          ) : (
+                            <span className="text-[11px] font-bold text-amber-700 flex items-center gap-1 mt-0.5">
+                              <Zap className="w-3 h-3 fill-current text-amber-500" />
+                              <span>Vale 100 XP (Nota na 1.ª tentativa)</span>
+                            </span>
+                          )
+                        ) : isDone ? (
+                          <span className="text-[11px] font-bold text-emerald-700 flex items-center gap-1 mt-0.5">
+                            <Zap className="w-3 h-3 fill-current text-emerald-500" />
+                            <span>{record?.bestScore ?? record?.score ?? 100} / 100 XP {record?.attempts && record.attempts > 1 ? `(${record.attempts} tent.)` : ''}</span>
+                          </span>
+                        ) : (
+                          <span className="text-[11px] font-bold text-indigo-600 flex items-center gap-1 mt-0.5">
+                            <Zap className="w-3 h-3 fill-current text-indigo-500" />
+                            <span>Vale 100 XP • Tentativas ilimitadas</span>
+                          </span>
+                        )}
                       </div>
                     </div>
 
@@ -575,7 +601,15 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                       }`}
                     >
                       <Play className="w-3.5 h-3.5 fill-current" />
-                      <span>{isDone ? (language === 'pt' ? 'Repetir' : 'Replay') : t.playChallenge}</span>
+                      <span>
+                        {isDone
+                          ? isFinalQuiz
+                            ? (language === 'pt' ? 'Treinar de Novo' : 'Practice Again')
+                            : (language === 'pt' ? 'Repetir Desafio' : 'Play Again')
+                          : isFinalQuiz
+                          ? (language === 'pt' ? 'Iniciar Quiz' : 'Start Quiz')
+                          : t.playChallenge}
+                      </span>
                     </button>
                   </div>
                 </div>

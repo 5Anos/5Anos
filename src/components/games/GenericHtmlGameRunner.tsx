@@ -120,7 +120,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
     setBuilderSubmitted(true);
     if (builderRules.allValid) {
       setCompleted(true);
-      onFinish(10, 10, 100);
+      onFinish(100, 100, 100);
     }
   };
 
@@ -137,7 +137,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
     });
     const pct = Math.round((correct / items.length) * 100);
     setCompleted(true);
-    onFinish(correct, items.length, pct);
+    onFinish(pct, 100, pct);
   };
 
   // MC Handler
@@ -157,7 +157,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
       });
       const pct = Math.round((correct / qs.length) * 100);
       setCompleted(true);
-      onFinish(correct, qs.length, pct);
+      onFinish(pct, 100, pct);
     }
   };
 
@@ -182,7 +182,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
       setPicked([]);
       if (nextMatched.length === data.pairs.length) {
         setCompleted(true);
-        onFinish(data.pairs.length, data.pairs.length, 100);
+        onFinish(100, 100, 100);
       }
     } else {
       setShakeIdx(ri);
@@ -207,7 +207,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
     const isCorrect = orderChosen.every((v, idx) => v === idx);
     if (isCorrect) {
       setCompleted(true);
-      onFinish(items.length, items.length, 100);
+      onFinish(100, 100, 100);
     }
   };
 

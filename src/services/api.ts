@@ -80,6 +80,18 @@ export function isUserAdmin(email?: string, role?: string): boolean {
 }
 
 /**
+ * Identifies if an activity is a "Quiz de Aprendizagem" (Final Comprehensive Quiz for each theme)
+ * which follows the strict rule:
+ * - Unlimited attempts allowed for practice and learning.
+ * - The official registered score is ALWAYS and permanently the score from the FIRST attempt.
+ */
+export function isLearningQuiz(activityId: string, activityType?: string): boolean {
+  if (activityType === 'quiz') return true;
+  const idLower = (activityId || '').toLowerCase();
+  return idLower.startsWith('quiz-final') || idLower.includes('final_quiz') || idLower.includes('quiz-final-tema');
+}
+
+/**
  * Evaluates which badges from BADGES should be unlocked based on progress and points.
  * Returns array of badges that should be unlocked.
  */
@@ -96,89 +108,82 @@ export function evaluateEligibleBadges(
     toUnlock.push({ badgeId: 'primeiros-passos', bonus: 50, name: 'Primeiros Passos' });
   }
 
-  // 2. Guardião Digital: completed all 5 Theme 1 modules
-  const theme1Modules = [
-    'seguranca-digital-intro',
-    'utilizacao-segura-internet',
-    'dados-pessoais-privacidade',
-    'responsabilidade-respeito',
-    'direitos-autor',
-  ];
-  const t1Done = theme1Modules.filter((id) => completedList.some((p) => p.activityId === id));
-  if (!existingAchievementIds.has('guardiao-digital') && t1Done.length >= 5) {
+  // 2. Guardião Digital: completed digital safety/security activities (Theme 3 or Theme 1/4)
+  const safetyActivitiesDone = completedList.filter(
+    (p) =>
+      p.themeId === 'seguranca' ||
+      p.themeId === 'seguranca-digital' ||
+      p.themeId === 'palavras-passe' ||
+      p.activityId.startsWith('seg-') ||
+      p.activityId.startsWith('pass-')
+  );
+  if (!existingAchievementIds.has('guardiao-digital') && safetyActivitiesDone.length >= 4) {
     toUnlock.push({ badgeId: 'guardiao-digital', bonus: 100, name: 'Guardião Digital' });
   }
 
-  // 3. Especialista em Segurança: scored >= 90% in any Theme 1 quiz
-  const t1Quiz90 = progressList.some(
+  // 3. Especialista em Segurança: scored >= 90% in any security/safety quiz or challenge
+  const safetyQuiz90 = progressList.some(
     (p) =>
-      p.themeId === 'seguranca-digital' &&
-      (p.activityType === 'quiz' || p.activityId.includes('quiz')) &&
-      (p.bestPercentage ?? p.percentage ?? 0) >= 90
+      (p.themeId === 'seguranca' || p.themeId === 'seguranca-digital' || p.themeId === 'palavras-passe' || p.activityId.includes('seguranca') || p.activityId.includes('pass')) &&
+      (p.activityType === 'quiz' || p.activityId.includes('quiz') || p.activityType === 'challenge') &&
+      (p.bestPercentage ?? p.percentage ?? p.score ?? 0) >= 90
   );
-  if (!existingAchievementIds.has('especialista-seguranca') && t1Quiz90) {
+  if (!existingAchievementIds.has('especialista-seguranca') && safetyQuiz90) {
     toUnlock.push({ badgeId: 'especialista-seguranca', bonus: 80, name: 'Especialista em Segurança' });
   }
 
-  // 4. Detetive Cibernético: completed phishing challenge
+  // 4. Detetive Cibernético: completed phishing or cyber danger challenge
   const phishingDone = completedList.some(
-    (p) => p.activityId === 'desafio-detetive-phishing' || p.activityId === 'desafio-phishing'
+    (p) =>
+      p.activityId === 'desafio-detetive-phishing' ||
+      p.activityId === 'desafio-seguro-perigoso' ||
+      p.activityId === 'jogo-seguranca-tf' ||
+      p.activityId === 'jogo-seguranca-mc'
   );
   if (!existingAchievementIds.has('detetive-cibernetico') && phishingDone) {
     toUnlock.push({ badgeId: 'detetive-cibernetico', bonus: 70, name: 'Detetive Cibernético' });
   }
 
-  // 5. Mestre do Email: completed Theme 2 challenges
-  const theme2Challenges = ['desafio-escrever-email', 'desafio-organizar-inbox', 'desafio-cc-bcc', 'quiz-final-tema2'];
-  const t2Done = theme2Challenges.filter((id) => completedList.some((p) => p.activityId === id));
-  if (!existingAchievementIds.has('mestre-email') && t2Done.length >= 4) {
+  // 5. Mestre do Email: completed Theme 5 (Correio Eletrónico) challenges/modules
+  const emailActivitiesDone = completedList.filter(
+    (p) => p.themeId === 'correio-eletronico' || p.activityId.startsWith('email-') || p.activityId.startsWith('jogo-email')
+  );
+  if (!existingAchievementIds.has('mestre-email') && emailActivitiesDone.length >= 3) {
     toUnlock.push({ badgeId: 'mestre-email', bonus: 100, name: 'Mestre do Email' });
   }
 
-  // 6. Detetive da Informação: completed all 7 Theme 3 modules
-  const theme3Modules = [
-    'pesquisa-o-que-e',
-    'pesquisa-motores-busca',
-    'pesquisa-boa-pesquisa',
-    'pesquisa-operadores',
-    'pesquisa-avaliar-fontes',
-    'pesquisa-direitos-plagio',
-    'pesquisa-organizar-informacao',
-  ];
-  const t3Done = theme3Modules.filter((id) => completedList.some((p) => p.activityId === id));
-  if (!existingAchievementIds.has('detetive-informacao') && t3Done.length >= 7) {
-    toUnlock.push({ badgeId: 'detetive-informacao', bonus: 90, name: 'Detetive da Informação' });
+  // 6. Detetive da Informação: completed Theme 6 (Navegar na Internet) or Theme 7 (Direitos de Autor) activities
+  const searchActivitiesDone = completedList.filter(
+    (p) =>
+      p.themeId === 'navegar-internet' ||
+      p.themeId === 'direitos-autor' ||
+      p.activityId.startsWith('net-') ||
+      p.activityId.startsWith('copy-')
+  );
+  if (!existingAchievementIds.has('detetive-informacao') && searchActivitiesDone.length >= 4) {
+    toUnlock.push({ badgeId: 'detetive-informacao', bonus: 100, name: 'Detetive da Informação' });
   }
 
-  // 7. Mestre da Pesquisa: scored >= 90% in Theme 3 final quiz
-  const t3Quiz90 = progressList.some(
-    (p) => p.activityId === 'quiz-final-tema3' && (p.bestPercentage ?? p.percentage ?? 0) >= 90
+  // 7. Mestre da Pesquisa: scored >= 90% in Internet Navigation or Research quiz
+  const searchQuiz90 = progressList.some(
+    (p) =>
+      (p.themeId === 'navegar-internet' || p.themeId === 'direitos-autor' || p.activityId.includes('net') || p.activityId.includes('copy')) &&
+      (p.activityType === 'quiz' || p.activityId.includes('quiz')) &&
+      (p.bestPercentage ?? p.percentage ?? p.score ?? 0) >= 90
   );
-  if (!existingAchievementIds.has('mestre-pesquisa') && t3Quiz90) {
+  if (!existingAchievementIds.has('mestre-pesquisa') && searchQuiz90) {
     toUnlock.push({ badgeId: 'mestre-pesquisa', bonus: 80, name: 'Mestre da Pesquisa' });
   }
 
-  // 8. TIC Explorer: completed modules across all 3 themes
-  const theme2Modules = [
-    'correio-o-que-e',
-    'correio-estrutura-endereco',
-    'correio-regras-ouro',
-    'correio-seguranca-anexos',
-    'correio-organizacao-limpeza',
-  ];
-  const t2ModsDone = theme2Modules.filter((id) => completedList.some((p) => p.activityId === id));
-  if (
-    !existingAchievementIds.has('tic-explorer') &&
-    t1Done.length >= 5 &&
-    t2ModsDone.length >= 5 &&
-    t3Done.length >= 7
-  ) {
+  // 8. TIC Explorer: completed activities across at least 4 different themes
+  const distinctThemesDone = new Set(completedList.map((p) => p.themeId).filter(Boolean));
+  if (!existingAchievementIds.has('tic-explorer') && distinctThemesDone.size >= 4) {
     toUnlock.push({ badgeId: 'tic-explorer', bonus: 150, name: 'TIC Explorer' });
   }
 
   // 9. Centurião de Pontos: reached 500+ total points
   if (!existingAchievementIds.has('centuriao-pontos') && userPoints >= 500) {
-    toUnlock.push({ badgeId: 'centuriao-pontos', bonus: 100, name: 'Centurião' });
+    toUnlock.push({ badgeId: 'centuriao-pontos', bonus: 60, name: 'Centurião Digital' });
   }
 
   return toUnlock;
@@ -842,15 +847,18 @@ export const api = {
     }
 
     // 4. Calculate verified points dynamically from progress
+    // Rule 1: Every challenge and quiz is worth 100 points maximum.
+    // Rule 3: For Quiz de Aprendizagem, official score is permanently the 1st attempt score.
     let calculatedPoints = 0;
     for (const p of progress) {
       if (p.status === 'completed') {
-        if (p.activityType === 'quiz') {
-          calculatedPoints += (p.bestPercentage ?? p.percentage ?? 100) >= 80 ? 30 : (p.bestPercentage ?? p.percentage ?? 100) >= 50 ? 20 : 15;
-        } else if (p.activityType === 'challenge') {
-          calculatedPoints += 25;
+        const isQuiz = isLearningQuiz(p.activityId, p.activityType);
+        if (isQuiz) {
+          const official = p.firstAttemptScore ?? p.score ?? Math.round(((p.firstAttemptPercentage ?? p.percentage ?? 100) / 100) * 100);
+          calculatedPoints += Math.min(100, Math.max(0, official));
         } else {
-          calculatedPoints += 15;
+          const best = p.bestScore ?? p.score ?? Math.round(((p.bestPercentage ?? p.percentage ?? 100) / 100) * 100);
+          calculatedPoints += Math.min(100, Math.max(0, best));
         }
       }
     }
@@ -867,6 +875,11 @@ export const api = {
         const d = userDoc.data();
         const storedPoints = typeof d.points === 'number' ? d.points : 0;
         user.points = Math.max(storedPoints, totalVerifiedPoints);
+        // Self-heal: if verified points exceed stored points, sync back to Firestore
+        if (!isUserAdmin(user.email, user.role) && user.points > storedPoints) {
+          setDoc(doc(db, 'users', user.id), { points: user.points, updatedAt: new Date().toISOString() }, { merge: true }).catch(() => {});
+          setDoc(doc(db, 'publicProfiles', user.id), { points: user.points, updatedAt: new Date().toISOString() }, { merge: true }).catch(() => {});
+        }
       } else {
         user.points = totalVerifiedPoints;
       }
@@ -973,46 +986,84 @@ export const api = {
     let earnedPoints = 0;
     const isCompleted = (payload.status || 'completed') === 'completed';
 
+    // Check if activity is a "Quiz de Aprendizagem"
+    const isQuiz = isLearningQuiz(payload.activityId, payload.activityType);
+
+    // Rule 1: Every challenge and quiz has a maximum score of 100 points/XP.
+    // Normalized score is between 0 and 100 based on finalPercentage.
+    const normalizedMaxScore = 100;
+    const normalizedScore = Math.max(0, Math.min(100, Math.round(finalPercentage ?? 100)));
+
     if (!existing) {
+      // 1.ª tentativa (First Attempt)
       existing = {
         userId,
         activityId: payload.activityId,
         activityType: payload.activityType,
         themeId: payload.themeId,
         status: payload.status || 'completed',
-        score: payload.score,
-        maxScore: payload.maxScore,
+        score: normalizedScore,
+        maxScore: normalizedMaxScore,
         percentage: finalPercentage,
         attempts: 1,
-        bestScore: payload.score,
+        bestScore: normalizedScore,
         bestPercentage: finalPercentage,
+        firstAttemptScore: normalizedScore,
+        firstAttemptPercentage: finalPercentage,
+        firstAttemptDate: new Date().toISOString(),
+        latestScore: normalizedScore,
+        latestPercentage: finalPercentage,
         lastUpdated: new Date().toISOString(),
       };
       progressList.push(existing);
 
-      // Points awarded for first completion
+      // Points awarded for first completion (up to 100 XP)
       if (isCompleted) {
-        if (payload.activityType === 'quiz') {
-          earnedPoints = (finalPercentage ?? 100) >= 80 ? 30 : (finalPercentage ?? 100) >= 50 ? 20 : 15;
-        } else if (payload.activityType === 'challenge') {
-          earnedPoints = 25;
-        } else {
-          earnedPoints = 15;
-        }
+        earnedPoints = normalizedScore;
       }
     } else {
-      existing.attempts += 1;
+      // Tentativas seguintes (Subsequent Attempts - 2.ª, 3.ª, ...)
+      // Regra 2: Alunos podem repetir qualquer desafio ou quiz quantas vezes quiserem sem limite.
+      existing.attempts = (existing.attempts || 1) + 1;
       existing.status = payload.status || existing.status;
       existing.lastUpdated = new Date().toISOString();
+      existing.latestScore = normalizedScore;
+      existing.latestPercentage = finalPercentage;
 
-      const prevBest = existing.bestPercentage ?? 0;
-      if (finalPercentage !== undefined && finalPercentage > prevBest) {
-        existing.bestPercentage = finalPercentage;
-        existing.bestScore = payload.score;
-        // Bonus points for improvement only
-        earnedPoints = 10;
+      // Garantir integridade dos dados da 1.ª tentativa
+      if (existing.firstAttemptScore === undefined) {
+        existing.firstAttemptScore = existing.score ?? normalizedScore;
+      }
+      if (existing.firstAttemptPercentage === undefined) {
+        existing.firstAttemptPercentage = existing.percentage ?? finalPercentage;
+      }
+      if (!existing.firstAttemptDate) {
+        existing.firstAttemptDate = existing.lastUpdated;
+      }
+
+      if (isQuiz) {
+        // REGRA 3 (ESPECIAL PARA QUIZ DE APRENDIZAGEM):
+        // A pontuação oficial/registada deve ser SEMPRE a pontuação obtida na PRIMEIRA tentativa.
+        // A 1.ª tentativa fica guardada permanentemente como "Pontuação da 1.ª tentativa".
+        // Tentativas seguintes servem apenas para treino/aprendizagem e NÃO substituem a pontuação oficial.
+        existing.score = existing.firstAttemptScore;
+        existing.percentage = existing.firstAttemptPercentage;
+        existing.maxScore = normalizedMaxScore;
+        // Tentativas de treino não atribuem novos pontos oficiais
+        earnedPoints = 0;
       } else {
-        earnedPoints = 0; // No points for repeated attempts without improvement
+        // Desafios regulares: os alunos podem melhorar o seu melhor resultado até 100 pontos
+        const prevBest = existing.bestScore ?? 0;
+        if (normalizedScore > prevBest) {
+          existing.bestScore = normalizedScore;
+          existing.bestPercentage = finalPercentage;
+          existing.score = normalizedScore;
+          existing.percentage = finalPercentage;
+          existing.maxScore = normalizedMaxScore;
+          earnedPoints = Math.max(0, normalizedScore - prevBest);
+        } else {
+          earnedPoints = 0;
+        }
       }
     }
 
@@ -1069,15 +1120,14 @@ export const api = {
       await setDoc(doc(db, 'users', userId, 'progress', payload.activityId), existing, { merge: true });
 
       const userUpdatePayload: any = {
+        points: user.points,
         lastActivity: user.lastActivity,
         updatedAt: new Date().toISOString(),
       };
-      if (isUserAdmin(user.email, user.role)) {
-        userUpdatePayload.points = user.points;
-      }
       await setDoc(doc(db, 'users', userId), userUpdatePayload, { merge: true });
 
-      if (isUserAdmin(user.email, user.role)) {
+      // Keep public profiles in sync for the student leaderboard (excluding admin accounts)
+      if (!isUserAdmin(user.email, user.role)) {
         await setDoc(
           doc(db, 'publicProfiles', userId),
           {
@@ -1142,15 +1192,13 @@ export const api = {
     // Sync to Firestore
     try {
       const userUpdatePayload: any = {
+        points: user.points,
         lastActivity: user.lastActivity,
         updatedAt: new Date().toISOString(),
       };
-      if (isUserAdmin(user.email, user.role)) {
-        userUpdatePayload.points = user.points;
-      }
       await setDoc(doc(db, 'users', userId), userUpdatePayload, { merge: true });
 
-      if (isUserAdmin(user.email, user.role)) {
+      if (!isUserAdmin(user.email, user.role)) {
         await setDoc(
           doc(db, 'publicProfiles', userId),
           {
@@ -1298,6 +1346,51 @@ export const api = {
       badgeCount: Math.min(BADGES.length, Math.floor((u.points || 0) / 35) + 1),
       isCurrentUser: u.id === currentUserId,
     }));
+  },
+
+  /**
+   * Fetch progress records for a single student from Cloud Firestore or fallback to localStorage
+   */
+  async getStudentProgress(studentId: string): Promise<ActivityProgress[]> {
+    if (!studentId) return [];
+    try {
+      const snap = await getDocs(collection(db, 'users', studentId, 'progress'));
+      if (!snap.empty) {
+        return snap.docs.map((d) => d.data() as ActivityProgress);
+      }
+    } catch (err) {
+      // Cloud Firestore read notice, fallback to local storage
+    }
+    try {
+      const local = localStorage.getItem(PROGRESS_STORAGE_KEY + studentId);
+      if (local) {
+        return JSON.parse(local) as ActivityProgress[];
+      }
+    } catch {
+      // Ignore parse error
+    }
+    return [];
+  },
+
+  /**
+   * Batch fetch progress records for multiple students for Teacher Area
+   */
+  async getStudentsProgressBatch(studentIds: string[]): Promise<Record<string, ActivityProgress[]>> {
+    const result: Record<string, ActivityProgress[]> = {};
+    if (!studentIds || studentIds.length === 0) return result;
+
+    await Promise.allSettled(
+      studentIds.map(async (id) => {
+        try {
+          const list = await this.getStudentProgress(id);
+          result[id] = list;
+        } catch {
+          result[id] = [];
+        }
+      })
+    );
+
+    return result;
   },
 
   /**

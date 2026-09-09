@@ -332,13 +332,13 @@ export const themePalavrasPasseData: ThemeDefinition = {
       shortDesc: { pt: 'Identifica a palavra-passe mais robusta e resistente a ataques.', en: 'Identify the most robust and secure password.' },
       icon: '🔑',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'what_would_you_do',
       gameData: {
         type: 'mc',
         title: 'Qual é a mais segura?',
         icon: '🔑',
-        xp: 20,
+        xp: 100,
         desc: 'Escolhe a palavra-passe mais difícil de adivinhar.',
         data: {
           questions: [
@@ -376,13 +376,13 @@ export const themePalavrasPasseData: ThemeDefinition = {
       shortDesc: { pt: 'Testa regras fundamentais de segurança de contas.', en: 'Test fundamental account security rules.' },
       icon: '⚡',
       durationMinutes: 3,
-      points: 15,
+      points: 100,
       type: 'true_false',
       gameData: {
         type: 'tf',
         title: 'Verdadeiro ou Falso: palavras-passe',
         icon: '⚡',
-        xp: 15,
+        xp: 100,
         desc: 'Classifica as afirmações sobre a proteção de palavras-passe.',
         data: {
           items: [
@@ -401,13 +401,13 @@ export const themePalavrasPasseData: ThemeDefinition = {
       shortDesc: { pt: 'Escolhe carateres e experimenta criar uma palavra-passe que cumpra todas as regras de segurança.', en: 'Choose characters and build a password meeting all safety rules through experimentation.' },
       icon: '🧩',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'password_builder',
       gameData: {
         type: 'password_builder',
         title: 'Constrói uma Palavra-passe Segura',
         icon: '🧩',
-        xp: 20,
+        xp: 100,
         desc: 'Seleciona os carateres para construir uma palavra-passe segura que cumpra todas as regras de proteção.',
         data: {
           lowercase: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
@@ -425,13 +425,13 @@ export const themePalavrasPasseData: ThemeDefinition = {
       shortDesc: { pt: 'Associa cada exemplo de palavra-passe à sua avaliação correta.', en: 'Match each password example to its security rating.' },
       icon: '🔗',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'match_pairs',
       gameData: {
         type: 'match',
         title: 'Segura ou Insegura?',
         icon: '🔗',
-        xp: 20,
+        xp: 100,
         desc: 'Associa corretamente cada palavra-passe à respetiva classificação.',
         data: {
           pairs: [
@@ -451,7 +451,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
       shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 3.', en: 'Comprehensive final assessment on Topic 3.' },
       icon: '🏆',
       durationMinutes: 10,
-      points: 50,
+      points: 100,
       type: 'final_quiz',
     },
   ],

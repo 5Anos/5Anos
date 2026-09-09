@@ -391,13 +391,13 @@ export const themeTicSociedadeData: ThemeDefinition = {
       shortDesc: { pt: 'Associa cada setor da sociedade à sua ferramenta tecnológica.', en: 'Match each sector to its technological tool.' },
       icon: '🔗',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'match_pairs',
       gameData: {
         type: 'match',
         title: 'Tecnologia ou Setor?',
         icon: '🔗',
-        xp: 20,
+        xp: 100,
         desc: 'Associa corretamente cada setor de atividade à respetiva aplicação TIC.',
         data: {
           pairs: [
@@ -417,13 +417,13 @@ export const themeTicSociedadeData: ThemeDefinition = {
       shortDesc: { pt: 'Testa os teus conhecimentos sobre o impacto das TIC.', en: 'Test your knowledge about ICT impact.' },
       icon: '⚡',
       durationMinutes: 3,
-      points: 15,
+      points: 100,
       type: 'true_false',
       gameData: {
         type: 'tf',
         title: 'Verdadeiro ou Falso: TIC no dia a dia',
         icon: '⚡',
-        xp: 15,
+        xp: 100,
         desc: 'Classifica cada afirmação sobre o papel das tecnologias na sociedade.',
         data: {
           items: [
@@ -442,13 +442,13 @@ export const themeTicSociedadeData: ThemeDefinition = {
       shortDesc: { pt: 'Escolhe a opção correta sobre o uso das tecnologias.', en: 'Choose the correct option about technology usage.' },
       icon: '🎯',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'what_would_you_do',
       gameData: {
         type: 'mc',
         title: 'Onde se usam as TIC?',
         icon: '🎯',
-        xp: 20,
+        xp: 100,
         desc: 'Responde às perguntas de escolha múltipla sobre o quotidiano digital.',
         data: {
           questions: [
@@ -486,13 +486,13 @@ export const themeTicSociedadeData: ThemeDefinition = {
       shortDesc: { pt: 'Ordena os passos desde a encomenda até à entrega em casa.', en: 'Order the steps from order to home delivery.' },
       icon: '📦',
       durationMinutes: 4,
-      points: 20,
+      points: 100,
       type: 'order_sequence',
       gameData: {
         type: 'order',
         title: 'Como chega uma compra online?',
         icon: '📦',
-        xp: 20,
+        xp: 100,
         desc: 'Coloca os passos do comércio eletrónico pela ordem correta.',
         data: {
           items: [
@@ -512,7 +512,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
       shortDesc: { pt: 'Avaliação final abrangente sobre o Tema 1.', en: 'Comprehensive final assessment on Topic 1.' },
       icon: '🏆',
       durationMinutes: 10,
-      points: 50,
+      points: 100,
       type: 'final_quiz',
     },
   ],
