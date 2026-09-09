@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { BarChart3, User as UserIcon, LogOut, Menu, X, Sparkles, Compass, Trophy, ShieldCheck, FileSpreadsheet } from 'lucide-react';
-import { User, Language } from '../types';
+import { BarChart3, User as UserIcon, LogOut, Menu, X, Sparkles, Compass, Trophy, ShieldCheck, FileSpreadsheet, Palette, Smile } from 'lucide-react';
+import { User, Language, AvatarConfig } from '../types';
 import { translations } from '../i18n/translations';
-import { isUserAdmin } from '../services/api';
+import { isUserAdmin, api } from '../services/api';
 import { TicDescomplicaLogo } from './TicDescomplicaLogo';
+import { CartoonAvatar } from './avatar/CartoonAvatar';
+import { AvatarCreatorModal } from './avatar/AvatarCreatorModal';
+import { getDefaultAvatar } from '../utils/avatarUtils';
 
 interface HeaderProps {
   user: User | null;
@@ -15,6 +18,7 @@ interface HeaderProps {
   onOpenLeaderboard: () => void;
   onOpenAdmin?: () => void;
   onLogout: () => void;
+  onUpdateUser?: (user: User) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -27,12 +31,25 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenLeaderboard,
   onOpenAdmin,
   onLogout,
+  onUpdateUser,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
 
   const isAdmin = user ? isUserAdmin(user.email, user.role) : false;
+
+  const handleSaveAvatar = async (newAvatar: AvatarConfig) => {
+    if (!user) return;
+    try {
+      await api.updateUserAvatar(user.id, newAvatar);
+      const updatedUser = { ...user, avatar: newAvatar };
+      onUpdateUser?.(updatedUser);
+    } catch (e) {
+      console.error('Failed to update avatar:', e);
+    }
+  };
 
   const t = translations[language];
 
@@ -178,20 +195,27 @@ export const Header: React.FC<HeaderProps> = ({
                       {user.name}
                     </p>
                   </div>
-                  <div className={`w-10 h-10 rounded-full border-2 border-white shadow-sm flex items-center justify-center font-bold text-sm ${
-                    isAdmin ? 'bg-amber-100 text-amber-900 ring-2 ring-amber-300' : 'bg-indigo-100 text-indigo-700'
-                  }`}>
-                    {user.name
-                      .split(' ')
-                      .map((n) => n[0])
-                      .slice(0, 2)
-                      .join('')
-                      .toUpperCase()}
-                  </div>
+                  {isAdmin ? (
+                    <div className="w-10 h-10 rounded-full border-2 border-white shadow-sm flex items-center justify-center font-bold text-sm bg-amber-100 text-amber-900 ring-2 ring-amber-300">
+                      {user.name
+                        .split(' ')
+                        .map((n) => n[0])
+                        .slice(0, 2)
+                        .join('')
+                        .toUpperCase()}
+                    </div>
+                  ) : (
+                    <div className="w-10 h-10 rounded-2xl overflow-hidden ring-2 ring-indigo-200 shadow-sm shrink-0 bg-white">
+                      <CartoonAvatar
+                        config={user.avatar || getDefaultAvatar(user.publicId || user.name)}
+                        size={40}
+                      />
+                    </div>
+                  )}
                 </button>
 
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white shadow-xl border border-slate-200 py-2 z-50 animate-in fade-in">
+                  <div className="absolute right-0 mt-2 w-68 rounded-2xl bg-white shadow-xl border border-slate-200 py-2 z-50 animate-in fade-in">
                     <div className="px-4 py-2.5 border-b border-slate-100">
                       <div className="flex items-center justify-between mb-1">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-600">
@@ -212,6 +236,22 @@ export const Header: React.FC<HeaderProps> = ({
                         </div>
                       )}
                     </div>
+
+                    {!isAdmin && (
+                      <div className="p-2 border-b border-slate-100 bg-purple-50/60">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setUserDropdownOpen(false);
+                            setIsAvatarModalOpen(true);
+                          }}
+                          className="w-full py-2 px-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                        >
+                          <Palette className="w-3.5 h-3.5" />
+                          <span>{language === 'pt' ? '🎨 Editar o Meu Cartoon' : '🎨 Edit My Cartoon'}</span>
+                        </button>
+                      </div>
+                    )}
 
                     {isAdmin && onOpenAdmin && (
                       <button
@@ -330,7 +370,32 @@ export const Header: React.FC<HeaderProps> = ({
               <span>{language === 'pt' ? 'Área da Professora & Pautas XLS' : 'Teacher Portal & XLS Records'}</span>
             </button>
           )}
+
+          {user && !isAdmin && (
+            <button
+              onClick={() => {
+                setIsAvatarModalOpen(true);
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-bold text-purple-900 bg-purple-50 border border-purple-200 flex items-center gap-3"
+            >
+              <Palette className="w-5 h-5 text-purple-600" />
+              <span>{language === 'pt' ? '🎨 Personalizar Meu Cartoon' : '🎨 Customize My Cartoon'}</span>
+            </button>
+          )}
         </div>
+      )}
+
+      {/* Avatar Creator Modal for Logged In Students */}
+      {isAvatarModalOpen && user && (
+        <AvatarCreatorModal
+          isOpen={isAvatarModalOpen}
+          initialAvatar={user.avatar || getDefaultAvatar(user.publicId || user.name)}
+          onSave={handleSaveAvatar}
+          onClose={() => setIsAvatarModalOpen(false)}
+          language={language}
+          title={language === 'pt' ? 'O Teu Avatar Cartoon TIC 5' : 'Your TIC 5 Cartoon Avatar'}
+        />
       )}
     </header>
   );

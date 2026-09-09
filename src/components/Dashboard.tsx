@@ -363,6 +363,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             language={language}
             onPointsAwarded={onPointsAwarded}
             onOpenAuth={onOpenAuth}
+            onNavigateTheme={onNavigateTheme}
           />
 
           {/* Achievements Card */}

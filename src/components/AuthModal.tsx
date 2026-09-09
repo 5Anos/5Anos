@@ -14,11 +14,17 @@ import {
   Sparkles,
   Eye,
   EyeOff,
+  Palette,
+  Shuffle,
+  Smile,
 } from 'lucide-react';
 import { api } from '../services/api';
-import { User, Language } from '../types';
+import { User, Language, AvatarConfig } from '../types';
 import { generateSecurePublicId, PUBLIC_ID_EXPLANATION } from '../utils/publicIdGenerator';
 import { getTurmasList } from '../data/turmasData';
+import { CartoonAvatar } from './avatar/CartoonAvatar';
+import { AvatarCreatorModal } from './avatar/AvatarCreatorModal';
+import { getDefaultAvatar, generateRandomAvatar, getAvatarSummary } from '../utils/avatarUtils';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -38,6 +44,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
   const [turma, setTurma] = useState('');
   const [publicId, setPublicId] = useState('');
   const [isShuffling, setIsShuffling] = useState(false);
+
+  // Avatar state
+  const [avatar, setAvatar] = useState<AvatarConfig>(() => getDefaultAvatar('Estudante'));
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
+  const [avatarChangedByUser, setAvatarChangedByUser] = useState(false);
 
   // Turmas list
   const [turmasList, setTurmasList] = useState<string[]>([]);
@@ -60,10 +71,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
           .generateUniquePublicId()
           .then((uniqueId) => {
             setPublicId(uniqueId);
+            if (!avatarChangedByUser) {
+              setAvatar(getDefaultAvatar(uniqueId));
+            }
           })
           .catch(() => {
             const taken = api.getAllTakenPublicIds();
-            setPublicId(generateSecurePublicId(taken));
+            const uniqueId = generateSecurePublicId(taken);
+            setPublicId(uniqueId);
+            if (!avatarChangedByUser) {
+              setAvatar(getDefaultAvatar(uniqueId));
+            }
           });
       }
     }
@@ -76,12 +94,24 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
     try {
       const newId = await api.generateUniquePublicId();
       setPublicId(newId);
+      if (!avatarChangedByUser) {
+        setAvatar(getDefaultAvatar(newId));
+      }
     } catch {
       const taken = api.getAllTakenPublicIds();
-      setPublicId(generateSecurePublicId(taken));
+      const newId = generateSecurePublicId(taken);
+      setPublicId(newId);
+      if (!avatarChangedByUser) {
+        setAvatar(getDefaultAvatar(newId));
+      }
     } finally {
       setTimeout(() => setIsShuffling(false), 200);
     }
+  };
+
+  const handleShuffleAvatar = () => {
+    setAvatar(generateRandomAvatar());
+    setAvatarChangedByUser(true);
   };
 
   const getFriendlyErrorMessage = (err: unknown, defaultMsg: string): string => {
@@ -158,7 +188,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
     setLoading(true);
 
     try {
-      const res = await api.register(name, email, password, turma, publicId, language);
+      const res = await api.register(name, email, password, turma, publicId, language, avatar);
       setSuccessMsg(
         language === 'pt'
           ? 'Conta criada com sucesso! Bem-vindo ao TIC 5 — Descomplica!'
@@ -477,6 +507,71 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                 </p>
               </div>
 
+              {/* 6. Cartoon Avatar (Criação e Personalização do Teu Cartoon) */}
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-50/90 via-indigo-50/70 to-pink-50/60 border border-purple-200/80 space-y-3">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-bold uppercase tracking-wider text-purple-950 flex items-center gap-1.5">
+                    <Smile className="w-4 h-4 text-purple-600" />
+                    <span>{language === 'pt' ? 'O Teu Avatar Cartoon' : 'Your Cartoon Avatar'}</span>
+                  </label>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-purple-700 bg-purple-100/90 px-2 py-0.5 rounded-full border border-purple-200">
+                    {language === 'pt' ? '🎨 Personalizável' : '🎨 Customizable'}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3.5 bg-white/95 p-3 rounded-2xl border border-purple-200/70 shadow-xs">
+                  <div className="relative shrink-0">
+                    <div className="w-18 h-18 rounded-2xl overflow-hidden shadow-md ring-3 ring-purple-200/80">
+                      <CartoonAvatar config={avatar} size={72} />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setIsAvatarModalOpen(true)}
+                      className="absolute -bottom-1 -right-1 p-1 rounded-full bg-purple-600 text-white shadow-sm hover:bg-purple-700 transition-colors cursor-pointer"
+                      title={language === 'pt' ? 'Personalizar avatar' : 'Customize avatar'}
+                    >
+                      <Palette className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-bold text-slate-800">
+                      {language === 'pt' ? 'O teu estilo único no jogo!' : 'Your unique gaming style!'}
+                    </p>
+                    <p className="text-[11px] text-slate-500 mt-0.5 truncate">
+                      {getAvatarSummary(avatar, language)}
+                    </p>
+
+                    <div className="flex items-center gap-2 mt-2">
+                      <button
+                        type="button"
+                        onClick={() => setIsAvatarModalOpen(true)}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-xs transition-colors cursor-pointer active:scale-98"
+                      >
+                        <Palette className="w-3.5 h-3.5" />
+                        <span>{language === 'pt' ? 'Criar / Editar' : 'Create / Edit'}</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={handleShuffleAvatar}
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-white hover:bg-purple-50 text-purple-700 font-bold text-xs border border-purple-200 shadow-2xs transition-colors cursor-pointer"
+                        title={language === 'pt' ? 'Gerar avatar aleatório' : 'Randomize avatar'}
+                      >
+                        <Shuffle className="w-3.5 h-3.5" />
+                        <span>{language === 'pt' ? 'Baralhar' : 'Shuffle'}</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-[11px] text-purple-900/80 leading-relaxed font-medium">
+                  {language === 'pt'
+                    ? '💡 Podes escolher cabelos, óculos, chapéus, roupas e cores! Este avatar será visível para os teus colegas no quadro de honra.'
+                    : '💡 You can choose hairs, glasses, hats, clothes, and colors! This avatar will be visible on the leaderboard.'}
+                </p>
+              </div>
+
               {/* Submit Register */}
               <button
                 type="submit"
@@ -496,6 +591,22 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
           )}
         </div>
       </div>
+
+      {/* Avatar Creator Modal for interactive cartoon customization */}
+      {isAvatarModalOpen && (
+        <AvatarCreatorModal
+          isOpen={isAvatarModalOpen}
+          initialAvatar={avatar}
+          onSave={(newAvatar) => {
+            setAvatar(newAvatar);
+            setAvatarChangedByUser(true);
+            setIsAvatarModalOpen(false);
+          }}
+          onClose={() => setIsAvatarModalOpen(false)}
+          language={language}
+          title={language === 'pt' ? 'Cria o Teu Cartoon de Aluno' : 'Create Your Student Cartoon'}
+        />
+      )}
     </div>
   );
 };

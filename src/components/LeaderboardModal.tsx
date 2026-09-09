@@ -20,6 +20,8 @@ import {
 } from 'lucide-react';
 import { User, Language, TurmaRanking, StudentRanking } from '../types';
 import { api } from '../services/api';
+import { CartoonAvatar } from './avatar/CartoonAvatar';
+import { getDefaultAvatar } from '../utils/avatarUtils';
 
 interface LeaderboardModalProps {
   isOpen: boolean;
@@ -420,7 +422,9 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                                         <span className="w-6 h-6 rounded-lg bg-slate-100 text-slate-700 font-extrabold text-[11px] flex items-center justify-center shrink-0">
                                           #{sIdx + 1}
                                         </span>
-                                        <span className="text-sm">🎭</span>
+                                        <div className="w-7 h-7 rounded-lg overflow-hidden shadow-2xs shrink-0 ring-1 ring-slate-200">
+                                          <CartoonAvatar config={stu.avatar || getDefaultAvatar(stu.publicId)} size={28} />
+                                        </div>
                                         <div>
                                           <p className="text-xs font-extrabold text-slate-800 font-mono">
                                             {stu.publicId}
@@ -555,8 +559,8 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                           #{student.position}
                         </span>
 
-                        <div className="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-base shrink-0">
-                          🎭
+                        <div className="w-11 h-11 rounded-2xl overflow-hidden shadow-xs ring-2 ring-slate-100 shrink-0">
+                          <CartoonAvatar config={student.avatar || getDefaultAvatar(student.publicId)} size={44} />
                         </div>
 
                         <div>

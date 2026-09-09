@@ -48,6 +48,8 @@ import {
   getQualitativeLevel,
 } from '../utils/exportUtils';
 import { ALL_THEMES, THEMES_BY_ID } from '../data/allThemesData';
+import { CartoonAvatar } from './avatar/CartoonAvatar';
+import { getDefaultAvatar } from '../utils/avatarUtils';
 
 interface AdminPanelModalProps {
   isOpen: boolean;
@@ -989,7 +991,15 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                               </span>
                             </td>
                             <td className="py-2.5 px-3 whitespace-nowrap font-bold text-slate-900">
-                              {student.name || 'Estudante'}
+                              <div className="flex items-center gap-2.5">
+                                <div className="w-8 h-8 rounded-xl overflow-hidden shadow-2xs shrink-0 ring-1 ring-slate-200">
+                                  <CartoonAvatar
+                                    config={student.avatar || getDefaultAvatar(student.publicId || student.name)}
+                                    size={32}
+                                  />
+                                </div>
+                                <span>{student.name || 'Estudante'}</span>
+                              </div>
                             </td>
                             <td className="py-2.5 px-3 whitespace-nowrap text-slate-600 font-mono text-xs">
                               {student.email}
@@ -2234,8 +2244,11 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
               {/* Header */}
               <div className="p-4 sm:p-6 bg-linear-to-r from-indigo-900 via-indigo-800 to-slate-900 text-white flex items-center justify-between border-b border-indigo-700 shrink-0">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-amber-400 font-black text-lg shadow-inner">
-                    {detailStudent.name?.charAt(0) || 'A'}
+                  <div className="w-12 h-12 rounded-2xl overflow-hidden ring-2 ring-indigo-400/40 shadow-inner shrink-0 bg-white">
+                    <CartoonAvatar
+                      config={detailStudent.avatar || getDefaultAvatar(detailStudent.publicId || detailStudent.name)}
+                      size={48}
+                    />
                   </div>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">

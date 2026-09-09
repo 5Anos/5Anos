@@ -31,10 +31,12 @@ import {
   TurmaRanking,
   StudentRanking,
   ThemeVisibilityMap,
+  AvatarConfig,
 } from '../types';
 import { BADGES } from '../data/badgesData';
 import { generateSecurePublicId } from '../utils/publicIdGenerator';
 import { getTurmasList, addTurma, removeTurmas } from '../data/turmasData';
+import { getDefaultAvatar } from '../utils/avatarUtils';
 
 const TOKEN_KEY = 'tic_5ano_auth_token';
 const CURRENT_USER_KEY = 'tic_5ano_current_user';
@@ -405,7 +407,8 @@ export const api = {
     password: string,
     turma: string,
     publicId: string,
-    language: Language = 'pt'
+    language: Language = 'pt',
+    avatar?: AvatarConfig
   ): Promise<{ user: User; token: string }> {
     const normalizedEmail = email.trim().toLowerCase();
     const cleanPassword = password.trim();
@@ -486,6 +489,7 @@ export const api = {
     }
 
     const initialPoints = 0;
+    const finalAvatar = avatar || getDefaultAvatar(finalPublicId);
 
     const newUser: User = {
       id: userId,
@@ -496,6 +500,7 @@ export const api = {
       role: isAdmin ? 'admin' : 'student',
       language,
       points: initialPoints,
+      avatar: finalAvatar,
       createdAt: new Date().toISOString(),
     };
 
@@ -509,6 +514,7 @@ export const api = {
       role: isAdmin ? 'admin' : 'student',
       language,
       points: initialPoints,
+      avatar: finalAvatar,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -529,6 +535,7 @@ export const api = {
             turma: finalTurma,
             role: 'student',
             points: initialPoints,
+            avatar: finalAvatar,
             updatedAt: new Date().toISOString(),
           },
           { merge: true }
@@ -640,6 +647,7 @@ export const api = {
         role: isAdmin ? 'admin' : (userDocData.role || 'student'),
         language: userDocData.language || 'pt',
         points: typeof userDocData.points === 'number' ? userDocData.points : (isAdmin ? 0 : 20),
+        avatar: userDocData.avatar || getDefaultAvatar(userDocData.publicId || userDocData.name || userId),
         createdAt: userDocData.createdAt || new Date().toISOString(),
         lastActivity: userDocData.lastActivity,
       };
@@ -658,6 +666,7 @@ export const api = {
         role: isAdmin ? 'admin' : 'student',
         language: 'pt',
         points: isAdmin ? 0 : 20,
+        avatar: getDefaultAvatar(userId),
         createdAt: new Date().toISOString(),
       };
       try {
@@ -803,6 +812,11 @@ export const api = {
         if (d.turma && user.role !== 'admin') {
           user.turma = d.turma;
         }
+        if (d.avatar) {
+          user.avatar = d.avatar;
+        } else if (!user.avatar) {
+          user.avatar = getDefaultAvatar(user.publicId || user.name || user.id);
+        }
       }
     } catch (e) {
       console.warn('Could not refresh user profile in getMe:', e);
@@ -918,6 +932,49 @@ export const api = {
           // ignore
         }
       }
+    }
+  },
+
+  /**
+   * Update student cartoon avatar in Firestore and local storage
+   */
+  async updateUserAvatar(userId: string, newAvatar: AvatarConfig): Promise<void> {
+    const updatedAt = new Date().toISOString();
+
+    // 1. Update users collection
+    try {
+      await setDoc(
+        doc(db, 'users', userId),
+        { avatar: newAvatar, updatedAt },
+        { merge: true }
+      );
+    } catch (err) {
+      console.warn('Firestore user avatar update notice:', err);
+    }
+
+    // 2. Update publicProfiles collection
+    try {
+      await setDoc(
+        doc(db, 'publicProfiles', userId),
+        { avatar: newAvatar, updatedAt },
+        { merge: true }
+      );
+    } catch (err) {
+      console.warn('Firestore publicProfile avatar update notice:', err);
+    }
+
+    // 3. Update local user state
+    try {
+      const raw = localStorage.getItem(CURRENT_USER_KEY);
+      if (raw) {
+        const u = JSON.parse(raw);
+        if (u.id === userId) {
+          u.avatar = newAvatar;
+          localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(u));
+        }
+      }
+    } catch {
+      // ignore
     }
   },
 
@@ -1229,7 +1286,7 @@ export const api = {
    */
   async getTurmaRankings(): Promise<TurmaRanking[]> {
     const defaultTurmas = getTurmasList();
-    const studentMap = new Map<string, { id: string; publicId: string; turma: string; points: number }>();
+    const studentMap = new Map<string, { id: string; publicId: string; turma: string; points: number; avatar?: AvatarConfig }>();
 
     try {
       const q = query(collection(db, 'publicProfiles'), limit(500));
@@ -1245,6 +1302,7 @@ export const api = {
             publicId: d.publicId || 'Estudante_TIC',
             turma: studentTurma,
             points: typeof d.points === 'number' ? d.points : (Number(d.points) || 0),
+            avatar: d.avatar,
           });
         }
       });
@@ -1277,11 +1335,13 @@ export const api = {
           points: s.points || 0,
           activitiesCount: Math.floor((s.points || 0) / 15),
           badgeCount: Math.min(BADGES.length, Math.floor((s.points || 0) / 35) + 1),
+          avatar: s.avatar,
         }));
 
       const topStudents = allStudentsInTurma.slice(0, 3).map((s) => ({
         publicId: s.publicId,
         points: s.points,
+        avatar: s.avatar,
       }));
 
       return {
@@ -1314,7 +1374,7 @@ export const api = {
    * Excludes all Admin / Teacher accounts.
    */
   async getStudentRankings(currentUserId?: string): Promise<StudentRanking[]> {
-    const studentList: { id: string; publicId: string; turma: string; points: number }[] = [];
+    const studentList: { id: string; publicId: string; turma: string; points: number; avatar?: AvatarConfig }[] = [];
 
     try {
       const q = query(collection(db, 'publicProfiles'), limit(500));
@@ -1328,6 +1388,7 @@ export const api = {
           publicId: d.publicId || 'Estudante_TIC',
           turma: d.turma ? String(d.turma).trim() : '5.º A',
           points: typeof d.points === 'number' ? d.points : (Number(d.points) || 0),
+          avatar: d.avatar,
         });
       });
     } catch (err) {
@@ -1345,6 +1406,7 @@ export const api = {
       activitiesCount: Math.floor((u.points || 0) / 15),
       badgeCount: Math.min(BADGES.length, Math.floor((u.points || 0) / 35) + 1),
       isCurrentUser: u.id === currentUserId,
+      avatar: u.avatar,
     }));
   },
 
@@ -1417,6 +1479,7 @@ export const api = {
             role: 'student',
             language: data.language || 'pt',
             points: typeof data.points === 'number' ? data.points : 0,
+            avatar: data.avatar,
             createdAt: data.createdAt || new Date().toISOString(),
             lastActivity: data.lastActivity,
           });

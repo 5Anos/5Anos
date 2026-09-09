@@ -5,7 +5,7 @@ export const translations = {
     gradeLabel: '5.º Ano de Escolaridade (10–11 anos)',
     teacherName: 'Professora Carla Oliveira',
     aiDisclaimer: 'Textos e conteúdos revistos pela Professora Carla Oliveira @2026',
-    footerAiDisclaimer: 'Plataforma Pedagógica Digital',
+    footerAiDisclaimer: 'Plataforma Pedagógica Digital desenvolvida com Inteligência Artificial',
     footerReviewedBy: 'Textos e conteúdos revistos pela Professora Carla Oliveira',
     footerCopyright: '© 2026',
 
@@ -121,7 +121,7 @@ export const translations = {
     gradeLabel: '5th Grade (Ages 10–11)',
     teacherName: 'Teacher Carla Oliveira',
     aiDisclaimer: 'Texts and content reviewed by Teacher Carla Oliveira @2026',
-    footerAiDisclaimer: 'Digital Educational Platform',
+    footerAiDisclaimer: 'Digital Educational Platform developed with Artificial Intelligence',
     footerReviewedBy: 'Texts and content reviewed by Teacher Carla Oliveira',
     footerCopyright: '© 2026',
 

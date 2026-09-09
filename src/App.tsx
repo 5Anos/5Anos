@@ -20,6 +20,11 @@ import { ReliableSourcesGame } from './components/games/ReliableSourcesGame';
 import { SearchOperatorsGame } from './components/games/SearchOperatorsGame';
 import { CopyOrCreditGame } from './components/games/CopyOrCreditGame';
 import { ErgonomicsPostureGame } from './components/games/ErgonomicsPostureGame';
+import { TicWhatIsTechGame } from './components/games/TicWhatIsTechGame';
+import { TicHelpSchoolGame } from './components/games/TicHelpSchoolGame';
+import { TicCyberbullyingGame } from './components/games/TicCyberbullyingGame';
+import { TicDigitalFootprintGame } from './components/games/TicDigitalFootprintGame';
+import { TicEcommerceGame } from './components/games/TicEcommerceGame';
 import { GenericChallengeGame } from './components/games/GenericChallengeGame';
 import { GenericHtmlGameRunner } from './components/games/GenericHtmlGameRunner';
 
@@ -609,6 +614,112 @@ export default function App() {
       );
     }
 
+    // Theme 1 Specific Games
+    if (activeChallengeId === 'desafio-tic-o-que-e') {
+      return (
+        <TicWhatIsTechGame
+          language={language}
+          onBack={returnToGames}
+          onFinish={(score, maxScore, percentage) => {
+            handleSaveProgress({
+              activityId: 'desafio-tic-o-que-e',
+              activityType: 'challenge',
+              themeId: currentTheme.id,
+              status: 'completed',
+              score,
+              maxScore,
+              percentage,
+              activityTitle: language === 'pt' ? 'É uma TIC? & Que Tecnologia Ajuda?' : 'Is it ICT? & Which Tech Helps?',
+            });
+          }}
+        />
+      );
+    }
+
+    if (activeChallengeId === 'desafio-tic-ajuda-escola') {
+      return (
+        <TicHelpSchoolGame
+          language={language}
+          onBack={returnToGames}
+          onFinish={(score, maxScore, percentage) => {
+            handleSaveProgress({
+              activityId: 'desafio-tic-ajuda-escola',
+              activityType: 'challenge',
+              themeId: currentTheme.id,
+              status: 'completed',
+              score,
+              maxScore,
+              percentage,
+              activityTitle: language === 'pt' ? 'Atividade de Criação: Ajuda a Escola!' : 'Creative Activity: Help the School!',
+            });
+          }}
+        />
+      );
+    }
+
+    if (activeChallengeId === 'desafio-tic-seguranca-cyberbullying') {
+      return (
+        <TicCyberbullyingGame
+          language={language}
+          onBack={returnToGames}
+          onFinish={(score, maxScore, percentage) => {
+            handleSaveProgress({
+              activityId: 'desafio-tic-seguranca-cyberbullying',
+              activityType: 'challenge',
+              themeId: currentTheme.id,
+              status: 'completed',
+              score,
+              maxScore,
+              percentage,
+              activityTitle: language === 'pt' ? 'Guardião Digital: Cyberbullying (5 Passos)' : 'Digital Guardian: Cyberbullying (5 Steps)',
+            });
+          }}
+        />
+      );
+    }
+
+    if (activeChallengeId === 'desafio-tic-pegada-ecra-lixo') {
+      return (
+        <TicDigitalFootprintGame
+          language={language}
+          onBack={returnToGames}
+          onFinish={(score, maxScore, percentage) => {
+            handleSaveProgress({
+              activityId: 'desafio-tic-pegada-ecra-lixo',
+              activityType: 'challenge',
+              themeId: currentTheme.id,
+              status: 'completed',
+              score,
+              maxScore,
+              percentage,
+              activityTitle: language === 'pt' ? 'Publicarias Isto? Pegada Digital & Lixo Eletrónico' : 'Would You Post This? Footprint & E-Waste',
+            });
+          }}
+        />
+      );
+    }
+
+    if (activeChallengeId === 'desafio-tic-compra-online') {
+      return (
+        <TicEcommerceGame
+          language={language}
+          onBack={returnToGames}
+          onFinish={(score, maxScore, percentage) => {
+            handleSaveProgress({
+              activityId: 'desafio-tic-compra-online',
+              activityType: 'challenge',
+              themeId: currentTheme.id,
+              status: 'completed',
+              score,
+              maxScore,
+              percentage,
+              activityTitle: language === 'pt' ? 'Como Chega uma Compra Online & Contactless (NFC)' : 'How Online Shopping Works & Contactless NFC',
+            });
+          }}
+        />
+      );
+    }
+
     // Default Interactive Generic Game for any other challenge across the 6 themes
     return (
       <GenericChallengeGame
@@ -666,6 +777,7 @@ export default function App() {
         onOpenLeaderboard={handleOpenLeaderboard}
         onOpenAdmin={() => setAdminModalOpen(true)}
         onLogout={handleLogout}
+        onUpdateUser={(updatedUser) => setUser(updatedUser)}
       />
 
       {/* Main Content Area */}

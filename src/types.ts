@@ -1,5 +1,19 @@
 export type Language = 'pt' | 'en';
 
+export interface AvatarConfig {
+  skinColor: string; // Hex color (e.g. '#FDDFBA')
+  hairStyle: 'short' | 'curly' | 'long' | 'ponytail' | 'afro' | 'spiky' | 'braids' | 'bald';
+  hairColor: string; // Hex color
+  expression: 'smile' | 'laugh' | 'cool' | 'wink' | 'star' | 'gamer';
+  glasses: 'none' | 'round' | 'square' | 'cool-shades' | 'vr-headset';
+  glassesColor?: string;
+  hat: 'none' | 'cap' | 'beanie' | 'headphones' | 'crown' | 'wizard';
+  hatColor?: string;
+  clothing: 'tshirt' | 'hoodie' | 'sweater' | 'superhero';
+  clothingColor: string;
+  bgColor: string; // Background circle color
+}
+
 export interface User {
   id: string;
   name: string; // Real Name (Private to student and teacher)
@@ -10,6 +24,7 @@ export interface User {
   language: Language;
   points: number;
   createdAt: string;
+  avatar?: AvatarConfig;
   lastActivity?: {
     themeId: string;
     moduleId?: string;
@@ -169,12 +184,14 @@ export interface TurmaRanking {
   topStudents: {
     publicId: string;
     points: number;
+    avatar?: AvatarConfig;
   }[];
   allStudents?: {
     publicId: string;
     points: number;
     activitiesCount: number;
     badgeCount: number;
+    avatar?: AvatarConfig;
   }[];
 }
 
@@ -187,6 +204,7 @@ export interface StudentRanking {
   activitiesCount: number;
   badgeCount: number;
   isCurrentUser?: boolean;
+  avatar?: AvatarConfig;
 }
 
 export type ThemeVisibilityMap = Record<string, boolean>;
