@@ -2,7 +2,7 @@ import { ThemeDefinition } from '../types';
 
 export const themeSegurancaData: ThemeDefinition = {
   id: 'seguranca',
-  number: 3,
+  number: 4,
   title: {
     pt: 'Segurança, responsabilidade e respeito em ambientes digitais',
     en: 'Security, responsibility and respect in digital environments',
@@ -281,14 +281,14 @@ export const themeSegurancaData: ThemeDefinition = {
           questions: [
             {
               q: 'Recebes uma mensagem a dizer que ganhaste um prémio e pedem a tua palavra-passe. O que fazes?',
-              opts: ['Não respondo e aviso logo um adulto de confiança', 'Envio a palavra-passe imediatamente', 'Reencaminho a mensagem a todos os amigos', 'Clico no link para confirmar'],
-              c: 0,
+              opts: ['Envio a palavra-passe imediatamente', 'Não respondo e aviso logo um adulto de confiança', 'Reencaminho a mensagem a todos os amigos', 'Clico no link para confirmar'],
+              c: 1,
               e: 'Nunca partilhes palavras-passe! Pedidos de palavras-passe são sempre uma tentativa de burla.'
             },
             {
               q: 'Porque é importante manter o antivírus e as atualizações do computador em dia?',
-              opts: ['Para proteger o computador contra novos vírus e falhas de segurança', 'Para o computador gastar a bateria mais depressa', 'Apenas para mudar a imagem de fundo do ecrã', 'Não tem qualquer utilidade prática'],
-              c: 0,
+              opts: ['Para o computador gastar a bateria mais depressa', 'Apenas para mudar a imagem de fundo do ecrã', 'Para proteger o computador contra novos vírus e falhas de segurança', 'Não tem qualquer utilidade prática'],
+              c: 2,
               e: 'As atualizações corrigem falhas de segurança e garantem que o antivírus reconhece novas ameaças.'
             },
             {
@@ -299,14 +299,14 @@ export const themeSegurancaData: ThemeDefinition = {
             },
             {
               q: 'Se uma pessoa desconhecida na Internet te pedir para ligares a câmara ou enviares fotos tuas, como deves reagir?',
-              opts: ['Recusar de imediato, fechar a conversa e avisar logo os pais ou um professor', 'Ligar a câmara para mostrar o teu quarto e ser simpático', 'Enviar uma fotografia com a camisola da tua escola', 'Pedir à pessoa que envie primeiro uma fotografia dela'],
-              c: 0,
+              opts: ['Ligar a câmara para mostrar o teu quarto e ser simpático', 'Enviar uma fotografia com a camisola da tua escola', 'Pedir à pessoa que envie primeiro uma fotografia dela', 'Recusar de imediato, fechar a conversa e avisar logo os pais ou um professor'],
+              c: 3,
               e: 'Nunca partilhes imagens nem ligues a câmara a desconhecidos! Avisa logo um adulto de confiança.'
             },
             {
               q: 'O que deves fazer se não tens a certeza se uma mensagem ou ficheiro recebido é seguro?',
-              opts: ['Pedir ajuda a um adulto de confiança antes de abrir', 'Abrir imediatamente para ver se acontece alguma coisa', 'Reencaminhar para todos os contactos da turma', 'Ignorar e continuar a navegar sem verificar'],
-              c: 0,
+              opts: ['Abrir imediatamente para ver se acontece alguma coisa', 'Pedir ajuda a um adulto de confiança antes de abrir', 'Reencaminhar para todos os contactos da turma', 'Ignorar e continuar a navegar sem verificar'],
+              c: 1,
               e: 'Pedir ajuda a um adulto de confiança é sempre a atitude mais segura!'
             }
           ]
@@ -314,36 +314,9 @@ export const themeSegurancaData: ThemeDefinition = {
       }
     },
     {
-      id: 'jogo-seguranca-match',
-      themeId: 'seguranca',
-      number: 3,
-      title: { pt: '🧩 Situação e Atitude Correta', en: '🧩 Situation and Correct Attitude' },
-      shortDesc: { pt: 'Associa cada situação à atitude mais correta.', en: 'Match each situation to the correct attitude.' },
-      icon: '🧩',
-      durationMinutes: 4,
-      points: 100,
-      type: 'match_pairs',
-      gameData: {
-        type: 'match',
-        title: 'Situação e Atitude Correta',
-        icon: '🧩',
-        xp: 100,
-        desc: 'Associa cada situação à atitude mais correta.',
-        data: {
-          pairs: [
-            { left: 'Link desconhecido numa mensagem', right: 'Não clicar' },
-            { left: 'Pedido de palavra-passe por mensagem', right: 'Nunca partilhar' },
-            { left: 'Colega a ser insultado online', right: 'Apoiar e avisar um adulto' },
-            { left: 'Foto de alguém sem autorização', right: 'Não publicar' },
-            { left: 'Mensagem suspeita e estranha', right: 'Falar com um adulto de confiança' }
-          ]
-        }
-      }
-    },
-    {
       id: 'jogo-seguranca-mc2',
       themeId: 'seguranca',
-      number: 4,
+      number: 3,
       title: { pt: '💡 O que deves fazer?', en: '💡 What should you do?' },
       shortDesc: { pt: 'Situações reais de segurança e respeito digital.', en: 'Real situations of digital safety and respect.' },
       icon: '💡',
@@ -360,14 +333,14 @@ export const themeSegurancaData: ThemeDefinition = {
           questions: [
             {
               q: 'Um colega publicou uma fotografia de outra pessoa sem autorização. Como deves agir?',
-              opts: ['Dizer-lhe que isso não é correto e sugerir que remova a foto', 'Partilhar também a fotografia', 'Fazer o mesmo com outra pessoa', 'Ignorar completamente'],
-              c: 0,
+              opts: ['Partilhar também a fotografia', 'Dizer-lhe que isso não é correto e sugerir que remova a foto', 'Fazer o mesmo com outra pessoa', 'Ignorar completamente'],
+              c: 1,
               e: 'Devemos sempre respeitar a privacidade e imagem dos outros.'
             },
             {
               q: 'Vês um colega a receber mensagens ofensivas repetidamente. O que deves fazer?',
-              opts: ['Apoiar o colega e falar com um adulto', 'Participar também nas mensagens', 'Ignorar por completo a situação', 'Partilhar a conversa publicamente'],
-              c: 0,
+              opts: ['Participar também nas mensagens', 'Ignorar por completo a situação', 'Apoiar o colega e falar com um adulto', 'Partilhar a conversa publicamente'],
+              c: 2,
               e: 'Apoiar a vítima e pedir ajuda a um adulto é a atitude correta.'
             },
             {
@@ -378,14 +351,14 @@ export const themeSegurancaData: ThemeDefinition = {
             },
             {
               q: 'Antes de publicares algo online, deves pensar:',
-              opts: ['Se essa publicação respeita os outros e a mim próprio', 'Apenas se vai ter muitos gostos', 'Se é engraçado, nada mais importa', 'Não é preciso pensar antes de publicar'],
-              c: 0,
+              opts: ['Apenas se vai ter muitos gostos', 'Se é engraçado, nada mais importa', 'Não é preciso pensar antes de publicar', 'Se essa publicação respeita os outros e a mim próprio'],
+              c: 3,
               e: 'Refletir antes de publicar evita problemas e mostra respeito.'
             },
             {
               q: 'Recebeste um ficheiro de um remetente desconhecido. O que deves fazer?',
-              opts: ['Não abrir e avisar um adulto', 'Abrir imediatamente por curiosidade', 'Reencaminhar a todos os amigos', 'Guardar sem verificar'],
-              c: 0,
+              opts: ['Abrir imediatamente por curiosidade', 'Não abrir e avisar um adulto', 'Reencaminhar a todos os amigos', 'Guardar sem verificar'],
+              c: 1,
               e: 'Ficheiros de origem desconhecida podem ser perigosos.'
             }
           ]
@@ -395,7 +368,7 @@ export const themeSegurancaData: ThemeDefinition = {
     {
       id: 'quiz-final-seguranca',
       themeId: 'seguranca',
-      number: 5,
+      number: 4,
       title: { pt: '🏆 Quiz de Aprendizagem: Segurança e Respeito (10 Questões)', en: '🏆 Learning Quiz: Security and Respect (10 Questions)' },
       shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas sobre o Tema de Segurança.', en: 'Comprehensive final assessment with 10 questions on Security.' },
       icon: '🏆',
@@ -409,20 +382,20 @@ export const themeSegurancaData: ThemeDefinition = {
       id: 'seg-q1',
       question: { pt: 'O que é o phishing?', en: 'What is phishing?' },
       options: {
-        pt: ['Uma técnica para enganar pessoas e roubar dados e credenciais', 'Um protocolo para acelerar descargas na Web', 'Um serviço de cópias de segurança na nuvem', 'Um formato de ficheiro de compressão de dados'],
-        en: ['A technique to trick people and steal data and credentials', 'A protocol to accelerate web downloads', 'A cloud-based backup service', 'A compressed data file format']
+        pt: ['Um protocolo para acelerar descargas na Web', 'Uma técnica para enganar pessoas e roubar dados e credenciais', 'Um serviço de cópias de segurança na nuvem', 'Um formato de ficheiro de compressão de dados'],
+        en: ['A protocol to accelerate web downloads', 'A technique to trick people and steal data and credentials', 'A cloud-based backup service', 'A compressed data file format']
       },
-      correctIndex: 0,
+      correctIndex: 1,
       explanation: { pt: 'O phishing tenta enganar as pessoas para obter dados pessoais.', en: 'Phishing attempts to trick people to obtain personal data.' }
     },
     {
       id: 'seg-q2',
       question: { pt: 'O que deves fazer ao receber uma mensagem de um desconhecido com um link?', en: 'What should you do when receiving a message from a stranger with a link?' },
       options: {
-        pt: ['Não clicar e avisar um adulto', 'Clicar imediatamente', 'Reencaminhar a todos', 'Responder com os teus dados'],
-        en: ['Do not click and warn an adult', 'Click immediately', 'Forward to everyone', 'Reply with your data']
+        pt: ['Clicar imediatamente', 'Reencaminhar a todos', 'Não clicar e avisar um adulto', 'Responder com os teus dados'],
+        en: ['Click immediately', 'Forward to everyone', 'Do not click and warn an adult', 'Reply with your data']
       },
-      correctIndex: 0,
+      correctIndex: 2,
       explanation: { pt: 'Nunca deves clicar em links de origem desconhecida.', en: 'You should never click links from unknown origins.' }
     },
     {
@@ -439,30 +412,30 @@ export const themeSegurancaData: ThemeDefinition = {
       id: 'seg-q4',
       question: { pt: 'Antes de publicares uma foto de outra pessoa deves:', en: 'Before publishing someone else\'s photo you should:' },
       options: {
-        pt: ['Pedir autorização', 'Publicar sem perguntar', 'Alterar a foto sem avisar', 'Enviar apenas a amigos, sem autorização'],
-        en: ['Ask permission', 'Publish without asking', 'Change the photo without warning', 'Send only to friends without permission']
+        pt: ['Publicar sem perguntar', 'Alterar a foto sem avisar', 'Enviar apenas a amigos, sem autorização', 'Pedir autorização'],
+        en: ['Publish without asking', 'Change the photo without warning', 'Send only to friends without permission', 'Ask permission']
       },
-      correctIndex: 0,
+      correctIndex: 3,
       explanation: { pt: 'É preciso respeitar a privacidade e imagem dos outros.', en: 'It is necessary to respect the privacy and image of others.' }
     },
     {
       id: 'seg-q5',
       question: { pt: 'O que é a pegada digital?', en: 'What is the digital footprint?' },
       options: {
-        pt: ['O rasto que deixamos das nossas ações, pesquisas e publicações online', 'O espaço em disco ocupado pelo sistema operativo', 'O histórico de comandos introduzidos na consola', 'A capacidade máxima de transferência do router'],
-        en: ['The trail we leave of our online actions, searches, and posts', 'The disk space occupied by the operating system', 'The command history recorded in the terminal', 'The maximum transfer capacity of the router']
+        pt: ['O espaço em disco ocupado pelo sistema operativo', 'O rasto que deixamos das nossas ações, pesquisas e publicações online', 'O histórico de comandos introduzidos na consola', 'A capacidade máxima de transferência do router'],
+        en: ['The disk space occupied by the operating system', 'The trail we leave of our online actions, searches, and posts', 'The command history recorded in the terminal', 'The maximum transfer capacity of the router']
       },
-      correctIndex: 0,
+      correctIndex: 1,
       explanation: { pt: 'Tudo o que publicamos ou partilhamos deixa um rasto digital.', en: 'Everything we publish or share leaves a digital trail.' }
     },
     {
       id: 'seg-q6',
       question: { pt: 'Quais destas informações NUNCA deves partilhar com desconhecidos na Internet ou em jogos online?', en: 'Which of these information should you NEVER share with strangers on the Internet or in online games?' },
       options: {
-        pt: ['A tua morada de casa, número de telemóvel e o nome da tua escola', 'A tua cor favorita e o teu desporto preferido', 'O nome do teu herói ou personagem de banda desenhada', 'O título de um livro que estás a ler na escola'],
-        en: ['Your home address, phone number, and school name', 'Your favorite color and preferred sport', 'The name of your comic book hero', 'The title of a book you are reading in school']
+        pt: ['A tua cor favorita e o teu desporto preferido', 'O nome do teu herói ou personagem de banda desenhada', 'A tua morada de casa, número de telemóvel e o nome da tua escola', 'O título de um livro que estás a ler na escola'],
+        en: ['Your favorite color and preferred sport', 'The name of your comic book hero', 'Your home address, phone number, and school name', 'The title of a book you are reading in school']
       },
-      correctIndex: 0,
+      correctIndex: 2,
       explanation: { pt: 'A morada, os contactos e a escola são dados pessoais privados que te identificam e nunca devem ser partilhados.', en: 'Address, contacts, and school are private identifiers that must never be revealed to strangers.' }
     },
     {
@@ -479,30 +452,30 @@ export const themeSegurancaData: ThemeDefinition = {
       id: 'seg-q8',
       question: { pt: 'Se um colega for vítima de ciberbullying, deves:', en: 'If a peer is a victim of cyberbullying, you should:' },
       options: {
-        pt: ['apoiá-lo e avisar um adulto', 'ignorar a situação', 'juntar-te às mensagens ofensivas', 'partilhar a conversa para toda a escola'],
-        en: ['support them and warn an adult', 'ignore the situation', 'join the offensive messages', 'share the conversation with the whole school']
+        pt: ['ignorar a situação', 'apoiá-lo e avisar um adulto', 'juntar-te às mensagens ofensivas', 'partilhar a conversa para toda a escola'],
+        en: ['ignore the situation', 'support them and warn an adult', 'join the offensive messages', 'share the conversation with the whole school']
       },
-      correctIndex: 0,
+      correctIndex: 1,
       explanation: { pt: 'Apoiar a vítima e envolver um adulto ajuda a resolver a situação.', en: 'Supporting the victim and involving an adult helps resolve the situation.' }
     },
     {
       id: 'seg-q9',
       question: { pt: 'Um ficheiro enviado por um desconhecido deve ser:', en: 'A file sent by a stranger should be:' },
       options: {
-        pt: ['ignorado e reportado a um adulto', 'aberto imediatamente', 'reencaminhado a amigos', 'guardado sem verificação'],
-        en: ['ignored and reported to an adult', 'opened immediately', 'forwarded to friends', 'saved without verification']
+        pt: ['aberto imediatamente', 'reencaminhado a amigos', 'ignorado e reportado a um adulto', 'guardado sem verificação'],
+        en: ['opened immediately', 'forwarded to friends', 'ignored and reported to an adult', 'saved without verification']
       },
-      correctIndex: 0,
+      correctIndex: 2,
       explanation: { pt: 'Ficheiros desconhecidos podem conter riscos.', en: 'Unknown files may contain risks.' }
     },
     {
       id: 'seg-q10',
       question: { pt: 'Se alguém que conheceste online te pedir para manter a conversa em segredo dos teus pais, o que deves fazer?', en: 'If someone you met online asks you to keep the conversation secret from your parents, what should you do?' },
       options: {
-        pt: ['Desconfiar de imediato e contar logo aos teus pais ou a um professor', 'Guardar o segredo para não estragar a amizade no jogo', 'Pedir à pessoa que envie primeiro a morada dela', 'Desligar o ecrã mas continuar a falar às escondidas'],
-        en: ['Be suspicious immediately and tell your parents or a teacher right away', 'Keep the secret so you do not harm the gaming friendship', 'Ask the person to send their address first', 'Turn off the screen but keep talking in secret']
+        pt: ['Guardar o segredo para não estragar a amizade no jogo', 'Pedir à pessoa que envie primeiro a morada dela', 'Desligar o ecrã mas continuar a falar às escondidas', 'Desconfiar de imediato e contar logo aos teus pais ou a um professor'],
+        en: ['Keep the secret so you do not harm the gaming friendship', 'Ask the person to send their address first', 'Turn off the screen but keep talking in secret', 'Be suspicious immediately and tell your parents or a teacher right away']
       },
-      correctIndex: 0,
+      correctIndex: 3,
       explanation: { pt: 'Ninguém com boas intenções pede a uma criança para guardar segredos dos pais. Se isso acontecer, avisa sempre um adulto!', en: 'Nobody with good intentions asks a child to keep secrets from their parents. Always notify a trusted adult!' }
     }
   ]

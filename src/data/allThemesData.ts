@@ -8,11 +8,11 @@ import { themeNavegarInternetData } from './themeNavegarInternetData';
 import { themeDireitosAutorData } from './themeDireitosAutorData';
 
 export const ALL_THEMES: ThemeDefinition[] = [
+  themeCorreioEletronicoData,
   themeTicSociedadeData,
   themeErgonomiaData,
   themeSegurancaData,
   themePalavrasPasseData,
-  themeCorreioEletronicoData,
   themeNavegarInternetData,
   themeDireitosAutorData,
 ];

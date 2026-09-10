@@ -1594,7 +1594,7 @@ export const api = {
   },
 
   /**
-   * Delete a single student from Firestore
+   * Delete a single student from Firestore and local caches
    */
   async adminDeleteStudent(studentId: string, studentEmail: string): Promise<{ success: boolean; message: string }> {
     const normalizedEmail = (studentEmail || '').toLowerCase().trim();
@@ -1604,8 +1604,45 @@ export const api = {
 
     try {
       if (studentId) {
+        // 1. Delete subcollections
+        try {
+          const progSnap = await getDocs(collection(db, 'users', studentId, 'progress'));
+          await Promise.allSettled(progSnap.docs.map((d) => deleteDoc(d.ref)));
+        } catch {}
+        try {
+          const achSnap = await getDocs(collection(db, 'users', studentId, 'achievements'));
+          await Promise.allSettled(achSnap.docs.map((d) => deleteDoc(d.ref)));
+        } catch {}
+        try {
+          const ptsSnap = await getDocs(collection(db, 'users', studentId, 'pointsHistory'));
+          await Promise.allSettled(ptsSnap.docs.map((d) => deleteDoc(d.ref)));
+        } catch {}
+
+        // 2. Delete user and public profile
         await deleteDoc(doc(db, 'users', studentId));
         await deleteDoc(doc(db, 'publicProfiles', studentId));
+      }
+
+      // 3. Fallback: match by email in users collection if doc id differed
+      if (normalizedEmail) {
+        try {
+          const eq = query(collection(db, 'users'), where('email', '==', normalizedEmail), limit(5));
+          const eqSnap = await getDocs(eq);
+          for (const docS of eqSnap.docs) {
+            const data = docS.data();
+            if (docS.id !== studentId && !isUserAdmin(data.email, data.role)) {
+              await deleteDoc(docS.ref);
+              await deleteDoc(doc(db, 'publicProfiles', docS.id));
+            }
+          }
+        } catch {}
+      }
+
+      // 4. Clean local storage for this student
+      if (studentId) {
+        localStorage.removeItem(PROGRESS_STORAGE_KEY + studentId);
+        localStorage.removeItem(ACHIEVEMENTS_STORAGE_KEY + studentId);
+        localStorage.removeItem(POINTS_STORAGE_KEY + studentId);
       }
     } catch (err) {
       console.warn('Firestore deletion warning for student:', err);
@@ -1629,17 +1666,48 @@ export const api = {
     const targetSet = new Set(studentIdsOrEmails.map((s) => s.toLowerCase().trim()));
 
     try {
-      const snap = await getDocs(query(collection(db, 'users'), limit(500)));
+      const snap = await getDocs(query(collection(db, 'users'), limit(1000)));
+      const deleteTasks: Promise<void>[] = [];
+
       for (const docSnap of snap.docs) {
         const data = docSnap.data();
         const email = (data.email || '').toLowerCase().trim();
         const id = docSnap.id;
-        if (!isUserAdmin(email, data.role) && (targetSet.has(id.toLowerCase()) || targetSet.has(email))) {
-          await deleteDoc(doc(db, 'users', id));
-          await deleteDoc(doc(db, 'publicProfiles', id));
+        const role = data.role;
+
+        if (!isUserAdmin(email, role) && (targetSet.has(id.toLowerCase()) || targetSet.has(email))) {
           deletedCount++;
+          deleteTasks.push(
+            (async () => {
+              try {
+                try {
+                  const progSnap = await getDocs(collection(db, 'users', id, 'progress'));
+                  await Promise.allSettled(progSnap.docs.map((d) => deleteDoc(d.ref)));
+                } catch {}
+                try {
+                  const achSnap = await getDocs(collection(db, 'users', id, 'achievements'));
+                  await Promise.allSettled(achSnap.docs.map((d) => deleteDoc(d.ref)));
+                } catch {}
+                try {
+                  const ptsSnap = await getDocs(collection(db, 'users', id, 'pointsHistory'));
+                  await Promise.allSettled(ptsSnap.docs.map((d) => deleteDoc(d.ref)));
+                } catch {}
+
+                await deleteDoc(doc(db, 'users', id));
+                await deleteDoc(doc(db, 'publicProfiles', id));
+
+                localStorage.removeItem(PROGRESS_STORAGE_KEY + id);
+                localStorage.removeItem(ACHIEVEMENTS_STORAGE_KEY + id);
+                localStorage.removeItem(POINTS_STORAGE_KEY + id);
+              } catch (e) {
+                console.warn(`Error deleting student ${id}:`, e);
+              }
+            })()
+          );
         }
       }
+
+      await Promise.allSettled(deleteTasks);
     } catch (err) {
       console.warn('Firestore batch deletion warning:', err);
     }
@@ -1663,17 +1731,49 @@ export const api = {
     let count = 0;
 
     try {
-      const snap = await getDocs(query(collection(db, 'users'), limit(500)));
+      const snap = await getDocs(query(collection(db, 'users'), limit(1000)));
+      const deleteTasks: Promise<void>[] = [];
+
       for (const docSnap of snap.docs) {
         const data = docSnap.data();
         const email = (data.email || '').toLowerCase().trim();
         const turma = (data.turma || '').toLowerCase().trim();
-        if (!isUserAdmin(email, data.role) && turmasSet.has(turma)) {
-          await deleteDoc(doc(db, 'users', docSnap.id));
-          await deleteDoc(doc(db, 'publicProfiles', docSnap.id));
+        const id = docSnap.id;
+        const role = data.role;
+
+        if (!isUserAdmin(email, role) && turmasSet.has(turma)) {
           count++;
+          deleteTasks.push(
+            (async () => {
+              try {
+                try {
+                  const progSnap = await getDocs(collection(db, 'users', id, 'progress'));
+                  await Promise.allSettled(progSnap.docs.map((d) => deleteDoc(d.ref)));
+                } catch {}
+                try {
+                  const achSnap = await getDocs(collection(db, 'users', id, 'achievements'));
+                  await Promise.allSettled(achSnap.docs.map((d) => deleteDoc(d.ref)));
+                } catch {}
+                try {
+                  const ptsSnap = await getDocs(collection(db, 'users', id, 'pointsHistory'));
+                  await Promise.allSettled(ptsSnap.docs.map((d) => deleteDoc(d.ref)));
+                } catch {}
+
+                await deleteDoc(doc(db, 'users', id));
+                await deleteDoc(doc(db, 'publicProfiles', id));
+
+                localStorage.removeItem(PROGRESS_STORAGE_KEY + id);
+                localStorage.removeItem(ACHIEVEMENTS_STORAGE_KEY + id);
+                localStorage.removeItem(POINTS_STORAGE_KEY + id);
+              } catch (e) {
+                console.warn(`Error deleting student ${id} in turma ${turma}:`, e);
+              }
+            })()
+          );
         }
       }
+
+      await Promise.allSettled(deleteTasks);
     } catch (err) {
       console.warn('Firestore deletion by turma warning:', err);
     }
@@ -1693,16 +1793,84 @@ export const api = {
     let count = 0;
 
     try {
+      // 1. Fetch all users from Firestore
       const snap = await getDocs(query(collection(db, 'users'), limit(1000)));
+      const deletePromises: Promise<void>[] = [];
+
       for (const docSnap of snap.docs) {
         const data = docSnap.data();
         const email = (data.email || '').toLowerCase().trim();
-        if (!isUserAdmin(email, data.role)) {
-          await deleteDoc(doc(db, 'users', docSnap.id));
-          await deleteDoc(doc(db, 'publicProfiles', docSnap.id));
+        const role = data.role;
+        const studentId = docSnap.id;
+
+        if (!isUserAdmin(email, role)) {
           count++;
+          deletePromises.push(
+            (async () => {
+              try {
+                // Delete subcollections
+                try {
+                  const progSnap = await getDocs(collection(db, 'users', studentId, 'progress'));
+                  await Promise.allSettled(progSnap.docs.map((d) => deleteDoc(d.ref)));
+                } catch {}
+                try {
+                  const achSnap = await getDocs(collection(db, 'users', studentId, 'achievements'));
+                  await Promise.allSettled(achSnap.docs.map((d) => deleteDoc(d.ref)));
+                } catch {}
+                try {
+                  const ptsSnap = await getDocs(collection(db, 'users', studentId, 'pointsHistory'));
+                  await Promise.allSettled(ptsSnap.docs.map((d) => deleteDoc(d.ref)));
+                } catch {}
+
+                // Delete primary doc and leaderboard profile
+                await deleteDoc(doc(db, 'users', studentId));
+                await deleteDoc(doc(db, 'publicProfiles', studentId));
+
+                // Local storage cleanup
+                localStorage.removeItem(PROGRESS_STORAGE_KEY + studentId);
+                localStorage.removeItem(ACHIEVEMENTS_STORAGE_KEY + studentId);
+                localStorage.removeItem(POINTS_STORAGE_KEY + studentId);
+              } catch (e) {
+                console.warn(`Error deleting student ${studentId}:`, e);
+              }
+            })()
+          );
         }
       }
+
+      await Promise.allSettled(deletePromises);
+
+      // 2. Also clean any remaining non-admin documents in publicProfiles
+      try {
+        const publicSnap = await getDocs(query(collection(db, 'publicProfiles'), limit(1000)));
+        const publicDeletes: Promise<void>[] = [];
+        for (const docSnap of publicSnap.docs) {
+          const data = docSnap.data();
+          if (data.role !== 'admin' && data.role !== 'teacher') {
+            publicDeletes.push(deleteDoc(docSnap.ref).then(() => {}).catch(() => {}));
+          }
+        }
+        await Promise.allSettled(publicDeletes);
+      } catch (e) {
+        console.warn('Error clearing publicProfiles:', e);
+      }
+
+      // 3. Clear all student progress/achievements keys in localStorage
+      try {
+        const keysToRemove: string[] = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (
+            key &&
+            (key.startsWith(PROGRESS_STORAGE_KEY) ||
+              key.startsWith(ACHIEVEMENTS_STORAGE_KEY) ||
+              key.startsWith(POINTS_STORAGE_KEY))
+          ) {
+            keysToRemove.push(key);
+          }
+        }
+        keysToRemove.forEach((k) => localStorage.removeItem(k));
+      } catch {}
     } catch (err) {
       console.warn('Firestore deleteAllStudents warning:', err);
     }

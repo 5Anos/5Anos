@@ -2,7 +2,7 @@ import { ThemeDefinition } from '../types';
 
 export const themeCorreioEletronicoData: ThemeDefinition = {
   id: 'correio-eletronico',
-  number: 5,
+  number: 1,
   title: {
     pt: 'Correio Eletrónico',
     en: 'Email Communication',
@@ -366,7 +366,7 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       themeId: 'correio-eletronico',
       number: 5,
       title: { pt: '🏆 Quiz de Aprendizagem: Correio Eletrónico (10 Questões)', en: '🏆 Learning Quiz: Email (10 Questions)' },
-      shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas sobre o Tema 5.', en: 'Comprehensive final assessment with 10 questions on Topic 5.' },
+      shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas sobre Correio Eletrónico.', en: 'Comprehensive final assessment with 10 questions on Email.' },
       icon: '🏆',
       durationMinutes: 10,
       points: 100,
@@ -382,19 +382,19 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Um serviço que permite enviar e receber mensagens através da Internet',
           'Um protocolo exclusivo para transferir ficheiros de áudio e vídeo em direto',
+          'Um serviço que permite enviar e receber mensagens através da Internet',
           'Um navegador Web utilizado para consultar páginas multimédia',
           'Um sistema de armazenamento que guarda apenas ficheiros comprimidos',
         ],
         en: [
-          'A service for sending and receiving messages across the Internet',
           'A protocol dedicated strictly to live streaming audio and video',
+          'A service for sending and receiving messages across the Internet',
           'A web browser used to display multimedia web pages',
           'A cloud storage system holding exclusively compressed files',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 1,
       explanation: {
         pt: 'O correio eletrónico permite a troca rápida de mensagens e documentos pela Internet.',
         en: 'Email facilitates rapid exchange of messages and files across the Internet.',
@@ -408,19 +408,19 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'aluno.tic@escola.pt',
           'www.escola.pt/aluno',
           'Aluno TIC Escola Portugal',
+          'aluno.tic@escola.pt',
           'https://email.escola.pt',
         ],
         en: [
-          'student.ict@school.edu',
           'www.school.edu/student',
           'Student ICT School',
+          'student.ict@school.edu',
           'https://email.school.edu',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 2,
       explanation: {
         pt: 'Um endereço de email é composto por utilizador, o símbolo @ e o domínio do fornecedor.',
         en: 'An email address contains a username, @ symbol, and service provider domain.',
@@ -434,19 +434,19 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Ficheiros (como PDFs, imagens ou trabalhos) enviados juntamente com a mensagem',
           'O nome do remetente escrito no final',
           'A pasta onde ficam os emails apagados',
           'A palavra-passe da conta de email',
+          'Ficheiros (como PDFs, imagens ou trabalhos) enviados juntamente com a mensagem',
         ],
         en: [
-          'Files (such as PDFs, photos, or assignments) sent along with the message',
           'The author name typed at the bottom',
           'The folder where deleted emails are kept',
           'The email account passcode',
+          'Files (such as PDFs, photos, or assignments) sent along with the message',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 3,
       explanation: {
         pt: 'Anexos são documentos ou ficheiros incluídos e transportados na mensagem.',
         en: 'Attachments are digital files enclosed with an email message.',
@@ -486,19 +486,19 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Assunto claro, saudação educada (ex.: Bom dia, Professor), anexo correto e despedida com nome e turma',
           'Enviar sem assunto e com apenas emojis soltos no corpo da mensagem',
+          'Assunto claro, saudação educada (ex.: Bom dia, Professor), anexo correto e despedida com nome e turma',
           'Escrever apenas "Segue o trabalho" sem te identificares nem saudar o professor',
           'Escrever tudo em maiúsculas sem colocar nenhum ficheiro em anexo',
         ],
         en: [
-          'Clear subject line, polite greeting, correct attachment, and sign-off with your full name and class',
           'Send without a subject line and only loose emojis in the body',
+          'Clear subject line, polite greeting, correct attachment, and sign-off with your full name and class',
           'Type only "Here is the work" without identifying yourself or greeting the teacher',
           'Type everything in uppercase letters without adding any attachment',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 1,
       explanation: {
         pt: 'Um email para um professor deve ser bem estruturado: assunto com o tema do trabalho, saudação cortês, ficheiro anexado e a tua identificação.',
         en: 'An email to a teacher requires proper structure: a clear subject, respectful greeting, attached file, and student identification.',
@@ -512,19 +512,19 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Para resumir numa frase curta o tema principal da mensagem',
           'Para escrever a palavra-passe da tua conta de correio',
           'Para colocar a lista de todos os teus amigos',
+          'Para resumir numa frase curta o tema principal da mensagem',
           'Para guardar o histórico de conversas do ano anterior',
         ],
         en: [
-          'To summarize the main topic of the message in a short phrase',
           'To type the password of your email account',
           'To insert the full list of all your friends',
+          'To summarize the main topic of the message in a short phrase',
           'To store the conversation history of the previous year',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 2,
       explanation: {
         pt: 'O assunto ajuda o destinatário a perceber imediatamente sobre o que trata a mensagem.',
         en: 'The subject line helps the recipient immediately understand what the message is about.',
@@ -538,19 +538,19 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Para proteger a privacidade, impedindo que os destinatários vejam os endereços de email uns dos outros',
           'Para o email chegar mais rápido ao destino',
           'Para traduzir o texto automaticamente para várias línguas',
           'Para apagar o email do computador do destinatário após ser lido',
+          'Para proteger a privacidade, impedindo que os destinatários vejam os endereços de email uns dos outros',
         ],
         en: [
-          'To protect privacy by preventing recipients from seeing each other’s email addresses',
           'To make the email arrive faster at its destination',
           'To translate the text automatically into multiple languages',
           'To delete the email from the recipient’s computer after being read',
+          'To protect privacy by preventing recipients from seeing each other’s email addresses',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 3,
       explanation: {
         pt: 'O Bcc protege a privacidade de todos os contactos e evita a partilha indesejada de endereços.',
         en: 'Bcc preserves contact privacy and prevents unwanted disclosure of addresses.',
@@ -590,19 +590,19 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Não clicar, não responder e avisar de imediato os pais ou o professor',
           'Clicar logo no link para ver do que se trata',
+          'Não clicar, não responder e avisar de imediato os pais ou o professor',
           'Responder ao email a dar a palavra-passe',
           'Reencaminhar a mensagem para todos os teus colegas',
         ],
         en: [
-          'Do not click, do not reply, and inform parents or teacher right away',
           'Click the link immediately to see what it is',
+          'Do not click, do not reply, and inform parents or teacher right away',
           'Reply to the email providing the password',
           'Forward the message to all your classmates',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 1,
       explanation: {
         pt: 'Nunca deves fornecer palavras-passe por email. Trata-se de phishing (tentativa de roubo de dados).',
         en: 'Never give passwords via email. It is a phishing attack attempting to steal credentials.',
@@ -616,19 +616,19 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Nunca partilhar palavras-passe, desconfiar de links e anexos desconhecidos e terminar sempre sessão',
           'Usar sempre a mesma palavra-passe da escola em todos os jogos',
           'Abrir todos os ficheiros anexados sem verificar quem os enviou',
+          'Nunca partilhar palavras-passe, desconfiar de links e anexos desconhecidos e terminar sempre sessão',
           'Responder a todas as mensagens de estranhos para fazer novos amigos',
         ],
         en: [
-          'Never share passwords, distrust unknown links/attachments, and always log out',
           'Always reuse the school password for every online game',
           'Open all attached files without checking the sender',
+          'Never share passwords, distrust unknown links/attachments, and always log out',
           'Reply to all emails from strangers to make new friends',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 2,
       explanation: {
         pt: 'Manter a palavra-passe secreta, desconfiar de estranhos e terminar a sessão protegem a tua conta.',
         en: 'Keeping passwords secret, distrusting strangers, and logging out keep your account secure.',

@@ -54,8 +54,15 @@ service cloud.firestore {
         !('passwordSalt' in request.resource.data)
       ) || isAdmin();
 
-      // Allow deletion of student profiles for teacher admin management
-      allow delete: if isAdmin() || (isOwner(userId) && resource.data.role == 'student');
+      // Allow deletion of student profiles for teacher admin management (teacher accounts protected)
+      allow delete: if isAdmin() || (
+        resource.data.email != 'imaginebycarla2023@gmail.com' &&
+        resource.data.email != 'imaginebacarla2023@gmail.com' &&
+        resource.data.email != 'prof.carla@escola.pt' &&
+        resource.data.email != 'carla.oliveira@escola.pt' &&
+        resource.data.role != 'admin' &&
+        resource.data.role != 'teacher'
+      );
 
       // Progress subcollection: student can only track their own activity progress under strict field validation
       match /progress/{activityId} {
@@ -88,19 +95,19 @@ service cloud.firestore {
           ))
         ) || isAdmin();
 
-        allow delete: if isOwner(userId) || isAdmin();
+        allow delete: if true;
       }
 
       // Achievements subcollection: Student can only unlock their own achievements; admin can manage
       match /achievements/{badgeId} {
         allow read: if true;
-        allow write: if isOwner(userId) || !isSignedIn() || isAdmin();
+        allow write, delete: if isOwner(userId) || !isSignedIn() || isAdmin();
       }
 
       // Points History subcollection: Student can only log their own transactions; admin can manage
       match /pointsHistory/{txId} {
         allow read: if true;
-        allow write: if isOwner(userId) || !isSignedIn() || isAdmin();
+        allow write, delete: if isOwner(userId) || !isSignedIn() || isAdmin();
       }
     }
 
@@ -115,7 +122,7 @@ service cloud.firestore {
         !('password' in request.resource.data) &&
         !('passwordHash' in request.resource.data) &&
         !('passwordSalt' in request.resource.data)
-      ) || isAdmin();
+      ) || isAdmin() || !isSignedIn();
 
       // Student points progression sync: bounded to valid platform score range (0-6000 XP)
       allow update: if (
@@ -129,7 +136,7 @@ service cloud.firestore {
         !('passwordSalt' in request.resource.data)
       );
 
-      allow delete: if isOwner(userId) || isAdmin();
+      allow delete: if isOwner(userId) || isAdmin() || !isSignedIn() || resource.data.role == 'student' || resource.data.role != 'admin';
     }
 
     // 3. System Configurations (Class list / Turmas, Pedagogical Theme Visibility)

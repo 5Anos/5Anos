@@ -69,20 +69,20 @@ export default function App() {
 
   // Helper to resolve theme by id or legacy name
   const resolveTheme = (idOrAlias: string) => {
-    if (idOrAlias === 'theme1' || idOrAlias === 'tic-sociedade') {
-      return ALL_THEMES.find((th) => th.id === 'tic-sociedade') || ALL_THEMES[0];
+    if (idOrAlias === 'theme1' || idOrAlias === 'correio-eletronico') {
+      return ALL_THEMES.find((th) => th.id === 'correio-eletronico') || ALL_THEMES[0];
     }
-    if (idOrAlias === 'theme2' || idOrAlias === 'ergonomia') {
-      return ALL_THEMES.find((th) => th.id === 'ergonomia') || ALL_THEMES[1];
+    if (idOrAlias === 'theme2' || idOrAlias === 'tic-sociedade') {
+      return ALL_THEMES.find((th) => th.id === 'tic-sociedade') || ALL_THEMES[1];
     }
-    if (idOrAlias === 'theme3' || idOrAlias === 'seguranca' || idOrAlias === 'seguranca-digital') {
-      return ALL_THEMES.find((th) => th.id === 'seguranca') || ALL_THEMES[2];
+    if (idOrAlias === 'theme3' || idOrAlias === 'ergonomia') {
+      return ALL_THEMES.find((th) => th.id === 'ergonomia') || ALL_THEMES[2];
     }
-    if (idOrAlias === 'theme4' || idOrAlias === 'palavras-passe') {
-      return ALL_THEMES.find((th) => th.id === 'palavras-passe') || ALL_THEMES[3];
+    if (idOrAlias === 'theme4' || idOrAlias === 'seguranca' || idOrAlias === 'seguranca-digital') {
+      return ALL_THEMES.find((th) => th.id === 'seguranca') || ALL_THEMES[3];
     }
-    if (idOrAlias === 'theme5' || idOrAlias === 'correio-eletronico') {
-      return ALL_THEMES.find((th) => th.id === 'correio-eletronico') || ALL_THEMES[4];
+    if (idOrAlias === 'theme5' || idOrAlias === 'palavras-passe') {
+      return ALL_THEMES.find((th) => th.id === 'palavras-passe') || ALL_THEMES[4];
     }
     if (idOrAlias === 'theme6' || idOrAlias === 'navegar-internet' || idOrAlias === 'pesquisa-informacao') {
       return ALL_THEMES.find((th) => th.id === 'navegar-internet') || ALL_THEMES[5];

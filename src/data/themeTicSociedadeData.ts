@@ -2,7 +2,7 @@ import { ThemeDefinition } from '../types';
 
 export const themeTicSociedadeData: ThemeDefinition = {
   id: 'tic-sociedade',
-  number: 1,
+  number: 2,
   title: {
     pt: 'TIC na Sociedade',
     en: 'ICT in Society',

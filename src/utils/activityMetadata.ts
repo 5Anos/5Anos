@@ -588,20 +588,20 @@ export function resolveActivityInfo(
     let targetTheme = ALL_THEMES[0];
     if (providedThemeId && THEMES_BY_ID[providedThemeId]) {
       targetTheme = THEMES_BY_ID[providedThemeId];
-    } else if (normalizedId.includes('tema1') || normalizedId.includes('tic')) {
-      targetTheme = ALL_THEMES[0];
-    } else if (normalizedId.includes('tema2') || normalizedId.includes('ergo')) {
-      targetTheme = ALL_THEMES[1];
-    } else if (normalizedId.includes('tema3') || normalizedId.includes('seguran')) {
-      targetTheme = ALL_THEMES[2];
-    } else if (normalizedId.includes('tema4') || normalizedId.includes('passe')) {
-      targetTheme = ALL_THEMES[3];
-    } else if (normalizedId.includes('tema5') || normalizedId.includes('email') || normalizedId.includes('correio')) {
-      targetTheme = ALL_THEMES[4];
-    } else if (normalizedId.includes('tema6') || normalizedId.includes('pesquisa') || normalizedId.includes('navegar')) {
-      targetTheme = ALL_THEMES[5];
-    } else if (normalizedId.includes('tema7') || normalizedId.includes('autor') || normalizedId.includes('referencia')) {
-      targetTheme = ALL_THEMES[6];
+    } else if (normalizedId.includes('email') || normalizedId.includes('correio')) {
+      targetTheme = THEMES_BY_ID['correio-eletronico'] || ALL_THEMES[0];
+    } else if (normalizedId.includes('tic') || normalizedId.includes('soc')) {
+      targetTheme = THEMES_BY_ID['tic-sociedade'] || ALL_THEMES[1];
+    } else if (normalizedId.includes('ergo')) {
+      targetTheme = THEMES_BY_ID['ergonomia'] || ALL_THEMES[2];
+    } else if (normalizedId.includes('seguran')) {
+      targetTheme = THEMES_BY_ID['seguranca'] || ALL_THEMES[3];
+    } else if (normalizedId.includes('passe') || normalizedId.includes('password')) {
+      targetTheme = THEMES_BY_ID['palavras-passe'] || ALL_THEMES[4];
+    } else if (normalizedId.includes('pesquisa') || normalizedId.includes('navegar')) {
+      targetTheme = THEMES_BY_ID['navegar-internet'] || ALL_THEMES[5];
+    } else if (normalizedId.includes('autor') || normalizedId.includes('referencia')) {
+      targetTheme = THEMES_BY_ID['direitos-autor'] || ALL_THEMES[6];
     }
 
     return {
@@ -622,20 +622,20 @@ export function resolveActivityInfo(
   let fallbackTheme = ALL_THEMES[0];
   if (providedThemeId && THEMES_BY_ID[providedThemeId]) {
     fallbackTheme = THEMES_BY_ID[providedThemeId];
-  } else if (normalizedId.startsWith('tic-') || normalizedId.includes('soc')) {
-    fallbackTheme = ALL_THEMES[0];
-  } else if (normalizedId.startsWith('ergo-')) {
-    fallbackTheme = ALL_THEMES[1];
-  } else if (normalizedId.startsWith('seg-') || normalizedId.includes('seguranca')) {
-    fallbackTheme = ALL_THEMES[2];
-  } else if (normalizedId.startsWith('passe-') || normalizedId.includes('password')) {
-    fallbackTheme = ALL_THEMES[3];
   } else if (normalizedId.startsWith('email-') || normalizedId.includes('inbox') || normalizedId.includes('correio')) {
-    fallbackTheme = ALL_THEMES[4];
+    fallbackTheme = THEMES_BY_ID['correio-eletronico'] || ALL_THEMES[0];
+  } else if (normalizedId.startsWith('tic-') || normalizedId.includes('soc')) {
+    fallbackTheme = THEMES_BY_ID['tic-sociedade'] || ALL_THEMES[1];
+  } else if (normalizedId.startsWith('ergo-')) {
+    fallbackTheme = THEMES_BY_ID['ergonomia'] || ALL_THEMES[2];
+  } else if (normalizedId.startsWith('seg-') || normalizedId.includes('seguranca')) {
+    fallbackTheme = THEMES_BY_ID['seguranca'] || ALL_THEMES[3];
+  } else if (normalizedId.startsWith('passe-') || normalizedId.includes('password')) {
+    fallbackTheme = THEMES_BY_ID['palavras-passe'] || ALL_THEMES[4];
   } else if (normalizedId.startsWith('nav-') || normalizedId.includes('pesquisa') || normalizedId.includes('aspas')) {
-    fallbackTheme = ALL_THEMES[5];
+    fallbackTheme = THEMES_BY_ID['navegar-internet'] || ALL_THEMES[5];
   } else if (normalizedId.startsWith('copy-') || normalizedId.startsWith('ref-') || normalizedId.includes('autor')) {
-    fallbackTheme = ALL_THEMES[6];
+    fallbackTheme = THEMES_BY_ID['direitos-autor'] || ALL_THEMES[6];
   }
 
   // Humanize the raw activity id

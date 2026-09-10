@@ -353,23 +353,23 @@ export const themeNavegarInternetData: ThemeDefinition = {
             {
               q: 'Se precisas de pesquisar sobre os vulcões em Portugal para um trabalho de Ciências, qual é a melhor pesquisa?',
               opts: [
-                'vulcões Portugal características',
                 'olá computador mostra-me coisas bonitas da terra',
+                'vulcões Portugal características',
                 'vulcão',
                 'quero saber tudo sobre vulcões quentes perto de mim por favor'
               ],
-              c: 0,
+              c: 1,
               e: 'Palavras-chave curtas, diretas e específicas ajudam o motor de busca a encontrar exatamente o que precisas.'
             },
             {
               q: 'Se quiseres procurar a expressão exata "D. Afonso Henriques" com as palavras juntas por essa ordem, o que deves usar?',
               opts: [
-                '"D. Afonso Henriques" (entre aspas)',
                 'D. Afonso Henriques!!! (com pontos de exclamação)',
                 'Escrever tudo em letras maiúsculas',
+                '"D. Afonso Henriques" (entre aspas)',
                 'Apagar o espaço entre as palavras'
               ],
-              c: 0,
+              c: 2,
               e: 'Colocar uma expressão entre aspas ("exemplo") faz com que o motor de busca encontre exatamente as palavras juntas por essa ordem!'
             }
           ]
@@ -429,35 +429,9 @@ export const themeNavegarInternetData: ThemeDefinition = {
       }
     },
     {
-      id: 'jogo-net-order',
-      themeId: 'navegar-internet',
-      number: 4,
-      title: { pt: '📦 Passos para uma Boa Pesquisa Escolar', en: '📦 Steps for School Web Research' },
-      shortDesc: { pt: 'Ordena os 4 passos recomendados para investigar um tema na Web.', en: 'Order the 4 recommended steps to research a topic online.' },
-      icon: '📦',
-      durationMinutes: 4,
-      points: 100,
-      type: 'order_sequence',
-      gameData: {
-        type: 'order',
-        title: 'Passos para uma Boa Pesquisa Escolar',
-        icon: '📦',
-        xp: 100,
-        desc: 'Coloca os passos de uma pesquisa escolar pela ordem correta.',
-        data: {
-          items: [
-            '1. Definir o tema e o que queres descobrir',
-            '2. Escolher palavras-chave simples e precisas',
-            '3. Comparar a informação em mais do que um site de confiança',
-            '4. Registar e anotar as fontes que utilizaste no trabalho'
-          ]
-        }
-      }
-    },
-    {
       id: 'quiz-final-tema6',
       themeId: 'navegar-internet',
-      number: 5,
+      number: 4,
       title: { pt: '🏆 Quiz de Aprendizagem: Navegar na Internet (10 Questões)', en: '🏆 Learning Quiz: Internet Browsing (10 Questions)' },
       shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas claras sobre o Tema 6.', en: 'Comprehensive final assessment with 10 clear questions on Topic 6.' },
       icon: '🏆',
@@ -475,19 +449,19 @@ export const themeNavegarInternetData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Um programa utilizado para abrir e ver páginas na Internet (ex.: Google Chrome, Mozilla Firefox, Microsoft Edge ou Safari)',
           'O botão que desliga o monitor do computador',
+          'Um programa utilizado para abrir e ver páginas na Internet (ex.: Google Chrome, Mozilla Firefox, Microsoft Edge ou Safari)',
           'Um vírus perigoso que apaga trabalhos escolares',
           'O cabo que liga o computador à tomada elétrica',
         ],
         en: [
-          'A program used to open and view web pages (e.g., Google Chrome, Mozilla Firefox, Microsoft Edge, or Safari)',
           'The physical power button on the computer monitor',
+          'A program used to open and view web pages (e.g., Google Chrome, Mozilla Firefox, Microsoft Edge, or Safari)',
           'A dangerous virus that erases homework',
           'The electrical power cord of the computer',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 1,
       explanation: {
         pt: 'O navegador web é o programa que usamos para explorar e abrir os sites na Internet.',
         en: 'A web browser is the application we use to explore and display web pages.',
@@ -501,19 +475,19 @@ export const themeNavegarInternetData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'A morada única de uma página na Internet (exemplo: https://www.seguranet.pt)',
           'A palavra-passe secreta do teu computador',
           'A marca do teclado do computador',
+          'A morada única de uma página na Internet (exemplo: https://www.seguranet.pt)',
           'O número de jogos instalados no telemóvel',
         ],
         en: [
-          'The unique address of a web page on the Internet (e.g. https://www.seguranet.pt)',
           'The secret password of your computer',
           'The brand name of the keyboard',
+          'The unique address of a web page on the Internet (e.g. https://www.seguranet.pt)',
           'The number of games installed on the phone',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 2,
       explanation: {
         pt: 'O URL é a morada que identifica exatamente onde fica uma página na Web.',
         en: 'A URL is the unique address identifying a web page location on the Internet.',
@@ -527,19 +501,19 @@ export const themeNavegarInternetData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'A ligação entre o teu computador e o site é segura e os dados viajam protegidos',
           'O site está bloqueado e ninguém pode ver nada',
           'O computador precisa de ser formatado',
           'A ligação à Internet foi desligada',
+          'A ligação entre o teu computador e o site é segura e os dados viajam protegidos',
         ],
         en: [
-          'The connection between your computer and the site is secure and data is protected',
           'The site is locked and no one can see anything',
           'The computer must be wiped and formatted',
           'The Internet connection has been shut down',
+          'The connection between your computer and the site is secure and data is protected',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 3,
       explanation: {
         pt: 'O HTTPS e o cadeado indicam uma ligação segura e cifrada.',
         en: 'HTTPS and the padlock represent a secure, encrypted connection.',
@@ -553,19 +527,19 @@ export const themeNavegarInternetData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Indica que o site é de Portugal',
           'Indica que o site é apenas para telemóveis',
+          'Indica que o site é de Portugal',
           'Significa que o site é proibido para menores',
           'Significa que a página está em construção',
         ],
         en: [
-          'It indicates that the website is from Portugal',
           'It means the website is only for mobile phones',
+          'It indicates that the website is from Portugal',
           'It means the website is forbidden for minors',
           'It means the page is under construction',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 1,
       explanation: {
         pt: 'O .pt é o domínio oficial de topo de Portugal.',
         en: '.pt is the official top-level country domain for Portugal.',
@@ -579,19 +553,19 @@ export const themeNavegarInternetData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Guardar atalhos para os teus sites favoritos (como a página da escola) e abri-los com um só clique',
           'Mudar a cor de fundo do ecrã',
           'Apagar todos os trabalhos da escola',
+          'Guardar atalhos para os teus sites favoritos (como a página da escola) e abri-los com um só clique',
           'Aumentar o volume das colunas de som',
         ],
         en: [
-          'Save shortcuts to favorite websites (like the school portal) to open them in one click',
           'Change screen wallpaper color',
           'Erase all school assignments',
+          'Save shortcuts to favorite websites (like the school portal) to open them in one click',
           'Turn up speaker volume',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 2,
       explanation: {
         pt: 'Os marcadores guardam atalhos para acederes rapidamente às páginas que mais usas.',
         en: 'Bookmarks store shortcuts so you can quickly open your most-used websites.',
@@ -605,19 +579,19 @@ export const themeNavegarInternetData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Para encontrar páginas que tenham exatamente essa expressão com as palavras juntas por essa ordem',
           'Para traduzir a frase para inglês',
           'Para eliminar os resultados que tenham essas palavras',
           'Para desligar o computador',
+          'Para encontrar páginas que tenham exatamente essa expressão com as palavras juntas por essa ordem',
         ],
         en: [
-          'To find pages containing that exact phrase with words together in that precise order',
           'To translate the phrase into English',
           'To remove search results containing those words',
           'To shut down the computer',
+          'To find pages containing that exact phrase with words together in that precise order',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 3,
       explanation: {
         pt: 'As aspas (" ") fazem o motor de busca procurar a frase exata, palavra por palavra.',
         en: 'Quotation marks force search engines to match the exact phrase word for word.',
@@ -631,19 +605,19 @@ export const themeNavegarInternetData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Verificar quem escreveu, a data do artigo e comparar a informação com outras fontes confiáveis e livros',
           'Acreditar logo no primeiro resultado que aparecer no topo sem ler',
+          'Verificar quem escreveu, a data do artigo e comparar a informação com outras fontes confiáveis e livros',
           'Acreditar apenas se o site tiver muitas cores e animações a piscar',
           'Copiar tudo sem pensar porque tudo na Internet é sempre 100% verdade',
         ],
         en: [
-          'Check the author, article date, and compare information across trusted sources and books',
           'Trust the very first top link without reading',
+          'Check the author, article date, and compare information across trusted sources and books',
           'Only trust pages with flashing colors and animations',
           'Copy everything blindly because everything online is always 100% true',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 1,
       explanation: {
         pt: 'Deves ter espírito crítico: verificar a autoria, a data e comparar em vários sítios credíveis.',
         en: 'Use critical thinking: check the author, date, and cross-reference with credible sources.',
@@ -657,19 +631,19 @@ export const themeNavegarInternetData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Passando o cursor do rato por cima do link e olhando para o endereço real que surge no fundo do ecrã',
           'Desligando o monitor e voltando a ligar',
           'Carregando na tecla de espaço 10 vezes',
+          'Passando o cursor do rato por cima do link e olhando para o endereço real que surge no fundo do ecrã',
           'Escrevendo o link num papel em branco',
         ],
         en: [
-          'Hovering the mouse cursor over the link and checking the real URL at the bottom of the screen',
           'Turning the monitor off and on again',
           'Pressing the spacebar 10 times',
+          'Hovering the mouse cursor over the link and checking the real URL at the bottom of the screen',
           'Writing the link on a blank paper',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 2,
       explanation: {
         pt: 'Passar o rato por cima do link mostra a morada verdadeira no canto inferior do navegador.',
         en: 'Hovering over a link displays the actual destination URL in the browser preview.',
@@ -683,19 +657,19 @@ export const themeNavegarInternetData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Fechar a janela imediatamente sem clicar nem dar qualquer dado pessoal',
           'Escrever logo a tua morada, nome completo e número de telefone',
           'Pedir o cartão de crédito aos pais para receber o prémio',
           'Enviar o anúncio para todos os teus colegas',
+          'Fechar a janela imediatamente sem clicar nem dar qualquer dado pessoal',
         ],
         en: [
-          'Close the window immediately without clicking or giving any personal data',
           'Type in your address, full name, and phone number right away',
           'Ask parents for their credit card to claim the prize',
           'Forward the ad to all your classmates',
+          'Close the window immediately without clicking or giving any personal data',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 3,
       explanation: {
         pt: 'Estes falsos prémios são armadilhas para enganar as pessoas. Nunca deves clicar nem partilhar dados.',
         en: 'Fake prize pop-ups are malicious scams. Never click them or give personal information.',
@@ -709,19 +683,19 @@ export const themeNavegarInternetData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Fechar imediatamente a página e contar logo a um adulto de confiança (pais ou professor)',
           'Guardar segredo e ficar assustado sozinho',
+          'Fechar imediatamente a página e contar logo a um adulto de confiança (pais ou professor)',
           'Partilhar com todos os amigos nas redes sociais',
           'Responder com mensagens insultuosas',
         ],
         en: [
-          'Close the page immediately and inform a trusted adult (parents or teacher) right away',
           'Keep it a secret and stay scared alone',
+          'Close the page immediately and inform a trusted adult (parents or teacher) right away',
           'Share it with all friends on social networks',
           'Reply with insulting messages',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 1,
       explanation: {
         pt: 'Contar a um adulto de confiança garante apoio imediato e ajuda a manter a tua segurança na Internet.',
         en: 'Informing a trusted adult ensures immediate support and protects your online safety.',

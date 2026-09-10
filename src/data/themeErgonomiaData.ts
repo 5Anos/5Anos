@@ -2,7 +2,7 @@ import { ThemeDefinition } from '../types';
 
 export const themeErgonomiaData: ThemeDefinition = {
   id: 'ergonomia',
-  number: 2,
+  number: 3,
   title: {
     pt: 'Ergonomia',
     en: 'Ergonomics',
@@ -412,59 +412,37 @@ export const themeErgonomiaData: ThemeDefinition = {
               e: 'Excelente! Um apoio de pés permite manter os joelhos num ângulo confortável e a coluna bem apoiada no encosto.'
             },
             {
-              q: 'A Ana está a usar o computador, mas o monitor está muito baixo. Para conseguir ler, ela passa o tempo todo com o queixo encostado ao peito e o pescoço inclinado. O que pode fazer?',
-              opts: [
-                'Elevar o monitor com um suporte até que o topo do ecrã fique ao nível dos olhos',
-                'Baixar a cadeira até o queixo encostar à secretária',
-                'Inclinar todo o tronco para a frente e aproximar a cara do ecrã',
-                'Continuar na mesma posição e apenas aumentar o brilho do ecrã'
-              ],
-              c: 0,
-              e: 'Muito bem! Elevar o monitor alinha o olhar na horizontal e evita forçar o pescoço para baixo.'
-            },
-            {
               q: 'O Tomás senta-se tão perto do monitor que quase consegue tocar-lhe com o nariz enquanto estuda e joga. Qual é a recomendação mais adequada?',
               opts: [
-                'Afastar o ecrã para cerca de um braço esticado de distância (cerca de 50 a 70 cm)',
                 'Aproximar-se ainda mais e usar óculos de sol dentro de casa',
+                'Afastar o ecrã para cerca de um braço esticado de distância (cerca de 50 a 70 cm)',
                 'Manter o monitor encostado ao teclado e inclinar a cabeça para trás',
                 'Tocar no ecrã continuamente para medir a temperatura do vidro'
               ],
-              c: 0,
+              c: 1,
               e: 'Boa escolha! A distância aproximada de um braço esticado protege a vista do cansaço e permite ver todo o conteúdo com nitidez.'
             },
             {
               q: 'Ao escrever no teclado, a Inês apoia a base das palmas no bordo afiado da mesa e dobra os pulsos muito para cima. O que pode fazer para melhorar?',
               opts: [
-                'Manter os pulsos direitos e alinhados com os antebraços, com espaço livre na secretária',
                 'Escrever apenas com uma mão e manter a outra dobrada atrás das costas',
                 'Dobrar os pulsos ainda mais para cima para pressionar as teclas com mais força',
+                'Manter os pulsos direitos e alinhados com os antebraços, com espaço livre na secretária',
                 'Apoiar todo o peso do peito sobre o teclado enquanto escreve'
               ],
-              c: 0,
+              c: 2,
               e: 'Exato! Pulsos direitos e alinhados numa linha reta reduzem a tensão nas articulações ao digitar.'
             },
             {
               q: 'O sol da tarde está a bater na janela atrás das costas do Pedro, criando um reflexo muito brilhante no monitor que não o deixa ler. O que deve fazer?',
               opts: [
-                'Ajustar a cortina ou mudar a orientação do monitor para que a luz venha de lado',
                 'Apagar todas as luzes da sala e trabalhar no escuro total',
+                'Ajustar a cortina ou mudar a orientação do monitor para que a luz venha de lado',
                 'Aumentar o brilho do monitor no máximo e colar a cara ao vidro',
                 'Trabalhar de olhos semicerrados forçando a visão'
               ],
-              c: 0,
+              c: 1,
               e: 'Boa decisão! A luz natural deve vir de lado para iluminar o espaço sem provocar reflexos diretos no monitor.'
-            },
-            {
-              q: 'A Leonor costuma estudar horas seguidas com o computador portátil deitado na cama de barriga para baixo. O que poderia fazer para um estudo mais confortável e saudável?',
-              opts: [
-                'Trabalhar numa secretária com cadeira adequada, mantendo o portátil elevado e com bom apoio',
-                'Continuar na cama de barriga para baixo mas colocar uma almofada alta no queixo',
-                'Pousar o portátil no tapete do chão e olhar para ele de pé',
-                'Estudar deitada de lado a segurar o portátil com uma mão no ar'
-              ],
-              c: 0,
-              e: 'Excelente! Estudar numa secretária com cadeira e mesa adequadas protege a coluna, pescoço e braços durante o estudo prolongado.'
             }
           ]
         }
