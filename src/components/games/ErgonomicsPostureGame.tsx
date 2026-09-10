@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Trophy, Sparkles, CheckCircle2, RotateCcw, AlertTriangle, Eye, Sun, Armchair, ShieldCheck, Heart, ArrowRight } from 'lucide-react';
 import { PostureCorrectionSimulator } from '../PostureCorrectionSimulator';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language } from '../../types';
 
 interface Props {
@@ -297,15 +298,27 @@ export const ErgonomicsPostureGame: React.FC<Props> = ({ language, onBack, onFin
                   : 'Examine the student. Click on red alert zones to fix posture flaws and align joints to 90 degrees!'}
               </p>
             </div>
-            {simulatorDone && (
-              <button
-                onClick={() => setActiveStage('scenarios')}
-                className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-sm shadow-md flex items-center gap-2 shrink-0 cursor-pointer transition-all hover:scale-102"
-              >
-                <span>{language === 'pt' ? 'Avançar para o Inspetor' : 'Next to Habit Inspector'}</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            )}
+            <div className="flex items-center gap-3">
+              <AudioSpeakButton
+                id="ergo-stage1-audio"
+                text={language === 'pt'
+                  ? 'Corrige a Postura do Aluno. Observa o estudante na secretária. Clica nas zonas vermelhas de alerta para descobrir os erros e aplicar a solução correta!'
+                  : 'Fix the Student Posture. Examine the student at the desk. Click on red alert zones to fix posture flaws!'}
+                language={language}
+                label={language === 'pt' ? 'Ouvir Instruções' : 'Listen Instructions'}
+                variant="pill"
+                size="sm"
+              />
+              {simulatorDone && (
+                <button
+                  onClick={() => setActiveStage('scenarios')}
+                  className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-sm shadow-md flex items-center gap-2 shrink-0 cursor-pointer transition-all hover:scale-102"
+                >
+                  <span>{language === 'pt' ? 'Avançar para o Inspetor' : 'Next to Habit Inspector'}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              )}
+            </div>
           </div>
 
           <PostureCorrectionSimulator language={language} onComplete={handleSimulatorComplete} />
@@ -354,23 +367,49 @@ export const ErgonomicsPostureGame: React.FC<Props> = ({ language, onBack, onFin
                 {language === 'pt' ? `Estudante: ${currentScenario.student}` : `Student: ${currentScenario.student}`}
               </p>
             </div>
-            <div className="w-full sm:w-36 bg-white/20 rounded-full h-3 overflow-hidden p-0.5">
-              <div
-                className="bg-emerald-400 h-full rounded-full transition-all duration-300"
-                style={{ width: `${((currentScenarioIdx + 1) / HABIT_SCENARIOS.length) * 100}%` }}
+            <div className="flex items-center gap-3">
+              <AudioSpeakButton
+                id={`ergo-scenario-${currentScenario.id}`}
+                text={`${currentScenario.title[language]}. Estudante: ${currentScenario.student}. ${currentScenario.situation[language]}. Pergunta: ${currentScenario.question[language]}`}
+                language={language}
+                label={language === 'pt' ? 'Ouvir Cenário' : 'Listen Scenario'}
+                variant="pill"
+                size="sm"
               />
+              <div className="w-24 sm:w-36 bg-white/20 rounded-full h-3 overflow-hidden p-0.5">
+                <div
+                  className="bg-emerald-400 h-full rounded-full transition-all duration-300"
+                  style={{ width: `${((currentScenarioIdx + 1) / HABIT_SCENARIOS.length) * 100}%` }}
+                />
+              </div>
             </div>
           </div>
 
           <div className="p-6 sm:p-8 rounded-3xl bg-white border-2 border-indigo-100 shadow-md space-y-6">
-            <div className="p-4 rounded-2xl bg-indigo-50/70 border border-indigo-100 text-sm text-slate-800 leading-relaxed font-medium">
-              {currentScenario.situation[language]}
+            <div className="p-4 rounded-2xl bg-indigo-50/70 border border-indigo-100 text-sm text-slate-800 leading-relaxed font-medium flex items-start justify-between gap-3">
+              <p className="flex-1">{currentScenario.situation[language]}</p>
+              <AudioSpeakButton
+                id={`ergo-sit-${currentScenario.id}`}
+                text={currentScenario.situation[language]}
+                language={language}
+                variant="icon"
+                size="xs"
+              />
             </div>
 
             <div>
-              <h3 className="text-base sm:text-lg font-black text-slate-900 mb-4">
-                {currentScenario.question[language]}
-              </h3>
+              <div className="flex items-start justify-between gap-3 mb-4">
+                <h3 className="text-base sm:text-lg font-black text-slate-900 flex-1">
+                  {currentScenario.question[language]}
+                </h3>
+                <AudioSpeakButton
+                  id={`ergo-q-${currentScenario.id}`}
+                  text={`${currentScenario.question[language]}. ${currentScenario.options.map((opt, i) => `Opção ${String.fromCharCode(65 + i)}: ${opt.text[language]}`).join('. ')}`}
+                  language={language}
+                  variant="icon"
+                  size="xs"
+                />
+              </div>
 
               <div className="space-y-3">
                 {currentScenario.options.map((opt, idx) => {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, AlertCircle, RefreshCw, EyeOff, Users, User, Trophy, Sparkles, ArrowRight, ShieldCheck, Mail, Send, HelpCircle } from 'lucide-react';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language } from '../../types';
 import { translations } from '../../i18n/translations';
 
@@ -192,11 +193,21 @@ export const CcBccSimulatorGame: React.FC<CcBccSimulatorGameProps> = ({ language
                 {language === 'pt' ? '🎭 O Enigma dos Destinatários: Para, Cc ou Bcc?' : '🎭 The Mystery of To, Cc, or Bcc?'}
               </h2>
             </div>
-            <div className="w-full sm:w-36 bg-white/20 rounded-full h-3 overflow-hidden p-0.5">
-              <div
-                className="bg-blue-400 h-full rounded-full transition-all duration-300"
-                style={{ width: `${((currentIdx + 1) / SCENARIOS.length) * 100}%` }}
+            <div className="flex items-center gap-3">
+              <AudioSpeakButton
+                id={`ccbcc-intro-${currentScenario.id}`}
+                text={`${currentScenario.title[language]}. ${currentScenario.description[language]}. Onde deves colocar este grupo de destinatários: Para, Cc ou Bcc?`}
+                language={language}
+                label={language === 'pt' ? 'Ouvir Caso' : 'Listen Case'}
+                variant="pill"
+                size="sm"
               />
+              <div className="w-24 sm:w-36 bg-white/20 rounded-full h-3 overflow-hidden p-0.5">
+                <div
+                  className="bg-blue-400 h-full rounded-full transition-all duration-300"
+                  style={{ width: `${((currentIdx + 1) / SCENARIOS.length) * 100}%` }}
+                />
+              </div>
             </div>
           </div>
 
@@ -221,13 +232,22 @@ export const CcBccSimulatorGame: React.FC<CcBccSimulatorGameProps> = ({ language
             {/* Email Fields */}
             <div className="p-6 space-y-4">
               {/* Context Description */}
-              <div className="p-4 rounded-2xl bg-blue-50/70 border border-blue-100 space-y-1">
-                <h3 className="text-sm font-black text-blue-950">
-                  {currentScenario.title[language]}
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-                  {currentScenario.description[language]}
-                </p>
+              <div className="p-4 rounded-2xl bg-blue-50/70 border border-blue-100 flex items-start justify-between gap-3">
+                <div className="space-y-1 flex-1">
+                  <h3 className="text-sm font-black text-blue-950">
+                    {currentScenario.title[language]}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+                    {currentScenario.description[language]}
+                  </p>
+                </div>
+                <AudioSpeakButton
+                  id={`ccbcc-desc-${currentScenario.id}`}
+                  text={`${currentScenario.title[language]}. ${currentScenario.description[language]}`}
+                  language={language}
+                  variant="icon"
+                  size="xs"
+                />
               </div>
 
               {/* Email Form Visualizer */}
@@ -326,30 +346,39 @@ export const CcBccSimulatorGame: React.FC<CcBccSimulatorGameProps> = ({ language
               {/* Feedback box */}
               {selectedField !== null && (
                 <div className="p-5 rounded-2xl bg-white border-2 border-slate-200 shadow-sm space-y-3 animate-in fade-in">
-                  <div className="flex items-start gap-2.5">
-                    {selectedField === currentScenario.correctField ? (
-                      <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                    ) : (
-                      <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
-                    )}
-                    <div className="space-y-1">
-                      <p className="font-black text-xs sm:text-sm text-slate-900">
-                        {selectedField === currentScenario.correctField
-                          ? language === 'pt'
-                            ? '🎉 Escolha Pedagógica Perfeita!'
-                            : '🎉 Perfect Choice!'
-                          : language === 'pt'
-                          ? `A opção correta seria: ${currentScenario.correctFieldName[language]}`
-                          : `The correct option was: ${currentScenario.correctFieldName[language]}`}
-                      </p>
-                      <p className="text-xs text-slate-700 leading-relaxed font-medium">
-                        {currentScenario.explanation[language]}
-                      </p>
-                      <div className="pt-2 text-[11px] font-bold text-blue-800 bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-200">
-                        💡 {language === 'pt' ? 'Efeito na Privacidade: ' : 'Privacy Effect: '}
-                        <span className="font-normal">{currentScenario.privacyEffect[language]}</span>
+                  <div className="flex items-start justify-between gap-2.5">
+                    <div className="flex items-start gap-2.5">
+                      {selectedField === currentScenario.correctField ? (
+                        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                      ) : (
+                        <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+                      )}
+                      <div className="space-y-1">
+                        <p className="font-black text-xs sm:text-sm text-slate-900">
+                          {selectedField === currentScenario.correctField
+                            ? language === 'pt'
+                              ? '🎉 Escolha Pedagógica Perfeita!'
+                              : '🎉 Perfect Choice!'
+                            : language === 'pt'
+                            ? `A opção correta seria: ${currentScenario.correctFieldName[language]}`
+                            : `The correct option was: ${currentScenario.correctFieldName[language]}`}
+                        </p>
+                        <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                          {currentScenario.explanation[language]}
+                        </p>
+                        <div className="pt-2 text-[11px] font-bold text-blue-800 bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-200">
+                          💡 {language === 'pt' ? 'Efeito na Privacidade: ' : 'Privacy Effect: '}
+                          <span className="font-normal">{currentScenario.privacyEffect[language]}</span>
+                        </div>
                       </div>
                     </div>
+                    <AudioSpeakButton
+                      id={`ccbcc-fb-${currentScenario.id}`}
+                      text={`${currentScenario.explanation[language]}. Efeito na Privacidade: ${currentScenario.privacyEffect[language]}`}
+                      language={language}
+                      variant="icon"
+                      size="xs"
+                    />
                   </div>
 
                   <div className="flex justify-end pt-2">

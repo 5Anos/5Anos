@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, ShieldCheck, Check, X, Sparkles, RefreshCw, KeyRound, AlertCircle, Trophy, ArrowRight, ShieldAlert, Lock, Zap } from 'lucide-react';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language } from '../../types';
 import { translations } from '../../i18n/translations';
 
@@ -285,13 +286,25 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
                   : 'Combine word blocks into a memorable, high-entropy passphrase that takes millions of years to crack!'}
               </p>
             </div>
-            <button
-              onClick={() => setActiveStage('dilemmas')}
-              className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs sm:text-sm shadow-md flex items-center gap-2 shrink-0 cursor-pointer transition-all hover:scale-102"
-            >
-              <span>{language === 'pt' ? 'Ir para Dilemas' : 'Next to Dilemmas'}</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-3">
+              <AudioSpeakButton
+                id="pwbuilder-phase1-intro"
+                text={language === 'pt'
+                  ? 'O Laboratório do Construtor de Frase-Passe. Combina blocos de palavras para criar uma frase-passe longa e segura!'
+                  : 'Passphrase Builder Lab. Combine word blocks to build a secure passphrase!'}
+                language={language}
+                label={language === 'pt' ? 'Ouvir Instruções' : 'Listen Instructions'}
+                variant="pill"
+                size="sm"
+              />
+              <button
+                onClick={() => setActiveStage('dilemmas')}
+                className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs sm:text-sm shadow-md flex items-center gap-2 shrink-0 cursor-pointer transition-all hover:scale-102"
+              >
+                <span>{language === 'pt' ? 'Ir para Dilemas' : 'Next to Dilemmas'}</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
           {/* Builder Sandbox */}
@@ -447,23 +460,49 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
                 {currentDilemma.title[language]}
               </h2>
             </div>
-            <div className="w-full sm:w-36 bg-white/20 rounded-full h-3 overflow-hidden p-0.5">
-              <div
-                className="bg-emerald-400 h-full rounded-full transition-all duration-300"
-                style={{ width: `${((currentDilemmaIdx + 1) / DILEMMAS.length) * 100}%` }}
+            <div className="flex items-center gap-3">
+              <AudioSpeakButton
+                id={`pwbuilder-dilemma-${currentDilemma.id}`}
+                text={`${currentDilemma.title[language]}. ${currentDilemma.situation[language]}. Pergunta: ${currentDilemma.question[language]}`}
+                language={language}
+                label={language === 'pt' ? 'Ouvir Dilema' : 'Listen Dilemma'}
+                variant="pill"
+                size="sm"
               />
+              <div className="w-24 sm:w-36 bg-white/20 rounded-full h-3 overflow-hidden p-0.5">
+                <div
+                  className="bg-emerald-400 h-full rounded-full transition-all duration-300"
+                  style={{ width: `${((currentDilemmaIdx + 1) / DILEMMAS.length) * 100}%` }}
+                />
+              </div>
             </div>
           </div>
 
           <div className="p-6 sm:p-8 rounded-3xl bg-white border border-emerald-100 shadow-md space-y-6">
-            <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100 text-sm text-slate-800 leading-relaxed font-medium">
-              {currentDilemma.situation[language]}
+            <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100 text-sm text-slate-800 leading-relaxed font-medium flex items-start justify-between gap-3">
+              <p className="flex-1">{currentDilemma.situation[language]}</p>
+              <AudioSpeakButton
+                id={`pwbuilder-sit-${currentDilemma.id}`}
+                text={currentDilemma.situation[language]}
+                language={language}
+                variant="icon"
+                size="xs"
+              />
             </div>
 
             <div>
-              <h3 className="text-base sm:text-lg font-black text-slate-900 mb-4">
-                {currentDilemma.question[language]}
-              </h3>
+              <div className="flex items-start justify-between gap-3 mb-4">
+                <h3 className="text-base sm:text-lg font-black text-slate-900 flex-1">
+                  {currentDilemma.question[language]}
+                </h3>
+                <AudioSpeakButton
+                  id={`pwbuilder-q-${currentDilemma.id}`}
+                  text={`${currentDilemma.question[language]}. ${currentDilemma.options.map((opt, i) => `Opção ${String.fromCharCode(65 + i)}: ${opt.text[language]}`).join('. ')}`}
+                  language={language}
+                  variant="icon"
+                  size="xs"
+                />
+              </div>
 
               <div className="space-y-3">
                 {currentDilemma.options.map((opt, idx) => {

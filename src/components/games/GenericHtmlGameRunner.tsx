@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, RotateCcw, ShieldCheck, Check, X, KeyRound, Delete, Sparkles } from 'lucide-react';
 import { PostureCorrectionSimulator } from '../PostureCorrectionSimulator';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language } from '../../types';
 
 interface GenericHtmlGameRunnerProps {
@@ -223,21 +224,32 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
       </button>
 
       <div className="bg-white rounded-3xl border border-slate-200 shadow-xl p-6 sm:p-8 space-y-6">
-        <div className="flex items-center gap-3.5 border-b border-slate-100 pb-5">
-          <div className="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-3xl shrink-0 shadow-inner">
-            {gameData.icon}
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
-                ⭐ +{gameData.xp} XP
-              </span>
+        <div className="flex items-center justify-between gap-3.5 border-b border-slate-100 pb-5">
+          <div className="flex items-center gap-3.5">
+            <div className="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-3xl shrink-0 shadow-inner">
+              {gameData.icon}
             </div>
-            <h2 className="text-xl sm:text-2xl font-black text-slate-900 mt-1">
-              {gameData.title}
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">{gameData.desc}</p>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                  ⭐ +{gameData.xp} XP
+                </span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 mt-1">
+                {gameData.title}
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 mt-0.5">{gameData.desc}</p>
+            </div>
           </div>
+
+          <AudioSpeakButton
+            id={`challenge-header-${gameData.title.replace(/\s+/g, '-').toLowerCase()}`}
+            text={`${gameData.title}. ${gameData.desc}`}
+            language={language}
+            label={language === 'pt' ? 'Ouvir Desafio' : 'Listen Challenge'}
+            variant="pill"
+            size="sm"
+          />
         </div>
 
         {/* 1. TRUE / FALSE */}
@@ -253,7 +265,16 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
               return (
                 <div key={i} className={`p-4 rounded-2xl border-2 transition-all space-y-3 ${statusCls}`}>
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <p className="text-sm font-bold text-slate-900 flex-1">{it.s}</p>
+                    <div className="flex items-start gap-2 flex-1">
+                      <p className="text-sm font-bold text-slate-900 flex-1">{it.s}</p>
+                      <AudioSpeakButton
+                        id={`tf-item-${i}`}
+                        text={it.s}
+                        language={language}
+                        variant="icon"
+                        size="xs"
+                      />
+                    </div>
                     <div className="flex items-center gap-2 shrink-0">
                       <button
                         onClick={() => handleTfSelect(i, true)}
@@ -280,8 +301,17 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                     </div>
                   </div>
                   {revealed && (
-                    <div className={`text-xs p-2.5 rounded-xl font-medium ${ans === it.a ? 'bg-emerald-100 text-emerald-900' : 'bg-rose-100 text-rose-900'}`}>
-                      {ans === it.a ? '✅ Correto! ' : '❌ Incorreto. '}{it.e}
+                    <div className={`text-xs p-2.5 rounded-xl font-medium flex items-start justify-between gap-2 ${ans === it.a ? 'bg-emerald-100 text-emerald-900' : 'bg-rose-100 text-rose-900'}`}>
+                      <div>
+                        {ans === it.a ? '✅ Correto! ' : '❌ Incorreto. '}{it.e}
+                      </div>
+                      <AudioSpeakButton
+                        id={`tf-feedback-${i}`}
+                        text={`${ans === it.a ? 'Correto.' : 'Incorreto.'} ${it.e}`}
+                        language={language}
+                        variant="icon"
+                        size="xs"
+                      />
                     </div>
                   )}
                 </div>
@@ -312,8 +342,17 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                 <span className="text-indigo-600">Progressão: {Math.round((mcIndex / qs.length) * 100)}%</span>
               </div>
 
-              <div className="text-base sm:text-lg font-black text-slate-900 leading-snug">
-                {q.q}
+              <div className="flex items-start justify-between gap-3">
+                <div className="text-base sm:text-lg font-black text-slate-900 leading-snug flex-1">
+                  {q.q}
+                </div>
+                <AudioSpeakButton
+                  id={`mc-q-${mcIndex}`}
+                  text={`${q.q}. ${q.opts.map((o: string, idx: number) => `Opção ${idx + 1}: ${o}`).join('. ')}`}
+                  language={language}
+                  variant="icon"
+                  size="xs"
+                />
               </div>
 
               <div className="space-y-2.5">
@@ -343,8 +382,17 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
 
               {chosen !== undefined && (
                 <div className="space-y-4 pt-2 animate-in fade-in">
-                  <div className={`p-4 rounded-2xl text-xs sm:text-sm font-medium ${chosen === q.c ? 'bg-emerald-50 border border-emerald-200 text-emerald-900' : 'bg-rose-50 border border-rose-200 text-rose-900'}`}>
-                    <strong>{chosen === q.c ? '✅ Correto!' : '❌ Não é bem assim.'}</strong> {q.e}
+                  <div className={`p-4 rounded-2xl text-xs sm:text-sm font-medium flex items-start justify-between gap-2 ${chosen === q.c ? 'bg-emerald-50 border border-emerald-200 text-emerald-900' : 'bg-rose-50 border border-rose-200 text-rose-900'}`}>
+                    <div>
+                      <strong>{chosen === q.c ? '✅ Correto!' : '❌ Não é bem assim.'}</strong> {q.e}
+                    </div>
+                    <AudioSpeakButton
+                      id={`mc-expl-${mcIndex}`}
+                      text={`${chosen === q.c ? 'Correto.' : 'Não é bem assim.'} ${q.e}`}
+                      language={language}
+                      variant="icon"
+                      size="xs"
+                    />
                   </div>
                   <button
                     onClick={handleMcNext}
@@ -361,9 +409,22 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
         {/* 3. MATCHING PAIRS */}
         {type === 'match' && !completed && (
           <div className="space-y-6">
-            <p className="text-xs sm:text-sm text-slate-600">
-              Clica num item da coluna da esquerda e, em seguida, no item correspondente da coluna da direita.
-            </p>
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-xs sm:text-sm text-slate-600">
+                {language === 'pt'
+                  ? 'Clica num item da coluna da esquerda e, em seguida, no item correspondente da coluna da direita.'
+                  : 'Click an item on the left column, then click its corresponding match on the right.'}
+              </p>
+              <AudioSpeakButton
+                id="match-instructions"
+                text={language === 'pt'
+                  ? 'Clica num item da coluna da esquerda e, em seguida, no item correspondente da coluna da direita.'
+                  : 'Click an item on the left column, then click its corresponding match on the right.'}
+                language={language}
+                variant="icon"
+                size="xs"
+              />
+            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Left Column */}
@@ -423,8 +484,23 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
         {/* 4. ORDER SEQUENCE */}
         {type === 'order' && !completed && (
           <div className="space-y-6">
+            <div className="flex items-center justify-between gap-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                {language === 'pt'
+                  ? `Passos ordenados (${orderChosen.length} / ${data.items.length})`
+                  : `Ordered steps (${orderChosen.length} / ${data.items.length})`}
+              </h4>
+              <AudioSpeakButton
+                id="order-instructions"
+                text={language === 'pt'
+                  ? 'Clica nos passos disponíveis pela ordem cronológica correta para completar a sequência.'
+                  : 'Click the available steps in correct order to complete the sequence.'}
+                language={language}
+                variant="icon"
+                size="xs"
+              />
+            </div>
             <div className="space-y-2.5">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">Passos ordenados ({orderChosen.length} / {data.items.length})</h4>
               <div className="space-y-2 min-h-[90px] p-3 rounded-2xl bg-slate-50 border border-slate-200">
                 {orderChosen.length === 0 ? (
                   <p className="text-xs text-slate-400 italic text-center py-4">Clica nos passos em baixo pela ordem correta...</p>
@@ -485,18 +561,29 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
         {(type === 'password_builder' || type === 'builder') && !completed && (
           <div className="space-y-6">
             {/* Pedagogical Note / Multiple Answers Banner */}
-            <div className="p-3.5 rounded-2xl bg-indigo-50/80 border border-indigo-200/80 text-xs text-indigo-950 flex items-start gap-2.5 shadow-2xs">
-              <Sparkles className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
-              <div>
-                <p className="font-bold text-indigo-900 mb-0.5">
-                  {language === 'pt' ? 'Múltiplas Soluções Possíveis!' : 'Multiple Valid Solutions!'}
-                </p>
-                <p className="text-indigo-800 leading-relaxed text-[11.5px]">
-                  {language === 'pt'
-                    ? 'Não existe uma resposta única pré-definida. Podes construir qualquer combinação com as opções abaixo — desde que cumpra todas as regras de segurança!'
-                    : 'There is no single predefined answer. You can create any combination with the options below as long as it satisfies all security rules!'}
-                </p>
+            <div className="p-3.5 rounded-2xl bg-indigo-50/80 border border-indigo-200/80 text-xs text-indigo-950 flex items-start justify-between gap-2.5 shadow-2xs">
+              <div className="flex items-start gap-2.5">
+                <Sparkles className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-bold text-indigo-900 mb-0.5">
+                    {language === 'pt' ? 'Múltiplas Soluções Possíveis!' : 'Multiple Valid Solutions!'}
+                  </p>
+                  <p className="text-indigo-800 leading-relaxed text-[11.5px]">
+                    {language === 'pt'
+                      ? 'Não existe uma resposta única pré-definida. Podes construir qualquer combinação com as opções abaixo — desde que cumpra todas as regras de segurança!'
+                      : 'There is no single predefined answer. You can create any combination with the options below as long as it satisfies all security rules!'}
+                  </p>
+                </div>
               </div>
+              <AudioSpeakButton
+                id="builder-guidelines"
+                text={language === 'pt'
+                  ? 'Constrói uma palavra-passe com pelo menos 8 carateres, misturando letras maiúsculas, minúsculas, números e símbolos sem dados pessoais!'
+                  : 'Build a password with at least 8 characters, combining uppercase, lowercase, numbers and symbols.'}
+                language={language}
+                variant="icon"
+                size="xs"
+              />
             </div>
 
             {/* Password Display / Workspace */}
