@@ -1881,7 +1881,8 @@ export const api = {
     forcedState?: boolean
   ): Promise<{ success: boolean; visibility: ThemeVisibilityMap }> {
     const current = await this.getThemeVisibility();
-    const nextState = forcedState !== undefined ? forcedState : !current[themeId];
+    const isCurrentlyVisible = current[themeId] !== false;
+    const nextState = forcedState !== undefined ? forcedState : !isCurrentlyVisible;
     const updated: ThemeVisibilityMap = {
       ...current,
       [themeId]: nextState,
