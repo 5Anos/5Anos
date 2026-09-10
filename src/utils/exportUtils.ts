@@ -123,14 +123,92 @@ export function getStudentThemeBreakdown(
 }
 
 /**
- * Returns qualitative evaluation descriptor based on Portuguese curriculum standards
+ * Retorna a menção qualitativa oficial para os Quizzes de Aprendizagem e Avaliações
+ * Escala Oficial:
+ * (0 a 19%) Não Satisfaz (Muito Fraco)
+ * (20% a 49%) Não Satisfaz
+ * (50% a 69%) Satisfaz
+ * (70% a 89%) Bom
+ * (90% a 100%) Muito Bom
  */
 export function getQualitativeLevel(percentage: number): string {
-  if (percentage >= 90) return 'Excelente (90-100%)';
-  if (percentage >= 70) return 'Muito Bom (70-89%)';
-  if (percentage >= 50) return 'Suficiente (50-69%)';
-  if (percentage > 0) return 'A Desenvolver (<50%)';
-  return 'Não Iniciado (0%)';
+  const p = Math.round(percentage);
+  if (p >= 90) return 'Muito Bom';
+  if (p >= 70) return 'Bom';
+  if (p >= 50) return 'Satisfaz';
+  if (p >= 20) return 'Não Satisfaz';
+  return 'Não Satisfaz (Muito Fraco)';
+}
+
+export function getQualitativeLevelWithRange(percentage: number): string {
+  const p = Math.round(percentage);
+  if (p >= 90) return 'Muito Bom (90% a 100%)';
+  if (p >= 70) return 'Bom (70% a 89%)';
+  if (p >= 50) return 'Satisfaz (50% a 69%)';
+  if (p >= 20) return 'Não Satisfaz (20% a 49%)';
+  return 'Não Satisfaz (Muito Fraco) (0 a 19%)';
+}
+
+export const getQuizMention = getQualitativeLevel;
+export const getQuizMentionWithRange = getQualitativeLevelWithRange;
+
+export function getQuizMentionBadgeStyle(percentageOrScore: number): {
+  bg: string;
+  text: string;
+  border: string;
+  pillClass: string;
+  badgeClass: string;
+  emoji: string;
+} {
+  const p = Math.round(percentageOrScore);
+  if (p >= 90) {
+    return {
+      bg: 'bg-emerald-500',
+      text: 'text-emerald-950',
+      border: 'border-emerald-300',
+      pillClass: 'bg-emerald-100 text-emerald-900 border-emerald-300',
+      badgeClass: 'bg-emerald-600 text-white',
+      emoji: '🌟',
+    };
+  }
+  if (p >= 70) {
+    return {
+      bg: 'bg-blue-500',
+      text: 'text-blue-950',
+      border: 'border-blue-300',
+      pillClass: 'bg-blue-100 text-blue-900 border-blue-300',
+      badgeClass: 'bg-blue-600 text-white',
+      emoji: '👍',
+    };
+  }
+  if (p >= 50) {
+    return {
+      bg: 'bg-teal-500',
+      text: 'text-teal-950',
+      border: 'border-teal-300',
+      pillClass: 'bg-teal-100 text-teal-900 border-teal-300',
+      badgeClass: 'bg-teal-600 text-white',
+      emoji: '✨',
+    };
+  }
+  if (p >= 20) {
+    return {
+      bg: 'bg-amber-500',
+      text: 'text-amber-950',
+      border: 'border-amber-300',
+      pillClass: 'bg-amber-100 text-amber-900 border-amber-300',
+      badgeClass: 'bg-amber-500 text-slate-950',
+      emoji: '⚠️',
+    };
+  }
+  return {
+    bg: 'bg-rose-500',
+    text: 'text-rose-950',
+    border: 'border-rose-300',
+    pillClass: 'bg-rose-100 text-rose-900 border-rose-300',
+    badgeClass: 'bg-rose-600 text-white',
+    emoji: '💪',
+  };
 }
 
 /**
@@ -181,6 +259,7 @@ export function exportThemeScoresToExcel(
       // Quiz column (1.ª tentativa oficial)
       const quizName = quizChallenge?.title?.pt || `Quiz Final Tema ${theme.number}`;
       rowObj[`Quiz Final (1.ª Tentativa - Oficial) (0-100)`] = breakdown.quiz.officialScore;
+      rowObj['Quiz Menção (1.ª Tentativa)'] = getQualitativeLevel(breakdown.quiz.officialScore);
       rowObj['Tentativas do Quiz'] = breakdown.quiz.attempts;
       rowObj['Pontuação Total Tema (0-500 XP)'] = breakdown.totalPoints;
       rowObj['Aproveitamento (%)'] = `${breakdown.percentage}%`;
@@ -200,6 +279,7 @@ export function exportThemeScoresToExcel(
       { wch: 18 }, // ID Público
       ...regularChallenges.map(() => ({ wch: 24 })), // Challenges
       { wch: 34 }, // Quiz
+      { wch: 24 }, // Quiz Menção
       { wch: 18 }, // Tentativas
       { wch: 28 }, // Total Tema
       { wch: 18 }, // %
@@ -292,6 +372,7 @@ export function exportThemeScoresToExcel(
       });
 
       rowObj[`Quiz Final (1.ª Tentativa - Oficial) (0-100)`] = breakdown.quiz.officialScore;
+      rowObj['Quiz Menção (1.ª Tentativa)'] = getQualitativeLevel(breakdown.quiz.officialScore);
       rowObj['Tentativas Quiz'] = breakdown.quiz.attempts;
       rowObj['Total Tema (0-500 XP)'] = breakdown.totalPoints;
       rowObj['Aproveitamento (%)'] = `${breakdown.percentage}%`;
@@ -308,6 +389,7 @@ export function exportThemeScoresToExcel(
       { wch: 32 },
       ...regularChallenges.map(() => ({ wch: 24 })),
       { wch: 34 },
+      { wch: 24 }, // Quiz Menção
       { wch: 16 },
       { wch: 22 },
       { wch: 18 },

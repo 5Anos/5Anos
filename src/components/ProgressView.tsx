@@ -6,6 +6,7 @@ import { BADGES } from '../data/badgesData';
 import { ALL_THEMES } from '../data/allThemesData';
 import { quizGameTrophy, boyAvatarImg, girlAvatarImg } from '../data/themeImages';
 import { resolveActivityInfo, ResolvedActivityInfo } from '../utils/activityMetadata';
+import { getQuizMention, getQuizMentionBadgeStyle } from '../utils/exportUtils';
 
 interface ProgressViewProps {
   user: User | null;
@@ -518,15 +519,15 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                               <td className="py-3 px-3 whitespace-nowrap font-black">
                                 {isFinalQuiz ? (
                                   <div>
-                                    <span className="text-amber-800 text-sm">
-                                      {officialQuizScore} / 100 XP
+                                    <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${getQuizMentionBadgeStyle(officialQuizScore).pillClass}`}>
+                                      {getQuizMention(officialQuizScore)}
                                     </span>
-                                    <span className="block text-[10px] text-slate-400 font-semibold">
-                                      {language === 'pt' ? '1.ª tentativa (Oficial)' : '1st attempt (Official)'}
+                                    <span className="block text-[10px] text-slate-400 font-semibold mt-0.5">
+                                      {language === 'pt' ? 'Menção Oficial (1.ª tentativa)' : 'Official Mention (1st attempt)'}
                                     </span>
-                                    {item.attempts > 1 && item.latestPercentage !== undefined && (
-                                      <span className="block text-[10px] text-indigo-600 font-medium">
-                                        {language === 'pt' ? `Último treino: ${item.latestPercentage}%` : `Last practice: ${item.latestPercentage}%`}
+                                    {item.attempts > 1 && (
+                                      <span className="block text-[10px] text-slate-500 font-medium">
+                                        {language === 'pt' ? `${item.attempts} treinos realizados` : `${item.attempts} practice runs`}
                                       </span>
                                     )}
                                   </div>
@@ -705,15 +706,15 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                       <td className="py-3 whitespace-nowrap font-black">
                         {isFinalQuiz ? (
                           <div>
-                            <span className="text-amber-800 text-sm">
-                              {officialQuizScore} / 100 XP
+                            <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${getQuizMentionBadgeStyle(officialQuizScore).pillClass}`}>
+                              {getQuizMention(officialQuizScore)}
                             </span>
-                            <span className="block text-[10px] text-slate-400 font-semibold">
-                              {language === 'pt' ? '1.ª tent. (Oficial)' : '1st att. (Official)'}
+                            <span className="block text-[10px] text-slate-400 font-semibold mt-0.5">
+                              {language === 'pt' ? 'Menção (1.ª tentativa)' : 'Mention (1st att.)'}
                             </span>
-                            {item.attempts > 1 && item.latestPercentage !== undefined && (
-                              <span className="block text-[10px] text-indigo-600 font-medium">
-                                {language === 'pt' ? `Treino: ${item.latestPercentage}%` : `Practice: ${item.latestPercentage}%`}
+                            {item.attempts > 1 && (
+                              <span className="block text-[10px] text-slate-500 font-medium">
+                                {language === 'pt' ? `${item.attempts} treinos` : `${item.attempts} practices`}
                               </span>
                             )}
                           </div>

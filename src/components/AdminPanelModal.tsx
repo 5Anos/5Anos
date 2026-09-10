@@ -44,6 +44,7 @@ import {
   exportStudentsToCSV,
   exportThemeScoresToExcel,
   exportThemeScoresToCSV,
+  exportDailyTipsScoresToExcel,
   getStudentThemeBreakdown,
   getQualitativeLevel,
 } from '../utils/exportUtils';
@@ -598,11 +599,34 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
     }
   };
 
+  const handleExportDailyTipsXLS = async () => {
+    if (filteredStudents.length === 0) return;
+    let currentMap = progressMap;
+    if (Object.keys(currentMap).length === 0 && students.length > 0) {
+      setLoadingProgress(true);
+      try {
+        currentMap = await api.getStudentsProgressBatch(students.map((s) => s.id));
+        setProgressMap(currentMap);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoadingProgress(false);
+      }
+    }
+    exportDailyTipsScoresToExcel(filteredStudents, currentMap, selectedTurma);
+    showToast(
+      'success',
+      language === 'pt'
+        ? 'Pauta de Dicas Diárias TIC e Bónus exportada com sucesso em XLS!'
+        : 'Daily Tips & Bonus scores exported to XLS!'
+    );
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
       <div
         id="admin-panel-modal-card"
-        className="relative w-full max-w-6xl max-h-[94vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+        className="relative w-full max-w-6xl h-[92vh] max-h-[95vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200"
       >
         {/* Modal Header */}
         <div className="p-4 sm:p-6 bg-linear-to-r from-indigo-900 via-indigo-850 to-slate-900 text-white flex items-center justify-between border-b border-indigo-800/60 shrink-0">
@@ -860,6 +884,17 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                     <span>XLS</span>
                   </button>
 
+                  {/* Export Dicas Diárias XLS */}
+                  <button
+                    onClick={handleExportDailyTipsXLS}
+                    disabled={filteredStudents.length === 0}
+                    className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shrink-0"
+                    title="Exportar pauta detalhada de participação e pontuações nas Dicas Diárias TIC (.xlsx)"
+                  >
+                    <Sparkles className="w-4 h-4 text-amber-100" />
+                    <span>{language === 'pt' ? '💡 Dicas do Dia (XLS)' : '💡 Daily Tips (XLS)'}</span>
+                  </button>
+
                   {/* Export CSV */}
                   <button
                     onClick={handleExportCSV}
@@ -917,8 +952,8 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
               </div>
             </div>
 
-            {/* Students Table */}
-            <div className="flex-1 overflow-x-auto overflow-y-auto p-4 sm:p-6 min-h-[260px]">
+            {/* Students Table with visible vertical scrollbar (barra lateral) */}
+            <div className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 custom-scrollbar flex flex-col">
               {loading ? (
                 <div className="py-20 text-center">
                   <RefreshCw className="w-8 h-8 text-indigo-600 animate-spin mx-auto mb-3" />
@@ -937,9 +972,10 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                   </p>
                 </div>
               ) : (
-                <div className="border border-slate-200 rounded-2xl overflow-hidden shadow-2xs">
-                  <table className="w-full text-left text-xs sm:text-sm">
-                    <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200 uppercase tracking-wider text-[11px]">
+                <div className="flex flex-col border border-slate-200 rounded-2xl overflow-hidden shadow-2xs bg-white">
+                  <div className="overflow-x-auto overflow-y-auto max-h-[50vh] sm:max-h-[56vh] custom-scrollbar">
+                    <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                      <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200 uppercase tracking-wider text-[11px] sticky top-0 z-20 shadow-xs">
                       <tr>
                         <th className="py-3 px-3 w-10 text-center">
                           <button
@@ -1047,7 +1083,21 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                         );
                       })}
                     </tbody>
-                  </table>
+                    </table>
+                  </div>
+                  <div className="p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 shrink-0">
+                    <span className="flex items-center gap-1.5 font-medium">
+                      <span>↕️</span>
+                      <span>
+                        {language === 'pt'
+                          ? `A mostrar ${filteredStudents.length} aluno(s). Utiliza a barra lateral à direita para ver todos.`
+                          : `Showing ${filteredStudents.length} student(s). Use the right sidebar/scrollbar to browse.`}
+                      </span>
+                    </span>
+                    <span className="text-slate-400 font-semibold">
+                      {selectedTurma === 'all' ? 'Todas as Turmas' : selectedTurma}
+                    </span>
+                  </div>
                 </div>
               )}
             </div>
@@ -1127,6 +1177,16 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                     <span className="hidden sm:inline">
                       {language === 'pt' ? 'Caderno Completo (7 Temas XLS)' : 'Master Workbook (7 Themes)'}
                     </span>
+                  </button>
+
+                  <button
+                    onClick={handleExportDailyTipsXLS}
+                    disabled={filteredStudents.length === 0}
+                    className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shrink-0"
+                    title="Exportar pauta detalhada de participação e pontuações nas Dicas Diárias TIC (.xlsx)"
+                  >
+                    <Sparkles className="w-4 h-4 text-amber-100" />
+                    <span>{language === 'pt' ? '💡 Dicas do Dia (XLS)' : '💡 Daily Tips (XLS)'}</span>
                   </button>
 
                   <button
@@ -1222,7 +1282,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
             </div>
 
             {/* Table Area */}
-            <div className="flex-1 overflow-y-auto p-4 sm:p-5">
+            <div className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-5 custom-scrollbar flex flex-col">
               {loadingProgress && Object.keys(progressMap).length === 0 ? (
                 <div className="p-12 text-center text-slate-500 flex flex-col items-center justify-center gap-3">
                   <RefreshCw className="w-8 h-8 animate-spin text-emerald-600" />
@@ -1254,8 +1314,8 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                   const regularChallenges = currentTheme.challenges.filter((c) => c.type !== 'final_quiz');
 
                   return (
-                    <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
-                      <div className="p-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2 flex-wrap">
+                    <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden flex flex-col">
+                      <div className="p-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2 flex-wrap shrink-0">
                         <div className="flex items-center gap-2">
                           <span className="w-6 h-6 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center">
                             {currentTheme.number}
@@ -1264,16 +1324,16 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                             {currentTheme.title.pt}
                           </h4>
                         </div>
-                        <div className="text-xs text-slate-500">
+                        <div className="text-xs text-slate-500 font-semibold">
                           {language === 'pt'
                             ? `A mostrar ${filteredStudents.length} aluno(s) • ${selectedTurma === 'all' ? 'Todas as Turmas' : selectedTurma}`
                             : `Showing ${filteredStudents.length} student(s)`}
                         </div>
                       </div>
 
-                      <div className="overflow-x-auto">
+                      <div className="overflow-x-auto overflow-y-auto max-h-[50vh] sm:max-h-[56vh] custom-scrollbar">
                         <table className="w-full text-left text-sm border-collapse">
-                          <thead className="bg-slate-100/90 text-slate-700 text-xs font-bold uppercase tracking-wider border-b border-slate-200 sticky top-0 z-10">
+                          <thead className="bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider border-b border-slate-200 sticky top-0 z-20 shadow-xs">
                             <tr>
                               <th className="py-3 px-3 w-12 text-center">N.º</th>
                               <th className="py-3 px-3 w-20">Turma</th>
@@ -1363,7 +1423,10 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                         >
                                           {breakdown.quiz.officialScore} / 100
                                         </span>
-                                        <span className="text-[10px] text-slate-500 font-semibold mt-0.5">
+                                        <span className="text-[10px] text-emerald-800 font-bold mt-0.5">
+                                          {getQualitativeLevel(breakdown.quiz.officialScore)}
+                                        </span>
+                                        <span className="text-[9px] text-slate-400 font-medium">
                                           {breakdown.quiz.attempts} {breakdown.quiz.attempts === 1 ? 'tentativa' : 'tentativas'}
                                         </span>
                                       </div>
@@ -1404,7 +1467,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                     </div>
                                   </td>
 
-                                  {/* Action */}
+                                   {/* Action */}
                                   <td className="py-2.5 px-3 text-center whitespace-nowrap">
                                     <button
                                       onClick={() => setDetailStudent(student)}
@@ -1420,31 +1483,42 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                           </tbody>
                         </table>
                       </div>
+                      <div className="p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 shrink-0">
+                        <span className="flex items-center gap-1.5 font-medium">
+                          <span>↕️</span>
+                          <span>
+                            {language === 'pt'
+                              ? `A mostrar ${filteredStudents.length} aluno(s). Utiliza a barra lateral à direita para percorrer todos os alunos.`
+                              : `Showing ${filteredStudents.length} student(s). Use the right scrollbar to view all.`}
+                          </span>
+                        </span>
+                        <span className="font-semibold text-emerald-700">Tema {currentTheme.number}: {currentTheme.title.pt}</span>
+                      </div>
                     </div>
                   );
                 })()
               ) : (
                 // ALL THEMES OVERVIEW TABLE
-                <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
-                  <div className="p-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2 flex-wrap">
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden flex flex-col">
+                  <div className="p-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2 flex-wrap shrink-0">
                     <div className="flex items-center gap-2">
                       <span className="w-6 h-6 rounded-lg bg-indigo-600 text-white font-black text-xs flex items-center justify-center">
                         🌐
                       </span>
                       <h4 className="font-bold text-slate-800 text-sm">
                         {language === 'pt'
-                          ? 'Pauta Global: Pontuação Consolidada dos 7 Temas'
-                          : 'Consolidated Scores across all 7 Themes'}
+                          ? 'Pauta Global: Pontuação Consolidada dos 7 Temas & Dicas Diárias'
+                          : 'Consolidated Scores across all 7 Themes & Daily Tips'}
                       </h4>
                     </div>
                     <div className="text-xs text-slate-500 font-semibold">
-                      {language === 'pt' ? 'Total Máximo: 3500 XP' : 'Maximum XP: 3500 XP'}
+                      {language === 'pt' ? 'Total Curricular: 3500 XP' : 'Curricular Max: 3500 XP'}
                     </div>
                   </div>
 
-                  <div className="overflow-x-auto">
+                  <div className="overflow-x-auto overflow-y-auto max-h-[50vh] sm:max-h-[56vh] custom-scrollbar">
                     <table className="w-full text-left text-sm border-collapse">
-                      <thead className="bg-slate-100/90 text-slate-700 text-xs font-bold uppercase tracking-wider border-b border-slate-200 sticky top-0 z-10">
+                      <thead className="bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider border-b border-slate-200 sticky top-0 z-20 shadow-xs">
                         <tr>
                           <th className="py-3 px-3 w-12 text-center">N.º</th>
                           <th className="py-3 px-3 w-20">Turma</th>
@@ -1457,8 +1531,19 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                             </th>
                           ))}
                           <th className="py-3 px-3 text-right min-w-[120px]">
-                            <div className="font-bold">Total Geral</div>
+                            <div className="font-bold">Total Temas</div>
                             <div className="text-[10px] text-slate-500 font-normal">/ 3500 XP</div>
+                          </th>
+                          <th className="py-3 px-3 text-center min-w-[120px]" title="Pontos obtidos em Dicas Diárias TIC e Bónus">
+                            <div className="font-bold text-amber-700 flex items-center justify-center gap-1">
+                              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                              <span>Dicas & Bónus</span>
+                            </div>
+                            <div className="text-[10px] text-amber-600 font-normal">Diárias XP</div>
+                          </th>
+                          <th className="py-3 px-3 text-right min-w-[120px]">
+                            <div className="font-bold text-indigo-900">Total Global</div>
+                            <div className="text-[10px] text-indigo-700 font-normal">Pontuação Total</div>
                           </th>
                           <th className="py-3 px-3 text-center min-w-[100px]">Média</th>
                           <th className="py-3 px-3 text-center w-24">Ações</th>
@@ -1468,6 +1553,13 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                         {filteredStudents.map((student, idx) => {
                           const sProgress = progressMap[student.id] || progressMap[student.email] || [];
                           let totalSum = 0;
+
+                          ALL_THEMES.forEach((theme) => {
+                            const b = getStudentThemeBreakdown(student, sProgress, theme);
+                            totalSum += b.totalPoints;
+                          });
+
+                          const tipsAndBonusXP = Math.max(0, (student.points ?? 0) - totalSum);
 
                           return (
                             <tr key={student.id || student.email} className="hover:bg-slate-50/80 transition-colors">
@@ -1490,7 +1582,6 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                               {/* Themes 1 to 7 */}
                               {ALL_THEMES.map((theme) => {
                                 const b = getStudentThemeBreakdown(student, sProgress, theme);
-                                totalSum += b.totalPoints;
                                 return (
                                   <td key={theme.id} className="py-2.5 px-2 text-center whitespace-nowrap">
                                     <span
@@ -1510,10 +1601,26 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                 );
                               })}
 
-                              {/* Total Geral */}
+                              {/* Total Temas Curriculares */}
+                              <td className="py-2.5 px-3 text-right whitespace-nowrap">
+                                <span className="font-bold text-slate-800 text-sm">
+                                  {totalSum} XP
+                                </span>
+                              </td>
+
+                              {/* Dicas Diárias & Bónus */}
+                              <td className="py-2.5 px-3 text-center whitespace-nowrap">
+                                <span className={`inline-block px-2 py-0.5 rounded-lg text-xs font-bold ${
+                                  tipsAndBonusXP > 0 ? 'bg-amber-100 text-amber-900 border border-amber-200' : 'text-slate-300'
+                                }`}>
+                                  {tipsAndBonusXP > 0 ? `+${tipsAndBonusXP} XP` : '0 XP'}
+                                </span>
+                              </td>
+
+                              {/* Total Global */}
                               <td className="py-2.5 px-3 text-right whitespace-nowrap">
                                 <span className="font-black text-indigo-700 text-sm">
-                                  {totalSum} XP
+                                  {student.points ?? 0} XP
                                 </span>
                               </td>
 
@@ -1554,6 +1661,17 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                         })}
                       </tbody>
                     </table>
+                  </div>
+                  <div className="p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 shrink-0">
+                    <span className="flex items-center gap-1.5 font-medium">
+                      <span>↕️</span>
+                      <span>
+                        {language === 'pt'
+                          ? `A mostrar ${filteredStudents.length} aluno(s). Utiliza a barra lateral à direita para ver todas as pontuações.`
+                          : `Showing ${filteredStudents.length} student(s). Use the right scrollbar to view all.`}
+                      </span>
+                    </span>
+                    <span className="font-semibold text-indigo-700">7 Temas Curriculares + Dicas Diárias</span>
                   </div>
                 </div>
               )}
@@ -2445,6 +2563,9 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                         <div className="flex items-center gap-1.5 font-bold">
                           <span className="px-2.5 py-1 rounded-lg bg-emerald-600 text-white shadow-xs">
                             {breakdown.quiz.officialScore} / 100
+                          </span>
+                          <span className="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-900 border border-emerald-300 text-xs font-bold">
+                            {getQualitativeLevel(breakdown.quiz.officialScore)}
                           </span>
                         </div>
                       </div>
