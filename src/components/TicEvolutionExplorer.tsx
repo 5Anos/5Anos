@@ -84,7 +84,7 @@ const CAREERS = [
   {
     title: { pt: 'Programador de Aplicações', en: 'App Developer' },
     icon: '💻',
-    desc: { pt: 'Cria jogos, programas e plataformas educativas que usamos todos os dias.', en: 'Builds games, apps, and learning platforms used every day.' },
+    desc: { pt: 'Cria jogos, programas e plataformas educativas que usamos todos os dias.', en: 'Builds games, aplicações, and learning platforms used every day.' },
   },
   {
     title: { pt: 'Especialista em Cibersegurança', en: 'Cybersecurity Defender' },

@@ -99,7 +99,7 @@ export const themeNavegarInternetData: ThemeDefinition = {
           en: 'The teacher asked students to open "https://area.escola.pt". Diogo typed the URL straight into the top Address Bar and saved it to Bookmarks with a star to access it with a single click.',
         },
         tip: {
-          pt: 'Escrever o endereço direto na barra de navegação é mais rápido e seguro do que pesquisar em motores de busca.',
+          pt: 'Escrever diretamente um endereço que conheces pode ser mais rápido e pode ajudar-te a evitar resultados de pesquisa falsos ou enganadores.',
           en: 'Typing the direct address into the browser bar is faster and avoids misleading search links.',
         },
       },
@@ -257,7 +257,7 @@ export const themeNavegarInternetData: ThemeDefinition = {
         pt: [
           'Anúncios de Falsos Prémios: janelas a dizer "Ganhaste um telemóvel!" ou "Ganhaste 1000 euros!" são 100% falsas (scams). Fecha logo a janela e nunca dês dados.',
           'Passar o rato por cima do link: antes de clicares num link, passa o cursor por cima sem carregar. No canto inferior do ecrã podes ver a morada verdadeira para onde ele vai!',
-          'Downloads e Ficheiros Executáveis (.exe): nunca faças download de ficheiros executáveis enviados por desconhecidos, pois podem instalar vírus.',
+          'Ficheiros Executáveis (.exe): não descarregues nem abras ficheiros executáveis (.exe) recebidos de fontes desconhecidas, porque podem conter software malicioso.',
           'Phishing: mensagens ou páginas falsas que tentam enganar-te para roubar palavras-passe ou informações pessoais.',
           'Se vires algo desagradável ou assustador: fecha a página imediatamente e conta logo a um adulto de confiança (pais ou professor).',
         ],

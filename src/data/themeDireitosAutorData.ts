@@ -170,10 +170,10 @@ export const themeDireitosAutorData: ThemeDefinition = {
       explanation: {
         pt: [
           'Copyright: Protege a obra intelectual original. O símbolo © não cria o direito e não significa necessariamente que o autor detenha pessoalmente todos os direitos. A utilização requer autorização prévia, salvo exceções legais.',
-          'Copyleft: Princípio de licenciamento (um conjunto de regras e permissões dadas pelo autor) que permite usar, modificar e partilhar uma obra, desde que as novas versões sejam partilhadas com as mesmas regras e liberdades.',
+          'Copyleft é um princípio de licenciamento que permite utilizar e modificar uma obra, mantendo determinadas liberdades nas versões modificadas.',
           'Royalty Free: Modalidade onde a obra pode ser utilizada sem pagar por cada utilização, mediante o cumprimento dos termos da licença.',
           'Creative Commons (CC): Licenças que permitem partilhar e utilizar obras, mas o utilizador deve sempre respeitar as condições definidas pelo autor (como dar crédito BY, não uso comercial NC, partilha com mesma licença SA ou sem alterações ND).',
-          'Domínio Público: Quando os direitos patrimoniais de uma obra expiram (normalmente muitos anos após a morte do autor), a obra passa ao Domínio Público e pode ser usada por todos, mantendo-se a obrigação de respeitar a autoria e o nome do autor original.',
+          'Domínio Público: Quando os direitos patrimoniais de uma obra expiram (normalmente muitos anos após a morte do autor), a obra passa ao Domínio Público e pode, em geral, ser utilizada e partilhada sem pedir autorização por direitos de autor, mantendo-se a obrigação de respeitar a autoria e o nome do autor original.',
         ],
         en: [
           'Copyright: Protects original works; rights exist upon creation. Use typically requires permission subject to statutory exceptions.',
@@ -198,7 +198,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'As licenças Creative Commons permitem combinar os 4 símbolos (BY, NC, SA, ND) para criar exatamente 6 licenças oficiais diferentes!',
+        pt: 'As licenças Creative Commons utilizam diferentes condições de utilização, como indicar o autor (BY), não permitir usos comerciais (NC), exigir a partilha com a mesma licença (SA) ou não permitir alterações (ND). Existem seis licenças principais.',
         en: 'Creative Commons combines the 4 conditions into exactly 6 official licenses!',
       },
       thinkAboutIt: {
@@ -771,7 +771,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Significa "Todos os direitos reservados" e que a obra está protegida por lei',
+          'Indica que a obra está protegida por direitos de autor',
           'Significa que a imagem é gratuita e pode ser vendida por qualquer pessoa',
           'Significa que o ficheiro contém um erro e não pode ser aberto',
           'Significa que o computador está sem ligação à Internet',
@@ -785,7 +785,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'O símbolo © indica que o autor detém todos os direitos e é necessária autorização para utilizar a obra.',
+        pt: 'O símbolo © pode indicar que uma obra está protegida por direitos de autor. A proteção existe mesmo quando o símbolo não aparece.',
         en: 'The © symbol means all rights are reserved by the original creator.',
       },
     },
@@ -837,7 +837,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Bancos de recursos livres como Wikimedia Commons, Pixabay e Freesound oferecem conteúdos seguros e autorizados para trabalhos escolares.',
+        pt: 'Sites como Wikimedia Commons, Pixabay e Freesound disponibilizam muitos recursos com diferentes licenças. Antes de utilizares um recurso, verifica sempre a licença e as condições de utilização desse recurso.',
         en: 'Free repositories like Wikimedia Commons, Pixabay, and Freesound provide legal and safe media assets.',
       },
     },

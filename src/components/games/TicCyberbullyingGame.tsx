@@ -50,7 +50,7 @@ const FIVE_STEPS: StepInfo[] = [
     title: { pt: '3. BLOQUEAR', en: '3. BLOCK' },
     action: {
       pt: 'Depois de guardar as provas, bloquear o contacto nas redes sociais, jogos ou aplicações de mensagens.',
-      en: 'After saving evidence, block the sender on social platforms, games, or chat apps.',
+      en: 'After saving evidence, block the sender on social platforms, games, or chat aplicações.',
     },
     why: {
       pt: 'Impede que o agressor continue a enviar novas mensagens ou a contactar-te.',
@@ -63,7 +63,7 @@ const FIVE_STEPS: StepInfo[] = [
     title: { pt: '4. DENUNCIAR', en: '4. REPORT' },
     action: {
       pt: 'Utilizar as ferramentas oficiais de denúncia dentro da plataforma ou jogo.',
-      en: 'Use official report buttons built into apps and games.',
+      en: 'Use official report buttons built into aplicações and games.',
     },
     why: {
       pt: 'Os moderadores das plataformas podem suspender a conta do agressor e remover os conteúdos ofensivos.',

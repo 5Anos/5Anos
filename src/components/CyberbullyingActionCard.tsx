@@ -108,7 +108,7 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
           </div>
           <AudioSpeakButton
             id="cyberbullying-scenario"
-            text={`${scenarioQuestion}. Opção A: Responder com outra ofensa no chat. Opção B: Não responder, guardar printscreen e bloquear.`}
+            text={`${scenarioQuestion}. Opção A: Responder com outra ofensa no chat. Opção B: Não responder, guardar captura de ecrã e bloquear.`}
             language={language}
             variant="icon"
             size="xs"
@@ -135,7 +135,7 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
               testAnswer === 1 ? 'bg-emerald-100 border-emerald-400 text-emerald-950' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
             }`}
           >
-            B) Não responder, guardar printscreen e bloquear
+            B) Não responder, guardar captura de ecrã e bloquear
           </button>
         </div>
 

@@ -42,7 +42,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
       eyebrow: { pt: 'História e Evolução', en: 'History & Evolution' },
       h: { pt: 'Do ENIAC de 1946 aos supercomputadores e profissões digitais', en: 'From 1946 ENIAC to supercomputers & ICT careers' },
       body: {
-        pt: '• <strong>ENIAC (1946):</strong> Um dos primeiros computadores do mundo, ocupava uma sala inteira de 160 metros quadrados!<br>• <strong>Supercomputadores:</strong> Máquinas gigantes que realizam biliões de cálculos por segundo para a investigação e meteorologia.<br>• <strong>Profissões TIC:</strong> Programadores de aplicações (apps), especialistas em cibersegurança, designers web e engenheiros de robótica.',
+        pt: '• <strong>ENIAC (1946):</strong> Um dos primeiros computadores do mundo, ocupava uma sala inteira de 160 metros quadrados!<br>• <strong>Supercomputadores:</strong> Máquinas gigantes que realizam biliões de cálculos por segundo para a investigação e meteorologia.<br>• <strong>Profissões TIC:</strong> Programadores de aplicações (aplicações), especialistas em cibersegurança, designers web e engenheiros de robótica.',
         en: '• <strong>ENIAC (1946):</strong> One of the first computers, occupying an entire 160 m² room!<br>• <strong>Supercomputers:</strong> Processing trillions of calculations per second for science.<br>• <strong>ICT Careers:</strong> App developers, cybersecurity defenders, web designers, and robotics engineers.',
       },
       icon: '⚡',
@@ -51,7 +51,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
       eyebrow: { pt: 'Cidadania e Segurança', en: 'Citizenship & Safety' },
       h: { pt: 'Cyberbullying, Linha 800 21 90 90 e Ponto Eletrão', en: 'Cyberbullying, Helpline 800 21 90 90 & E-Waste' },
       body: {
-        pt: '🛡️ <strong>Regra dos 5 Passos contra o Cyberbullying:</strong><br>1. 🛑 <strong>PARAR</strong> (não responder com insultos)<br>2. 📸 <strong>GUARDAR</strong> (fazer capturas de ecrã como prova)<br>3. 🚫 <strong>BLOQUEAR</strong> o contacto<br>4. 🚩 <strong>DENUNCIAR</strong> na plataforma<br>5. 🧑‍🏫 <strong>PEDIR AJUDA</strong> a pais, professores ou ligar para a <em>Linha Internet Segura (800 21 90 90 - Gratuita e Confidencial)</em>.<br><br>♻️ <strong>Lixo Eletrónico:</strong> Aparelhos avariados e pilhas devem ser colocados no <em>Ponto Eletrão</em>, nunca no lixo comum!',
+        pt: '🛡️ <strong>Regra dos 5 Passos contra o Cyberbullying:</strong><br>1. 🛑 <strong>PARAR</strong> (não responder com insultos)<br>2. 📸 <strong>GUARDAR</strong> (fazer capturas de ecrã como prova)<br>3. 🚫 <strong>BLOQUEAR</strong> o contacto<br>4. 🚩 <strong>DENUNCIAR</strong> na plataforma<br>5. 🧑‍🏫 <strong>PEDIR AJUDA</strong> a pais, professores ou ligar para a <em>Linha Internet Segura (800 21 90 90 - Gratuita e Confidencial)</em>.<br><br>♻️ <strong>Lixo Eletrónico:</strong> Entrega equipamentos elétricos e eletrónicos e pilhas nos pontos de recolha adequados. Em Portugal, existem redes de recolha como o Ponto Eletrão.!',
         en: '🛡️ <strong>5-Step Rule Against Cyberbullying:</strong><br>1. 🛑 <strong>STOP</strong><br>2. 📸 <strong>SAVE</strong> evidence<br>3. 🚫 <strong>BLOCK</strong> sender<br>4. 🚩 <strong>REPORT</strong><br>5. 🧑‍🏫 <strong>SEEK HELP</strong> from trusted adults or call the <em>Safe Internet Helpline (800 21 90 90 - Free & Confidential)</em>.<br><br>♻️ <strong>E-Waste:</strong> Deliver broken electronics to <em>Ponto Eletrão</em> recycling points!',
       },
       icon: '🛡️',

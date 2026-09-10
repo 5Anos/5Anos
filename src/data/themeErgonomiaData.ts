@@ -122,7 +122,7 @@ export const themeErgonomiaData: ThemeDefinition = {
           en: 'Think about blood circulation and pelvis alignment.',
         },
         reflection: {
-          pt: 'Cruzar as pernas ou sentar sobre um pé desvia a coluna para o lado (postura assimétrica) e dificulta a circulação sanguínea, provocando formigueiro e dormência nas pernas.',
+          pt: 'Cruzar as pernas ou sentar sobre um pé durante muito tempo pode deixar o corpo numa posição assimétrica e causar desconforto. É preferível manter os pés apoiados e mudar de posição regularmente.',
           en: 'Crossing legs twists the pelvis and spine while hindering blood flow, causing numbness and tingling in your legs.',
         },
       },
@@ -300,7 +300,7 @@ export const themeErgonomiaData: ThemeDefinition = {
           en: 'Think of thumbs, wrists, and your tilted neck.',
         },
         reflection: {
-          pt: 'Os polegares (pelo movimento repetitivo), os pulsos e a nuca vão ficar doridos e tensos. Fazer pausas frequentes previne essas lesões!',
+          pt: 'Os polegares (pelo movimento repetitivo), os pulsos e a nuca vão ficar doridos e tensos. Fazer pausas regulares pode ajudar a reduzir o desconforto e a fadiga.',
           en: 'Your thumbs, wrists, and neck muscles get fatigued from repetitive strain. Frequent micro-breaks prevent injury!',
         },
       },
@@ -505,12 +505,12 @@ export const themeErgonomiaData: ThemeDefinition = {
           'Organize the workspace, chair, and body posture to study comfortably and protect health',
           'Increase computer processor speed to download games faster',
           'Buy the most expensive and colorful accessories from tech stores',
-          'Program digital apps and games without needing to take breaks',
+          'Program digital aplicações and games without needing to take breaks',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'A Ergonomia ajuda-nos a adaptar os equipamentos e a posição do nosso corpo para evitar dores, cansaço e lesões.',
+        pt: 'A ergonomia ajuda-nos a adaptar o espaço, os equipamentos e a posição do corpo para trabalhar com mais conforto e reduzir o risco de desconforto e lesões.',
         en: 'Ergonomics helps adapt equipment and body posture to prevent pain, fatigue, and injury.',
       },
       optionExplanations: {

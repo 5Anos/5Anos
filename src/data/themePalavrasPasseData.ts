@@ -164,7 +164,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
           'A regra fundamental: não partilhes as tuas palavras-passe com amigos ou colegas. Se precisares de ajuda com uma conta, pede apoio aos teus pais ou encarregados de educação ou ao teu professor!',
           'Nunca apontar em papéis colados no monitor (post-its): qualquer pessoa que passe pela tua secretária pode ver a tua palavra-passe.',
           'Palavras-passe diferentes para contas diferentes: se usares a mesma palavra-passe no jogo e no teu email escolar, se o jogo sofrer um ataque, o invasor poderá aceder a outras contas.',
-          'Autenticação de Dois Fatores (2FA) ou Confirmação Suplementar: funciona como uma fechadura dupla! Além de saberes a tua palavra-passe normal, precisas de uma confirmação extra ou "suplementar" (como um código secreto temporário enviado para o telemóvel ou gerado por uma aplicação segura). Assim, mesmo que alguém descubra a tua palavra-passe, não consegue entrar na tua conta porque não tem essa segunda confirmação extra.',
+          'Autenticação de Dois Fatores (2FA) ou Confirmação Suplementar: funciona como uma fechadura dupla! Além de saberes a tua palavra-passe normal, precisas de uma confirmação extra ou "suplementar" (como um código secreto temporário enviado para o telemóvel ou gerado por uma aplicação segura). Assim, mesmo que alguém descubra a tua palavra-passe, o segundo fator acrescenta uma camada extra de proteção e torna mais difícil entrar na tua conta.',
         ],
         en: [
           'The golden rule: do not share passwords with classmates or friends. If you need help with an account, ask your parents or your teacher!',
