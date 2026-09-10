@@ -36,8 +36,8 @@ import {
   ListOrdered,
   ExternalLink,
 } from 'lucide-react';
-import { User, Language, ThemeVisibilityMap, ActivityProgress } from '../types';
-import { api, isUserAdmin, DEFAULT_THEME_VISIBILITY } from '../services/api';
+import { User, Language, ThemeVisibilityMap, QuizVisibilityMap, ActivityProgress } from '../types';
+import { api, isUserAdmin, DEFAULT_THEME_VISIBILITY, DEFAULT_QUIZ_VISIBILITY } from '../services/api';
 import { getTurmasList } from '../data/turmasData';
 import {
   exportStudentsToExcel,
@@ -93,6 +93,10 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   // Theme Visibility State
   const [themeVisibility, setThemeVisibility] = useState<ThemeVisibilityMap>(DEFAULT_THEME_VISIBILITY);
   const [togglingThemeId, setTogglingThemeId] = useState<string | null>(null);
+
+  // Quiz Visibility State
+  const [quizVisibility, setQuizVisibility] = useState<QuizVisibilityMap>(DEFAULT_QUIZ_VISIBILITY);
+  const [togglingQuizId, setTogglingQuizId] = useState<string | null>(null);
 
   // Turmas local list state (for reactive updates upon creation/deletion)
   const [turmasList, setTurmasList] = useState<string[]>([]);
@@ -185,6 +189,58 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       setThemeVisibility(map);
     } catch (err) {
       console.error('Failed to load theme visibility:', err);
+    }
+
+    try {
+      const qMap = await api.getQuizVisibility();
+      setQuizVisibility(qMap);
+    } catch (err) {
+      console.error('Failed to load quiz visibility:', err);
+    }
+  };
+
+  const handleToggleQuiz = async (themeId: string, currentVal: boolean) => {
+    setTogglingQuizId(themeId);
+    const nextVal = !currentVal;
+    const nextMap: QuizVisibilityMap = { ...quizVisibility, [themeId]: nextVal };
+    setQuizVisibility(nextMap);
+
+    const themeObj = ALL_THEMES.find((t) => t.id === themeId);
+    const themeName = themeObj ? `Tema ${themeObj.number}: ${themeObj.title.pt}` : themeId;
+
+    try {
+      await api.saveQuizVisibility(nextMap);
+      showToast(
+        'success',
+        nextVal
+          ? (language === 'pt' ? `🏆 Quiz do ${themeName} agora VISÍVEL para alunos!` : `🏆 Quiz of ${themeName} is now VISIBLE to students!`)
+          : (language === 'pt' ? `🔒 Quiz do ${themeName} agora OCULTO para alunos.` : `🔒 Quiz of ${themeName} is now HIDDEN for students.`)
+      );
+    } catch (err: any) {
+      showToast('error', err?.message || 'Erro ao atualizar visibilidade do quiz.');
+      setQuizVisibility(quizVisibility);
+    } finally {
+      setTogglingQuizId(null);
+    }
+  };
+
+  const handleSetAllQuizzes = async (visible: boolean) => {
+    const nextMap: QuizVisibilityMap = {};
+    ALL_THEMES.forEach((t) => {
+      nextMap[t.id] = visible;
+    });
+    setQuizVisibility(nextMap);
+
+    try {
+      await api.saveQuizVisibility(nextMap);
+      showToast(
+        'success',
+        visible
+          ? (language === 'pt' ? '🌟 Quizzes de Aprendizagem de TODOS os temas tornados VISÍVEIS!' : '🌟 Quizzes for ALL themes are now visible!')
+          : (language === 'pt' ? '🔒 Quizzes de Aprendizagem de todos os temas OCULTADOS aos alunos.' : '🔒 Quizzes for all themes hidden.')
+      );
+    } catch (err: any) {
+      showToast('error', err?.message || 'Erro ao atualizar visibilidade dos quizzes.');
     }
   };
 
@@ -1874,29 +1930,34 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                 </div>
               </div>
 
+              {/* Theme Presets */}
               <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs text-slate-500 font-bold mr-1">
+                  {language === 'pt' ? 'Temas:' : 'Themes:'}
+                </span>
+
                 <button
                   type="button"
                   onClick={() => handleSetAllThemes(true)}
-                  className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
                   <Eye className="w-3.5 h-3.5" />
-                  <span>{language === 'pt' ? '🌟 Desbloquear Todos (7 Temas)' : 'Unlock All (7 Themes)'}</span>
+                  <span>{language === 'pt' ? '🌟 Desbloquear Todos os Temas' : 'Unlock All Themes'}</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => handleSetThemesUpTo(1)}
-                  className="px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
                   <Lock className="w-3.5 h-3.5 text-amber-600" />
-                  <span>{language === 'pt' ? '🔒 Apenas Tema 1 (Início de Ano)' : 'Only Theme 1 (Start of Year)'}</span>
+                  <span>{language === 'pt' ? '🔒 Apenas Tema 1' : 'Only Theme 1'}</span>
                 </button>
 
-                <div className="h-6 w-px bg-slate-200 hidden sm:block mx-1" />
+                <div className="h-5 w-px bg-slate-200 hidden sm:block mx-1" />
 
                 <span className="text-xs text-slate-500 font-medium">
-                  {language === 'pt' ? 'Desbloquear até ao:' : 'Unlock up to:'}
+                  {language === 'pt' ? 'Até ao:' : 'Up to:'}
                 </span>
 
                 {[2, 3, 4, 5, 6].map((num) => (
@@ -1904,11 +1965,36 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                     key={num}
                     type="button"
                     onClick={() => handleSetThemesUpTo(num)}
-                    className="px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50 text-indigo-900 font-bold text-xs transition-colors cursor-pointer"
+                    className="px-2 py-1 rounded-lg bg-white border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50 text-indigo-900 font-bold text-xs transition-colors cursor-pointer"
                   >
-                    Tema {num}
+                    T{num}
                   </button>
                 ))}
+              </div>
+
+              {/* Quiz Presets */}
+              <div className="pt-2 border-t border-slate-200 flex flex-wrap items-center gap-2">
+                <span className="text-xs text-amber-800 font-bold mr-1">
+                  {language === 'pt' ? 'Quizzes de Aprendizagem:' : 'Learning Quizzes:'}
+                </span>
+
+                <button
+                  type="button"
+                  onClick={() => handleSetAllQuizzes(true)}
+                  className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Eye className="w-3.5 h-3.5" />
+                  <span>{language === 'pt' ? '🏆 Mostrar Todos os Quizzes' : 'Show All Quizzes'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleSetAllQuizzes(false)}
+                  className="px-3 py-1.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Lock className="w-3.5 h-3.5 text-slate-600" />
+                  <span>{language === 'pt' ? '🔒 Ocultar Todos os Quizzes' : 'Hide All Quizzes'}</span>
+                </button>
               </div>
             </div>
 
@@ -1920,15 +2006,16 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                   <span>{language === 'pt' ? 'Lista de Temas Curriculares (7 Temas)' : 'Curriculum Themes (7 Themes)'}</span>
                 </h4>
                 <span className="text-xs text-slate-500">
-                  {language === 'pt' ? 'Clique no interruptor para alterar a visibilidade em tempo real' : 'Click toggle to change in real-time'}
+                  {language === 'pt' ? 'Controle a visibilidade do Tema e do Quiz de cada tema separadamente' : 'Control Theme and Quiz visibility separately'}
                 </span>
               </div>
 
               <div className="grid grid-cols-1 gap-3.5">
                 {ALL_THEMES.map((theme) => {
                   const isVisible = themeVisibility[theme.id] !== false;
-                  const isToggling = togglingThemeId === theme.id;
-                  const totalActivities = theme.challenges.length;
+                  const isQuizVisible = quizVisibility[theme.id] === true;
+                  const isTogglingTheme = togglingThemeId === theme.id;
+                  const isTogglingQuiz = togglingQuizId === theme.id;
 
                   return (
                     <div
@@ -1939,7 +2026,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                           : 'bg-slate-50/80 border-slate-200 hover:border-slate-300 opacity-90'
                       }`}
                     >
-                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
                         {/* Theme Info */}
                         <div className="flex items-start gap-3.5 max-w-xl">
                           <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shadow-xs shrink-0 ${
@@ -1963,12 +2050,24 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                               {isVisible ? (
                                 <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                                   <Eye className="w-3 h-3 text-emerald-600" />
-                                  <span>{language === 'pt' ? 'Visível para Alunos' : 'Visible to Students'}</span>
+                                  <span>{language === 'pt' ? 'Tema Visível' : 'Theme Visible'}</span>
                                 </span>
                               ) : (
                                 <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
                                   <Lock className="w-3 h-3 text-amber-600" />
-                                  <span>{language === 'pt' ? 'Oculto / Bloqueado' : 'Hidden / Locked'}</span>
+                                  <span>{language === 'pt' ? 'Tema Bloqueado' : 'Theme Locked'}</span>
+                                </span>
+                              )}
+
+                              {isQuizVisible ? (
+                                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-900 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">
+                                  <Award className="w-3 h-3 text-amber-600" />
+                                  <span>{language === 'pt' ? '🏆 Quiz Visível' : '🏆 Quiz Visible'}</span>
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full border border-slate-300">
+                                  <Lock className="w-3 h-3 text-slate-500" />
+                                  <span>{language === 'pt' ? '🔒 Quiz Oculto' : '🔒 Quiz Hidden'}</span>
                                 </span>
                               )}
                             </div>
@@ -1986,49 +2085,63 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                             <div className="flex items-center gap-3 pt-1 text-[11px] text-slate-400">
                               <span>📖 {theme.lessons?.length || 0} lições</span>
                               <span>•</span>
-                              <span>🎮 {theme.challenges.length} jogos & desafios</span>
+                              <span>🎮 {theme.challenges.length} desafios</span>
                               <span>•</span>
                               <span>🎯 Quiz final ({theme.finalQuiz?.length || 15} perguntas)</span>
                             </div>
                           </div>
                         </div>
 
-                        {/* Toggle Action Control */}
-                        <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end pt-3 sm:pt-0 border-t sm:border-t-0 border-slate-200 shrink-0">
-                          <div className="text-right hidden sm:block">
-                            <div className={`text-xs font-bold ${isVisible ? 'text-emerald-700' : 'text-slate-500'}`}>
-                              {isVisible
-                                ? (language === 'pt' ? 'Tema Ativo' : 'Active Theme')
-                                : (language === 'pt' ? 'Tema Bloqueado' : 'Locked Theme')}
-                            </div>
-                            <div className="text-[10px] text-slate-400">
-                              {isVisible
-                                ? (language === 'pt' ? 'Alunos acedem livremente' : 'Students have access')
-                                : (language === 'pt' ? 'Alunos veem "Em breve"' : 'Shows "Coming soon"')}
-                            </div>
-                          </div>
-
+                        {/* Dual Toggle Action Controls */}
+                        <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 w-full lg:w-auto justify-between lg:justify-end pt-3 lg:pt-0 border-t lg:border-t-0 border-slate-200 shrink-0">
+                          {/* Theme Toggle Button */}
                           <button
                             type="button"
                             onClick={() => handleToggleTheme(theme.id, isVisible)}
-                            disabled={isToggling}
-                            className={`px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 transition-all cursor-pointer shadow-xs disabled:opacity-50 ${
+                            disabled={isTogglingTheme}
+                            className={`px-3.5 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs disabled:opacity-50 ${
                               isVisible
                                 ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
-                                : 'bg-amber-600 hover:bg-amber-700 text-white'
+                                : 'bg-slate-700 hover:bg-slate-800 text-white'
                             }`}
                           >
-                            {isToggling ? (
-                              <RefreshCw className="w-4 h-4 animate-spin" />
+                            {isTogglingTheme ? (
+                              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                             ) : isVisible ? (
                               <>
-                                <Eye className="w-4 h-4" />
-                                <span>{language === 'pt' ? 'Visível (Clique p/ Ocultar)' : 'Visible (Click to Hide)'}</span>
+                                <Eye className="w-3.5 h-3.5" />
+                                <span>{language === 'pt' ? 'Tema: Visível' : 'Theme: Visible'}</span>
                               </>
                             ) : (
                               <>
-                                <Lock className="w-4 h-4 text-white" />
-                                <span>{language === 'pt' ? 'Desbloquear para Alunos' : 'Unlock for Students'}</span>
+                                <Lock className="w-3.5 h-3.5 text-amber-300" />
+                                <span>{language === 'pt' ? 'Tema: Bloqueado' : 'Theme: Locked'}</span>
+                              </>
+                            )}
+                          </button>
+
+                          {/* Quiz Toggle Button */}
+                          <button
+                            type="button"
+                            onClick={() => handleToggleQuiz(theme.id, isQuizVisible)}
+                            disabled={isTogglingQuiz}
+                            className={`px-3.5 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs disabled:opacity-50 ${
+                              isQuizVisible
+                                ? 'bg-amber-400 hover:bg-amber-500 text-slate-950 border border-amber-500'
+                                : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300'
+                            }`}
+                          >
+                            {isTogglingQuiz ? (
+                              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                            ) : isQuizVisible ? (
+                              <>
+                                <Eye className="w-3.5 h-3.5 text-amber-900" />
+                                <span>{language === 'pt' ? 'Quiz: Visível' : 'Quiz: Visible'}</span>
+                              </>
+                            ) : (
+                              <>
+                                <Lock className="w-3.5 h-3.5 text-slate-600" />
+                                <span>{language === 'pt' ? 'Quiz: Oculto' : 'Quiz: Hidden'}</span>
                               </>
                             )}
                           </button>

@@ -31,6 +31,7 @@ import {
   TurmaRanking,
   StudentRanking,
   ThemeVisibilityMap,
+  QuizVisibilityMap,
   AvatarConfig,
 } from '../types';
 import { BADGES } from '../data/badgesData';
@@ -44,6 +45,7 @@ const PROGRESS_STORAGE_KEY = 'tic_5ano_progress_';
 const ACHIEVEMENTS_STORAGE_KEY = 'tic_5ano_achievements_';
 const POINTS_STORAGE_KEY = 'tic_5ano_points_';
 const THEME_VISIBILITY_KEY = 'tic_5ano_theme_visibility';
+const QUIZ_VISIBILITY_KEY = 'tic_5ano_quiz_visibility';
 
 // Safe storage fallback for SSR and preview environments
 if (typeof globalThis.localStorage === 'undefined') {
@@ -64,6 +66,21 @@ export const DEFAULT_THEME_VISIBILITY: ThemeVisibilityMap = {
   'correio-eletronico': true,
   'navegar-internet': true,
   'direitos-autor': true,
+};
+
+export const DEFAULT_QUIZ_VISIBILITY: QuizVisibilityMap = {
+  'seguranca-digital': false,
+  'pesquisa-informacao': false,
+  'ergonomia-saude': false,
+  'modelagem-3d': false,
+  'algoritmos-programacao': false,
+  'correio-eletronico': false,
+  'direitos-autor': false,
+  'tic-sociedade': false,
+  'ergonomia': false,
+  'seguranca': false,
+  'palavras-passe': false,
+  'navegar-internet': false,
 };
 
 // Designated Teacher / Administrator accounts (Carla Oliveira)
@@ -2107,6 +2124,145 @@ export const api = {
 
     return () => {
       window.removeEventListener('tic_theme_visibility_updated', handleLocalUpdate);
+      unsubscribeFirestore();
+    };
+  },
+
+  /**
+   * Get current quiz visibility map (Firestore + LocalStorage cache)
+   */
+  async getQuizVisibility(): Promise<QuizVisibilityMap> {
+    let currentMap: QuizVisibilityMap = { ...DEFAULT_QUIZ_VISIBILITY };
+    try {
+      const local = localStorage.getItem(QUIZ_VISIBILITY_KEY);
+      if (local) {
+        const parsed = JSON.parse(local);
+        if (typeof parsed === 'object' && parsed !== null) {
+          currentMap = { ...DEFAULT_QUIZ_VISIBILITY, ...parsed };
+        }
+      }
+    } catch {
+      // ignore
+    }
+
+    try {
+      const snap = await getDoc(doc(db, 'config', 'quiz_visibility'));
+      if (snap.exists()) {
+        const data = snap.data();
+        if (data?.visibility && typeof data.visibility === 'object') {
+          currentMap = { ...DEFAULT_QUIZ_VISIBILITY, ...data.visibility };
+          localStorage.setItem(QUIZ_VISIBILITY_KEY, JSON.stringify(currentMap));
+        }
+      }
+    } catch (err) {
+      console.warn('Could not fetch quiz_visibility from Firestore:', err);
+    }
+
+    return currentMap;
+  },
+
+  /**
+   * Save quiz visibility map (Admins/Teachers only)
+   */
+  async saveQuizVisibility(
+    newVisibility: QuizVisibilityMap
+  ): Promise<{ success: boolean; visibility: QuizVisibilityMap; message: string }> {
+    const merged: QuizVisibilityMap = { ...DEFAULT_QUIZ_VISIBILITY, ...newVisibility };
+
+    try {
+      localStorage.setItem(QUIZ_VISIBILITY_KEY, JSON.stringify(merged));
+      window.dispatchEvent(new CustomEvent('tic_quiz_visibility_updated', { detail: merged }));
+    } catch (e) {
+      console.warn('Could not cache quiz visibility in localStorage:', e);
+    }
+
+    try {
+      await setDoc(
+        doc(db, 'config', 'quiz_visibility'),
+        {
+          visibility: merged,
+          updatedAt: new Date().toISOString(),
+          updatedBy: auth.currentUser?.email || 'admin',
+        },
+        { merge: true }
+      );
+    } catch (err) {
+      console.warn('Could not sync quiz_visibility to Firestore:', err);
+    }
+
+    return {
+      success: true,
+      visibility: merged,
+      message: 'Visibilidade dos quizzes atualizada com sucesso!',
+    };
+  },
+
+  /**
+   * Toggle quiz visibility for a single theme
+   */
+  async toggleQuizVisibility(
+    themeId: string,
+    forcedState?: boolean
+  ): Promise<{ success: boolean; visibility: QuizVisibilityMap }> {
+    const current = await this.getQuizVisibility();
+    const isCurrentlyVisible = current[themeId] === true;
+    const nextState = forcedState !== undefined ? forcedState : !isCurrentlyVisible;
+    const updated: QuizVisibilityMap = {
+      ...current,
+      [themeId]: nextState,
+    };
+    await this.saveQuizVisibility(updated);
+    return { success: true, visibility: updated };
+  },
+
+  /**
+   * Subscribe to real-time quiz visibility changes from Firestore
+   */
+  onQuizVisibilityChange(callback: (visibility: QuizVisibilityMap) => void): () => void {
+    try {
+      const local = localStorage.getItem(QUIZ_VISIBILITY_KEY);
+      if (local) {
+        callback({ ...DEFAULT_QUIZ_VISIBILITY, ...JSON.parse(local) });
+      } else {
+        callback({ ...DEFAULT_QUIZ_VISIBILITY });
+      }
+    } catch {
+      callback({ ...DEFAULT_QUIZ_VISIBILITY });
+    }
+
+    const handleLocalUpdate = (e: any) => {
+      if (e?.detail) {
+        callback(e.detail);
+      }
+    };
+    window.addEventListener('tic_quiz_visibility_updated', handleLocalUpdate);
+
+    let unsubscribeFirestore = () => {};
+    try {
+      unsubscribeFirestore = onSnapshot(
+        doc(db, 'config', 'quiz_visibility'),
+        (snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.data();
+            if (data?.visibility) {
+              const merged = { ...DEFAULT_QUIZ_VISIBILITY, ...data.visibility };
+              try {
+                localStorage.setItem(QUIZ_VISIBILITY_KEY, JSON.stringify(merged));
+              } catch {}
+              callback(merged);
+            }
+          }
+        },
+        (error) => {
+          console.warn('Firestore quiz_visibility snapshot notice:', error);
+        }
+      );
+    } catch (err) {
+      console.warn('Failed to attach quiz_visibility snapshot listener:', err);
+    }
+
+    return () => {
+      window.removeEventListener('tic_quiz_visibility_updated', handleLocalUpdate);
       unsubscribeFirestore();
     };
   },

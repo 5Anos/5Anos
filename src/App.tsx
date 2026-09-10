@@ -20,14 +20,15 @@ import { ReliableSourcesGame } from './components/games/ReliableSourcesGame';
 import { SearchOperatorsGame } from './components/games/SearchOperatorsGame';
 import { CopyOrCreditGame } from './components/games/CopyOrCreditGame';
 import { ErgonomicsPostureGame } from './components/games/ErgonomicsPostureGame';
+import { ErgonomicsTrueFalseGame } from './components/games/ErgonomicsTrueFalseGame';
 import { TicWhatIsTechGame } from './components/games/TicWhatIsTechGame';
 import { TicCyberbullyingGame } from './components/games/TicCyberbullyingGame';
 import { TicDigitalFootprintGame } from './components/games/TicDigitalFootprintGame';
 import { GenericChallengeGame } from './components/games/GenericChallengeGame';
 import { GenericHtmlGameRunner } from './components/games/GenericHtmlGameRunner';
 
-import { api, isUserAdmin, DEFAULT_THEME_VISIBILITY } from './services/api';
-import { User, ActivityProgress, UserAchievement, PointTransaction, Language, ThemeVisibilityMap } from './types';
+import { api, isUserAdmin, DEFAULT_THEME_VISIBILITY, DEFAULT_QUIZ_VISIBILITY } from './services/api';
+import { User, ActivityProgress, UserAchievement, PointTransaction, Language, ThemeVisibilityMap, QuizVisibilityMap } from './types';
 import { ALL_THEMES } from './data/allThemesData';
 import { translations } from './i18n/translations';
 import { Sparkles, Lock, ArrowLeft } from 'lucide-react';
@@ -41,8 +42,9 @@ export default function App() {
   const [pointsHistory, setPointsHistory] = useState<PointTransaction[]>([]);
   const [language, setLanguage] = useState<Language>('pt');
 
-  // Theme Visibility State
+  // Theme & Quiz Visibility State
   const [themeVisibility, setThemeVisibility] = useState<ThemeVisibilityMap>(DEFAULT_THEME_VISIBILITY);
+  const [quizVisibility, setQuizVisibility] = useState<QuizVisibilityMap>(DEFAULT_QUIZ_VISIBILITY);
 
   // Navigation State
   const [currentView, setCurrentView] = useState<ViewMode>('dashboard');
@@ -118,7 +120,7 @@ export default function App() {
     }
     loadUser();
 
-    // Load initial theme visibility
+    // Load initial theme & quiz visibility
     async function loadVisibility() {
       try {
         const map = await api.getThemeVisibility();
@@ -126,12 +128,23 @@ export default function App() {
       } catch {
         // fallback to default
       }
+
+      try {
+        const qMap = await api.getQuizVisibility();
+        setQuizVisibility(qMap);
+      } catch {
+        // fallback to default
+      }
     }
     loadVisibility();
 
-    // Real-time theme visibility sync listener across all connected devices
+    // Real-time theme & quiz visibility sync listener across all connected devices
     const unsubVisibility = api.onThemeVisibilityChange((newMap) => {
       setThemeVisibility(newMap);
+    });
+
+    const unsubQuizVisibility = api.onQuizVisibilityChange((newMap) => {
+      setQuizVisibility(newMap);
     });
 
     // Firebase Auth listener
@@ -156,6 +169,7 @@ export default function App() {
 
     return () => {
       if (typeof unsubVisibility === 'function') unsubVisibility();
+      if (typeof unsubQuizVisibility === 'function') unsubQuizVisibility();
       if (typeof unsubscribeAuth === 'function') unsubscribeAuth();
     };
   }, []);
@@ -182,6 +196,24 @@ export default function App() {
       );
     } catch (err: any) {
       showToast('Erro', err?.message || 'Erro ao alterar visibilidade.');
+    }
+  };
+
+  const handleToggleQuizVisibility = async (themeId: string) => {
+    try {
+      const res = await api.toggleQuizVisibility(themeId);
+      const nextMap = res.visibility;
+      setQuizVisibility(nextMap);
+      const isNowVisible = nextMap[themeId] === true;
+      const th = ALL_THEMES.find((t) => t.id === themeId);
+      const thTitle = th ? `Tema ${th.number}: ${th.title[language]}` : themeId;
+      showToast(
+        isNowVisible
+          ? (language === 'pt' ? `🏆 Quiz do ${thTitle} agora VISÍVEL para alunos!` : `🏆 Quiz of ${thTitle} is now visible to students!`)
+          : (language === 'pt' ? `🔒 Quiz do ${thTitle} agora OCULTO para alunos.` : `🔒 Quiz of ${thTitle} is now hidden for students.`)
+      );
+    } catch (err: any) {
+      showToast('Erro', err?.message || 'Erro ao alterar visibilidade do quiz.');
     }
   };
 
@@ -593,6 +625,27 @@ export default function App() {
       );
     }
 
+    if (activeChallengeId === 'jogo-ergo-tf' || activeChallengeId === 'desafio-ergo-tf') {
+      return (
+        <ErgonomicsTrueFalseGame
+          language={language}
+          onBack={returnToGames}
+          onFinish={(score, maxScore, percentage) => {
+            handleSaveProgress({
+              activityId: activeChallengeId,
+              activityType: 'challenge',
+              themeId: currentTheme.id,
+              status: 'completed',
+              score,
+              maxScore,
+              percentage,
+              activityTitle: language === 'pt' ? 'Postura e Hábitos: Verdadeiro ou Falso?' : 'Posture and Habits: True or False?',
+            });
+          }}
+        />
+      );
+    }
+
     // Theme 1 Specific Games
     if (activeChallengeId === 'desafio-tic-o-que-e') {
       return (
@@ -790,7 +843,9 @@ export default function App() {
               initialTab={activeThemeTab}
               isAdmin={isAdmin}
               isLockedForStudents={themeVisibility[currentTheme.id] === false}
+              quizVisibility={quizVisibility}
               onToggleVisibility={handleToggleThemeVisibility}
+              onToggleQuizVisibility={handleToggleQuizVisibility}
               onBack={() => {
                 setCurrentView('dashboard');
                 setActiveThemeTab('content');
@@ -803,6 +858,14 @@ export default function App() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               onOpenChallenge={(chalId) => {
+                const isFinalQuiz = chalId.startsWith('quiz-final') || currentTheme.finalQuiz.some((q) => q.id.includes(chalId));
+                if (isFinalQuiz && !isAdmin && quizVisibility[currentTheme.id] !== true) {
+                  showToast(
+                    language === 'pt' ? '🔒 Quiz Oculto' : '🔒 Quiz Hidden',
+                    language === 'pt' ? 'Este quiz de aprendizagem está temporariamente oculto pela professora.' : 'This quiz is currently hidden by the teacher.'
+                  );
+                  return;
+                }
                 setActiveChallengeId(chalId);
                 setCurrentView('challenge');
                 window.scrollTo({ top: 0, behavior: 'smooth' });

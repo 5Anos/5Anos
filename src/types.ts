@@ -208,9 +208,16 @@ export interface StudentRanking {
 }
 
 export type ThemeVisibilityMap = Record<string, boolean>;
+export type QuizVisibilityMap = Record<string, boolean>;
 
 export interface ThemeVisibilityDoc {
   visibility: ThemeVisibilityMap;
+  updatedAt?: string;
+  updatedBy?: string;
+}
+
+export interface QuizVisibilityDoc {
+  visibility: QuizVisibilityMap;
   updatedAt?: string;
   updatedBy?: string;
 }

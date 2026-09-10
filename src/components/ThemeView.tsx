@@ -37,7 +37,9 @@ interface ThemeViewProps {
   language: Language;
   isAdmin?: boolean;
   isLockedForStudents?: boolean;
+  quizVisibility?: Record<string, boolean>;
   onToggleVisibility?: (themeId: string) => void;
+  onToggleQuizVisibility?: (themeId: string) => void;
   onBack: () => void;
   onOpenModule: (moduleId: string) => void;
   onOpenChallenge: (challengeId: string) => void;
@@ -50,7 +52,9 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
   language,
   isAdmin = false,
   isLockedForStudents = false,
+  quizVisibility = {},
   onToggleVisibility,
+  onToggleQuizVisibility,
   onBack,
   onOpenModule,
   onOpenChallenge,
@@ -496,8 +500,65 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
             {theme.challenges.map((chal) => {
               const record = progressList.find((p) => p.activityId === chal.id);
               const isDone = record?.status === 'completed';
-              const isFinalQuiz = chal.type === 'final_quiz';
+              const isFinalQuiz = chal.type === 'final_quiz' || chal.id.startsWith('quiz-final');
+              const isQuizVisible = quizVisibility[theme.id] === true;
               const chalImg = getChallengeImage(chal.type);
+
+              // If it's a final quiz and hidden for students, show a locked notification card to students
+              if (isFinalQuiz && !isAdmin && !isQuizVisible) {
+                return (
+                  <div
+                    key={chal.id}
+                    className="rounded-[2rem] border-2 border-slate-200 bg-slate-50/90 p-6 shadow-2xs flex flex-col justify-between relative overflow-hidden group"
+                  >
+                    <div>
+                      {/* Card Top Pill Badge */}
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider bg-slate-200 text-slate-700 flex items-center gap-1.5">
+                          <Lock className="w-3.5 h-3.5 text-amber-600" />
+                          <span>🏆 Quiz de Aprendizagem</span>
+                        </span>
+                        <span className="text-[11px] font-bold text-amber-800 bg-amber-100/90 border border-amber-200 px-2.5 py-1 rounded-full flex items-center gap-1">
+                          <Lock className="w-3 h-3 text-amber-600" />
+                          <span>{language === 'pt' ? 'Oculto pela Professora' : 'Hidden by Teacher'}</span>
+                        </span>
+                      </div>
+
+                      {/* Locked icon header */}
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="w-12 h-12 rounded-2xl bg-amber-100/80 text-amber-700 flex items-center justify-center text-2xl shadow-inner border border-amber-200">
+                          🔒
+                        </div>
+                        <div>
+                          <h3 className="text-base sm:text-lg font-black text-slate-800 leading-snug">
+                            {chal.title[language]}
+                          </h3>
+                          <span className="text-[11px] font-bold text-amber-700 flex items-center gap-1 mt-0.5">
+                            <Zap className="w-3 h-3 fill-current text-amber-500" />
+                            <span>{language === 'pt' ? 'Aguardando visibilidade' : 'Waiting for teacher release'}</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        {language === 'pt'
+                          ? 'Este quiz de aprendizagem está atualmente oculto e será colocado visível pela professora no momento apropriado da aula.'
+                          : 'This quiz is currently hidden and will be made visible by the teacher during class.'}
+                      </p>
+                    </div>
+
+                    <div className="mt-6 pt-4 border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-500 font-semibold">
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-3.5 h-3.5 text-slate-400" />
+                        <span>~{chal.durationMinutes} min</span>
+                      </span>
+                      <span className="px-3 py-1.5 rounded-xl bg-slate-200/80 text-slate-600 font-bold text-xs cursor-not-allowed">
+                        🔒 {language === 'pt' ? 'Não Disponível' : 'Not Available'}
+                      </span>
+                    </div>
+                  </div>
+                );
+              }
 
               return (
                 <div
@@ -505,7 +566,9 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                   onClick={() => onOpenChallenge(chal.id)}
                   className={`rounded-[2rem] border-2 p-6 shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer flex flex-col justify-between group relative overflow-hidden ${
                     isFinalQuiz
-                      ? 'border-amber-300 bg-gradient-to-b from-amber-50/90 via-orange-50/40 to-white hover:border-amber-400'
+                      ? isQuizVisible
+                        ? 'border-amber-300 bg-gradient-to-b from-amber-50/90 via-orange-50/40 to-white hover:border-amber-400'
+                        : 'border-slate-300 bg-slate-50/90 hover:border-amber-400'
                       : isDone
                       ? 'border-emerald-200 bg-gradient-to-b from-emerald-50/30 to-white hover:border-emerald-300'
                       : 'border-slate-200 bg-white hover:border-indigo-300'
@@ -524,6 +587,17 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                         >
                           {isFinalQuiz ? '🏆 Quiz de Aprendizagem' : `Desafio ${chal.number}`}
                         </span>
+
+                        {isFinalQuiz && isAdmin && (
+                          <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full border flex items-center gap-1 ${
+                            isQuizVisible
+                              ? 'bg-emerald-100 text-emerald-900 border-emerald-300'
+                              : 'bg-rose-100 text-rose-900 border-rose-300'
+                          }`}>
+                            {isQuizVisible ? <Eye className="w-3 h-3 text-emerald-600" /> : <Lock className="w-3 h-3 text-rose-600" />}
+                            <span>{isQuizVisible ? 'Visível p/ Alunos' : 'Oculto p/ Alunos'}</span>
+                          </span>
+                        )}
                       </div>
 
                       {isDone ? (
@@ -592,6 +666,36 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                     <p className="mt-2 text-xs sm:text-sm text-slate-600 line-clamp-3 leading-relaxed">
                       {chal.shortDesc[language]}
                     </p>
+
+                    {/* Teacher Quick Toggle Button inside Quiz Card */}
+                    {isFinalQuiz && isAdmin && onToggleQuizVisibility && (
+                      <div className="mt-3 pt-2 border-t border-amber-200/60 flex items-center justify-between gap-2" onClick={(e) => e.stopPropagation()}>
+                        <span className="text-[11px] font-semibold text-slate-600">
+                          {language === 'pt' ? 'Controlo do Quiz:' : 'Quiz Control:'}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => onToggleQuizVisibility(theme.id)}
+                          className={`px-3 py-1.5 rounded-xl font-extrabold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs ${
+                            isQuizVisible
+                              ? 'bg-amber-500 hover:bg-amber-600 text-slate-950'
+                              : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                          }`}
+                        >
+                          {isQuizVisible ? (
+                            <>
+                              <Lock className="w-3.5 h-3.5" />
+                              <span>{language === 'pt' ? 'Ocultar dos Alunos' : 'Hide from Students'}</span>
+                            </>
+                          ) : (
+                            <>
+                              <Eye className="w-3.5 h-3.5" />
+                              <span>{language === 'pt' ? 'Tornar Visível para Alunos' : 'Make Visible to Students'}</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    )}
                   </div>
 
                   <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
