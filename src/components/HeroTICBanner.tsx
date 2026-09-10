@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, Sparkles, Lightbulb } from 'lucide-react';
 import { User, Language } from '../types';
+import { AudioSpeakButton } from './AudioSpeakButton';
 import boyAvatarImg from '../assets/images/tic_boy_avatar_1788537870929.jpg';
 import girlAvatarImg from '../assets/images/tic_girl_avatar_1788537889222.jpg';
 
@@ -52,8 +53,8 @@ export const HeroTICBanner: React.FC<HeroTICBannerProps> = ({
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         {/* Left Col: Main Titles & Introductory Statement */}
         <div className="lg:col-span-7 space-y-4">
-          {/* Greeting Badge with Decorative Rays */}
-          <div className="inline-flex items-center gap-2 px-1">
+          {/* Greeting Badge with Decorative Rays and Audio Button */}
+          <div className="flex flex-wrap items-center justify-between gap-3 px-1">
             <div className="relative inline-flex items-center gap-2">
               <span className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight font-sans">
                 Olá!
@@ -69,6 +70,19 @@ export const HeroTICBanner: React.FC<HeroTICBannerProps> = ({
                 ✦
               </div>
             </div>
+
+            <AudioSpeakButton
+              id="hero-banner-audio"
+              text={
+                isPt
+                  ? 'Olá! Bem-vindo ao teu espaço de TIC, Tecnologias da Informação e Comunicação. Aqui vais aprender, experimentar e descobrir novas formas de utilizar a tecnologia de maneira segura, responsável, criativa e inteligente.'
+                  : 'Hello! Welcome to your ICT Space. Here you will learn, experiment, and discover new ways to use technology in a safe, responsible, creative, and smart way.'
+              }
+              language={language}
+              label={isPt ? 'Ouvir Mensagem de Boas-Vindas' : 'Listen Welcome'}
+              variant="pill"
+              size="sm"
+            />
           </div>
 
           {/* Main Title */}

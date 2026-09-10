@@ -29,6 +29,7 @@ import { TicApplicationsExplorer } from './TicApplicationsExplorer';
 import { TicEvolutionExplorer } from './TicEvolutionExplorer';
 import { CyberbullyingActionCard } from './CyberbullyingActionCard';
 import { getQuizMention, getQuizMentionBadgeStyle } from '../utils/exportUtils';
+import { AudioSpeakButton } from './AudioSpeakButton';
 
 interface ThemeViewProps {
   theme: ThemeDefinition;
@@ -162,9 +163,19 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
           )} flex flex-col md:flex-row items-center justify-between gap-6 border-2 border-white/10`}
         >
           <div className="relative z-10 max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-black uppercase tracking-wider text-amber-300 border border-white/20 shadow-xs">
-              <span className="text-base">{theme.icon}</span>
-              <span>Tema {theme.number}</span>
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-black uppercase tracking-wider text-amber-300 border border-white/20 shadow-xs">
+                <span className="text-base">{theme.icon}</span>
+                <span>Tema {theme.number}</span>
+              </div>
+              <AudioSpeakButton
+                id={`theme-banner-${theme.id}-audio`}
+                text={`Tema ${theme.number}: ${theme.title[language]}. ${theme.intro[language]}`}
+                language={language}
+                label={language === 'pt' ? 'Ouvir Apresentação do Tema' : 'Listen Theme Overview'}
+                variant="pill"
+                size="sm"
+              />
             </div>
 
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
@@ -267,11 +278,19 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
               <div className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/90 shadow-sm space-y-6 relative overflow-hidden">
                 {/* Header of Active Step */}
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-5">
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-2.5 flex-wrap">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-indigo-50 text-indigo-700 border border-indigo-100">
                       <span>{currentLesson.icon || '📖'}</span>
                       <span>{currentLesson.eyebrow[language]}</span>
                     </span>
+                    <AudioSpeakButton
+                      id={`lesson-step-${theme.id}-${currentStepIndex}`}
+                      text={`${currentLesson.eyebrow[language]}: ${currentLesson.h[language]}. ${currentLesson.body[language].replace(/<[^>]+>/g, ' ')}`}
+                      language={language}
+                      label={language === 'pt' ? 'Ouvir Explicação' : 'Listen Explanation'}
+                      variant="pill"
+                      size="sm"
+                    />
                   </div>
 
                   <div className="text-xs sm:text-sm font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
@@ -489,15 +508,27 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                   <div>
                     {/* Card Top Pill Badge */}
                     <div className="flex items-center justify-between mb-4">
-                      <span
-                        className={`text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider ${
-                          isFinalQuiz
-                            ? 'bg-amber-200/90 text-amber-950 shadow-2xs'
-                            : 'bg-slate-100 text-slate-700'
-                        }`}
-                      >
-                        {isFinalQuiz ? '🏆 Quiz de Aprendizagem' : `Desafio ${chal.number}`}
-                      </span>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span
+                          className={`text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider ${
+                            isFinalQuiz
+                              ? 'bg-amber-200/90 text-amber-950 shadow-2xs'
+                              : 'bg-slate-100 text-slate-700'
+                          }`}
+                        >
+                          {isFinalQuiz ? '🏆 Quiz de Aprendizagem' : `Desafio ${chal.number}`}
+                        </span>
+                        <div onClick={(e) => e.stopPropagation()}>
+                          <AudioSpeakButton
+                            id={`chal-card-${chal.id}-audio`}
+                            text={`${chal.title[language]}. ${chal.shortDesc[language]}`}
+                            language={language}
+                            label={language === 'pt' ? 'Ouvir' : 'Listen'}
+                            variant="pill"
+                            size="sm"
+                          />
+                        </div>
+                      </div>
 
                       {isDone ? (
                         <span className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border ${

@@ -861,7 +861,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada nas aulas de TIC?",
+      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada em segurança digital?",
       "en": "How does the ninja 'Pass-Phrase' technique taught in ICT work?"
     },
     "options": [
@@ -1152,8 +1152,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI."
     },
     "whyItMatters": {
-      "pt": "Nas aulas de TIC aprendemos como os componentes físicos comunicam através do barramento de dados (Bus).",
-      "en": "Nas aulas de TIC aprendemos como os componentes físicos comunicam através do barramento de dados (Bus)."
+      "pt": "Os os componentes físicos comunicam através do barramento de dados (Bus).",
+      "en": "Os os componentes físicos comunicam através do barramento de dados (Bus)."
     },
     "funFact": {
       "pt": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!",
@@ -1527,8 +1527,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias."
     },
     "whyItMatters": {
-      "pt": "Verificação de certificados de segurança e protocolos de navegação segura nas aulas de TIC.",
-      "en": "Verificação de certificados de segurança e protocolos de navegação segura nas aulas de TIC."
+      "pt": "Verificação de certificados de segurança e protocolos de navegação segura na Internet.",
+      "en": "Verificação de certificados de segurança e protocolos de navegação segura na Internet."
     },
     "funFact": {
       "pt": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!",
@@ -1611,8 +1611,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Para que servem as licenças Creative Commons (CC) que aprendeste nas aulas de TIC?",
-      "en": "What are Creative Commons (CC) licenses used for in ICT class?"
+      "pt": "Para que servem as licenças Creative Commons (CC)?",
+      "en": "What are Creative Commons (CC) licenses used for?"
     },
     "options": [
       {
@@ -3331,8 +3331,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado."
     },
     "funFact": {
-      "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora a tua concentração nas aulas de TIC!",
-      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora a tua concentração nas aulas de TIC!"
+      "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!",
+      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -3627,8 +3627,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!"
     },
     "whyItMatters": {
-      "pt": "Eficiência e atalhos de teclado na navegação Web nas aulas de TIC do 5.º ano.",
-      "en": "Eficiência e atalhos de teclado na navegação Web nas aulas de TIC do 5.º ano."
+      "pt": "Eficiência e atalhos de teclado na navegação Web no dia a dia.",
+      "en": "Eficiência e atalhos de teclado na navegação Web no dia a dia."
     },
     "funFact": {
       "pt": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!",
@@ -4527,7 +4527,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "Earth takes 365 days and 6 hours to orbit the Sun. Coders who forget leap year math can crash systems."
     },
     "whyItMatters": {
-      "pt": "Programação de computadores exige precisão matemática: nas aulas de TIC aprendemos que os algoritmos têm de prever todos os casos possíveis.",
+      "pt": "Programação de computadores exige precisão matemática: os algoritmos têm de prever todos os casos possíveis.",
       "en": "Coding requires mathematical rigor: algorithms must handle edge cases like Feb 29."
     },
     "funFact": {
@@ -5061,7 +5061,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada nas aulas de TIC?",
+      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada em segurança digital?",
       "en": "How does the ninja 'Pass-Phrase' technique taught in ICT work?"
     },
     "options": [
@@ -5352,8 +5352,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI."
     },
     "whyItMatters": {
-      "pt": "Nas aulas de TIC aprendemos como os componentes físicos comunicam através do barramento de dados (Bus).",
-      "en": "Nas aulas de TIC aprendemos como os componentes físicos comunicam através do barramento de dados (Bus)."
+      "pt": "Os os componentes físicos comunicam através do barramento de dados (Bus).",
+      "en": "Os os componentes físicos comunicam através do barramento de dados (Bus)."
     },
     "funFact": {
       "pt": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!",
@@ -5727,8 +5727,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias."
     },
     "whyItMatters": {
-      "pt": "Verificação de certificados de segurança e protocolos de navegação segura nas aulas de TIC.",
-      "en": "Verificação de certificados de segurança e protocolos de navegação segura nas aulas de TIC."
+      "pt": "Verificação de certificados de segurança e protocolos de navegação segura na Internet.",
+      "en": "Verificação de certificados de segurança e protocolos de navegação segura na Internet."
     },
     "funFact": {
       "pt": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!",
@@ -5811,8 +5811,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Para que servem as licenças Creative Commons (CC) que aprendeste nas aulas de TIC?",
-      "en": "What are Creative Commons (CC) licenses used for in ICT class?"
+      "pt": "Para que servem as licenças Creative Commons (CC)?",
+      "en": "What are Creative Commons (CC) licenses used for?"
     },
     "options": [
       {
@@ -7531,8 +7531,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado."
     },
     "funFact": {
-      "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora a tua concentração nas aulas de TIC!",
-      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora a tua concentração nas aulas de TIC!"
+      "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!",
+      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -7827,8 +7827,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!"
     },
     "whyItMatters": {
-      "pt": "Eficiência e atalhos de teclado na navegação Web nas aulas de TIC do 5.º ano.",
-      "en": "Eficiência e atalhos de teclado na navegação Web nas aulas de TIC do 5.º ano."
+      "pt": "Eficiência e atalhos de teclado na navegação Web no dia a dia.",
+      "en": "Eficiência e atalhos de teclado na navegação Web no dia a dia."
     },
     "funFact": {
       "pt": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!",
@@ -9261,7 +9261,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada nas aulas de TIC?",
+      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada em segurança digital?",
       "en": "How does the ninja 'Pass-Phrase' technique taught in ICT work?"
     },
     "options": [
@@ -9552,8 +9552,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI."
     },
     "whyItMatters": {
-      "pt": "Nas aulas de TIC aprendemos como os componentes físicos comunicam através do barramento de dados (Bus).",
-      "en": "Nas aulas de TIC aprendemos como os componentes físicos comunicam através do barramento de dados (Bus)."
+      "pt": "Os os componentes físicos comunicam através do barramento de dados (Bus).",
+      "en": "Os os componentes físicos comunicam através do barramento de dados (Bus)."
     },
     "funFact": {
       "pt": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!",
@@ -9927,8 +9927,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias."
     },
     "whyItMatters": {
-      "pt": "Verificação de certificados de segurança e protocolos de navegação segura nas aulas de TIC.",
-      "en": "Verificação de certificados de segurança e protocolos de navegação segura nas aulas de TIC."
+      "pt": "Verificação de certificados de segurança e protocolos de navegação segura na Internet.",
+      "en": "Verificação de certificados de segurança e protocolos de navegação segura na Internet."
     },
     "funFact": {
       "pt": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!",
@@ -10011,8 +10011,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Para que servem as licenças Creative Commons (CC) que aprendeste nas aulas de TIC?",
-      "en": "What are Creative Commons (CC) licenses used for in ICT class?"
+      "pt": "Para que servem as licenças Creative Commons (CC)?",
+      "en": "What are Creative Commons (CC) licenses used for?"
     },
     "options": [
       {
@@ -11731,8 +11731,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado."
     },
     "funFact": {
-      "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora a tua concentração nas aulas de TIC!",
-      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora a tua concentração nas aulas de TIC!"
+      "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!",
+      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -12027,8 +12027,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!"
     },
     "whyItMatters": {
-      "pt": "Eficiência e atalhos de teclado na navegação Web nas aulas de TIC do 5.º ano.",
-      "en": "Eficiência e atalhos de teclado na navegação Web nas aulas de TIC do 5.º ano."
+      "pt": "Eficiência e atalhos de teclado na navegação Web no dia a dia.",
+      "en": "Eficiência e atalhos de teclado na navegação Web no dia a dia."
     },
     "funFact": {
       "pt": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!",
@@ -13461,7 +13461,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada nas aulas de TIC?",
+      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada em segurança digital?",
       "en": "How does the ninja 'Pass-Phrase' technique taught in ICT work?"
     },
     "options": [
@@ -13752,8 +13752,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI."
     },
     "whyItMatters": {
-      "pt": "Nas aulas de TIC aprendemos como os componentes físicos comunicam através do barramento de dados (Bus).",
-      "en": "Nas aulas de TIC aprendemos como os componentes físicos comunicam através do barramento de dados (Bus)."
+      "pt": "Os os componentes físicos comunicam através do barramento de dados (Bus).",
+      "en": "Os os componentes físicos comunicam através do barramento de dados (Bus)."
     },
     "funFact": {
       "pt": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!",
@@ -14127,8 +14127,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias."
     },
     "whyItMatters": {
-      "pt": "Verificação de certificados de segurança e protocolos de navegação segura nas aulas de TIC.",
-      "en": "Verificação de certificados de segurança e protocolos de navegação segura nas aulas de TIC."
+      "pt": "Verificação de certificados de segurança e protocolos de navegação segura na Internet.",
+      "en": "Verificação de certificados de segurança e protocolos de navegação segura na Internet."
     },
     "funFact": {
       "pt": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!",
@@ -14211,8 +14211,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Para que servem as licenças Creative Commons (CC) que aprendeste nas aulas de TIC?",
-      "en": "What are Creative Commons (CC) licenses used for in ICT class?"
+      "pt": "Para que servem as licenças Creative Commons (CC)?",
+      "en": "What are Creative Commons (CC) licenses used for?"
     },
     "options": [
       {
@@ -15931,8 +15931,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado."
     },
     "funFact": {
-      "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora a tua concentração nas aulas de TIC!",
-      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora a tua concentração nas aulas de TIC!"
+      "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!",
+      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -16227,8 +16227,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!"
     },
     "whyItMatters": {
-      "pt": "Eficiência e atalhos de teclado na navegação Web nas aulas de TIC do 5.º ano.",
-      "en": "Eficiência e atalhos de teclado na navegação Web nas aulas de TIC do 5.º ano."
+      "pt": "Eficiência e atalhos de teclado na navegação Web no dia a dia.",
+      "en": "Eficiência e atalhos de teclado na navegação Web no dia a dia."
     },
     "funFact": {
       "pt": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!",
@@ -17661,7 +17661,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada nas aulas de TIC?",
+      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada em segurança digital?",
       "en": "How does the ninja 'Pass-Phrase' technique taught in ICT work?"
     },
     "options": [
@@ -17952,8 +17952,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI."
     },
     "whyItMatters": {
-      "pt": "Nas aulas de TIC aprendemos como os componentes físicos comunicam através do barramento de dados (Bus).",
-      "en": "Nas aulas de TIC aprendemos como os componentes físicos comunicam através do barramento de dados (Bus)."
+      "pt": "Os os componentes físicos comunicam através do barramento de dados (Bus).",
+      "en": "Os os componentes físicos comunicam através do barramento de dados (Bus)."
     },
     "funFact": {
       "pt": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!",
@@ -18327,8 +18327,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias."
     },
     "whyItMatters": {
-      "pt": "Verificação de certificados de segurança e protocolos de navegação segura nas aulas de TIC.",
-      "en": "Verificação de certificados de segurança e protocolos de navegação segura nas aulas de TIC."
+      "pt": "Verificação de certificados de segurança e protocolos de navegação segura na Internet.",
+      "en": "Verificação de certificados de segurança e protocolos de navegação segura na Internet."
     },
     "funFact": {
       "pt": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!",
@@ -18411,8 +18411,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Para que servem as licenças Creative Commons (CC) que aprendeste nas aulas de TIC?",
-      "en": "What are Creative Commons (CC) licenses used for in ICT class?"
+      "pt": "Para que servem as licenças Creative Commons (CC)?",
+      "en": "What are Creative Commons (CC) licenses used for?"
     },
     "options": [
       {
@@ -19227,7 +19227,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "In leap years it falls on Sept 12. 256 is the number of distinct states of an 8-bit byte."
     },
     "whyItMatters": {
-      "pt": "Nas aulas de TIC aprendemos que o Byte é a unidade de medida fundamental de informação digital.",
+      "pt": "o Byte é a unidade de medida fundamental de informação digital.",
       "en": "In ICT we learn the Byte is the fundamental building block of digital measurement."
     },
     "funFact": {
@@ -20131,8 +20131,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado."
     },
     "funFact": {
-      "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora a tua concentração nas aulas de TIC!",
-      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora a tua concentração nas aulas de TIC!"
+      "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!",
+      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -20427,8 +20427,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!"
     },
     "whyItMatters": {
-      "pt": "Eficiência e atalhos de teclado na navegação Web nas aulas de TIC do 5.º ano.",
-      "en": "Eficiência e atalhos de teclado na navegação Web nas aulas de TIC do 5.º ano."
+      "pt": "Eficiência e atalhos de teclado na navegação Web no dia a dia.",
+      "en": "Eficiência e atalhos de teclado na navegação Web no dia a dia."
     },
     "funFact": {
       "pt": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!",
@@ -21861,7 +21861,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada nas aulas de TIC?",
+      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada em segurança digital?",
       "en": "How does the ninja 'Pass-Phrase' technique taught in ICT work?"
     },
     "options": [
@@ -22152,8 +22152,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI."
     },
     "whyItMatters": {
-      "pt": "Nas aulas de TIC aprendemos como os componentes físicos comunicam através do barramento de dados (Bus).",
-      "en": "Nas aulas de TIC aprendemos como os componentes físicos comunicam através do barramento de dados (Bus)."
+      "pt": "Os os componentes físicos comunicam através do barramento de dados (Bus).",
+      "en": "Os os componentes físicos comunicam através do barramento de dados (Bus)."
     },
     "funFact": {
       "pt": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!",
@@ -22527,8 +22527,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias."
     },
     "whyItMatters": {
-      "pt": "Verificação de certificados de segurança e protocolos de navegação segura nas aulas de TIC.",
-      "en": "Verificação de certificados de segurança e protocolos de navegação segura nas aulas de TIC."
+      "pt": "Verificação de certificados de segurança e protocolos de navegação segura na Internet.",
+      "en": "Verificação de certificados de segurança e protocolos de navegação segura na Internet."
     },
     "funFact": {
       "pt": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!",
@@ -22611,8 +22611,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Para que servem as licenças Creative Commons (CC) que aprendeste nas aulas de TIC?",
-      "en": "What are Creative Commons (CC) licenses used for in ICT class?"
+      "pt": "Para que servem as licenças Creative Commons (CC)?",
+      "en": "What are Creative Commons (CC) licenses used for?"
     },
     "options": [
       {
@@ -24331,8 +24331,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado."
     },
     "funFact": {
-      "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora a tua concentração nas aulas de TIC!",
-      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora a tua concentração nas aulas de TIC!"
+      "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!",
+      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -24627,8 +24627,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!"
     },
     "whyItMatters": {
-      "pt": "Eficiência e atalhos de teclado na navegação Web nas aulas de TIC do 5.º ano.",
-      "en": "Eficiência e atalhos de teclado na navegação Web nas aulas de TIC do 5.º ano."
+      "pt": "Eficiência e atalhos de teclado na navegação Web no dia a dia.",
+      "en": "Eficiência e atalhos de teclado na navegação Web no dia a dia."
     },
     "funFact": {
       "pt": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!",
@@ -26061,7 +26061,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada nas aulas de TIC?",
+      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada em segurança digital?",
       "en": "How does the ninja 'Pass-Phrase' technique taught in ICT work?"
     },
     "options": [
@@ -26352,8 +26352,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI."
     },
     "whyItMatters": {
-      "pt": "Nas aulas de TIC aprendemos como os componentes físicos comunicam através do barramento de dados (Bus).",
-      "en": "Nas aulas de TIC aprendemos como os componentes físicos comunicam através do barramento de dados (Bus)."
+      "pt": "Os os componentes físicos comunicam através do barramento de dados (Bus).",
+      "en": "Os os componentes físicos comunicam através do barramento de dados (Bus)."
     },
     "funFact": {
       "pt": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!",
@@ -26727,8 +26727,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias."
     },
     "whyItMatters": {
-      "pt": "Verificação de certificados de segurança e protocolos de navegação segura nas aulas de TIC.",
-      "en": "Verificação de certificados de segurança e protocolos de navegação segura nas aulas de TIC."
+      "pt": "Verificação de certificados de segurança e protocolos de navegação segura na Internet.",
+      "en": "Verificação de certificados de segurança e protocolos de navegação segura na Internet."
     },
     "funFact": {
       "pt": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!",
@@ -26811,8 +26811,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Para que servem as licenças Creative Commons (CC) que aprendeste nas aulas de TIC?",
-      "en": "What are Creative Commons (CC) licenses used for in ICT class?"
+      "pt": "Para que servem as licenças Creative Commons (CC)?",
+      "en": "What are Creative Commons (CC) licenses used for?"
     },
     "options": [
       {

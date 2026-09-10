@@ -9,6 +9,7 @@ import { getThemeImage } from '../data/themeImages';
 import { isUserAdmin, DEFAULT_THEME_VISIBILITY } from '../services/api';
 import { HeroTICBanner } from './HeroTICBanner';
 import { DailyTipWidget } from './DailyTipWidget';
+import { AudioSpeakButton } from './AudioSpeakButton';
 
 interface DashboardProps {
   user: User | null;
@@ -194,7 +195,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       <div id="curriculum-themes-section" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start scroll-mt-6">
         {/* Left Column (Span 8): 7 Main Theme Cards */}
         <div className="lg:col-span-8 space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-slate-900">
                 {language === 'pt' ? 'Temas de Aprendizagem' : 'Learning Themes'}
@@ -207,12 +208,26 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       : `${displayedThemes.length} Available Curriculum Topics`)}
               </p>
             </div>
-            {isAdmin && (
-              <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100 flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>{language === 'pt' ? 'Modo Professora Ativo' : 'Teacher Mode'}</span>
-              </span>
-            )}
+            <div className="flex items-center gap-2">
+              <AudioSpeakButton
+                id="dashboard-themes-list-audio"
+                text={
+                  language === 'pt'
+                    ? `Aqui estão os temas de TIC: ${displayedThemes.map((t) => `Tema ${t.number}, ${t.title.pt}`).join('. ')}.`
+                    : `Here are the ICT topics: ${displayedThemes.map((t) => `Topic ${t.number}, ${t.title.en}`).join('. ')}.`
+                }
+                language={language}
+                label={language === 'pt' ? 'Ouvir Temas' : 'Listen Topics'}
+                variant="pill"
+                size="sm"
+              />
+              {isAdmin && (
+                <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100 flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>{language === 'pt' ? 'Modo Professora Ativo' : 'Teacher Mode'}</span>
+                </span>
+              )}
+            </div>
           </div>
 
           {/* Theme Cards Grid */}
@@ -281,9 +296,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       )}
                     </div>
 
-                    {/* Theme Badge & Number */}
+                    {/* Theme Badge & Number + Audio Button */}
                     <div className="flex items-center justify-between gap-2 mb-2">
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-1.5 flex-wrap">
                         <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${colorInfo.bgBadge}`}>
                           Tema {theme.number}
                         </span>
@@ -293,6 +308,16 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             {language === 'pt' ? 'Oculto na Turma' : 'Hidden in Class'}
                           </span>
                         )}
+                        <div onClick={(e) => e.stopPropagation()}>
+                          <AudioSpeakButton
+                            id={`theme-card-${theme.id}-audio`}
+                            text={`Tema ${theme.number}: ${theme.title[language]}. ${theme.tagline[language]}`}
+                            language={language}
+                            label={language === 'pt' ? 'Ouvir' : 'Listen'}
+                            variant="pill"
+                            size="sm"
+                          />
+                        </div>
                       </div>
                       <span className="text-xl">{theme.icon}</span>
                     </div>

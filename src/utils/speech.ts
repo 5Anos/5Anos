@@ -6,7 +6,18 @@ class SpeechManager {
   private currentUtterance: SpeechSynthesisUtterance | null = null;
   private currentId: string | null = null;
   private listeners: Set<(speakingId: string | null) => void> = new Set();
+  private globalAudioListeners: Set<(enabled: boolean) => void> = new Set();
   private keepAliveInterval: any = null;
+  private globalAudioEnabled: boolean = true; // Enabled by default so students immediately have audio ready
+
+  constructor() {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('tic_audio_mode_enabled');
+      if (stored !== null) {
+        this.globalAudioEnabled = stored === 'true';
+      }
+    }
+  }
 
   public subscribe(listener: (speakingId: string | null) => void): () => void {
     this.listeners.add(listener);
@@ -14,6 +25,41 @@ class SpeechManager {
     return () => {
       this.listeners.delete(listener);
     };
+  }
+
+  public subscribeGlobalAudio(listener: (enabled: boolean) => void): () => void {
+    this.globalAudioListeners.add(listener);
+    listener(this.globalAudioEnabled);
+    return () => {
+      this.globalAudioListeners.delete(listener);
+    };
+  }
+
+  public isGlobalAudio(): boolean {
+    return this.globalAudioEnabled;
+  }
+
+  public toggleGlobalAudio(): boolean {
+    this.globalAudioEnabled = !this.globalAudioEnabled;
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('tic_audio_mode_enabled', String(this.globalAudioEnabled));
+    }
+    this.globalAudioListeners.forEach((fn) => fn(this.globalAudioEnabled));
+    if (!this.globalAudioEnabled) {
+      this.stop();
+    }
+    return this.globalAudioEnabled;
+  }
+
+  public setGlobalAudio(enabled: boolean) {
+    this.globalAudioEnabled = enabled;
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('tic_audio_mode_enabled', String(enabled));
+    }
+    this.globalAudioListeners.forEach((fn) => fn(this.globalAudioEnabled));
+    if (!enabled) {
+      this.stop();
+    }
   }
 
   private notify() {
@@ -57,6 +103,10 @@ class SpeechManager {
 
     // Stop any ongoing speech
     this.stop();
+
+    if (!this.globalAudioEnabled) {
+      this.setGlobalAudio(true);
+    }
 
     const cleanText = this.sanitizeText(rawText);
     if (!cleanText.trim()) return;
