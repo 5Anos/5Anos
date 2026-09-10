@@ -1972,29 +1972,72 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                 ))}
               </div>
 
-              {/* Quiz Presets */}
-              <div className="pt-2 border-t border-slate-200 flex flex-wrap items-center gap-2">
-                <span className="text-xs text-amber-800 font-bold mr-1">
-                  {language === 'pt' ? 'Quizzes de Aprendizagem:' : 'Learning Quizzes:'}
-                </span>
+              {/* Quiz Selection Checklist Grid */}
+              <div className="pt-3 border-t border-slate-200 space-y-2.5">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div className="flex items-center gap-2">
+                    <Award className="w-4 h-4 text-amber-600" />
+                    <span className="text-xs text-amber-900 font-extrabold uppercase tracking-wider">
+                      {language === 'pt' ? 'Seleção de Quizzes Visíveis aos Alunos' : 'Select Visible Quizzes for Students'}
+                    </span>
+                    <span className="text-[11px] font-black px-2.5 py-0.5 rounded-full bg-amber-200/90 text-amber-950 border border-amber-300">
+                      {ALL_THEMES.filter((t) => quizVisibility[t.id] === true).length} / {ALL_THEMES.length} {language === 'pt' ? 'Visíveis' : 'Visible'}
+                    </span>
+                  </div>
 
-                <button
-                  type="button"
-                  onClick={() => handleSetAllQuizzes(true)}
-                  className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
-                >
-                  <Eye className="w-3.5 h-3.5" />
-                  <span>{language === 'pt' ? '🏆 Mostrar Todos os Quizzes' : 'Show All Quizzes'}</span>
-                </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => handleSetAllQuizzes(true)}
+                      className="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-[11px] transition-colors flex items-center gap-1 cursor-pointer"
+                    >
+                      <Eye className="w-3 h-3" />
+                      <span>{language === 'pt' ? 'Marcar Todos' : 'Check All'}</span>
+                    </button>
 
-                <button
-                  type="button"
-                  onClick={() => handleSetAllQuizzes(false)}
-                  className="px-3 py-1.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer"
-                >
-                  <Lock className="w-3.5 h-3.5 text-slate-600" />
-                  <span>{language === 'pt' ? '🔒 Ocultar Todos os Quizzes' : 'Hide All Quizzes'}</span>
-                </button>
+                    <button
+                      type="button"
+                      onClick={() => handleSetAllQuizzes(false)}
+                      className="px-2.5 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-[11px] transition-colors flex items-center gap-1 cursor-pointer"
+                    >
+                      <Lock className="w-3 h-3 text-slate-600" />
+                      <span>{language === 'pt' ? 'Desmarcar Todos' : 'Uncheck All'}</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                  {ALL_THEMES.map((t) => {
+                    const isQuizVis = quizVisibility[t.id] === true;
+                    return (
+                      <label
+                        key={`quiz-select-${t.id}`}
+                        className={`flex items-center justify-between p-2.5 rounded-xl border-2 cursor-pointer transition-all ${
+                          isQuizVis
+                            ? 'bg-amber-100/90 border-amber-400 text-amber-950 font-extrabold shadow-2xs'
+                            : 'bg-white border-slate-200 text-slate-600 hover:border-amber-300'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2 min-w-0">
+                          <input
+                            type="checkbox"
+                            checked={isQuizVis}
+                            onChange={() => handleToggleQuiz(t.id, isQuizVis)}
+                            className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500 cursor-pointer shrink-0"
+                          />
+                          <div className="truncate">
+                            <div className="text-xs font-bold truncate">Tema {t.number}: {t.title[language]}</div>
+                          </div>
+                        </div>
+                        <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md shrink-0 ml-1.5 ${
+                          isQuizVis ? 'bg-amber-300 text-amber-950' : 'bg-slate-100 text-slate-500'
+                        }`}>
+                          {isQuizVis ? 'Visível' : 'Oculto'}
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
