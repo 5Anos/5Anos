@@ -580,35 +580,45 @@ export const api = {
     } catch (fbError: any) {
       console.warn('Firebase Auth sign-in notification:', fbError?.code || fbError?.message);
 
-      // Check for Teacher / Admin accounts
-      if (isUserAdmin(normalizedEmail)) {
-        try {
-          const q = query(collection(db, 'users'), where('email', '==', normalizedEmail), limit(1));
-          const snap = await getDocs(q);
-          if (!snap.empty) {
-            fallbackUserId = snap.docs[0].id;
-          } else {
-            fallbackUserId = 'admin_carla_oliveira_by';
-          }
-        } catch {
-          fallbackUserId = 'admin_carla_oliveira_by';
-        }
-      } else if (
+      // Explicit authentication failure: wrong password or unknown user must ALWAYS be rejected
+      if (
+        fbError?.code === 'auth/wrong-password' ||
+        fbError?.code === 'auth/invalid-credential' ||
+        fbError?.code === 'auth/user-not-found'
+      ) {
+        throw new Error('Palavra-passe ou email incorretos.');
+      }
+
+      // Provider inactive in Firebase Console: safe development / offline fallback
+      if (
         fbError?.code === 'auth/operation-not-allowed' ||
         fbError?.code === 'auth/admin-restricted-operation'
       ) {
-        // Firebase Auth provider is inactive in Firebase Console, verify against Firestore
-        try {
-          const q = query(collection(db, 'users'), where('email', '==', normalizedEmail), limit(1));
-          const snap = await getDocs(q);
-          if (!snap.empty) {
-            fallbackUserId = snap.docs[0].id;
-          } else {
-            throw new Error('Conta não encontrada com este email. Por favor, cria uma conta primeiro.');
+        if (isUserAdmin(normalizedEmail)) {
+          try {
+            const q = query(collection(db, 'users'), where('email', '==', normalizedEmail), limit(1));
+            const snap = await getDocs(q);
+            if (!snap.empty) {
+              fallbackUserId = snap.docs[0].id;
+            } else {
+              fallbackUserId = 'admin_carla_oliveira_by';
+            }
+          } catch {
+            fallbackUserId = 'admin_carla_oliveira_by';
           }
-        } catch (e: any) {
-          if (e.message?.includes('Conta não encontrada')) throw e;
-          throw new Error('Palavra-passe ou email incorretos.');
+        } else {
+          try {
+            const q = query(collection(db, 'users'), where('email', '==', normalizedEmail), limit(1));
+            const snap = await getDocs(q);
+            if (!snap.empty) {
+              fallbackUserId = snap.docs[0].id;
+            } else {
+              throw new Error('Conta não encontrada com este email. Por favor, cria uma conta primeiro.');
+            }
+          } catch (e: any) {
+            if (e.message?.includes('Conta não encontrada')) throw e;
+            throw new Error('Palavra-passe ou email incorretos.');
+          }
         }
       } else {
         throw new Error('Palavra-passe ou email incorretos.');
@@ -882,17 +892,28 @@ export const api = {
     const badgeBonus = eligibleBadges.reduce((acc, b) => acc + b.bonus, 0);
     const totalVerifiedPoints = calculatedPoints + badgeBonus;
 
+    // Legitimate daily tip points from verified history (capped at 50 pts each)
+    const dailyTipPoints = pointsHistory
+      .filter((tx) => tx.id?.startsWith('pt-daily-') || tx.reason?.includes('Curiosidade'))
+      .reduce((sum, tx) => sum + Math.min(50, Math.max(0, tx.amount || 0)), 0);
+
+    const maxLegitimatePoints = totalVerifiedPoints + dailyTipPoints;
+
     // 5. Fetch stored points if any from Firestore
     try {
       const userDoc = await getDoc(doc(db, 'users', user.id));
       if (userDoc.exists()) {
         const d = userDoc.data();
         const storedPoints = typeof d.points === 'number' ? d.points : 0;
-        user.points = Math.max(storedPoints, totalVerifiedPoints);
-        // Self-heal: if verified points exceed stored points, sync back to Firestore
-        if (!isUserAdmin(user.email, user.role) && user.points > storedPoints) {
-          setDoc(doc(db, 'users', user.id), { points: user.points, updatedAt: new Date().toISOString() }, { merge: true }).catch(() => {});
-          setDoc(doc(db, 'publicProfiles', user.id), { points: user.points, updatedAt: new Date().toISOString() }, { merge: true }).catch(() => {});
+        if (!isUserAdmin(user.email, user.role)) {
+          // Reconcile points: never allow arbitrary inflation beyond legitimate activities + bonuses
+          user.points = Math.min(maxLegitimatePoints, Math.max(totalVerifiedPoints, storedPoints));
+          if (storedPoints !== user.points) {
+            setDoc(doc(db, 'users', user.id), { points: user.points, updatedAt: new Date().toISOString() }, { merge: true }).catch(() => {});
+            setDoc(doc(db, 'publicProfiles', user.id), { points: user.points, updatedAt: new Date().toISOString() }, { merge: true }).catch(() => {});
+          }
+        } else {
+          user.points = storedPoints;
         }
       } else {
         user.points = totalVerifiedPoints;
@@ -1001,20 +1022,23 @@ export const api = {
     if (!rawUser) throw new Error('Inicia sessão para guardar o progresso.');
 
     const user: User = JSON.parse(rawUser);
-    const userId = user.id;
+    // Enforce identity integrity: prioritize Firebase Auth currentUser UID if available
+    const userId = (auth.currentUser?.uid && auth.currentUser.uid === user.id)
+      ? auth.currentUser.uid
+      : user.id;
 
     // Validate inputs
     if (!payload.activityId || !payload.themeId) {
       throw new Error('Identificador da atividade em falta.');
     }
 
-    // Clamp and sanitize percentage
+    // Clamp and sanitize percentage (0 to 100)
     let finalPercentage: number | undefined = payload.percentage;
     if (payload.score !== undefined && payload.maxScore && payload.maxScore > 0) {
       const safeScore = Math.max(0, Math.min(payload.score, payload.maxScore));
       finalPercentage = Math.round((safeScore / payload.maxScore) * 100);
     } else if (finalPercentage !== undefined) {
-      finalPercentage = Math.max(0, Math.min(100, finalPercentage));
+      finalPercentage = Math.max(0, Math.min(100, Math.round(Number(finalPercentage) || 0)));
     }
 
     // 1. Fetch current progress list & achievements from Firestore

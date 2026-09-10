@@ -529,6 +529,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   if (!isOpen) return null;
 
   const isAdmin = currentUser && isUserAdmin(currentUser.email, currentUser.role);
+  if (!isAdmin) return null;
 
   const handleExportXLS = () => {
     if (filteredStudents.length === 0) return;

@@ -296,7 +296,7 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
           const isCorrect = userChoice === q.correctIndex;
 
           return (
-            <div key={q.id} className="rounded-[2rem] bg-white border border-slate-200 p-6 shadow-xs space-y-4">
+            <div key={q.id} className="rounded-2xl sm:rounded-[2rem] bg-white border border-slate-200 p-4 sm:p-6 shadow-xs space-y-4">
               <div className="flex items-start gap-3">
                 <span className="w-7 h-7 rounded-full bg-indigo-50 text-indigo-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 border border-indigo-200/60">
                   {idx + 1}
@@ -306,7 +306,7 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                 </h3>
               </div>
 
-              <div className="space-y-2.5 pl-10">
+              <div className="space-y-2.5 sm:pl-10">
                 {q.options[language].map((opt, optIdx) => {
                   let style = 'border-slate-200 bg-white hover:bg-slate-50 text-slate-800';
 
@@ -342,7 +342,7 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
               </div>
 
               {submitted && (
-                <div className={`mt-3 p-4 rounded-xl text-xs sm:text-sm pl-10 ${
+                <div className={`mt-3 p-4 rounded-xl text-xs sm:text-sm sm:pl-10 ${
                   isCorrect ? 'bg-emerald-100/70 text-emerald-950' : 'bg-amber-100/70 text-amber-950'
                 }`}>
                   <p className="font-bold mb-0.5">{isCorrect ? t.correctAnswer : t.wrongAnswer}</p>

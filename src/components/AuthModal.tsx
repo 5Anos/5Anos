@@ -143,7 +143,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
     setLoading(true);
 
     try {
-      const res = await api.login(email, password);
+      const cleanEmail = email.trim().toLowerCase();
+      const cleanPassword = password.trim();
+      const res = await api.login(cleanEmail, cleanPassword);
       setSuccessMsg(language === 'pt' ? 'Sessão iniciada com sucesso!' : 'Signed in successfully!');
       setTimeout(() => {
         onSuccess(res.user);
@@ -161,17 +163,22 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
     setErrorMsg('');
     setSuccessMsg('');
 
-    if (!name.trim()) {
+    const cleanName = name.trim().slice(0, 50);
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanPassword = password.trim();
+    const cleanPublicId = publicId.trim().toUpperCase();
+
+    if (!cleanName) {
       setErrorMsg(language === 'pt' ? 'Por favor, insere o teu nome.' : 'Please enter your name.');
       return;
     }
 
-    if (!email.trim() || !email.includes('@')) {
+    if (!cleanEmail || !cleanEmail.includes('@')) {
       setErrorMsg(language === 'pt' ? 'Por favor, insere um email válido.' : 'Please enter a valid email.');
       return;
     }
 
-    if (password.length < 6) {
+    if (cleanPassword.length < 6) {
       setErrorMsg(
         language === 'pt'
           ? 'A palavra-passe deve ter pelo menos 6 caracteres.'
@@ -188,7 +195,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
     setLoading(true);
 
     try {
-      const res = await api.register(name, email, password, turma, publicId, language, avatar);
+      const res = await api.register(cleanName, cleanEmail, cleanPassword, turma, cleanPublicId, language, avatar);
       setSuccessMsg(
         language === 'pt'
           ? 'Conta criada com sucesso! Bem-vindo ao TIC 5 — Descomplica!'
@@ -206,10 +213,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200 overflow-y-auto">
-      <div className="relative w-full max-w-lg my-8 rounded-[2rem] bg-white shadow-2xl border border-slate-200 overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200 overflow-y-auto">
+      <div className="relative w-full max-w-lg my-auto sm:my-8 rounded-2xl sm:rounded-[2rem] bg-white shadow-2xl border border-slate-200 overflow-hidden max-h-[92vh] flex flex-col">
         {/* Modal Header */}
-        <div className="px-6 pt-6 pb-5 bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-900 text-white flex items-center justify-between">
+        <div className="px-5 sm:px-6 pt-5 sm:pt-6 pb-4 sm:pb-5 bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-900 text-white flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-xl font-bold border border-white/15">
               💡
@@ -288,7 +295,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         )}
 
         {/* Form Body */}
-        <div className="p-6">
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1">
           {/* TAB 1: 🔐 Entrar na Conta */}
           {tab === 'login' && (
             <form onSubmit={handleLogin} className="space-y-4">

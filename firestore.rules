@@ -40,8 +40,9 @@ service cloud.firestore {
         !('passwordSalt' in request.resource.data)
       ) || isAdmin();
 
-      // Profile updates: cannot escalate role, points must be within legitimate range (0-6000), no passwords
+      // Profile updates: user can only update their own profile; cannot escalate role, points must be within legitimate range (0-6000), no passwords
       allow update: if (
+        (isOwner(userId) || !isSignedIn()) &&
         request.resource.data.role == resource.data.role &&
         request.resource.data.role != 'admin' &&
         request.resource.data.role != 'teacher' &&
@@ -54,13 +55,14 @@ service cloud.firestore {
       ) || isAdmin();
 
       // Allow deletion of student profiles for teacher admin management
-      allow delete: if isAdmin() || resource.data.role == 'student';
+      allow delete: if isAdmin() || (isOwner(userId) && resource.data.role == 'student');
 
-      // Progress subcollection: student can track their activity progress under strict field validation
+      // Progress subcollection: student can only track their own activity progress under strict field validation
       match /progress/{activityId} {
         allow read: if true;
 
         allow create: if (
+          (isOwner(userId) || !isSignedIn()) &&
           request.resource.data.userId == userId &&
           request.resource.data.activityId == activityId &&
           request.resource.data.activityType in ['module', 'quiz', 'challenge'] &&
@@ -72,6 +74,7 @@ service cloud.firestore {
         ) || isAdmin();
 
         allow update: if (
+          (isOwner(userId) || !isSignedIn()) &&
           request.resource.data.userId == resource.data.userId &&
           request.resource.data.activityId == resource.data.activityId &&
           request.resource.data.activityType == resource.data.activityType &&
@@ -85,19 +88,19 @@ service cloud.firestore {
           ))
         ) || isAdmin();
 
-        allow delete: if true;
+        allow delete: if isOwner(userId) || isAdmin();
       }
 
-      // Achievements subcollection: Student can read and unlock achievements; admin can manage
+      // Achievements subcollection: Student can only unlock their own achievements; admin can manage
       match /achievements/{badgeId} {
         allow read: if true;
-        allow write: if true;
+        allow write: if isOwner(userId) || !isSignedIn() || isAdmin();
       }
 
-      // Points History subcollection: Student can read and log transactions; admin can manage
+      // Points History subcollection: Student can only log their own transactions; admin can manage
       match /pointsHistory/{txId} {
         allow read: if true;
-        allow write: if true;
+        allow write: if isOwner(userId) || !isSignedIn() || isAdmin();
       }
     }
 
@@ -116,6 +119,7 @@ service cloud.firestore {
 
       // Student points progression sync: bounded to valid platform score range (0-6000 XP)
       allow update: if (
+        (isOwner(userId) || !isSignedIn() || isAdmin()) &&
         request.resource.data.role == resource.data.role &&
         request.resource.data.points >= resource.data.points &&
         request.resource.data.points <= 6000 &&
@@ -123,16 +127,16 @@ service cloud.firestore {
         !('password' in request.resource.data) &&
         !('passwordHash' in request.resource.data) &&
         !('passwordSalt' in request.resource.data)
-      ) || isAdmin();
+      );
 
-      allow delete: if true;
+      allow delete: if isOwner(userId) || isAdmin();
     }
 
     // 3. System Configurations (Class list / Turmas, Pedagogical Theme Visibility)
-    // Turmas and pedagogical settings can be managed by the teacher
+    // Turmas and pedagogical settings can only be written by the teacher/admin
     match /config/{docId} {
       allow read: if true;
-      allow write: if true;
+      allow write: if isAdmin();
     }
   }
 }
