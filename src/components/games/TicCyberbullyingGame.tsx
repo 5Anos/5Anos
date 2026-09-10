@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, XCircle, Shield, AlertTriangle, PhoneCall, HeartHandshake, Eye, MessageSquare, ArrowRight, RotateCcw, Award } from 'lucide-react';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language } from '../../types';
 
 interface TicCyberbullyingGameProps {
@@ -109,6 +110,17 @@ const STORY_SCENARIOS: StoryScenario[] = [
     options: [
       {
         text: {
+          pt: 'Responder com insultos ainda mais graves para se vingar publicamente.',
+          en: 'Reply with even worse insults to take revenge publicly.',
+        },
+        isCorrect: false,
+        feedback: {
+          pt: 'Incorreto! Responder com violência verbal alimenta a provocação e agrava o conflito.',
+          en: 'Incorrect! Escalating insult fights worsens the situation and creates more toxicity.',
+        },
+      },
+      {
+        text: {
           pt: 'Parar (não responder aos insultos) e tirar imediatamente printscreens das mensagens como prova.',
           en: 'Stop (do not reply to insults) and immediately take screenshots as evidence.',
         },
@@ -120,19 +132,8 @@ const STORY_SCENARIOS: StoryScenario[] = [
       },
       {
         text: {
-          pt: 'Responder com insultos ainda mais graves para se defender.',
-          en: 'Reply with even worse insults to defend herself.',
-        },
-        isCorrect: false,
-        feedback: {
-          pt: 'Incorreto! Responder com violência verbal transforma a vítima também em agressora e agrava o problema.',
-          en: 'Incorrect! Escalating insult fights worsens the situation and creates more toxicity.',
-        },
-      },
-      {
-        text: {
-          pt: 'Apagar tudo, calar-se e fingir que nada aconteceu.',
-          en: 'Delete everything, stay silent, and pretend nothing happened.',
+          pt: 'Apagar tudo do telemóvel, calar-se e fingir que não se importa.',
+          en: 'Delete everything, stay silent, and pretend you don’t care.',
         },
         isCorrect: false,
         feedback: {
@@ -155,19 +156,8 @@ const STORY_SCENARIOS: StoryScenario[] = [
     options: [
       {
         text: {
-          pt: 'Ligar para a Linha Internet Segura (800 21 90 90) e conversar com os pais ou o seu professor.',
-          en: 'Call the Safe Internet Helpline (800 21 90 90) and speak with parents or teachers.',
-        },
-        isCorrect: true,
-        feedback: {
-          pt: 'Muito bem! A Linha Internet Segura (800 21 90 90) é gratuita, confidencial e tem especialistas prontos a ouvir e ajudar!',
-          en: 'Well done! The Safe Internet Helpline (800 21 90 90) is free, anonymous, and staffed by caring experts.',
-        },
-      },
-      {
-        text: {
-          pt: 'Publicar a palavra-passe do agressor na Internet.',
-          en: 'Post the aggressor’s password publicly.',
+          pt: 'Publicar a palavra-passe do colega agressor na Internet.',
+          en: 'Post the aggressor’s password publicly on social media.',
         },
         isCorrect: false,
         feedback: {
@@ -177,13 +167,116 @@ const STORY_SCENARIOS: StoryScenario[] = [
       },
       {
         text: {
-          pt: 'Deixar de ir à escola e fechar-se no quarto.',
-          en: 'Skip school and isolate in her bedroom.',
+          pt: 'Deixar de ir às aulas e fechar-se no quarto sem falar com ninguém.',
+          en: 'Skip school and isolate in her bedroom without talking to anyone.',
         },
         isCorrect: false,
         feedback: {
           pt: 'Incorreto! A escola e a família estão lá para proteger os alunos.',
           en: 'Incorrect! School and family exist to keep students safe.',
+        },
+      },
+      {
+        text: {
+          pt: 'Ligar para a Linha Internet Segura (800 21 90 90) e conversar com os pais ou o seu professor.',
+          en: 'Call the Safe Internet Helpline (800 21 90 90) and speak with parents or teachers.',
+        },
+        isCorrect: true,
+        feedback: {
+          pt: 'Muito bem! A Linha Internet Segura (800 21 90 90) é gratuita, confidencial e tem especialistas prontos a ouvir e ajudar!',
+          en: 'Well done! The Safe Internet Helpline (800 21 90 90) is free, anonymous, and staffed by caring experts.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'tomas_story_3',
+    story: {
+      pt: 'O Tomás vê no chat de um jogo online que vários jogadores estão a insultar em coro um colega novo até ele chorar.',
+      en: 'Tomás sees players repeatedly insulting a new gamer in chat until he cries.',
+    },
+    question: {
+      pt: 'Como testemunha (espetador), qual é a atitude correta e solidária do Tomás?',
+      en: 'As a bystander, what is the empathetic and correct action?',
+    },
+    options: [
+      {
+        text: {
+          pt: 'Apoiar o colega em privado, não rir nem partilhar os insultos, e denunciar os agressores no jogo.',
+          en: 'Support the peer privately, do not laugh or share, and report the bullies in the game.',
+        },
+        isCorrect: true,
+        feedback: {
+          pt: 'Perfeito! Os espetadores têm um papel crucial: não incentivar o agressor e apoiar a vítima faz toda a diferença.',
+          en: 'Perfect! Bystanders play a huge role: refusing to amplify bullying and reporting makes gaming safe for all.',
+        },
+      },
+      {
+        text: {
+          pt: 'Juntar-se aos outros e insultar também para ser popular no grupo.',
+          en: 'Join the crowd and insult too to look cool.',
+        },
+        isCorrect: false,
+        feedback: {
+          pt: 'Incorreto! Fazer coro com os agressores torna-te cúmplice de cyberbullying.',
+          en: 'Incorrect! Joining bullies makes you an active participant in harassment.',
+        },
+      },
+      {
+        text: {
+          pt: 'Gravar um vídeo e enviar para todos os amigos para se rirem.',
+          en: 'Record a video and send to everyone to mock the victim.',
+        },
+        isCorrect: false,
+        feedback: {
+          pt: 'Incorreto! Partilhar conteúdos humilhantes propaga o dano psicológico.',
+          en: 'Incorrect! Spreading humiliating content compounds the harm.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'bloquear_story_4',
+    story: {
+      pt: 'Uma conta anónima continua a enviar mensagens insistentes e desconfortáveis através de uma rede social.',
+      en: 'An anonymous account keeps sending uncomfortable messages on social media.',
+    },
+    question: {
+      pt: 'Qual a funcionalidade técnica da aplicação que deves utilizar de imediato?',
+      en: 'Which built-in app feature should you use immediately?',
+    },
+    options: [
+      {
+        text: {
+          pt: 'Enviar a tua morada de casa para tirarem as dúvidas.',
+          en: 'Send your home address to clear up doubts.',
+        },
+        isCorrect: false,
+        feedback: {
+          pt: 'Incorreto! Nunca partilhes dados pessoais privados com desconhecidos.',
+          en: 'Incorrect! Never share private personal info with strangers.',
+        },
+      },
+      {
+        text: {
+          pt: 'Utilizar as opções de Bloquear o perfil e Denunciar à moderação da rede social.',
+          en: 'Use the Block profile and Report features to platform moderators.',
+        },
+        isCorrect: true,
+        feedback: {
+          pt: 'Excelente! Bloquear corta o canal de contacto e denunciar permite que a conta ofensiva seja suspensa.',
+          en: 'Excellent! Blocking stops incoming harassment and reporting flags the account to moderators.',
+        },
+      },
+      {
+        text: {
+          pt: 'Mudar o teu nome para o nome da pessoa anónima.',
+          en: 'Change your display name to the anonymous user’s name.',
+        },
+        isCorrect: false,
+        feedback: {
+          pt: 'Incorreto! Isso não resolve a segurança da tua conta.',
+          en: 'Incorrect! That does not secure your digital space.',
         },
       },
     ],
@@ -247,7 +340,7 @@ export const TicCyberbullyingGame: React.FC<TicCyberbullyingGameProps> = ({
       </button>
 
       {/* Header Banner */}
-      <div className="rounded-3xl bg-gradient-to-r from-rose-900 via-purple-900 to-indigo-950 text-white p-6 sm:p-8 shadow-xl mb-8 relative overflow-hidden">
+      <div className="rounded-3xl bg-gradient-to-r from-rose-900 via-purple-900 to-indigo-950 text-white p-6 sm:p-8 shadow-xl mb-8 relative overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="relative z-10 space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-xs font-black uppercase tracking-wider text-rose-300">
             <Shield className="w-3.5 h-3.5 text-amber-300" />
@@ -262,6 +355,18 @@ export const TicCyberbullyingGame: React.FC<TicCyberbullyingGameProps> = ({
               : 'Master the 5-step rule against cyberbullying and learn how to get support via the Safe Internet Helpline (800 21 90 90).'}
           </p>
         </div>
+        <AudioSpeakButton
+          id="cyberbullying-header"
+          text={`${language === 'pt' ? 'Guardião Digital: Cyberbullying e Linha Internet Segura' : 'Digital Guardian: Cyberbullying and Helpline'}. ${
+            language === 'pt'
+              ? 'Aprende a Regra dos 5 Passos contra o cyberbullying e descobre como pedir ajuda de forma segura e gratuita na Linha Internet Segura, 800 21 90 90.'
+              : 'Master the 5-step rule against cyberbullying and learn how to get support via the Safe Internet Helpline, 800 21 90 90.'
+          }`}
+          language={language}
+          label={language === 'pt' ? 'Ouvir Introdução' : 'Listen Intro'}
+          variant="pill"
+          size="sm"
+        />
       </div>
 
       {/* STAGE 1: OS 5 PASSOS INTERATIVOS */}
@@ -325,6 +430,13 @@ export const TicCyberbullyingGame: React.FC<TicCyberbullyingGameProps> = ({
                       <h3 className="text-lg font-black text-slate-900">{step.title[language]}</h3>
                     </div>
                   </div>
+                  <AudioSpeakButton
+                    id={`cyber-step-${step.num}`}
+                    text={`${step.title[language]}. ${step.action[language]}. Porquê? ${step.why[language]}`}
+                    language={language}
+                    variant="icon"
+                    size="sm"
+                  />
                 </div>
 
                 <div className="space-y-2">
@@ -370,10 +482,25 @@ export const TicCyberbullyingGame: React.FC<TicCyberbullyingGameProps> = ({
                 </h2>
               </div>
             </div>
+            <AudioSpeakButton
+              id={`cyber-scenario-head-${curScenario.id}`}
+              text={`${language === 'pt' ? 'Caso Prático: O Desafio da Ana' : 'Case Study: Ana’s Challenge'}. ${curScenario.story[language]}. Pergunta: ${curScenario.question[language]}`}
+              language={language}
+              label={language === 'pt' ? 'Ouvir Caso' : 'Listen Case'}
+              variant="pill"
+              size="sm"
+            />
           </div>
 
-          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 text-xs sm:text-sm leading-relaxed font-medium">
-            "{curScenario.story[language]}"
+          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 text-xs sm:text-sm leading-relaxed font-medium flex items-start justify-between gap-3">
+            <p className="flex-1">"{curScenario.story[language]}"</p>
+            <AudioSpeakButton
+              id={`cyber-scenario-story-${curScenario.id}`}
+              text={curScenario.story[language]}
+              language={language}
+              variant="icon"
+              size="xs"
+            />
           </div>
 
           <div className="space-y-3 pt-2">
@@ -381,6 +508,13 @@ export const TicCyberbullyingGame: React.FC<TicCyberbullyingGameProps> = ({
               <h3 className="text-sm sm:text-base font-black text-slate-900 flex-1">
                 {curScenario.question[language]}
               </h3>
+              <AudioSpeakButton
+                id={`cyber-scenario-q-${curScenario.id}`}
+                text={`${curScenario.question[language]}. ${curScenario.options.map((opt, i) => `Opção ${i + 1}: ${opt.text[language]}`).join('. ')}`}
+                language={language}
+                variant="icon"
+                size="xs"
+              />
             </div>
 
             <div className="space-y-2.5">

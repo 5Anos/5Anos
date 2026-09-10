@@ -122,19 +122,19 @@ export const themeTicSociedadeData: ThemeDefinition = {
           },
           options: {
             pt: [
-              'Tecnologias da Informação e Comunicação',
               'Técnicas de Informática e Cabos',
+              'Tecnologias da Informação e Comunicação',
               'Telemóveis e Internet em Casa',
               'Transmissão Instantânea de Computadores',
             ],
             en: [
-              'Information and Communication Technologies',
               'Techniques of Informatics and Cables',
+              'Information and Communication Technologies',
               'Telephones and Internet at Home',
               'Instant Computer Transmission',
             ],
           },
-          correctIndex: 0,
+          correctIndex: 1,
           explanation: {
             pt: 'TIC significa Tecnologias da Informação e Comunicação.',
             en: 'ICT stands for Information and Communication Technologies.',
@@ -210,19 +210,19 @@ export const themeTicSociedadeData: ThemeDefinition = {
           },
           options: {
             pt: [
-              'NFC (Near Field Communication / Contactless)',
               'Bluetooth de longo alcance',
               'Sensor de humidade do solo',
+              'NFC (Near Field Communication / Contactless)',
               'Impressão a laser',
             ],
             en: [
-              'NFC (Near Field Communication / Contactless)',
               'Long-range Bluetooth',
               'Soil moisture sensor',
+              'NFC (Near Field Communication / Contactless)',
               'Laser printing',
             ],
           },
-          correctIndex: 0,
+          correctIndex: 2,
           explanation: {
             pt: 'O contactless utiliza ondas de rádio NFC de curto alcance.',
             en: 'Contactless payments utilize short-range NFC radio signals.',
@@ -294,19 +294,19 @@ export const themeTicSociedadeData: ThemeDefinition = {
           },
           options: {
             pt: [
-              'Processar biliões de cálculos complexos para ciência e previsões climáticas',
               'Servir apenas para ver vídeos infantis na Internet',
+              'Processar biliões de cálculos complexos para ciência e previsões climáticas',
               'Imprimir folhas em papel mais depressa',
               'Substituir os cadernos escolares na mochila',
             ],
             en: [
-              'Process billions of complex calculations for climate models and science',
               'Only play video games',
+              'Process billions of complex calculations for climate models and science',
               'Print paper faster',
               'Replace school backpack notebooks',
             ],
           },
-          correctIndex: 0,
+          correctIndex: 1,
           explanation: {
             pt: 'Supercomputadores realizam cálculos gigantescos para investigação científica e previsões meteorológicas.',
             en: 'Supercomputers process massive computational models for science and weather forecasting.',
@@ -380,19 +380,19 @@ export const themeTicSociedadeData: ThemeDefinition = {
           },
           options: {
             pt: [
-              '800 21 90 90',
               '112',
               '808 24 24 24',
+              '800 21 90 90',
               '118',
             ],
             en: [
-              '800 21 90 90',
               '112',
               '808 24 24 24',
+              '800 21 90 90',
               '118',
             ],
           },
-          correctIndex: 0,
+          correctIndex: 2,
           explanation: {
             pt: 'A Linha Internet Segura atende gratuitamente no 800 21 90 90.',
             en: 'The Safe Internet Helpline operates toll-free at 800 21 90 90.',
@@ -477,19 +477,19 @@ export const themeTicSociedadeData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Tecnologias da Informação e Comunicação: ferramentas que nos ajudam a trabalhar com informação e a comunicar.',
           'Técnicas de Informática e Cabos: aparelhos elétricos que apenas servem para ligar computadores à corrente.',
+          'Tecnologias da Informação e Comunicação: ferramentas que nos ajudam a trabalhar com informação e a comunicar.',
           'Transmissão Instantânea de Computadores: programas exclusivos para criar videojogos em computadores de secretária.',
           'Telefones e Internet em Casa: um serviço que serve apenas para fazer chamadas telefónicas fixas.',
         ],
         en: [
-          'Information and Communication Technologies: tools that help us process information and communicate.',
           'Informatics and Cables: electrical accessories used only to plug computers into power sockets.',
+          'Information and Communication Technologies: tools that help us process information and communicate.',
           'Instant Computer Transmission: programs exclusively designed for desktop video games.',
           'Home Internet & Phones: a service used solely for landline phone calls.',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 1,
       explanation: {
         pt: 'As TIC (Tecnologias da Informação e Comunicação) são tecnologias que nos ajudam a criar, guardar, organizar, procurar e comunicar informação.',
         en: 'ICT stands for Information and Communication Technologies, enabling us to create, store, organize, search, and communicate data.',
@@ -503,19 +503,19 @@ export const themeTicSociedadeData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Porque o mais importante é o que fazemos com eles: os programas, a Internet e a forma como comunicamos e resolvemos problemas.',
           'Porque os aparelhos eletrónicos não funcionam sem pilhas ou baterias recarregáveis.',
           'Porque os livros em papel e os cadernos escolares também são considerados aparelhos eletrónicos digitais.',
+          'Porque o mais importante é o que fazemos com eles: os programas, a Internet e a forma como comunicamos e resolvemos problemas.',
           'Porque qualquer objeto de plástico utilizado na sala de aula é considerado uma TIC.',
         ],
         en: [
-          'Because what matters most is what we accomplish with them: software, networks, communication, and problem-solving.',
           'Because electronic devices require rechargeable batteries to operate.',
           'Because paper textbooks and notebooks are also classified as digital electronic devices.',
+          'Because what matters most is what we accomplish with them: software, networks, communication, and problem-solving.',
           'Because every plastic object used in the classroom is considered ICT.',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 2,
       explanation: {
         pt: 'As TIC englobam os equipamentos, as aplicações, as redes e, acima de tudo, as tarefas e problemas que conseguimos resolver através delas.',
         en: 'ICT encompasses hardware, software, networks, and above all, our capacity to solve real-world problems through them.',
@@ -555,19 +555,19 @@ export const themeTicSociedadeData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'O GPS (Sistema de Posicionamento Global) através de uma aplicação de mapas no telemóvel.',
           'Um sensor de humidade colocado no solo do jardim da rua.',
           'Uma impressora multifunções ligada por cabo USB ao computador.',
           'Um leitor de código de barras instalado numa caixa de supermercado.',
+          'O GPS (Sistema de Posicionamento Global) através de uma aplicação de mapas no telemóvel.',
         ],
         en: [
-          'GPS (Global Positioning System) via a mobile map application.',
           'A soil moisture sensor placed in a sidewalk flowerbed.',
           'A multifunction printer plugged into a computer via USB.',
           'A barcode scanner installed at a supermarket checkout.',
+          'GPS (Global Positioning System) via a mobile map application.',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 3,
       explanation: {
         pt: 'O GPS recebe sinais de satélites no espaço para calcular a localização exata e indicar o melhor caminho no mapa.',
         en: 'GPS calculates coordinates from space satellite signals to deliver turn-by-turn navigation.',
@@ -581,19 +581,19 @@ export const themeTicSociedadeData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Permitem consultar exames no computador, fazer teleconsultas à distância e usar robôs como ferramentas de apoio em cirurgias.',
           'Substituem totalmente os médicos e enfermeiros, que deixam de ser necessários no hospital.',
+          'Permitem consultar exames no computador, fazer teleconsultas à distância e usar robôs como ferramentas de apoio em cirurgias.',
           'Servem apenas para os doentes jogarem videojogos nas salas de espera.',
           'Fazem o diagnóstico automático de todas as doenças sem qualquer intervenção ou decisão humana.',
         ],
         en: [
-          'They allow digital medical record access, remote telemedicine, and high-precision robot assistance for surgeons.',
           'They completely replace human doctors and nurses who are no longer needed.',
+          'They allow digital medical record access, remote telemedicine, and high-precision robot assistance for surgeons.',
           'They are used solely for patients to play video games in waiting rooms.',
           'They diagnose all medical conditions automatically without human physician oversight.',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 1,
       explanation: {
         pt: 'As TIC facilitam processos clínicos, permitem telemedicina e disponibilizam robôs de apoio com grande precisão aos cirurgiões.',
         en: 'ICT enables electronic patient records, telemedicine, and provides surgical robotic assistance to doctors.',
@@ -607,19 +607,19 @@ export const themeTicSociedadeData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Instalando sensores de humidade no solo ligados em rede (IoT / Internet das Coisas) que avisam quando o solo está seco.',
           'Regando todo o campo continuamente dia e noite com a mesma quantidade de água, mesmo quando chove.',
           'Substituindo todas as plantas naturais por fotografias digitais projetadas num ecrã.',
+          'Instalando sensores de humidade no solo ligados em rede (IoT / Internet das Coisas) que avisam quando o solo está seco.',
           'Colocando um microfone no campo para ouvir as folhas a crescer.',
         ],
         en: [
-          'Installing networked soil moisture sensors (IoT) that signal when the soil is genuinely dry.',
           'Watering the entire field non-stop day and night, even during heavy rain.',
           'Replacing natural crops with digital photos projected on a screen.',
+          'Installing networked soil moisture sensors (IoT) that signal when the soil is genuinely dry.',
           'Placing a microphone in the field to listen to leaves growing.',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 2,
       explanation: {
         pt: 'Os sensores detetam a humidade do solo e comunicam através da IoT para regar apenas quando é necessário, poupando água.',
         en: 'Sensors detect soil moisture and communicate via IoT to irrigate only when necessary, conserving water.',
@@ -659,19 +659,19 @@ export const themeTicSociedadeData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Parar a conversa, não responder, guardar provas (printscreens), bloquear o contacto e pedir ajuda a um adulto de confiança.',
           'Responder imediatamente com insultos mais graves para demonstrar força.',
           'Partilhar as mensagens em todas as redes sociais públicas para criar uma discussão geral.',
           'Apagar tudo rapidamente, esconder o telemóvel e não contar a ninguém por vergonha.',
+          'Parar a conversa, não responder, guardar provas (printscreens), bloquear o contacto e pedir ajuda a um adulto de confiança.',
         ],
         en: [
-          'Stop talking, do not reply, save screenshot evidence, block the sender, and ask a trusted adult for help.',
           'Reply with worse insults to prove strength.',
           'Broadcast the messages on all public social channels to start a dispute.',
           'Delete everything, hide the phone, and stay silent out of shame.',
+          'Stop talking, do not reply, save screenshot evidence, block the sender, and ask a trusted adult for help.',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 3,
       explanation: {
         pt: 'A regra dos 5 passos (Parar, Guardar, Bloquear, Denunciar e Pedir Ajuda) garante segurança e permite a intervenção de adultos.',
         en: 'The 5-step rule (Stop, Save, Block, Report, Seek Help) protects victims and allows adults to intervene effectively.',
@@ -685,19 +685,19 @@ export const themeTicSociedadeData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Fazer pausas, desligar ecrãs antes de dormir e equilibrar com sono (9-10h), estudo, desporto e família.',
           'Jogar durante a noite toda porque a luz do ecrã ajuda a descansar a mente.',
           'Deixar de estudar para ter mais horas livres para subir de nível nos jogos.',
+          'Fazer pausas, desligar ecrãs antes de dormir e equilibrar com sono (9-10h), estudo, desporto e família.',
           'Nunca mais tocar em nenhum computador ou telemóvel durante toda a vida.',
         ],
         en: [
-          'Take regular breaks, avoid screens before bed, and balance digital time with sleep (9-10 hrs), study, sports, and family.',
           'Play games all night because screen light relaxes brain activity.',
           'Stop doing homework to maximize gaming leveling hours.',
+          'Take regular breaks, avoid screens before bed, and balance digital time with sleep (9-10 hrs), study, sports, and family.',
           'Never touch a computer or smartphone ever again for life.',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 2,
       explanation: {
         pt: 'O uso saudável das TIC exige equilíbrio entre as atividades digitais, o sono reparador, o desporto e o convívio presencial.',
         en: 'Healthy ICT usage requires balancing digital screen time with restful sleep, physical exercise, and family time.',
@@ -711,19 +711,19 @@ export const themeTicSociedadeData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Entregá-los num ponto de recolha próprio (Ponto Eletrão) para reciclagem segura dos materiais.',
           'Deitá-los no contentor do lixo comum da cozinha juntamente com restos de comida.',
+          'Entregá-los num ponto de recolha próprio (Ponto Eletrão) para reciclagem segura dos materiais.',
           'Deitá-los no ecoponto azul do papel e cartão para serem triturados.',
           'Queimá-los no quintal para libertar espaço nas gavetas.',
         ],
         en: [
-          'Deliver them to a dedicated e-waste collection bin (Ponto Eletrão) for safe material recycling.',
           'Toss them into household kitchen food waste bins.',
+          'Deliver them to a dedicated e-waste collection bin (Ponto Eletrão) for safe material recycling.',
           'Throw them into the blue paper and cardboard recycling bin.',
           'Burn them in the backyard to free up drawer space.',
         ],
       },
-      correctIndex: 0,
+      correctIndex: 1,
       explanation: {
         pt: 'Equipamentos elétricos e eletrónicos têm componentes perigosos e metais recicláveis; devem ser sempre colocados no Ponto Eletrão.',
         en: 'Electronics contain both hazardous chemicals and recoverable metals; they must be disposed of at dedicated e-waste recycling points.',

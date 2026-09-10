@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, XCircle, Sparkles, HelpCircle, ArrowRight, RotateCcw, Lightbulb, Compass, Award } from 'lucide-react';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language } from '../../types';
 
 interface TicWhatIsTechGameProps {
@@ -131,21 +132,21 @@ const PROBLEMS_DATA: ProblemSolution[] = [
     options: [
       {
         id: 'opt1_a',
-        text: { pt: 'Videochamada através da Internet', en: 'Internet Video Call' },
-        why: {
-          pt: 'Excelente! A videochamada combina imagem e voz instantânea através da rede, aproximando pessoas mesmo a milhares de quilómetros.',
-          en: 'Excellent! Video calls combine real-time voice and video over the network, connecting people thousands of miles apart.',
-        },
-        isBest: true,
-      },
-      {
-        id: 'opt1_b',
         text: { pt: 'Enviar uma carta pelos correios', en: 'Send a physical letter by post' },
         why: {
           pt: 'Uma carta é bonita, mas demora dias ou semanas a chegar e não permite ver o rosto nem conversar em direto.',
           en: 'A letter is nice, but takes weeks and does not allow seeing faces or live interaction.',
         },
         isBest: false,
+      },
+      {
+        id: 'opt1_b',
+        text: { pt: 'Videochamada através da Internet', en: 'Internet Video Call' },
+        why: {
+          pt: 'Excelente! A videochamada combina imagem e voz instantânea através da rede, aproximando pessoas mesmo a milhares de quilómetros.',
+          en: 'Excellent! Video calls combine real-time voice and video over the network, connecting people thousands of miles apart.',
+        },
+        isBest: true,
       },
       {
         id: 'opt1_c',
@@ -168,15 +169,6 @@ const PROBLEMS_DATA: ProblemSolution[] = [
     options: [
       {
         id: 'opt2_a',
-        text: { pt: 'Aplicação de mapas com GPS no telemóvel', en: 'Maps app with GPS on smartphone' },
-        why: {
-          pt: 'Perfeito! O GPS recebe sinais de satélites e calcula a rota exata passo a passo com indicação do tempo de chegada.',
-          en: 'Perfect! GPS receives satellite signals and calculates turn-by-turn directions with estimated arrival times.',
-        },
-        isBest: true,
-      },
-      {
-        id: 'opt2_b',
         text: { pt: 'Sensor de humidade do solo', en: 'Soil moisture sensor' },
         why: {
           pt: 'Um sensor de humidade mede a água na terra das plantas, não serve para navegação de trânsito.',
@@ -185,13 +177,22 @@ const PROBLEMS_DATA: ProblemSolution[] = [
         isBest: false,
       },
       {
-        id: 'opt2_c',
+        id: 'opt2_b',
         text: { pt: 'Caminhar à toa até encontrar o museu', en: 'Walk randomly until finding it' },
         why: {
           pt: 'Podes perder-te ou demorar muito tempo. A tecnologia de mapas com GPS resolve este problema com rapidez e segurança.',
           en: 'You might get lost. GPS maps solve this safely and efficiently.',
         },
         isBest: false,
+      },
+      {
+        id: 'opt2_c',
+        text: { pt: 'Aplicação de mapas com GPS no telemóvel', en: 'Maps app with GPS on smartphone' },
+        why: {
+          pt: 'Perfeito! O GPS recebe sinais de satélites e calcula a rota exata passo a passo com indicação do tempo de chegada.',
+          en: 'Perfect! GPS receives satellite signals and calculates turn-by-turn directions with estimated arrival times.',
+        },
+        isBest: true,
       },
     ],
   },
@@ -221,6 +222,15 @@ const PROBLEMS_DATA: ProblemSolution[] = [
         },
         isBest: false,
       },
+      {
+        id: 'opt3_c',
+        text: { pt: 'Desligar o computador e inventar factos ao calhas', en: 'Turn off the computer and guess facts randomly' },
+        why: {
+          pt: 'Trabalhos escolares exigem dados científicos comprovados e rigorosos, não adivinhação.',
+          en: 'School projects require validated, factual sources rather than guesswork.',
+        },
+        isBest: false,
+      },
     ],
   },
   {
@@ -233,6 +243,15 @@ const PROBLEMS_DATA: ProblemSolution[] = [
     options: [
       {
         id: 'opt4_a',
+        text: { pt: 'Regar o campo inteiro dia e noite sem parar', en: 'Water the entire field constantly day and night' },
+        why: {
+          pt: 'Isso desperdiça muita água e pode afogar as plantas. A tecnologia ajuda a tomar decisões sustentáveis.',
+          en: 'This wastes water and harms crops. ICT enables sustainable precision farming.',
+        },
+        isBest: false,
+      },
+      {
+        id: 'opt4_b',
         text: { pt: 'Sensores de humidade no solo ligados em rede (IoT / Internet das Coisas)', en: 'Connected soil moisture sensors (IoT)' },
         why: {
           pt: 'Exatamente! Os sensores medem a água no solo e enviam alertas para o agricultor regar apenas onde é necessário, poupando água.',
@@ -241,11 +260,85 @@ const PROBLEMS_DATA: ProblemSolution[] = [
         isBest: true,
       },
       {
-        id: 'opt4_b',
-        text: { pt: 'Regar o campo inteiro dia e noite sem parar', en: 'Water the entire field constantly day and night' },
+        id: 'opt4_c',
+        text: { pt: 'Pintar a relva com tinta verde', en: 'Paint the grass with green paint' },
         why: {
-          pt: 'Isso desperdiça muita água e pode afogar as plantas. A tecnologia ajuda a tomar decisões sustentáveis.',
-          en: 'This wastes water and harms crops. ICT enables sustainable precision farming.',
+          pt: 'Pintar plantas não resolve a necessidade biológica de água nem traz sustentabilidade.',
+          en: 'Painting does not solve irrigation needs or sustainability.',
+        },
+        isBest: false,
+      },
+    ],
+  },
+  {
+    id: 'prob5',
+    icon: '👥',
+    problem: {
+      pt: 'Precisas de fazer um trabalho de grupo com três colegas ao mesmo tempo, mas cada um está em sua casa.',
+      en: 'You need to work on a group project with three classmates simultaneously from your homes.',
+    },
+    options: [
+      {
+        id: 'opt5_a',
+        text: { pt: 'Esperar pela próxima aula e tentar fazer tudo em 5 minutos', en: 'Wait for next class and rush in 5 minutes' },
+        why: {
+          pt: 'Fazer tudo à pressa resulta num trabalho incompleto e com fraca qualidade.',
+          en: 'Rushing in the last minutes leads to poor, incomplete school work.',
+        },
+        isBest: false,
+      },
+      {
+        id: 'opt5_b',
+        text: { pt: 'Enviar mensagens em papel com pombos-correio', en: 'Send paper notes with carrier pigeons' },
+        why: {
+          pt: 'Método histórico lento que não permite edição conjunta e rápida de documentos.',
+          en: 'Ancient method that does not enable real-time joint document editing.',
+        },
+        isBest: false,
+      },
+      {
+        id: 'opt5_c',
+        text: { pt: 'Documento colaborativo na nuvem (Cloud) com edição em tempo real', en: 'Collaborative cloud document with real-time editing' },
+        why: {
+          pt: 'Perfeito! As ferramentas na nuvem permitem que vários alunos escrevam e revejam o mesmo documento ao mesmo tempo.',
+          en: 'Perfect! Cloud tools allow multiple students to write and review the same project simultaneously.',
+        },
+        isBest: true,
+      },
+    ],
+  },
+  {
+    id: 'prob6',
+    icon: '📊',
+    problem: {
+      pt: 'A professora pediu para apresentares um resumo com fotografias, esquemas e texto perante toda a turma.',
+      en: 'The teacher asked you to present a summary with images, diagrams, and text to the class.',
+    },
+    options: [
+      {
+        id: 'opt6_a',
+        text: { pt: 'Programa de apresentação digital de diapositivos (slides)', en: 'Digital slide presentation software' },
+        why: {
+          pt: 'Fantástico! Os programas de apresentação combinam imagens, texto e animações de forma clara e profissional num projetor.',
+          en: 'Fantastic! Presentation software combines graphics, text, and visuals clearly on a projector.',
+        },
+        isBest: true,
+      },
+      {
+        id: 'opt6_b',
+        text: { pt: 'Calculadora de bolso simples', en: 'Basic pocket calculator' },
+        why: {
+          pt: 'A calculadora só faz operações matemáticas básicas, não exibe apresentações multimédia.',
+          en: 'Calculators only compute math equations, they do not show multimedia slides.',
+        },
+        isBest: false,
+      },
+      {
+        id: 'opt6_c',
+        text: { pt: 'Leitor ótico de códigos de barras', en: 'Barcode scanner' },
+        why: {
+          pt: 'O leitor ótico serve para identificar produtos em lojas, não para apresentar trabalhos escolares.',
+          en: 'Barcode scanners identify store products, not school presentations.',
         },
         isBest: false,
       },
@@ -346,7 +439,7 @@ export const TicWhatIsTechGame: React.FC<TicWhatIsTechGameProps> = ({
       </button>
 
       {/* Header Banner */}
-      <div className="rounded-3xl bg-gradient-to-r from-blue-900 via-indigo-900 to-indigo-950 text-white p-6 sm:p-8 shadow-xl mb-8 relative overflow-hidden">
+      <div className="rounded-3xl bg-gradient-to-r from-blue-900 via-indigo-900 to-indigo-950 text-white p-6 sm:p-8 shadow-xl mb-8 relative overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="relative z-10 space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-xs font-black uppercase tracking-wider text-sky-300">
             <Sparkles className="w-3.5 h-3.5 text-amber-300" />
@@ -361,23 +454,48 @@ export const TicWhatIsTechGame: React.FC<TicWhatIsTechGameProps> = ({
               : 'Discover what makes a tool ICT and understand how technology solves real everyday problems!'}
           </p>
         </div>
+        <AudioSpeakButton
+          id="whatistech-header"
+          text={`${language === 'pt' ? 'É uma TIC e Que Tecnologia Ajuda?' : 'Is it ICT and Which Tech Helps?'}. ${
+            language === 'pt'
+              ? 'Descobre a função das tecnologias, compreende por que razão são TIC e descobre como a tecnologia ajuda a resolver problemas do dia a dia!'
+              : 'Discover what makes a tool ICT and understand how technology solves real everyday problems!'
+          }`}
+          language={language}
+          label={language === 'pt' ? 'Ouvir Introdução' : 'Listen Intro'}
+          variant="pill"
+          size="sm"
+        />
       </div>
 
       {/* PHASE 1: É uma TIC? Porquê? */}
       {activePhase === 'phase1' && (
         <div className="space-y-6 animate-in fade-in">
-          <div className="p-4 sm:p-5 rounded-2xl bg-indigo-50 border border-indigo-200 flex items-start gap-3">
-            <Lightbulb className="w-6 h-6 text-indigo-600 shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <h2 className="text-base sm:text-lg font-black text-indigo-950">
-                {language === 'pt' ? 'Parte 1: É uma TIC? Sim ou Não?' : 'Part 1: Is it ICT? Yes or No?'}
-              </h2>
-              <p className="text-xs sm:text-sm text-indigo-900 font-medium leading-relaxed">
-                {language === 'pt'
-                  ? 'As TIC são tecnologias que nos ajudam a trabalhar com informação e a comunicar. Classifica cada um dos 8 itens abaixo e descobre o porquê de cada resposta!'
-                  : 'ICT are tools that help us process information and communicate. Classify each item below and discover the reason!'}
-              </p>
+          <div className="p-4 sm:p-5 rounded-2xl bg-indigo-50 border border-indigo-200 flex items-start justify-between gap-3">
+            <div className="flex items-start gap-3">
+              <Lightbulb className="w-6 h-6 text-indigo-600 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <h2 className="text-base sm:text-lg font-black text-indigo-950">
+                  {language === 'pt' ? 'Parte 1: É uma TIC? Sim ou Não?' : 'Part 1: Is it ICT? Yes or No?'}
+                </h2>
+                <p className="text-xs sm:text-sm text-indigo-900 font-medium leading-relaxed">
+                  {language === 'pt'
+                    ? 'As TIC são tecnologias que nos ajudam a trabalhar com informação e a comunicar. Classifica cada um dos 8 itens abaixo e descobre o porquê de cada resposta!'
+                    : 'ICT are tools that help us process information and communicate. Classify each item below and discover the reason!'}
+                </p>
+              </div>
             </div>
+            <AudioSpeakButton
+              id="whatistech-p1-instructions"
+              text={`${language === 'pt' ? 'Parte 1: É uma TIC? Sim ou Não?' : 'Part 1: Is it ICT? Yes or No?'}. ${
+                language === 'pt'
+                  ? 'As TIC são tecnologias que nos ajudam a trabalhar com informação e a comunicar. Classifica cada um dos 8 itens abaixo!'
+                  : 'ICT are tools that help us process information and communicate. Classify each item below!'
+              }`}
+              language={language}
+              variant="icon"
+              size="sm"
+            />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -400,18 +518,27 @@ export const TicWhatIsTechGame: React.FC<TicWhatIsTechGameProps> = ({
                   }`}
                 >
                   <div>
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-2xl shrink-0">
-                        {item.icon}
+                    <div className="flex items-center justify-between gap-3 mb-2">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-2xl shrink-0">
+                          {item.icon}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block truncate">
+                            {item.category[language]}
+                          </span>
+                          <h3 className="text-sm sm:text-base font-extrabold text-slate-900 leading-snug">
+                            {item.name[language]}
+                          </h3>
+                        </div>
                       </div>
-                      <div className="min-w-0 flex-1">
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block truncate">
-                          {item.category[language]}
-                        </span>
-                        <h3 className="text-sm sm:text-base font-extrabold text-slate-900 leading-snug">
-                          {item.name[language]}
-                        </h3>
-                      </div>
+                      <AudioSpeakButton
+                        id={`tech-item-${item.id}`}
+                        text={`${item.name[language]}. ${phase1Checked ? item.why[language] : ''}`}
+                        language={language}
+                        variant="icon"
+                        size="xs"
+                      />
                     </div>
 
                     {/* Educational feedback if checked */}
@@ -507,20 +634,29 @@ export const TicWhatIsTechGame: React.FC<TicWhatIsTechGameProps> = ({
       {/* PHASE 2: Que tecnologia poderia ajudar? */}
       {activePhase === 'phase2' && (
         <div className="space-y-6 animate-in fade-in">
-          <div className="p-4 sm:p-5 rounded-2xl bg-amber-50 border border-amber-200 flex items-start gap-3">
-            <Compass className="w-6 h-6 text-amber-700 shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-black text-amber-800 uppercase tracking-wider bg-amber-200/80 px-2 py-0.5 rounded-full">
-                  {language === 'pt'
-                    ? `Situação ${currentProblemIdx + 1} de ${PROBLEMS_DATA.length}`
-                    : `Scenario ${currentProblemIdx + 1} of ${PROBLEMS_DATA.length}`}
-                </span>
+          <div className="p-4 sm:p-5 rounded-2xl bg-amber-50 border border-amber-200 flex items-start justify-between gap-3">
+            <div className="flex items-start gap-3">
+              <Compass className="w-6 h-6 text-amber-700 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-black text-amber-800 uppercase tracking-wider bg-amber-200/80 px-2 py-0.5 rounded-full">
+                    {language === 'pt'
+                      ? `Situação ${currentProblemIdx + 1} de ${PROBLEMS_DATA.length}`
+                      : `Scenario ${currentProblemIdx + 1} of ${PROBLEMS_DATA.length}`}
+                  </span>
+                </div>
+                <h2 className="text-base sm:text-lg font-black text-amber-950">
+                  {language === 'pt' ? 'Parte 2: Que tecnologia poderia ajudar a resolver o problema?' : 'Part 2: Which technology could help solve this problem?'}
+                </h2>
               </div>
-              <h2 className="text-base sm:text-lg font-black text-amber-950">
-                {language === 'pt' ? 'Parte 2: Que tecnologia poderia ajudar a resolver o problema?' : 'Part 2: Which technology could help solve this problem?'}
-              </h2>
             </div>
+            <AudioSpeakButton
+              id={`tech-p2-card-${currentProblem.id}`}
+              text={`${language === 'pt' ? 'Problema:' : 'Problem:'} ${currentProblem.problem[language]}. ${language === 'pt' ? 'Qual é a melhor solução tecnológica?' : 'Which is the best tech solution?'}`}
+              language={language}
+              variant="pill"
+              size="sm"
+            />
           </div>
 
           {/* Current Problem Card */}
@@ -539,6 +675,13 @@ export const TicWhatIsTechGame: React.FC<TicWhatIsTechGameProps> = ({
                   </h3>
                 </div>
               </div>
+              <AudioSpeakButton
+                id={`tech-prob-${currentProblem.id}`}
+                text={currentProblem.problem[language]}
+                language={language}
+                variant="icon"
+                size="xs"
+              />
             </div>
 
             <div className="space-y-3 pt-2">
@@ -546,6 +689,13 @@ export const TicWhatIsTechGame: React.FC<TicWhatIsTechGameProps> = ({
                 <p className="text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-wider">
                   {language === 'pt' ? 'Qual é a melhor solução tecnológica?' : 'Which is the best tech solution?'}
                 </p>
+                <AudioSpeakButton
+                  id={`tech-prob-opts-${currentProblem.id}`}
+                  text={currentProblem.options.map((o, idx) => `Opção ${idx + 1}: ${o.text[language]}`).join('. ')}
+                  language={language}
+                  variant="icon"
+                  size="xs"
+                />
               </div>
 
               <div className="space-y-2.5">

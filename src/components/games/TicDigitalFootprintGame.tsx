@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, XCircle, Sparkles, Shield, Trash2, Clock, Globe, ArrowRight, RotateCcw, Award, ThumbsUp, AlertTriangle } from 'lucide-react';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language } from '../../types';
 
 interface TicDigitalFootprintGameProps {
@@ -13,7 +14,7 @@ interface ItemToClassify {
   icon: string;
   title: { pt: string; en: string };
   desc: { pt: string; en: string };
-  correctCategory: 'safe' | 'caution' | 'danger';
+  correctCategory: 'safe' | 'danger';
   feedback: { pt: string; en: string };
 }
 
@@ -74,48 +75,6 @@ const ITEMS_LIST: ItemToClassify[] = [
       en: '❌ Do not share! Passwords are strictly personal. Never reveal them even to best friends.',
     },
   },
-  {
-    id: 'f5',
-    icon: '🎮',
-    title: { pt: 'Jogar 6 horas seguidas até às 2h da manhã na véspera de um teste', en: 'Playing 6 hours straight until 2 AM before a test' },
-    desc: {
-      pt: 'O Pedro quer ficar a jogar a noite toda no telemóvel na véspera da aula.',
-      en: 'Pedro wants to play mobile games all night before school next day.',
-    },
-    correctCategory: 'caution',
-    feedback: {
-      pt: '⚠️ Cuidado / Não recomendado! O descanso, o sono de 9-10h e o estudo são essenciais. Os ecrãs antes de dormir prejudicam a saúde e a concentração.',
-      en: '⚠️ Caution / Unhealthy! Sleep (9-10 hrs) and homework come first. Screens right before sleep harm brain recovery.',
-    },
-  },
-  {
-    id: 'f6',
-    icon: '📱',
-    title: { pt: 'Um telemóvel antigo e cabos estragados que já não funcionam', en: 'An old broken smartphone and cables' },
-    desc: {
-      pt: 'A Sofia encontrou aparelhos elétricos avariados na gaveta e quer saber onde os deitar.',
-      en: 'Sofia found broken electrical gear in a drawer and wants to dispose of it safely.',
-    },
-    correctCategory: 'caution',
-    feedback: {
-      pt: '♻️ Entregar no Ponto Eletrão! Nunca deitar no lixo comum de casa nem no ecoponto do papel. O lixo eletrónico deve ser reciclado em contentores específicos (Eletrão).',
-      en: '♻️ Deliver to E-Waste recycling points (Ponto Eletrão)! Never put in general trash or paper bins.',
-    },
-  },
-  {
-    id: 'f7',
-    icon: '🗣️',
-    title: { pt: 'Conversar diretamente com o colega de mesa na sala de aula', en: 'Talking directly to your desk classmate in class' },
-    desc: {
-      pt: 'Precisas de uma borracha e o teu colega está sentado mesmo ao teu lado.',
-      en: 'You need an eraser and your classmate sits right next to you.',
-    },
-    correctCategory: 'safe',
-    feedback: {
-      pt: '✅ Comunicação Presencial! Nem tudo precisa de ecrãs ou telemóveis. Conversar cara a cara é a melhor forma quando estamos juntos.',
-      en: '✅ Direct conversation! Not everything needs digital tech. Face-to-face chat is the best choice when seated together.',
-    },
-  },
 ];
 
 export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = ({
@@ -124,7 +83,7 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
   onFinish,
 }) => {
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, 'safe' | 'caution' | 'danger'>>({});
+  const [answers, setAnswers] = useState<Record<string, 'safe' | 'danger'>>({});
   const [showFeedback, setShowFeedback] = useState(false);
   const [isDone, setIsDone] = useState(false);
 
@@ -132,7 +91,7 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
   const userChoice = answers[curItem?.id];
   const isCorrect = userChoice === curItem?.correctCategory;
 
-  const handleClassify = (cat: 'safe' | 'caution' | 'danger') => {
+  const handleClassify = (cat: 'safe' | 'danger') => {
     if (showFeedback) return;
     setAnswers((prev) => ({ ...prev, [curItem.id]: cat }));
     setShowFeedback(true);
@@ -172,21 +131,33 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
       </button>
 
       {/* Header Banner */}
-      <div className="rounded-3xl bg-gradient-to-r from-teal-900 via-emerald-900 to-indigo-950 text-white p-6 sm:p-8 shadow-xl mb-8 relative overflow-hidden">
+      <div className="rounded-3xl bg-gradient-to-r from-teal-900 via-emerald-900 to-indigo-950 text-white p-6 sm:p-8 shadow-xl mb-8 relative overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="relative z-10 space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-xs font-black uppercase tracking-wider text-teal-300">
             <Globe className="w-3.5 h-3.5 text-amber-300" />
-            <span>{language === 'pt' ? 'Pegada Digital & Sustentabilidade' : 'Digital Footprint & Sustainability'}</span>
+            <span>{language === 'pt' ? 'Pegada Digital & Privacidade' : 'Digital Footprint & Privacy'}</span>
           </div>
           <h1 className="text-xl sm:text-3xl font-black text-white">
-            🌍 {language === 'pt' ? 'Publicarias Isto? Pegada Digital, Tempo de Ecrã & Lixo Eletrónico' : 'Would You Post This? Footprint & E-Waste'}
+            🌍 {language === 'pt' ? 'Publicarias Isto? O Jogo da Pegada Digital' : 'Would You Post This? The Footprint Game'}
           </h1>
           <p className="text-xs sm:text-sm text-teal-100 max-w-2xl font-medium">
             {language === 'pt'
-              ? 'Tudo o que partilhamos online constrói a nossa pegada digital. Classifica cada situação entre Adequado, Cuidado / Equilíbrio e Não Partilhar!'
-              : 'Everything we post shapes our digital footprint. Classify each situation wisely!'}
+              ? 'Tudo o que partilhamos online constrói a nossa pegada digital. Classifica cada situação entre Adequado / Seguro e Não Partilhar!'
+              : 'Everything we post shapes our digital footprint. Classify each situation as Safe or Do Not Share!'}
           </p>
         </div>
+        <AudioSpeakButton
+          id="digitalfootprint-header"
+          text={`${language === 'pt' ? 'Publicarias Isto? O Jogo da Pegada Digital' : 'Would You Post This? The Footprint Game'}. ${
+            language === 'pt'
+              ? 'Tudo o que partilhamos online constrói a nossa pegada digital. Classifica cada situação entre Adequado / Seguro e Não Partilhar!'
+              : 'Everything we post shapes our digital footprint. Classify each situation as Safe or Do Not Share!'
+          }`}
+          language={language}
+          label={language === 'pt' ? 'Ouvir Introdução' : 'Listen Intro'}
+          variant="pill"
+          size="sm"
+        />
       </div>
 
       {!isDone ? (
@@ -229,6 +200,13 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
                   </p>
                 </div>
               </div>
+              <AudioSpeakButton
+                id={`footprint-item-${curItem.id}`}
+                text={`${curItem.title[language]}. ${curItem.desc[language]}. Pergunta: ${language === 'pt' ? 'Qual é a atitude correta?' : 'What is the correct action?'}`}
+                language={language}
+                variant="icon"
+                size="sm"
+              />
             </div>
           </div>
 
@@ -238,13 +216,13 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
               {language === 'pt' ? 'Qual é a atitude correta?' : 'What is the correct action?'}
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Option 1: Safe / Adequado */}
               <button
                 type="button"
                 disabled={showFeedback}
                 onClick={() => handleClassify('safe')}
-                className={`p-4 rounded-2xl border-2 text-center transition-all flex flex-col items-center justify-center gap-2 cursor-pointer ${
+                className={`p-5 rounded-2xl border-2 text-center transition-all flex flex-col items-center justify-center gap-2 cursor-pointer ${
                   showFeedback && curItem.correctCategory === 'safe'
                     ? 'border-emerald-500 bg-emerald-50 text-emerald-950 ring-2 ring-emerald-500/30'
                     : showFeedback && userChoice === 'safe' && curItem.correctCategory !== 'safe'
@@ -252,37 +230,18 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
                     : 'border-slate-200 hover:border-emerald-400 hover:bg-emerald-50/30 bg-white text-slate-800'
                 }`}
               >
-                <span className="text-2xl">✅</span>
-                <span className="text-xs sm:text-sm font-black">
+                <span className="text-3xl">✅</span>
+                <span className="text-sm font-black">
                   {language === 'pt' ? 'Adequado / Seguro' : 'Safe / Appropriate'}
                 </span>
               </button>
 
-              {/* Option 2: Caution / Equilíbrio / Reciclagem */}
-              <button
-                type="button"
-                disabled={showFeedback}
-                onClick={() => handleClassify('caution')}
-                className={`p-4 rounded-2xl border-2 text-center transition-all flex flex-col items-center justify-center gap-2 cursor-pointer ${
-                  showFeedback && curItem.correctCategory === 'caution'
-                    ? 'border-amber-500 bg-amber-50 text-amber-950 ring-2 ring-amber-500/30'
-                    : showFeedback && userChoice === 'caution' && curItem.correctCategory !== 'caution'
-                    ? 'border-rose-400 bg-rose-50 text-rose-950 ring-2 ring-rose-400/30'
-                    : 'border-slate-200 hover:border-amber-400 hover:bg-amber-50/30 bg-white text-slate-800'
-                }`}
-              >
-                <span className="text-2xl">⚠️</span>
-                <span className="text-xs sm:text-sm font-black">
-                  {language === 'pt' ? 'Cuidado / Equilíbrio / Reciclar' : 'Caution / Balance / Recycle'}
-                </span>
-              </button>
-
-              {/* Option 3: Danger / Não Partilhar */}
+              {/* Option 2: Danger / Não Partilhar */}
               <button
                 type="button"
                 disabled={showFeedback}
                 onClick={() => handleClassify('danger')}
-                className={`p-4 rounded-2xl border-2 text-center transition-all flex flex-col items-center justify-center gap-2 cursor-pointer ${
+                className={`p-5 rounded-2xl border-2 text-center transition-all flex flex-col items-center justify-center gap-2 cursor-pointer ${
                   showFeedback && curItem.correctCategory === 'danger'
                     ? 'border-rose-500 bg-rose-50 text-rose-950 ring-2 ring-rose-500/30'
                     : showFeedback && userChoice === 'danger' && curItem.correctCategory !== 'danger'
@@ -290,9 +249,9 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
                     : 'border-slate-200 hover:border-rose-400 hover:bg-rose-50/30 bg-white text-slate-800'
                 }`}
               >
-                <span className="text-2xl">❌</span>
-                <span className="text-xs sm:text-sm font-black">
-                  {language === 'pt' ? 'Não Partilhar / Proibido' : 'Do Not Share / Block'}
+                <span className="text-3xl">❌</span>
+                <span className="text-sm font-black">
+                  {language === 'pt' ? 'Não Partilhar / Privado' : 'Do Not Share / Private'}
                 </span>
               </button>
             </div>
@@ -303,6 +262,13 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
             <div className="p-4 rounded-2xl bg-teal-50 border border-teal-200 space-y-2 animate-in fade-in">
               <div className="flex items-center justify-between gap-2">
                 <span className="text-xs font-bold text-teal-800">{language === 'pt' ? 'Explicação:' : 'Explanation:'}</span>
+                <AudioSpeakButton
+                  id={`footprint-feedback-${curItem.id}`}
+                  text={curItem.feedback[language]}
+                  language={language}
+                  variant="icon"
+                  size="xs"
+                />
               </div>
               <p className="text-xs sm:text-sm font-medium text-teal-950 leading-relaxed">
                 {curItem.feedback[language]}

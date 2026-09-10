@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, AlertTriangle, Search, Trophy, Sparkles, RefreshCw, ArrowRight, Filter, HelpCircle } from 'lucide-react';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language } from '../../types';
 
 interface SearchOperatorsGameProps {
@@ -309,21 +310,40 @@ export const SearchOperatorsGame: React.FC<SearchOperatorsGameProps> = ({ langua
       {!gameOver ? (
         <div className="bg-white rounded-[2rem] border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6">
           {/* Header */}
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-2 border border-blue-200/60">
-              <Filter className="w-3.5 h-3.5" />
-              <span>{language === 'pt' ? 'Desafio 3: O Mistério das Aspas e Operadores' : 'Challenge 3: Quotes & Operators Mystery'}</span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-2 border border-blue-200/60">
+                <Filter className="w-3.5 h-3.5" />
+                <span>{language === 'pt' ? 'Desafio 3: O Mistério das Aspas e Operadores' : 'Challenge 3: Quotes & Operators Mystery'}</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+                {riddle.missionTitle[language]}
+              </h2>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
-              {riddle.missionTitle[language]}
-            </h2>
+            <AudioSpeakButton
+              id={`search-riddle-${riddle.id}`}
+              text={`${riddle.missionTitle[language]}. ${language === 'pt' ? 'O Enigma a resolver:' : 'The Riddle to solve:'} ${riddle.problemDescription[language]}. ${language === 'pt' ? 'Qual a fórmula de pesquisa com operadores que resolve o problema?' : 'Which operator-powered search formula solves this?'}`}
+              language={language}
+              label={language === 'pt' ? 'Ouvir Enigma' : 'Listen Riddle'}
+              variant="pill"
+              size="sm"
+            />
           </div>
 
           {/* Mission Problem */}
           <div className="p-4 sm:p-5 rounded-2xl bg-indigo-50/50 border border-indigo-100 space-y-2">
-            <div className="flex items-center gap-2 text-xs font-bold text-indigo-900">
-              <HelpCircle className="w-4 h-4 text-indigo-600 shrink-0" />
-              <span>{language === 'pt' ? 'O Enigma a resolver:' : 'The Riddle to solve:'}</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-xs font-bold text-indigo-900">
+                <HelpCircle className="w-4 h-4 text-indigo-600 shrink-0" />
+                <span>{language === 'pt' ? 'O Enigma a resolver:' : 'The Riddle to solve:'}</span>
+              </div>
+              <AudioSpeakButton
+                id={`search-desc-${riddle.id}`}
+                text={riddle.problemDescription[language]}
+                language={language}
+                variant="icon"
+                size="xs"
+              />
             </div>
             <p className="text-xs sm:text-sm text-indigo-950 font-medium leading-relaxed">
               {riddle.problemDescription[language]}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, XCircle, AlertTriangle, ShieldCheck, ShieldAlert, Sparkles, RefreshCw, ArrowRight, Award, HelpCircle, HeartHandshake, Eye, MessageSquare, Lock } from 'lucide-react';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language } from '../../types';
 import { translations } from '../../i18n/translations';
 
@@ -338,7 +339,7 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
       </button>
 
       {/* Header */}
-      <div className="text-center mb-6">
+      <div className="text-center mb-6 flex flex-col items-center">
         <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">
           {language === 'pt' ? 'Desafio 4' : 'Challenge 4'}
         </span>
@@ -346,11 +347,23 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
           <span>⚖️</span>
           <span>{language === 'pt' ? 'O que farias? — Dilemas de Cidadania Digital' : 'What would you do? — Digital Citizenship Dilemmas'}</span>
         </h1>
-        <p className="text-sm text-slate-600 mt-1 max-w-xl mx-auto">
+        <p className="text-sm text-slate-600 mt-1 max-w-xl mx-auto mb-3">
           {language === 'pt'
             ? 'Enfrenta situações reais do quotidiano escolar e online. Decide com ética, empatia e segurança!'
             : 'Confront real-life school and digital scenarios. Make ethical, empathetic, and safe decisions!'}
         </p>
+        <AudioSpeakButton
+          id="whatwouldyoudo-header"
+          text={`${language === 'pt' ? 'O que farias? Dilemas de Cidadania Digital' : 'What would you do? Digital Citizenship Dilemmas'}. ${
+            language === 'pt'
+              ? 'Enfrenta situações reais do quotidiano escolar e online. Decide com ética, empatia e segurança!'
+              : 'Confront real-life school and digital scenarios. Make ethical, empathetic, and safe decisions!'
+          }`}
+          language={language}
+          label={language === 'pt' ? 'Ouvir Introdução' : 'Listen Intro'}
+          variant="pill"
+          size="sm"
+        />
       </div>
 
       {!finished ? (
@@ -383,6 +396,13 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-xl">{dilemma.icon}</span>
+                <AudioSpeakButton
+                  id={`dilemma-card-${dilemma.id}`}
+                  text={`${dilemma.title[language]}. ${dilemma.scenario[language]}. ${dilemma.question[language]}`}
+                  language={language}
+                  variant="icon"
+                  size="sm"
+                />
               </div>
             </div>
 
@@ -399,6 +419,13 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
                 <HelpCircle className="w-4 h-4 text-indigo-600 shrink-0" />
                 <span>{dilemma.question[language]}</span>
               </div>
+              <AudioSpeakButton
+                id={`dilemma-q-${dilemma.id}`}
+                text={`${dilemma.question[language]}. ${dilemma.options.map((opt, i) => `Opção ${i + 1}: ${opt.text[language]}`).join('. ')}`}
+                language={language}
+                variant="icon"
+                size="xs"
+              />
             </div>
           </div>
 

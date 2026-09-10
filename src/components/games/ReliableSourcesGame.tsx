@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, AlertTriangle, XCircle, ShieldCheck, Search, Trophy, Sparkles, RefreshCw, ArrowRight, ExternalLink } from 'lucide-react';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language } from '../../types';
 
 interface ReliableSourcesGameProps {
@@ -215,14 +216,24 @@ export const ReliableSourcesGame: React.FC<ReliableSourcesGameProps> = ({ langua
       {!gameOver ? (
         <div className="bg-white rounded-[2rem] border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6">
           {/* Header badge */}
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wider mb-2 border border-emerald-200/60">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>{language === 'pt' ? 'Desafio 2: Detetive de Fontes Fiáveis' : 'Challenge 2: Reliable Sources Detective'}</span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wider mb-2 border border-emerald-200/60">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>{language === 'pt' ? 'Desafio 2: Detetive de Fontes Fiáveis' : 'Challenge 2: Reliable Sources Detective'}</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+                {language === 'pt' ? 'Analisa a página encontrada:' : 'Analyze the web page found:'}
+              </h2>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
-              {language === 'pt' ? 'Analisa a página encontrada:' : 'Analyze the web page found:'}
-            </h2>
+            <AudioSpeakButton
+              id={`source-case-${currentCase.id}`}
+              text={`${language === 'pt' ? 'Título:' : 'Title:'} ${currentCase.title}. ${language === 'pt' ? 'Autor:' : 'Author:'} ${currentCase.author}. ${language === 'pt' ? 'Conteúdo:' : 'Content:'} ${currentCase.snippet[language]}. ${language === 'pt' ? 'Pista do Detetive:' : 'Detective Clue:'} ${currentCase.detectiveTip[language]}`}
+              language={language}
+              label={language === 'pt' ? 'Ouvir Caso' : 'Listen Case'}
+              variant="pill"
+              size="sm"
+            />
           </div>
 
           {/* Web page inspection card */}
@@ -242,9 +253,18 @@ export const ReliableSourcesGame: React.FC<ReliableSourcesGameProps> = ({ langua
 
             {/* Page content */}
             <div className="p-5 space-y-3 bg-white">
-              <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
-                {currentCase.title}
-              </h3>
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
+                  {currentCase.title}
+                </h3>
+                <AudioSpeakButton
+                  id={`source-title-${currentCase.id}`}
+                  text={`${currentCase.title}. ${currentCase.snippet[language]}`}
+                  language={language}
+                  variant="icon"
+                  size="xs"
+                />
+              </div>
 
               <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 font-medium pb-2 border-b border-slate-100">
                 <span>✍️ <strong>{language === 'pt' ? 'Autor:' : 'Author:'}</strong> {currentCase.author}</span>

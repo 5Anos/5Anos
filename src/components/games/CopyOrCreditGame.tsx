@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, AlertTriangle, ShieldCheck, Trophy, Sparkles, RefreshCw, ArrowRight, FileCheck, XCircle } from 'lucide-react';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language } from '../../types';
 
 interface CopyOrCreditGameProps {
@@ -192,21 +193,40 @@ export const CopyOrCreditGame: React.FC<CopyOrCreditGameProps> = ({ language, on
       {!gameOver ? (
         <div className="bg-white rounded-[2rem] border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6">
           {/* Header */}
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-50 text-violet-700 text-xs font-bold uppercase tracking-wider mb-2 border border-violet-200/60">
-              <FileCheck className="w-3.5 h-3.5" />
-              <span>{language === 'pt' ? 'Desafio 4: Copiar ou Criar? Direitos e Plágio' : 'Challenge 4: Copy or Create? Copyright & Plagiarism'}</span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-50 text-violet-700 text-xs font-bold uppercase tracking-wider mb-2 border border-violet-200/60">
+                <FileCheck className="w-3.5 h-3.5" />
+                <span>{language === 'pt' ? 'Desafio 4: Copiar ou Criar? Direitos e Plágio' : 'Challenge 4: Copy or Create? Copyright & Plagiarism'}</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+                {scenario.studentName}
+              </h2>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
-              {scenario.studentName}
-            </h2>
+            <AudioSpeakButton
+              id={`copy-credit-audio-${scenario.id}`}
+              text={`${scenario.studentName}. ${language === 'pt' ? 'Situação a avaliar:' : 'Scenario to evaluate:'} ${scenario.situation[language]}. ${language === 'pt' ? 'Esta atitude é correta ou incorreta?' : 'Is this behavior appropriate or inappropriate?'}`}
+              language={language}
+              label={language === 'pt' ? 'Ouvir Situação' : 'Listen Scenario'}
+              variant="pill"
+              size="sm"
+            />
           </div>
 
           {/* Situation Box */}
           <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block">
-              {language === 'pt' ? 'Situação a avaliar:' : 'Scenario to evaluate:'}
-            </span>
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block">
+                {language === 'pt' ? 'Situação a avaliar:' : 'Scenario to evaluate:'}
+              </span>
+              <AudioSpeakButton
+                id={`copy-credit-sit-${scenario.id}`}
+                text={scenario.situation[language]}
+                language={language}
+                variant="icon"
+                size="xs"
+              />
+            </div>
             <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium">
               "{scenario.situation[language]}"
             </p>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, AlertCircle, RefreshCw, Folder, Trash2, Mail, GraduationCap } from 'lucide-react';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language } from '../../types';
 import { translations } from '../../i18n/translations';
 
@@ -123,18 +124,30 @@ export const InboxSortingGame: React.FC<InboxSortingGameProps> = ({ language, on
         <span>{t.backToTheme}</span>
       </button>
 
-      <div className="text-center mb-6">
+      <div className="text-center mb-6 flex flex-col items-center">
         <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">
           {language === 'pt' ? 'Desafio 2' : 'Challenge 2'}
         </span>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">
           {language === 'pt' ? '🗂️ O Organizador de Correio' : '🗂️ The Mailbox Organizer'}
         </h1>
-        <p className="text-sm text-slate-600 mt-1">
+        <p className="text-sm text-slate-600 mt-1 max-w-xl mx-auto mb-3">
           {language === 'pt'
             ? 'Classifica cada mensagem na pasta correta: Principal, Escola ou Spam/Lixo.'
             : 'Sort each incoming email into the right folder: Inbox, School, or Spam.'}
         </p>
+        <AudioSpeakButton
+          id="inboxsorting-header"
+          text={`${language === 'pt' ? 'O Organizador de Correio' : 'The Mailbox Organizer'}. ${
+            language === 'pt'
+              ? 'Classifica cada mensagem na pasta correta: Principal, Escola ou Spam/Lixo.'
+              : 'Sort each incoming email into the right folder: Inbox, School, or Spam.'
+          }`}
+          language={language}
+          label={language === 'pt' ? 'Ouvir Instruções' : 'Listen Instructions'}
+          variant="pill"
+          size="sm"
+        />
       </div>
 
       {!done ? (
@@ -152,6 +165,13 @@ export const InboxSortingGame: React.FC<InboxSortingGameProps> = ({ language, on
           <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
             <div className="flex items-center justify-between text-xs">
               <span className="font-mono text-slate-500">{currentEmail.sender}</span>
+              <AudioSpeakButton
+                id={`inbox-email-${currentEmail.id}`}
+                text={`${language === 'pt' ? 'Remetente:' : 'Sender:'} ${currentEmail.sender}. ${language === 'pt' ? 'Assunto:' : 'Subject:'} ${currentEmail.subject[language]}. ${currentEmail.preview[language]}`}
+                language={language}
+                variant="icon"
+                size="xs"
+              />
             </div>
             <h3 className="text-base sm:text-lg font-bold text-slate-900">
               {currentEmail.subject[language]}

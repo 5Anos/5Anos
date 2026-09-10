@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Send, CheckCircle2, AlertCircle, Sparkles, HelpCircle } from 'lucide-react';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language } from '../../types';
 import { translations } from '../../i18n/translations';
 
@@ -51,18 +52,30 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
         <span>{t.backToTheme}</span>
       </button>
 
-      <div className="text-center mb-6">
+      <div className="text-center mb-6 flex flex-col items-center">
         <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">
           {language === 'pt' ? 'Desafio 1' : 'Challenge 1'}
         </span>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">
           {language === 'pt' ? '✉️ Simulador de Escrita de Email' : '✉️ Professional Email Composer'}
         </h1>
-        <p className="text-sm text-slate-600 mt-1">
+        <p className="text-sm text-slate-600 mt-1 max-w-xl mx-auto mb-3">
           {language === 'pt'
             ? 'Aprende a estruturar uma mensagem formal e educada dirigida a um professor ou colega.'
             : 'Learn to structure a respectful, formal email addressed to a teacher or classmate.'}
         </p>
+        <AudioSpeakButton
+          id="emaillab-header"
+          text={`${language === 'pt' ? 'Simulador de Escrita de Email' : 'Professional Email Composer'}. ${
+            language === 'pt'
+              ? 'Aprende a estruturar uma mensagem formal e educada dirigida a um professor ou colega.'
+              : 'Learn to structure a respectful, formal email addressed to a teacher or classmate.'
+          }`}
+          language={language}
+          label={language === 'pt' ? 'Ouvir Instruções' : 'Listen Instructions'}
+          variant="pill"
+          size="sm"
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

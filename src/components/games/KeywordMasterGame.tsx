@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, AlertTriangle, Key, Search, Sparkles, RefreshCw, Trophy, ArrowRight } from 'lucide-react';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language } from '../../types';
 import { translations } from '../../i18n/translations';
 
@@ -360,21 +361,40 @@ export const KeywordMasterGame: React.FC<KeywordMasterGameProps> = ({ language, 
       {!gameOver ? (
         <div className="bg-white rounded-[2rem] border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6">
           {/* Mission Header */}
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-2 border border-blue-200/60">
-              <Key className="w-3.5 h-3.5" />
-              <span>{language === 'pt' ? 'Desafio 1: O Mestre das Palavras-Chave' : 'Challenge 1: The Keyword Master'}</span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-2 border border-blue-200/60">
+                <Key className="w-3.5 h-3.5" />
+                <span>{language === 'pt' ? 'Desafio 1: O Mestre das Palavras-Chave' : 'Challenge 1: The Keyword Master'}</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+                {mission.topic[language]}
+              </h2>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
-              {mission.topic[language]}
-            </h2>
+            <AudioSpeakButton
+              id={`keyword-mission-${mission.id}`}
+              text={`${mission.topic[language]}. ${language === 'pt' ? 'Pesquisa incorreta:' : 'Incorrect query:'} ${mission.badQuery[language]}. ${language === 'pt' ? 'Qual é a melhor fórmula de palavras-chave?' : 'Which is the best keyword formula?'}`}
+              language={language}
+              label={language === 'pt' ? 'Ouvir Missão' : 'Listen Mission'}
+              variant="pill"
+              size="sm"
+            />
           </div>
 
           {/* Student's bad query illustration */}
           <div className="p-4 sm:p-5 rounded-2xl bg-amber-50/60 border border-amber-200/80 space-y-2">
-            <div className="flex items-center gap-2 text-xs font-bold text-amber-800">
-              <span>🤦‍♂️</span>
-              <span>{language === 'pt' ? 'O que um aluno inexperiente escreveu na caixa de pesquisa:' : 'What an inexperienced student typed:'}</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-xs font-bold text-amber-800">
+                <span>🤦‍♂️</span>
+                <span>{language === 'pt' ? 'O que um aluno inexperiente escreveu na caixa de pesquisa:' : 'What an inexperienced student typed:'}</span>
+              </div>
+              <AudioSpeakButton
+                id={`keyword-bad-${mission.id}`}
+                text={`${language === 'pt' ? 'Pesquisa incorreta:' : 'Incorrect query:'} ${mission.badQuery[language]}`}
+                language={language}
+                variant="icon"
+                size="xs"
+              />
             </div>
             <div className="bg-white p-3 rounded-xl border border-amber-200 font-mono text-xs sm:text-sm text-slate-700 break-words flex items-center gap-2 shadow-2xs">
               <Search className="w-4 h-4 text-slate-400 shrink-0" />

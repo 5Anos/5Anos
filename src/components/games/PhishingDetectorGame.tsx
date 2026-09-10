@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, AlertCircle, CheckCircle2, ShieldAlert, Search, Trophy, ArrowRight, RotateCcw, Sparkles, Smartphone, Mail, MessageSquare, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language } from '../../types';
 import { translations } from '../../i18n/translations';
 
@@ -198,7 +199,7 @@ export const PhishingDetectorGame: React.FC<PhishingDetectorGameProps> = ({ lang
       {activeStage === 'emailLab' && (
         <div className="space-y-6">
           <div className="p-6 bg-gradient-to-r from-rose-950 via-slate-900 to-red-950 text-white rounded-3xl shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
+            <div className="flex-1">
               <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-rose-500 text-white">
                 {language === 'pt' ? 'Fase 1: Inspecionar Email Falso' : 'Phase 1: Inspect Fake Email'}
               </span>
@@ -211,15 +212,29 @@ export const PhishingDetectorGame: React.FC<PhishingDetectorGameProps> = ({ lang
                   : 'Click the 4 suspicious zones in this email with your detective magnifier to unmask the scam!'}
               </p>
             </div>
-            {revealedClues.length === 4 && (
-              <button
-                onClick={() => setActiveStage('radar')}
-                className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs sm:text-sm shadow-md flex items-center gap-2 shrink-0 cursor-pointer transition-all hover:scale-102 animate-in zoom-in-95"
-              >
-                <span>{language === 'pt' ? 'Avançar para o Radar' : 'Next to Radar'}</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            )}
+            <div className="flex items-center gap-2">
+              <AudioSpeakButton
+                id="phishing-stage1-audio"
+                text={`${language === 'pt' ? 'O Detetive de Phishing: Encontra as 4 Pistas' : 'The Phishing Detective: Find the 4 Clues'}. ${
+                  language === 'pt'
+                    ? 'Clica nas 4 zonas suspeitas dentro da mensagem com a tua lupa de detetive para as desmascarar!'
+                    : 'Click the 4 suspicious zones in this email to unmask the scam!'
+                }`}
+                language={language}
+                label={language === 'pt' ? 'Ouvir Instruções' : 'Listen'}
+                variant="pill"
+                size="sm"
+              />
+              {revealedClues.length === 4 && (
+                <button
+                  onClick={() => setActiveStage('radar')}
+                  className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs sm:text-sm shadow-md flex items-center gap-2 shrink-0 cursor-pointer transition-all hover:scale-102 animate-in zoom-in-95"
+                >
+                  <span>{language === 'pt' ? 'Avançar para o Radar' : 'Next to Radar'}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Simulated Email Client */}
@@ -416,8 +431,15 @@ export const PhishingDetectorGame: React.FC<PhishingDetectorGameProps> = ({ lang
 
               {/* Message Bubble */}
               <div className="p-4 flex-1 flex flex-col justify-center space-y-3">
-                <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm text-xs sm:text-sm text-slate-900 font-medium leading-relaxed">
-                  {currentRadar.preview[language]}
+                <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm text-xs sm:text-sm text-slate-900 font-medium leading-relaxed flex items-start justify-between gap-2">
+                  <span>{currentRadar.preview[language]}</span>
+                  <AudioSpeakButton
+                    id={`phishing-radar-msg-${currentRadar.id}`}
+                    text={`${language === 'pt' ? 'Mensagem recebida de' : 'Message received from'} ${currentRadar.sender}: ${currentRadar.preview[language]}. ${currentRadar.question[language]}`}
+                    language={language}
+                    variant="icon"
+                    size="xs"
+                  />
                 </div>
               </div>
 
