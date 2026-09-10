@@ -1213,9 +1213,9 @@ export const api = {
   },
 
   /**
-   * Record Daily TIC Tip Bonus (+15 points once per day)
+   * Record Daily TIC Tip Bonus (50 points for correct answer, 25 points for participation)
    */
-  async recordDailyTipBonus(tipTitle: string, bonusPoints = 15): Promise<{
+  async recordDailyTipBonus(tipTitle: string, bonusPoints = 50): Promise<{
     success: boolean;
     user: User | null;
     userPoints: number;

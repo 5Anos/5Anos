@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BarChart3, User as UserIcon, LogOut, Menu, X, Sparkles, Compass, Trophy, ShieldCheck, FileSpreadsheet, Palette, Smile } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { BarChart3, User as UserIcon, LogOut, Menu, X, Sparkles, Compass, Trophy, ShieldCheck, FileSpreadsheet, Palette, Smile, Lightbulb } from 'lucide-react';
 import { User, Language, AvatarConfig } from '../types';
 import { translations } from '../i18n/translations';
 import { isUserAdmin, api } from '../services/api';
@@ -7,6 +7,7 @@ import { TicDescomplicaLogo } from './TicDescomplicaLogo';
 import { CartoonAvatar } from './avatar/CartoonAvatar';
 import { AvatarCreatorModal } from './avatar/AvatarCreatorModal';
 import { getDefaultAvatar } from '../utils/avatarUtils';
+import { getTodayDateString } from '../data/dailyTipsData';
 
 interface HeaderProps {
   user: User | null;
@@ -19,6 +20,7 @@ interface HeaderProps {
   onOpenAdmin?: () => void;
   onLogout: () => void;
   onUpdateUser?: (user: User) => void;
+  onOpenDailyTip?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -32,11 +34,37 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAdmin,
   onLogout,
   onUpdateUser,
+  onOpenDailyTip,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
+  const [hasCompletedTodayTip, setHasCompletedTodayTip] = useState(false);
+
+  // Check if today's tip is completed
+  useEffect(() => {
+    const checkTipStatus = () => {
+      try {
+        const todayStr = getTodayDateString();
+        const storageKey = `tic_daily_tip_${todayStr}_${user?.id || 'guest'}`;
+        const raw = localStorage.getItem(storageKey);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          setHasCompletedTodayTip(!!parsed.answered);
+        } else {
+          setHasCompletedTodayTip(false);
+        }
+      } catch {
+        setHasCompletedTodayTip(false);
+      }
+    };
+
+    checkTipStatus();
+    // Re-check periodically or on focus
+    window.addEventListener('focus', checkTipStatus);
+    return () => window.removeEventListener('focus', checkTipStatus);
+  }, [user]);
 
   const isAdmin = user ? isUserAdmin(user.email, user.role) : false;
 
@@ -95,6 +123,26 @@ export const Header: React.FC<HeaderProps> = ({
                 >
                   <BarChart3 className="w-4 h-4 text-amber-500" />
                   <span>{t.navProgress}</span>
+                </button>
+              )}
+
+              {/* Dica do Dia TIC (Daily Tip) - Accessible to all students */}
+              {onOpenDailyTip && (
+                <button
+                  onClick={onOpenDailyTip}
+                  className="py-5 text-sm font-extrabold text-indigo-700 hover:text-indigo-900 transition-all border-b-2 border-transparent flex items-center gap-1.5 cursor-pointer bg-indigo-50/90 hover:bg-indigo-100/90 px-3 my-2.5 rounded-xl border border-indigo-200/90 shadow-2xs group"
+                >
+                  <Lightbulb className="w-4 h-4 text-amber-500 fill-amber-300 group-hover:rotate-12 transition-transform" />
+                  <span>{language === 'pt' ? '💡 Dica do Dia' : '💡 Daily Tip'}</span>
+                  {!hasCompletedTodayTip ? (
+                    <span className="ml-1 inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-black bg-amber-400 text-amber-950 animate-pulse shadow-2xs">
+                      {language === 'pt' ? 'Nova!' : 'New!'}
+                    </span>
+                  ) : (
+                    <span className="ml-1 text-[11px] font-bold text-emerald-600">
+                      ✓
+                    </span>
+                  )}
                 </button>
               )}
 
@@ -342,6 +390,30 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <BarChart3 className="w-5 h-5 text-amber-500" />
               <span>{t.navProgress}</span>
+            </button>
+          )}
+
+          {onOpenDailyTip && (
+            <button
+              onClick={() => {
+                onOpenDailyTip();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-extrabold text-indigo-900 bg-indigo-50 border border-indigo-200 flex items-center justify-between"
+            >
+              <div className="flex items-center gap-3">
+                <Lightbulb className="w-5 h-5 text-amber-500 fill-amber-300" />
+                <span>{language === 'pt' ? '💡 Dica do Dia TIC' : '💡 Daily ICT Tip'}</span>
+              </div>
+              {!hasCompletedTodayTip ? (
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-400 text-amber-950 animate-pulse">
+                  {language === 'pt' ? 'Nova (+50 pts)' : 'New (+50 pts)'}
+                </span>
+              ) : (
+                <span className="text-xs font-bold text-emerald-600">
+                  {language === 'pt' ? 'Concluída ✓' : 'Done ✓'}
+                </span>
+              )}
             </button>
           )}
 
