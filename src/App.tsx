@@ -646,7 +646,7 @@ export default function App() {
               score,
               maxScore,
               percentage,
-              activityTitle: language === 'pt' ? 'Publicarias Isto? Pegada Digital & Lixo Eletrónico' : 'Would You Post This? Footprint & E-Waste',
+              activityTitle: language === 'pt' ? 'Publicarias Isto?' : 'Would You Post This?',
             });
           }}
         />

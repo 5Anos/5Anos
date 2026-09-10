@@ -138,20 +138,20 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
             <span>{language === 'pt' ? 'Pegada Digital & Privacidade' : 'Digital Footprint & Privacy'}</span>
           </div>
           <h1 className="text-xl sm:text-3xl font-black text-white">
-            🌍 {language === 'pt' ? 'Publicarias Isto? O Jogo da Pegada Digital' : 'Would You Post This? The Footprint Game'}
+            🌍 {language === 'pt' ? 'Publicarias Isto?' : 'Would You Post This?'}
           </h1>
           <p className="text-xs sm:text-sm text-teal-100 max-w-2xl font-medium">
             {language === 'pt'
-              ? 'Tudo o que partilhamos online constrói a nossa pegada digital. Classifica cada situação entre Adequado / Seguro e Não Partilhar!'
-              : 'Everything we post shapes our digital footprint. Classify each situation as Safe or Do Not Share!'}
+              ? 'Tudo o que partilhamos online constrói a nossa pegada digital. Avalia cada situação e decide se é seguro publicar ou se deve ficar privado!'
+              : 'Everything we share online shapes our digital footprint. Evaluate each situation and decide if it is safe to post or should stay private!'}
           </p>
         </div>
         <AudioSpeakButton
           id="digitalfootprint-header"
-          text={`${language === 'pt' ? 'Publicarias Isto? O Jogo da Pegada Digital' : 'Would You Post This? The Footprint Game'}. ${
+          text={`${language === 'pt' ? 'Publicarias Isto?' : 'Would You Post This?'}. ${
             language === 'pt'
-              ? 'Tudo o que partilhamos online constrói a nossa pegada digital. Classifica cada situação entre Adequado / Seguro e Não Partilhar!'
-              : 'Everything we post shapes our digital footprint. Classify each situation as Safe or Do Not Share!'
+              ? 'Tudo o que partilhamos online constrói a nossa pegada digital. Avalia cada situação e decide se é seguro publicar ou se deve ficar privado!'
+              : 'Everything we share online shapes our digital footprint. Evaluate each situation and decide if it is safe to post or should stay private!'
           }`}
           language={language}
           label={language === 'pt' ? 'Ouvir Introdução' : 'Listen Intro'}
@@ -309,8 +309,8 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
             </h2>
             <p className="text-sm text-slate-600 leading-relaxed font-medium">
               {language === 'pt'
-                ? 'Pensar antes de publicar, equilibrar o tempo de ecrã com o desporto e a família, e reciclar o lixo eletrónico no Ponto Eletrão são as marcas de um verdadeiro cidadão digital!'
-                : 'Thinking before posting, balancing screen time with physical activity, and recycling e-waste are the hallmarks of a great digital citizen!'}
+                ? 'Pensar sempre antes de publicar e proteger os teus dados e fotos privadas são as marcas de um verdadeiro cidadão digital!'
+                : 'Thinking before posting and protecting your private data and photos are the hallmarks of a great digital citizen!'}
             </p>
           </div>
 
