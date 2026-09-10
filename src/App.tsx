@@ -3,7 +3,6 @@ import { Header } from './components/Header';
 import { AuthModal } from './components/AuthModal';
 import { LeaderboardModal } from './components/LeaderboardModal';
 import { AdminPanelModal } from './components/AdminPanelModal';
-import { DailyTipWidget } from './components/DailyTipWidget';
 import { Dashboard } from './components/Dashboard';
 import { ThemeView } from './components/ThemeView';
 import { ModuleReader } from './components/ModuleReader';
@@ -62,7 +61,6 @@ export default function App() {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [leaderboardModalOpen, setLeaderboardModalOpen] = useState(false);
   const [adminModalOpen, setAdminModalOpen] = useState(false);
-  const [dailyTipModalOpen, setDailyTipModalOpen] = useState(false);
   const [adminInitialTab, setAdminInitialTab] = useState<'students' | 'turmas' | 'themes' | 'danger'>('students');
   const [toastMessage, setToastMessage] = useState<{ title: string; subtitle?: string } | null>(null);
 
@@ -735,7 +733,6 @@ export default function App() {
         onOpenAuth={() => setAuthModalOpen(true)}
         onOpenLeaderboard={handleOpenLeaderboard}
         onOpenAdmin={() => setAdminModalOpen(true)}
-        onOpenDailyTip={() => setDailyTipModalOpen(true)}
         onLogout={handleLogout}
         onUpdateUser={(updatedUser) => setUser(updatedUser)}
       />
@@ -915,36 +912,6 @@ export default function App() {
         currentUser={user}
         language={language}
         initialTab={adminInitialTab}
-      />
-
-      {/* Global Daily Tip Modal (Available from Header navigation anywhere) */}
-      <DailyTipWidget
-        user={user}
-        language={language}
-        forceOpen={dailyTipModalOpen}
-        hideCard={true}
-        onClose={() => setDailyTipModalOpen(false)}
-        onPointsAwarded={(updatedUser, _pts, updatedAchievements) => {
-          if (updatedUser) {
-            setUser(updatedUser);
-          }
-          if (updatedAchievements && updatedAchievements.length > 0) {
-            setAchievements(updatedAchievements);
-          }
-          setToastMessage({
-            title: language === 'pt' ? '🎉 Dica do Dia Concluída!' : '🎉 Daily Tip Completed!',
-            subtitle:
-              language === 'pt'
-                ? 'Pontos creditados com sucesso no teu perfil!'
-                : 'Points credited successfully to your profile!',
-          });
-          setTimeout(() => setToastMessage(null), 4000);
-        }}
-        onOpenAuth={() => setAuthModalOpen(true)}
-        onNavigateTheme={(themeId) => {
-          setDailyTipModalOpen(false);
-          navigateToTheme(themeId);
-        }}
       />
     </div>
   );
