@@ -5,7 +5,6 @@ import {
   CheckCircle2,
   Award,
   BookOpen,
-  GraduationCap,
   Calendar,
   HelpCircle,
   AlertCircle,
@@ -327,21 +326,6 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                 </div>
                 <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-normal bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
                   {todayTip.description[language]}
-                </p>
-              </div>
-
-              {/* Curricular Connection */}
-              <div className="p-3.5 rounded-xl bg-slate-100/70 border border-slate-200 space-y-1">
-                <div className="flex items-center gap-2 text-xs font-bold text-slate-900">
-                  <GraduationCap className="w-4 h-4 text-indigo-600" />
-                  <span>
-                    {language === 'pt'
-                      ? 'O que aprendes nas aulas de TIC sobre isto?'
-                      : 'What you learn in ICT class about this:'}
-                  </span>
-                </div>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  {todayTip.whyItMatters[language]}
                 </p>
               </div>
 
