@@ -655,8 +655,8 @@ export const themeDireitosAutorData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Em Portugal, as obras entram em domínio público 70 anos após o falecimento do autor e podem ser usadas por todos.',
-        en: 'Works enter the public domain 70 years after the author’s death and can be freely used.',
+        pt: 'Em Portugal, as obras entram, em geral, no domínio público 70 anos após o falecimento do autor. A partir daí, podem, em geral, ser utilizadas e partilhadas sem pedir autorização por direitos de autor.',
+        en: 'In Portugal, works generally enter the public domain 70 years after the author\'s death. From then on, they can generally be used and shared without asking for copyright permission.',
       },
     },
     {
