@@ -29,6 +29,7 @@ import { TicApplicationsExplorer } from './TicApplicationsExplorer';
 import { TicEvolutionExplorer } from './TicEvolutionExplorer';
 import { CyberbullyingActionCard } from './CyberbullyingActionCard';
 import { getQuizMention, getQuizMentionBadgeStyle } from '../utils/exportUtils';
+import { AudioSpeakButton } from './AudioSpeakButton';
 
 interface ThemeViewProps {
   theme: ThemeDefinition;
@@ -290,6 +291,14 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                   </div>
 
                   <div className="flex items-center gap-2.5 flex-wrap">
+                    <AudioSpeakButton
+                      id={`theme-${theme.id}-step-${currentStepIndex}`}
+                      text={`${currentLesson.h[language]}. ${currentLesson.body[language]}`}
+                      language={language}
+                      label={language === 'pt' ? 'Ouvir Conteúdo' : 'Listen Content'}
+                      variant="pill"
+                      size="sm"
+                    />
                     <div className="text-xs sm:text-sm font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full">
                       {language === 'pt'
                         ? `Passo ${currentStepIndex + 1} de ${lessons.length}`

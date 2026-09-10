@@ -3,6 +3,7 @@ import { ArrowLeft, CheckCircle2, AlertCircle, RefreshCw, Award, Sparkles, BookO
 import { QuizQuestion, Language, ActivityProgress } from '../../types';
 import { translations } from '../../i18n/translations';
 import { getQuizMention, getQuizMentionBadgeStyle } from '../../utils/exportUtils';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 
 interface FinalQuizViewProps {
   themeTitle: string;
@@ -153,6 +154,18 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
               🏆 {language === 'pt' ? `Quiz de Aprendizagem: ${themeTitle}` : `Learning Quiz: ${themeTitle}`}
             </h1>
+            <AudioSpeakButton
+              id={`quiz-${themeNumber}-intro`}
+              text={`${language === 'pt' ? `Quiz de Aprendizagem do Tema ${themeNumber}: ${themeTitle}` : `Learning Quiz: ${themeTitle}`}. ${
+                language === 'pt'
+                  ? 'Avalia todos os conhecimentos deste tema. Podes repetir quantas vezes quiseres para treinar!'
+                  : 'Assess all knowledge from this theme.'
+              }`}
+              language={language}
+              label={language === 'pt' ? 'Ouvir Quiz' : 'Listen Quiz'}
+              variant="pill"
+              size="sm"
+            />
           </div>
 
           <p className="text-sm sm:text-base text-indigo-200 max-w-2xl leading-relaxed">
@@ -299,13 +312,22 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
 
           return (
             <div key={q.id} className="rounded-2xl sm:rounded-[2rem] bg-white border border-slate-200 p-4 sm:p-6 shadow-xs space-y-4">
-              <div className="flex items-start gap-3 flex-1">
-                <span className="w-7 h-7 rounded-full bg-indigo-50 text-indigo-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 border border-indigo-200/60">
-                  {idx + 1}
-                </span>
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
-                  {q.question[language]}
-                </h3>
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-start gap-3 flex-1">
+                  <span className="w-7 h-7 rounded-full bg-indigo-50 text-indigo-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 border border-indigo-200/60">
+                    {idx + 1}
+                  </span>
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
+                    {q.question[language]}
+                  </h3>
+                </div>
+                <AudioSpeakButton
+                  id={`finalquiz-q-${q.id}`}
+                  text={`${q.question[language]}. ${q.options[language].map((opt, i) => `Opção ${i + 1}: ${opt}`).join('. ')}`}
+                  language={language}
+                  variant="icon"
+                  size="xs"
+                />
               </div>
 
               <div className="space-y-2.5 sm:pl-10">
@@ -344,13 +366,22 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
               </div>
 
               {submitted && (
-                <div className={`mt-3 p-4 rounded-xl text-xs sm:text-sm sm:pl-10 ${
+                <div className={`mt-3 p-4 rounded-xl text-xs sm:text-sm sm:pl-10 flex items-start justify-between gap-3 ${
                   isCorrect ? 'bg-emerald-100/70 text-emerald-950' : 'bg-amber-100/70 text-amber-950'
                 }`}>
-                  <div className="mb-1">
-                    <p className="font-bold">{isCorrect ? t.correctAnswer : t.wrongAnswer}</p>
+                  <div>
+                    <div className="mb-1">
+                      <p className="font-bold">{isCorrect ? t.correctAnswer : t.wrongAnswer}</p>
+                    </div>
+                    <p className="leading-relaxed">{q.explanation[language]}</p>
                   </div>
-                  <p className="leading-relaxed">{q.explanation[language]}</p>
+                  <AudioSpeakButton
+                    id={`finalquiz-expl-${q.id}`}
+                    text={`${isCorrect ? t.correctAnswer : t.wrongAnswer}. ${q.explanation[language]}`}
+                    language={language}
+                    variant="icon"
+                    size="xs"
+                  />
                 </div>
               )}
             </div>

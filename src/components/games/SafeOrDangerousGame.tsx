@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, XCircle, AlertTriangle, ShieldCheck, ShieldAlert, Sparkles, RefreshCw, ArrowRight, Award, Lock, Eye, AlertCircle, HelpCircle } from 'lucide-react';
 import { Language } from '../../types';
 import { translations } from '../../i18n/translations';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 
 interface SafeOrDangerousGameProps {
   language: Language;
@@ -381,9 +382,23 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
       {/* Header with Game Character & Theme */}
       <div className="bg-gradient-to-r from-emerald-800 via-teal-900 to-slate-900 rounded-[2rem] text-white p-6 sm:p-8 shadow-xl mb-6 relative overflow-hidden">
         <div className="relative z-10 space-y-2">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/15 text-xs font-black uppercase tracking-wider text-emerald-300 backdrop-blur-sm border border-white/10">
-            <ShieldCheck className="w-4 h-4 text-emerald-300" />
-            <span>{language === 'pt' ? 'Laboratório de Cibersegurança • Tema 2' : 'Cybersecurity Lab • Topic 2'}</span>
+          <div className="flex items-center justify-between gap-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/15 text-xs font-black uppercase tracking-wider text-emerald-300 backdrop-blur-sm border border-white/10">
+              <ShieldCheck className="w-4 h-4 text-emerald-300" />
+              <span>{language === 'pt' ? 'Laboratório de Cibersegurança • Tema 2' : 'Cybersecurity Lab • Topic 2'}</span>
+            </div>
+            <AudioSpeakButton
+              id="safe-or-dangerous-intro"
+              text={`${language === 'pt' ? 'Seguro ou Perigoso? Diagnóstico de Riscos' : 'Safe or Dangerous? Risk Diagnosis'}. ${
+                language === 'pt'
+                  ? 'Analisa 6 situações reais enfrentadas por alunos do 5.º ano. Descobre as armadilhas digitais e aprende a tomar decisões seguras no dia a dia!'
+                  : 'Evaluate 6 real dilemmas faced by 5th graders.'
+              }`}
+              language={language}
+              label={language === 'pt' ? 'Ouvir Jogo' : 'Listen Game'}
+              variant="pill"
+              size="xs"
+            />
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-white">
             🛡️ {language === 'pt' ? 'Seguro ou Perigoso? — Diagnóstico de Riscos' : 'Safe or Dangerous? — Risk Diagnosis'}
@@ -429,6 +444,14 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
                 </div>
               </div>
               <div className="flex items-center gap-2">
+                <AudioSpeakButton
+                  id={`scenario-${currentScenario.id}`}
+                  text={`${currentScenario.title[language]}. ${currentScenario.context[language]}. ${currentScenario.question[language]}`}
+                  language={language}
+                  label={language === 'pt' ? 'Ouvir Caso' : 'Listen Case'}
+                  variant="pill"
+                  size="xs"
+                />
                 <span className="text-2xl">{currentScenario.icon}</span>
               </div>
             </div>
@@ -516,6 +539,13 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
                       </>
                     )}
                   </div>
+                  <AudioSpeakButton
+                    id={`safe-expl-${currentScenario.id}-${selectedOpt.id}`}
+                    text={`${selectedOpt.isCorrect ? (language === 'pt' ? 'Decisão Exemplar!' : 'Exemplary Choice!') : (language === 'pt' ? 'Atenção ao Risco!' : 'Caution!')} ${selectedOpt.explanation[language]}`}
+                    language={language}
+                    variant="icon"
+                    size="xs"
+                  />
                 </div>
                 <p className="text-xs sm:text-sm leading-relaxed font-medium">
                   {selectedOpt.explanation[language]}

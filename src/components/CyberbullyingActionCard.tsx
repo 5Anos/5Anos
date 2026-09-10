@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PhoneCall, HelpCircle } from 'lucide-react';
 import { Language } from '../types';
+import { AudioSpeakButton } from './AudioSpeakButton';
 
 interface CyberbullyingActionCardProps {
   language?: Language;
@@ -42,6 +43,14 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
         </div>
 
         <div className="flex items-center gap-2">
+          <AudioSpeakButton
+            id="cyberbullying-card-intro"
+            text={`${cardTitle}. ${cardDesc}. ${STEPS.map((s) => `Passo ${s.num}: ${s.title[language]}, ${s.desc[language]}`).join('. ')}`}
+            language={language}
+            label={language === 'pt' ? 'Ouvir 5 Passos' : 'Listen 5 Steps'}
+            variant="pill"
+            size="xs"
+          />
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-100 text-rose-900 text-xs font-bold shrink-0">
             <PhoneCall className="w-3.5 h-3.5 text-rose-600" />
             <span>800 21 90 90 (Linha Grátis)</span>
@@ -81,6 +90,13 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
             </p>
           </div>
         </div>
+        <AudioSpeakButton
+          id={`cyberbullying-step-${activeStep}`}
+          text={`${STEPS[activeStep].title[language]}. ${STEPS[activeStep].desc[language]}`}
+          language={language}
+          variant="icon"
+          size="xs"
+        />
       </div>
 
       {/* Interactive Quick Decision Scenario */}
@@ -90,6 +106,13 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
             <HelpCircle className="w-4 h-4 text-indigo-600 shrink-0" />
             <span>{language === 'pt' ? 'Situação Prática: O que farias?' : 'Practical Scenario: What would you do?'}</span>
           </div>
+          <AudioSpeakButton
+            id="cyberbullying-scenario"
+            text={`${scenarioQuestion}. Opção A: Responder com outra ofensa no chat. Opção B: Não responder, guardar printscreen e bloquear.`}
+            language={language}
+            variant="icon"
+            size="xs"
+          />
         </div>
 
         <p className="text-xs text-slate-700 leading-relaxed font-medium">
@@ -123,6 +146,15 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
                 ? '🎉 Muito bem! Esta é a atitude correta: não alimentar discussões, registar prova e cortar o contacto.'
                 : '⚠️ Cuidado: responder com insultos só piora a situação. A regra de ouro é PARAR e BLOQUEAR!'}
             </p>
+            <AudioSpeakButton
+              id="cyberbullying-answer-feedback"
+              text={testAnswer === 1
+                ? 'Muito bem! Esta é a atitude correta: não alimentar discussões, registar prova e cortar o contacto.'
+                : 'Cuidado: responder com insultos só piora a situação. A regra de ouro é PARAR e BLOQUEAR!'}
+              language={language}
+              variant="icon"
+              size="xs"
+            />
           </div>
         )}
       </div>

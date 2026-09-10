@@ -177,8 +177,16 @@ class SpeechManager {
 
   private sanitizeText(text: string): string {
     return text
+      .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
+      .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ')
+      .replace(/<[^>]+>/g, ' ') // Strip all HTML tags
       .replace(/[*#_~`>]/g, ' ') // Strip markdown symbols
       .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Extract link text
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
       .replace(/\s+/g, ' ')
       .trim();
   }
