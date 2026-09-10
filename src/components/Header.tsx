@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { BarChart3, User as UserIcon, LogOut, Menu, X, Sparkles, Compass, Trophy, ShieldCheck, FileSpreadsheet, Palette, Smile, Volume2, VolumeX } from 'lucide-react';
+import React, { useState } from 'react';
+import { BarChart3, User as UserIcon, LogOut, Menu, X, Sparkles, Compass, Trophy, ShieldCheck, FileSpreadsheet, Palette, Smile } from 'lucide-react';
 import { User, Language, AvatarConfig } from '../types';
 import { translations } from '../i18n/translations';
 import { isUserAdmin, api } from '../services/api';
@@ -7,7 +7,6 @@ import { TicDescomplicaLogo } from './TicDescomplicaLogo';
 import { CartoonAvatar } from './avatar/CartoonAvatar';
 import { AvatarCreatorModal } from './avatar/AvatarCreatorModal';
 import { getDefaultAvatar } from '../utils/avatarUtils';
-import { speechService } from '../utils/speech';
 
 interface HeaderProps {
   user: User | null;
@@ -38,30 +37,6 @@ export const Header: React.FC<HeaderProps> = ({
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
-  const [isAudioActive, setIsAudioActive] = useState(speechService.isGlobalAudio());
-  const [isSpeaking, setIsSpeaking] = useState(speechService.getSpeakingId() !== null);
-
-  useEffect(() => {
-    const unsubSpeaking = speechService.subscribe((id) => setIsSpeaking(id !== null));
-    const unsubGlobal = speechService.subscribeGlobalAudio((enabled) => setIsAudioActive(enabled));
-    return () => {
-      unsubSpeaking();
-      unsubGlobal();
-    };
-  }, []);
-
-  const handleToggleGlobalAudio = () => {
-    const nextState = speechService.toggleGlobalAudio();
-    if (nextState) {
-      const welcome =
-        language === 'pt'
-          ? 'Som ativado! Clica nos botões de som para ouvir perguntas e conteúdos.'
-          : 'Sound enabled! Click speaker buttons to listen to questions and content.';
-      speechService.speak('header-sound-on', welcome, language);
-    } else {
-      speechService.stop();
-    }
-  };
 
   const isAdmin = user ? isUserAdmin(user.email, user.role) : false;
 
@@ -147,37 +122,8 @@ export const Header: React.FC<HeaderProps> = ({
             </nav>
           </div>
 
-          {/* Right Controls: Sound, Points, Language, User Menu */}
+          {/* Right Controls: Points, Language, User Menu */}
           <div className="flex items-center gap-2 sm:gap-3 lg:gap-4">
-            {/* Global Audio Toggle for Students / Teachers */}
-            <button
-              type="button"
-              id="header-sound-btn"
-              onClick={handleToggleGlobalAudio}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs sm:text-sm font-extrabold cursor-pointer border transition-all select-none ${
-                isAudioActive
-                  ? isSpeaking
-                    ? 'bg-emerald-600 text-white border-emerald-400 shadow-md ring-2 ring-emerald-300 animate-pulse'
-                    : 'bg-indigo-600 text-white border-indigo-700 hover:bg-indigo-700 shadow-xs'
-                  : 'bg-amber-100 text-amber-950 border-amber-300 hover:bg-amber-200 shadow-xs'
-              }`}
-              title={
-                isAudioActive
-                  ? (language === 'pt' ? 'Som Ativado (Clica para desativar)' : 'Sound ON (Click to turn off)')
-                  : (language === 'pt' ? 'Ativar Som para ouvir os textos e quizzes' : 'Enable Sound to listen to text & quizzes')
-              }
-            >
-              {isAudioActive ? (
-                <Volume2 className={`w-4 h-4 shrink-0 ${isSpeaking ? 'text-emerald-200 animate-bounce' : ''}`} />
-              ) : (
-                <VolumeX className="w-4 h-4 shrink-0 text-amber-800" />
-              )}
-              <span className="font-black whitespace-nowrap">
-                {isAudioActive
-                  ? (language === 'pt' ? '🔊 Som: Ligado' : '🔊 Sound: ON')
-                  : (language === 'pt' ? '🔇 Ativar Som' : '🔇 Turn ON Sound')}
-              </span>
-            </button>
 
             {/* Student Points Pill */}
             {user && !isAdmin && (
@@ -372,35 +318,6 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 space-y-2 shadow-md animate-in slide-in-from-top duration-150 max-h-[80vh] overflow-y-auto">
-          {/* Mobile Sound Toggle */}
-          <button
-            type="button"
-            onClick={() => {
-              handleToggleGlobalAudio();
-            }}
-            className={`w-full text-left px-3 py-2.5 rounded-xl text-sm font-black flex items-center gap-3 border transition-all ${
-              isAudioActive
-                ? isSpeaking
-                  ? 'bg-emerald-600 text-white border-emerald-400 animate-pulse'
-                  : 'bg-indigo-50 text-indigo-900 border-indigo-200'
-                : 'bg-amber-100 text-amber-950 border-amber-300'
-            }`}
-          >
-            {isAudioActive ? (
-              <Volume2 className="w-5 h-5 text-indigo-600 shrink-0" />
-            ) : (
-              <VolumeX className="w-5 h-5 text-amber-700 shrink-0" />
-            )}
-            <span>
-              {isAudioActive
-                ? language === 'pt'
-                  ? '🔊 Som Ativado (Voz Ligada)'
-                  : '🔊 Sound ON (Voice Enabled)'
-                : language === 'pt'
-                ? '🔇 Ativar Som / Leitor de Voz'
-                : '🔇 Turn ON Sound / Voice Reader'}
-            </span>
-          </button>
 
           <button
             onClick={() => {

@@ -224,13 +224,6 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                 <h4 className="text-sm sm:text-base font-extrabold text-slate-900 leading-snug group-hover:text-indigo-950 transition-colors line-clamp-2 flex-1">
                   {todayTip.title[language]}
                 </h4>
-                <AudioSpeakButton
-                  id={`daily-card-${todayTip.id}`}
-                  text={`${language === 'pt' ? 'Dica do dia:' : "Today's tip:"} ${todayTip.title[language]}. ${todayTip.description[language]}`}
-                  language={language}
-                  variant="icon"
-                  size="xs"
-                />
               </div>
 
               <div className="mt-2.5 flex items-center justify-between">
@@ -335,14 +328,6 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                     <BookOpen className="w-4 h-4 text-indigo-600" />
                     <span>{language === 'pt' ? 'A Curiosidade Explicada' : 'The Curiosity Explained'}</span>
                   </div>
-                  <AudioSpeakButton
-                    id={`daily-tip-desc-${todayTip.id}`}
-                    text={`${todayTip.title[language]}. ${todayTip.description[language]}`}
-                    language={language}
-                    label={language === 'pt' ? 'Ouvir curiosidade' : 'Listen'}
-                    variant="pill"
-                    size="xs"
-                  />
                 </div>
                 <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-normal bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
                   {todayTip.description[language]}
@@ -356,13 +341,6 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                     <span>✨</span>
                     <span>{language === 'pt' ? 'Curiosidade Extra / Sabias que?' : 'Fun Fact / Did You Know?'}</span>
                   </div>
-                  <AudioSpeakButton
-                    id={`daily-tip-funfact-${todayTip.id}`}
-                    text={`${language === 'pt' ? 'Curiosidade extra:' : 'Fun fact:'} ${todayTip.funFact[language]}`}
-                    language={language}
-                    variant="icon"
-                    size="xs"
-                  />
                 </div>
                 <p className="text-xs sm:text-sm text-amber-950 font-medium leading-relaxed">
                   {todayTip.funFact[language]}
@@ -380,16 +358,6 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                     <span className="text-[11px] font-black text-indigo-700 bg-indigo-100/70 px-2 py-0.5 rounded-full">
                       {language === 'pt' ? '50 pts se acertares • 25 pts se errares' : '50 pts correct • 25 pts wrong'}
                     </span>
-                    <AudioSpeakButton
-                      id={`daily-tip-q-${todayTip.id}`}
-                      text={`${language === 'pt' ? 'Pergunta de hoje:' : "Today's question:"} ${todayTip.question[language]}. ${
-                        language === 'pt' ? 'Opções de resposta:' : 'Options:'
-                      } ${todayTip.options.map((opt) => `${opt.id.toUpperCase()}: ${opt[language]}.`).join(' ')}`}
-                      language={language}
-                      label={language === 'pt' ? 'Ouvir pergunta' : 'Listen'}
-                      variant="pill"
-                      size="xs"
-                    />
                   </div>
                 </div>
 
@@ -556,13 +524,6 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                             </span>
                             <span>{todayTip.explanation[language]}</span>
                           </div>
-                          <AudioSpeakButton
-                            id={`daily-tip-expl-${todayTip.id}`}
-                            text={`${language === 'pt' ? 'Explicação:' : 'Explanation:'} ${todayTip.explanation[language]}`}
-                            language={language}
-                            variant="icon"
-                            size="xs"
-                          />
                         </div>
                       </div>
                     </div>

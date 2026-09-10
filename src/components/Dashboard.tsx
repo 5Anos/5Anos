@@ -9,7 +9,6 @@ import { getThemeImage } from '../data/themeImages';
 import { isUserAdmin, DEFAULT_THEME_VISIBILITY } from '../services/api';
 import { HeroTICBanner } from './HeroTICBanner';
 import { DailyTipWidget } from './DailyTipWidget';
-import { AudioSpeakButton } from './AudioSpeakButton';
 
 interface DashboardProps {
   user: User | null;
@@ -208,26 +207,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       : `${displayedThemes.length} Available Curriculum Topics`)}
               </p>
             </div>
-            <div className="flex items-center gap-2">
-              <AudioSpeakButton
-                id="dashboard-themes-list-audio"
-                text={
-                  language === 'pt'
-                    ? `Aqui estão os temas de TIC: ${displayedThemes.map((t) => `Tema ${t.number}, ${t.title.pt}`).join('. ')}.`
-                    : `Here are the ICT topics: ${displayedThemes.map((t) => `Topic ${t.number}, ${t.title.en}`).join('. ')}.`
-                }
-                language={language}
-                label={language === 'pt' ? 'Ouvir Temas' : 'Listen Topics'}
-                variant="pill"
-                size="sm"
-              />
-              {isAdmin && (
+            {isAdmin && (
+              <div className="flex items-center gap-2">
                 <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100 flex items-center gap-1.5">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   <span>{language === 'pt' ? 'Modo Professora Ativo' : 'Teacher Mode'}</span>
                 </span>
-              )}
-            </div>
+              </div>
+            )}
           </div>
 
           {/* Theme Cards Grid */}
@@ -308,16 +295,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             {language === 'pt' ? 'Oculto na Turma' : 'Hidden in Class'}
                           </span>
                         )}
-                        <div onClick={(e) => e.stopPropagation()}>
-                          <AudioSpeakButton
-                            id={`theme-card-${theme.id}-audio`}
-                            text={`Tema ${theme.number}: ${theme.title[language]}. ${theme.tagline[language]}`}
-                            language={language}
-                            label={language === 'pt' ? 'Ouvir' : 'Listen'}
-                            variant="pill"
-                            size="sm"
-                          />
-                        </div>
                       </div>
                       <span className="text-xl">{theme.icon}</span>
                     </div>
