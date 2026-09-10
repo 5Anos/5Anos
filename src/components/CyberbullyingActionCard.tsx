@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ShieldAlert, CheckCircle2, PhoneCall, Trash2, ArrowRight, Sparkles, HelpCircle } from 'lucide-react';
+import { PhoneCall, HelpCircle } from 'lucide-react';
 import { Language } from '../types';
+import { AudioSpeakButton } from './AudioSpeakButton';
 
 interface CyberbullyingActionCardProps {
   language?: Language;
@@ -18,6 +19,12 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
   const [activeStep, setActiveStep] = useState<number>(0);
   const [testAnswer, setTestAnswer] = useState<number | null>(null);
 
+  const cardTitle = language === 'pt' ? 'Escudo de Cidadania: A Regra dos 5 Passos' : 'Citizenship Shield: The 5 Steps Rule';
+  const cardDesc = language === 'pt' ? 'Clica em cada passo para saber exatamente o que fazer perante ofensas online!' : 'Click each step to master anti-cyberbullying actions!';
+  const scenarioQuestion = language === 'pt'
+    ? 'Um jogador desconhecido envia uma mensagem maldosa no chat de um jogo. O que deves fazer em primeiro lugar?'
+    : 'An unknown player sends an unkind message in game chat. What is your first step?';
+
   return (
     <div className="w-full bg-gradient-to-br from-rose-50/80 via-white to-amber-50/80 rounded-3xl border-2 border-rose-200/90 p-5 sm:p-6 shadow-sm space-y-5">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-rose-100">
@@ -27,17 +34,26 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
           </span>
           <div>
             <h3 className="text-base sm:text-lg font-black text-slate-900">
-              {language === 'pt' ? 'Escudo de Cidadania: A Regra dos 5 Passos' : 'Citizenship Shield: The 5 Steps Rule'}
+              {cardTitle}
             </h3>
             <p className="text-xs text-slate-600 font-medium">
-              {language === 'pt' ? 'Clica em cada passo para saber exatamente o que fazer perante ofensas online!' : 'Click each step to master anti-cyberbullying actions!'}
+              {cardDesc}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-100 text-rose-900 text-xs font-bold shrink-0">
-          <PhoneCall className="w-3.5 h-3.5 text-rose-600" />
-          <span>800 21 90 90 (Linha Grátis)</span>
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-100 text-rose-900 text-xs font-bold shrink-0">
+            <PhoneCall className="w-3.5 h-3.5 text-rose-600" />
+            <span>800 21 90 90 (Linha Grátis)</span>
+          </div>
+          <AudioSpeakButton
+            id="cyberbullying-card-intro"
+            text={`${cardTitle}. ${cardDesc}. Linha de apoio SOS Criança: 800 21 90 90.`}
+            language={language}
+            variant="icon"
+            size="sm"
+          />
         </div>
       </div>
 
@@ -60,55 +76,104 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
       </div>
 
       {/* Active Step Details */}
-      <div className="p-4 rounded-2xl bg-rose-50/60 border border-rose-200 flex items-center gap-3">
-        <span className="text-3xl">{STEPS[activeStep].icon}</span>
-        <div>
-          <h4 className="text-xs sm:text-sm font-black text-rose-950">
-            {language === 'pt' ? `Passo ${activeStep + 1}: ` : `Step ${activeStep + 1}: `}
-            {STEPS[activeStep].title[language]}
-          </h4>
-          <p className="text-xs sm:text-sm text-slate-700 font-medium mt-0.5">
-            {STEPS[activeStep].desc[language]}
-          </p>
+      <div className="p-4 rounded-2xl bg-rose-50/60 border border-rose-200 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="text-3xl">{STEPS[activeStep].icon}</span>
+          <div>
+            <h4 className="text-xs sm:text-sm font-black text-rose-950">
+              {language === 'pt' ? `Passo ${activeStep + 1}: ` : `Step ${activeStep + 1}: `}
+              {STEPS[activeStep].title[language]}
+            </h4>
+            <p className="text-xs sm:text-sm text-slate-700 font-medium mt-0.5">
+              {STEPS[activeStep].desc[language]}
+            </p>
+          </div>
         </div>
+        <AudioSpeakButton
+          id={`cyberbullying-step-${activeStep}`}
+          text={`${language === 'pt' ? 'Passo' : 'Step'} ${activeStep + 1}: ${STEPS[activeStep].title[language]}. ${STEPS[activeStep].desc[language]}`}
+          language={language}
+          label={language === 'pt' ? 'Ouvir Passo' : 'Listen Step'}
+          variant="pill"
+          size="xs"
+        />
       </div>
 
       {/* Interactive Quick Decision Scenario */}
       <div className="p-4 rounded-2xl bg-white border border-slate-200 space-y-3">
-        <div className="flex items-center gap-2 text-indigo-900 font-bold text-xs sm:text-sm">
-          <HelpCircle className="w-4 h-4 text-indigo-600 shrink-0" />
-          <span>{language === 'pt' ? 'Situação Prática: O que farias?' : 'Practical Scenario: What would you do?'}</span>
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 text-indigo-900 font-bold text-xs sm:text-sm">
+            <HelpCircle className="w-4 h-4 text-indigo-600 shrink-0" />
+            <span>{language === 'pt' ? 'Situação Prática: O que farias?' : 'Practical Scenario: What would you do?'}</span>
+          </div>
+          <AudioSpeakButton
+            id="cyberbullying-scenario-audio"
+            text={`${language === 'pt' ? 'Situação Prática: O que farias?' : 'Practical Scenario: What would you do?'} ${scenarioQuestion}`}
+            language={language}
+            label={language === 'pt' ? 'Ouvir Pergunta' : 'Listen Question'}
+            variant="pill"
+            size="xs"
+          />
         </div>
+
         <p className="text-xs text-slate-700 leading-relaxed font-medium">
-          {language === 'pt'
-            ? 'Um jogador desconhecido envia uma mensagem maldosa no chat de um jogo. O que deves fazer em primeiro lugar?'
-            : 'An unknown player sends an unkind message in game chat. What is your first step?'}
+          {scenarioQuestion}
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <button
-            onClick={() => setTestAnswer(0)}
-            className={`p-2.5 rounded-xl border text-xs font-bold text-left transition-all cursor-pointer ${
-              testAnswer === 0 ? 'bg-amber-100 border-amber-400 text-amber-950' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
-            }`}
-          >
-            A) Responder com outra ofensa no chat
-          </button>
-          <button
-            onClick={() => setTestAnswer(1)}
-            className={`p-2.5 rounded-xl border text-xs font-bold text-left transition-all cursor-pointer ${
-              testAnswer === 1 ? 'bg-emerald-100 border-emerald-400 text-emerald-950' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
-            }`}
-          >
-            B) Não responder, guardar printscreen e bloquear
-          </button>
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => setTestAnswer(0)}
+              className={`flex-1 p-2.5 rounded-xl border text-xs font-bold text-left transition-all cursor-pointer ${
+                testAnswer === 0 ? 'bg-amber-100 border-amber-400 text-amber-950' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
+              }`}
+            >
+              A) Responder com outra ofensa no chat
+            </button>
+            <AudioSpeakButton
+              id="cyberbullying-opt-a"
+              text="Opção A: Responder com outra ofensa no chat."
+              language={language}
+              variant="icon"
+              size="xs"
+            />
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => setTestAnswer(1)}
+              className={`flex-1 p-2.5 rounded-xl border text-xs font-bold text-left transition-all cursor-pointer ${
+                testAnswer === 1 ? 'bg-emerald-100 border-emerald-400 text-emerald-950' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
+              }`}
+            >
+              B) Não responder, guardar printscreen e bloquear
+            </button>
+            <AudioSpeakButton
+              id="cyberbullying-opt-b"
+              text="Opção B: Não responder, guardar printscreen e bloquear."
+              language={language}
+              variant="icon"
+              size="xs"
+            />
+          </div>
         </div>
 
         {testAnswer !== null && (
-          <div className={`p-3 rounded-xl text-xs font-medium ${testAnswer === 1 ? 'bg-emerald-50 text-emerald-900 border border-emerald-200' : 'bg-amber-50 text-amber-900 border border-amber-200'}`}>
-            {testAnswer === 1
-              ? '🎉 Muito bem! Esta é a atitude correta: não alimentar discussões, registar prova e cortar o contacto.'
-              : '⚠️ Cuidado: responder com insultos só piora a situação. A regra de ouro é PARAR e BLOQUEAR!'}
+          <div className={`p-3 rounded-xl text-xs font-medium flex items-center justify-between gap-2 ${testAnswer === 1 ? 'bg-emerald-50 text-emerald-900 border border-emerald-200' : 'bg-amber-50 text-amber-900 border border-amber-200'}`}>
+            <p className="leading-relaxed">
+              {testAnswer === 1
+                ? '🎉 Muito bem! Esta é a atitude correta: não alimentar discussões, registar prova e cortar o contacto.'
+                : '⚠️ Cuidado: responder com insultos só piora a situação. A regra de ouro é PARAR e BLOQUEAR!'}
+            </p>
+            <AudioSpeakButton
+              id="cyberbullying-feedback"
+              text={testAnswer === 1
+                ? 'Muito bem! Esta é a atitude correta: não alimentar discussões, registar prova e cortar o contacto.'
+                : 'Cuidado: responder com insultos só piora a situação. A regra de ouro é PARAR e BLOQUEAR!'}
+              language={language}
+              variant="icon"
+              size="xs"
+            />
           </div>
         )}
       </div>
@@ -119,6 +184,13 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
           <span className="text-xl">♻️</span>
           <span>{language === 'pt' ? 'Equipamentos e pilhas velhas vão para o Ponto Eletrão, nunca para o lixo comum!' : 'E-waste goes to recycling points, never ordinary bins!'}</span>
         </div>
+        <AudioSpeakButton
+          id="cyberbullying-pontoeletrao"
+          text={language === 'pt' ? 'Equipamentos e pilhas velhas vão para o Ponto Eletrão, nunca para o lixo comum!' : 'E-waste goes to recycling points, never ordinary bins!'}
+          language={language}
+          variant="icon"
+          size="xs"
+        />
       </div>
     </div>
   );

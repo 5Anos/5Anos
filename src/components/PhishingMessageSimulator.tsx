@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { ShieldAlert, AlertTriangle, CheckCircle2, UserCheck, MessageSquare, ArrowRight, Sparkles } from 'lucide-react';
+import { ShieldAlert, MessageSquare } from 'lucide-react';
+import { AudioSpeakButton } from './AudioSpeakButton';
 
 export const PhishingMessageSimulator: React.FC = () => {
   const [selectedAction, setSelectedAction] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<{ type: 'danger' | 'success' | 'warning'; msg: string } | null>(null);
+
+  const smsText =
+    'Mensagem de número desconhecido: Olá! Parabéns! Ganhaste um telemóvel novo e mil moedas no teu jogo favorito! Clica já no link para reclamar o prémio antes que expire: link falso.';
 
   const handleAction = (action: 'click' | 'reply' | 'report') => {
     setSelectedAction(action);
@@ -26,9 +30,9 @@ export const PhishingMessageSimulator: React.FC = () => {
   };
 
   return (
-    <div className="w-full bg-gradient-to-b from-amber-50/70 to-slate-50 rounded-2xl border-2 border-amber-200 shadow-md p-3.5 sm:p-4 font-sans select-none">
+    <div className="w-full bg-gradient-to-b from-amber-50/70 to-slate-50 rounded-2xl border-2 border-amber-200 shadow-md p-3.5 sm:p-4 font-sans select-none space-y-3">
       {/* Top Banner */}
-      <div className="flex items-center justify-between gap-2 pb-2 mb-3 border-b border-amber-200">
+      <div className="flex items-center justify-between gap-2 pb-2 border-b border-amber-200">
         <div className="flex items-center gap-2">
           <span className="p-1.5 bg-amber-500 text-white rounded-lg shadow-sm">
             <ShieldAlert className="w-4 h-4" />
@@ -37,21 +41,40 @@ export const PhishingMessageSimulator: React.FC = () => {
             Simulador de Decisão em Tempo Real
           </span>
         </div>
-        <span className="text-[11px] font-bold px-2 py-0.5 bg-amber-100 text-amber-800 rounded-full border border-amber-300">
-          Cenário Prático
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="text-[11px] font-bold px-2 py-0.5 bg-amber-100 text-amber-800 rounded-full border border-amber-300">
+            Cenário Prático
+          </span>
+          <AudioSpeakButton
+            id="phishing-sim-intro"
+            text="Simulador de decisão em tempo real: cenário prático de mensagem suspeita de phishing."
+            language="pt"
+            variant="icon"
+            size="xs"
+          />
+        </div>
       </div>
 
       {/* Simulated Smartphone Chat Message */}
-      <div className="bg-slate-900 rounded-2xl p-3 sm:p-4 text-white shadow-lg border border-slate-800 mb-3.5">
+      <div className="bg-slate-900 rounded-2xl p-3 sm:p-4 text-white shadow-lg border border-slate-800">
         <div className="flex items-center justify-between text-xs text-slate-400 pb-2 mb-2 border-b border-slate-800">
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             <span className="font-semibold text-slate-300">Mensagem de Número Desconhecido</span>
           </div>
-          <span className="text-[10px] bg-red-950/80 text-red-300 px-2 py-0.5 rounded-full border border-red-800 font-bold">
-            ⚠️ Não Verificado
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] bg-red-950/80 text-red-300 px-2 py-0.5 rounded-full border border-red-800 font-bold">
+              ⚠️ Não Verificado
+            </span>
+            <AudioSpeakButton
+              id="phishing-sim-sms-audio"
+              text={smsText}
+              language="pt"
+              label="Ouvir Mensagem"
+              variant="pill"
+              size="xs"
+            />
+          </div>
         </div>
 
         {/* Chat Bubble */}
@@ -74,17 +97,25 @@ export const PhishingMessageSimulator: React.FC = () => {
       </div>
 
       {/* Question Prompt */}
-      <div className="mb-2 text-center">
+      <div className="flex items-center justify-between gap-2 px-1">
         <p className="text-xs sm:text-sm font-bold text-slate-800">
           O que deves fazer imediatamente? Clica numa opção para agir:
         </p>
+        <AudioSpeakButton
+          id="phishing-sim-prompt-audio"
+          text="O que deves fazer imediatamente? Opção um: Clicar no link por curiosidade. Opção dois: Responder a perguntar detalhes. Opção três: Não clicar e avisar logo um adulto de confiança."
+          language="pt"
+          label="Ouvir opções"
+          variant="inline"
+          size="xs"
+        />
       </div>
 
       {/* Interactive Action Decision Buttons (Imperative) */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
         <button
           onClick={() => handleAction('click')}
-          className={`p-2.5 rounded-xl border text-xs font-bold transition-all flex flex-col items-center justify-center gap-1 text-center shadow-sm ${
+          className={`p-2.5 rounded-xl border text-xs font-bold transition-all flex flex-col items-center justify-center gap-1 text-center shadow-sm cursor-pointer ${
             selectedAction === 'click'
               ? 'bg-red-600 text-white border-red-700 scale-[0.98] ring-2 ring-red-400'
               : 'bg-white hover:bg-red-50 text-red-700 border-red-200'
@@ -97,7 +128,7 @@ export const PhishingMessageSimulator: React.FC = () => {
 
         <button
           onClick={() => handleAction('reply')}
-          className={`p-2.5 rounded-xl border text-xs font-bold transition-all flex flex-col items-center justify-center gap-1 text-center shadow-sm ${
+          className={`p-2.5 rounded-xl border text-xs font-bold transition-all flex flex-col items-center justify-center gap-1 text-center shadow-sm cursor-pointer ${
             selectedAction === 'reply'
               ? 'bg-amber-600 text-white border-amber-700 scale-[0.98] ring-2 ring-amber-400'
               : 'bg-white hover:bg-amber-50 text-amber-800 border-amber-200'
@@ -110,7 +141,7 @@ export const PhishingMessageSimulator: React.FC = () => {
 
         <button
           onClick={() => handleAction('report')}
-          className={`p-2.5 rounded-xl border text-xs font-bold transition-all flex flex-col items-center justify-center gap-1 text-center shadow-sm ${
+          className={`p-2.5 rounded-xl border text-xs font-bold transition-all flex flex-col items-center justify-center gap-1 text-center shadow-sm cursor-pointer ${
             selectedAction === 'report'
               ? 'bg-emerald-600 text-white border-emerald-700 scale-[0.98] ring-2 ring-emerald-400'
               : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border-emerald-300'
@@ -125,7 +156,7 @@ export const PhishingMessageSimulator: React.FC = () => {
       {/* Immediate Interactive Feedback */}
       {feedback && (
         <div
-          className={`p-3 rounded-xl border text-xs sm:text-sm font-semibold animate-in fade-in slide-in-from-top-1 ${
+          className={`p-3 rounded-xl border text-xs sm:text-sm font-semibold flex items-center justify-between gap-2 animate-in fade-in slide-in-from-top-1 ${
             feedback.type === 'danger'
               ? 'bg-red-100 border-red-300 text-red-950'
               : feedback.type === 'warning'
@@ -133,7 +164,14 @@ export const PhishingMessageSimulator: React.FC = () => {
               : 'bg-emerald-100 border-emerald-300 text-emerald-950'
           }`}
         >
-          {feedback.msg}
+          <span>{feedback.msg}</span>
+          <AudioSpeakButton
+            id="phishing-feedback-audio"
+            text={feedback.msg}
+            language="pt"
+            variant="icon"
+            size="xs"
+          />
         </div>
       )}
     </div>

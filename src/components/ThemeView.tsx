@@ -283,20 +283,24 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                       <span>{currentLesson.icon || '📖'}</span>
                       <span>{currentLesson.eyebrow[language]}</span>
                     </span>
+                  </div>
+
+                  <div className="flex items-center gap-2.5 flex-wrap">
+                    {/* Apenas um botão de áudio no conteúdo que lê todo o texto do separador */}
                     <AudioSpeakButton
                       id={`lesson-step-${theme.id}-${currentStepIndex}`}
-                      text={`${currentLesson.eyebrow[language]}: ${currentLesson.h[language]}. ${currentLesson.body[language].replace(/<[^>]+>/g, ' ')}`}
+                      text={`${currentLesson.h[language]}. ${currentLesson.body[language].replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim()}`}
                       language={language}
-                      label={language === 'pt' ? 'Ouvir Explicação' : 'Listen Explanation'}
+                      label={language === 'pt' ? 'Ouvir Conteúdo' : 'Listen Content'}
                       variant="pill"
                       size="sm"
                     />
-                  </div>
 
-                  <div className="text-xs sm:text-sm font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
-                    {language === 'pt'
-                      ? `Passo ${currentStepIndex + 1} de ${lessons.length}`
-                      : `Step ${currentStepIndex + 1} of ${lessons.length}`}
+                    <div className="text-xs sm:text-sm font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full">
+                      {language === 'pt'
+                        ? `Passo ${currentStepIndex + 1} de ${lessons.length}`
+                        : `Step ${currentStepIndex + 1} of ${lessons.length}`}
+                    </div>
                   </div>
                 </div>
 
@@ -305,11 +309,10 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                   {currentLesson.h[language]}
                 </h2>
 
-                {/* Pedagogical Step Renderer: Explanation + Hands-on Interactive Lab */}
+                {/* Pedagogical Step Renderer: Complete natural text */}
                 <div className="space-y-6 w-full">
-                  {/* Content Body Explanation */}
                   <div
-                    className="text-sm sm:text-base text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"
+                    className="text-base sm:text-lg text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"
                     dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
                   />
 

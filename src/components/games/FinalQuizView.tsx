@@ -352,28 +352,20 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                   }
 
                   return (
-                    <div key={optIdx} className="flex items-center gap-2">
-                      <button
-                        disabled={submitted}
-                        onClick={() => handleSelect(q.id, optIdx)}
-                        className={`flex-1 text-left p-3.5 rounded-xl border text-xs sm:text-sm transition-all flex items-center justify-between cursor-pointer ${style}`}
-                      >
-                        <span>{opt}</span>
-                        {submitted && optIdx === q.correctIndex && (
-                          <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-                        )}
-                        {submitted && userChoice === optIdx && optIdx !== q.correctIndex && (
-                          <AlertCircle className="w-5 h-5 text-rose-500 shrink-0" />
-                        )}
-                      </button>
-                      <AudioSpeakButton
-                        id={`finalquiz-q-${q.id}-opt-${optIdx}`}
-                        text={opt}
-                        language={language}
-                        variant="icon"
-                        size="sm"
-                      />
-                    </div>
+                    <button
+                      key={optIdx}
+                      disabled={submitted}
+                      onClick={() => handleSelect(q.id, optIdx)}
+                      className={`w-full text-left p-3.5 rounded-xl border text-xs sm:text-sm transition-all flex items-center justify-between cursor-pointer ${style}`}
+                    >
+                      <span>{opt}</span>
+                      {submitted && optIdx === q.correctIndex && (
+                        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                      )}
+                      {submitted && userChoice === optIdx && optIdx !== q.correctIndex && (
+                        <AlertCircle className="w-5 h-5 text-rose-500 shrink-0" />
+                      )}
+                    </button>
                   );
                 })}
               </div>

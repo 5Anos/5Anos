@@ -25,7 +25,6 @@ import { TicCyberbullyingGame } from './components/games/TicCyberbullyingGame';
 import { TicDigitalFootprintGame } from './components/games/TicDigitalFootprintGame';
 import { GenericChallengeGame } from './components/games/GenericChallengeGame';
 import { GenericHtmlGameRunner } from './components/games/GenericHtmlGameRunner';
-import { AudioAccessibilityBar } from './components/AudioAccessibilityBar';
 
 import { api, isUserAdmin, DEFAULT_THEME_VISIBILITY } from './services/api';
 import { User, ActivityProgress, UserAchievement, PointTransaction, Language, ThemeVisibilityMap } from './types';
@@ -913,39 +912,6 @@ export default function App() {
         currentUser={user}
         language={language}
         initialTab={adminInitialTab}
-      />
-
-      {/* Floating Audio & Voice Accessibility Assistant */}
-      <AudioAccessibilityBar
-        language={language}
-        currentScreenDescription={(() => {
-          if (currentView === 'dashboard') {
-            return language === 'pt'
-              ? 'Página Principal de TIC 5 Descomplica. Escolhe um dos 7 temas escolares para explorar conteúdos, resolver desafios e ganhar pontos!'
-              : 'Main Dashboard of TIC 5 Descomplica. Choose one of the 7 themes to study and play!';
-          }
-          if (currentView === 'theme') {
-            return language === 'pt'
-              ? `Estás a explorar o ${currentTheme.title[language]}. Clica na aba Módulos para estudar o passo a passo, ou na aba Desafios para jogar!`
-              : `You are exploring ${currentTheme.title[language]}. Select Modules or Challenges to play!`;
-          }
-          if (currentView === 'module') {
-            return language === 'pt'
-              ? 'Módulo de Aprendizagem Interativo. Ouve cada um dos cinco passos e responde às questões de verificação.'
-              : 'Interactive Module. Listen to the steps and answer the check questions.';
-          }
-          if (currentView === 'challenge') {
-            return language === 'pt'
-              ? 'Desafio Prático. Ouve o enunciado, escolhe a resposta correta e ganha pontos e medalhas.'
-              : 'Interactive Challenge. Listen to the scenario and choose the right answer.';
-          }
-          if (currentView === 'progress') {
-            return language === 'pt'
-              ? 'Página de Progresso e Conquistas. Aqui podes acompanhar os teus pontos, quizzes concluídos e os teus emblemas.'
-              : 'Progress and Achievements page. Track your points and badges here.';
-          }
-          return undefined;
-        })()}
       />
     </div>
   );

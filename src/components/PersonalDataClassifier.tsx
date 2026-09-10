@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ShieldCheck, ShieldAlert, Sparkles, CheckCircle2, XCircle } from 'lucide-react';
+import { CheckCircle2, XCircle } from 'lucide-react';
 import { Language } from '../types';
+import { AudioSpeakButton } from './AudioSpeakButton';
 
 interface PersonalDataClassifierProps {
   language?: Language;
@@ -66,6 +67,11 @@ export const PersonalDataClassifier: React.FC<PersonalDataClassifierProps> = ({ 
     setAnswers((prev) => ({ ...prev, [id]: choiceIsPrivate }));
   };
 
+  const title = language === 'pt' ? 'Classificador de Dados: Privado 🛑 vs Partilhável ✅' : 'Data Sorter: Confidential 🛑 vs Shareable ✅';
+  const desc = language === 'pt'
+    ? 'Identifica o que deves guardar em segredo e o que podes partilhar com segurança!'
+    : 'Identify what must remain confidential and what is safe to share!';
+
   return (
     <div className="w-full bg-gradient-to-br from-indigo-50/70 via-white to-sky-50/70 rounded-3xl border-2 border-indigo-200/80 p-5 sm:p-6 shadow-sm space-y-5">
       <div className="flex items-center justify-between gap-3 pb-3 border-b border-indigo-100">
@@ -75,15 +81,22 @@ export const PersonalDataClassifier: React.FC<PersonalDataClassifierProps> = ({ 
           </span>
           <div>
             <h3 className="text-base sm:text-lg font-black text-slate-900">
-              {language === 'pt' ? 'Classificador de Dados: Privado 🛑 vs Partilhável ✅' : 'Data Sorter: Confidential 🛑 vs Shareable ✅'}
+              {title}
             </h3>
             <p className="text-xs text-slate-600 font-medium">
-              {language === 'pt'
-                ? 'Identifica o que deves guardar em segredo e o que podes partilhar com segurança!'
-                : 'Identify what must remain confidential and what is safe to share!'}
+              {desc}
             </p>
           </div>
         </div>
+
+        <AudioSpeakButton
+          id="personal-data-classifier-header"
+          text={`${title}. ${desc}`}
+          language={language}
+          label={language === 'pt' ? 'Ouvir Instruções' : 'Listen Instructions'}
+          variant="pill"
+          size="xs"
+        />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
@@ -104,9 +117,18 @@ export const PersonalDataClassifier: React.FC<PersonalDataClassifierProps> = ({ 
               }`}
             >
               <div>
-                <div className="flex items-center gap-2.5 mb-2">
-                  <span className="text-2xl p-1.5 bg-slate-100 rounded-xl">{item.icon}</span>
-                  <h4 className="font-bold text-xs sm:text-sm text-slate-900 leading-tight">{item.name[language]}</h4>
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-2xl p-1.5 bg-slate-100 rounded-xl">{item.icon}</span>
+                    <h4 className="font-bold text-xs sm:text-sm text-slate-900 leading-tight">{item.name[language]}</h4>
+                  </div>
+                  <AudioSpeakButton
+                    id={`data-item-${item.id}-audio`}
+                    text={`${item.name[language]}. ${hasAnswered ? item.advice[language] : 'Como classificas este dado? É privado ou partilhável?'}`}
+                    language={language}
+                    variant="icon"
+                    size="xs"
+                  />
                 </div>
 
                 {!hasAnswered ? (
