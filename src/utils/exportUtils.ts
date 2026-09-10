@@ -318,9 +318,117 @@ export function exportThemeScoresToExcel(
     XLSX.utils.book_append_sheet(workbook, themeSheet, safeSheetTitle.substring(0, 31));
   });
 
+  // 3. Dicas Diárias & Bónus Sheet
+  const tipsRows = filteredStudents.map((student, idx) => {
+    const studentProgress = progressMap[student.id] || progressMap[student.email] || [];
+    let totalCurricularSum = 0;
+    ALL_THEMES.forEach((theme) => {
+      const breakdown = getStudentThemeBreakdown(student, studentProgress, theme);
+      totalCurricularSum += breakdown.totalPoints;
+    });
+
+    const tipsAndBonusXP = Math.max(0, (student.points ?? 0) - totalCurricularSum);
+    // Estimativa de dicas lidas/respondidas (25 a 50 pts por dia)
+    const estimatedTipsCount = tipsAndBonusXP > 0 ? Math.round(tipsAndBonusXP / 40) : 0;
+
+    return {
+      'N.º': idx + 1,
+      'Turma': student.turma || '5.º A',
+      'Nome do Aluno': student.name || 'Sem Nome',
+      'Email': student.email || '',
+      'ID Público': student.publicId || '',
+      'Pontos Ganhos em Dicas Diárias & Bónus (XP)': tipsAndBonusXP,
+      'Estimativa de Dicas Respondidas': estimatedTipsCount > 0 ? `~${estimatedTipsCount} dicas` : '0 dicas',
+      'Pontos Temas Curriculares (0-3500 XP)': totalCurricularSum,
+      'Pontuação Global Acumulada (XP)': student.points ?? 0,
+      'Última Atividade Realizada': student.lastActivity?.title || '—',
+      'Data da Última Atividade': student.lastActivity?.timestamp ? new Date(student.lastActivity.timestamp).toLocaleString('pt-PT') : '—',
+    };
+  });
+
+  const tipsSheet = XLSX.utils.json_to_sheet(tipsRows);
+  tipsSheet['!cols'] = [
+    { wch: 6 },
+    { wch: 10 },
+    { wch: 28 },
+    { wch: 32 },
+    { wch: 18 },
+    { wch: 38 },
+    { wch: 30 },
+    { wch: 32 },
+    { wch: 30 },
+    { wch: 34 },
+    { wch: 22 },
+  ];
+  XLSX.utils.book_append_sheet(workbook, tipsSheet, 'Dicas Diárias & Bónus');
+
   const fileName = `MundoTIC_Caderno_Avaliacao_7Temas_Turma_${turmaSlug}_${todayStr}.xlsx`;
   XLSX.writeFile(workbook, fileName);
 }
+
+/**
+ * Dedicated export for Dicas Diárias (Daily Tips) and bonus points per student
+ */
+export function exportDailyTipsScoresToExcel(
+  filteredStudents: User[],
+  progressMap: Record<string, any[]>,
+  selectedTurma?: string
+): void {
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const turmaSlug = selectedTurma && selectedTurma !== 'all'
+    ? selectedTurma.replace(/[^a-zA-Z0-9]/g, '_')
+    : 'Todas_Turmas';
+
+  const rows = filteredStudents.map((student, idx) => {
+    const studentProgress = progressMap[student.id] || progressMap[student.email] || [];
+    let totalCurricularSum = 0;
+    ALL_THEMES.forEach((theme) => {
+      const breakdown = getStudentThemeBreakdown(student, studentProgress, theme);
+      totalCurricularSum += breakdown.totalPoints;
+    });
+
+    const tipsAndBonusXP = Math.max(0, (student.points ?? 0) - totalCurricularSum);
+    const estimatedTipsCount = tipsAndBonusXP > 0 ? Math.round(tipsAndBonusXP / 40) : 0;
+
+    return {
+      'N.º': idx + 1,
+      'Turma': student.turma || '5.º A',
+      'Nome do Aluno': student.name || 'Sem Nome',
+      'Email Institucional': student.email || '',
+      'ID Público (Nickname)': student.publicId || '',
+      'Pontos Dicas Diárias & Bónus (XP)': tipsAndBonusXP,
+      'Dicas Realizadas (Estimativa)': estimatedTipsCount > 0 ? `~${estimatedTipsCount} dicas` : '0',
+      'Pontos Temas Curriculares (0-3500 XP)': totalCurricularSum,
+      'Pontuação Global Total (XP)': student.points ?? 0,
+      'Nível de Envolvimento': tipsAndBonusXP >= 200 ? 'Excelente (Muito Ativo)' : tipsAndBonusXP >= 50 ? 'Regular' : tipsAndBonusXP > 0 ? 'Iniciante' : 'Sem Participação',
+      'Última Atividade Registada': student.lastActivity?.title || 'Sem registo',
+      'Data da Atividade': student.lastActivity?.timestamp ? new Date(student.lastActivity.timestamp).toLocaleString('pt-PT') : '—',
+    };
+  });
+
+  const workbook = XLSX.utils.book_new();
+  const worksheet = XLSX.utils.json_to_sheet(rows);
+
+  worksheet['!cols'] = [
+    { wch: 6 },  // N.º
+    { wch: 10 }, // Turma
+    { wch: 28 }, // Nome
+    { wch: 32 }, // Email
+    { wch: 20 }, // ID
+    { wch: 32 }, // Dicas XP
+    { wch: 28 }, // Estimativa
+    { wch: 34 }, // Temas
+    { wch: 28 }, // Global XP
+    { wch: 26 }, // Nivel
+    { wch: 36 }, // Ultima atividade
+    { wch: 22 }, // Data
+  ];
+
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Pauta Dicas Diárias');
+  const fileName = `MundoTIC_Pauta_Dicas_Diarias_Turma_${turmaSlug}_${todayStr}.xlsx`;
+  XLSX.writeFile(workbook, fileName);
+}
+
 
 /**
  * Exports basic students list to Excel (.xlsx) file, optionally filtered by class (turma)
