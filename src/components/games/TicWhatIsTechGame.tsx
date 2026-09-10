@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, XCircle, Sparkles, HelpCircle, ArrowRight, RotateCcw, Lightbulb, Compass, Award } from 'lucide-react';
 import { Language } from '../../types';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 
 interface TicWhatIsTechGameProps {
   language: Language;
@@ -525,24 +526,44 @@ export const TicWhatIsTechGame: React.FC<TicWhatIsTechGameProps> = ({
 
           {/* Current Problem Card */}
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
-            <div className="flex items-start gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center text-3xl shrink-0 shadow-inner">
-                {currentProblem.icon}
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center text-3xl shrink-0 shadow-inner">
+                  {currentProblem.icon}
+                </div>
+                <div className="space-y-1">
+                  <span className="text-xs font-bold text-amber-700 uppercase tracking-wider">
+                    {language === 'pt' ? 'Situação / Problema:' : 'Situation / Problem:'}
+                  </span>
+                  <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 leading-snug">
+                    "{currentProblem.problem[language]}"
+                  </h3>
+                </div>
               </div>
-              <div className="space-y-1">
-                <span className="text-xs font-bold text-amber-700 uppercase tracking-wider">
-                  {language === 'pt' ? 'Situação / Problema:' : 'Situation / Problem:'}
-                </span>
-                <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 leading-snug">
-                  "{currentProblem.problem[language]}"
-                </h3>
-              </div>
+              <AudioSpeakButton
+                id={`tech-prob-${currentProblem.id}`}
+                text={`Problema: ${currentProblem.problem[language]}`}
+                language={language}
+                label={language === 'pt' ? 'Ouvir problema' : 'Listen'}
+                variant="pill"
+                size="xs"
+              />
             </div>
 
             <div className="space-y-3 pt-2">
-              <p className="text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-wider">
-                {language === 'pt' ? 'Qual é a melhor solução tecnológica?' : 'Which is the best tech solution?'}
-              </p>
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-wider">
+                  {language === 'pt' ? 'Qual é a melhor solução tecnológica?' : 'Which is the best tech solution?'}
+                </p>
+                <AudioSpeakButton
+                  id={`tech-prob-opts-${currentProblem.id}`}
+                  text={`${language === 'pt' ? 'Qual é a melhor solução tecnológica? Opções:' : 'Which is the best tech solution? Options:'} ${currentProblem.options.map((opt, i) => `${language === 'pt' ? 'Opção' : 'Option'} ${i + 1}: ${opt.text[language]}.`).join(' ')}`}
+                  language={language}
+                  label={language === 'pt' ? 'Ouvir opções' : 'Listen'}
+                  variant="pill"
+                  size="xs"
+                />
+              </div>
 
               <div className="space-y-2.5">
                 {currentProblem.options.map((opt) => {
@@ -562,36 +583,44 @@ export const TicWhatIsTechGame: React.FC<TicWhatIsTechGameProps> = ({
                   }
 
                   return (
-                    <button
-                      key={opt.id}
-                      type="button"
-                      disabled={showProbFeedback}
-                      onClick={() => handleSelectProblemOption(opt.id)}
-                      className={`w-full text-left p-4 rounded-2xl border-2 transition-all flex flex-col gap-2 ${optStyle} ${
-                        showProbFeedback ? 'cursor-default' : 'cursor-pointer'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="text-sm sm:text-base font-extrabold">
-                          {opt.text[language]}
-                        </span>
-                        {showProbFeedback && opt.isBest && (
-                          <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-                        )}
-                        {showProbFeedback && isSelected && !opt.isBest && (
-                          <XCircle className="w-5 h-5 text-rose-600 shrink-0" />
-                        )}
-                      </div>
-
-                      {showProbFeedback && (isSelected || opt.isBest) && (
-                        <div className="pt-2 border-t border-black/10 text-xs sm:text-sm font-medium leading-relaxed">
-                          <span className="font-bold">
-                            {language === 'pt' ? '💡 Porquê? ' : '💡 Why? '}
+                    <div key={opt.id} className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        disabled={showProbFeedback}
+                        onClick={() => handleSelectProblemOption(opt.id)}
+                        className={`flex-1 text-left p-4 rounded-2xl border-2 transition-all flex flex-col gap-2 ${optStyle} ${
+                          showProbFeedback ? 'cursor-default' : 'cursor-pointer'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-sm sm:text-base font-extrabold">
+                            {opt.text[language]}
                           </span>
-                          <span>{opt.why[language]}</span>
+                          {showProbFeedback && opt.isBest && (
+                            <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                          )}
+                          {showProbFeedback && isSelected && !opt.isBest && (
+                            <XCircle className="w-5 h-5 text-rose-600 shrink-0" />
+                          )}
                         </div>
-                      )}
-                    </button>
+
+                        {showProbFeedback && (isSelected || opt.isBest) && (
+                          <div className="pt-2 border-t border-black/10 text-xs sm:text-sm font-medium leading-relaxed">
+                            <span className="font-bold">
+                              {language === 'pt' ? '💡 Porquê? ' : '💡 Why? '}
+                            </span>
+                            <span>{opt.why[language]}</span>
+                          </div>
+                        )}
+                      </button>
+                      <AudioSpeakButton
+                        id={`tech-opt-${opt.id}`}
+                        text={showProbFeedback ? `${opt.text[language]}. ${opt.why[language]}` : opt.text[language]}
+                        language={language}
+                        variant="icon"
+                        size="sm"
+                      />
+                    </div>
                   );
                 })}
               </div>

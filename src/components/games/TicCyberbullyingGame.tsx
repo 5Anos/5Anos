@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, XCircle, Shield, AlertTriangle, PhoneCall, HeartHandshake, Eye, MessageSquare, ArrowRight, RotateCcw, Award } from 'lucide-react';
 import { Language } from '../../types';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 
 interface TicCyberbullyingGameProps {
   language: Language;
@@ -313,16 +314,26 @@ export const TicCyberbullyingGame: React.FC<TicCyberbullyingGameProps> = ({
             const step = FIVE_STEPS.find((s) => s.num === activeStepTab)!;
             return (
               <div className="p-6 rounded-2xl bg-gradient-to-br from-indigo-50/70 via-purple-50/50 to-white border-2 border-indigo-200 space-y-4 animate-in fade-in">
-                <div className="flex items-center gap-3">
-                  <span className="w-12 h-12 rounded-2xl bg-white shadow-xs border border-indigo-100 flex items-center justify-center text-3xl">
-                    {step.icon}
-                  </span>
-                  <div>
-                    <span className="text-xs font-black uppercase tracking-wider text-indigo-700">
-                      {language === 'pt' ? `Passo ${step.num}` : `Step ${step.num}`}
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <span className="w-12 h-12 rounded-2xl bg-white shadow-xs border border-indigo-100 flex items-center justify-center text-3xl">
+                      {step.icon}
                     </span>
-                    <h3 className="text-lg font-black text-slate-900">{step.title[language]}</h3>
+                    <div>
+                      <span className="text-xs font-black uppercase tracking-wider text-indigo-700">
+                        {language === 'pt' ? `Passo ${step.num}` : `Step ${step.num}`}
+                      </span>
+                      <h3 className="text-lg font-black text-slate-900">{step.title[language]}</h3>
+                    </div>
                   </div>
+                  <AudioSpeakButton
+                    id={`cyber-step-${step.num}`}
+                    text={`${step.title[language]}. Ação: ${step.action[language]}. Porquê: ${step.why[language]}`}
+                    language={language}
+                    label={language === 'pt' ? 'Ouvir passo' : 'Listen'}
+                    variant="pill"
+                    size="xs"
+                  />
                 </div>
 
                 <div className="space-y-2">
@@ -354,18 +365,28 @@ export const TicCyberbullyingGame: React.FC<TicCyberbullyingGameProps> = ({
       {/* STAGE 2: CENÁRIOS PRÁTICOS (HISTÓRIA DA ANA) */}
       {currentStage === 'scenarios' && (
         <div className="space-y-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm animate-in fade-in">
-          <div className="p-4 sm:p-5 rounded-2xl bg-rose-50 border border-rose-200 flex items-start gap-3">
-            <AlertTriangle className="w-6 h-6 text-rose-700 shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <span className="text-xs font-black text-rose-800 uppercase tracking-wider bg-rose-200/80 px-2.5 py-0.5 rounded-full">
-                {language === 'pt'
-                  ? `Situação ${scenarioIdx + 1} de ${STORY_SCENARIOS.length}`
-                  : `Scenario ${scenarioIdx + 1} of ${STORY_SCENARIOS.length}`}
-              </span>
-              <h2 className="text-base sm:text-lg font-black text-rose-950 mt-1">
-                {language === 'pt' ? 'Caso Prático: O Desafio da Ana' : 'Case Study: Ana’s Challenge'}
-              </h2>
+          <div className="p-4 sm:p-5 rounded-2xl bg-rose-50 border border-rose-200 flex items-start justify-between gap-3">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="w-6 h-6 text-rose-700 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <span className="text-xs font-black text-rose-800 uppercase tracking-wider bg-rose-200/80 px-2.5 py-0.5 rounded-full">
+                  {language === 'pt'
+                    ? `Situação ${scenarioIdx + 1} de ${STORY_SCENARIOS.length}`
+                    : `Scenario ${scenarioIdx + 1} of ${STORY_SCENARIOS.length}`}
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-rose-950 mt-1">
+                  {language === 'pt' ? 'Caso Prático: O Desafio da Ana' : 'Case Study: Ana’s Challenge'}
+                </h2>
+              </div>
             </div>
+            <AudioSpeakButton
+              id={`cyber-story-audio-${curScenario.id}`}
+              text={`Situação ${scenarioIdx + 1}. Caso Prático: ${curScenario.story[language]}`}
+              language={language}
+              label={language === 'pt' ? 'Ouvir caso' : 'Listen'}
+              variant="pill"
+              size="xs"
+            />
           </div>
 
           <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 text-xs sm:text-sm leading-relaxed font-medium">
@@ -373,9 +394,21 @@ export const TicCyberbullyingGame: React.FC<TicCyberbullyingGameProps> = ({
           </div>
 
           <div className="space-y-3 pt-2">
-            <h3 className="text-sm sm:text-base font-black text-slate-900">
-              {curScenario.question[language]}
-            </h3>
+            <div className="flex items-center justify-between gap-2">
+              <h3 className="text-sm sm:text-base font-black text-slate-900 flex-1">
+                {curScenario.question[language]}
+              </h3>
+              <AudioSpeakButton
+                id={`cyber-q-audio-${curScenario.id}`}
+                text={`${curScenario.question[language]}. ${
+                  language === 'pt' ? 'Opções:' : 'Options:'
+                } ${curScenario.options.map((opt, i) => `${language === 'pt' ? 'Opção' : 'Option'} ${i + 1}: ${opt.text[language]}.`).join(' ')}`}
+                language={language}
+                label={language === 'pt' ? 'Ouvir pergunta' : 'Listen'}
+                variant="pill"
+                size="xs"
+              />
+            </div>
 
             <div className="space-y-2.5">
               {curScenario.options.map((opt, idx) => {
@@ -395,31 +428,39 @@ export const TicCyberbullyingGame: React.FC<TicCyberbullyingGameProps> = ({
                 }
 
                 return (
-                  <button
-                    key={idx}
-                    type="button"
-                    disabled={showFeedback}
-                    onClick={() => handleSelectOption(idx)}
-                    className={`w-full text-left p-4 rounded-2xl border-2 transition-all flex flex-col gap-2 ${optStyle} ${
-                      showFeedback ? 'cursor-default' : 'cursor-pointer'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs sm:text-sm font-extrabold">{opt.text[language]}</span>
-                      {showFeedback && opt.isCorrect && (
-                        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-                      )}
-                      {showFeedback && isSelected && !opt.isCorrect && (
-                        <XCircle className="w-5 h-5 text-rose-600 shrink-0" />
-                      )}
-                    </div>
-
-                    {showFeedback && (isSelected || opt.isCorrect) && (
-                      <div className="pt-2 border-t border-black/10 text-xs font-medium leading-relaxed">
-                        <span>{opt.feedback[language]}</span>
+                  <div key={idx} className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      disabled={showFeedback}
+                      onClick={() => handleSelectOption(idx)}
+                      className={`flex-1 text-left p-4 rounded-2xl border-2 transition-all flex flex-col gap-2 ${optStyle} ${
+                        showFeedback ? 'cursor-default' : 'cursor-pointer'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-xs sm:text-sm font-extrabold">{opt.text[language]}</span>
+                        {showFeedback && opt.isCorrect && (
+                          <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                        )}
+                        {showFeedback && isSelected && !opt.isCorrect && (
+                          <XCircle className="w-5 h-5 text-rose-600 shrink-0" />
+                        )}
                       </div>
-                    )}
-                  </button>
+
+                      {showFeedback && (isSelected || opt.isCorrect) && (
+                        <div className="pt-2 border-t border-black/10 text-xs font-medium leading-relaxed">
+                          <span>{opt.feedback[language]}</span>
+                        </div>
+                      )}
+                    </button>
+                    <AudioSpeakButton
+                      id={`cyber-opt-${curScenario.id}-${idx}`}
+                      text={opt.text[language]}
+                      language={language}
+                      variant="icon"
+                      size="sm"
+                    />
+                  </div>
                 );
               })}
             </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, XCircle, AlertTriangle, ShieldCheck, ShieldAlert, Sparkles, RefreshCw, ArrowRight, Award, Lock, Eye, AlertCircle, HelpCircle } from 'lucide-react';
 import { Language } from '../../types';
 import { translations } from '../../i18n/translations';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 
 interface SafeOrDangerousGameProps {
   language: Language;
@@ -428,7 +429,17 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
                   </h3>
                 </div>
               </div>
-              <span className="text-2xl">{currentScenario.icon}</span>
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">{currentScenario.icon}</span>
+                <AudioSpeakButton
+                  id={`safe-game-scenario-${currentScenario.id}`}
+                  text={`${currentScenario.title[language]}. ${currentScenario.context[language]}`}
+                  language={language}
+                  label={language === 'pt' ? 'Ouvir situação' : 'Listen'}
+                  variant="pill"
+                  size="xs"
+                />
+              </div>
             </div>
 
             <p className="text-xs sm:text-sm text-slate-800 font-medium leading-relaxed pt-1">
@@ -437,14 +448,26 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
           </div>
 
           {/* Question Banner */}
-          <div className="flex items-start gap-2.5 text-slate-900 font-black text-sm sm:text-base">
-            <HelpCircle className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" />
-            <span>{currentScenario.question[language]}</span>
+          <div className="flex items-center justify-between gap-2.5 text-slate-900 font-black text-sm sm:text-base">
+            <div className="flex items-start gap-2.5 flex-1">
+              <HelpCircle className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" />
+              <span>{currentScenario.question[language]}</span>
+            </div>
+            <AudioSpeakButton
+              id={`safe-game-q-${currentScenario.id}`}
+              text={`${currentScenario.question[language]}. ${
+                language === 'pt' ? 'Opções:' : 'Options:'
+              } ${currentScenario.options.map((opt, i) => `${language === 'pt' ? 'Opção' : 'Option'} ${i + 1}: ${opt.text[language]}.`).join(' ')}`}
+              language={language}
+              label={language === 'pt' ? 'Ouvir pergunta' : 'Listen'}
+              variant="pill"
+              size="xs"
+            />
           </div>
 
           {/* Action Options */}
           <div className="space-y-3">
-            {currentScenario.options.map((opt) => {
+            {currentScenario.options.map((opt, optIndex) => {
               const isSelected = selectedOptionId === opt.id;
               let btnClass = 'border-slate-200 bg-white hover:border-emerald-300 hover:bg-emerald-50/30 text-slate-800';
 
@@ -459,31 +482,39 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
               }
 
               return (
-                <button
-                  key={opt.id}
-                  disabled={showFeedback}
-                  onClick={() => handleSelect(opt.id)}
-                  className={`w-full text-left p-4 sm:p-5 rounded-2xl border-2 transition-all flex items-start justify-between gap-3.5 cursor-pointer shadow-2xs ${btnClass}`}
-                >
-                  <div className="space-y-1">
-                    <span className="text-xs sm:text-sm font-semibold block leading-relaxed">
-                      {opt.text[language]}
-                    </span>
-                    {showFeedback && (
-                      <span className="inline-block text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-white/80 border border-slate-200 text-slate-600">
-                        {opt.ruleBadge[language]}
+                <div key={opt.id} className="flex items-center gap-2">
+                  <button
+                    disabled={showFeedback}
+                    onClick={() => handleSelect(opt.id)}
+                    className={`flex-1 text-left p-4 sm:p-5 rounded-2xl border-2 transition-all flex items-start justify-between gap-3.5 cursor-pointer shadow-2xs ${btnClass}`}
+                  >
+                    <div className="space-y-1">
+                      <span className="text-xs sm:text-sm font-semibold block leading-relaxed">
+                        {opt.text[language]}
                       </span>
-                    )}
-                  </div>
+                      {showFeedback && (
+                        <span className="inline-block text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-white/80 border border-slate-200 text-slate-600">
+                          {opt.ruleBadge[language]}
+                        </span>
+                      )}
+                    </div>
 
-                  {showFeedback && (
-                    opt.isCorrect ? (
-                      <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                    ) : isSelected ? (
-                      <XCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
-                    ) : null
-                  )}
-                </button>
+                    {showFeedback && (
+                      opt.isCorrect ? (
+                        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                      ) : isSelected ? (
+                        <XCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+                      ) : null
+                    )}
+                  </button>
+                  <AudioSpeakButton
+                    id={`safe-game-opt-${currentScenario.id}-${optIndex}`}
+                    text={opt.text[language]}
+                    language={language}
+                    variant="icon"
+                    size="sm"
+                  />
+                </div>
               );
             })}
           </div>
@@ -498,18 +529,28 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
                     : 'bg-rose-50 border-rose-300 text-rose-950'
                 }`}
               >
-                <div className="flex items-center gap-2 font-black text-sm mb-1">
-                  {selectedOpt.isCorrect ? (
-                    <>
-                      <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                      <span>{language === 'pt' ? 'Decisão Exemplar!' : 'Exemplary Choice!'}</span>
-                    </>
-                  ) : (
-                    <>
-                      <AlertTriangle className="w-5 h-5 text-rose-600" />
-                      <span>{language === 'pt' ? 'Atenção ao Risco:' : 'Caution - Potential Risk:'}</span>
-                    </>
-                  )}
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <div className="flex items-center gap-2 font-black text-sm">
+                    {selectedOpt.isCorrect ? (
+                      <>
+                        <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                        <span>{language === 'pt' ? 'Decisão Exemplar!' : 'Exemplary Choice!'}</span>
+                      </>
+                    ) : (
+                      <>
+                        <AlertTriangle className="w-5 h-5 text-rose-600" />
+                        <span>{language === 'pt' ? 'Atenção ao Risco:' : 'Caution - Potential Risk:'}</span>
+                      </>
+                    )}
+                  </div>
+                  <AudioSpeakButton
+                    id={`safe-game-expl-${currentScenario.id}`}
+                    text={`${selectedOpt.isCorrect ? (language === 'pt' ? 'Decisão Exemplar!' : 'Exemplary Choice!') : (language === 'pt' ? 'Atenção ao Risco:' : 'Caution - Potential Risk:')}. ${selectedOpt.explanation[language]}`}
+                    language={language}
+                    variant="inline"
+                    size="xs"
+                    label={language === 'pt' ? 'Ouvir explicação' : 'Listen'}
+                  />
                 </div>
                 <p className="text-xs sm:text-sm leading-relaxed font-medium">
                   {selectedOpt.explanation[language]}

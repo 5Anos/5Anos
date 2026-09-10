@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, XCircle, Sparkles, Shield, Trash2, Clock, Globe, ArrowRight, RotateCcw, Award, ThumbsUp, AlertTriangle } from 'lucide-react';
 import { Language } from '../../types';
+import { AudioSpeakButton } from '../AudioSpeakButton';
 
 interface TicDigitalFootprintGameProps {
   language: Language;
@@ -215,18 +216,28 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
 
           {/* Current Card */}
           <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-50 to-teal-50/40 border-2 border-slate-200 space-y-4">
-            <div className="flex items-start gap-4">
-              <span className="w-14 h-14 rounded-2xl bg-white shadow-xs border border-teal-100 flex items-center justify-center text-3xl shrink-0">
-                {curItem.icon}
-              </span>
-              <div className="space-y-1">
-                <h2 className="text-base sm:text-lg font-black text-slate-900 leading-snug">
-                  {curItem.title[language]}
-                </h2>
-                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
-                  {curItem.desc[language]}
-                </p>
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex items-start gap-4">
+                <span className="w-14 h-14 rounded-2xl bg-white shadow-xs border border-teal-100 flex items-center justify-center text-3xl shrink-0">
+                  {curItem.icon}
+                </span>
+                <div className="space-y-1">
+                  <h2 className="text-base sm:text-lg font-black text-slate-900 leading-snug">
+                    {curItem.title[language]}
+                  </h2>
+                  <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+                    {curItem.desc[language]}
+                  </p>
+                </div>
               </div>
+              <AudioSpeakButton
+                id={`footprint-item-${curItem.id}`}
+                text={`${curItem.title[language]}. ${curItem.desc[language]}`}
+                language={language}
+                label={language === 'pt' ? 'Ouvir situação' : 'Listen'}
+                variant="pill"
+                size="xs"
+              />
             </div>
           </div>
 
@@ -298,8 +309,21 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
 
           {/* Feedback Box */}
           {showFeedback && (
-            <div className="p-4 rounded-2xl bg-teal-50 border border-teal-200 text-xs sm:text-sm font-medium text-teal-950 leading-relaxed animate-in fade-in">
-              {curItem.feedback[language]}
+            <div className="p-4 rounded-2xl bg-teal-50 border border-teal-200 space-y-2 animate-in fade-in">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-xs font-bold text-teal-800">{language === 'pt' ? 'Explicação:' : 'Explanation:'}</span>
+                <AudioSpeakButton
+                  id={`footprint-expl-${curItem.id}`}
+                  text={curItem.feedback[language]}
+                  language={language}
+                  variant="inline"
+                  size="xs"
+                  label={language === 'pt' ? 'Ouvir explicação' : 'Listen'}
+                />
+              </div>
+              <p className="text-xs sm:text-sm font-medium text-teal-950 leading-relaxed">
+                {curItem.feedback[language]}
+              </p>
             </div>
           )}
 

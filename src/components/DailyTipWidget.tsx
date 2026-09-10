@@ -18,6 +18,7 @@ import {
   DailyTicTip,
 } from '../data/dailyTipsData';
 import { api } from '../services/api';
+import { AudioSpeakButton } from './AudioSpeakButton';
 
 interface DailyTipWidgetProps {
   user: User | null;
@@ -219,9 +220,18 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                 </span>
               </div>
 
-              <h4 className="text-sm sm:text-base font-extrabold text-slate-900 leading-snug group-hover:text-indigo-950 transition-colors line-clamp-2">
-                {todayTip.title[language]}
-              </h4>
+              <div className="flex items-center justify-between gap-2">
+                <h4 className="text-sm sm:text-base font-extrabold text-slate-900 leading-snug group-hover:text-indigo-950 transition-colors line-clamp-2 flex-1">
+                  {todayTip.title[language]}
+                </h4>
+                <AudioSpeakButton
+                  id={`daily-card-${todayTip.id}`}
+                  text={`${language === 'pt' ? 'Dica do dia:' : "Today's tip:"} ${todayTip.title[language]}. ${todayTip.description[language]}`}
+                  language={language}
+                  variant="icon"
+                  size="xs"
+                />
+              </div>
 
               <div className="mt-2.5 flex items-center justify-between">
                 <span className="text-xs font-bold text-indigo-700 group-hover:underline flex items-center gap-1">
@@ -320,9 +330,19 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
 
               {/* Reading Section: Description */}
               <div className="space-y-1.5">
-                <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider">
-                  <BookOpen className="w-4 h-4 text-indigo-600" />
-                  <span>{language === 'pt' ? 'A Curiosidade Explicada' : 'The Curiosity Explained'}</span>
+                <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-indigo-600" />
+                    <span>{language === 'pt' ? 'A Curiosidade Explicada' : 'The Curiosity Explained'}</span>
+                  </div>
+                  <AudioSpeakButton
+                    id={`daily-tip-desc-${todayTip.id}`}
+                    text={`${todayTip.title[language]}. ${todayTip.description[language]}`}
+                    language={language}
+                    label={language === 'pt' ? 'Ouvir curiosidade' : 'Listen'}
+                    variant="pill"
+                    size="xs"
+                  />
                 </div>
                 <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-normal bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
                   {todayTip.description[language]}
@@ -331,9 +351,18 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
 
               {/* Fun Fact Extra */}
               <div className="p-3.5 rounded-xl bg-amber-50/90 border border-amber-200 space-y-1">
-                <div className="flex items-center gap-2 text-xs font-extrabold text-amber-900">
-                  <span>✨</span>
-                  <span>{language === 'pt' ? 'Curiosidade Extra / Sabias que?' : 'Fun Fact / Did You Know?'}</span>
+                <div className="flex items-center justify-between gap-2 text-xs font-extrabold text-amber-900">
+                  <div className="flex items-center gap-2">
+                    <span>✨</span>
+                    <span>{language === 'pt' ? 'Curiosidade Extra / Sabias que?' : 'Fun Fact / Did You Know?'}</span>
+                  </div>
+                  <AudioSpeakButton
+                    id={`daily-tip-funfact-${todayTip.id}`}
+                    text={`${language === 'pt' ? 'Curiosidade extra:' : 'Fun fact:'} ${todayTip.funFact[language]}`}
+                    language={language}
+                    variant="icon"
+                    size="xs"
+                  />
                 </div>
                 <p className="text-xs sm:text-sm text-amber-950 font-medium leading-relaxed">
                   {todayTip.funFact[language]}
@@ -347,9 +376,21 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                     <HelpCircle className="w-4 h-4 text-indigo-600" />
                     <span>{language === 'pt' ? 'Pergunta de Hoje' : "Today's Question"}</span>
                   </div>
-                  <span className="text-[11px] font-black text-indigo-700 bg-indigo-100/70 px-2 py-0.5 rounded-full">
-                    {language === 'pt' ? '50 pts se acertares • 25 pts se errares' : '50 pts correct • 25 pts wrong'}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-black text-indigo-700 bg-indigo-100/70 px-2 py-0.5 rounded-full">
+                      {language === 'pt' ? '50 pts se acertares • 25 pts se errares' : '50 pts correct • 25 pts wrong'}
+                    </span>
+                    <AudioSpeakButton
+                      id={`daily-tip-q-${todayTip.id}`}
+                      text={`${language === 'pt' ? 'Pergunta de hoje:' : "Today's question:"} ${todayTip.question[language]}. ${
+                        language === 'pt' ? 'Opções de resposta:' : 'Options:'
+                      } ${todayTip.options.map((opt) => `${opt.id.toUpperCase()}: ${opt[language]}.`).join(' ')}`}
+                      language={language}
+                      label={language === 'pt' ? 'Ouvir pergunta' : 'Listen'}
+                      variant="pill"
+                      size="xs"
+                    />
+                  </div>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-blue-50/50 border border-blue-200/80">
@@ -380,42 +421,50 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                     }
 
                     return (
-                      <button
-                        key={opt.id}
-                        type="button"
-                        disabled={isRevealed || submitting}
-                        onClick={() => handleSelectOption(opt.id)}
-                        className={`w-full text-left p-3.5 rounded-xl border transition-all flex items-start gap-3 cursor-pointer ${optionStyle} ${
-                          isRevealed ? 'cursor-default' : 'active:scale-[0.99]'
-                        }`}
-                      >
-                        <div
-                          className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 border ${
-                            isRevealed
-                              ? isCorrectAnswer
-                                ? 'bg-emerald-600 text-white border-emerald-600'
-                                : isSelected
-                                ? 'bg-rose-500 text-white border-rose-500'
-                                : 'bg-slate-200 text-slate-600 border-slate-300'
-                              : isSelected
-                              ? 'bg-indigo-600 text-white border-indigo-600'
-                              : 'bg-white text-slate-600 border-slate-300'
+                      <div key={opt.id} className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          disabled={isRevealed || submitting}
+                          onClick={() => handleSelectOption(opt.id)}
+                          className={`flex-1 text-left p-3.5 rounded-xl border transition-all flex items-start gap-3 cursor-pointer ${optionStyle} ${
+                            isRevealed ? 'cursor-default' : 'active:scale-[0.99]'
                           }`}
                         >
-                          {opt.id.toUpperCase()}
-                        </div>
+                          <div
+                            className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 border ${
+                              isRevealed
+                                ? isCorrectAnswer
+                                  ? 'bg-emerald-600 text-white border-emerald-600'
+                                  : isSelected
+                                  ? 'bg-rose-500 text-white border-rose-500'
+                                  : 'bg-slate-200 text-slate-600 border-slate-300'
+                                : isSelected
+                                ? 'bg-indigo-600 text-white border-indigo-600'
+                                : 'bg-white text-slate-600 border-slate-300'
+                            }`}
+                          >
+                            {opt.id.toUpperCase()}
+                          </div>
 
-                        <div className="flex-1 min-w-0 text-xs sm:text-sm">
-                          {opt[language]}
-                        </div>
+                          <div className="flex-1 min-w-0 text-xs sm:text-sm">
+                            {opt[language]}
+                          </div>
 
-                        {isRevealed && isCorrectAnswer && (
-                          <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                        )}
-                        {isRevealed && isSelected && !isCorrectAnswer && (
-                          <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
-                        )}
-                      </button>
+                          {isRevealed && isCorrectAnswer && (
+                            <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                          )}
+                          {isRevealed && isSelected && !isCorrectAnswer && (
+                            <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+                          )}
+                        </button>
+                        <AudioSpeakButton
+                          id={`daily-tip-opt-${todayTip.id}-${opt.id}`}
+                          text={`${opt.id.toUpperCase()}: ${opt[language]}`}
+                          language={language}
+                          variant="icon"
+                          size="xs"
+                        />
+                      </div>
                     );
                   })}
                 </div>
@@ -500,11 +549,20 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                         </p>
 
                         {/* Explanation */}
-                        <div className="mt-2 pt-2 border-t border-black/10 text-xs">
-                          <span className="font-bold">
-                            {language === 'pt' ? '💡 Explicação: ' : '💡 Explanation: '}
-                          </span>
-                          <span>{todayTip.explanation[language]}</span>
+                        <div className="mt-2 pt-2 border-t border-black/10 text-xs flex items-center justify-between gap-2">
+                          <div>
+                            <span className="font-bold">
+                              {language === 'pt' ? '💡 Explicação: ' : '💡 Explanation: '}
+                            </span>
+                            <span>{todayTip.explanation[language]}</span>
+                          </div>
+                          <AudioSpeakButton
+                            id={`daily-tip-expl-${todayTip.id}`}
+                            text={`${language === 'pt' ? 'Explicação:' : 'Explanation:'} ${todayTip.explanation[language]}`}
+                            language={language}
+                            variant="icon"
+                            size="xs"
+                          />
                         </div>
                       </div>
                     </div>

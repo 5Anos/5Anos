@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, ChevronRight, HelpCircle, Lightbulb, Sparkles, BookOpen, AlertCircle, RefreshCw } from 'lucide-react';
 import { PedagogicalModule, Language } from '../types';
 import { translations } from '../i18n/translations';
+import { AudioSpeakButton } from './AudioSpeakButton';
 
 interface ModuleReaderProps {
   module: PedagogicalModule;
@@ -74,9 +75,19 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
 
       {/* Module Title Header */}
       <div className="mb-6">
-        <span className="text-xs font-bold uppercase tracking-widest text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200/60">
-          {language === 'pt' ? 'Conteúdo' : 'Topic'} {module.number}
-        </span>
+        <div className="flex items-center justify-between gap-3">
+          <span className="text-xs font-bold uppercase tracking-widest text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200/60">
+            {language === 'pt' ? 'Conteúdo' : 'Topic'} {module.number}
+          </span>
+          <AudioSpeakButton
+            id={`module-title-${module.id}`}
+            text={`${module.title[language]}. ${module.shortDesc[language]}`}
+            language={language}
+            label={language === 'pt' ? 'Ouvir módulo' : 'Listen'}
+            variant="pill"
+            size="sm"
+          />
+        </div>
         <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-3 tracking-tight">
           {module.title[language]}
         </h1>
@@ -110,16 +121,33 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
         {/* STEP 1: Explicação direta */}
         {currentStep === 1 && (
           <div className="space-y-4 animate-in fade-in">
-            <div className="flex items-center gap-2 text-indigo-700">
-              <Lightbulb className="w-6 h-6" />
-              <h2 className="text-xl font-bold">{t.step1Title}</h2>
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-indigo-700">
+                <Lightbulb className="w-6 h-6" />
+                <h2 className="text-xl font-bold">{t.step1Title}</h2>
+              </div>
+              <AudioSpeakButton
+                id={`module-step1-all-${module.id}`}
+                text={(module.explanation?.[language] || []).join(' ')}
+                language={language}
+                label={language === 'pt' ? 'Ouvir explicação' : 'Listen'}
+                variant="pill"
+                size="sm"
+              />
             </div>
 
             <div className="space-y-3.5 text-sm sm:text-base text-slate-700 leading-relaxed">
               {(module.explanation?.[language] || []).map((paragraph, idx) => (
-                <p key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-200/70">
-                  {paragraph}
-                </p>
+                <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-200/70 flex items-start justify-between gap-3">
+                  <p className="flex-1">{paragraph}</p>
+                  <AudioSpeakButton
+                    id={`module-step1-p-${module.id}-${idx}`}
+                    text={paragraph}
+                    language={language}
+                    variant="icon"
+                    size="xs"
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -128,9 +156,21 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
         {/* STEP 2: Exemplo do Quotidiano */}
         {currentStep === 2 && (
           <div className="space-y-4 animate-in fade-in">
-            <div className="flex items-center gap-2 text-amber-700">
-              <Sparkles className="w-6 h-6" />
-              <h2 className="text-xl font-bold">{t.step2Title}</h2>
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-amber-700">
+                <Sparkles className="w-6 h-6" />
+                <h2 className="text-xl font-bold">{t.step2Title}</h2>
+              </div>
+              <AudioSpeakButton
+                id={`module-step2-${module.id}`}
+                text={`${module.example?.title?.[language] || ''}. ${module.example?.scenario?.[language] || ''}. ${
+                  module.example?.tip?.[language] ? `Dica: ${module.example.tip[language]}` : ''
+                }`}
+                language={language}
+                label={language === 'pt' ? 'Ouvir exemplo' : 'Listen'}
+                variant="pill"
+                size="sm"
+              />
             </div>
 
             <div className="p-6 rounded-2xl bg-amber-50/70 border border-amber-200/80 space-y-3">
@@ -141,8 +181,15 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
                 {module.example?.scenario?.[language]}
               </p>
               {module.example?.tip?.[language] && (
-                <div className="pt-3 border-t border-amber-200 text-xs sm:text-sm font-semibold text-amber-900 bg-amber-100/60 p-3 rounded-xl">
-                  💡 {module.example.tip[language]}
+                <div className="pt-3 border-t border-amber-200 text-xs sm:text-sm font-semibold text-amber-900 bg-amber-100/60 p-3 rounded-xl flex items-center justify-between gap-2">
+                  <span>💡 {module.example.tip[language]}</span>
+                  <AudioSpeakButton
+                    id={`module-step2-tip-${module.id}`}
+                    text={`Dica: ${module.example.tip[language]}`}
+                    language={language}
+                    variant="icon"
+                    size="xs"
+                  />
                 </div>
               )}
             </div>
@@ -152,9 +199,19 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
         {/* STEP 3: Sabias que...? */}
         {currentStep === 3 && (
           <div className="space-y-4 animate-in fade-in">
-            <div className="flex items-center gap-2 text-purple-700">
-              <Sparkles className="w-6 h-6" />
-              <h2 className="text-xl font-bold">{t.step3Title}</h2>
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-purple-700">
+                <Sparkles className="w-6 h-6" />
+                <h2 className="text-xl font-bold">{t.step3Title}</h2>
+              </div>
+              <AudioSpeakButton
+                id={`module-step3-${module.id}`}
+                text={`${language === 'pt' ? 'Sabias que?' : 'Did you know?'} ${module.funFact?.[language] || ''}`}
+                language={language}
+                label={language === 'pt' ? 'Ouvir curiosidade' : 'Listen'}
+                variant="pill"
+                size="sm"
+              />
             </div>
 
             <div className="p-8 rounded-2xl bg-purple-50/80 border border-purple-200 text-center space-y-4">
@@ -169,9 +226,21 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
         {/* STEP 4: Vamos pensar (Reflexão) */}
         {currentStep === 4 && (
           <div className="space-y-4 animate-in fade-in">
-            <div className="flex items-center gap-2 text-indigo-700">
-              <HelpCircle className="w-6 h-6" />
-              <h2 className="text-xl font-bold">{t.step4Title}</h2>
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-indigo-700">
+                <HelpCircle className="w-6 h-6" />
+                <h2 className="text-xl font-bold">{t.step4Title}</h2>
+              </div>
+              <AudioSpeakButton
+                id={`module-step4-${module.id}`}
+                text={`${module.thinkAboutIt?.question?.[language] || ''}. ${
+                  module.thinkAboutIt?.clue?.[language] ? `Pista: ${module.thinkAboutIt.clue[language]}` : ''
+                }`}
+                language={language}
+                label={language === 'pt' ? 'Ouvir reflexão' : 'Listen'}
+                variant="pill"
+                size="sm"
+              />
             </div>
 
             <div className="p-6 rounded-2xl bg-indigo-50/60 border border-indigo-200/80 space-y-4">
@@ -180,19 +249,40 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
               </p>
 
               {module.thinkAboutIt?.clue?.[language] && (
-                <div className="p-3 rounded-xl bg-white border border-indigo-100 text-xs sm:text-sm text-slate-600 font-medium">
-                  🔍 <strong>{language === 'pt' ? 'Pista:' : 'Clue:'}</strong> {module.thinkAboutIt.clue[language]}
+                <div className="p-3 rounded-xl bg-white border border-indigo-100 text-xs sm:text-sm text-slate-600 font-medium flex items-center justify-between gap-2">
+                  <div>
+                    🔍 <strong>{language === 'pt' ? 'Pista:' : 'Clue:'}</strong> {module.thinkAboutIt.clue[language]}
+                  </div>
+                  <AudioSpeakButton
+                    id={`module-step4-clue-${module.id}`}
+                    text={`Pista: ${module.thinkAboutIt.clue[language]}`}
+                    language={language}
+                    variant="icon"
+                    size="xs"
+                  />
                 </div>
               )}
 
               <div className="pt-2">
-                <button
-                  type="button"
-                  onClick={() => setShowReflection(!showReflection)}
-                  className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm transition-colors cursor-pointer"
-                >
-                  {showReflection ? t.hideReflection : t.showReflection}
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowReflection(!showReflection)}
+                    className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm transition-colors cursor-pointer"
+                  >
+                    {showReflection ? t.hideReflection : t.showReflection}
+                  </button>
+                  {showReflection && (
+                    <AudioSpeakButton
+                      id={`module-step4-reflection-${module.id}`}
+                      text={`${language === 'pt' ? 'Reflexão Pedagógica:' : 'Educational Insight:'} ${module.thinkAboutIt?.reflection?.[language] || ''}`}
+                      language={language}
+                      variant="inline"
+                      size="sm"
+                      label={language === 'pt' ? 'Ouvir explicação' : 'Listen'}
+                    />
+                  )}
+                </div>
 
                 {showReflection && (
                   <div className="mt-3 p-4 rounded-xl bg-white border border-indigo-200 text-slate-800 text-sm leading-relaxed animate-in fade-in">
@@ -235,13 +325,26 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
 
                 return (
                   <div key={q.id} className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-                    <div className="flex items-start gap-2">
-                      <span className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
-                        {idx + 1}
-                      </span>
-                      <p className="font-bold text-sm sm:text-base text-slate-900">
-                        {q.question?.[language]}
-                      </p>
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
+                      <div className="flex items-start gap-2 flex-1">
+                        <span className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                          {idx + 1}
+                        </span>
+                        <p className="font-bold text-sm sm:text-base text-slate-900">
+                          {q.question?.[language]}
+                        </p>
+                      </div>
+                      <AudioSpeakButton
+                        id={`module-quiz-q-${q.id}`}
+                        text={`${language === 'pt' ? 'Pergunta' : 'Question'} ${idx + 1}: ${q.question?.[language]}. ${
+                          language === 'pt' ? 'Opções:' : 'Options:'
+                        } ${(q.options?.[language] || []).map((opt, i) => `${language === 'pt' ? 'Opção' : 'Option'} ${i + 1}: ${opt}.`).join(' ')}`}
+                        language={language}
+                        label={language === 'pt' ? 'Ouvir pergunta' : 'Listen'}
+                        variant="pill"
+                        size="sm"
+                        className="self-start sm:self-auto"
+                      />
                     </div>
 
                     <div className="space-y-2 pl-8">
@@ -261,20 +364,29 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
                         }
 
                         return (
-                          <button
-                            key={optIdx}
-                            disabled={submittedQuiz}
-                            onClick={() => handleSelectOption(q.id, optIdx)}
-                            className={`w-full text-left p-3 rounded-xl border text-xs sm:text-sm transition-all flex items-center justify-between cursor-pointer ${btnStyle}`}
-                          >
-                            <span>{opt}</span>
-                            {submittedQuiz && optIdx === q.correctIndex && (
-                              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                            )}
-                            {submittedQuiz && userChoice === optIdx && optIdx !== q.correctIndex && (
-                              <AlertCircle className="w-4 h-4 text-rose-500 shrink-0" />
-                            )}
-                          </button>
+                          <div key={optIdx} className="flex items-center gap-2">
+                            <button
+                              key={optIdx}
+                              disabled={submittedQuiz}
+                              onClick={() => handleSelectOption(q.id, optIdx)}
+                              className={`flex-1 text-left p-3 rounded-xl border text-xs sm:text-sm transition-all flex items-center justify-between cursor-pointer ${btnStyle}`}
+                            >
+                              <span>{opt}</span>
+                              {submittedQuiz && optIdx === q.correctIndex && (
+                                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                              )}
+                              {submittedQuiz && userChoice === optIdx && optIdx !== q.correctIndex && (
+                                <AlertCircle className="w-4 h-4 text-rose-500 shrink-0" />
+                              )}
+                            </button>
+                            <AudioSpeakButton
+                              id={`module-quiz-q-${q.id}-opt-${optIdx}`}
+                              text={opt}
+                              language={language}
+                              variant="icon"
+                              size="xs"
+                            />
+                          </div>
                         );
                       })}
                     </div>
@@ -283,7 +395,17 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
                       <div className={`mt-3 p-3 rounded-xl text-xs sm:text-sm pl-8 ${
                         isCorrect ? 'bg-emerald-100/70 text-emerald-900' : 'bg-amber-100/70 text-amber-900'
                       }`}>
-                        <p className="font-bold mb-0.5">{isCorrect ? t.correctAnswer : t.wrongAnswer}</p>
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <p className="font-bold">{isCorrect ? t.correctAnswer : t.wrongAnswer}</p>
+                          <AudioSpeakButton
+                            id={`module-quiz-q-${q.id}-expl`}
+                            text={`${isCorrect ? t.correctAnswer : t.wrongAnswer}. ${q.explanation?.[language] || ''}`}
+                            language={language}
+                            variant="inline"
+                            size="xs"
+                            label={language === 'pt' ? 'Ouvir explicação' : 'Listen'}
+                          />
+                        </div>
                         <p>{q.explanation?.[language]}</p>
                       </div>
                     )}
