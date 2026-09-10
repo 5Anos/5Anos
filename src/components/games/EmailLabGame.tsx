@@ -23,6 +23,10 @@ import {
   Sparkles,
   X,
   RotateCcw,
+  XCircle,
+  AlertTriangle,
+  Star,
+  Award,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { AudioSpeakButton } from '../AudioSpeakButton';
@@ -45,6 +49,28 @@ interface DraggableOption {
   colorText: string;
   iconColor: string;
   correctSlot?: 'to' | 'subject' | 'body' | 'attachment' | 'cc';
+}
+
+interface EvaluationDetail {
+  id: string;
+  fieldLabel: string;
+  expectedLabel: string;
+  userPlacedContent: string | null;
+  score: number;
+  maxScore: number;
+  isCorrect: boolean;
+  status: 'correct' | 'incorrect' | 'missing';
+  feedback: string;
+}
+
+interface EvaluationResult {
+  totalScore: number;
+  maxScore: number;
+  percentage: number;
+  details: EvaluationDetail[];
+  overallTitle: string;
+  overallDescription: string;
+  stars: number;
 }
 
 const INITIAL_OPTIONS: DraggableOption[] = [
@@ -134,6 +160,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
 
   const [validationError, setValidationError] = useState<string | null>(null);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [evaluationResult, setEvaluationResult] = useState<EvaluationResult | null>(null);
   const [activeTab, setActiveTab] = useState<'message' | 'insert' | 'format' | 'options'>('message');
 
   // Available options (not yet placed)
@@ -226,82 +253,286 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
     setSelectedOptionForClick(null);
     setValidationError(null);
     setIsCompleted(false);
+    setEvaluationResult(null);
   };
 
-  // Validation on "Enviar"
-  const handleSend = () => {
-    const toFilled = placedSlots.to?.id === 'opt-recipient';
-    const subjectFilled = placedSlots.subject?.id === 'opt-subject';
-    const bodyFilled = placedSlots.body?.id === 'opt-body';
+  const handleTryAgain = () => {
+    setIsCompleted(false);
+  };
 
-    if (!toFilled && !placedSlots.to) {
-      setValidationError(
-        language === 'pt'
-          ? '⚠️ Falta indicar o destinatário no campo "Para". Arrasta um endereço de email para lá!'
-          : '⚠️ Please add the recipient in the "To" field!'
-      );
-      return;
-    }
+  // Detailed Evaluation Calculation
+  const calculateEvaluation = (): EvaluationResult => {
+    const details: EvaluationDetail[] = [];
 
-    if (placedSlots.to && placedSlots.to.id !== 'opt-recipient') {
-      setValidationError(
-        language === 'pt'
-          ? '⚠️ O campo "Para" deve conter um endereço de email válido (ex.: amigo@escola.pt).'
-          : '⚠️ The "To" field must contain an email address!'
-      );
-      return;
-    }
-
-    if (!subjectFilled && !placedSlots.subject) {
-      setValidationError(
-        language === 'pt'
-          ? '⚠️ Falta preencher o "Assunto" do email. Lembra-te que o assunto resume o tema da mensagem!'
-          : '⚠️ Subject is missing! The subject must summarize your message.'
-      );
-      return;
-    }
-
-    if (placedSlots.subject && placedSlots.subject.id !== 'opt-subject') {
-      setValidationError(
-        language === 'pt'
-          ? '⚠️ O "Assunto" deve ser um título curto e claro (ex.: Trabalho de TIC), não o corpo da mensagem.'
-          : '⚠️ Subject should be a concise summary!'
-      );
-      return;
-    }
-
-    if (!bodyFilled && !placedSlots.body) {
-      setValidationError(
-        language === 'pt'
-          ? '⚠️ Falta a mensagem do email. Arrasta o texto com saudação, conteúdo e despedida para o corpo do email!'
-          : '⚠️ Email body is missing!'
-      );
-      return;
-    }
-
-    if (placedSlots.body && placedSlots.body.id !== 'opt-body') {
-      setValidationError(
-        language === 'pt'
-          ? '⚠️ A mensagem principal deve conter a saudação, o pedido e a despedida educada.'
-          : '⚠️ The message body is not formatted properly!'
-      );
-      return;
-    }
-
-    // Success!
-    setValidationError(null);
-    setIsCompleted(true);
-    try {
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 },
+    // 1. Campo "Para" (Destinatário) - 30 pts
+    const toOpt = placedSlots.to;
+    if (toOpt?.id === 'opt-recipient') {
+      details.push({
+        id: 'to',
+        fieldLabel: language === 'pt' ? 'Destinatário (Para)' : 'Recipient (To)',
+        expectedLabel: 'amigo@escola.pt',
+        userPlacedContent: toOpt.content,
+        score: 30,
+        maxScore: 30,
+        isCorrect: true,
+        status: 'correct',
+        feedback:
+          language === 'pt'
+            ? 'Excelente! Colocaste o endereço de email do destinatário ("amigo@escola.pt").'
+            : 'Excellent! You placed the correct recipient email address ("amigo@escola.pt").',
       });
-    } catch {}
+    } else if (toOpt) {
+      details.push({
+        id: 'to',
+        fieldLabel: language === 'pt' ? 'Destinatário (Para)' : 'Recipient (To)',
+        expectedLabel: 'amigo@escola.pt',
+        userPlacedContent: toOpt.content.length > 30 ? toOpt.content.slice(0, 30) + '...' : toOpt.content,
+        score: 0,
+        maxScore: 30,
+        isCorrect: false,
+        status: 'incorrect',
+        feedback:
+          language === 'pt'
+            ? `Incorreto. Colocaste "${toOpt.content.slice(0, 25)}..." no campo "Para". Este campo deve conter o endereço de email de quem vai receber a mensagem (amigo@escola.pt).`
+            : `Incorrect. The "To" field must contain the recipient's email address (amigo@escola.pt).`,
+      });
+    } else {
+      details.push({
+        id: 'to',
+        fieldLabel: language === 'pt' ? 'Destinatário (Para)' : 'Recipient (To)',
+        expectedLabel: 'amigo@escola.pt',
+        userPlacedContent: null,
+        score: 0,
+        maxScore: 30,
+        isCorrect: false,
+        status: 'missing',
+        feedback:
+          language === 'pt'
+            ? 'Em falta. Não indicaste nenhum destinatário no campo "Para". Um email precisa sempre de um destinatário válido!'
+            : 'Missing. The "To" field is empty. An email always needs a recipient!',
+      });
+    }
+
+    // 2. Campo "Assunto" - 25 pts
+    const subjectOpt = placedSlots.subject;
+    if (subjectOpt?.id === 'opt-subject') {
+      details.push({
+        id: 'subject',
+        fieldLabel: language === 'pt' ? 'Assunto' : 'Subject',
+        expectedLabel: 'Trabalho de TIC',
+        userPlacedContent: subjectOpt.content,
+        score: 25,
+        maxScore: 25,
+        isCorrect: true,
+        status: 'correct',
+        feedback:
+          language === 'pt'
+            ? 'Muito bem! O assunto "Trabalho de TIC" resume de forma concisa o tema do email.'
+            : 'Well done! The subject "Trabalho de TIC" summarizes the email topic.',
+      });
+    } else if (subjectOpt) {
+      details.push({
+        id: 'subject',
+        fieldLabel: language === 'pt' ? 'Assunto' : 'Subject',
+        expectedLabel: 'Trabalho de TIC',
+        userPlacedContent: subjectOpt.content.length > 30 ? subjectOpt.content.slice(0, 30) + '...' : subjectOpt.content,
+        score: 0,
+        maxScore: 25,
+        isCorrect: false,
+        status: 'incorrect',
+        feedback:
+          language === 'pt'
+            ? 'Incorreto. O assunto deve ser um título curto e informativo (ex.: Trabalho de TIC), e não o corpo de texto ou remetente.'
+            : 'Incorrect. Subject must be a concise title, not body text or sender.',
+      });
+    } else {
+      details.push({
+        id: 'subject',
+        fieldLabel: language === 'pt' ? 'Assunto' : 'Subject',
+        expectedLabel: 'Trabalho de TIC',
+        userPlacedContent: null,
+        score: 0,
+        maxScore: 25,
+        isCorrect: false,
+        status: 'missing',
+        feedback:
+          language === 'pt'
+            ? 'Em falta. O campo "Assunto" ficou em branco. Um assunto claro evita que o email seja ignorado ou confundido com spam.'
+            : 'Missing. The subject field is empty.',
+      });
+    }
+
+    // 3. Campo "Mensagem" (Corpo) - 30 pts
+    const bodyOpt = placedSlots.body;
+    if (bodyOpt?.id === 'opt-body') {
+      details.push({
+        id: 'body',
+        fieldLabel: language === 'pt' ? 'Corpo da Mensagem' : 'Message Body',
+        expectedLabel: language === 'pt' ? 'Saudação + Texto + Despedida' : 'Greeting + Body + Closing',
+        userPlacedContent: bodyOpt.content.length > 35 ? bodyOpt.content.slice(0, 35) + '...' : bodyOpt.content,
+        score: 30,
+        maxScore: 30,
+        isCorrect: true,
+        status: 'correct',
+        feedback:
+          language === 'pt'
+            ? 'Excelente! A mensagem está completa com saudação inicial ("Olá"), texto do pedido e despedida formal ("Cumprimentos, João Silva").'
+            : 'Excellent! The message contains proper greeting, content, and courteous closing.',
+      });
+    } else if (bodyOpt) {
+      details.push({
+        id: 'body',
+        fieldLabel: language === 'pt' ? 'Corpo da Mensagem' : 'Message Body',
+        expectedLabel: language === 'pt' ? 'Saudação + Texto + Despedida' : 'Greeting + Body + Closing',
+        userPlacedContent: bodyOpt.content.length > 35 ? bodyOpt.content.slice(0, 35) + '...' : bodyOpt.content,
+        score: 0,
+        maxScore: 30,
+        isCorrect: false,
+        status: 'incorrect',
+        feedback:
+          language === 'pt'
+            ? 'Incorreto. Colocaste um elemento que não é o corpo estruturado da mensagem.'
+            : 'Incorrect element in message body.',
+      });
+    } else {
+      details.push({
+        id: 'body',
+        fieldLabel: language === 'pt' ? 'Corpo da Mensagem' : 'Message Body',
+        expectedLabel: language === 'pt' ? 'Saudação + Texto + Despedida' : 'Greeting + Body + Closing',
+        userPlacedContent: null,
+        score: 0,
+        maxScore: 30,
+        isCorrect: false,
+        status: 'missing',
+        feedback:
+          language === 'pt'
+            ? 'Em falta. O corpo do email está vazio. Lembra-te de incluir sempre a saudação, a mensagem e a despedida.'
+            : 'Missing. The message body is empty.',
+      });
+    }
+
+    // 4. Campo "Anexo" - 15 pts
+    const attOpt = placedSlots.attachment;
+    if (attOpt?.id === 'opt-attachment') {
+      details.push({
+        id: 'attachment',
+        fieldLabel: language === 'pt' ? 'Anexo do Ficheiro' : 'Attachment',
+        expectedLabel: 'trabalho_tic.docx',
+        userPlacedContent: attOpt.content,
+        score: 15,
+        maxScore: 15,
+        isCorrect: true,
+        status: 'correct',
+        feedback:
+          language === 'pt'
+            ? 'Perfeito! Anexaste o ficheiro "trabalho_tic.docx" mencionado no texto do email.'
+            : 'Perfect! You attached the requested file (trabalho_tic.docx).',
+      });
+    } else if (attOpt) {
+      details.push({
+        id: 'attachment',
+        fieldLabel: language === 'pt' ? 'Anexo do Ficheiro' : 'Attachment',
+        expectedLabel: 'trabalho_tic.docx',
+        userPlacedContent: attOpt.content,
+        score: 0,
+        maxScore: 15,
+        isCorrect: false,
+        status: 'incorrect',
+        feedback:
+          language === 'pt'
+            ? 'Incorreto. O anexo deve ser o ficheiro do trabalho (trabalho_tic.docx).'
+            : 'Incorrect attachment file.',
+      });
+    } else {
+      details.push({
+        id: 'attachment',
+        fieldLabel: language === 'pt' ? 'Anexo do Ficheiro' : 'Attachment',
+        expectedLabel: 'trabalho_tic.docx',
+        userPlacedContent: null,
+        score: 0,
+        maxScore: 15,
+        isCorrect: false,
+        status: 'missing',
+        feedback:
+          language === 'pt'
+            ? 'Atenção: A mensagem refere "Segue em anexo o meu trabalho...", mas esqueceste-te de anexar o ficheiro (trabalho_tic.docx).'
+            : 'Missing. The text references an attachment, but no file was attached.',
+      });
+    }
+
+    const totalScore = details.reduce((sum, d) => sum + d.score, 0);
+    const maxScore = 100;
+    const percentage = Math.round((totalScore / maxScore) * 100);
+
+    let stars = 0;
+    let overallTitle = '';
+    let overallDescription = '';
+
+    if (percentage === 100) {
+      stars = 3;
+      overallTitle = language === 'pt' ? '🎉 Email Perfeito! 100% de Cotação!' : '🎉 Perfect Email! 100% Score!';
+      overallDescription =
+        language === 'pt'
+          ? 'Estruturaste o email com excelência: destinatário correto, assunto claro, corpo da mensagem bem estruturado e ficheiro devidamente anexado!'
+          : 'You structured the email with excellence: recipient, subject line, greeting, polite message, and attachment!';
+    } else if (percentage >= 70) {
+      stars = 2;
+      overallTitle = language === 'pt' ? '👍 Bom Trabalho! Quase Perfeito!' : '👍 Good Job! Almost Perfect!';
+      overallDescription =
+        language === 'pt'
+          ? `Obtiveste ${totalScore} em 100 pontos (${percentage}%). A maioria dos elementos está correta, mas ainda podes afinar os detalhes assinalados para atingires os 100%! `
+          : `You scored ${totalScore} out of 100 points (${percentage}%). Review the feedback below to improve.`;
+    } else if (percentage >= 30) {
+      stars = 1;
+      overallTitle = language === 'pt' ? '⚠️ Email Incompleto ou com Erros' : '⚠️ Incomplete Email with Mistakes';
+      overallDescription =
+        language === 'pt'
+          ? `Obtiveste ${totalScore} em 100 pontos (${percentage}%). Vários elementos importantes estão em falta ou em campos incorretos. Consulta o relatório abaixo.`
+          : `You scored ${totalScore} out of 100 points (${percentage}%). Several essential elements are missing or misplaced.`;
+    } else {
+      stars = 0;
+      overallTitle = language === 'pt' ? '❌ Email com Falhas Graves' : '❌ Email Missing Key Fields';
+      overallDescription =
+        language === 'pt'
+          ? `Obtiveste ${totalScore} em 100 pontos (${percentage}%). Um email necessita obrigatoriamente de destinatário ("Para"), assunto e corpo da mensagem.`
+          : `You scored ${totalScore} out of 100 points (${percentage}%). An email needs at least a recipient, subject and body.`;
+    }
+
+    return {
+      totalScore,
+      maxScore,
+      percentage,
+      details,
+      overallTitle,
+      overallDescription,
+      stars,
+    };
+  };
+
+  // Evaluation on "Enviar"
+  const handleSend = () => {
+    const result = calculateEvaluation();
+    setEvaluationResult(result);
+    setIsCompleted(true);
+
+    if (result.percentage === 100) {
+      try {
+        confetti({
+          particleCount: 90,
+          spread: 75,
+          origin: { y: 0.6 },
+        });
+      } catch {}
+    }
   };
 
   const handleFinish = () => {
-    onFinish(100, 100, 100);
+    if (evaluationResult) {
+      onFinish(evaluationResult.totalScore, evaluationResult.maxScore, evaluationResult.percentage);
+    } else {
+      onFinish(100, 100, 100);
+    }
+    onBack();
   };
 
   const renderCardIcon = (iconType: DraggableOption['iconType']) => {
@@ -854,47 +1085,176 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
         </div>
       </div>
 
-      {/* Completion Victory Modal */}
-      {isCompleted && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in">
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-md w-full p-6 text-center animate-in zoom-in-95">
-            <div className="w-16 h-16 rounded-3xl bg-emerald-100 border border-emerald-200 text-emerald-600 mx-auto flex items-center justify-center mb-4 shadow-sm">
-              <Sparkles className="w-8 h-8 fill-emerald-500 text-emerald-600" />
+      {/* Evaluation & Completion Modal */}
+      {isCompleted && evaluationResult && (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-in fade-in overflow-y-auto">
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-xl w-full p-5 sm:p-6 text-center animate-in zoom-in-95 my-auto max-h-[92vh] flex flex-col">
+            {/* Header Icon and Badges */}
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <div
+                className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-xs ${
+                  evaluationResult.percentage === 100
+                    ? 'bg-emerald-100 border border-emerald-200 text-emerald-600'
+                    : evaluationResult.percentage >= 70
+                    ? 'bg-blue-100 border border-blue-200 text-blue-600'
+                    : evaluationResult.percentage >= 30
+                    ? 'bg-amber-100 border border-amber-200 text-amber-600'
+                    : 'bg-rose-100 border border-rose-200 text-rose-600'
+                }`}
+              >
+                {evaluationResult.percentage === 100 ? (
+                  <Sparkles className="w-7 h-7 fill-emerald-500 text-emerald-600" />
+                ) : evaluationResult.percentage >= 70 ? (
+                  <Award className="w-7 h-7 text-blue-600" />
+                ) : evaluationResult.percentage >= 30 ? (
+                  <AlertTriangle className="w-7 h-7 text-amber-600" />
+                ) : (
+                  <XCircle className="w-7 h-7 text-rose-600" />
+                )}
+              </div>
             </div>
 
-            <span className="inline-block px-3 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-900 border border-amber-200 mb-2">
-              ⭐ + 100 XP
-            </span>
+            {/* Stars & Score Indicator */}
+            <div className="flex items-center justify-center gap-1 mb-2">
+              {[1, 2, 3].map((starIndex) => (
+                <Star
+                  key={starIndex}
+                  className={`w-5 h-5 ${
+                    starIndex <= evaluationResult.stars
+                      ? 'text-amber-400 fill-amber-400'
+                      : 'text-slate-200 fill-slate-100'
+                  }`}
+                />
+              ))}
+            </div>
 
-            <h2 className="text-2xl font-black text-slate-900">
-              {language === 'pt' ? '🎉 Fantástico! Email Enviado!' : '🎉 Great Job! Email Sent!'}
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <span
+                className={`px-3 py-1 rounded-full text-xs font-black border ${
+                  evaluationResult.percentage === 100
+                    ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                    : evaluationResult.percentage >= 70
+                    ? 'bg-blue-50 text-blue-800 border-blue-200'
+                    : evaluationResult.percentage >= 30
+                    ? 'bg-amber-50 text-amber-800 border-amber-200'
+                    : 'bg-rose-50 text-rose-800 border-rose-200'
+                }`}
+              >
+                {language === 'pt' ? 'Cotação:' : 'Score:'} {evaluationResult.totalScore} / {evaluationResult.maxScore} pts ({evaluationResult.percentage}%)
+              </span>
+              <span className="px-3 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-900 border border-amber-200">
+                ⭐ +{evaluationResult.totalScore} XP
+              </span>
+            </div>
+
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
+              {evaluationResult.overallTitle}
             </h2>
 
-            <p className="text-sm text-slate-600 mt-2 mb-4 leading-relaxed">
-              {language === 'pt'
-                ? 'Estruturaste o email com perfeição: destinatário correto, assunto claro, saudação formal, mensagem objetiva e anexo do trabalho de TIC!'
-                : 'You assembled the email perfectly: recipient, subject line, respectful greeting, clear message and attachment!'}
+            <p className="text-xs sm:text-sm text-slate-600 mt-1 mb-3 leading-relaxed">
+              {evaluationResult.overallDescription}
             </p>
 
-            <div className="p-3 bg-emerald-50 rounded-2xl border border-emerald-200 text-emerald-900 text-xs font-medium text-left mb-5 space-y-1.5">
-              <div className="font-bold flex items-center gap-1.5 text-emerald-800">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span>{language === 'pt' ? 'Resumo da Aprendizagem:' : 'Learning Summary:'}</span>
+            {/* Itemized Diagnostic Checklist */}
+            <div className="flex-1 overflow-y-auto pr-1 text-left space-y-2 mb-4 max-h-[36vh]">
+              <div className="text-xs font-bold text-slate-700 flex items-center justify-between pb-1 border-b border-slate-100">
+                <span>{language === 'pt' ? 'Correção dos Elementos do Email:' : 'Email Elements Diagnostic:'}</span>
+                <span className="text-[11px] font-normal text-slate-500">
+                  {evaluationResult.details.filter((d) => d.isCorrect).length} de {evaluationResult.details.length} corretos
+                </span>
               </div>
-              <ul className="list-disc pl-5 space-y-1 text-emerald-800 text-[11px]">
-                <li><strong>Para:</strong> {placedSlots.to?.content} (Endereço do destinatário)</li>
-                <li><strong>Assunto:</strong> {placedSlots.subject?.content} (Resumo do objetivo)</li>
-                <li><strong>Mensagem:</strong> Saudação + corpo + assinatura educada</li>
-                {placedSlots.attachment && <li><strong>Anexo:</strong> {placedSlots.attachment.content}</li>}
-              </ul>
+
+              {evaluationResult.details.map((detail) => (
+                <div
+                  key={detail.id}
+                  className={`p-2.5 rounded-xl border text-xs transition-colors ${
+                    detail.isCorrect
+                      ? 'bg-emerald-50/70 border-emerald-200 text-emerald-950'
+                      : detail.status === 'missing'
+                      ? 'bg-amber-50/70 border-amber-200 text-amber-950'
+                      : 'bg-rose-50/70 border-rose-200 text-rose-950'
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <div className="flex items-center gap-1.5 font-bold">
+                      {detail.isCorrect ? (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                      ) : detail.status === 'missing' ? (
+                        <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+                      ) : (
+                        <XCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                      )}
+                      <span>{detail.fieldLabel}</span>
+                    </div>
+
+                    <span
+                      className={`text-[10px] font-black px-2 py-0.5 rounded-md ${
+                        detail.isCorrect
+                          ? 'bg-emerald-200/80 text-emerald-900'
+                          : 'bg-rose-200/80 text-rose-900'
+                      }`}
+                    >
+                      {detail.score} / {detail.maxScore} pts
+                    </span>
+                  </div>
+
+                  <p className="text-[11px] leading-relaxed mb-1 opacity-90">{detail.feedback}</p>
+
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] font-medium pt-1 border-t border-black/5 text-slate-600">
+                    <div>
+                      <span className="text-slate-400 font-normal">
+                        {language === 'pt' ? 'O que colocaste: ' : 'Placed: '}
+                      </span>
+                      <span className="font-semibold text-slate-800">
+                        {detail.userPlacedContent ? `"${detail.userPlacedContent}"` : <em>{language === 'pt' ? 'Nenhum' : 'Empty'}</em>}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 font-normal">
+                        {language === 'pt' ? 'Esperado: ' : 'Expected: '}
+                      </span>
+                      <span className="font-semibold text-emerald-700">"{detail.expectedLabel}"</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
 
-            <button
-              onClick={handleFinish}
-              className="w-full py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md shadow-emerald-600/20 transition-all cursor-pointer hover:scale-[1.02] active:scale-98"
-            >
-              {language === 'pt' ? 'Concluir Desafio (+100 XP)' : 'Complete Challenge (+100 XP)'}
-            </button>
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-center gap-2 pt-2 border-t border-slate-100">
+              {evaluationResult.percentage < 100 ? (
+                <>
+                  <button
+                    onClick={handleTryAgain}
+                    className="w-full sm:w-1/2 py-2.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs sm:text-sm border border-indigo-200 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    {language === 'pt' ? 'Corrigir e Tentar 100%' : 'Fix & Try 100%'}
+                  </button>
+                  <button
+                    onClick={handleFinish}
+                    className="w-full sm:w-1/2 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-emerald-600/20 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                  >
+                    <span>{language === 'pt' ? `Concluir (+${evaluationResult.totalScore} XP) →` : `Complete (+${evaluationResult.totalScore} XP) →`}</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={handleReset}
+                    className="w-full sm:w-1/3 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm transition-colors cursor-pointer"
+                  >
+                    {language === 'pt' ? 'Tentar de Novo' : 'Try Again'}
+                  </button>
+                  <button
+                    onClick={handleFinish}
+                    className="w-full sm:w-2/3 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-emerald-600/20 transition-all cursor-pointer hover:scale-[1.01] active:scale-98 flex items-center justify-center gap-1.5"
+                  >
+                    <span>{language === 'pt' ? 'Concluir Desafio (+100 XP) →' : 'Complete Challenge (+100 XP) →'}</span>
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       )}
