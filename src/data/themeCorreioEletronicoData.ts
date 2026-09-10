@@ -244,27 +244,15 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       id: 'jogo-email-order',
       themeId: 'correio-eletronico',
       number: 1,
-      title: { pt: '✉️ Constrói um email', en: '✉️ Draft an Email' },
-      shortDesc: { pt: 'Ordena os elementos fundamentais para enviar uma mensagem correta.', en: 'Order the key elements to send a proper message.' },
+      title: { pt: '✉️ Constrói um email', en: '✉️ Constrói um email' },
+      shortDesc: {
+        pt: 'Arrasta as opções da direita para os locais corretos, para completares a mensagem de email.',
+        en: 'Arrasta as opções da direita para os locais corretos, para completares a mensagem de email.',
+      },
       icon: '✉️',
       durationMinutes: 4,
       points: 100,
-      type: 'order_sequence',
-      gameData: {
-        type: 'order',
-        title: 'Constrói um email',
-        icon: '✉️',
-        xp: 100,
-        desc: 'Coloca os campos de uma mensagem de email pela ordem correta de envio.',
-        data: {
-          items: [
-            'Inserir o endereço de email do destinatário (Para)',
-            'Escrever um assunto claro e direto',
-            'Adicionar a saudação inicial e a mensagem principal',
-            'Colocar a assinatura e verificar os anexos antes de enviar'
-          ]
-        }
-      }
+      type: 'build_email',
     },
     {
       id: 'jogo-email-mc',

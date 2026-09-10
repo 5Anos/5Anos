@@ -421,21 +421,25 @@ export default function App() {
       );
     }
 
-    if (activeChallengeId === 'desafio-escrever-email') {
+    if (
+      activeChallengeId === 'desafio-escrever-email' ||
+      activeChallengeId === 'jogo-email-order' ||
+      activeChallengeId === 'desafio-email'
+    ) {
       return (
         <EmailLabGame
           language={language}
           onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
-              activityId: 'desafio-escrever-email',
+              activityId: activeChallengeId,
               activityType: 'challenge',
               themeId: currentTheme.id,
               status: 'completed',
               score,
               maxScore,
               percentage,
-              activityTitle: language === 'pt' ? 'Simulador de Escrita de Email' : 'Email Composer',
+              activityTitle: language === 'pt' ? 'Constrói um email' : 'Build an Email',
             });
           }}
         />

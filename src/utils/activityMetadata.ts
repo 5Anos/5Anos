@@ -320,9 +320,9 @@ const KNOWN_ACTIVITY_MAPPINGS: Record<
   },
   'jogo-email-order': {
     themeId: 'correio-eletronico',
-    title: { pt: 'Ordem de Redação de um Email', en: 'Email Writing Order' },
-    shortDesc: { pt: 'Ordena desde a saudação até à assinatura', en: 'Order from greeting down to signature' },
-    icon: '📝',
+    title: { pt: 'Constrói um email', en: 'Constrói um email' },
+    shortDesc: { pt: 'Arrasta as opções da direita para os locais corretos, para completares a mensagem de email.', en: 'Arrasta as opções da direita para os locais corretos, para completares a mensagem de email.' },
+    icon: '✉️',
     type: 'challenge',
   },
   'quiz-final-tema5': {
