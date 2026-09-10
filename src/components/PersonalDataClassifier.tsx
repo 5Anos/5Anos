@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { CheckCircle2, XCircle } from 'lucide-react';
 import { Language } from '../types';
-import { AudioSpeakButton } from './AudioSpeakButton';
 
 interface PersonalDataClassifierProps {
   language?: Language;
@@ -88,15 +87,6 @@ export const PersonalDataClassifier: React.FC<PersonalDataClassifierProps> = ({ 
             </p>
           </div>
         </div>
-
-        <AudioSpeakButton
-          id="personal-data-classifier-header"
-          text={`${title}. ${desc}`}
-          language={language}
-          label={language === 'pt' ? 'Ouvir Instruções' : 'Listen Instructions'}
-          variant="pill"
-          size="xs"
-        />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
@@ -122,13 +112,6 @@ export const PersonalDataClassifier: React.FC<PersonalDataClassifierProps> = ({ 
                     <span className="text-2xl p-1.5 bg-slate-100 rounded-xl">{item.icon}</span>
                     <h4 className="font-bold text-xs sm:text-sm text-slate-900 leading-tight">{item.name[language]}</h4>
                   </div>
-                  <AudioSpeakButton
-                    id={`data-item-${item.id}-audio`}
-                    text={`${item.name[language]}. ${hasAnswered ? item.advice[language] : 'Como classificas este dado? É privado ou partilhável?'}`}
-                    language={language}
-                    variant="icon"
-                    size="xs"
-                  />
                 </div>
 
                 {!hasAnswered ? (

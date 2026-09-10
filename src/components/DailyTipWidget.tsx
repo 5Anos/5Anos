@@ -18,7 +18,6 @@ import {
   DailyTicTip,
 } from '../data/dailyTipsData';
 import { api } from '../services/api';
-import { AudioSpeakButton } from './AudioSpeakButton';
 
 interface DailyTipWidgetProps {
   user: User | null;
@@ -389,50 +388,42 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                     }
 
                     return (
-                      <div key={opt.id} className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          disabled={isRevealed || submitting}
-                          onClick={() => handleSelectOption(opt.id)}
-                          className={`flex-1 text-left p-3.5 rounded-xl border transition-all flex items-start gap-3 cursor-pointer ${optionStyle} ${
-                            isRevealed ? 'cursor-default' : 'active:scale-[0.99]'
+                      <button
+                        key={opt.id}
+                        type="button"
+                        disabled={isRevealed || submitting}
+                        onClick={() => handleSelectOption(opt.id)}
+                        className={`w-full text-left p-3.5 rounded-xl border transition-all flex items-start gap-3 cursor-pointer ${optionStyle} ${
+                          isRevealed ? 'cursor-default' : 'active:scale-[0.99]'
+                        }`}
+                      >
+                        <div
+                          className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 border ${
+                            isRevealed
+                              ? isCorrectAnswer
+                                ? 'bg-emerald-600 text-white border-emerald-600'
+                                : isSelected
+                                ? 'bg-rose-500 text-white border-rose-500'
+                                : 'bg-slate-200 text-slate-600 border-slate-300'
+                              : isSelected
+                              ? 'bg-indigo-600 text-white border-indigo-600'
+                              : 'bg-white text-slate-600 border-slate-300'
                           }`}
                         >
-                          <div
-                            className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 border ${
-                              isRevealed
-                                ? isCorrectAnswer
-                                  ? 'bg-emerald-600 text-white border-emerald-600'
-                                  : isSelected
-                                  ? 'bg-rose-500 text-white border-rose-500'
-                                  : 'bg-slate-200 text-slate-600 border-slate-300'
-                                : isSelected
-                                ? 'bg-indigo-600 text-white border-indigo-600'
-                                : 'bg-white text-slate-600 border-slate-300'
-                            }`}
-                          >
-                            {opt.id.toUpperCase()}
-                          </div>
+                          {opt.id.toUpperCase()}
+                        </div>
 
-                          <div className="flex-1 min-w-0 text-xs sm:text-sm">
-                            {opt[language]}
-                          </div>
+                        <div className="flex-1 min-w-0 text-xs sm:text-sm">
+                          {opt[language]}
+                        </div>
 
-                          {isRevealed && isCorrectAnswer && (
-                            <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                          )}
-                          {isRevealed && isSelected && !isCorrectAnswer && (
-                            <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
-                          )}
-                        </button>
-                        <AudioSpeakButton
-                          id={`daily-tip-opt-${todayTip.id}-${opt.id}`}
-                          text={`${opt.id.toUpperCase()}: ${opt[language]}`}
-                          language={language}
-                          variant="icon"
-                          size="xs"
-                        />
-                      </div>
+                        {isRevealed && isCorrectAnswer && (
+                          <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                        )}
+                        {isRevealed && isSelected && !isCorrectAnswer && (
+                          <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+                        )}
+                      </button>
                     );
                   })}
                 </div>

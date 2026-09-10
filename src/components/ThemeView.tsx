@@ -29,7 +29,6 @@ import { TicApplicationsExplorer } from './TicApplicationsExplorer';
 import { TicEvolutionExplorer } from './TicEvolutionExplorer';
 import { CyberbullyingActionCard } from './CyberbullyingActionCard';
 import { getQuizMention, getQuizMentionBadgeStyle } from '../utils/exportUtils';
-import { AudioSpeakButton } from './AudioSpeakButton';
 
 interface ThemeViewProps {
   theme: ThemeDefinition;
@@ -114,14 +113,27 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
             <span>{language === 'pt' ? 'Voltar ao Início' : 'Back to Home'}</span>
           </button>
 
-          {isAdmin && isLockedForStudents && onToggleVisibility && (
-            <button
-              onClick={() => onToggleVisibility(theme.id)}
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3.5 py-2 rounded-xl transition-colors cursor-pointer shadow-2xs"
-            >
-              <Eye className="w-4 h-4 text-emerald-600" />
-              <span>{language === 'pt' ? 'Desbloquear para Alunos' : 'Unlock for Students'}</span>
-            </button>
+          {isAdmin && onToggleVisibility && (
+            isLockedForStudents ? (
+              <button
+                type="button"
+                onClick={() => onToggleVisibility(theme.id)}
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3.5 py-2 rounded-xl transition-colors cursor-pointer shadow-2xs"
+              >
+                <Eye className="w-4 h-4 text-emerald-600" />
+                <span>{language === 'pt' ? 'Desbloquear para Alunos' : 'Unlock for Students'}</span>
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => onToggleVisibility(theme.id)}
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-white hover:bg-slate-100 border border-slate-300 px-3.5 py-2 rounded-xl transition-colors cursor-pointer shadow-2xs"
+                title={language === 'pt' ? 'Bloquear / Ocultar este tema aos alunos' : 'Lock / Hide this theme from students'}
+              >
+                <Lock className="w-4 h-4 text-amber-600" />
+                <span>{language === 'pt' ? 'Ocultar aos Alunos' : 'Hide from Students'}</span>
+              </button>
+            )
           )}
         </div>
 
@@ -168,14 +180,6 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                 <span className="text-base">{theme.icon}</span>
                 <span>Tema {theme.number}</span>
               </div>
-              <AudioSpeakButton
-                id={`theme-banner-${theme.id}-audio`}
-                text={`Tema ${theme.number}: ${theme.title[language]}. ${theme.intro[language]}`}
-                language={language}
-                label={language === 'pt' ? 'Ouvir Apresentação do Tema' : 'Listen Theme Overview'}
-                variant="pill"
-                size="sm"
-              />
             </div>
 
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
@@ -286,16 +290,6 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                   </div>
 
                   <div className="flex items-center gap-2.5 flex-wrap">
-                    {/* Apenas um botão de áudio no conteúdo que lê todo o texto do separador */}
-                    <AudioSpeakButton
-                      id={`lesson-step-${theme.id}-${currentStepIndex}`}
-                      text={`${currentLesson.h[language]}. ${currentLesson.body[language].replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim()}`}
-                      language={language}
-                      label={language === 'pt' ? 'Ouvir Conteúdo' : 'Listen Content'}
-                      variant="pill"
-                      size="sm"
-                    />
-
                     <div className="text-xs sm:text-sm font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full">
                       {language === 'pt'
                         ? `Passo ${currentStepIndex + 1} de ${lessons.length}`
@@ -521,16 +515,6 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                         >
                           {isFinalQuiz ? '🏆 Quiz de Aprendizagem' : `Desafio ${chal.number}`}
                         </span>
-                        <div onClick={(e) => e.stopPropagation()}>
-                          <AudioSpeakButton
-                            id={`chal-card-${chal.id}-audio`}
-                            text={`${chal.title[language]}. ${chal.shortDesc[language]}`}
-                            language={language}
-                            label={language === 'pt' ? 'Ouvir' : 'Listen'}
-                            variant="pill"
-                            size="sm"
-                          />
-                        </div>
                       </div>
 
                       {isDone ? (

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, XCircle, Sparkles, Trophy, HelpCircle, ArrowRight, RotateCcw } from 'lucide-react';
 import { Language } from '../../types';
-import { AudioSpeakButton } from '../AudioSpeakButton';
 
 interface ChallengeQuestion {
   id: string;
@@ -415,15 +414,6 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
               {challenge.instructions[language]}
             </p>
           </div>
-          <AudioSpeakButton
-            id={`generic-chal-head-${challengeId}`}
-            text={`${challenge.title[language]}. ${challenge.instructions[language]}`}
-            language={language}
-            label={language === 'pt' ? 'Ouvir instruções' : 'Listen'}
-            variant="pill"
-            size="sm"
-            className="shrink-0"
-          />
         </div>
       </div>
 
@@ -440,13 +430,6 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
               <p className="text-xs font-bold uppercase tracking-wider text-indigo-700 mb-1">Cenário:</p>
               <p className="text-sm font-semibold">{currentQ.situation[language]}</p>
             </div>
-            <AudioSpeakButton
-              id={`generic-chal-scenario-${currentQ.id}`}
-              text={`Cenário: ${currentQ.situation[language]}`}
-              language={language}
-              variant="icon"
-              size="xs"
-            />
           </div>
 
           {/* Question */}
@@ -454,17 +437,6 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
             <h2 className="text-base sm:text-lg font-bold text-slate-900 flex-1">
               {currentQ.question[language]}
             </h2>
-            <AudioSpeakButton
-              id={`generic-chal-q-${currentQ.id}`}
-              text={`${currentQ.question[language]}. ${
-                language === 'pt' ? 'Opções:' : 'Options:'
-              } ${currentQ.options[language].map((opt, i) => `${language === 'pt' ? 'Opção' : 'Option'} ${i + 1}: ${opt}.`).join(' ')}`}
-              language={language}
-              label={language === 'pt' ? 'Ouvir pergunta' : 'Listen'}
-              variant="pill"
-              size="sm"
-              className="shrink-0"
-            />
           </div>
 
           {/* Options */}
@@ -483,28 +455,20 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
               }
 
               return (
-                <div key={optIdx} className="flex items-center gap-2">
-                  <button
-                    disabled={showFeedback}
-                    onClick={() => handleSelect(optIdx)}
-                    className={`flex-1 text-left p-4 rounded-2xl border text-sm transition-all flex items-center justify-between cursor-pointer ${btnStyle}`}
-                  >
-                    <span>{opt}</span>
-                    {showFeedback && optIdx === currentQ.correctIndex && (
-                      <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-                    )}
-                    {showFeedback && selected === optIdx && optIdx !== currentQ.correctIndex && (
-                      <XCircle className="w-5 h-5 text-rose-500 shrink-0" />
-                    )}
-                  </button>
-                  <AudioSpeakButton
-                    id={`generic-chal-opt-${currentQ.id}-${optIdx}`}
-                    text={opt}
-                    language={language}
-                    variant="icon"
-                    size="sm"
-                  />
-                </div>
+                <button
+                  key={optIdx}
+                  disabled={showFeedback}
+                  onClick={() => handleSelect(optIdx)}
+                  className={`w-full text-left p-4 rounded-2xl border text-sm transition-all flex items-center justify-between cursor-pointer ${btnStyle}`}
+                >
+                  <span>{opt}</span>
+                  {showFeedback && optIdx === currentQ.correctIndex && (
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                  )}
+                  {showFeedback && selected === optIdx && optIdx !== currentQ.correctIndex && (
+                    <XCircle className="w-5 h-5 text-rose-500 shrink-0" />
+                  )}
+                </button>
               );
             })}
           </div>
@@ -518,14 +482,6 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
             >
               <div className="flex items-center justify-between gap-2 mb-1">
                 <p className="font-bold text-sm">{isCorrect ? '✅ Resposta Exata!' : '💡 Dica Importante:'}</p>
-                <AudioSpeakButton
-                  id={`generic-chal-expl-${currentQ.id}`}
-                  text={`${isCorrect ? 'Resposta Exata!' : 'Dica Importante:'} ${currentQ.explanation[language]}`}
-                  language={language}
-                  variant="inline"
-                  size="xs"
-                  label={language === 'pt' ? 'Ouvir explicação' : 'Listen'}
-                />
               </div>
               <p className="text-xs sm:text-sm">{currentQ.explanation[language]}</p>
               <button

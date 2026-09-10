@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, XCircle, AlertTriangle, ShieldCheck, ShieldAlert, Sparkles, RefreshCw, ArrowRight, Award, HelpCircle, HeartHandshake, Eye, MessageSquare, Lock } from 'lucide-react';
 import { Language } from '../../types';
 import { translations } from '../../i18n/translations';
-import { AudioSpeakButton } from '../AudioSpeakButton';
 
 interface WhatWouldYouDoGameProps {
   language: Language;
@@ -384,14 +383,6 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-xl">{dilemma.icon}</span>
-                <AudioSpeakButton
-                  id={`what-dilemma-scenario-${dilemma.id}`}
-                  text={`${dilemma.title[language]}. ${dilemma.scenario[language]}`}
-                  language={language}
-                  label={language === 'pt' ? 'Ouvir cenário' : 'Listen'}
-                  variant="pill"
-                  size="xs"
-                />
               </div>
             </div>
 
@@ -408,16 +399,6 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
                 <HelpCircle className="w-4 h-4 text-indigo-600 shrink-0" />
                 <span>{dilemma.question[language]}</span>
               </div>
-              <AudioSpeakButton
-                id={`what-dilemma-q-${dilemma.id}`}
-                text={`${dilemma.question[language]}. ${
-                  language === 'pt' ? 'Opções:' : 'Options:'
-                } ${dilemma.options.map((opt, i) => `${language === 'pt' ? 'Opção' : 'Option'} ${i + 1}: ${opt.text[language]}.`).join(' ')}`}
-                language={language}
-                label={language === 'pt' ? 'Ouvir pergunta' : 'Listen'}
-                variant="pill"
-                size="xs"
-              />
             </div>
           </div>
 
@@ -437,30 +418,22 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
               }
 
               return (
-                <div key={idx} className="flex items-center gap-2">
-                  <button
-                    disabled={selectedOption !== null}
-                    onClick={() => handleSelect(idx)}
-                    className={`flex-1 text-left p-4 rounded-2xl border text-xs sm:text-sm transition-all flex items-start justify-between gap-3 cursor-pointer ${btnClass}`}
-                  >
-                    <div className="space-y-1">
-                      <span className="font-medium">{opt.text[language]}</span>
-                    </div>
-                    {selectedOption !== null && opt.isBest && (
-                      <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                    )}
-                    {selectedOption === idx && !opt.isBest && (
-                      <AlertTriangle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
-                    )}
-                  </button>
-                  <AudioSpeakButton
-                    id={`what-dilemma-opt-${dilemma.id}-${idx}`}
-                    text={opt.text[language]}
-                    language={language}
-                    variant="icon"
-                    size="sm"
-                  />
-                </div>
+                <button
+                  key={idx}
+                  disabled={selectedOption !== null}
+                  onClick={() => handleSelect(idx)}
+                  className={`w-full text-left p-4 rounded-2xl border text-xs sm:text-sm transition-all flex items-start justify-between gap-3 cursor-pointer ${btnClass}`}
+                >
+                  <div className="space-y-1">
+                    <span className="font-medium">{opt.text[language]}</span>
+                  </div>
+                  {selectedOption !== null && opt.isBest && (
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                  )}
+                  {selectedOption === idx && !opt.isBest && (
+                    <AlertTriangle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
+                  )}
+                </button>
               );
             })}
           </div>
@@ -487,14 +460,6 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
                       </>
                     )}
                   </div>
-                  <AudioSpeakButton
-                    id={`what-dilemma-expl-${dilemma.id}`}
-                    text={`${dilemma.options[selectedOption].isBest ? (language === 'pt' ? 'Decisão Exemplar!' : 'Exemplary Choice!') : (language === 'pt' ? 'Decisão Arriscada ou Incorreta:' : 'Risky or Incorrect Choice:')}. ${dilemma.options[selectedOption].feedback[language]}`}
-                    language={language}
-                    variant="inline"
-                    size="xs"
-                    label={language === 'pt' ? 'Ouvir explicação' : 'Listen'}
-                  />
                 </div>
                 <p className="text-xs sm:text-sm leading-relaxed">
                   {dilemma.options[selectedOption].feedback[language]}

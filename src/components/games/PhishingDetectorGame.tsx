@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ArrowLeft, AlertCircle, CheckCircle2, ShieldAlert, Search, Trophy, ArrowRight, RotateCcw, Sparkles, Smartphone, Mail, MessageSquare, AlertTriangle, ShieldCheck } from 'lucide-react';
 import { Language } from '../../types';
 import { translations } from '../../i18n/translations';
-import { AudioSpeakButton } from '../AudioSpeakButton';
 
 interface PhishingDetectorGameProps {
   language: Language;
@@ -236,14 +235,6 @@ export const PhishingDetectorGame: React.FC<PhishingDetectorGameProps> = ({ lang
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <AudioSpeakButton
-                  id="phishing-email-audio"
-                  text={`${language === 'pt' ? 'Email suspeito recebido.' : 'Suspicious email received.'} ${language === 'pt' ? 'De: Suporte Oficial aviso-urgente@servico-gratis-123.xyz. Assunto: Urgente, a tua conta será bloqueada em 15 minutos se não clicares. Conteúdo: Caro utilizador, detetámos uma anomalia grave no teu computador e na tua conta escolar. Para evitar a perda permanente de todos os teus ficheiros e jogos, deves clicar no botão abaixo imediatamente.' : 'From: Official Support. Subject: Urgent, your account will be locked in 15 minutes. Body: Dear user, we detected an issue with your account. Click immediately.'}`}
-                  language={language}
-                  label={language === 'pt' ? 'Ouvir email' : 'Listen'}
-                  variant="pill"
-                  size="xs"
-                />
                 <span className="text-xs font-bold text-rose-600 bg-rose-50 px-2.5 py-1 rounded-full flex items-center gap-1 border border-rose-200">
                   <ShieldAlert className="w-3.5 h-3.5" />
                   <span>{language === 'pt' ? 'Pistas: ' : 'Clues: '} {revealedClues.length} / 4</span>
@@ -419,14 +410,6 @@ export const PhishingDetectorGame: React.FC<PhishingDetectorGameProps> = ({ lang
                   <span className="truncate max-w-[150px]">{currentRadar.sender}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <AudioSpeakButton
-                    id={`phishing-radar-msg-${currentRadar.id}`}
-                    text={`${language === 'pt' ? 'Mensagem de' : 'Message from'} ${currentRadar.sender}: ${currentRadar.preview[language]}. ${currentRadar.question[language]}`}
-                    language={language}
-                    label={language === 'pt' ? 'Ouvir' : 'Listen'}
-                    variant="pill"
-                    size="xs"
-                  />
                   <span className="text-[10px] opacity-75">14:32</span>
                 </div>
               </div>
@@ -490,14 +473,6 @@ export const PhishingDetectorGame: React.FC<PhishingDetectorGameProps> = ({ lang
             <div className="max-w-md mx-auto p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-3 animate-in fade-in">
               <div className="flex items-center justify-between gap-2">
                 <span className="text-xs font-bold text-slate-500">{language === 'pt' ? 'Explicação pedagógica:' : 'Explanation:'}</span>
-                <AudioSpeakButton
-                  id={`phishing-radar-expl-${currentRadar.id}`}
-                  text={currentRadar.explanation[language]}
-                  language={language}
-                  variant="inline"
-                  size="xs"
-                  label={language === 'pt' ? 'Ouvir explicação' : 'Listen'}
-                />
               </div>
               <p className="text-xs text-slate-800 leading-relaxed font-medium">
                 {currentRadar.explanation[language]}

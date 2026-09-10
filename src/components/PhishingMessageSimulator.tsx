@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import { ShieldAlert, MessageSquare } from 'lucide-react';
-import { AudioSpeakButton } from './AudioSpeakButton';
 
 export const PhishingMessageSimulator: React.FC = () => {
   const [selectedAction, setSelectedAction] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<{ type: 'danger' | 'success' | 'warning'; msg: string } | null>(null);
-
-  const smsText =
-    'Mensagem de número desconhecido: Olá! Parabéns! Ganhaste um telemóvel novo e mil moedas no teu jogo favorito! Clica já no link para reclamar o prémio antes que expire: link falso.';
 
   const handleAction = (action: 'click' | 'reply' | 'report') => {
     setSelectedAction(action);
@@ -45,13 +41,6 @@ export const PhishingMessageSimulator: React.FC = () => {
           <span className="text-[11px] font-bold px-2 py-0.5 bg-amber-100 text-amber-800 rounded-full border border-amber-300">
             Cenário Prático
           </span>
-          <AudioSpeakButton
-            id="phishing-sim-intro"
-            text="Simulador de decisão em tempo real: cenário prático de mensagem suspeita de phishing."
-            language="pt"
-            variant="icon"
-            size="xs"
-          />
         </div>
       </div>
 
@@ -66,14 +55,6 @@ export const PhishingMessageSimulator: React.FC = () => {
             <span className="text-[10px] bg-red-950/80 text-red-300 px-2 py-0.5 rounded-full border border-red-800 font-bold">
               ⚠️ Não Verificado
             </span>
-            <AudioSpeakButton
-              id="phishing-sim-sms-audio"
-              text={smsText}
-              language="pt"
-              label="Ouvir Mensagem"
-              variant="pill"
-              size="xs"
-            />
           </div>
         </div>
 
@@ -101,14 +82,6 @@ export const PhishingMessageSimulator: React.FC = () => {
         <p className="text-xs sm:text-sm font-bold text-slate-800">
           O que deves fazer imediatamente? Clica numa opção para agir:
         </p>
-        <AudioSpeakButton
-          id="phishing-sim-prompt-audio"
-          text="O que deves fazer imediatamente? Opção um: Clicar no link por curiosidade. Opção dois: Responder a perguntar detalhes. Opção três: Não clicar e avisar logo um adulto de confiança."
-          language="pt"
-          label="Ouvir opções"
-          variant="inline"
-          size="xs"
-        />
       </div>
 
       {/* Interactive Action Decision Buttons (Imperative) */}
@@ -165,13 +138,6 @@ export const PhishingMessageSimulator: React.FC = () => {
           }`}
         >
           <span>{feedback.msg}</span>
-          <AudioSpeakButton
-            id="phishing-feedback-audio"
-            text={feedback.msg}
-            language="pt"
-            variant="icon"
-            size="xs"
-          />
         </div>
       )}
     </div>

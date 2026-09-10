@@ -283,17 +283,42 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       )}
                     </div>
 
-                    {/* Theme Badge & Number + Audio Button */}
+                    {/* Theme Badge & Number + Teacher Quick Visibility Control */}
                     <div className="flex items-center justify-between gap-2 mb-2">
                       <div className="flex items-center gap-1.5 flex-wrap">
                         <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${colorInfo.bgBadge}`}>
                           Tema {theme.number}
                         </span>
-                        {!isVisibleForStudents && isAdmin && (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 flex items-center gap-1">
-                            <Lock className="w-2.5 h-2.5" />
-                            {language === 'pt' ? 'Oculto na Turma' : 'Hidden in Class'}
-                          </span>
+                        {isAdmin && onToggleThemeVisibility && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onToggleThemeVisibility(theme.id);
+                            }}
+                            className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border flex items-center gap-1 transition-all cursor-pointer shadow-2xs hover:scale-105 active:scale-95 ${
+                              isVisibleForStudents
+                                ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
+                                : 'bg-amber-100 text-amber-950 border-amber-300 hover:bg-amber-200'
+                            }`}
+                            title={
+                              isVisibleForStudents
+                                ? (language === 'pt' ? 'Clique para ocultar aos alunos' : 'Click to hide from students')
+                                : (language === 'pt' ? 'Clique para desbloquear aos alunos' : 'Click to unlock for students')
+                            }
+                          >
+                            {isVisibleForStudents ? (
+                              <>
+                                <Eye className="w-2.5 h-2.5 text-emerald-600" />
+                                <span>{language === 'pt' ? 'Visível' : 'Visible'}</span>
+                              </>
+                            ) : (
+                              <>
+                                <Lock className="w-2.5 h-2.5 text-amber-700" />
+                                <span>{language === 'pt' ? 'Oculto' : 'Hidden'}</span>
+                              </>
+                            )}
+                          </button>
                         )}
                       </div>
                       <span className="text-xl">{theme.icon}</span>

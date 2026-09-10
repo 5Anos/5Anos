@@ -2015,7 +2015,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                             className={`px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 transition-all cursor-pointer shadow-xs disabled:opacity-50 ${
                               isVisible
                                 ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
-                                : 'bg-slate-800 hover:bg-slate-900 text-white'
+                                : 'bg-amber-600 hover:bg-amber-700 text-white'
                             }`}
                           >
                             {isToggling ? (
@@ -2023,12 +2023,12 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                             ) : isVisible ? (
                               <>
                                 <Eye className="w-4 h-4" />
-                                <span>{language === 'pt' ? 'Visível (Desbloqueado)' : 'Visible'}</span>
+                                <span>{language === 'pt' ? 'Visível (Clique p/ Ocultar)' : 'Visible (Click to Hide)'}</span>
                               </>
                             ) : (
                               <>
-                                <Lock className="w-4 h-4 text-amber-400" />
-                                <span>{language === 'pt' ? 'Ocultar aos Alunos' : 'Hidden'}</span>
+                                <Lock className="w-4 h-4 text-white" />
+                                <span>{language === 'pt' ? 'Desbloquear para Alunos' : 'Unlock for Students'}</span>
                               </>
                             )}
                           </button>
