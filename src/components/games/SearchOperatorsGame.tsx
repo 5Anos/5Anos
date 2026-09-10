@@ -39,7 +39,7 @@ const RIDDLES: OperatorRiddle[] = [
         operatorUsed: 'Aspas "" (Termo exato)',
         isCorrect: true,
         explanation: {
-          pt: '🎯 Excelente! As aspas (" ") forçam o motor de busca a encontrar exatamente a frase completa na mesma ordem, levando diretamente à Autopsicografia de Fernando Pessoa.',
+          pt: 'As aspas (" ") forçam o motor de busca a encontrar exatamente a frase completa na mesma ordem, levando diretamente à Autopsicografia de Fernando Pessoa.',
           en: '🎯 Excellent! Quotes (" ") force the search engine to match the full phrase in exact order, targeting Fernando Pessoa’s Autopsicografia.',
         },
         searchResultPreview: 'Fernando Pessoa — Autopsicografia ("O poeta é um fingidor. Finge tão completamente...")',

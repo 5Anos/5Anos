@@ -55,7 +55,7 @@ const SCENARIOS: InteractiveScenario[] = [
         verdict: 'safe',
         isCorrect: true,
         explanation: {
-          pt: 'Excelente! Prémios fáceis e urgentes na Internet são quase sempre tentativas de fraude (phishing) para roubar dados ou subscrever serviços pagos sem autorização.',
+          pt: 'Prémios fáceis e urgentes na Internet são quase sempre tentativas de fraude (phishing) para roubar dados ou subscrever serviços pagos sem autorização.',
           en: 'Excellent! Urgent prizes on the web are almost always scams (phishing) designed to steal data or trigger paid subscriptions.',
         },
         ruleBadge: { pt: 'Regra de Ouro: Desconfia de ofertas milagrosas', en: 'Golden Rule: Distrust miraculous offers' },
@@ -98,7 +98,7 @@ const SCENARIOS: InteractiveScenario[] = [
     tag: { pt: 'Palavras-Passe & Acessos', en: 'Passwords & Account Access' },
     title: { pt: 'A Mesma Chave para Todas as Portas', en: 'The Same Key for Every Door' },
     context: {
-      pt: 'A Leonor adora simplificar e inventou a palavra-passe "leonor2014". Para não se esquecer de nada, usa exatamente a mesma senha no email da escola, no jogo Roblox, no TikTok e na plataforma de mensagens.',
+      pt: 'A Leonor adora simplificar e inventou a palavra-passe "leonor2014". Para não se esquecer de nada, usa exatamente a mesma palavra-passe no email da escola, no jogo Roblox, no TikTok e na plataforma de mensagens.',
       en: 'Leonor likes simplicity and came up with "leonor2014". To never forget, she uses this exact same password on school email, Roblox, TikTok, and chat.',
     },
     question: {
@@ -109,30 +109,30 @@ const SCENARIOS: InteractiveScenario[] = [
       {
         id: 'opt2_safe',
         text: {
-          pt: 'Criar senhas diferentes para cada serviço importante (com letras, números e símbolos) e usar frases-passe.',
+          pt: 'Criar palavras-passe diferentes para cada serviço importante (com letras, números e símbolos) e usar frases-passe.',
           en: 'Create unique passwords for each service (using letters, numbers, symbols) or strong passphrases.',
         },
         verdict: 'safe',
         isCorrect: true,
         explanation: {
-          pt: 'Muito bem! Se um site sofrer um ataque ou fuga de dados, as outras contas da Leonor continuam 100% seguras porque têm senhas diferentes.',
+          pt: 'Se um site sofrer um ataque ou fuga de dados, as outras contas da Leonor continuam 100% seguras porque têm palavras-passe diferentes.',
           en: 'Well done! If one platform suffers a data breach, Leonor’s other accounts remain fully protected with unique passwords.',
         },
-        ruleBadge: { pt: 'Regra: Senhas únicas e complexas', en: 'Rule: Unique complex passwords' },
+        ruleBadge: { pt: 'Regra: Palavras-passe únicas e complexas', en: 'Rule: Unique complex passwords' },
       },
       {
         id: 'opt2_danger',
         text: {
-          pt: 'Manter a mesma senha porque mudar de palavras-passe dá muito trabalho e não tem perigo.',
+          pt: 'Manter a mesma palavra-passe porque mudar de palavras-passe dá muito trabalho e não tem perigo.',
           en: 'Keep the same password because changing is tedious and poses no real danger.',
         },
         verdict: 'danger',
         isCorrect: false,
         explanation: {
-          pt: 'Comportamento de risco! Se alguém descobrir a senha num jogo inseguro, ganha acesso imediato ao email escolar e às restantes contas.',
+          pt: 'Comportamento de risco! Se alguém descobrir a palavra-passe num jogo inseguro, ganha acesso imediato ao email escolar e às restantes contas.',
           en: 'Risky behavior! If someone discovers the password in an insecure game, they gain full access to school email and private accounts.',
         },
-        ruleBadge: { pt: 'Efeito dominó em fugas de dados', en: 'Domino effect in security leaks' },
+        ruleBadge: { pt: 'Efeito dominó em roubo de dados', en: 'Domino effect in security leaks' },
       },
     ],
   },
@@ -253,7 +253,7 @@ const SCENARIOS: InteractiveScenario[] = [
         verdict: 'safe',
         isCorrect: true,
         explanation: {
-          pt: 'Correto! Ficheiros .exe de origens não oficiais muitas vezes disfarçam vírus perigosos. Deves utilizar apenas lojas oficiais e autorizadas pelos teus pais.',
+          pt: 'Ficheiros .exe de origens não oficiais muitas vezes disfarçam vírus perigosos. Deves utilizar apenas lojas oficiais e autorizadas pelos teus pais.',
           en: 'Correct! Unofficial .exe files frequently conceal destructive malware. Use only verified stores authorized by parents.',
         },
         ruleBadge: { pt: 'Segurança: Descarrega apenas de fontes oficiais', en: 'Safety: Download only from official stores' },

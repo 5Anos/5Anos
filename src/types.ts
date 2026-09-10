@@ -85,6 +85,7 @@ export interface QuizQuestion {
   options: { pt: string[]; en: string[] };
   correctIndex: number;
   explanation: { pt: string; en: string };
+  optionExplanations?: { pt: string[]; en: string[] };
 }
 
 export interface TopicContent {

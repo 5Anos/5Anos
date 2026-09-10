@@ -26,13 +26,22 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
   onReturnToGames,
   onFinish,
 }) => {
+  const type = gameData?.type || '';
+  const data = gameData?.data || {};
+
+  const isTf = type === 'tf' || type === 'true_false';
+  const isMc = type === 'mc' || type === 'multiple_choice';
+  const isMatch = type === 'match' || type === 'pairs' || type === 'match_pairs';
+  const isOrder = type === 'order' || type === 'order_sequence';
+  const isClassify = type === 'classify' || type === 'reliable_sources' || type === 'classification';
+
   const [answers, setAnswers] = useState<Record<number, boolean>>({});
   const [mcIndex, setMcIndex] = useState(0);
   const [mcAnswers, setMcAnswers] = useState<number[]>([]);
   const [shuffledQuestions] = useState(() => {
-    if (gameData.type === 'mc' && gameData.data?.questions) {
+    if (isMc && gameData.data?.questions) {
       return gameData.data.questions.map((q: any) => {
-        const indices = q.opts.map((_: any, idx: number) => idx);
+        const indices = q.opts ? q.opts.map((_: any, idx: number) => idx) : [];
         for (let i = indices.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [indices[i], indices[j]] = [indices[j], indices[i]];
@@ -53,7 +62,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
   const [shakeIdx, setShakeIdx] = useState<number | null>(null);
   const [orderChosen, setOrderChosen] = useState<number[]>([]);
   const [orderPool, setOrderPool] = useState<number[]>(() => {
-    if (gameData.type === 'order') {
+    if (isOrder && gameData.data?.items) {
       return gameData.data.items.map((_: any, i: number) => i).sort(() => Math.random() - 0.5);
     }
     return [];
@@ -61,14 +70,15 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
   const [orderChecked, setOrderChecked] = useState(false);
   const [completed, setCompleted] = useState(false);
 
+  // Classify Game State
+  const [classifiedMap, setClassifiedMap] = useState<Record<number, string>>({});
+  const [selectedClassifyItem, setSelectedClassifyItem] = useState<number | null>(null);
+
   // Password Builder State
   const [builderPassword, setBuilderPassword] = useState('');
   const [builderSubmitted, setBuilderSubmitted] = useState(false);
 
-  const type = gameData.type;
-  const data = gameData.data;
-
-  // Validate rules for password builder (focusing on length, hard to guess, no personal data, no predictable patterns)
+  // Validate rules for password builder
   const validatePasswordRules = (pwd: string) => {
     const isLong = pwd.length >= 8;
     const pwdLower = pwd.toLowerCase();
@@ -132,10 +142,11 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
   };
 
   const handleTfFinish = () => {
-    const items = data.items;
+    const items = data.items || data.questions || [];
     let correct = 0;
     items.forEach((it: any, i: number) => {
-      if (answers[i] === it.a) correct++;
+      const expected = it.a !== undefined ? it.a : it.isTrue;
+      if (answers[i] === expected) correct++;
     });
     const pct = Math.round((correct / items.length) * 100);
     setCompleted(true);
@@ -165,7 +176,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
 
   // Match Handler
   const [rightOrder] = useState<number[]>(() => {
-    if (type === 'match') {
+    if (isMatch && data?.pairs) {
       return data.pairs.map((_: any, i: number) => i).sort(() => Math.random() - 0.5);
     }
     return [];
@@ -253,75 +264,82 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
         </div>
 
         {/* 1. TRUE / FALSE */}
-        {type === 'tf' && (
+        {isTf && (
           <div className="space-y-4">
-            {data.items.map((it: any, i: number) => {
-              const ans = answers[i];
-              const revealed = ans !== undefined;
-              let statusCls = 'border-slate-200 bg-white';
-              if (revealed) {
-                statusCls = ans === it.a ? 'border-emerald-300 bg-emerald-50/50' : 'border-rose-300 bg-rose-50/50';
-              }
-              return (
-                <div key={i} className={`p-4 rounded-2xl border-2 transition-all space-y-3 ${statusCls}`}>
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div className="flex items-start gap-2 flex-1">
-                      <p className="text-sm font-bold text-slate-900 flex-1">{it.s}</p>
-                      <AudioSpeakButton
-                        id={`tf-item-${i}`}
-                        text={it.s}
-                        language={language}
-                        variant="icon"
-                        size="xs"
-                      />
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <button
-                        onClick={() => handleTfSelect(i, true)}
-                        disabled={revealed || completed}
-                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                          ans === true
-                            ? 'bg-emerald-600 text-white shadow-xs'
-                            : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
-                        }`}
-                      >
-                        Verdadeiro
-                      </button>
-                      <button
-                        onClick={() => handleTfSelect(i, false)}
-                        disabled={revealed || completed}
-                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                          ans === false
-                            ? 'bg-rose-600 text-white shadow-xs'
-                            : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
-                        }`}
-                      >
-                        Falso
-                      </button>
-                    </div>
-                  </div>
-                  {revealed && (
-                    <div className={`text-xs p-2.5 rounded-xl font-medium flex items-start justify-between gap-2 ${ans === it.a ? 'bg-emerald-100 text-emerald-900' : 'bg-rose-100 text-rose-900'}`}>
-                      <div>
-                        {ans === it.a ? '✅ Correto! ' : '❌ Incorreto. '}{it.e}
+            {(() => {
+              const tfItems = data.items || data.questions || [];
+              return tfItems.map((it: any, i: number) => {
+                const statementText = it.statement || it.s || '';
+                const expectedAnswer = it.isTrue !== undefined ? it.isTrue : it.a;
+                const explanationText = it.explanation || it.e || '';
+
+                const ans = answers[i];
+                const revealed = ans !== undefined;
+                let statusCls = 'border-slate-200 bg-white';
+                if (revealed) {
+                  statusCls = ans === expectedAnswer ? 'border-emerald-300 bg-emerald-50/50' : 'border-rose-300 bg-rose-50/50';
+                }
+                return (
+                  <div key={i} className={`p-4 rounded-2xl border-2 transition-all space-y-3 ${statusCls}`}>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div className="flex items-start gap-2 flex-1">
+                        <p className="text-sm font-bold text-slate-900 flex-1">{statementText}</p>
+                        <AudioSpeakButton
+                          id={`tf-item-${i}`}
+                          text={statementText}
+                          language={language}
+                          variant="icon"
+                          size="xs"
+                        />
                       </div>
-                      <AudioSpeakButton
-                        id={`tf-feedback-${i}`}
-                        text={`${ans === it.a ? 'Correto.' : 'Incorreto.'} ${it.e}`}
-                        language={language}
-                        variant="icon"
-                        size="xs"
-                      />
+                      <div className="flex items-center gap-2 shrink-0">
+                        <button
+                          onClick={() => handleTfSelect(i, true)}
+                          disabled={revealed || completed}
+                          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                            ans === true
+                              ? 'bg-emerald-600 text-white shadow-xs'
+                              : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
+                          }`}
+                        >
+                          Verdadeiro
+                        </button>
+                        <button
+                          onClick={() => handleTfSelect(i, false)}
+                          disabled={revealed || completed}
+                          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                            ans === false
+                              ? 'bg-rose-600 text-white shadow-xs'
+                              : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
+                          }`}
+                        >
+                          Falso
+                        </button>
+                      </div>
                     </div>
-                  )}
-                </div>
-              );
-            })}
+                    {revealed && (
+                      <div className={`text-xs p-2.5 rounded-xl font-medium flex items-start justify-between gap-2 ${ans === expectedAnswer ? 'bg-emerald-100 text-emerald-900' : 'bg-rose-100 text-rose-900'}`}>
+                        <div>
+                          {ans === expectedAnswer ? '✅ Correto! ' : '❌ Incorreto. '}{explanationText}
+                        </div>
+                        <AudioSpeakButton
+                          id={`tf-feedback-${i}`}
+                          text={`${ans === expectedAnswer ? 'Correto.' : 'Incorreto.'} ${explanationText}`}
+                          language={language}
+                          variant="icon"
+                          size="xs"
+                        />
+                      </div>
+                    )}
+                  </div>
+                );
+              });
+            })()}
 
             {!completed && (
               <button
                 onClick={handleTfFinish}
-                disabled={Object.keys(answers).length < data.items.length}
+                disabled={Object.keys(answers).length < (data.items || data.questions || []).length}
                 className="w-full py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-all cursor-pointer disabled:opacity-50 mt-4"
               >
                 Concluir Desafio e Receber XP
@@ -331,7 +349,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
         )}
 
         {/* 2. MULTIPLE CHOICE */}
-        {type === 'mc' && !completed && (() => {
+        {isMc && !completed && (() => {
           const qs = shuffledQuestions;
           const q = qs[mcIndex];
           const chosen = mcAnswers[mcIndex];
@@ -524,7 +542,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
         })()}
 
         {/* 3. MATCHING PAIRS */}
-        {type === 'match' && !completed && (
+        {isMatch && !completed && (
           <div className="space-y-6">
             <div className="flex items-center justify-between gap-3">
               <p className="text-xs sm:text-sm text-slate-600">
@@ -550,20 +568,70 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                 {data.pairs.map((p: any, i: number) => {
                   const isMatched = matched.includes(i);
                   const isSel = picked[0] === i;
+
+                  const leftText = p.left || '';
+                  const image = p.image;
+                  const icon = p.icon;
+
+                  let conceptVisual = null;
+                  if (image) {
+                    conceptVisual = (
+                      <img
+                        src={image}
+                        alt=""
+                        className="w-11 h-11 rounded-xl object-cover border border-slate-200/80 shrink-0 shadow-2xs"
+                      />
+                    );
+                  } else if (icon) {
+                    conceptVisual = (
+                      <div className="w-11 h-11 rounded-xl bg-indigo-100/90 text-indigo-950 border border-indigo-200 flex items-center justify-center font-black text-xl shrink-0 shadow-2xs">
+                        {icon}
+                      </div>
+                    );
+                  } else {
+                    let fallbackIcon = '📌';
+                    let fallbackBg = 'bg-indigo-100 text-indigo-900 border-indigo-200';
+                    const lower = leftText.toLowerCase();
+
+                    if (lower.includes('copyright') || lower.includes('©')) {
+                      fallbackIcon = '©️';
+                      fallbackBg = 'bg-sky-100 text-sky-900 border-sky-200';
+                    } else if (lower.includes('copyleft')) {
+                      fallbackIcon = '🄯';
+                      fallbackBg = 'bg-emerald-100 text-emerald-900 border-emerald-200';
+                    } else if (lower.includes('cc-by') || lower.includes('creative commons') || lower.includes('licença cc')) {
+                      fallbackIcon = '🅒🅒';
+                      fallbackBg = 'bg-amber-100 text-amber-900 border-amber-200';
+                    } else if (lower.includes('royalty') || lower.includes('free')) {
+                      fallbackIcon = '💎';
+                      fallbackBg = 'bg-purple-100 text-purple-900 border-purple-200';
+                    } else if (lower.includes('password') || lower.includes('previsível') || lower.includes('gestor')) {
+                      fallbackIcon = '🔑';
+                      fallbackBg = 'bg-slate-100 text-slate-900 border-slate-200';
+                    }
+
+                    conceptVisual = (
+                      <div className={`w-11 h-11 rounded-xl border flex items-center justify-center font-black text-lg shrink-0 shadow-2xs ${fallbackBg}`}>
+                        {fallbackIcon}
+                      </div>
+                    );
+                  }
+
                   return (
                     <button
                       key={i}
                       onClick={() => !isMatched && handleMatchLeft(i)}
                       disabled={isMatched}
-                      className={`w-full text-left p-3.5 rounded-2xl border-2 text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                      className={`w-full text-left p-3 rounded-2xl border-2 text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-3.5 ${
                         isMatched
                           ? 'border-emerald-300 bg-emerald-50 text-emerald-800 opacity-80 cursor-default'
                           : isSel
-                          ? 'border-indigo-600 bg-indigo-50 text-indigo-900 shadow-xs'
-                          : 'border-slate-200 bg-white hover:border-indigo-300 text-slate-800'
+                          ? 'border-indigo-600 bg-indigo-50 text-indigo-900 shadow-xs ring-2 ring-indigo-200'
+                          : 'border-slate-200 bg-white hover:border-indigo-300 text-slate-800 hover:shadow-xs'
                       }`}
                     >
-                      {p.left}
+                      {conceptVisual}
+                      <span className="flex-1 leading-snug">{leftText}</span>
                     </button>
                   );
                 })}
@@ -599,7 +667,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
         )}
 
         {/* 4. ORDER SEQUENCE */}
-        {type === 'order' && !completed && (
+        {isOrder && !completed && (
           <div className="space-y-6">
             <div className="flex items-center justify-between gap-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
@@ -673,6 +741,99 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
             )}
           </div>
         )}
+
+        {/* 5. CLASSIFY / RELIABLE SOURCES */}
+        {isClassify && !completed && (() => {
+          const categories = data.categories || [];
+          const items = data.items || [];
+
+          const handleClassify = (itemIdx: number, categoryId: string) => {
+            const nextMap = { ...classifiedMap, [itemIdx]: categoryId };
+            setClassifiedMap(nextMap);
+            setSelectedClassifyItem(null);
+
+            if (Object.keys(nextMap).length === items.length) {
+              let correct = 0;
+              items.forEach((it: any, idx: number) => {
+                if (nextMap[idx] === it.categoryId) correct++;
+              });
+              const pct = Math.round((correct / items.length) * 100);
+              setCompleted(true);
+              onFinish(pct, 100, pct);
+            }
+          };
+
+          return (
+            <div className="space-y-6">
+              <p className="text-xs sm:text-sm text-slate-600 font-medium">
+                {language === 'pt'
+                  ? 'Clica num elemento para o selecionar e depois clica na categoria onde o queres colocar.'
+                  : 'Click an item to select it, then click the target category box.'}
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {categories.map((cat: any) => {
+                  const catItems = items.filter((_: any, idx: number) => classifiedMap[idx] === cat.id);
+                  return (
+                    <div
+                      key={cat.id}
+                      onClick={() => selectedClassifyItem !== null && handleClassify(selectedClassifyItem, cat.id)}
+                      className={`p-4 rounded-2xl border-2 transition-all space-y-3 min-h-[160px] ${
+                        selectedClassifyItem !== null
+                          ? 'border-indigo-500 bg-indigo-50/60 cursor-pointer hover:border-indigo-600 shadow-sm ring-2 ring-indigo-200'
+                          : 'border-slate-200 bg-slate-50'
+                      }`}
+                    >
+                      <h4 className="font-extrabold text-sm sm:text-base text-indigo-950 flex items-center justify-between">
+                        <span>{cat.label}</span>
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800 font-bold">
+                          {catItems.length}
+                        </span>
+                      </h4>
+
+                      <div className="space-y-2">
+                        {catItems.map((it: any, idx: number) => (
+                          <div
+                            key={idx}
+                            className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm font-bold text-slate-800 shadow-2xs"
+                          >
+                            {it.text}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Items Pool */}
+              <div className="space-y-2 pt-2">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  {language === 'pt' ? 'Elementos para classificar' : 'Items to classify'}
+                </h4>
+                <div className="flex flex-wrap gap-2.5">
+                  {items.map((it: any, idx: number) => {
+                    if (classifiedMap[idx] !== undefined) return null;
+                    const isSelected = selectedClassifyItem === idx;
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => setSelectedClassifyItem(isSelected ? null : idx)}
+                        className={`p-3 rounded-xl border-2 text-xs sm:text-sm font-bold transition-all cursor-pointer text-left shadow-2xs ${
+                          isSelected
+                            ? 'border-indigo-600 bg-indigo-600 text-white shadow-md ring-2 ring-indigo-300'
+                            : 'border-slate-200 bg-white hover:border-indigo-300 text-slate-800'
+                        }`}
+                      >
+                        {it.text}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* 5. PASSWORD BUILDER INTERACTIVE GAME */}
         {(type === 'password_builder' || type === 'builder') && !completed && (

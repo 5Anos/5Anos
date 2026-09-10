@@ -107,7 +107,7 @@ const MISSIONS: Mission[] = [
         text: 'batalha aljubarrota 1385 padeira brites almeida',
         isBest: true,
         explanation: {
-          pt: '🎯 Excelente! Inclui o nome do acontecimento histórico e as personagens centrais de forma precisa.',
+          pt: 'Inclui o nome do acontecimento histórico e as personagens centrais de forma precisa.',
           en: '🎯 Excellent! Includes the historical event name and central figures with high precision.',
         },
         simulatedSnippet: {
@@ -211,7 +211,7 @@ const MISSIONS: Mission[] = [
         text: 'rio nascente serra da estrela figueira da foz foz',
         isBest: true,
         explanation: {
-          pt: '🎯 Excelente! Aponta a nascente (Serra da Estrela) e a foz (Figueira da Foz) para identificar de imediato o Rio Mondego.',
+          pt: 'Aponta a nascente (Serra da Estrela) e a foz (Figueira da Foz) para identificar de imediato o Rio Mondego.',
           en: '🎯 Excellent! Identifies the source (Serra da Estrela) and the river mouth (Figueira da Foz) to pinpoint Rio Mondego.',
         },
         simulatedSnippet: {

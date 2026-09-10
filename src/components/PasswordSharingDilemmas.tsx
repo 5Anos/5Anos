@@ -24,7 +24,7 @@ const SCENARIOS: Scenario[] = [
     },
     allowShare: false,
     explanation: {
-      pt: 'Nunca deves partilhar! Amizade não significa partilhar senhas. Se ele perder itens ou a conta for bloqueada, a vossa amizade pode ficar prejudicada.',
+      pt: 'Nunca deves partilhar! Amizade não significa partilhar palavras-passe. Se ele perder itens ou a conta for bloqueada, a vossa amizade pode ficar prejudicada.',
       en: 'Never share! Friendship does not mean sharing passwords.',
     },
   },

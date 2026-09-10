@@ -219,6 +219,17 @@ export const FreeMediaBanks: React.FC<{ language: 'pt' | 'en' }> = ({ language }
           </p>
         </div>
 
+        {/* Golden Rule Tip Box */}
+        <div className="w-full bg-amber-50 border border-amber-200 rounded-2xl p-3.5 flex items-start gap-3">
+          <Sparkles className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+          <p className="text-xs sm:text-sm text-amber-950 font-medium leading-relaxed">
+            <strong>{language === 'pt' ? 'Regra Importante:' : 'Important Rule:'}</strong>{' '}
+            {language === 'pt'
+              ? 'Mesmo em sites de conteúdos gratuitos (como Pixabay ou Wikimedia Commons), deves verificar a licença específica de cada ficheiro para saber se podes usar, alterar ou se precisas de dar crédito ao autor.'
+              : 'Even on free media websites (like Pixabay or Wikimedia Commons), always check the specific license for each file to know if you can use, modify, or need to credit the author.'}
+          </p>
+        </div>
+
         {/* Quick Search */}
         <div className="relative w-full md:w-64 shrink-0">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />

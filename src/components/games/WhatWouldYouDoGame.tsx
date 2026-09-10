@@ -111,7 +111,7 @@ const DILEMMAS: Dilemma[] = [
       {
         id: 'opt2_best',
         text: {
-          pt: 'Explicar com simpatia que a senha é estritamente pessoal e ajudar o amigo a falar com o professor ou técnico.',
+          pt: 'Explicar com simpatia que a palavra-passe é estritamente pessoal e ajudar o amigo a falar com o professor ou técnico.',
           en: 'Kindly explain that passwords are strictly personal and help his friend contact the teacher or IT support.',
         },
         verdict: 'safe',
@@ -139,7 +139,7 @@ const DILEMMAS: Dilemma[] = [
       {
         id: 'opt2_trade',
         text: {
-          pt: 'Cobrar-lhe dinheiro, lanches ou cartas de jogo em troca de partilhar a senha.',
+          pt: 'Cobrar-lhe dinheiro, lanches ou cartas de jogo em troca de partilhar a palavra-passe.',
           en: 'Charge him money, snacks, or trading cards in exchange for the password.',
         },
         verdict: 'danger',

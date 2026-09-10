@@ -90,7 +90,7 @@ const AREAS: ApplicationArea[] = [
     },
     keyPoints: {
       pt: [
-        'Processos Clínicos Eletrónicos: historial de vacinas e análises acessível a médicos em todo o país.',
+        'Processos Clínicos Eletrónicos: fichas médicas digitais (como o teu historial de vacinas e análises) que os médicos conseguem consultar com segurança em todo o país.',
         'Telemedicina: consultas por videochamada segura para quem vive em aldeias ou ilhas isoladas.',
         'Robôs Cirúrgicos: ferramentas de altíssima precisão controladas pelo cirurgião humano (apoiam, nunca substituem os médicos!).',
         'GPS & Navegação por Satélite: calcula caminhos rápidos, evita trânsito e mostra horários de autocarros e comboios em tempo real.',

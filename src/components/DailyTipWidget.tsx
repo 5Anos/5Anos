@@ -500,18 +500,30 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                         <p className="text-xs sm:text-sm">
                           {savedAnswer?.isCorrect
                             ? language === 'pt'
-                              ? 'Leste com atenção e acertaste em cheio! Ganhaste 50 pontos!'
+                              ? 'Leste com atenção e acertaste em cheio na resposta! Ganhaste 50 pontos!'
                               : 'You read carefully and got it right! You earned 50 points!'
                             : language === 'pt'
-                            ? 'Erraste a pergunta, mas pelo teu esforço e por leres a dica ganhaste 25 pontos de participação!'
-                            : 'You missed the question, but earned 25 participation points for reading the tip!'}
+                            ? 'A tua opção selecionada não estava correta, mas pelo teu esforço e por leres a dica ganhaste 25 pontos de participação!'
+                            : 'Your selected option was incorrect, but you earned 25 participation points for reading the tip!'}
                         </p>
 
-                        {/* Explanation */}
-                        <div className="mt-2 pt-2 border-t border-black/10 text-xs flex items-center justify-between gap-2">
-                          <div>
+                        {/* Detailed Explanation */}
+                        <div className="mt-2 pt-2 border-t border-black/10 text-xs space-y-1">
+                          {!savedAnswer?.isCorrect && savedAnswer?.selectedOptionId && (
+                            <div className="p-2.5 rounded-lg bg-amber-100/90 border border-amber-300 text-amber-950 font-medium">
+                              <span className="font-bold">
+                                {language === 'pt' ? '❌ Análise da Opção Selecionada: ' : '❌ Selected Option Analysis: '}
+                              </span>
+                              <span>
+                                {language === 'pt'
+                                  ? `A opção que escolheste não é a melhor resposta para esta curiosidade. Vê a fundamentação correta abaixo:`
+                                  : `The option you picked is not the correct choice for this tip. See the rationale below:`}
+                              </span>
+                            </div>
+                          )}
+                          <div className="pt-1">
                             <span className="font-bold">
-                              {language === 'pt' ? '💡 Explicação: ' : '💡 Explanation: '}
+                              {language === 'pt' ? '💡 Explicação da Resposta Correta: ' : '💡 Correct Answer Explanation: '}
                             </span>
                             <span>{todayTip.explanation[language]}</span>
                           </div>

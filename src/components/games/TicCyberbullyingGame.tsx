@@ -34,14 +34,14 @@ const FIVE_STEPS: StepInfo[] = [
   {
     num: 2,
     icon: '📸',
-    title: { pt: '2. GUARDAR', en: '2. SAVE' },
+    title: { pt: '2. GUARDAR PROVAS', en: '2. SAVE EVIDENCE' },
     action: {
-      pt: 'Fazer capturas de ecrã (printscreens) e guardar as mensagens e datas como prova.',
-      en: 'Take screenshots and save messages, usernames, and dates as evidence.',
+      pt: 'Fazer capturas de ecrã (printscreens) e guardar as mensagens, fotografias e datas como prova antes de qualquer outra ação.',
+      en: 'Take screenshots and save messages, photos, usernames, and dates as evidence before taking any other action.',
     },
     why: {
-      pt: 'As mensagens podem ser apagadas mais tarde pelo agressor. As provas ajudam a escola e as autoridades.',
-      en: 'Perpetrators may delete posts later. Saved evidence helps teachers and parents take action.',
+      pt: 'Nunca apagues as mensagens nem bloqueies o agressor sem guardar provas primeiro! Se apagares de imediato, perdes as provas necessárias para os adultos e autoridades poderem intervir.',
+      en: 'Never delete messages or block the bully without saving evidence first! Deleting immediately destroys evidence needed by parents, teachers, and authorities.',
     },
   },
   {
@@ -49,8 +49,8 @@ const FIVE_STEPS: StepInfo[] = [
     icon: '🚫',
     title: { pt: '3. BLOQUEAR', en: '3. BLOCK' },
     action: {
-      pt: 'Bloquear o contacto nas redes sociais, jogos ou aplicações de mensagens.',
-      en: 'Block the sender on social platforms, games, or chat apps.',
+      pt: 'Depois de guardar as provas, bloquear o contacto nas redes sociais, jogos ou aplicações de mensagens.',
+      en: 'After saving evidence, block the sender on social platforms, games, or chat apps.',
     },
     why: {
       pt: 'Impede que o agressor continue a enviar novas mensagens ou a contactar-te.',
@@ -126,19 +126,19 @@ const STORY_SCENARIOS: StoryScenario[] = [
         },
         isCorrect: true,
         feedback: {
-          pt: 'Correto! Responder no grupo só alimentaria a discussão. Guardar as provas é fundamental para mostrar aos adultos.',
+          pt: 'Responder no grupo só alimentaria a discussão. Guardar as provas é fundamental para mostrar aos adultos.',
           en: 'Correct! Replying only feeds the trolls. Saving evidence is essential for adults to intervene.',
         },
       },
       {
         text: {
-          pt: 'Apagar tudo do telemóvel, calar-se e fingir que não se importa.',
-          en: 'Delete everything, stay silent, and pretend you don’t care.',
+          pt: 'Apagar tudo do telemóvel de imediato, calar-se e fingir que não se importa.',
+          en: 'Delete everything immediately, stay silent, and pretend you don’t care.',
         },
         isCorrect: false,
         feedback: {
-          pt: 'Incorreto! Ficar em silêncio faz a vítima sofrer e o agressor continuará. Pedir ajuda é a atitude correta.',
-          en: 'Incorrect! Staying silent allows harassment to continue.',
+          pt: 'Incorreto! Se apagares as mensagens sem tirar printscreens, perdes as provas necessárias para os adultos e autoridades intervir. Nunca apagues as mensagens antes de guardar as provas!',
+          en: 'Incorrect! Deleting messages without taking screenshots destroys the evidence needed by adults and authorities. Never delete messages before saving evidence!',
         },
       },
     ],
@@ -183,7 +183,7 @@ const STORY_SCENARIOS: StoryScenario[] = [
         },
         isCorrect: true,
         feedback: {
-          pt: 'Muito bem! A Linha Internet Segura (800 21 90 90) é gratuita, confidencial e tem especialistas prontos a ouvir e ajudar!',
+          pt: 'A Linha Internet Segura (800 21 90 90) é gratuita, confidencial e tem especialistas prontos a ouvir e ajudar!',
           en: 'Well done! The Safe Internet Helpline (800 21 90 90) is free, anonymous, and staffed by caring experts.',
         },
       },
@@ -207,7 +207,7 @@ const STORY_SCENARIOS: StoryScenario[] = [
         },
         isCorrect: true,
         feedback: {
-          pt: 'Perfeito! Os espetadores têm um papel crucial: não incentivar o agressor e apoiar a vítima faz toda a diferença.',
+          pt: 'Os espetadores têm um papel crucial: não incentivar o agressor e apoiar a vítima faz toda a diferença.',
           en: 'Perfect! Bystanders play a huge role: refusing to amplify bullying and reporting makes gaming safe for all.',
         },
       },
@@ -259,13 +259,13 @@ const STORY_SCENARIOS: StoryScenario[] = [
       },
       {
         text: {
-          pt: 'Utilizar as opções de Bloquear o perfil e Denunciar à moderação da rede social.',
-          en: 'Use the Block profile and Report features to platform moderators.',
+          pt: 'Primeiro tirar printscreens para Guardar Provas, e depois Bloquear o perfil e Denunciar à moderação da rede social.',
+          en: 'First take screenshots to Save Evidence, and then Block the profile and Report to platform moderators.',
         },
         isCorrect: true,
         feedback: {
-          pt: 'Excelente! Bloquear corta o canal de contacto e denunciar permite que a conta ofensiva seja suspensa.',
-          en: 'Excellent! Blocking stops incoming harassment and reporting flags the account to moderators.',
+          pt: 'Guardar provas em primeiro lugar é essencial antes de bloquear ou denunciar, garantindo que as evidências não se perdem.',
+          en: 'Excellent! Saving evidence first is essential before blocking or reporting, ensuring evidence is preserved.',
         },
       },
       {

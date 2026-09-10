@@ -143,7 +143,7 @@ const PROBLEMS_DATA: ProblemSolution[] = [
         id: 'opt1_b',
         text: { pt: 'Videochamada através da Internet', en: 'Internet Video Call' },
         why: {
-          pt: 'Excelente! A videochamada combina imagem e voz instantânea através da rede, aproximando pessoas mesmo a milhares de quilómetros.',
+          pt: 'A videochamada combina imagem e voz instantânea através da rede, aproximando pessoas mesmo a milhares de quilómetros.',
           en: 'Excellent! Video calls combine real-time voice and video over the network, connecting people thousands of miles apart.',
         },
         isBest: true,
@@ -189,7 +189,7 @@ const PROBLEMS_DATA: ProblemSolution[] = [
         id: 'opt2_c',
         text: { pt: 'Aplicação de mapas com GPS no telemóvel', en: 'Maps app with GPS on smartphone' },
         why: {
-          pt: 'Perfeito! O GPS recebe sinais de satélites e calcula a rota exata passo a passo com indicação do tempo de chegada.',
+          pt: 'O GPS recebe sinais de satélites e calcula a rota exata passo a passo com indicação do tempo de chegada.',
           en: 'Perfect! GPS receives satellite signals and calculates turn-by-turn directions with estimated arrival times.',
         },
         isBest: true,
@@ -208,7 +208,7 @@ const PROBLEMS_DATA: ProblemSolution[] = [
         id: 'opt3_a',
         text: { pt: 'Pesquisa num motor de busca em fontes e enciclopédias educativas seguras', en: 'Search engine on reliable educational encyclopedias' },
         why: {
-          pt: 'Muito bem! Um motor de pesquisa permite aceder a bibliotecas e artigos científicos educativos de forma organizada.',
+          pt: 'Um motor de pesquisa permite aceder a bibliotecas e artigos científicos educativos de forma organizada.',
           en: 'Well done! A search engine accesses educational libraries and articles systematically.',
         },
         isBest: true,
@@ -300,7 +300,7 @@ const PROBLEMS_DATA: ProblemSolution[] = [
         id: 'opt5_c',
         text: { pt: 'Documento colaborativo na nuvem (Cloud) com edição em tempo real', en: 'Collaborative cloud document with real-time editing' },
         why: {
-          pt: 'Perfeito! As ferramentas na nuvem permitem que vários alunos escrevam e revejam o mesmo documento ao mesmo tempo.',
+          pt: 'As ferramentas na nuvem permitem que vários alunos escrevam e revejam o mesmo documento ao mesmo tempo.',
           en: 'Perfect! Cloud tools allow multiple students to write and review the same project simultaneously.',
         },
         isBest: true,

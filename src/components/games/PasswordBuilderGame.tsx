@@ -42,13 +42,13 @@ const DILEMMAS: SharingDilemma[] = [
         },
         isCorrect: true,
         feedback: {
-          pt: '✅ Resposta exemplar! Amizade não significa partilhar senhas. Uma palavra-passe emprestada pode ser alterada sem querer ou partilhada com outras pessoas.',
+          pt: '✅ Resposta exemplar! Amizade não significa partilhar palavras-passe. Uma palavra-passe emprestada pode ser alterada sem querer ou partilhada com outras pessoas.',
           en: '✅ Exemplary! True friendship does not require sharing credentials. Shared passwords risk accidental loss or leakage.',
         },
       },
       {
         text: {
-          pt: 'Dar-lhe a senha, mas pedir-lhe em segredo que não conte a mais ninguém',
+          pt: 'Dar-lhe a palavra-passe, mas pedir-lhe em segredo que não conte a mais ninguém',
           en: 'Give him the password but secretly ask him not to tell anyone else',
         },
         isCorrect: false,
@@ -275,7 +275,7 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
           <div className="p-6 bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 text-white rounded-3xl shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
               <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-500 text-white">
-                {language === 'pt' ? 'Fase 1: O Laboratório de Senhas' : 'Phase 1: Password Lab'}
+                {language === 'pt' ? 'Fase 1: O Laboratório de Palavras-passe' : 'Phase 1: Password Lab'}
               </span>
               <h2 className="text-xl sm:text-2xl font-black mt-1">
                 {language === 'pt' ? '🔐 O Laboratório do Construtor de Frase-Passe' : '🔐 Passphrase Builder Lab'}

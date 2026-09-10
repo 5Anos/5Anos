@@ -69,8 +69,8 @@ export const translations = {
     // Quizzes & Games
     questionCount: 'Pergunta {current} de {total}',
     confirmAnswer: 'Verificar resposta',
-    correctAnswer: '🎉 Excelente! Resposta correta.',
-    wrongAnswer: '⚠️ Atenção: Não é bem isso.',
+    correctAnswer: '✅ Resposta Correta — Explicação:',
+    wrongAnswer: '❌ Opção Selecionada Incorreta — Análise do Erro:',
     explanationTitle: 'Porquê?',
     tryAgain: 'Tentar novamente',
     quizResults: 'Resultados do Quiz',
@@ -185,8 +185,8 @@ export const translations = {
     // Quizzes & Games
     questionCount: 'Question {current} of {total}',
     confirmAnswer: 'Check answer',
-    correctAnswer: '🎉 Great job! Correct answer.',
-    wrongAnswer: '⚠️ Careful: That is not quite right.',
+    correctAnswer: '✅ Correct Answer — Rationale:',
+    wrongAnswer: '❌ Incorrect Option Selected — Error Analysis:',
     explanationTitle: 'Why?',
     tryAgain: 'Try again',
     quizResults: 'Quiz Results',

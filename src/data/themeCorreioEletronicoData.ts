@@ -24,8 +24,8 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       eyebrow: { pt: 'Vamos descobrir', en: "Let's discover" },
       h: { pt: 'O que é o correio eletrónico?', en: 'What is email?' },
       body: {
-        pt: 'O correio eletrónico (email) é um serviço que permite enviar e receber mensagens através da Internet, usando um endereço próprio — por exemplo, <strong>nome@exemplo.com</strong>.<br><br>É muito usado na escola, no trabalho e para comunicar de forma mais formal do que numa rede social.<br><br><strong>História e Origem:</strong><br>• Em 1971, <strong>Ray Tomlinson</strong> desenvolveu um sistema que permitia enviar mensagens entre computadores numa rede e utilizou o símbolo <strong>@</strong> nos endereços de email.',
-        en: 'Email is an online service that allows sending and receiving messages over the Internet using a unique address — for instance, <strong>name@example.com</strong>.<br><br>It is widely used in school, work, and for more formal communication than social media.<br><br><strong>History and Origins:</strong><br>• In 1971, <strong>Ray Tomlinson</strong> developed a system allowing messages between networked computers and introduced the <strong>@</strong> symbol in email addresses.',
+        pt: 'O correio eletrónico (email) é um serviço que permite enviar e receber mensagens através da Internet, usando um endereço próprio — por exemplo, <strong>nome@exemplo.com</strong>.<br><br>É muito usado na escola, no trabalho e para comunicar de forma mais formal do que numa rede social.<br><br><strong>História e Origem:</strong><br>• Em 1971, <strong>Ray Tomlinson</strong> realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo <strong>@</strong> nos endereços de correio eletrónico.',
+        en: 'Email is an online service that allows sending and receiving messages over the Internet using a unique address — for instance, <strong>name@example.com</strong>.<br><br>It is widely used in school, work, and for more formal communication than social media.<br><br><strong>History and Origins:</strong><br>• In 1971, <strong>Ray Tomlinson</strong> carried out one of the earliest experiments sending messages between networked computers and popularized the <strong>@</strong> symbol in email addresses.',
       },
       icon: '✉️',
     },
@@ -100,8 +100,8 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
         },
       },
       funFact: {
-        pt: 'Em 1971, Ray Tomlinson desenvolveu um sistema que permitia enviar mensagens entre computadores numa rede e utilizou o símbolo @ nos endereços de email.',
-        en: 'In 1971, Ray Tomlinson developed a system allowing messages between networked computers and introduced the @ symbol in email addresses.',
+        pt: 'Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico.',
+        en: 'In 1971, Ray Tomlinson carried out one of the earliest experiments sending messages between networked computers and popularized the @ symbol in email addresses.',
       },
       thinkAboutIt: {
         question: {
@@ -162,19 +162,19 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       explanation: {
         pt: [
           'Netiqueta no Email: saudação cordial, frases respeitosas, evitar CAPS LOCK e incluir assinatura.',
-          'Diferença entre Para, Cc (Com conhecimento) e Bcc (Cópia oculta): use Bcc para proteger a privacidade dos contactos de várias pessoas.',
+          'Estrutura de destinatários: Para (destinatário principal), Cc (outros destinatários que devem ter conhecimento) e Cco / Bcc (destinatários ocultos entre si). Usa o Cco (ou Bcc) para proteger a privacidade dos contactos de várias pessoas.',
           'Alerta Phishing: emails a oferecer prémios falsos, a pedir palavras-passe ou com links estranhos.',
           'Não abras anexos inesperados ou suspeitos, sobretudo quando vêm de remetentes desconhecidos.',
-          'Um ficheiro .EXE é executável, ou seja, pode iniciar um programa. Um ficheiro deste tipo que chegue inesperadamente deve ser tratado com especial cuidado.',
-          'Um ficheiro .ZIP é um arquivo comprimido que pode conter vários ficheiros. Se vier de uma origem desconhecida, deve ser tratado com cuidado.',
+          'Um ficheiro .EXE pode executar um programa: nunca abras ficheiros executáveis recebidos de fontes desconhecidas sem a ajuda de um adulto.',
+          'Um ficheiro .ZIP é um ficheiro comprimido que pode conter vários ficheiros. Se vier de uma origem desconhecida, deve ser tratado com cuidado.',
         ],
         en: [
           'Email Netiquette: polite greeting, respectful tone, avoiding all caps, and signing your name.',
-          'To vs Cc vs Bcc: use Bcc to safeguard the privacy of recipients in group emails.',
+          'Recipient structure: To (main recipient), Cc (carbon copy for info), and Cco / Bcc (blind carbon copy for hidden recipients). Use Cco (or Bcc) to safeguard contact privacy.',
           'Phishing awareness: fake prize notifications, urgent credential requests, and suspicious links.',
           'Do not open unexpected or suspicious attachments, especially when they come from unknown senders.',
-          'An .EXE file is executable, meaning it can launch a program. Such a file arriving unexpectedly must be treated with special care.',
-          'A .ZIP file is a compressed archive that can contain multiple files. If it comes from an unknown source, it must be handled with caution.',
+          'An .EXE file can execute a program: never open executable files received from unknown sources without help from an adult.',
+          'A .ZIP file is a compressed file that can contain multiple files. If it comes from an unknown source, it must be handled with caution.',
         ],
       },
       example: {
@@ -187,13 +187,13 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
           en: 'Tiago received an email claiming he won a new smartphone, asking him to click a link and provide his address and password. He stayed alert, avoided clicking, and reported it to his teacher.',
         },
         tip: {
-          pt: 'Nenhuma empresa séria oferece prémios do nada nem pede palavras-passe por email!',
-          en: 'Reputable institutions never give random prizes or ask for passwords over email!',
+          pt: 'Desconfia de mensagens que prometem prémios inesperados e pedem dados pessoais, palavras-passe ou pagamentos.',
+          en: 'Be suspicious of messages that promise unexpected prizes and ask for personal data, passwords, or payments.',
         },
       },
       funFact: {
-        pt: 'O termo "Spam" para correio indesejado inspirou-se num famoso sketch de comédia dos Monty Python onde a palavra "spam" era repetida sem parar!',
-        en: 'The term "Spam" for junk mail originated from a classic Monty Python comedy sketch where the word was repeated incessantly!',
+        pt: 'A palavra SPAM era originalmente o nome de uma marca de carne enlatada. Ficou famosa no programa de humor Monty Python, onde a palavra «Spam» era repetida sem parar. Mais tarde, o termo passou a ser usado para descrever mensagens e correio indesejado enviados em massa na Internet.',
+        en: 'The word SPAM was originally a brand name for canned meat. It became famous in a Monty Python comedy sketch where the word "Spam" was repeated endlessly. Later, the term was adopted to describe unsolicited bulk emails on the Internet.',
       },
       thinkAboutIt: {
         question: {
@@ -318,7 +318,7 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
           items: [
             { s: 'Escrever uma mensagem inteira em LETRAS MAIÚSCULAS equivale a estar a gritar.', a: true, e: 'Correto na etiqueta digital! Escrever em maiúsculas transmite agressividade.' },
             { s: 'Devemos abrir sempre qualquer anexo enviado por um endereço desconhecido.', a: false, e: 'Anexos inesperados podem conter ficheiros perigosos. Não os abras sem confirmar com um adulto.' },
-            { s: 'O assunto do email deve resumir claramente o conteúdo da mensagem.', a: true, e: 'Correto! Ajuda o destinatário a perceber do que se trata antes de abrir.' }
+            { s: 'O assunto do email deve resumir claramente o conteúdo da mensagem.', a: true, e: 'Ajuda o destinatário a perceber do que se trata antes de abrir.' }
           ]
         }
       }
@@ -339,27 +339,27 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
     {
       id: 'email-q1',
       question: {
-        pt: 'O que é o correio eletrónico (email)?',
-        en: 'What is electronic mail (email)?',
+        pt: 'A professora de TIC pediu à turma para enviar um relatório em PDF a partir de casa sem usar uma pen drive. Que serviço digital é o mais adequado para esta tarefa?',
+        en: 'The ICT teacher asked the class to submit a PDF report from home without using a USB drive. Which digital service is best suited for this task?',
       },
       options: {
         pt: [
-          'Um protocolo exclusivo para transferir ficheiros de áudio e vídeo em direto',
-          'Um serviço que permite enviar e receber mensagens através da Internet',
-          'Um navegador Web utilizado para consultar páginas multimédia',
-          'Um sistema de armazenamento que guarda apenas ficheiros comprimidos',
+          'O serviço de correio eletrónico (email), anexando o ficheiro PDF à mensagem',
+          'Uma aplicação de edição de áudio offline',
+          'O leitor de código de barras da biblioteca da escola',
+          'Um programa de descompactação de ficheiros sem rede',
         ],
         en: [
-          'A protocol dedicated strictly to live streaming audio and video',
-          'A service for sending and receiving messages across the Internet',
-          'A web browser used to display multimedia web pages',
-          'A cloud storage system holding exclusively compressed files',
+          'An electronic mail (email) service, attaching the PDF file to the message',
+          'An offline audio editing application',
+          'The school library barcode reader',
+          'An offline file archiver program',
         ],
       },
-      correctIndex: 1,
+      correctIndex: 0,
       explanation: {
-        pt: 'O correio eletrónico permite a troca rápida de mensagens e documentos pela Internet.',
-        en: 'Email facilitates rapid exchange of messages and files across the Internet.',
+        pt: 'O correio eletrónico permite enviar mensagens e anexar ficheiros (como PDFs ou imagens) de forma rápida e segura através da Internet.',
+        en: 'Email allows sending messages and attaching files (like PDFs or images) quickly and securely across the Internet.',
       },
     },
     {

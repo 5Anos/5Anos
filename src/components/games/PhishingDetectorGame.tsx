@@ -53,7 +53,7 @@ const RADAR_ITEMS: MessageRadarItem[] = [
       en: 'Is this a genuine gaming promotion?',
     },
     explanation: {
-      pt: '🚨 Golpe clássico de jogos! Moedas virtuais grátis em troca de senhas nunca são verdadeiras. O objetivo é roubar a tua conta de jogo.',
+      pt: '🚨 Golpe clássico de jogos! Moedas virtuais grátis em troca de palavras-passe nunca são verdadeiras. O objetivo é roubar a tua conta de jogo.',
       en: '🚨 Classic gaming scam! Free in-game currency promises requiring your credentials are always malicious traps to hijack accounts.',
     },
   },

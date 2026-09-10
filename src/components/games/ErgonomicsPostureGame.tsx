@@ -87,13 +87,13 @@ const HABIT_SCENARIOS: HabitScenario[] = [
     options: [
       {
         text: {
-          pt: 'Fazer uma pausa ativa de 3 a 5 minutos: levantar, esticar o corpo, beber água e olhar para longe (pelo menos 6 metros)',
-          en: 'Take an active 3-5 minute break: stand up, stretch, drink water, and look at a distant object (at least 6 meters away)',
+          pt: 'Fazer uma pausa ativa (levanta-se, mexe o corpo, estica suavemente os braços e as pernas e bebe água) e aplicar a regra 20-20-20 para olhar para longe (pelo menos 6 metros) durante 20 segundos para descansar a visão',
+          en: 'Take an active break (stand up, move your body, gently stretch arms and legs, drink water) and apply the 20-20-20 rule to look into the distance (at least 6m) for 20s to rest eyes',
         },
         isBest: true,
         feedback: {
-          pt: '✅ Muito bem! A regra 20-20-20 e as pequenas pausas relaxam os músculos da coluna, ativam a circulação e descansam os olhos.',
-          en: '✅ Well done! The 20-20-20 rule and short active breaks relax posture muscles and relieve eye fatigue.',
+          pt: '✅ Muito bem! As pausas ativas relaxam os músculos e a circulação, enquanto a regra 20-20-20 descansa especificamente os olhos.',
+          en: '✅ Well done! Active breaks relax muscles and circulation, while the 20-20-20 rule specifically rests eye focus.',
         },
       },
       {
@@ -504,8 +504,8 @@ export const ErgonomicsPostureGame: React.FC<Props> = ({ language, onBack, onFin
             </h2>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-medium">
               {language === 'pt'
-                ? 'Aprendeste a ajustar a cabeça, costas, braços e pés na secretária, a regular a luz lateral para evitar reflexos e a aplicar a regra 20-20-20 com pausas ativas.'
-                : 'You mastered 90° posture alignment, glare-free side lighting, and active 20-20-20 breaks.'}
+                ? 'Aprendeste a ajustar a postura na secretária, a regular a luz lateral e a combinar as pausas ativas corporais com o descanso visual da regra 20-20-20.'
+                : 'You mastered ergonomic desk posture, glare-free lighting, and combining active body breaks with the 20-20-20 visual rest rule.'}
             </p>
           </div>
 

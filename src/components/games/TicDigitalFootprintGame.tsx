@@ -71,7 +71,7 @@ const ITEMS_LIST: ItemToClassify[] = [
     },
     correctCategory: 'danger',
     feedback: {
-      pt: '❌ Não partilhar! A palavra-passe é estritamente pessoal e intransmissível. Nem aos melhores amigos se deve dar a senha.',
+      pt: '❌ Não partilhar! A palavra-passe é estritamente pessoal e intransmissível. Nem aos melhores amigos se deve dar a palavra-passe.',
       en: '❌ Do not share! Passwords are strictly personal. Never reveal them even to best friends.',
     },
   },

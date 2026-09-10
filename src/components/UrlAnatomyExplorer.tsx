@@ -11,10 +11,10 @@ export const UrlAnatomyExplorer: React.FC<UrlAnatomyExplorerProps> = ({ language
 
   const PARTS = {
     protocol: {
-      name: 'Protocolo Seguro (https://)',
+      name: 'Protocolo Cifrado (https://)',
       color: 'bg-emerald-100 text-emerald-900 border-emerald-300',
       icon: '🔒',
-      desc: 'O "s" significa "Seguro" (cifrado com SSL/TLS). Garante que a informação transmitida entre o teu navegador e o site viaja protegida contra espiões.',
+      desc: 'HTTPS e o cadeado indicam que a ligação ao site está protegida por cifragem. Isso não significa que o site seja verdadeiro ou de confiança.',
     },
     subdomain: {
       name: 'Subdomínio (www)',
@@ -32,7 +32,7 @@ export const UrlAnatomyExplorer: React.FC<UrlAnatomyExplorerProps> = ({ language
       name: 'Terminação / Domínio de Topo (.pt)',
       color: 'bg-amber-100 text-amber-900 border-amber-300',
       icon: '🇵🇹',
-      desc: 'Identifica o país (.pt = Portugal, .es = Espanha) ou tipo de entidade (.gov = governo, .edu = educação, .org = organização, .com = comercial).',
+      desc: '.pt é o domínio de topo associado a Portugal (outros exemplos: .es = Espanha, .gov = governo, .edu = educação, .org = organização, .com = comercial).',
     },
     path: {
       name: 'Caminho / Página (/jogos/5ano)',

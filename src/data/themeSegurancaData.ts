@@ -63,11 +63,11 @@ export const themeSegurancaData: ThemeDefinition = {
       explanation: {
         pt: [
           'O phishing é uma técnica usada para enganar pessoas e roubar dados através de mensagens ou sites falsos que parecem verdadeiros.',
-          'Sinais de alerta: mensagens de desconhecidos, pedidos urgentes de palavras-passe, links estranhos ou promessas de prémios exagerados.',
+          'Sinais de alerta: pedidos urgentes de palavras-passe ou dados pessoais, links estranhos ou promessas de prémios. Uma mensagem pode parecer vir de alguém que conheces (como uma empresa, professor ou amigo) e, mesmo assim, ser falsa.',
         ],
         en: [
           'Phishing is a technique used to trick people and steal data via fake messages or sites that look authentic.',
-          'Warning signs: messages from strangers, urgent password requests, strange links, or exaggerated prize promises.',
+          'Warning signs: urgent password or personal data requests, strange links, or prize promises. A message may look like it comes from someone you know (like a company, teacher, or friend) and still be fake.',
         ],
       },
       example: {
@@ -161,12 +161,12 @@ export const themeSegurancaData: ThemeDefinition = {
       icon: '👣',
       explanation: {
         pt: [
-          'Tudo o que publicas, comentas ou partilhas online deixa um rasto chamado pegada digital.',
-          'Mesmo depois de apagares algo, pode já ter sido guardado por outros. Pensa bem antes de publicar!',
+          'Algumas das nossas atividades online deixam registos. Publicações, comentários e conteúdos que partilhamos podem fazer parte da nossa pegada digital.',
+          'Aquilo que publicas pode ser copiado, guardado ou partilhado por outras pessoas e pode permanecer acessível durante muito tempo.',
         ],
         en: [
-          'Everything you post, comment, or share online leaves a trail called a digital footprint.',
-          'Even after deleting something, it may have already been saved by others. Think before you post!',
+          'Some of our online activities leave records. Posts, comments, and shared content can form part of our digital footprint.',
+          'What you publish can be copied, saved, or shared by others and may remain accessible for a long time.',
         ],
       },
       example: {
@@ -200,17 +200,17 @@ export const themeSegurancaData: ThemeDefinition = {
       eyebrow: { pt: 'Phishing', en: 'Phishing' },
       h: { pt: 'Links e mensagens suspeitas', en: 'Suspicious links and messages' },
       body: {
-        pt: 'O phishing é uma técnica usada para enganar pessoas e roubar dados através de mensagens ou sites falsos que parecem verdadeiros.<br><br>Sinais de alerta:<ul><li>Mensagens de pessoas ou empresas que não conheces.</li><li>Pedidos urgentes de dados pessoais ou palavras-passe.</li><li>Links estranhos ou encurtados.</li><li>Promessas de prémios que pareçam boas demais para ser verdade.</li><li>Nunca deves clicar em links suspeitos nem partilhar dados pessoais com desconhecidos.</li></ul>',
-        en: 'Phishing is a technique used to trick people and steal data via fake messages or sites that look authentic.<br><br>Warning signs:<ul><li>Messages from people or companies you do not know.</li><li>Urgent requests for personal data or passwords.</li><li>Strange or shortened links.</li><li>Promises of prizes that sound too good to be true.</li><li>You should never click suspicious links or share personal data with strangers.</li></ul>',
+        pt: 'O phishing é uma técnica usada para enganar pessoas e roubar dados através de mensagens ou sites falsos que parecem verdadeiros.<br><br>Sinais de alerta:<ul><li>Pedidos urgentes de dados pessoais ou palavras-passe.</li><li>Mensagens que personificam entidades ou conhecidos (uma mensagem pode parecer vir de alguém que conheces e, mesmo assim, ser falsa).</li><li>Links estranhos ou encurtados.</li><li>Promessas de prémios.</li><li>Nunca deves clicar em links suspeitos nem partilhar dados sensíveis.</li></ul>',
+        en: 'Phishing is a technique used to trick people and steal data via fake messages or sites that look authentic.<br><br>Warning signs:<ul><li>Urgent requests for personal data or passwords.</li><li>Messages impersonating organizations or acquaintances (a message can look like it comes from someone you know and still be fake).</li><li>Strange or shortened links.</li><li>Promises of prizes.</li><li>You should never click suspicious links or share sensitive data.</li></ul>',
       },
       icon: '🎣',
     },
     {
       eyebrow: { pt: 'Ciberbullying', en: 'Cyberbullying' },
-      h: { pt: 'Ciberbullying e respeito', en: 'Cyberbullying and respect' },
+      h: { pt: 'Ciberbullying e a Regra dos 5 Passos', en: 'Cyberbullying and the 5-Step Rule' },
       body: {
-        pt: 'Ciberbullying é o uso de meios digitais para intimidar, insultar, humilhar, ameaçar ou magoar outra pessoa.<br><br>Antes de publicar um comentário, uma fotografia ou uma mensagem, pensa: "Diria isto à pessoa olhos nos olhos?" Se a resposta for não, talvez não devas publicar.<br><br><em>"Um colega publicou uma fotografia de outra pessoa sem autorização."</em> Isto não é correto — devemos sempre pedir autorização antes de partilhar imagens de outras pessoas.',
-        en: 'Cyberbullying is the use of digital media to intimidate, insult, humiliate, threaten, or hurt another person.<br><br>Before posting a comment, photo, or message, think: "Would I say this to the person face to face?" If the answer is no, maybe you shouldn\'t post it.',
+        pt: 'Ciberbullying é o uso de meios digitais para intimidar, insultar, humilhar, ameaçar ou magoar outra pessoa.<br><br>Se fores vítima ou testemunha de Ciberbullying, aplica a <strong>Regra dos 5 Passos</strong>:<ul><li><strong>1. PARAR:</strong> Não responder nem reagir com insultos.</li><li><strong>2. GUARDAR PROVAS:</strong> Tirar capturas de ecrã (printscreens) das mensagens, fotos e datas. ⚠️ <em>Nunca apagues as mensagens antes de as guardar como prova!</em></li><li><strong>3. BLOQUEAR:</strong> Bloquear o contacto do agressor para impedir novas mensagens.</li><li><strong>4. DENUNCIAR:</strong> Utilizar a opção de denúncia na plataforma ou aplicação.</li><li><strong>5. PEDIR AJUDA:</strong> Falar imediatamente com pais, professores ou ligar para a Linha Internet Segura (800 21 90 90).</li></ul>',
+        en: 'Cyberbullying is using digital tools to intimidate, insult, humiliate, or harm others.<br><br>If you experience or witness Cyberbullying, follow the <strong>5-Step Rule</strong>:<ul><li><strong>1. STOP:</strong> Do not reply or retaliate with insults.</li><li><strong>2. SAVE EVIDENCE:</strong> Take screenshots of messages, photos, and timestamps. ⚠️ <em>Never delete messages before saving evidence!</em></li><li><strong>3. BLOCK:</strong> Block the bully to prevent new messages.</li><li><strong>4. REPORT:</strong> Use in-app reporting tools on the platform.</li><li><strong>5. SEEK HELP:</strong> Speak immediately with parents, teachers, or call the Safe Internet Helpline (800 21 90 90).</li></ul>',
       },
       icon: '🤝',
     },
@@ -227,8 +227,8 @@ export const themeSegurancaData: ThemeDefinition = {
       eyebrow: { pt: 'Sabias que...?', en: 'Did you know...?' },
       h: { pt: 'A tua pegada digital', en: 'Your digital footprint' },
       body: {
-        pt: 'A nossa atividade na Internet pode deixar uma pegada digital. Mesmo depois de apagares algo, pode já ter sido visto ou guardado por outras pessoas. Por isso, é importante pensar antes de publicar ou partilhar.',
-        en: 'Our activity on the Internet can leave a digital footprint. Even after deleting something, it may have already been seen or saved by others. Therefore, it is important to think before posting or sharing.',
+        pt: 'Algumas das nossas atividades online deixam registos. Publicações, comentários e conteúdos que partilhamos podem fazer parte da nossa pegada digital. Aquilo que publicas pode ser copiado, guardado ou partilhado por outras pessoas e pode permanecer acessível durante muito tempo. Por isso, é importante pensar antes de publicar ou partilhar.',
+        en: 'Some of our online activities leave records. Posts, comments, and shared content can form part of our digital footprint. What you publish can be copied, saved, or shared by others and may remain accessible for a long time. Therefore, it is important to think before posting or sharing.',
       },
       icon: '👣',
     },
@@ -253,7 +253,7 @@ export const themeSegurancaData: ThemeDefinition = {
         data: {
           items: [
             { s: 'Devo clicar em qualquer link que recebo, mesmo de desconhecidos.', a: false, e: 'Nunca deves clicar em links de origem desconhecida.' },
-            { s: 'Ligar-me a redes Wi-Fi públicas sem cuidado pode ser arriscado.', a: true, e: 'Redes públicas podem não ser seguras para dados pessoais.' },
+            { s: 'Uma rede Wi-Fi pública ou desconhecida pode apresentar riscos.', a: true, e: 'Uma rede Wi-Fi pública ou desconhecida pode apresentar riscos. Evita introduzir dados sensíveis em redes em que não confias.' },
             { s: 'Publicar uma foto de um colega sem autorização é correto.', a: false, e: 'Devemos sempre pedir autorização antes de partilhar imagens de outras pessoas.' },
             { s: 'Devo falar com um adulto de confiança se receber uma mensagem estranha.', a: true, e: 'Pedir ajuda a um adulto é sempre uma boa atitude nestas situações.' },
             { s: 'O ciberbullying é apenas uma brincadeira sem consequências.', a: false, e: 'O ciberbullying pode magoar seriamente outras pessoas e tem consequências reais.' }
@@ -410,13 +410,29 @@ export const themeSegurancaData: ThemeDefinition = {
   finalQuiz: [
     {
       id: 'seg-q1',
-      question: { pt: 'O que é o phishing?', en: 'What is phishing?' },
+      question: {
+        pt: 'A Maria recebe um email que parece do seu banco, pedindo com urgência para clicar num link e introduzir a sua palavra-passe. O que é esta situação e como deve reagir?',
+        en: 'Maria receives an email that looks like it is from her bank, urgently asking her to click a link and enter her password. What is this situation and how should she react?',
+      },
       options: {
-        pt: ['Um protocolo para acelerar descargas na Web', 'Uma técnica para enganar pessoas e roubar dados e credenciais', 'Um serviço de cópias de segurança na nuvem', 'Um formato de ficheiro de compressão de dados'],
-        en: ['A protocol to accelerate web downloads', 'A technique to trick people and steal data and credentials', 'A cloud-based backup service', 'A compressed data file format']
+        pt: [
+          'É um envio normal do sistema para atualizar a conta e a Maria deve introduzir os dados rapidamente.',
+          'É uma tentativa de phishing; a Maria não deve clicar no link nem facultar dados, devendo avisar um adulto.',
+          'É uma mensagem automática de teste do navegador e a Maria pode reencaminhá-la a colegas.',
+          'É um serviço gratuito de apoio ao cliente e a Maria deve responder com a sua palavra-passe.',
+        ],
+        en: [
+          'It is a normal system update and Maria should enter her details immediately.',
+          'It is a phishing attempt; Maria should not click the link or provide data, and should inform an adult.',
+          'It is an automatic browser test message and Maria can forward it to classmates.',
+          'It is a free customer support service and Maria should reply with her password.',
+        ],
       },
       correctIndex: 1,
-      explanation: { pt: 'O phishing tenta enganar as pessoas para obter dados pessoais.', en: 'Phishing attempts to trick people to obtain personal data.' }
+      explanation: {
+        pt: 'O phishing é uma tentativa de fraude que usa mensagens falsas para enganar as pessoas e roubar dados pessoais e palavras-passe.',
+        en: 'Phishing is a fraudulent attempt using fake messages to trick people into revealing personal credentials.',
+      },
     },
     {
       id: 'seg-q2',
@@ -430,13 +446,29 @@ export const themeSegurancaData: ThemeDefinition = {
     },
     {
       id: 'seg-q3',
-      question: { pt: 'O que é o ciberbullying?', en: 'What is cyberbullying?' },
+      question: {
+        pt: 'O Bernardo reparou que um colega de turma está a receber mensagens insultuosas e montagens de fotos num grupo da escola. Que situação é esta e qual é o procedimento correto?',
+        en: 'Bernardo noticed a classmate is receiving insulting messages and photo montages in a class chat group. What situation is this and what is the correct action?',
+      },
       options: {
-        pt: ['O uso de meios digitais para intimidar, insultar, humilhar, ameaçar ou magoar outra pessoa', 'Uma discussão construtiva num fórum de turma', 'Um teste de velocidade de ligação à rede', 'Um filtro de proteção de conteúdos impróprios'],
-        en: ['Using digital media to intimidate, insult, humiliate, threaten, or hurt someone', 'A constructive discussion in a class forum', 'A network speed measurement test', 'A protection filter against inappropriate content']
+        pt: [
+          'É ciberbullying; o Bernardo deve apoiar o colega, incentivar a guardar provas e pedir ajuda a um professor ou encarregado de educação.',
+          'É uma brincadeira habitual e o Bernardo deve continuar a partilhar as imagens no grupo.',
+          'É um problema técnico de ligação à Internet e o Bernardo deve reiniciar o router de casa.',
+          'É um jogo de equipa e o Bernardo deve responder com insultos ainda mais graves.',
+        ],
+        en: [
+          'It is cyberbullying; Bernardo should support his classmate, encourage saving evidence, and ask a teacher or guardian for help.',
+          'It is a normal joke and Bernardo should keep sharing the images in the group.',
+          'It is an internet connection technical issue and Bernardo should restart the home router.',
+          'It is a team game and Bernardo should reply with even worse insults.',
+        ],
       },
       correctIndex: 0,
-      explanation: { pt: 'O ciberbullying causa dano real a outras pessoas.', en: 'Cyberbullying causes real harm to other people.' }
+      explanation: {
+        pt: 'O ciberbullying causa dano real. Apoiar a vítima, guardar provas e envolver um adulto é a atitude correta de cidadania digital.',
+        en: 'Cyberbullying causes real harm. Supporting the victim, keeping evidence, and involving an adult is responsible digital citizenship.',
+      },
     },
     {
       id: 'seg-q4',
@@ -450,13 +482,29 @@ export const themeSegurancaData: ThemeDefinition = {
     },
     {
       id: 'seg-q5',
-      question: { pt: 'O que é a pegada digital?', en: 'What is the digital footprint?' },
+      question: {
+        pt: 'A Sofia publicou uma fotografia de um passeio escolar e comentou um artigo num blogue de Ciência. Como é que estas ações afetam a sua pegada digital?',
+        en: 'Sofia posted a photo from a school field trip and commented on a Science blog article. How do these actions affect her digital footprint?',
+      },
       options: {
-        pt: ['O espaço em disco ocupado pelo sistema operativo', 'O rasto que deixamos das nossas ações, pesquisas e publicações online', 'O histórico de comandos introduzidos na consola', 'A capacidade máxima de transferência do router'],
-        en: ['The disk space occupied by the operating system', 'The trail we leave of our online actions, searches, and posts', 'The command history recorded in the terminal', 'The maximum transfer capacity of the router']
+        pt: [
+          'Apenas alteram a capacidade do disco rígido do computador da escola.',
+          'Fazem parte da sua pegada digital, pois são registos e conteúdos partilhados que podem permanecer acessíveis.',
+          'Apagam automaticamente todo o histórico de navegação anterior.',
+          'Aumentam a velocidade da ligação de fibra ótica de sua casa.',
+        ],
+        en: [
+          'They only change the hard drive capacity of the school computer.',
+          'They become part of her digital footprint, as shared posts and comments can remain accessible over time.',
+          'They automatically erase all previous web browsing history.',
+          'They increase the home fiber optic connection speed.',
+        ],
       },
       correctIndex: 1,
-      explanation: { pt: 'Tudo o que publicamos ou partilhamos deixa um rasto digital.', en: 'Everything we publish or share leaves a digital trail.' }
+      explanation: {
+        pt: 'Publicações, comentários e conteúdos partilhados na Internet fazem parte da pegada digital e podem permanecer acessíveis durante muito tempo.',
+        en: 'Posts, comments, and shared content online form part of a digital footprint and can remain accessible over time.',
+      },
     },
     {
       id: 'seg-q6',
@@ -470,13 +518,13 @@ export const themeSegurancaData: ThemeDefinition = {
     },
     {
       id: 'seg-q7',
-      question: { pt: 'Redes Wi-Fi públicas podem ser:', en: 'Public Wi-Fi networks can be:' },
+      question: { pt: 'Sobre redes Wi-Fi públicas ou desconhecidas, qual é a atitude correta?', en: 'Regarding public or unknown Wi-Fi networks, what is the correct attitude?' },
       options: {
-        pt: ['menos seguras para o tráfego de dados e informações pessoais', 'sempre totalmente seguras em qualquer circunstância', 'protegidas automaticamente por cifra militar', 'iguais às redes privadas de casa em nível de segurança'],
-        en: ['less secure for data traffic and personal information', 'always fully secure under all circumstances', 'automatically protected by military-grade encryption', 'identical to private home networks in security level']
+        pt: ['Uma rede Wi-Fi pública ou desconhecida pode apresentar riscos; evita introduzir dados sensíveis em redes em que não confias', 'São sempre totalmente seguras sem qualquer tipo de risco', 'Permitem enviar dados de cartão de crédito sem qualquer preocupação', 'Não apresentam qualquer risco de segurança'],
+        en: ['A public or unknown Wi-Fi network can present risks; avoid entering sensitive data on networks you do not trust', 'They are always fully safe without any risk', 'They allow credit card data to be sent without concern', 'They present no security risks']
       },
       correctIndex: 0,
-      explanation: { pt: 'É preciso ter mais cuidado com dados pessoais em redes públicas.', en: 'You need to be extra careful with personal data on public networks.' }
+      explanation: { pt: 'Uma rede Wi-Fi pública ou desconhecida pode apresentar riscos. Evita introduzir dados sensíveis em redes em que não confias.', en: 'A public or unknown Wi-Fi network can present risks. Avoid entering sensitive data on networks you do not trust.' }
     },
     {
       id: 'seg-q8',
@@ -502,11 +550,11 @@ export const themeSegurancaData: ThemeDefinition = {
       id: 'seg-q10',
       question: { pt: 'Se alguém que conheceste online te pedir para manter a conversa em segredo dos teus pais, o que deves fazer?', en: 'If someone you met online asks you to keep the conversation secret from your parents, what should you do?' },
       options: {
-        pt: ['Guardar o segredo para não estragar a amizade no jogo', 'Pedir à pessoa que envie primeiro a morada dela', 'Desligar o ecrã mas continuar a falar às escondidas', 'Desconfiar de imediato e contar logo aos teus pais ou a um professor'],
-        en: ['Keep the secret so you do not harm the gaming friendship', 'Ask the person to send their address first', 'Turn off the screen but keep talking in secret', 'Be suspicious immediately and tell your parents or a teacher right away']
+        pt: ['Guardar o segredo para não estragar a amizade no jogo', 'Pedir à pessoa que envie primeiro a morada dela', 'Desligar o ecrã mas continuar a falar às escondidas', 'Desconfiar de imediato e pedir ajuda aos teus pais ou a outro adulto de confiança'],
+        en: ['Keep the secret so you do not harm the gaming friendship', 'Ask the person to send their address first', 'Turn off the screen but keep talking in secret', 'Be suspicious immediately and ask your parents or another trusted adult for help']
       },
       correctIndex: 3,
-      explanation: { pt: 'Ninguém com boas intenções pede a uma criança para guardar segredos dos pais. Se isso acontecer, avisa sempre um adulto!', en: 'Nobody with good intentions asks a child to keep secrets from their parents. Always notify a trusted adult!' }
+      explanation: { pt: 'Se uma pessoa que conheceste online te pedir para esconder a conversa dos teus pais ou de outro adulto de confiança, deves desconfiar e pedir ajuda.', en: 'If someone you met online asks you to hide the conversation from your parents or another trusted adult, you should be suspicious and ask for help.' }
     }
   ]
 };

@@ -366,22 +366,50 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
               </div>
 
               {submitted && (
-                <div className={`mt-3 p-4 rounded-xl text-xs sm:text-sm sm:pl-10 flex items-start justify-between gap-3 ${
-                  isCorrect ? 'bg-emerald-100/70 text-emerald-950' : 'bg-amber-100/70 text-amber-950'
+                <div className={`mt-3 p-4 rounded-xl text-xs sm:text-sm sm:ml-10 space-y-2 ${
+                  isCorrect ? 'bg-emerald-100/70 text-emerald-950 border border-emerald-200' : 'bg-rose-50 text-rose-950 border border-rose-200'
                 }`}>
-                  <div>
-                    <div className="mb-1">
-                      <p className="font-bold">{isCorrect ? t.correctAnswer : t.wrongAnswer}</p>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="space-y-2 flex-1">
+                      <p className="font-extrabold text-sm flex items-center gap-1.5">
+                        <span>{isCorrect ? '✅' : '❌'}</span>
+                        <span>{isCorrect ? t.correctAnswer : t.wrongAnswer}</span>
+                      </p>
+
+                      {!isCorrect && userChoice !== undefined && (
+                        <div className="p-3 rounded-lg bg-rose-100/80 border border-rose-300 text-rose-950 font-medium space-y-1">
+                          <p className="font-bold text-xs uppercase tracking-wide text-rose-900">
+                            {language === 'pt' ? `A tua escolha: «${q.options[language][userChoice]}»` : `Your choice: "${q.options[language][userChoice]}"`}
+                          </p>
+                          <p className="text-xs sm:text-sm">
+                            {q.optionExplanations?.[language]?.[userChoice] ||
+                              (language === 'pt'
+                                ? `Esta opção está incorreta porque não responde adequadamente à situação do problema. A resposta correta é «${q.options[language][q.correctIndex]}».`
+                                : `This option is incorrect as it does not solve the scenario appropriately. The correct answer is "${q.options[language][q.correctIndex]}".`)}
+                          </p>
+                        </div>
+                      )}
+
+                      <div className="pt-1">
+                        <p className="font-bold text-xs text-slate-700 mb-0.5">
+                          {language === 'pt' ? '💡 Resposta Correta e Explicação do Conceito:' : '💡 Correct Answer & Concept Explanation:'}
+                        </p>
+                        <p className="leading-relaxed">{q.explanation[language]}</p>
+                      </div>
                     </div>
-                    <p className="leading-relaxed">{q.explanation[language]}</p>
+
+                    <AudioSpeakButton
+                      id={`finalquiz-expl-${q.id}`}
+                      text={`${isCorrect ? t.correctAnswer : t.wrongAnswer}. ${
+                        !isCorrect && userChoice !== undefined && q.optionExplanations?.[language]?.[userChoice]
+                          ? q.optionExplanations[language][userChoice] + '. '
+                          : ''
+                      } ${q.explanation[language]}`}
+                      language={language}
+                      variant="icon"
+                      size="xs"
+                    />
                   </div>
-                  <AudioSpeakButton
-                    id={`finalquiz-expl-${q.id}`}
-                    text={`${isCorrect ? t.correctAnswer : t.wrongAnswer}. ${q.explanation[language]}`}
-                    language={language}
-                    variant="icon"
-                    size="xs"
-                  />
                 </div>
               )}
             </div>

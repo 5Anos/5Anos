@@ -24,7 +24,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
       eyebrow: { pt: 'Vamos Descobrir', en: "Let's Discover" },
       h: { pt: 'O que são Direitos de Autor?', en: 'What are Copyrights?' },
       body: {
-        pt: 'Já imaginaste se passasses horas a fazer um desenho incrível de artes, a escrever uma história divertida ou a criar um nível novo num jogo... e outro colega apagasse o teu nome e dissesse que foi ele que fez tudo?<br><br>Não seria nada justo! É exatamente para evitar isso que existem os <strong>Direitos de Autor</strong>.<br><br>Em Portugal, a lei e a <strong>Constituição da República Portuguesa (artigo 42.º)</strong> protegem quem cria obras originais através do <strong>Código do Direito de Autor (CDADC)</strong>. O direito de autor nasce com a própria criação da obra, independentemente de registo ou da presença do símbolo <strong>©</strong> (Copyright), que serve para identificar o titular e avisar que a obra está protegida.',
+        pt: 'Já imaginaste se passasses horas a fazer um desenho incrível de artes, a escrever uma história divertida ou a criar um nível novo num jogo... e outro colega apagasse o teu nome e dissesse que foi ele que fez tudo?<br><br>Não seria nada justo! É exatamente para evitar isso que existem os <strong>Direitos de Autor</strong>.<br><br>Em Portugal, a lei e a <strong>Constituição da República Portuguesa (artigo 42.º)</strong> protegem quem cria obras originais através do <strong>Código do Direito de Autor (CDADC)</strong>. O direito de autor nasce no momento em que a obra é criada, não dependendo de registo nem do símbolo <strong>©</strong>. O símbolo <strong>©</strong> indica apenas que a obra está protegida e ajuda a identificar quem detém esses direitos (que pode ser o autor ou uma entidade a quem os direitos foram transferidos).',
         en: 'Imagine creating an awesome drawing, story, or video game level, and someone copied it claiming it was theirs! That is why Copyright exists: to protect creators under the Portuguese Constitution and CDADC. Copyright protection exists upon creation, and the © symbol identifies the rights holder.',
       },
       icon: '📜',
@@ -85,7 +85,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
           'Os Direitos de Autor são um Direito Fundamental consagrado na Constituição da República Portuguesa (artigo 42.º), que protege as obras ou criações intelectuais.',
           'Rege-se pelo Código do Direito de Autor e dos Direitos Conexos (CDADC), publicado pelo Decreto-Lei n.º 63/85, de 14 de março.',
           'A proteção é reconhecida em todos os países da União Europeia, na Convenção de Berna e nos países membros do Tratado OMPI (Organização Mundial da Propriedade Intelectual).',
-          'O direito de autor nasce com a criação da obra, independentemente de formalidades. O símbolo © (Copyright) assinala a titularidade dos direitos, requerendo habitualmente autorização para utilização, com as exceções previstas na lei (como o direito de citação).',
+          'O direito de autor nasce no momento em que a obra é criada, não dependendo de registo nem da presença do símbolo ©. O símbolo © assinala que a obra está protegida e identifica o titular dos direitos (o autor ou uma entidade a quem os direitos tenham sido cedidos).',
         ],
         en: [
           'Copyright is a fundamental right in the Portuguese Constitution protecting intellectual works under CDADC.',
@@ -148,7 +148,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
           },
           correctIndex: 0,
           explanation: {
-            pt: 'Correto! É um direito fundamental consagrado na Constituição e no CDADC (Decreto-Lei n.º 63/85).',
+            pt: 'É um direito fundamental consagrado na Constituição e no CDADC (Decreto-Lei n.º 63/85).',
             en: 'Correct! A fundamental right established in the Constitution and CDADC.',
           },
         },
@@ -169,16 +169,18 @@ export const themeDireitosAutorData: ThemeDefinition = {
       icon: '🏷️',
       explanation: {
         pt: [
-          'Copyright: Protege a obra intelectual original. A sua utilização requer habitualmente autorização prévia do autor, salvo exceções legais (como o direito de citação para fins educativos).',
-          'Copyleft: Princípio de licenciamento que permite utilizar, modificar e redistribuir a obra, exigindo que as obras derivadas sejam partilhadas sob os mesmos termos de licença.',
-          'Royalty Free: Modalidade onde a obra pode ser utilizada sem necessidade de pagar direitos por cada utilização, mediante o cumprimento dos termos da licença.',
-          'Creative Commons (CC): Entidade sem fins lucrativos que disponibiliza licenças padronizadas com condições modulares (Atribuição BY, Uso Não Comercial NC, Partilha com a Mesma Licença SA, Sem Derivações ND).',
+          'Copyright: Protege a obra intelectual original. O símbolo © não cria o direito e não significa necessariamente que o autor detenha pessoalmente todos os direitos. A utilização requer autorização prévia, salvo exceções legais.',
+          'Copyleft: Princípio de licenciamento (um conjunto de regras e permissões dadas pelo autor) que permite usar, modificar e partilhar uma obra, desde que as novas versões sejam partilhadas com as mesmas regras e liberdades.',
+          'Royalty Free: Modalidade onde a obra pode ser utilizada sem pagar por cada utilização, mediante o cumprimento dos termos da licença.',
+          'Creative Commons (CC): Licenças que permitem partilhar e utilizar obras, mas o utilizador deve sempre respeitar as condições definidas pelo autor (como dar crédito BY, não uso comercial NC, partilha com mesma licença SA ou sem alterações ND).',
+          'Domínio Público: Quando os direitos patrimoniais de uma obra expiram (normalmente muitos anos após a morte do autor), a obra passa ao Domínio Público e pode ser usada por todos, mantendo-se a obrigação de respeitar a autoria e o nome do autor original.',
         ],
         en: [
-          'Copyright: Protects original works; use typically requires author permission subject to statutory exceptions.',
-          'Copyleft: Allows using, modifying, and sharing provided derivative works retain the same license.',
+          'Copyright: Protects original works; rights exist upon creation. Use typically requires permission subject to statutory exceptions.',
+          'Copyleft: Licensing principle that permits using, modifying, and sharing provided new versions retain the same terms and freedoms.',
           'Royalty Free: Usable without per-use royalty fees, subject to terms.',
-          'Creative Commons: Open standardized licensing framework with conditions (BY, NC, SA, ND).',
+          'Creative Commons: Allows sharing and using works while respecting conditions set by the author (BY, NC, SA, ND).',
+          'Public Domain: When economic rights expire, works enter the Public Domain and can be used by anyone, while respecting the original author’s name and authorship.',
         ],
       },
       example: {
@@ -224,7 +226,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
             pt: [
               'Não-Comercial (a obra não pode ser utilizada para fins comerciais)',
               'Nova Cópia (exige guardar sempre o ficheiro original intacto)',
-              'Nível Central (indica licenciamento válido apenas no país de origem)',
+              'Nível Central (indica que as permissões são válidas apenas no país de origem)',
               'Norma Comunitária (restringe o uso a instituições de solidariedade)',
             ],
             en: [
@@ -322,7 +324,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
           },
           correctIndex: 0,
           explanation: {
-            pt: 'Perfeito! Citação = palavras exatas entre aspas. Paráfrase = ideias por palavras nossas.',
+            pt: 'Citação = palavras exatas entre aspas. Paráfrase = ideias por palavras nossas.',
             en: 'Perfect! Citation = exact words in quotes. Paraphrase = ideas in our words.',
           },
         },
@@ -411,7 +413,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
           },
           correctIndex: 0,
           explanation: {
-            pt: 'Perfeito! Na norma APA 7.ª edição as referências de páginas web terminam diretamente no URL, sem "Consultado em".',
+            pt: 'Na norma APA 7.ª edição as referências de páginas web terminam diretamente no URL, sem "Consultado em".',
             en: 'Spot on! APA 7th edition web references conclude directly with the URL without access dates.',
           },
         },
@@ -437,10 +439,30 @@ export const themeDireitosAutorData: ThemeDefinition = {
         desc: 'Encontra os pares correspondentes entre símbolos e regras de utilização.',
         data: {
           pairs: [
-            { left: 'Símbolo © (Copyright)', right: 'Assinala a titularidade dos direitos de autor' },
-            { left: 'Copyleft', right: 'Obras derivadas devem ser partilhadas sob a mesma licença' },
-            { left: 'Licença CC-BY', right: 'Permite determinados usos da obra, desde que seja dada atribuição ao autor e sejam respeitadas as condições da licença.' },
-            { left: 'Royalty Free', right: 'Uso sem pagamento de direitos por cada utilização' }
+            {
+              left: 'Símbolo © (Copyright)',
+              right: 'Identifica quem é o dono ou titular dos direitos de autor',
+              icon: '©️',
+              image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=160&q=80'
+            },
+            {
+              left: 'Copyleft',
+              right: 'Obras derivadas devem ser partilhadas sob a mesma licença',
+              icon: '🄯',
+              image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=160&q=80'
+            },
+            {
+              left: 'Licença CC-BY',
+              right: 'Permite determinados usos da obra, desde que seja dada atribuição ao autor e sejam respeitadas as condições da licença.',
+              icon: '🅒🅒',
+              image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=160&q=80'
+            },
+            {
+              left: 'Royalty Free',
+              right: 'Uso sem pagamento de direitos por cada utilização',
+              icon: '💎',
+              image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=160&q=80'
+            }
           ]
         }
       }
@@ -666,27 +688,27 @@ export const themeDireitosAutorData: ThemeDefinition = {
     {
       id: 'copy-q5',
       question: {
-        pt: 'O que é o Plágio?',
-        en: 'What is Plagiarism?',
+        pt: 'O João precisa de entregar um trabalho de História. Qual destas atitudes constitui plágio?',
+        en: 'João needs to submit a History assignment. Which of these actions constitutes plagiarism?',
       },
       options: {
         pt: [
-          'Copiar ou apresentar o trabalho de outra pessoa como se tivesse sido feito por nós',
-          'Fazer um resumo com as tuas próprias palavras indicando a fonte',
-          'Pedir ajuda ao professor para corrigir erros ortográficos',
-          'Comprar um caderno novo na papelaria da escola',
+          'Copiar frases de um artigo da Internet e colá-las no trabalho apresentando-as como suas sem citar a fonte.',
+          'Escrever um resumo do artigo pelas suas próprias palavras e indicar a fonte no final.',
+          'Pedir ao professor para rever a bibliografia e ajudar a corrigir a formatação.',
+          'Utilizar imagens de domínio público indicando a origem e o autor.',
         ],
         en: [
-          'Copying or presenting someone else’s work as if you made it yourself',
-          'Writing a summary in your own words while citing the source',
-          'Asking the teacher for help to fix spelling errors',
-          'Buying a new notebook at the school bookstore',
+          'Copying sentences from an online article and pasting them into the assignment as his own without citing the source.',
+          'Writing a summary of the article in his own words and citing the source at the end.',
+          'Asking the teacher to review the bibliography and help format references.',
+          'Using public domain images while properly attributing the origin and creator.',
         ],
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Plágio é uma falta de respeito grave que consiste em roubar as ideias ou obras de outros sem dar crédito.',
-        en: 'Plagiarism is copying someone else’s work without credit and claiming ownership.',
+        pt: 'Plágio é uma falta de respeito grave que consiste em utilizar as ideias ou palavras de outros apresentando-as como suas sem dar crédito.',
+        en: 'Plagiarism is copying someone else’s work or words without credit and claiming ownership.',
       },
     },
     {

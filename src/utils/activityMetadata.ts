@@ -87,7 +87,7 @@ const KNOWN_ACTIVITY_MAPPINGS: Record<
   'ergo-postura': {
     themeId: 'ergonomia',
     title: { pt: 'Postura Correta ao Computador', en: 'Proper Computer Posture' },
-    shortDesc: { pt: 'Módulo 1: Pés, costas, ecrã a 90 graus', en: 'Module 1: Feet, back, screen angles' },
+    shortDesc: { pt: 'Módulo 1: Pés, costas e postura confortável (~90°)', en: 'Module 1: Feet, back and comfortable posture (~90°)' },
     icon: '🪑',
     type: 'module',
   },
@@ -236,7 +236,7 @@ const KNOWN_ACTIVITY_MAPPINGS: Record<
   'jogo-passe-mc': {
     themeId: 'palavras-passe',
     title: { pt: 'Escolha Múltipla: Palavras-passe & PIN', en: 'Multiple Choice: Passwords & PIN' },
-    shortDesc: { pt: 'Responde a perguntas sobre cofres de senhas e PINs', en: 'Answer questions on password vaults and PINs' },
+    shortDesc: { pt: 'Responde a perguntas sobre cofres de palavras-passe e PINs', en: 'Answer questions on password vaults and PINs' },
     icon: '🔐',
     type: 'challenge',
   },

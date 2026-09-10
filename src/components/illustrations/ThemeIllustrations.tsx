@@ -144,7 +144,7 @@ export const Theme2ErgonomicsIllustration: React.FC<IllustrationProps> = ({ clas
     <g transform="translate(20, 20)">
       <rect width="80" height="38" rx="10" fill="#FFFFFF" stroke="#10B981" strokeWidth="1.5" />
       <text x="40" y="16" textAnchor="middle" fill="#047857" fontSize="9" fontWeight="bold">REGRA 20-20-20</text>
-      <text x="40" y="30" textAnchor="middle" fill="#059669" fontSize="9">Pausas Ativas ⏱️</text>
+      <text x="40" y="30" textAnchor="middle" fill="#059669" fontSize="8">Descanso Visual 👁️</text>
     </g>
 
     {/* Natural light window symbol */}

@@ -32,7 +32,7 @@ export const EmailAddressAnatomy: React.FC<EmailAddressAnatomyProps> = ({ langua
       name: 'Domínio de Topo (.pt)',
       icon: '🇵🇹',
       color: 'bg-amber-100 text-amber-950 border-amber-300',
-      desc: 'Mostra o país (.pt = Portugal) ou tipo de instituição (.edu, .org, .com).',
+      desc: '.pt é o domínio de topo associado a Portugal (ou outros tipos como .edu, .org, .com).',
     },
   };
 
