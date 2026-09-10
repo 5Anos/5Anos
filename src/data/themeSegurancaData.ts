@@ -281,33 +281,63 @@ export const themeSegurancaData: ThemeDefinition = {
           questions: [
             {
               q: 'Recebes uma mensagem a dizer que ganhaste um prémio e pedem a tua palavra-passe. O que fazes?',
-              opts: ['Envio a palavra-passe imediatamente', 'Não respondo e aviso logo um adulto de confiança', 'Reencaminho a mensagem a todos os amigos', 'Clico no link para confirmar'],
-              c: 1,
-              e: 'Nunca partilhes palavras-passe! Pedidos de palavras-passe são sempre uma tentativa de burla.'
+              opts: [
+                'Reencaminho a mensagem a todos os amigos',
+                'Envio a palavra-passe imediatamente',
+                'Clico no link para confirmar',
+                'Não respondo e aviso logo um adulto de confiança'
+              ],
+              c: 3,
+              e: 'Nunca partilhes palavras-passe! Pedidos de palavras-passe são sempre uma tentativa de burla.',
+              tip: 'Pequenas escolhas, grandes seguranças!'
             },
             {
               q: 'Porque é importante manter o antivírus e as atualizações do computador em dia?',
-              opts: ['Para o computador gastar a bateria mais depressa', 'Apenas para mudar a imagem de fundo do ecrã', 'Para proteger o computador contra novos vírus e falhas de segurança', 'Não tem qualquer utilidade prática'],
+              opts: [
+                'Para o computador gastar a bateria mais depressa',
+                'Apenas para mudar a imagem de fundo do ecrã',
+                'Para proteger o computador contra novos vírus e falhas de segurança',
+                'Não tem qualquer utilidade prática'
+              ],
               c: 2,
-              e: 'As atualizações corrigem falhas de segurança e garantem que o antivírus reconhece novas ameaças.'
+              e: 'As atualizações corrigem falhas de segurança e garantem que o antivírus reconhece novas ameaças.',
+              tip: 'Escudo e antivírus sempre atualizados!'
             },
             {
               q: 'Qual destes é um sinal típico de uma tentativa de burla ou fraude digital?',
-              opts: ['Mensagens com pedidos urgentes de dados pessoais ou dinheiro sob ameaça', 'Um aviso do professor no Teams ou Classroom sobre um trabalho', 'Um email da biblioteca a avisar do prazo de devolução de um livro', 'Uma mensagem da família a combinar a hora de jantar'],
+              opts: [
+                'Mensagens com pedidos urgentes de dados pessoais ou dinheiro sob ameaça',
+                'Um aviso do professor no Teams ou Classroom sobre um trabalho',
+                'Um email da biblioteca a avisar do prazo de devolução de um livro',
+                'Uma mensagem da família a combinar a hora de jantar'
+              ],
               c: 0,
-              e: 'O sentido de urgência e o pedido de dados confidenciais são os sinais mais comuns de fraude digital.'
+              e: 'O sentido de urgência e o pedido de dados confidenciais são os sinais mais comuns de fraude digital.',
+              tip: 'Urgência excessiva? Suspeita sempre!'
             },
             {
               q: 'Se uma pessoa desconhecida na Internet te pedir para ligares a câmara ou enviares fotos tuas, como deves reagir?',
-              opts: ['Ligar a câmara para mostrar o teu quarto e ser simpático', 'Enviar uma fotografia com a camisola da tua escola', 'Pedir à pessoa que envie primeiro uma fotografia dela', 'Recusar de imediato, fechar a conversa e avisar logo os pais ou um professor'],
+              opts: [
+                'Ligar a câmara para mostrar o teu quarto e ser simpático',
+                'Enviar uma fotografia com a camisola da tua escola',
+                'Pedir à pessoa que envie primeiro uma fotografia dela',
+                'Recusar de imediato, fechar a conversa e avisar logo os pais ou um professor'
+              ],
               c: 3,
-              e: 'Nunca partilhes imagens nem ligues a câmara a desconhecidos! Avisa logo um adulto de confiança.'
+              e: 'Nunca partilhes imagens nem ligues a câmara a desconhecidos! Avisa logo um adulto de confiança.',
+              tip: 'A tua privacidade é o teu maior tesouro!'
             },
             {
               q: 'O que deves fazer se não tens a certeza se uma mensagem ou ficheiro recebido é seguro?',
-              opts: ['Abrir imediatamente para ver se acontece alguma coisa', 'Pedir ajuda a um adulto de confiança antes de abrir', 'Reencaminhar para todos os contactos da turma', 'Ignorar e continuar a navegar sem verificar'],
+              opts: [
+                'Abrir imediatamente para ver se acontece alguma coisa',
+                'Pedir ajuda a um adulto de confiança antes de abrir',
+                'Reencaminhar para todos os contactos da turma',
+                'Ignorar e continuar a navegar sem verificar'
+              ],
               c: 1,
-              e: 'Pedir ajuda a um adulto de confiança é sempre a atitude mais segura!'
+              e: 'Pedir ajuda a um adulto de confiança é sempre a atitude mais segura!',
+              tip: 'Na dúvida, para e fala com um adulto!'
             }
           ]
         }

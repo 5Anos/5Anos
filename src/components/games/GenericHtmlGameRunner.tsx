@@ -335,70 +335,187 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
           const qs = shuffledQuestions;
           const q = qs[mcIndex];
           const chosen = mcAnswers[mcIndex];
+
+          const getOptionIconAndStyle = (optionText: string, index: number) => {
+            const styles = [
+              {
+                border: 'border-sky-300/90 bg-sky-50/80 hover:bg-sky-100/90 text-sky-950 hover:border-sky-400',
+                iconBg: 'bg-sky-200/90 text-sky-800',
+                radioBorder: 'border-sky-400 text-sky-600',
+                defaultIcon: '👥',
+              },
+              {
+                border: 'border-emerald-300/90 bg-emerald-50/80 hover:bg-emerald-100/90 text-emerald-950 hover:border-emerald-400',
+                iconBg: 'bg-emerald-200/90 text-emerald-800',
+                radioBorder: 'border-emerald-400 text-emerald-600',
+                defaultIcon: '🔒',
+              },
+              {
+                border: 'border-amber-300/90 bg-amber-50/80 hover:bg-amber-100/90 text-amber-950 hover:border-amber-400',
+                iconBg: 'bg-amber-200/90 text-amber-800',
+                radioBorder: 'border-amber-400 text-amber-600',
+                defaultIcon: '🔗',
+              },
+              {
+                border: 'border-rose-300/90 bg-rose-50/80 hover:bg-rose-100/90 text-rose-950 hover:border-rose-400',
+                iconBg: 'bg-rose-200/90 text-rose-800',
+                radioBorder: 'border-rose-400 text-rose-600',
+                defaultIcon: '⚠️',
+              },
+            ];
+
+            const style = styles[index % styles.length];
+            let icon = style.defaultIcon;
+
+            const lower = optionText.toLowerCase();
+            if (lower.includes('amigos') || lower.includes('reencaminho') || lower.includes('redes') || lower.includes('partilhar') || lower.includes('colegas')) {
+              icon = '👥';
+            } else if (lower.includes('palavra-passe') || lower.includes('senha') || lower.includes('proteger') || lower.includes('bloque')) {
+              icon = '🔒';
+            } else if (lower.includes('link') || lower.includes('clico') || lower.includes('site') || lower.includes('confirmar') || lower.includes('url')) {
+              icon = '🔗';
+            } else if (lower.includes('adulto') || lower.includes('aviso') || lower.includes('não respondo') || lower.includes('recusar') || lower.includes('denuncia')) {
+              icon = '⚠️';
+            } else if (lower.includes('antivírus') || lower.includes('computador') || lower.includes('atualiz')) {
+              icon = '💻';
+            } else if (lower.includes('câmara') || lower.includes('foto') || lower.includes('imagem')) {
+              icon = '📷';
+            }
+
+            return { ...style, icon };
+          };
+
           return (
-            <div className="space-y-5">
-              <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-wider">
-                <span>Pergunta {mcIndex + 1} de {qs.length}</span>
-                <span className="text-indigo-600">Progressão: {Math.round((mcIndex / qs.length) * 100)}%</span>
-              </div>
-
-              <div className="flex items-start justify-between gap-3">
-                <div className="text-base sm:text-lg font-black text-slate-900 leading-snug flex-1">
-                  {q.q}
+            <div className="space-y-6 w-full max-w-4xl mx-auto animate-in fade-in">
+              {/* Header Bar */}
+              <div className="bg-slate-50/90 p-4 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-2xs">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs sm:text-sm font-black text-indigo-900 uppercase tracking-widest">
+                    PERGUNTA {mcIndex + 1} DE {qs.length}
+                  </span>
                 </div>
-                <AudioSpeakButton
-                  id={`mc-q-${mcIndex}`}
-                  text={`${q.q}. ${q.opts.map((o: string, idx: number) => `Opção ${idx + 1}: ${o}`).join('. ')}`}
-                  language={language}
-                  variant="icon"
-                  size="xs"
-                />
-              </div>
 
-              <div className="space-y-2.5">
-                {q.opts.map((o: string, oi: number) => {
-                  let btnCls = 'border-slate-200 bg-white hover:border-indigo-400 hover:bg-indigo-50/40 text-slate-800';
-                  if (chosen !== undefined) {
-                    if (oi === q.c) {
-                      btnCls = 'border-emerald-500 bg-emerald-50 text-emerald-950 font-bold';
-                    } else if (oi === chosen) {
-                      btnCls = 'border-rose-500 bg-rose-50 text-rose-950 font-bold';
-                    } else {
-                      btnCls = 'border-slate-200 opacity-50 bg-white text-slate-500';
-                    }
-                  }
-                  return (
-                    <button
-                      key={oi}
-                      onClick={() => chosen === undefined && handleMcSelect(oi)}
-                      disabled={chosen !== undefined}
-                      className={`w-full text-left p-4 rounded-2xl border-2 transition-all text-sm font-semibold cursor-pointer ${btnCls}`}
-                    >
-                      {o}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {chosen !== undefined && (
-                <div className="space-y-4 pt-2 animate-in fade-in">
-                  <div className={`p-4 rounded-2xl text-xs sm:text-sm font-medium flex items-start justify-between gap-2 ${chosen === q.c ? 'bg-emerald-50 border border-emerald-200 text-emerald-900' : 'bg-rose-50 border border-rose-200 text-rose-900'}`}>
-                    <div>
-                      <strong>{chosen === q.c ? '✅ Correto!' : '❌ Não é bem assim.'}</strong> {q.e}
-                    </div>
-                    <AudioSpeakButton
-                      id={`mc-expl-${mcIndex}`}
-                      text={`${chosen === q.c ? 'Correto.' : 'Não é bem assim.'} ${q.e}`}
-                      language={language}
-                      variant="icon"
-                      size="xs"
+                <div className="flex items-center gap-3 w-full sm:w-auto">
+                  <span className="text-xs sm:text-sm font-black text-indigo-700 shrink-0">
+                    PROGRESSÃO: {Math.round((mcIndex / qs.length) * 100)}%
+                  </span>
+                  <div className="w-full sm:w-44 h-3 bg-slate-200 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full transition-all duration-500"
+                      style={{ width: `${Math.round((mcIndex / qs.length) * 100)}%` }}
                     />
                   </div>
+                </div>
+              </div>
+
+              {/* Main Question & Colorful Option Cards */}
+              <div className="space-y-4">
+                {/* Question Title Box */}
+                <div className="flex items-center justify-between gap-4 bg-white p-5 sm:p-6 rounded-2xl border-2 border-indigo-100 shadow-xs">
+                  <h3 className="text-base sm:text-xl font-black text-slate-900 leading-snug flex-1">
+                    {q.q}
+                  </h3>
+                  <AudioSpeakButton
+                    id={`mc-q-${mcIndex}`}
+                    text={`${q.q}. ${q.opts.map((o: string, idx: number) => `Opção ${idx + 1}: ${o}`).join('. ')}`}
+                    language={language}
+                    variant="icon"
+                    size="md"
+                  />
+                </div>
+
+                {/* Options List - Distributed Full Width */}
+                <div className="space-y-3 sm:space-y-3.5">
+                  {q.opts.map((o: string, oi: number) => {
+                    const style = getOptionIconAndStyle(o, oi);
+                    let btnCls = `border-2 ${style.border} cursor-pointer hover:shadow-xs`;
+                    let radioCls = `border-2 ${style.radioBorder} bg-white`;
+                    let showCheckIcon = null;
+
+                    if (chosen !== undefined) {
+                      if (oi === q.c) {
+                        btnCls = 'border-2 border-emerald-500 bg-emerald-100/90 text-emerald-950 font-black shadow-xs ring-2 ring-emerald-300';
+                        radioCls = 'bg-emerald-600 border-emerald-600 text-white';
+                        showCheckIcon = <Check className="w-4 h-4 stroke-[3]" />;
+                      } else if (oi === chosen) {
+                        btnCls = 'border-2 border-rose-500 bg-rose-100/90 text-rose-950 font-black shadow-xs ring-2 ring-rose-300';
+                        radioCls = 'bg-rose-600 border-rose-600 text-white';
+                        showCheckIcon = <X className="w-4 h-4 stroke-[3]" />;
+                      } else {
+                        btnCls = 'border-2 border-slate-200 opacity-40 bg-slate-50 text-slate-400';
+                        radioCls = 'border-slate-300 bg-slate-100';
+                      }
+                    }
+
+                    return (
+                      <button
+                        key={oi}
+                        onClick={() => chosen === undefined && handleMcSelect(oi)}
+                        disabled={chosen !== undefined}
+                        className={`w-full text-left p-4 sm:p-5 rounded-2xl transition-all duration-200 flex items-center justify-between gap-4 group shadow-2xs ${btnCls}`}
+                      >
+                        <div className="flex items-center gap-4 flex-1 min-w-0">
+                          {/* Icon Badge */}
+                          <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-xl shrink-0 shadow-2xs ${style.iconBg}`}>
+                            {style.icon}
+                          </div>
+                          <span className="text-sm sm:text-lg font-bold leading-snug">
+                            {o}
+                          </span>
+                        </div>
+
+                        {/* Radio Check Circle */}
+                        <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-transform ${radioCls}`}>
+                          {showCheckIcon}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Feedback & Next Button Section */}
+              {chosen !== undefined && (
+                <div className="space-y-4 pt-2 animate-in fade-in slide-in-from-bottom-3 duration-300">
+                  <div className={`p-4 sm:p-5 rounded-2xl border-2 text-sm sm:text-base font-semibold flex items-start justify-between gap-3 shadow-xs ${
+                    chosen === q.c
+                      ? 'bg-emerald-50 border-emerald-300 text-emerald-950'
+                      : 'bg-amber-50 border-amber-300 text-amber-950'
+                  }`}>
+                    <div className="space-y-1 flex-1">
+                      <div className="font-extrabold flex items-center gap-2 text-base">
+                        {chosen === q.c ? (
+                          <span className="text-emerald-700 flex items-center gap-1.5">
+                            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                            <span>Excelente Decisão!</span>
+                          </span>
+                        ) : (
+                          <span className="text-amber-800 flex items-center gap-1.5">
+                            <Sparkles className="w-5 h-5 text-amber-600" />
+                            <span>Atenção ao Risco:</span>
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs sm:text-sm text-slate-800 leading-relaxed pt-1">
+                        {q.e}
+                      </p>
+                    </div>
+
+                    <AudioSpeakButton
+                      id={`mc-expl-${mcIndex}`}
+                      text={`${chosen === q.c ? 'Excelente decisão.' : 'Atenção ao risco.'} ${q.e}`}
+                      language={language}
+                      variant="icon"
+                      size="sm"
+                    />
+                  </div>
+
                   <button
                     onClick={handleMcNext}
-                    className="w-full py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-all cursor-pointer"
+                    className="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-black text-sm sm:text-base shadow-md hover:shadow-lg transition-all cursor-pointer flex items-center justify-center gap-2"
                   >
-                    {mcIndex + 1 < qs.length ? 'Próxima Pergunta →' : 'Ver Resultado Final 🏆'}
+                    <span>{mcIndex + 1 < qs.length ? 'Próxima Pergunta' : 'Ver Resultado Final 🏆'}</span>
+                    <span className="text-lg">→</span>
                   </button>
                 </div>
               )}
