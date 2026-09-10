@@ -18,6 +18,7 @@ import {
   DailyTicTip,
 } from '../data/dailyTipsData';
 import { api } from '../services/api';
+import { AudioSpeakButton } from './AudioSpeakButton';
 
 interface DailyTipWidgetProps {
   user: User | null;
@@ -61,6 +62,8 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [justSubmitted, setJustSubmitted] = useState(false);
+  const [imgFailed, setImgFailed] = useState(false);
+  const [modalImgFailed, setModalImgFailed] = useState(false);
 
   // Sync modal state with forceOpen prop if provided
   useEffect(() => {
@@ -173,10 +176,23 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
 
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between gap-2 mb-1 flex-wrap">
-                <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-indigo-900 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
-                  {language === 'pt' ? '💡 Dica do Dia TIC' : '💡 Daily ICT Tip'}
-                </span>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  {!imgFailed ? (
+                    <img
+                      src="/icone.png"
+                      alt={language === 'pt' ? 'Sabias que?' : 'Did you know?'}
+                      className="h-10 sm:h-12 w-auto object-contain shrink-0"
+                      referrerPolicy="no-referrer"
+                      onError={() => setImgFailed(true)}
+                    />
+                  ) : (
+                    <div className="flex items-center gap-1.5 bg-linear-to-r from-indigo-600 via-blue-600 to-sky-600 text-white px-3 py-1 rounded-full shadow-xs border border-white/20">
+                      <span className="text-[11px] sm:text-xs font-black tracking-wide flex items-center gap-1 text-white uppercase">
+                        💡 {language === 'pt' ? 'Sabias que?' : 'Did you know?'}
+                      </span>
+                    </div>
+                  )}
+                </div>
 
                 {hasAnsweredToday ? (
                   <span
@@ -225,23 +241,24 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                 </h4>
               </div>
 
-              <div className="mt-2.5 flex items-center justify-between">
-                <span className="text-xs font-bold text-indigo-700 group-hover:underline flex items-center gap-1">
-                  {hasAnsweredToday
-                    ? language === 'pt'
-                      ? 'Ver explicação e resultado'
-                      : 'View explanation and score'
-                    : language === 'pt'
-                    ? 'Lê a dica e responde (+50 pts)'
-                    : 'Read tip and answer (+50 pts)'}
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </span>
+              <div className="mt-4 flex items-center justify-between gap-2 border-t border-indigo-100/40 pt-3">
+                {hasAnsweredToday ? (
+                  <div className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-black bg-indigo-50 text-indigo-700 border border-indigo-100 group-hover:bg-indigo-100 transition-all shadow-2xs">
+                    <span>{language === 'pt' ? 'Ver explicação e resultado' : 'View explanation and score'}</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                ) : (
+                  <div className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-black bg-indigo-600 text-white group-hover:bg-indigo-700 group-hover:scale-[1.02] active:scale-95 transition-all shadow-xs">
+                    <span>{language === 'pt' ? 'Lê e responde (+50pt)' : 'Read & answer (+50pt)'}</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                )}
 
-                <span className="text-[10px] font-semibold text-slate-500">
+                <span className="text-[10px] font-black uppercase text-slate-500 tracking-wider shrink-0">
                   {hasAnsweredToday
                     ? language === 'pt'
-                      ? '✅ Concluída hoje'
-                      : '✅ Done today'
+                      ? '✅ Concluída'
+                      : '✅ Completed'
                     : language === 'pt'
                     ? '50 pts acerto / 25 pts erro'
                     : '50 pts right / 25 pts wrong'}
@@ -264,15 +281,22 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                   <div className="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-xs flex items-center justify-center text-2xl font-bold border border-white/20 shadow-inner">
                     {todayTip.themeIcon}
                   </div>
-                  <div>
-                    <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-sky-300">
-                      <Sparkles className="w-3 h-3 text-amber-300" />
-                      {todayTip.dateLabel[language]}
-                    </span>
-                    <h3 className="text-lg font-bold tracking-tight mt-0.5 text-white flex items-center gap-2">
-                      <span>💡</span>
-                      <span>{language === 'pt' ? 'Dica de Hoje' : "Today's Tip"}</span>
-                    </h3>
+                  <div className="flex items-center gap-2">
+                    {!modalImgFailed ? (
+                      <img
+                        src="/icone.png"
+                        alt={language === 'pt' ? 'Sabias que?' : 'Did you know?'}
+                        className="h-12 w-auto object-contain"
+                        referrerPolicy="no-referrer"
+                        onError={() => setModalImgFailed(true)}
+                      />
+                    ) : (
+                      <div className="flex items-center gap-1.5 bg-white/10 text-white px-3 py-1.5 rounded-full border border-white/20">
+                        <span className="text-xs font-black tracking-wide flex items-center gap-1 text-white uppercase">
+                          💡 {language === 'pt' ? 'Sabias que?' : 'Did you know?'}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -327,6 +351,15 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                     <BookOpen className="w-4 h-4 text-indigo-600" />
                     <span>{language === 'pt' ? 'A Curiosidade Explicada' : 'The Curiosity Explained'}</span>
                   </div>
+                  <AudioSpeakButton
+                    id={`daily_tip_audio_${todayTip.title.en.replace(/\s+/g, '_')}`}
+                    text={`${todayTip.title[language]}. ${todayTip.teaser ? todayTip.teaser[language] + '.' : ''} ${todayTip.description[language]}. ${todayTip.funFact ? todayTip.funFact[language] : ''}`}
+                    language={language}
+                    size="sm"
+                    variant="inline"
+                    label={language === 'pt' ? 'Ouvir Dica' : 'Listen'}
+                    stopLabel={language === 'pt' ? 'Parar' : 'Stop'}
+                  />
                 </div>
                 <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-normal bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
                   {todayTip.description[language]}
@@ -349,9 +382,20 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
               {/* QUESTION & INTERACTIVE CHALLENGE */}
               <div className="pt-2 border-t border-slate-200 space-y-3">
                 <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-indigo-900">
-                    <HelpCircle className="w-4 h-4 text-indigo-600" />
-                    <span>{language === 'pt' ? 'Pergunta de Hoje' : "Today's Question"}</span>
+                  <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-indigo-900 flex-wrap">
+                    <div className="flex items-center gap-2">
+                      <HelpCircle className="w-4 h-4 text-indigo-600" />
+                      <span>{language === 'pt' ? 'Pergunta de Hoje' : "Today's Question"}</span>
+                    </div>
+                    <AudioSpeakButton
+                      id={`daily_tip_question_${todayTip.title.en.replace(/\s+/g, '_')}`}
+                      text={`${todayTip.question[language]}. ${todayTip.options.map(o => `${o.id.toUpperCase()}: ${o[language]}`).join('. ')}`}
+                      language={language}
+                      size="xs"
+                      variant="inline"
+                      label={language === 'pt' ? 'Ouvir Pergunta' : 'Listen'}
+                      stopLabel={language === 'pt' ? 'Parar' : 'Stop'}
+                    />
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-[11px] font-black text-indigo-700 bg-indigo-100/70 px-2 py-0.5 rounded-full">
