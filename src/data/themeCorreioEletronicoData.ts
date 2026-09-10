@@ -244,10 +244,10 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       id: 'jogo-email-order',
       themeId: 'correio-eletronico',
       number: 1,
-      title: { pt: '✉️ Constrói um email', en: '✉️ Constrói um email' },
+      title: { pt: '✉️ Constrói um email', en: '✉️ Build an Email' },
       shortDesc: {
-        pt: 'Arrasta as opções da direita para os locais corretos, para completares a mensagem de email.',
-        en: 'Arrasta as opções da direita para os locais corretos, para completares a mensagem de email.',
+        pt: 'Envia um email ao teu professor a entregar o trabalho de TIC, com conhecimento (Cc) dos colegas de grupo.',
+        en: 'Send an email to your teacher submitting your ICT project, with CC to your teammates.',
       },
       icon: '✉️',
       durationMinutes: 4,
@@ -324,35 +324,9 @@ export const themeCorreioEletronicoData: ThemeDefinition = {
       }
     },
     {
-      id: 'jogo-email-match',
-      themeId: 'correio-eletronico',
-      number: 4,
-      title: { pt: '🔗 Parte do Email', en: '🔗 Parts of an Email Match' },
-      shortDesc: { pt: 'Associa cada componente do email à sua respetiva função.', en: 'Match each email component to its purpose.' },
-      icon: '🔗',
-      durationMinutes: 4,
-      points: 100,
-      type: 'match_pairs',
-      gameData: {
-        type: 'match',
-        title: 'Parte do Email',
-        icon: '🔗',
-        xp: 100,
-        desc: 'Associa corretamente cada elemento do cabeçalho de email.',
-        data: {
-          pairs: [
-            { left: 'Para (To)', right: 'Destinatário principal da mensagem' },
-            { left: 'Assunto (Subject)', right: 'Resumo rápido do tema tratado' },
-            { left: 'Cc (Cópia)', right: 'Destinatários secundários visíveis por todos' },
-            { left: 'Anexo (Attachment)', right: 'Ficheiro (documento ou foto) enviado em conjunto' }
-          ]
-        }
-      }
-    },
-    {
       id: 'quiz-final-tema5',
       themeId: 'correio-eletronico',
-      number: 5,
+      number: 4,
       title: { pt: '🏆 Quiz de Aprendizagem: Correio Eletrónico (10 Questões)', en: '🏆 Learning Quiz: Email (10 Questions)' },
       shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas sobre Correio Eletrónico.', en: 'Comprehensive final assessment with 10 questions on Email.' },
       icon: '🏆',
