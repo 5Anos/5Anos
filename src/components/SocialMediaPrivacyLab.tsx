@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { UserX, ShieldAlert, CheckCircle2, UserCheck } from 'lucide-react';
 import { Language } from '../types';
-import { AudioSpeakButton } from './AudioSpeakButton';
 
 interface SocialMediaPrivacyLabProps {
   language?: Language;
@@ -14,10 +13,6 @@ export const SocialMediaPrivacyLab: React.FC<SocialMediaPrivacyLabProps> = ({ la
   const labDesc = language === 'pt'
     ? 'Analisa o perfil antes de decidir aceitar ou rejeitar contactos desconhecidos.'
     : 'Analyze profile indicators before accepting unknown friend requests.';
-
-  const messageText = language === 'pt'
-    ? 'SuperGamer 2026, contacto desconhecido, zero amigos em comum, criado há dois dias. Mensagem: Olá! Vi que jogas Roblox e Fortnite. Sou teu amigo da escola, mas não digo qual. Aceita-me e diz-me a tua morada para jogarmos juntos!'
-    : 'SuperGamer 2026, unknown contact, 0 mutual friends. Message: Hello! I see you play Roblox. I am your school friend. Accept me and tell me your home address!';
 
   return (
     <div className="w-full bg-gradient-to-br from-indigo-50/70 via-white to-purple-50/70 rounded-3xl border-2 border-indigo-200/80 p-5 sm:p-6 shadow-sm space-y-5">
@@ -35,15 +30,6 @@ export const SocialMediaPrivacyLab: React.FC<SocialMediaPrivacyLabProps> = ({ la
             </p>
           </div>
         </div>
-
-        <AudioSpeakButton
-          id="social-lab-intro"
-          text={`${labTitle}. ${labDesc}`}
-          language={language}
-          label={language === 'pt' ? 'Ouvir Desafio' : 'Listen Challenge'}
-          variant="pill"
-          size="xs"
-        />
       </div>
 
       {/* Simulated Friend Request Card */}
@@ -61,15 +47,6 @@ export const SocialMediaPrivacyLab: React.FC<SocialMediaPrivacyLabProps> = ({ la
               <p className="text-xs text-slate-500 font-medium">0 amigos em comum • Criado há 2 dias</p>
             </div>
           </div>
-
-          <AudioSpeakButton
-            id="social-lab-message"
-            text={messageText}
-            language={language}
-            label={language === 'pt' ? 'Ouvir Mensagem' : 'Listen Message'}
-            variant="pill"
-            size="xs"
-          />
         </div>
 
         <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 leading-relaxed font-medium">
@@ -94,16 +71,6 @@ export const SocialMediaPrivacyLab: React.FC<SocialMediaPrivacyLabProps> = ({ la
                 <span>Aceitar Amizade</span>
               </button>
             </div>
-            <div className="flex justify-center">
-              <AudioSpeakButton
-                id="social-lab-options"
-                text={language === 'pt' ? 'Opções: Rejeitar e Bloquear o contacto desconhecido, ou Aceitar Amizade.' : 'Options: Reject and Block unknown contact, or Accept Friendship.'}
-                language={language}
-                label={language === 'pt' ? 'Ouvir Opções de Escolha' : 'Listen Choices'}
-                variant="inline"
-                size="xs"
-              />
-            </div>
           </div>
         ) : (
           <div className={`p-3.5 rounded-xl text-xs font-medium space-y-1 ${
@@ -114,17 +81,6 @@ export const SocialMediaPrivacyLab: React.FC<SocialMediaPrivacyLabProps> = ({ la
                 {decision === 'reject' ? <CheckCircle2 className="w-4 h-4 text-emerald-600" /> : <ShieldAlert className="w-4 h-4 text-rose-600" />}
                 <span>{decision === 'reject' ? '🏆 Decisão Excelente!' : '⛔ Risco Elevado!'}</span>
               </p>
-              <AudioSpeakButton
-                id="social-lab-feedback"
-                text={`${decision === 'reject' ? 'Decisão Excelente!' : 'Risco Elevado!'} ${
-                  decision === 'reject'
-                    ? 'Perfis desconhecidos com zero amigos em comum que pedem dados pessoais são potenciais contas falsas. Rejeitar, bloquear e avisar os pais é a melhor atitude!'
-                    : 'Nunca aceites contactos desconhecidos nem reveles a tua morada! Podes expor a tua vida privada a pessoas mal-intencionadas.'
-                }`}
-                language={language}
-                variant="icon"
-                size="xs"
-              />
             </div>
             <p className="leading-relaxed">
               {decision === 'reject'

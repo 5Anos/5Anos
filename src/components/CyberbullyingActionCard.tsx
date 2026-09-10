@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { PhoneCall, HelpCircle } from 'lucide-react';
 import { Language } from '../types';
-import { AudioSpeakButton } from './AudioSpeakButton';
 
 interface CyberbullyingActionCardProps {
   language?: Language;
@@ -47,13 +46,6 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
             <PhoneCall className="w-3.5 h-3.5 text-rose-600" />
             <span>800 21 90 90 (Linha Grátis)</span>
           </div>
-          <AudioSpeakButton
-            id="cyberbullying-card-intro"
-            text={`${cardTitle}. ${cardDesc}. Linha de apoio SOS Criança: 800 21 90 90.`}
-            language={language}
-            variant="icon"
-            size="sm"
-          />
         </div>
       </div>
 
@@ -89,14 +81,6 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
             </p>
           </div>
         </div>
-        <AudioSpeakButton
-          id={`cyberbullying-step-${activeStep}`}
-          text={`${language === 'pt' ? 'Passo' : 'Step'} ${activeStep + 1}: ${STEPS[activeStep].title[language]}. ${STEPS[activeStep].desc[language]}`}
-          language={language}
-          label={language === 'pt' ? 'Ouvir Passo' : 'Listen Step'}
-          variant="pill"
-          size="xs"
-        />
       </div>
 
       {/* Interactive Quick Decision Scenario */}
@@ -106,14 +90,6 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
             <HelpCircle className="w-4 h-4 text-indigo-600 shrink-0" />
             <span>{language === 'pt' ? 'Situação Prática: O que farias?' : 'Practical Scenario: What would you do?'}</span>
           </div>
-          <AudioSpeakButton
-            id="cyberbullying-scenario-audio"
-            text={`${language === 'pt' ? 'Situação Prática: O que farias?' : 'Practical Scenario: What would you do?'} ${scenarioQuestion}`}
-            language={language}
-            label={language === 'pt' ? 'Ouvir Pergunta' : 'Listen Question'}
-            variant="pill"
-            size="xs"
-          />
         </div>
 
         <p className="text-xs text-slate-700 leading-relaxed font-medium">
@@ -121,41 +97,23 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <div className="flex items-center gap-1.5">
-            <button
-              onClick={() => setTestAnswer(0)}
-              className={`flex-1 p-2.5 rounded-xl border text-xs font-bold text-left transition-all cursor-pointer ${
-                testAnswer === 0 ? 'bg-amber-100 border-amber-400 text-amber-950' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
-              }`}
-            >
-              A) Responder com outra ofensa no chat
-            </button>
-            <AudioSpeakButton
-              id="cyberbullying-opt-a"
-              text="Opção A: Responder com outra ofensa no chat."
-              language={language}
-              variant="icon"
-              size="xs"
-            />
-          </div>
+          <button
+            onClick={() => setTestAnswer(0)}
+            className={`w-full p-2.5 rounded-xl border text-xs font-bold text-left transition-all cursor-pointer ${
+              testAnswer === 0 ? 'bg-amber-100 border-amber-400 text-amber-950' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
+            }`}
+          >
+            A) Responder com outra ofensa no chat
+          </button>
 
-          <div className="flex items-center gap-1.5">
-            <button
-              onClick={() => setTestAnswer(1)}
-              className={`flex-1 p-2.5 rounded-xl border text-xs font-bold text-left transition-all cursor-pointer ${
-                testAnswer === 1 ? 'bg-emerald-100 border-emerald-400 text-emerald-950' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
-              }`}
-            >
-              B) Não responder, guardar printscreen e bloquear
-            </button>
-            <AudioSpeakButton
-              id="cyberbullying-opt-b"
-              text="Opção B: Não responder, guardar printscreen e bloquear."
-              language={language}
-              variant="icon"
-              size="xs"
-            />
-          </div>
+          <button
+            onClick={() => setTestAnswer(1)}
+            className={`w-full p-2.5 rounded-xl border text-xs font-bold text-left transition-all cursor-pointer ${
+              testAnswer === 1 ? 'bg-emerald-100 border-emerald-400 text-emerald-950' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
+            }`}
+          >
+            B) Não responder, guardar printscreen e bloquear
+          </button>
         </div>
 
         {testAnswer !== null && (
@@ -165,15 +123,6 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
                 ? '🎉 Muito bem! Esta é a atitude correta: não alimentar discussões, registar prova e cortar o contacto.'
                 : '⚠️ Cuidado: responder com insultos só piora a situação. A regra de ouro é PARAR e BLOQUEAR!'}
             </p>
-            <AudioSpeakButton
-              id="cyberbullying-feedback"
-              text={testAnswer === 1
-                ? 'Muito bem! Esta é a atitude correta: não alimentar discussões, registar prova e cortar o contacto.'
-                : 'Cuidado: responder com insultos só piora a situação. A regra de ouro é PARAR e BLOQUEAR!'}
-              language={language}
-              variant="icon"
-              size="xs"
-            />
           </div>
         )}
       </div>
@@ -184,13 +133,6 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
           <span className="text-xl">♻️</span>
           <span>{language === 'pt' ? 'Equipamentos e pilhas velhas vão para o Ponto Eletrão, nunca para o lixo comum!' : 'E-waste goes to recycling points, never ordinary bins!'}</span>
         </div>
-        <AudioSpeakButton
-          id="cyberbullying-pontoeletrao"
-          text={language === 'pt' ? 'Equipamentos e pilhas velhas vão para o Ponto Eletrão, nunca para o lixo comum!' : 'E-waste goes to recycling points, never ordinary bins!'}
-          language={language}
-          variant="icon"
-          size="xs"
-        />
       </div>
     </div>
   );
