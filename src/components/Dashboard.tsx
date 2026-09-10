@@ -51,7 +51,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
   // Calculate statistics across visible themes
   const totalActivities = displayedThemes.reduce(
-    (acc, theme) => acc + theme.modules.length + theme.challenges.length,
+    (acc, theme) => acc + theme.challenges.length,
     0
   );
 
@@ -221,9 +221,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {displayedThemes.map((theme) => {
               const isVisibleForStudents = themeVisibility[theme.id] !== false;
-              const themeActivitiesCount = theme.modules.length + theme.challenges.length;
+              const themeChallengeIds = new Set(theme.challenges.map((c) => c.id));
+              const themeActivitiesCount = theme.challenges.length;
               const themeCompletedCount = progressList.filter(
-                (p) => (p.themeId === theme.id || (theme.id === 'tic-sociedade' && p.themeId === 'seguranca-digital')) && p.status === 'completed'
+                (p) =>
+                  p.status === 'completed' &&
+                  (themeChallengeIds.has(p.activityId) ||
+                    p.themeId === theme.id ||
+                    p.themeId === String(theme.number) ||
+                    (theme.id === 'tic-sociedade' && (p.themeId === 'seguranca-digital' || p.activityId.includes('tic'))))
               ).length;
               const themePct = themeActivitiesCount > 0 ? Math.min(100, Math.round((themeCompletedCount / themeActivitiesCount) * 100)) : 0;
               const colorInfo = getThemeColor(theme.number);

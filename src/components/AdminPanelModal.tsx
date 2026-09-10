@@ -1928,7 +1928,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                 {ALL_THEMES.map((theme) => {
                   const isVisible = themeVisibility[theme.id] !== false;
                   const isToggling = togglingThemeId === theme.id;
-                  const totalActivities = theme.modules.length + theme.challenges.length;
+                  const totalActivities = theme.challenges.length;
 
                   return (
                     <div

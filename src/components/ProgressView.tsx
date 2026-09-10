@@ -31,12 +31,12 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
   const [viewMode, setViewMode] = useState<'grouped' | 'list'>('grouped');
 
   const totalActivities = ALL_THEMES.reduce(
-    (acc, theme) => acc + theme.modules.length + theme.challenges.length,
+    (acc, theme) => acc + theme.challenges.length,
     0
   );
 
   const completedCount = progressList.filter((p) => p.status === 'completed').length;
-  const overallPercentage = Math.min(100, Math.round((completedCount / totalActivities) * 100));
+  const overallPercentage = totalActivities > 0 ? Math.min(100, Math.round((completedCount / totalActivities) * 100)) : 0;
 
   const quizRecords = progressList.filter((p) => p.bestPercentage !== undefined);
   const avgQuiz = quizRecords.length > 0
@@ -57,11 +57,17 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
   // Group activities by theme
   const themesWithProgress = useMemo(() => {
     return ALL_THEMES.map((theme) => {
+      const themeChallengeIds = new Set(theme.challenges.map((c) => c.id));
       const items = enrichedProgress.filter(
-        (p) => p.meta.themeId === theme.id || p.themeId === theme.id
+        (p) =>
+          themeChallengeIds.has(p.activityId) ||
+          p.meta.themeId === theme.id ||
+          p.themeId === theme.id ||
+          p.themeId === String(theme.number) ||
+          (theme.id === 'tic-sociedade' && (p.themeId === 'seguranca-digital' || p.activityId.includes('tic')))
       );
       const completed = items.filter((p) => p.status === 'completed').length;
-      const totalThemeActivities = theme.modules.length + theme.challenges.length;
+      const totalThemeActivities = theme.challenges.length;
       return {
         theme,
         items,
