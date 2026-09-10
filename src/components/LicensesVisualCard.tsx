@@ -336,8 +336,8 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
                 </div>
                 <p className="text-[11px] text-purple-950 leading-snug font-medium pl-5">
                   {language === 'pt'
-                    ? 'Podes usar livremente! É uma boa ideia indicar onde encontraste a fonte.'
-                    : 'Use freely! It is still nice to mention where you found it.'}
+                    ? 'Podes utilizar e partilhar sem pedir autorização por direitos de autor! É uma boa ideia indicar de onde retiraste a fonte.'
+                    : 'Use and share without asking for copyright permission! It is still nice to mention where you found it.'}
                 </p>
               </div>
             </div>
@@ -346,7 +346,7 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
           {/* Verdict Banner */}
           <div className="p-2.5 bg-emerald-600 text-white text-center font-black text-xs flex items-center justify-center gap-1.5">
             <Check className="w-4 h-4 shrink-0" />
-            <span>{language === 'pt' ? 'Podes usar livremente!' : 'Can use freely!'}</span>
+            <span>{language === 'pt' ? 'Podes utilizar sem pedir autorização!' : 'Can use without asking for permission!'}</span>
           </div>
         </div>
       </div>

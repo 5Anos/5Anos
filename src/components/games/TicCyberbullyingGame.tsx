@@ -36,7 +36,7 @@ const FIVE_STEPS: StepInfo[] = [
     icon: '📸',
     title: { pt: '2. GUARDAR PROVAS', en: '2. SAVE EVIDENCE' },
     action: {
-      pt: 'Fazer capturas de ecrã (printscreens) e guardar as mensagens, fotografias e datas como prova antes de qualquer outra ação.',
+      pt: 'Fazer capturas de ecrã e guardar as mensagens, fotografias e datas como prova antes de qualquer outra ação.',
       en: 'Take screenshots and save messages, photos, usernames, and dates as evidence before taking any other action.',
     },
     why: {
@@ -121,7 +121,7 @@ const STORY_SCENARIOS: StoryScenario[] = [
       },
       {
         text: {
-          pt: 'Parar (não responder aos insultos) e tirar imediatamente printscreens das mensagens como prova.',
+          pt: 'Parar (não responder aos insultos) e tirar imediatamente capturas de ecrã das mensagens como prova.',
           en: 'Stop (do not reply to insults) and immediately take screenshots as evidence.',
         },
         isCorrect: true,
@@ -137,7 +137,7 @@ const STORY_SCENARIOS: StoryScenario[] = [
         },
         isCorrect: false,
         feedback: {
-          pt: 'Incorreto! Se apagares as mensagens sem tirar printscreens, perdes as provas necessárias para os adultos e autoridades intervir. Nunca apagues as mensagens antes de guardar as provas!',
+          pt: 'Incorreto! Se apagares as mensagens sem tirar capturas de ecrã, perdes as provas necessárias para os adultos e autoridades intervir. Nunca apagues as mensagens antes de guardar as provas!',
           en: 'Incorrect! Deleting messages without taking screenshots destroys the evidence needed by adults and authorities. Never delete messages before saving evidence!',
         },
       },
@@ -259,7 +259,7 @@ const STORY_SCENARIOS: StoryScenario[] = [
       },
       {
         text: {
-          pt: 'Primeiro tirar printscreens para Guardar Provas, e depois Bloquear o perfil e Denunciar à moderação da rede social.',
+          pt: 'Primeiro tirar capturas de ecrã para Guardar Provas, e depois Bloquear o perfil e Denunciar à moderação da rede social.',
           en: 'First take screenshots to Save Evidence, and then Block the profile and Report to platform moderators.',
         },
         isCorrect: true,

@@ -662,7 +662,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
           'Responder imediatamente com insultos mais graves para demonstrar força.',
           'Partilhar as mensagens em todas as redes sociais públicas para criar uma discussão geral.',
           'Apagar tudo rapidamente, esconder o telemóvel e não contar a ninguém por vergonha.',
-          'Parar a conversa, não responder, guardar provas (printscreens), bloquear o contacto e pedir ajuda a um adulto de confiança.',
+          'Parar a conversa, não responder, guardar provas (capturas de ecrã), bloquear o contacto e pedir ajuda a um adulto de confiança.',
         ],
         en: [
           'Reply with worse insults to prove strength.',

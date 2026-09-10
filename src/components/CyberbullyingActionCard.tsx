@@ -9,7 +9,7 @@ interface CyberbullyingActionCardProps {
 
 const STEPS = [
   { num: 1, title: { pt: 'PARAR', en: 'STOP' }, icon: '🛑', desc: { pt: 'Não respondas com insultos nem alimentes discussões.', en: 'Do not reply with insults or escalate.' } },
-  { num: 2, title: { pt: 'GUARDAR', en: 'SAVE' }, icon: '📸', desc: { pt: 'Tira printscreens ou fotos das mensagens como prova.', en: 'Take screenshots of messages as evidence.' } },
+  { num: 2, title: { pt: 'GUARDAR', en: 'SAVE' }, icon: '📸', desc: { pt: 'Tira capturas de ecrã ou fotos das mensagens como prova.', en: 'Take screenshots of messages as evidence.' } },
   { num: 3, title: { pt: 'BLOQUEAR', en: 'BLOCK' }, icon: '🚫', desc: { pt: 'Bloqueia o contacto para não receberes mais notificações.', en: 'Block the sender to stop receiving messages.' } },
   { num: 4, title: { pt: 'DENUNCIAR', en: 'REPORT' }, icon: '🚩', desc: { pt: 'Usa a opção de denúncia dentro do jogo ou rede social.', en: 'Use in-app reporting tools.' } },
   { num: 5, title: { pt: 'PEDIR AJUDA', en: 'ASK HELP' }, icon: '🧑‍🏫', desc: { pt: 'Fala com os pais, professores ou liga para a Linha 800 21 90 90.', en: 'Talk to parents, teachers, or call 800 21 90 90.' } },
