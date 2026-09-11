@@ -48,6 +48,20 @@ const KNOWN_ACTIVITY_MAPPINGS: Record<
     icon: '💡',
     type: 'module',
   },
+  'tic-soc-vantagens-desafios': {
+    themeId: 'tic-sociedade',
+    title: { pt: 'TIC: vantagens e desafios', en: 'ICT: Advantages & Challenges' },
+    shortDesc: { pt: 'Módulo 4: Vantagens e desafios da tecnologia no dia a dia', en: 'Module 4: Tech advantages and challenges' },
+    icon: '⚖️',
+    type: 'module',
+  },
+  'tic-soc-tecnologia-ambiente': {
+    themeId: 'tic-sociedade',
+    title: { pt: '5. Tecnologia e ambiente', en: '5. Technology and Environment' },
+    shortDesc: { pt: 'Módulo 5: Lixo eletrónico, reciclagem e consumo responsável', en: 'Module 5: E-waste, recycling, and responsible use' },
+    icon: '🌱',
+    type: 'module',
+  },
   'jogo-tic-setor-match': {
     themeId: 'tic-sociedade',
     title: { pt: 'Correspondência de Setores TIC', en: 'ICT Sectors Match' },

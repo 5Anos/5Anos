@@ -27,6 +27,8 @@ import { CitationSimulator } from './CitationSimulator';
 import { LicensesVisualCard } from './LicensesVisualCard';
 import { TicApplicationsExplorer } from './TicApplicationsExplorer';
 import { TicEvolutionExplorer } from './TicEvolutionExplorer';
+import { TicProsConsExplorer } from './TicProsConsExplorer';
+import { TicGreenTechExplorer } from './TicGreenTechExplorer';
 import { CyberbullyingActionCard } from './CyberbullyingActionCard';
 import { getQuizMention, getQuizMentionBadgeStyle } from '../utils/exportUtils';
 import { AudioSpeakButton } from './AudioSpeakButton';
@@ -333,7 +335,10 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                       <TicEvolutionExplorer language={language} />
                     )}
                     {theme.id === 'tic-sociedade' && currentStepIndex === 3 && (
-                      <CyberbullyingActionCard language={language} />
+                      <TicProsConsExplorer language={language} />
+                    )}
+                    {theme.id === 'tic-sociedade' && currentStepIndex === 4 && (
+                      <TicGreenTechExplorer language={language} />
                     )}
 
                     {/* TEMA 2: Ergonomia e Bem-Estar */}
@@ -366,6 +371,9 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                       <PhishingMessageSimulator />
                     )}
                     {(theme.id === 'seguranca' || theme.id === 'seguranca-digital') && currentStepIndex === 2 && (
+                      <CyberbullyingActionCard language={language} />
+                    )}
+                    {(theme.id === 'seguranca' || theme.id === 'seguranca-digital') && currentStepIndex === 3 && (
                       <SocialMediaPrivacyLab language={language} />
                     )}
                     {(theme.id === 'seguranca' || theme.id === 'seguranca-digital') && currentStepIndex === 4 && (

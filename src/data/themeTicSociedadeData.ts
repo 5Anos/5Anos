@@ -48,13 +48,22 @@ export const themeTicSociedadeData: ThemeDefinition = {
       icon: '⚡',
     },
     {
-      eyebrow: { pt: 'Cidadania', en: 'Citizenship' },
-      h: { pt: 'Cyberbullying, Linha 800 21 90 90 e Reciclagem de Eletrónicos', en: 'Cyberbullying, Helpline 800 21 90 90 & E-Waste' },
+      eyebrow: { pt: 'TIC: vantagens e desafios', en: 'ICT: Advantages & Challenges' },
+      h: { pt: 'TIC: vantagens e desafios', en: 'ICT: Advantages & Challenges' },
       body: {
-        pt: '🛡️ <strong>Regra dos 5 Passos contra o Cyberbullying:</strong><br>1. 🛑 <strong>PARAR</strong> (não responder com insultos)<br>2. 📸 <strong>GUARDAR</strong> (fazer capturas de ecrã como prova)<br>3. 🚫 <strong>BLOQUEAR</strong> o contacto<br>4. 🚩 <strong>DENUNCIAR</strong> na plataforma<br>5. 🧑‍🏫 <strong>PEDIR AJUDA</strong> a pais, professores ou ligar para a <em>Linha Internet Segura (800 21 90 90 - Gratuita e Confidencial)</em>.<br><br>♻️ <strong>Lixo Eletrónico:</strong> Entrega equipamentos elétricos e eletrónicos e pilhas nos pontos de recolha adequados (como ecocentros, lojas que aceitam retoma ou redes de recolha seletiva como o Ponto Eletrão).',
-        en: '🛡️ <strong>5-Step Rule Against Cyberbullying:</strong><br>1. 🛑 <strong>STOP</strong><br>2. 📸 <strong>SAVE</strong> evidence<br>3. 🚫 <strong>BLOCK</strong> sender<br>4. 🚩 <strong>REPORT</strong><br>5. 🧑‍🏫 <strong>SEEK HELP</strong> from trusted adults or call the <em>Safe Internet Helpline (800 21 90 90 - Free & Confidential)</em>.<br><br>♻️ <strong>E-Waste:</strong> Deliver broken electronics to proper collection points (such as ecocentres, retail stores, or e-waste recycling bins like Ponto Eletrão)!',
+        pt: 'A tecnologia faz parte do nosso dia a dia e traz coisas fantásticas, mas também tem desafios que precisamos de conhecer para usar os ecrãs com equilíbrio e inteligência!<br><br>🌟 <strong>VANTAGENS DAS TIC:</strong><br>• <strong>Facilita a comunicação:</strong> Podemos conversar, enviar mensagens ou fazer videochamadas com a família e amigos num segundo, mesmo que estejam noutra cidade ou país. Partilhar ideias nunca foi tão rápido e fácil!<br>• <strong>Ajuda a aprender:</strong> A Internet é como uma biblioteca viva sem fim. Podes pesquisar temas para trabalhos da escola, ver vídeos com experiências científicas, descobrir curiosidades do mundo e treinar com jogos educativos de matemática ou línguas.<br><br>⚠️ <strong>DESAFIOS DAS TIC:</strong><br>• <strong>Pode distrair:</strong> Notificações a apitar, vídeos engraçados e jogos podem tirar a tua atenção das aulas e fazer-te esquecer dos trabalhos de casa ou dos deveres do dia a dia.<br>• <strong>Pode levar a passar demasiado tempo em frente ao ecrã:</strong> Ficar muitas horas seguidas no telemóvel, tablet ou consola cansa os olhos, pode causar dores de cabeça e prejudicar o sono. Tira também tempo precioso para brincar ao ar livre, praticar desporto e conviver cara a cara com quem mais gostas.<br>• <strong>Nem toda a informação encontrada online é correta:</strong> Qualquer pessoa pode publicar coisas na Internet! Existem notícias falsas (<em>fake news</em>), brincadeiras e erros. Por isso, deves sempre confirmar a informação com professores, pais ou enciclopédias de confiança antes de a usares num trabalho.',
+        en: 'Technology is part of our daily lives and brings amazing opportunities, but it also has challenges we must understand to keep a healthy digital balance!<br><br>🌟 <strong>ADVANTAGES OF ICT:</strong><br>• <strong>Facilitates communication:</strong> We can talk, text, or video call family and friends instantly, even across borders. Sharing ideas has never been easier!<br>• <strong>Helps you learn:</strong> The Internet is an endless library. You can research school topics, watch science experiments, explore global wonders, and practice subjects through educational games.<br><br>⚠️ <strong>CHALLENGES OF ICT:</strong><br>• <strong>Can distract you:</strong> Pings, funny videos, and games can steal your focus during class and make homework take twice as long.<br>• <strong>Can lead to excessive screen time:</strong> Spending hours staring at screens strains your eyes, causes headaches, and harms sleep quality, taking away time from outdoor play and real-life connections.<br>• <strong>Not all information online is correct:</strong> Anyone can publish content online. Rumors and fake news exist. Always verify facts with teachers, trusted books, or reliable sources before using them.',
       },
-      icon: '🛡️',
+      icon: '⚖️',
+    },
+    {
+      eyebrow: { pt: '5. Tecnologia e ambiente', en: '5. Technology and Environment' },
+      h: { pt: '5. Tecnologia e ambiente', en: '5. Technology and Environment' },
+      body: {
+        pt: 'Adoramos os nossos aparelhos, mas já pensaste o que acontece quando deixam de funcionar? A tecnologia e a natureza precisam de andar de mãos dadas!<br><br>🗑️ <strong>O que é o Lixo Eletrónico (E-Waste)?</strong><br>São todos os telemóveis antigos, tablets com o ecrã partido, consolas velhas, cabos e pilhas que já não funcionam e deixam de ser usados. Como as pessoas trocam de tecnologia com frequência, o lixo eletrónico é o que mais cresce em todo o planeta!<br><br>⛔ <strong>Porque NÃO devemos deitar equipamentos eletrónicos no lixo comum:</strong><br>• <strong>Substâncias perigosas:</strong> Dentro dos circuitos e das baterias existem químicos e metais tóxicos (como chumbo, mercúrio e lítio). Se forem parar ao caixote de lixo normal ou a um aterro comum, esses venenos podem contaminar a terra, as plantas e a água que bebemos!<br>• <strong>Perigo de incêndio:</strong> Baterias de lítio esmagadas nos camiões do lixo comum podem rebentar e provocar incêndios graves.<br>• <strong>Desperdício de materiais preciosos:</strong> Os equipamentos têm ouro, prata e cobre que se perdem para sempre se não forem reciclados.<br><br>🔄 <strong>Reutilização e Reciclagem de Equipamentos:</strong><br>• <strong>Reutilizar primeiro:</strong> Se um aparelho ainda liga e funciona, podes oferecê-lo a um primo mais novo, doar a uma escola ou levar a uma oficina para reparar em vez de deitar fora.<br>• <strong>Reciclar no sítio certo:</strong> Se estiver mesmo avariado, entrega-o no <strong>Ponto Eletrão</strong> (contentores especiais em escolas e supermercados), num <strong>Ecocentro</strong> municipal ou numa <strong>loja de eletrodomésticos</strong>, onde os técnicos desmontam as peças em segurança.<br><br>🌍 <strong>Consumo Responsável de Tecnologia:</strong><br>Ser amigo do ambiente é cuidar bem do que já temos! Usa capa protetora no telemóvel, não comas nem bebas perto do teclado, desliga o carregador da tomada quando a bateria chegar a 100% e desliga o computador à noite para poupar energia.',
+        en: 'We love our gadgets, but have you thought about what happens when they break down? Technology and nature must go hand in hand!<br><br>🗑️ <strong>What is Electronic Waste (E-Waste)?</strong><br>It includes all broken phones, shattered tablets, old consoles, dead batteries, and wires no longer in use. It is the fastest growing waste stream on our planet!<br><br>⛔ <strong>Why you should NEVER throw electronics in regular trash:</strong><br>• <strong>Hazardous substances:</strong> Circuits and batteries contain toxic heavy metals (like lead, mercury, and lithium). In ordinary landfills, rainwater washes these toxins into soil, plants, and drinking water!<br>• <strong>Fire risk:</strong> Crushed lithium batteries in regular waste trucks can spark dangerous fires.<br>• <strong>Precious resources lost:</strong> Electronics contain gold, silver, and copper that are lost forever unless properly recycled.<br><br>🔄 <strong>Reusing and Recycling Equipment:</strong><br>• <strong>Reuse first:</strong> If a gadget still works, pass it to a younger relative, donate to a school, or repair it.<br>• <strong>Recycle correctly:</strong> If broken beyond repair, take it to dedicated collection points like <strong>Ponto Eletrão</strong>, an <strong>Ecocenter</strong>, or retail appliance stores.<br><br>🌍 <strong>Responsible Tech Consumption:</strong><br>Being an eco-guardian means taking care of what we own! Use protective cases, keep food and liquids away from keyboards, unplug chargers once fully charged, and shut down computers when not in use to save energy.',
+      },
+      icon: '🌱',
     },
   ],
   modules: [
@@ -315,87 +324,223 @@ export const themeTicSociedadeData: ThemeDefinition = {
       ],
     },
     {
-      id: 'tic-soc-cidadania-seguranca',
+      id: 'tic-soc-vantagens-desafios',
       themeId: 'tic-sociedade',
       number: 4,
       title: {
-        pt: 'Cidadania Digital, Cyberbullying e Linha Internet Segura',
-        en: 'Digital Citizenship, Cyberbullying & Safe Helpline',
+        pt: 'TIC: vantagens e desafios',
+        en: 'ICT: Advantages & Challenges',
       },
       shortDesc: {
-        pt: 'Domina a Regra dos 5 Passos contra o cyberbullying, sabe quando ligar para a Linha 800 21 90 90 e protege a tua pegada digital.',
-        en: 'Master the 5-step rule against cyberbullying, use the 800 21 90 90 helpline, and protect your digital footprint.',
+        pt: 'Descobre as grandes vantagens da tecnologia para comunicar e aprender, e aprende a lidar com os desafios: distrações, tempo de ecrã e informação incorreta.',
+        en: 'Discover the advantages of tech for communicating and learning, and how to tackle challenges: distractions, screen time, and misinformation.',
       },
-      icon: '🛡️',
+      icon: '⚖️',
       explanation: {
         pt: [
-          'O cyberbullying é a agressão ou humilhação intencional repetida através de meios digitais. A regra dos 5 passos (Parar → Guardar provas → Denunciar/Bloquear → Pedir ajuda) garante segurança.',
-          'A Linha Internet Segura (800 21 90 90) é um serviço telefónico gratuito e confidencial em Portugal para apoiar crianças, pais e professores.',
-          'A pegada digital é o registo do que publicamos online. Dados pessoais e palavras-passe nunca devem ser partilhados publicamente.',
+          'Vantagens das TIC: Facilitam a comunicação com amigos e família em qualquer lugar, e ajudam imenso a aprender através de pesquisas, vídeos educativos e jogos pedagógicos.',
+          'Desafios das TIC: Podem distrair dos estudos com notificações, podem levar a passar demasiado tempo em frente ao ecrã (o que prejudica a visão e o sono), e nem toda a informação encontrada online é correta (é preciso confirmar sempre com fontes seguras).',
         ],
         en: [
-          'Cyberbullying is repeated digital harassment. The 5 steps (Stop, Save, Block, Report, Seek Help) provide clear safety guidelines.',
-          'The Safe Internet Helpline (800 21 90 90) is a free and confidential support line in Portugal.',
-          'Digital footprints represent online activity records. Never share personal addresses or passwords.',
+          'Advantages of ICT: Facilitates instant communication worldwide and helps you learn through research, educational videos, and learning games.',
+          'Challenges of ICT: Can cause distractions, may lead to excessive screen time, and not all information found online is accurate (always verify).',
         ],
       },
       example: {
         title: {
-          pt: 'Exemplo: Pedir Ajuda',
-          en: 'Example: Asking for Help',
+          pt: 'Exemplo: O Trabalho de Grupo',
+          en: 'Example: The Group Project',
         },
         scenario: {
-          pt: 'A Ana recebe mensagens desagradáveis. Ela guarda as mensagens como prova, bloqueia o contacto e fala imediatamente com os pais e professores.',
-          en: 'Ana receives mean messages. She captures screenshots as proof, blocks the sender, and tells trusted adults immediately.',
+          pt: 'O Martim usa o computador para pesquisar curiosidades sobre os golfinhos e faz videochamada com o colega de grupo (Vantagens!). Mas desliga as notificações dos jogos para não se distrair nem perder tempo de estudo (Desafio superado!).',
+          en: 'Martim uses the computer to research dolphin facts and video calls his project partner (Advantages!). He mutes game notifications so he stays focused (Challenge solved!).',
         },
         tip: {
-          pt: 'Pedir ajuda é o passo mais inteligente e corajoso!',
-          en: 'Seeking help is the smartest and bravest move!',
+          pt: 'O equilíbrio é o segredo: usa a tecnologia para aprender e comunicar, mas reserva tempo para brincar ao ar livre e estar com a família!',
+          en: 'Balance is key: use tech to learn and connect, but save time for outdoor play and family!',
         },
       },
       funFact: {
-        pt: 'Aquilo que publicas pode ser copiado, guardado ou partilhado por outras pessoas e pode permanecer acessível durante muito tempo.',
-        en: 'What you post can be copied, saved, or shared by others and may remain accessible for a long time.',
+        pt: 'Fazer uma pausa de 5 minutos a olhar para longe a cada 30 minutos de ecrã ajuda os teus olhos a descansarem e evita dores de cabeça!',
+        en: 'Taking a 5-minute break looking far away every 30 minutes rests your eyes and prevents headaches!',
       },
       thinkAboutIt: {
         question: {
-          pt: 'Se um colega estiver a sofrer ofensas num chat de grupo, o que deves fazer?',
-          en: 'If a peer is facing harassment in a group chat, what should you do?',
+          pt: 'Se vires um vídeo na Internet a dizer que amanhã não há aulas em Portugal, deves partilhar logo com toda a turma?',
+          en: 'If you see an online video claiming schools are closed tomorrow, should you immediately share it?',
         },
         clue: {
-          pt: 'Lembra-te de não ficar calado nem rir da situação.',
-          en: 'Remember not to stay silent or laugh along.',
+          pt: 'Lembra-te do desafio: nem toda a informação encontrada online é correta.',
+          en: 'Remember the challenge: not all information found online is true.',
         },
         reflection: {
-          pt: 'Apoia o colega, guarda provas e avisa um professor ou adulto de confiança.',
-          en: 'Support your classmate, save evidence, and notify a trusted teacher or parent.',
+          pt: 'Não deves partilhar sem confirmar! Pergunta primeiro aos teus pais ou professores para saber se a notícia é verdadeira ou se é uma brincadeira/fake news.',
+          en: 'Do not share without confirming! First ask parents or teachers if it is true or a fake rumor.',
         },
       },
       quizQuestions: [
         {
           id: 'q-mod4-1',
           question: {
-            pt: 'Qual é o número gratuito da Linha Internet Segura em Portugal?',
-            en: 'What is the toll-free Safe Internet Helpline number in Portugal?',
+            pt: 'Qual destas opções é uma VANTAGEM das Tecnologias da Informação e Comunicação?',
+            en: 'Which of these is an ADVANTAGE of ICT?',
           },
           options: {
             pt: [
-              '112',
-              '808 24 24 24',
-              '800 21 90 90',
-              '118',
+              'Levar a passar demasiado tempo em frente ao ecrã',
+              'Facilitar a comunicação com familiares e amigos distantes',
+              'Distrair com notificações durante as aulas',
+              'Espalhar informação que nem sempre é correta',
             ],
             en: [
-              '112',
-              '808 24 24 24',
-              '800 21 90 90',
-              '118',
+              'Causing excessive screen time',
+              'Facilitating communication with distant family and friends',
+              'Distracting with notifications during lessons',
+              'Spreading inaccurate information',
             ],
           },
-          correctIndex: 2,
+          correctIndex: 1,
           explanation: {
-            pt: 'A Linha Internet Segura atende gratuitamente no 800 21 90 90.',
-            en: 'The Safe Internet Helpline operates toll-free at 800 21 90 90.',
+            pt: 'Facilitar a comunicação e ajudar a aprender são duas grandes vantagens das TIC.',
+            en: 'Facilitating communication and helping us learn are two major advantages of ICT.',
+          },
+        },
+        {
+          id: 'q-mod4-2',
+          question: {
+            pt: 'Porque é que encontrar informação na Internet pode ser um desafio?',
+            en: 'Why can finding information on the Internet be a challenge?',
+          },
+          options: {
+            pt: [
+              'Porque a Internet fecha aos fins de semana',
+              'Porque nem toda a informação encontrada online é correta e existem fake news',
+              'Porque os computadores só têm fotografias a preto e branco',
+              'Porque a Internet só funciona se falarmos em voz alta',
+            ],
+            en: [
+              'Because the Internet closes on weekends',
+              'Because not all information online is correct and fake news exists',
+              'Because computers only have black and white photos',
+              'Because the Internet only works if we speak out loud',
+            ],
+          },
+          correctIndex: 1,
+          explanation: {
+            pt: 'Na Internet qualquer pessoa pode publicar conteúdos, pelo que devemos sempre confirmar fontes seguras.',
+            en: 'Anyone can publish online, so we must always check trusted sources.',
+          },
+        },
+      ],
+    },
+    {
+      id: 'tic-soc-tecnologia-ambiente',
+      themeId: 'tic-sociedade',
+      number: 5,
+      title: {
+        pt: '5. Tecnologia e ambiente',
+        en: '5. Technology & Environment',
+      },
+      shortDesc: {
+        pt: 'Aprende o que é o lixo eletrónico, porque nunca o deitar no lixo comum, como reutilizar e reciclar no Ponto Eletrão e praticar o consumo responsável.',
+        en: 'Learn about e-waste, why never in regular trash, reusing and recycling at Ponto Eletrão, and responsible tech habits.',
+      },
+      icon: '🌱',
+      explanation: {
+        pt: [
+          'O lixo eletrónico (e-waste) são computadores, telemóveis, tablets, consolas e pilhas velhas que deixam de funcionar.',
+          'Nunca devemos deitar equipamentos eletrónicos no lixo comum porque contêm substâncias tóxicas (chumbo, mercúrio, baterias de lítio) que contaminam o solo e a água, além de perderem materiais valiosos que poderiam ser reciclados.',
+          'Praticar a reutilização (dar a quem precisa ou reparar), a reciclagem em locais próprios (como o Ponto Eletrão e Ecocentros) e o consumo responsável (cuidar dos aparelhos e poupar energia) protege o nosso planeta!',
+        ],
+        en: [
+          'Electronic waste (e-waste) includes old computers, phones, tablets, consoles, and batteries that no longer work.',
+          'Never discard electronics in regular trash because they contain toxic chemicals (lead, mercury, lithium batteries) that contaminate soil and water, and valuable materials are wasted.',
+          'Reusing (passing to someone or repairing), recycling at dedicated sites (like Ponto Eletrão and Eco-centers), and responsible consumption protects our planet!',
+        ],
+      },
+      example: {
+        title: {
+          pt: 'Exemplo: O Telemóvel Antigo da Mãe',
+          en: 'Example: Mom’s Old Phone',
+        },
+        scenario: {
+          pt: 'A mãe da Leonor trocou de telemóvel porque a bateria durava pouco. A Leonor e a mãe levaram o aparelho a uma loja para trocar a bateria e ofereceram o telemóvel ao avô para ele poder falar com a família por videochamada!',
+          en: 'Leonor’s mom replaced her phone battery and gifted the refreshed device to grandpa so he could video call the family!',
+        },
+        tip: {
+          pt: 'Reutilizar e reparar é a melhor forma de poupar recursos do planeta Terra!',
+          en: 'Reusing and repairing is the best way to save planet Earth’s resources!',
+        },
+      },
+      funFact: {
+        pt: 'Sabias que uma tonelada de telemóveis velhos pode conter mais ouro e prata do que uma tonelada de pedra de uma mina de ouro?',
+        en: 'Did you know a metric ton of old phones can contain more gold and silver than a ton of rock from a gold mine?',
+      },
+      thinkAboutIt: {
+        question: {
+          pt: 'Se tiveres pilhas gastas do comando da televisão ou de um brinquedo, onde as deves colocar?',
+          en: 'If you have depleted batteries from a TV remote or toy, where should you place them?',
+        },
+        clue: {
+          pt: 'Lembra-te do Pilhão e do Ponto Eletrão.',
+          en: 'Remember the battery recycling box and Ponto Eletrão.',
+        },
+        reflection: {
+          pt: 'Devem ser colocadas no Pilhão ou Ponto Eletrão mais próximo (no supermercado ou na escola), NUNCA no lixo comum de casa!',
+          en: 'They must go into a battery collection bin (Pilhão) or Ponto Eletrão, NEVER in household trash!',
+        },
+      },
+      quizQuestions: [
+        {
+          id: 'q-mod5-1',
+          question: {
+            pt: 'Porque é que NUNCA devemos deitar equipamentos eletrónicos no lixo comum?',
+            en: 'Why should we NEVER throw electronic equipment into regular trash?',
+          },
+          options: {
+            pt: [
+              'Porque os aparelhos começam a falar sozinhos no caixote',
+              'Porque contêm substâncias tóxicas e baterias que poluem o solo e a água, e materiais valiosos que devem ser reciclados',
+              'Porque os camiões do lixo só levam objetos redondos',
+              'Porque o lixo comum é apenas para folhas de papel limpas',
+            ],
+            en: [
+              'Because devices start talking in the garbage bin',
+              'Because they contain toxic substances and batteries that contaminate soil and water, and valuable materials to recycle',
+              'Because garbage trucks only pick up round items',
+              'Because regular trash is only for clean paper sheets',
+            ],
+          },
+          correctIndex: 1,
+          explanation: {
+            pt: 'Os eletrónicos contêm metais pesados e baterias perigosas que contaminam a natureza se forem para aterros normais.',
+            en: 'Electronics contain heavy metals and hazardous batteries that poison nature if thrown into ordinary landfills.',
+          },
+        },
+        {
+          id: 'q-mod5-2',
+          question: {
+            pt: 'Onde deves entregar um computador ou telemóvel velho que já não funciona?',
+            en: 'Where should you hand in an old broken computer or phone?',
+          },
+          options: {
+            pt: [
+              'No caixote do lixo de casa ou na sarjeta da rua',
+              'No Ponto Eletrão, num Ecocentro municipal ou numa loja de eletrodomésticos',
+              'Enterrar na terra do jardim para virar adubo',
+              'Deitar num rio ou no mar',
+            ],
+            en: [
+              'In the domestic kitchen trash or street gutter',
+              'At a Ponto Eletrão bin, municipal Eco-center, or electronics store',
+              'Burying in garden soil to make fertilizer',
+              'Throwing it into a river or ocean',
+            ],
+          },
+          correctIndex: 1,
+          explanation: {
+            pt: 'O Ponto Eletrão, os Ecocentros e as lojas autorizadas garantem a recolha e reciclagem segura dos equipamentos.',
+            en: 'Ponto Eletrão bins, Eco-centers, and authorized stores ensure safe e-waste collection and recycling.',
           },
         },
       ],

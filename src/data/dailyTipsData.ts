@@ -161,12 +161,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Postura na Cadeira",
-      "en": "Postura na Cadeira"
+      "en": "Chair Posture"
     },
     "icon": "🪑",
     "title": {
       "pt": "Postura Confortável: a posição ideal para estudar ao computador!",
-      "en": "Postura Confortável: a posição ideal para estudar ao computador!"
+      "en": "Comfortable Posture: the ideal position for studying at a computer!"
     },
     "teaser": {
       "pt": "Sabias que os cotovelos e joelhos devem ficar, aproximadamente, num ângulo de 90°, numa posição confortável?",
@@ -182,7 +182,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "Se os teus pés não chegarem ao chão na escola, pede um apoio de pés para manter a postura certa!",
-      "en": "Se os teus pés não chegarem ao chão na escola, pede um apoio de pés para manter a postura certa!"
+      "en": "If your feet do not reach the floor at school, ask for a footrest to help you keep the correct posture!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -236,28 +236,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Pegada Digital",
-      "en": "Pegada Digital"
+      "en": "Digital Footprint"
     },
     "icon": "👣",
     "title": {
       "pt": "A tua Pegada Digital é como uma pegada no cimento fresco!",
-      "en": "A tua Pegada Digital é como uma pegada no cimento fresco!"
+      "en": "Your Digital Footprint is like a footprint in wet cement!"
     },
     "teaser": {
       "pt": "Algumas das nossas atividades online deixam registos. Publicações, comentários e conteúdos que partilhamos podem fazer parte da nossa pegada digital.",
       "en": "Some of our online activities leave records. Posts, comments, and content we share can form part of our digital footprint."
     },
     "description": {
-      "pt": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã (captura de ecrã). Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes.",
-      "en": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã (captura de ecrã). Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes."
+      "pt": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã. Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes.",
+      "en": "Every click, video you watch, and comment builds your online reputation. Even if you delete a photo, someone may have taken a screenshot. So build a positive digital footprint by sharing thoughtfully and kindly."
     },
     "whyItMatters": {
       "pt": "No Tema 3 de TIC aprendemos a refletir criticamente sobre as consequências das nossas ações online.",
-      "en": "No Tema 3 de TIC aprendemos a refletir criticamente sobre as consequências das nossas ações online."
+      "en": "In ICT Topic 3, we learn to think critically about the consequences of our online actions."
     },
     "funFact": {
       "pt": "A regra de ouro: só deves publicar algo se não tiveres vergonha que a tua professora ou avó vejam!",
-      "en": "A regra de ouro: só deves publicar algo se não tiveres vergonha que a tua professora ou avó vejam!"
+      "en": "The golden rule: only post something if you would be comfortable with your teacher or grandmother seeing it!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -311,28 +311,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Força de Palavras-passe",
-      "en": "Força de Palavras-passe"
+      "en": "Password Strength"
     },
     "icon": "⚡",
     "title": {
       "pt": "123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar.",
-      "en": "123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar."
+      "en": "123456 is an extremely predictable password and is among the first combinations automated systems may try."
     },
     "teaser": {
       "pt": "Inacreditavelmente, continua a ser uma das palavras-passe mais usadas no planeta!",
-      "en": "Inacreditavelmente, continua a ser uma das palavras-passe mais usadas no planeta!"
+      "en": "Unbelievably, it is still one of the most commonly used passwords in the world!"
     },
     "description": {
       "pt": "Programas automáticos usam listas de palavras comuns e sequências de teclado simples. Palavras-passe como \"123456\", \"qwerty\", \"password\" ou a tua data de aniversário são adivinhadas instantaneamente por computadores.",
-      "en": "Programas automáticos usam listas de palavras comuns e sequências de teclado simples. Palavras-passe como \"123456\", \"qwerty\", \"password\" ou a tua data de aniversário são adivinhadas instantaneamente por computadores."
+      "en": "Automated programs use lists of common words and simple keyboard sequences. Passwords such as \"123456\", \"qwerty\", \"password\", or your birthday can be guessed instantly by computers."
     },
     "whyItMatters": {
       "pt": "No Tema 4 de TIC aprendemos a criar palavras-passe robustas que protegem as nossas contas escolares.",
-      "en": "No Tema 4 de TIC aprendemos a criar palavras-passe robustas que protegem as nossas contas escolares."
+      "en": "In ICT Topic 4, we learn to create strong passwords that protect our school accounts."
     },
     "funFact": {
       "pt": "Outra palavra-passe péssima muito usada é \"admin\" ou o nome do clube de futebol favorito!",
-      "en": "Outra palavra-passe péssima muito usada é \"admin\" ou o nome do clube de futebol favorito!"
+      "en": "Another very poor password that is widely used is \"admin\" or the name of a favourite football club!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -386,12 +386,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Campos do Email",
-      "en": "Campos do Email"
+      "en": "Email Fields"
     },
     "icon": "🕶️",
     "title": {
       "pt": "O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade",
-      "en": "O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade"
+      "en": "The Bcc field lets you send emails to several people while protecting their privacy."
     },
     "teaser": {
       "pt": "Vais convidar 25 colegas da turma para uma festa por email? Usa o Cco!",
@@ -399,7 +399,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "description": {
       "pt": "No email tens: \"Para\" (destinatários principais), \"Cc\" (Com Cópia, visível a todos) e \"Cco\" (Com Cópia Oculta). Ao colocar os contactos em Cco, ninguém vê o endereço privado dos outros, evitando spam e exposição indesejada de contactos.",
-      "en": "No email tens: \"Para\" (destinatários principais), \"Cc\" (Com Cópia, visível a todos) e \"Cco\" (Com Cópia Oculta). Ao colocar os contactos em Cco, ninguém vê o endereço privado dos outros, evitando spam e exposição indesejada de contactos."
+      "en": "In an email you have: \"To\" (main recipients), \"Cc\" (Carbon Copy, visible to everyone), and \"Bcc\" (Blind Carbon Copy). When you put contacts in Bcc, no one can see the other people's private addresses, helping prevent spam and unwanted exposure of contacts."
     },
     "whyItMatters": {
       "pt": "No Tema 5 de TIC aprendemos a usar os campos Para, Cc e Cco de acordo com as regras do RGPD.",
@@ -407,7 +407,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "A sigla Cc vem do papel químico (\"Carbon Copy\") que se usava antigamente nas máquinas de escrever!",
-      "en": "A sigla Cc vem do papel químico (\"Carbon Copy\") que se usava antigamente nas máquinas de escrever!"
+      "en": "The abbreviation Cc comes from carbon paper (\"Carbon Copy\"), which was once used with typewriters!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -461,28 +461,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Navegador vs Motor",
-      "en": "Navegador vs Motor"
+      "en": "Browser vs Search Engine"
     },
     "icon": "🚗",
     "title": {
       "pt": "O Navegador é o Automóvel, o Motor de Busca é o GPS!",
-      "en": "O Navegador é o Automóvel, o Motor de Busca é o GPS!"
+      "en": "The Browser is the Car, the Search Engine is the GPS!"
     },
     "teaser": {
       "pt": "Muitos alunos confundem o Chrome com o Google. Sabes qual é a diferença real?",
-      "en": "Muitos alunos confundem o Chrome com o Google. Sabes qual é a diferença real?"
+      "en": "Many students confuse Chrome with Google. Do you know the real difference?"
     },
     "description": {
       "pt": "O Navegador (Browser, como Chrome, Edge, Firefox ou Safari) é a aplicação instalada que abre e desenha páginas Web. O Motor de Busca (Google, Bing, DuckDuckGo) é um site especial que cataloga a rede para responder a perguntas.",
-      "en": "O Navegador (Browser, como Chrome, Edge, Firefox ou Safari) é a aplicação instalada que abre e desenha páginas Web. O Motor de Busca (Google, Bing, DuckDuckGo) é um site especial que cataloga a rede para responder a perguntas."
+      "en": "The Browser (such as Chrome, Edge, Firefox, or Safari) is the application that opens and displays web pages. A Search Engine (such as Google, Bing, or DuckDuckGo) is a special website that indexes the web to answer searches."
     },
     "whyItMatters": {
       "pt": "No Tema 6 de TIC aprendemos a usar a barra de endereços (URL) diretamente sem passar pelo motor de busca.",
-      "en": "No Tema 6 de TIC aprendemos a usar a barra de endereços (URL) diretamente sem passar pelo motor de busca."
+      "en": "In ICT Topic 6, we learn to use the address bar (URL) directly instead of going through a search engine."
     },
     "funFact": {
       "pt": "A primeira janela de navegação inventada em 1990 chamava-se \"WorldWideWeb\"!",
-      "en": "A primeira janela de navegação inventada em 1990 chamava-se \"WorldWideWeb\"!"
+      "en": "The first web browser, created in 1990, was called \"WorldWideWeb\"!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -536,28 +536,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Google Imagens",
-      "en": "Google Imagens"
+      "en": "Google Images"
     },
     "icon": "🎨",
     "title": {
       "pt": "As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!",
-      "en": "As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!"
+      "en": "Photos from Google Images are NOT free to use however you want!"
     },
     "teaser": {
       "pt": "Copiar uma foto qualquer e colar num trabalho sem autorização pode violar a lei.",
-      "en": "Copiar uma foto qualquer e colar num trabalho sem autorização pode violar a lei."
+      "en": "Copying any photo and putting it into a school project without permission may violate copyright law."
     },
     "description": {
       "pt": "Quando um fotógrafo ou ilustrador cria uma imagem, ela fica logo protegida por Direitos de Autor (Copyright). Não a podes descarregar e reutilizar sem autorização. Para trabalhos escolares, usa imagens com licenças Creative Commons ou de Domínio Público.",
-      "en": "Quando um fotógrafo ou ilustrador cria uma imagem, ela fica logo protegida por Direitos de Autor (Copyright). Não a podes descarregar e reutilizar sem autorização. Para trabalhos escolares, usa imagens com licenças Creative Commons ou de Domínio Público."
+      "en": "When a photographer or illustrator creates an image, it is generally protected by copyright. You cannot download and reuse it without permission. For school projects, use images with suitable Creative Commons licences or in the public domain."
     },
     "whyItMatters": {
       "pt": "No Tema 7 de TIC aprendemos a respeitar a propriedade intelectual e o trabalho dos artistas.",
-      "en": "No Tema 7 de TIC aprendemos a respeitar a propriedade intelectual e o trabalho dos artistas."
+      "en": "In ICT Topic 7, we learn to respect intellectual property and the work of artists."
     },
     "funFact": {
       "pt": "Quando encontras uma imagem na Internet, lembra-te de verificar sempre a sua fonte original e qual é a licença de utilização específica. Mesmo nas licenças Creative Commons, deves respeitar regras como indicar o nome do autor (atribuição) e verificar se podes usar a imagem no teu trabalho!",
-      "en": "Quando encontras uma imagem na Internet, lembra-te de verificar sempre a sua fonte original e qual é a licença de utilização específica. Mesmo nas licenças Creative Commons, deves respeitar regras como indicar o nome do autor (atribuição) e verificar se podes usar a imagem no teu trabalho!"
+      "en": "When you find an image online, always check its original source and its specific licence. Even with Creative Commons licences, follow rules such as crediting the author and checking whether you may use the image in your project!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -611,28 +611,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Memória do Computador",
-      "en": "Memória do Computador"
+      "en": "Computer Memory"
     },
     "icon": "⚡",
     "title": {
       "pt": "Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!",
-      "en": "Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!"
+      "en": "RAM vs SSD: the work desk vs the cupboard!"
     },
     "teaser": {
       "pt": "Qual é a diferença entre a memória que apaga tudo quando desligas e a que guarda ficheiros?",
-      "en": "Qual é a diferença entre a memória que apaga tudo quando desligas e a que guarda ficheiros?"
+      "en": "What is the difference between memory that is cleared when you switch off the computer and storage that keeps files?"
     },
     "description": {
       "pt": "O Disco SSD é o armário com gavetas: guarda os teus trabalhos a longo prazo, mas lembra-te de que os discos também se podem avariar, pelo que deves fazer sempre cópias de segurança (backups) dos teus ficheiros mais importantes!",
-      "en": "O Disco SSD é o armário com gavetas: guarda os teus trabalhos a longo prazo, mas lembra-te de que os discos também se podem avariar, pelo que deves fazer sempre cópias de segurança (backups) dos teus ficheiros mais importantes!"
+      "en": "The SSD is like a cupboard with drawers: it stores your work for the long term. Remember that storage devices can fail, so always make backups of your most important files!"
     },
     "whyItMatters": {
       "pt": "Identificar a diferença entre memória primária (RAM) e armazenamento secundário (SSD/HDD) é uma competência essencial de TIC.",
-      "en": "Identificar a diferença entre memória primária (RAM) e armazenamento secundário (SSD/HDD) é uma competência essencial de TIC."
+      "en": "Knowing the difference between primary memory (RAM) and secondary storage (SSD/HDD) is an essential ICT skill."
     },
     "funFact": {
       "pt": "Os novos discos SSD não têm peças móveis e usam chips de memória flash super rápidos!",
-      "en": "Os novos discos SSD não têm peças móveis e usam chips de memória flash super rápidos!"
+      "en": "Modern SSDs have no moving parts and use very fast flash-memory chips!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -658,7 +658,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "d",
         "pt": "A RAM é rápida e temporária (apaga-se ao desligar); o SSD guarda ficheiros em definitivo!",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "RAM is fast and temporary (it is cleared when the computer is switched off); the SSD stores files for the long term!"
       }
     ],
     "correctOptionId": "d",
@@ -761,28 +761,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Privacidade e Redes",
-      "en": "Privacidade e Redes"
+      "en": "Privacy and Networks"
     },
     "icon": "🕵️‍♂️",
     "title": {
       "pt": "A regra do \"Estranho no Jardim\": nada de moradas em jogos online!",
-      "en": "A regra do \"Estranho no Jardim\": nada de moradas em jogos online!"
+      "en": "The \"Stranger in the Garden\" rule: never share your address in online games!"
     },
     "teaser": {
       "pt": "Roblox, Fortnite, Brawl Stars... avatares simpáticos podem esconder qualquer pessoa.",
-      "en": "Roblox, Fortnite, Brawl Stars... avatares simpáticos podem esconder qualquer pessoa."
+      "en": "Roblox, Fortnite, Brawl Stars... friendly-looking avatars can hide the identity of any person."
     },
     "description": {
       "pt": "Nunca partilhes o teu nome completo, número de telemóvel, nome da escola ou fotos onde se veja o emblema do teu clube ou a rua de tua casa com desconhecidos em salas de conversação ou jogos online.",
-      "en": "Nunca partilhes o teu nome completo, número de telemóvel, nome da escola ou fotos onde se veja o emblema do teu clube ou a rua de tua casa com desconhecidos em salas de conversação ou jogos online."
+      "en": "Never share your full name, phone number, school name, or photos showing your club badge or the street where you live with strangers in chats or online games."
     },
     "whyItMatters": {
       "pt": "A proteção de dados pessoais e a defesa da privacidade individual são prioridades de Cidadania Digital.",
-      "en": "A proteção de dados pessoais e a defesa da privacidade individual são prioridades de Cidadania Digital."
+      "en": "Protecting personal data and defending individual privacy are priorities of Digital Citizenship."
     },
     "funFact": {
       "pt": "É por isso que nos jogos é muito mais seguro e divertido usar nomes de código como \"FalcãoVeloz_99\"!",
-      "en": "É por isso que nos jogos é muito mais seguro e divertido usar nomes de código como \"FalcãoVeloz_99\"!"
+      "en": "That is why using code names such as \"FalcãoVeloz_99\" in games is safer and more fun!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -836,28 +836,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "O Segredo da Frase-Passe",
-      "en": "O Segredo da Frase-Passe"
+      "en": "The Secret of the Passphrase"
     },
     "icon": "🍕",
     "title": {
       "pt": "O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!",
-      "en": "O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!"
+      "en": "The \"Passphrase\" method: O_Meu_Cao_Adora_Comer_99_Gelados!"
     },
     "teaser": {
-      "pt": "Uma frase longa com espaços ou travessões é fácil de decorar e quase altamente seguro.",
-      "en": "Uma frase longa com espaços ou travessões é fácil de decorar e quase altamente seguro."
+      "pt": "Uma frase longa com espaços ou travessões é fácil de decorar e muito segura.",
+      "en": "A long phrase with spaces or dashes is easy to remember and can be very secure."
     },
     "description": {
       "pt": "Em vez de uma palavra-passe curta e confusa que esqueces amanhã, inventa uma frase maluca com 4 ou 5 palavras e junta números e símbolos. Uma frase-passe longa e difícil de adivinhar é geralmente mais segura do que uma palavra-passe curta e previsível.",
-      "en": "Em vez de uma palavra-passe curta e confusa que esqueces amanhã, inventa uma frase maluca com 4 ou 5 palavras e junta números e símbolos. Uma frase-passe longa e difícil de adivinhar é geralmente mais segura do que uma palavra-passe curta e previsível."
+      "en": "Instead of a short, confusing password that you will forget tomorrow, invent a funny phrase with 4 or 5 words and add numbers and symbols. A long, hard-to-guess passphrase is generally safer than a short, predictable password."
     },
     "whyItMatters": {
       "pt": "Construção de palavras-passe fortes com base em frases mnemónicas compridas.",
-      "en": "Construção de palavras-passe fortes com base em frases mnemónicas compridas."
+      "en": "Creating strong passwords based on long memorable phrases."
     },
     "funFact": {
       "pt": "Quanto mais comprida for a palavra-passe, mais combinações matemáticas o invasor tem de testar!",
-      "en": "Quanto mais comprida for a palavra-passe, mais combinações matemáticas o invasor tem de testar!"
+      "en": "The longer the password, the more mathematical combinations an attacker has to test!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -911,28 +911,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "O Símbolo Arroba",
-      "en": "O Símbolo Arroba"
+      "en": "The At Symbol"
     },
     "icon": "🐌",
     "title": {
       "pt": "O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!",
-      "en": "O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!"
+      "en": "The @ symbol is called \"snail\" in Italy and \"elephant trunk\" in Sweden!"
     },
     "teaser": {
       "pt": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico.",
-      "en": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico."
+      "en": "In 1971, Ray Tomlinson carried out one of the first experiments sending messages between networked computers and popularised the use of @ in email addresses."
     },
     "description": {
       "pt": "Em inglês lê-se \"at\" (no local de). Em Portugal chamamos-lhe arroba, mas outros países dão-lhe nomes animais engraçados: os italianos dizem \"chiocciola\" (caracol) e os israelitas \"strudel\" (bolo enrolado)!",
-      "en": "Em inglês lê-se \"at\" (no local de). Em Portugal chamamos-lhe arroba, mas outros países dão-lhe nomes animais engraçados: os italianos dizem \"chiocciola\" (caracol) e os israelitas \"strudel\" (bolo enrolado)!"
+      "en": "In English it is read as \"at\". In Portugal we call it \"arroba\", while other countries have funny animal names for it: Italians say \"chiocciola\" (snail) and Israelis say \"strudel\" (a rolled pastry)!"
     },
     "whyItMatters": {
-      "pt": "Estrutura padrão de um endereço de correio eletrónico: utilizador@dominio. extensao.",
-      "en": "Estrutura padrão de um endereço de correio eletrónico: utilizador@dominio. extensao."
+      "pt": "Estrutura padrão de um endereço de correio eletrónico: utilizador@domínio.extensão.",
+      "en": "Standard structure of an email address: username@domain.extension."
     },
     "funFact": {
       "pt": "Antigamente, a arroba era uma medida de peso usada no comércio que valia cerca de 15 quilogramas!",
-      "en": "Antigamente, a arroba era uma medida de peso usada no comércio que valia cerca de 15 quilogramas!"
+      "en": "In the past, the arroba was a unit of weight used in trade, worth about 15 kilograms!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -986,28 +986,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Truque das Aspas",
-      "en": "Truque das Aspas"
+      "en": "Quotation Marks Trick"
     },
     "icon": "🔍",
     "title": {
       "pt": "Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!",
-      "en": "Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!"
+      "en": "Search like a detective: the magic quotation-mark trick \"\" in a search engine!"
     },
     "teaser": {
       "pt": "Sabias que podes obrigar o motor de busca a encontrar exatamente a frase que queres?",
-      "en": "Sabias que podes obrigar o motor de busca a encontrar exatamente a frase que queres?"
+      "en": "Did you know you can make a search engine find exactly the phrase you want?"
     },
     "description": {
       "pt": "Se colocares uma frase entre aspas (ex: \"energia eólica em Portugal\"), o motor de busca só mostra páginas que tenham essas palavras exatamente nessa ordem, filtrando milhares de páginas irrelevantes!",
-      "en": "Se colocares uma frase entre aspas (ex: \"energia eólica em Portugal\"), o motor de busca só mostra páginas que tenham essas palavras exatamente nessa ordem, filtrando milhares de páginas irrelevantes!"
+      "en": "If you put a phrase in quotation marks (e.g. \"wind energy in Portugal\"), the search engine looks for pages containing those words in that exact order, filtering out thousands of irrelevant pages!"
     },
     "whyItMatters": {
-      "pt": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5. º ano.",
-      "en": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5. º ano."
+      "pt": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5.º ano.",
+      "en": "Advanced search techniques using Boolean operators and delimiters in 5th grade."
     },
     "funFact": {
       "pt": "Se usares o sinal de menos (ex: jaguar -carro), ele procura o felino e elimina as páginas sobre automóveis!",
-      "en": "Se usares o sinal de menos (ex: jaguar -carro), ele procura o felino e elimina as páginas sobre automóveis!"
+      "en": "If you use the minus sign (e.g. jaguar -car), it searches for the animal and removes pages about cars!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -1061,28 +1061,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "O que é Plágio",
-      "en": "O que é Plágio"
+      "en": "What Is Plagiarism"
     },
     "icon": "✂️",
     "title": {
       "pt": "Plágio: roubar a medalha de ouro de outra pessoa!",
-      "en": "Plágio: roubar a medalha de ouro de outra pessoa!"
+      "en": "Plagiarism: stealing someone else's gold medal!"
     },
     "teaser": {
       "pt": "Fazer \"Copiar e Colar\" da Wikipédia e assinar com o teu nome é desonestidade académica.",
-      "en": "Fazer \"Copiar e Colar\" da Wikipédia e assinar com o teu nome é desonestidade académica."
+      "en": "Copying and pasting from Wikipedia and signing it with your own name is academic dishonesty."
     },
     "description": {
       "pt": "Plágio é copiar textos, ideias, desenhos ou código de outra pessoa fingindo que foste tu a criar. É como alguém correr uma maratona e tu roubares a medalha para dizer que venceste. O correto é ler, explicar pelas tuas próprias palavras e citar a fonte de onde aprendeste.",
-      "en": "Plágio é copiar textos, ideias, desenhos ou código de outra pessoa fingindo que foste tu a criar. É como alguém correr uma maratona e tu roubares a medalha para dizer que venceste. O correto é ler, explicar pelas tuas próprias palavras e citar a fonte de onde aprendeste."
+      "en": "Plagiarism is copying another person's texts, ideas, drawings, or code and pretending you created them. It is like someone running a marathon and you stealing the medal to say you won. The right thing is to read, explain in your own words, and cite the source you learned from."
     },
     "whyItMatters": {
-      "pt": "Compreensão de plágio vs autoria original e integridade académica no 5. º ano.",
-      "en": "Compreensão de plágio vs autoria original e integridade académica no 5. º ano."
+      "pt": "Compreensão de plágio vs autoria original e integridade académica no 5.º ano.",
+      "en": "Understanding plagiarism versus original authorship and academic integrity in 5th grade."
     },
     "funFact": {
       "pt": "Os professores têm ferramentas de software que detetam plágio em trabalhos escolares em segundos!",
-      "en": "Os professores têm ferramentas de software que detetam plágio em trabalhos escolares em segundos!"
+      "en": "Teachers have software tools that can detect plagiarism in schoolwork within seconds!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -1136,28 +1136,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Placa Principal",
-      "en": "Placa Principal"
+      "en": "Main Board"
     },
     "icon": "🛣️",
     "title": {
       "pt": "A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!",
-      "en": "A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!"
+      "en": "The Motherboard is the motorway that connects all the computer's components!"
     },
     "teaser": {
       "pt": "Como é que a placa gráfica fala com o processador e com o disco rígido?",
-      "en": "Como é que a placa gráfica fala com o processador e com o disco rígido?"
+      "en": "How does the graphics card communicate with the processor and the hard drive?"
     },
     "description": {
       "pt": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI.",
-      "en": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI."
+      "en": "The Motherboard is a large green or black circuit board filled with copper tracks. The CPU, RAM, sound card, and network card connect to it, along with USB and HDMI ports."
     },
     "whyItMatters": {
-      "pt": "Os os componentes físicos comunicam através do barramento de dados (Bus).",
-      "en": "Os os componentes físicos comunicam através do barramento de dados (Bus)."
+      "pt": "Os componentes físicos comunicam através do barramento de dados (Bus).",
+      "en": "The physical components communicate through the data bus (Bus)."
     },
     "funFact": {
       "pt": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!",
-      "en": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!"
+      "en": "It is called a \"motherboard\" because it houses and connects all the other boards and components attached to the system!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -1211,28 +1211,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Sono e Tecnologia",
-      "en": "Sono e Tecnologia"
+      "en": "Sleep and Technology"
     },
     "icon": "🌙",
     "title": {
       "pt": "A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \"",
-      "en": "A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \""
+      "en": "Blue Light from the screen tells your brain: \"Wake up, it is still beach time!\""
     },
     "teaser": {
       "pt": "Porque deves desligar os ecrãs 30 a 60 minutos antes de dormir para acordares com energia?",
-      "en": "Porque deves desligar os ecrãs 30 a 60 minutos antes de dormir para acordares com energia?"
+      "en": "Why should you turn off screens 30 to 60 minutes before bed so you can wake up with energy?"
     },
     "description": {
       "pt": "A luz azul emitida por ecrãs bloqueia a melatonina, a hormona que dá sono. Quando usas o telemóvel na cama, o teu cérebro fica confuso, demoras mais tempo a adormecer e acordas cansado para a escola.",
-      "en": "A luz azul emitida por ecrãs bloqueia a melatonina, a hormona que dá sono. Quando usas o telemóvel na cama, o teu cérebro fica confuso, demoras mais tempo a adormecer e acordas cansado para a escola."
+      "en": "Blue light from screens can affect melatonin, the hormone involved in sleep. Using a phone in bed can make it harder to fall asleep and may leave you tired for school."
     },
     "whyItMatters": {
       "pt": "Estudamos o equilíbrio entre o tempo de ecrã e o descanso reparador de 9 a 12 horas diárias.",
-      "en": "Estudamos o equilíbrio entre o tempo de ecrã e o descanso reparador de 9 a 12 horas diárias."
+      "en": "We study the balance between screen time and restorative sleep of 9 to 12 hours per day."
     },
     "funFact": {
       "pt": "Substituir o telemóvel antes de dormir por um livro em papel melhora as tuas notas escolares!",
-      "en": "Substituir o telemóvel antes de dormir por um livro em papel melhora as tuas notas escolares!"
+      "en": "Replacing your phone with a paper book before bed can help your sleep and school performance!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -1286,28 +1286,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Apoio e Helplines",
-      "en": "Apoio e Helplines"
+      "en": "Support and Helplines"
     },
     "icon": "📞",
     "title": {
       "pt": "Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!",
-      "en": "Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!"
+      "en": "Portugal's Safe Internet Line: 800 21 90 90 (free and confidential)!"
     },
     "teaser": {
       "pt": "Se algo correr mal online, existe uma equipa simpática pronta para te ajudar.",
-      "en": "Se algo correr mal online, existe uma equipa simpática pronta para te ajudar."
+      "en": "If something goes wrong online, there is a friendly team ready to help you."
     },
     "description": {
       "pt": "Se vires conteúdos assustadores, sofreres cyberbullying ou tiveres dúvidas sobre a tua segurança, podes ligar gratuitamente para o 800 21 90 90 ou para o SOS Criança (116 111). Nunca guardes medos só para ti!",
-      "en": "Se vires conteúdos assustadores, sofreres cyberbullying ou tiveres dúvidas sobre a tua segurança, podes ligar gratuitamente para o 800 21 90 90 ou para o SOS Criança (116 111). Nunca guardes medos só para ti!"
+      "en": "If you see frightening content, experience cyberbullying, or have concerns about your safety, you can call 800 21 90 90 or SOS Criança (116 111) for free. Never keep your worries to yourself!"
     },
     "whyItMatters": {
       "pt": "Conhecer as linhas de apoio e saber a quem recorrer perante incidentes digitais é fundamental.",
-      "en": "Conhecer as linhas de apoio e saber a quem recorrer perante incidentes digitais é fundamental."
+      "en": "Knowing support lines and knowing who to turn to when digital incidents happen is essential."
     },
     "funFact": {
       "pt": "Lembra-te: falar com os pais ou professores de confiança é sempre o primeiro e melhor passo!",
-      "en": "Lembra-te: falar com os pais ou professores de confiança é sempre o primeiro e melhor passo!"
+      "en": "Remember: talking to a trusted parent or teacher is always the first and best step!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -1361,28 +1361,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Partilha de Palavras-passe",
-      "en": "Partilha de Palavras-passe"
+      "en": "Password Sharing"
     },
     "icon": "🪥",
     "title": {
       "pt": "Palavras-passe são como escovas de dentes: não se emprestam a ninguém!",
-      "en": "Palavras-passe são como escovas de dentes: não se emprestam a ninguém!"
+      "en": "Passwords are like toothbrushes: you do not lend them to anyone!"
     },
     "teaser": {
       "pt": "Nem ao melhor amigo da turma deves confiar a chave da tua vida digital.",
-      "en": "Nem ao melhor amigo da turma deves confiar a chave da tua vida digital."
+      "en": "Even your best friend in class should not be trusted with the key to your digital life."
     },
     "description": {
       "pt": "A tua palavra-passe é pessoal e intransmissível. Se a emprestares, perdes o controlo sobre quem acede aos teus emails e notas. A única exceção são os teus pais ou encarregados de educação para te protegerem.",
-      "en": "A tua palavra-passe é pessoal e intransmissível. Se a emprestares, perdes o controlo sobre quem acede aos teus emails e notas. A única exceção são os teus pais ou encarregados de educação para te protegerem."
+      "en": "Your password is personal and should not be shared. If you lend it to someone, you lose control over who can access your emails and grades. The exception is your parents or guardians, who may need it to protect you."
     },
     "whyItMatters": {
       "pt": "Responsabilidade e sigilo de credenciais de acesso no ambiente escolar e pessoal.",
-      "en": "Responsabilidade e sigilo de credenciais de acesso no ambiente escolar e pessoal."
+      "en": "Responsible and confidential handling of access credentials at school and in personal life."
     },
     "funFact": {
       "pt": "Se um dia tiveres de introduzir a tua palavra-passe à frente de alguém, tapa o teclado com a outra mão!",
-      "en": "Se um dia tiveres de introduzir a tua palavra-passe à frente de alguém, tapa o teclado com a outra mão!"
+      "en": "If you ever have to enter your password in front of someone, cover the keyboard with your other hand!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -1436,28 +1436,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Netiqueta em Emails",
-      "en": "Netiqueta em Emails"
+      "en": "Email Netiquette"
     },
     "icon": "📢",
     "title": {
       "pt": "Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!",
-      "en": "Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!"
+      "en": "Writing in CAPITAL LETTERS in an email is like SHOUTING!"
     },
     "teaser": {
       "pt": "Ao redigir mensagens para professores ou colegas, usa sempre letras maiúsculas e minúsculas normais.",
-      "en": "Ao redigir mensagens para professores ou colegas, usa sempre letras maiúsculas e minúsculas normais."
+      "en": "When writing messages to teachers or classmates, use normal upper- and lower-case letters."
     },
     "description": {
       "pt": "Na etiqueta digital, escrever palavras ou frases inteiras em maiúsculas soa agressivo e irritado. Além disso, blocos de texto em maiúsculas são muito mais difíceis e cansativos de ler no ecrã.",
-      "en": "Na etiqueta digital, escrever palavras ou frases inteiras em maiúsculas soa agressivo e irritado. Além disso, blocos de texto em maiúsculas são muito mais difíceis e cansativos de ler no ecrã."
+      "en": "In digital etiquette, writing whole words or sentences in capital letters can sound aggressive and angry. Blocks of capital letters are also much harder and more tiring to read on screen."
     },
     "whyItMatters": {
       "pt": "Regras de cortesia, pontuação e comunicação assertiva no correio eletrónico.",
-      "en": "Regras de cortesia, pontuação e comunicação assertiva no correio eletrónico."
+      "en": "Rules of courtesy, punctuation, and assertive communication in email."
     },
     "funFact": {
       "pt": "Começa sempre com uma saudação formal (\"Bom dia, Professora\") e termina com assinatura e turma!",
-      "en": "Começa sempre com uma saudação formal (\"Bom dia, Professora\") e termina com assinatura e turma!"
+      "en": "Always start with a polite greeting (\"Good morning, Teacher\") and finish with your name and class!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -1511,28 +1511,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Segurança HTTPS",
-      "en": "Segurança HTTPS"
+      "en": "HTTPS Security"
     },
     "icon": "🔒",
     "title": {
       "pt": "O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!",
-      "en": "O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!"
+      "en": "The \"S\" in HTTPS is the invisible safe that encrypts your data!"
     },
     "teaser": {
       "pt": "Nunca introduzas palavras-passe em páginas que comecem apenas por \"http://\" sem o \"s\".",
-      "en": "Nunca introduzas palavras-passe em páginas que comecem apenas por \"http://\" sem o \"s\"."
+      "en": "Never enter passwords on pages that start only with \"http://\" without the \"s\"."
     },
     "description": {
       "pt": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias.",
-      "en": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias."
+      "en": "The \"S\" means Secure. It indicates that the connection between your computer and the website is encrypted using a digital certificate: people on the Wi-Fi network cannot simply read the information you send."
     },
     "whyItMatters": {
       "pt": "Verificação de certificados de segurança e protocolos de navegação segura na Internet.",
-      "en": "Verificação de certificados de segurança e protocolos de navegação segura na Internet."
+      "en": "Checking security certificates and secure browsing protocols on the Internet."
     },
     "funFact": {
       "pt": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!",
-      "en": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!"
+      "en": "More than 95% of modern websites use the HTTPS protocol!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -1591,23 +1591,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🤝",
     "title": {
       "pt": "Creative Commons: o convite amigável para partilhar criatividade com o mundo!",
-      "en": "Creative Commons: o convite amigável para partilhar criatividade com o mundo!"
+      "en": "Creative Commons: a friendly invitation to share creativity with the world!"
     },
     "teaser": {
       "pt": "Conheces o símbolo com dois \"C\" (CC) que vês na Wikipédia, no Scratch e no YouTube?",
-      "en": "Conheces o símbolo com dois \"C\" (CC) que vês na Wikipédia, no Scratch e no YouTube?"
+      "en": "Do you know the symbol with two \"C\"s (CC) that you see on Wikipedia, Scratch, and YouTube?"
     },
     "description": {
       "pt": "Em 2001, o professor Lawrence Lessig criou as licenças Creative Commons. Elas permitem que autores digam: \"Podes usar a minha música ou foto de graça para o teu trabalho escolar, desde que me dês o devido crédito (CC-BY)! \".",
-      "en": "Em 2001, o professor Lawrence Lessig criou as licenças Creative Commons. Elas permitem que autores digam: \"Podes usar a minha música ou foto de graça para o teu trabalho escolar, desde que me dês o devido crédito (CC-BY)! \"."
+      "en": "In 2001, professor Lawrence Lessig helped create the Creative Commons licences. They let authors say: \"You may use my music or photo for your school project, as long as you give me proper credit (CC-BY)!\""
     },
     "whyItMatters": {
       "pt": "Identificação dos símbolos de partilha Creative Commons (BY, NC, ND, SA) no Tema 7.",
-      "en": "Identificação dos símbolos de partilha Creative Commons (BY, NC, ND, SA) no Tema 7."
+      "en": "Identifying Creative Commons sharing symbols (BY, NC, ND, SA) in Topic 7."
     },
     "funFact": {
       "pt": "A enciclopédia Wikipédia e os projetos remixados no Scratch funcionam sob licenças Creative Commons!",
-      "en": "A enciclopédia Wikipédia e os projetos remixados no Scratch funcionam sob licenças Creative Commons!"
+      "en": "Wikipedia and remixed projects on Scratch can use Creative Commons licences!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -1661,28 +1661,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Linguagem dos Computadores",
-      "en": "Linguagem dos Computadores"
+      "en": "Computer Language"
     },
     "icon": "0️⃣",
     "title": {
       "pt": "Tudo no computador são apenas ZEROS e UNS (0 e 1)!",
-      "en": "Tudo no computador são apenas ZEROS e UNS (0 e 1)!"
+      "en": "Everything in a computer is represented using ZEROS and ONES (0 and 1)!"
     },
     "teaser": {
       "pt": "Fotos, músicas, jogos 3D e vídeos do YouTube... como é que cabem em apenas dois números?",
-      "en": "Fotos, músicas, jogos 3D e vídeos do YouTube... como é que cabem em apenas dois números?"
+      "en": "Photos, music, 3D games, and YouTube videos... how can they fit into just two numbers?"
     },
     "description": {
       "pt": "Os circuitos do computador funcionam com eletricidade: ou passa corrente (1) ou não passa (0). A este sistema chamamos Código Binário. Combinando 8 zeros e uns (um Byte), o computador consegue representar qualquer letra, som ou cor de um píxel!",
-      "en": "Os circuitos do computador funcionam com eletricidade: ou passa corrente (1) ou não passa (0). A este sistema chamamos Código Binário. Combinando 8 zeros e uns (um Byte), o computador consegue representar qualquer letra, som ou cor de um píxel!"
+      "en": "Computer circuits use electricity: current is represented as 1 and no current as 0. This system is called Binary Code. By combining 8 zeros and ones (one byte), a computer can represent letters, sounds, or pixel colours!"
     },
     "whyItMatters": {
-      "pt": "No 5. º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte.",
-      "en": "No 5. º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte."
+      "pt": "No 5.º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte.",
+      "en": "In 5th grade ICT, we learn the fundamental concept of a bit (Binary Digit) and a byte."
     },
     "funFact": {
       "pt": "A letra \"A\" maiúscula em binário escreve-se assim: 01000001!",
-      "en": "A letra \"A\" maiúscula em binário escreve-se assim: 01000001!"
+      "en": "The capital letter \"A\" in binary is written as 01000001!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -1736,28 +1736,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Pescoço e Coluna",
-      "en": "Pescoço e Coluna"
+      "en": "Neck and Spine"
     },
     "icon": "🦒",
     "title": {
       "pt": "O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!",
-      "en": "O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!"
+      "en": "\"Text Neck\": putting 27 kg of force on your spine!"
     },
     "teaser": {
       "pt": "Inclinar a cabeça para baixo sobre o telemóvel esforça o pescoço como carregar um saco de cimento.",
-      "en": "Inclinar a cabeça para baixo sobre o telemóvel esforça o pescoço como carregar um saco de cimento."
+      "en": "Looking down at a phone puts strain on your neck like carrying a bag of cement."
     },
     "description": {
       "pt": "Uma cabeça humana em posição direita pesa cerca de 5 kg. Mas quando a inclinas a 60 graus sobre um telemóvel ou tablet, a força exercida no pescoço sobe para 27 kg! Levanta os braços e traz o ecrã até aos olhos!",
-      "en": "Uma cabeça humana em posição direita pesa cerca de 5 kg. Mas quando a inclinas a 60 graus sobre um telemóvel ou tablet, a força exercida no pescoço sobe para 27 kg! Levanta os braços e traz o ecrã até aos olhos!"
+      "en": "A human head in an upright position weighs about 5 kg. When you tilt it 60 degrees over a phone or tablet, the force on the neck can rise greatly. Raise your arms and bring the screen up to eye level!"
     },
     "whyItMatters": {
       "pt": "Aprender a posicionar o topo do monitor ao nível da linha dos olhos é uma regra ergonómica essencial.",
-      "en": "Aprender a posicionar o topo do monitor ao nível da linha dos olhos é uma regra ergonómica essencial."
+      "en": "Learning to position the top of the monitor around eye level is an essential ergonomic rule."
     },
     "funFact": {
       "pt": "Fazer rotações suaves com a cabeça de vez em quando alivia a tensão acumulada nos ombros!",
-      "en": "Fazer rotações suaves com a cabeça de vez em quando alivia a tensão acumulada nos ombros!"
+      "en": "Gently rotating your head from time to time can relieve built-up tension in your shoulders!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -1811,28 +1811,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Netiqueta e Empatia",
-      "en": "Netiqueta e Empatia"
+      "en": "Netiquette and Empathy"
     },
     "icon": "💬",
     "title": {
       "pt": "Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!",
-      "en": "Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!"
+      "en": "Netiquette: kindness and respect in messages and virtual classrooms!"
     },
     "teaser": {
       "pt": "Como ser um colega cinco estrelas em grupos de WhatsApp e fóruns da turma?",
-      "en": "Como ser um colega cinco estrelas em grupos de WhatsApp e fóruns da turma?"
+      "en": "How can you be a five-star classmate in WhatsApp groups and class forums?"
     },
     "description": {
       "pt": "Netiqueta é a etiqueta da Net. Significa não insultar, não espalhar boatos, não partilhar fotos de colegas sem autorização expressa deles e respeitar as opiniões diferentes com cordialidade e espírito de equipa.",
-      "en": "Netiqueta é a etiqueta da Net. Significa não insultar, não espalhar boatos, não partilhar fotos de colegas sem autorização expressa deles e respeitar as opiniões diferentes com cordialidade e espírito de equipa."
+      "en": "Netiquette means Internet etiquette. It means not insulting people, spreading rumours, or sharing classmates' photos without their permission, and respecting different opinions with kindness and team spirit."
     },
     "whyItMatters": {
-      "pt": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5. º ano.",
-      "en": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5. º ano."
+      "pt": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5.º ano.",
+      "en": "Promoting peaceful coexistence and combating all forms of cyberbullying in 5th grade."
     },
     "funFact": {
       "pt": "Um emoji sorridente ajuda a demonstrar que a tua mensagem é amigável e sem má intenção!",
-      "en": "Um emoji sorridente ajuda a demonstrar que a tua mensagem é amigável e sem má intenção!"
+      "en": "A smiling emoji can help show that your message is friendly and not meant badly!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -1886,28 +1886,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Autenticação de 2 Fatores",
-      "en": "Autenticação de 2 Fatores"
+      "en": "Two-Factor Authentication"
     },
     "icon": "📲",
     "title": {
       "pt": "Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!",
-      "en": "Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!"
+      "en": "Two-Factor Authentication (2FA): the double lock on your digital door!"
     },
     "teaser": {
       "pt": "Mesmo que alguém descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro.",
-      "en": "Mesmo que alguém descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro."
+      "en": "Even if someone discovers your password, a second authentication factor adds an extra layer of protection and makes access much safer."
     },
     "description": {
       "pt": "O 2FA combina algo que sabes (a tua palavra-passe) com algo que tens (um código enviado por SMS ou gerado numa aplicação segura). É a proteção mais recomendada para contas de email e jogos importantes.",
-      "en": "O 2FA combina algo que sabes (a tua palavra-passe) com algo que tens (um código enviado por SMS ou gerado numa aplicação segura). É a proteção mais recomendada para contas de email e jogos importantes."
+      "en": "2FA combines something you know (your password) with something you have (a code sent by SMS or generated by a secure app). It is strongly recommended for important email and gaming accounts."
     },
     "whyItMatters": {
       "pt": "Conhecer mecanismos modernos de autenticação multifator no Tema 4 de TIC.",
-      "en": "Conhecer mecanismos modernos de autenticação multifator no Tema 4 de TIC."
+      "en": "Learning about modern multi-factor authentication mechanisms in ICT Topic 4."
     },
     "funFact": {
       "pt": "É exatamente como o cartão multibanco: precisas do cartão físico e do código PIN para levantar dinheiro!",
-      "en": "É exatamente como o cartão multibanco: precisas do cartão físico e do código PIN para levantar dinheiro!"
+      "en": "It is just like a bank card: you need the physical card and the PIN to withdraw money!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -1961,28 +1961,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Anexos Perigosos",
-      "en": "Anexos Perigosos"
+      "en": "Dangerous Attachments"
     },
     "icon": "📎",
     "title": {
       "pt": "Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!",
-      "en": "Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!"
+      "en": "Beware of attachments: never open files with suspicious extensions!"
     },
     "teaser": {
       "pt": "Ficheiros como . exe, . bat, . vbs ou ficheiros . zip desconhecidos podem esconder vírus perigosos.",
-      "en": "Ficheiros como . exe, . bat, . vbs ou ficheiros . zip desconhecidos podem esconder vírus perigosos."
+      "en": "Files such as .exe, .bat, .vbs, or unknown .zip files can hide dangerous malware."
     },
     "description": {
       "pt": "Se receberes um email de alguém que não conheces com um anexo que diz \"fatura. exe\" ou \"fotos. zip\", não abras! Os criminosos usam anexos disfarçados para infetar o computador e roubar ficheiros.",
-      "en": "Se receberes um email de alguém que não conheces com um anexo que diz \"fatura. exe\" ou \"fotos. zip\", não abras! Os criminosos usam anexos disfarçados para infetar o computador e roubar ficheiros."
+      "en": "If you receive an email from someone you do not know with an attachment called \"invoice.exe\" or \"photos.zip\", do not open it! Criminals use disguised attachments to infect computers and steal files."
     },
     "whyItMatters": {
       "pt": "Reconhecimento de tipos de ficheiros e extensões seguras (. pdf, . docx, . png) no Tema 5 de TIC.",
-      "en": "Reconhecimento de tipos de ficheiros e extensões seguras (. pdf, . docx, . png) no Tema 5 de TIC."
+      "en": "Recognising file types and safer extensions (.pdf, .docx, .png) in ICT Topic 5."
     },
     "funFact": {
       "pt": "Na dúvida, pede ao teu professor ou pais para analisarem o email com o programa antivírus!",
-      "en": "Na dúvida, pede ao teu professor ou pais para analisarem o email com o programa antivírus!"
+      "en": "When in doubt, ask your teacher or parents to check the email with antivirus software!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -2036,28 +2036,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Combate a Fake News",
-      "en": "Combate a Fake News"
+      "en": "Fighting Fake News"
     },
     "icon": "🕵️‍♀️",
     "title": {
       "pt": "O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!",
-      "en": "O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!"
+      "en": "The 3-Question Detective Test against Fake News!"
     },
     "teaser": {
       "pt": "Nem tudo o que está na Internet é verdade! Qualquer pessoa pode publicar invenções.",
-      "en": "Nem tudo o que está na Internet é verdade! Qualquer pessoa pode publicar invenções."
+      "en": "Not everything on the Internet is true! Anyone can publish made-up information."
     },
     "description": {
       "pt": "Antes de usar uma informação num trabalho escolar, pergunta: 1) QUEM escreveu? (É um especialista respeitado? ); 2) QUANDO foi publicado? (É recente ou de há 10 anos? ); 3) OUTROS jornais sérios e enciclopédias confirmam a mesma notícia?",
-      "en": "Antes de usar uma informação num trabalho escolar, pergunta: 1) QUEM escreveu? (É um especialista respeitado? ); 2) QUANDO foi publicado? (É recente ou de há 10 anos? ); 3) OUTROS jornais sérios e enciclopédias confirmam a mesma notícia?"
+      "en": "Before using information in a school project, ask: 1) WHO wrote it? (Are they a respected expert?); 2) WHEN was it published? (Is it recent or 10 years old?); 3) Do other reliable newspapers and encyclopedias confirm the same information?"
     },
     "whyItMatters": {
       "pt": "Literacia da informação e espírito crítico na avaliação de fontes da Web.",
-      "en": "Literacia da informação e espírito crítico na avaliação de fontes da Web."
+      "en": "Information literacy and critical thinking when evaluating Web sources."
     },
     "funFact": {
       "pt": "Em 1998, um biólogo criou o site falso do \"Polvo das Árvores\" para provar como as pessoas acreditam em tudo online!",
-      "en": "Em 1998, um biólogo criou o site falso do \"Polvo das Árvores\" para provar como as pessoas acreditam em tudo online!"
+      "en": "In 1998, a biologist created the fake \"Tree Octopus\" website to show how easily people can believe things online!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -2111,28 +2111,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Citação e Bibliografia",
-      "en": "Citação e Bibliografia"
+      "en": "Citation and Bibliography"
     },
     "icon": "📚",
     "title": {
       "pt": "Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!",
-      "en": "Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!"
+      "en": "Citing sources is not weakness: it is the mark of real scientists!"
     },
     "teaser": {
       "pt": "Indicar os livros e sites consultados valoriza o teu trabalho e dá-te notas melhores!",
-      "en": "Indicar os livros e sites consultados valoriza o teu trabalho e dá-te notas melhores!"
+      "en": "Listing the books and websites you consulted adds value to your work and can help you earn better marks!"
     },
     "description": {
       "pt": "Alguns alunos têm vergonha de dizer de onde tiraram a informação, pensando que deviam saber tudo de cabeça. Pelo contrário! Cientistas e historiadores indicam sempre a \"Webgrafia\" no final com autor, título do artigo, link e data de acesso.",
-      "en": "Alguns alunos têm vergonha de dizer de onde tiraram a informação, pensando que deviam saber tudo de cabeça. Pelo contrário! Cientistas e historiadores indicam sempre a \"Webgrafia\" no final com autor, título do artigo, link e data de acesso."
+      "en": "Some students are embarrassed to say where they got information, thinking they should know everything by heart. The opposite is true! Scientists and historians always list their sources at the end, with the author, article title, link, and access date."
     },
     "whyItMatters": {
       "pt": "Elaboração rigorosa de bibliografias e webgrafias de acordo com as normas escolares de TIC.",
-      "en": "Elaboração rigorosa de bibliografias e webgrafias de acordo com as normas escolares de TIC."
+      "en": "Careful preparation of bibliographies and web references according to school ICT guidelines."
     },
     "funFact": {
       "pt": "Grandes cientistas como Einstein e Newton sempre agradeceram publicamente aos autores que leram!",
-      "en": "Grandes cientistas como Einstein e Newton sempre agradeceram publicamente aos autores que leram!"
+      "en": "Great scientists such as Einstein and Newton always publicly acknowledged the authors they read!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -2186,28 +2186,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Periféricos de TIC",
-      "en": "Periféricos de TIC"
+      "en": "ICT Peripherals"
     },
     "icon": "🖨️",
     "title": {
       "pt": "Periféricos: a ponte mágica entre o ser humano e a máquina!",
-      "en": "Periféricos: a ponte mágica entre o ser humano e a máquina!"
+      "en": "Peripherals: the magic bridge between people and machines!"
     },
     "teaser": {
       "pt": "Sabes dizer se os teus auscultadores são de entrada ou de saída de informação?",
-      "en": "Sabes dizer se os teus auscultadores são de entrada ou de saída de informação?"
+      "en": "Can you tell whether your headphones are input or output devices?"
     },
     "description": {
       "pt": "Periféricos de Entrada enviam dados para o computador (rato, teclado, microfone, câmara). Periféricos de Saída mostram o resultado (monitor, colunas de som, impressora). E periféricos Mistos fazem as duas coisas (ecrãs táteis e auscultadores com microfone integrado)!",
-      "en": "Periféricos de Entrada enviam dados para o computador (rato, teclado, microfone, câmara). Periféricos de Saída mostram o resultado (monitor, colunas de som, impressora). E periféricos Mistos fazem as duas coisas (ecrãs táteis e auscultadores com microfone integrado)!"
+      "en": "Input peripherals send data to the computer (mouse, keyboard, microphone, camera). Output peripherals show the result (monitor, speakers, printer). Mixed peripherals do both (touchscreens and headsets with a built-in microphone)!"
     },
     "whyItMatters": {
       "pt": "Classificar periféricos em Entrada, Saída e Mistos é uma das matérias mais importantes do Tema 1.",
-      "en": "Classificar periféricos em Entrada, Saída e Mistos é uma das matérias mais importantes do Tema 1."
+      "en": "Classifying peripherals as Input, Output, and Mixed is one of the most important subjects in Topic 1."
     },
     "funFact": {
       "pt": "Os óculos de realidade virtual são periféricos mistos: mostram imagem e leem o movimento da cabeça!",
-      "en": "Os óculos de realidade virtual são periféricos mistos: mostram imagem e leem o movimento da cabeça!"
+      "en": "Virtual reality headsets are mixed peripherals: they display images and read head movement!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -2261,28 +2261,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Volume e Audição",
-      "en": "Volume e Audição"
+      "en": "Volume and Hearing"
     },
     "icon": "🎧",
     "title": {
       "pt": "A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!",
-      "en": "A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!"
+      "en": "The 60/60 rule for headphones: protect your ears for life!"
     },
     "teaser": {
       "pt": "Ouvir música ou jogos aos berros nos fones pode causar danos irreversíveis na audição.",
-      "en": "Ouvir música ou jogos aos berros nos fones pode causar danos irreversíveis na audição."
+      "en": "Listening to music or games at full volume through headphones can cause permanent hearing damage."
     },
     "description": {
       "pt": "Os médicos recomendam a regra dos 60/60: nunca usar auscultadores a mais de 60% do volume máximo, e fazer uma pausa a cada 60 minutos. Se a pessoa ao teu lado consegue ouvir o som dos teus fones, está alto demais!",
-      "en": "Os médicos recomendam a regra dos 60/60: nunca usar auscultadores a mais de 60% do volume máximo, e fazer uma pausa a cada 60 minutos. Se a pessoa ao teu lado consegue ouvir o som dos teus fones, está alto demais!"
+      "en": "Doctors recommend the 60/60 rule: never use headphones above 60% of maximum volume, and take a break every 60 minutes. If the person next to you can hear your headphones, the volume is too high!"
     },
     "whyItMatters": {
       "pt": "O bem-estar e a saúde no uso de periféricos de som fazem parte do programa curricular de TIC.",
-      "en": "O bem-estar e a saúde no uso de periféricos de som fazem parte do programa curricular de TIC."
+      "en": "Well-being and health when using audio peripherals are part of the ICT curriculum."
     },
     "funFact": {
       "pt": "As pequenas células ciliadas do ouvido interno não se regeneram se forem destruídas por som estridente!",
-      "en": "As pequenas células ciliadas do ouvido interno não se regeneram se forem destruídas por som estridente!"
+      "en": "The tiny hair cells in the inner ear do not grow back if they are destroyed by very loud sound!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -2336,28 +2336,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Localização GPS",
-      "en": "Localização GPS"
+      "en": "GPS Location"
     },
     "icon": "📍",
     "title": {
       "pt": "Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!",
-      "en": "Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!"
+      "en": "Beware of geolocation: your photos may contain hidden coordinates!"
     },
     "teaser": {
       "pt": "Sabias que as fotos do telemóvel podem guardar a latitude e longitude exatas de onde foram tiradas?",
-      "en": "Sabias que as fotos do telemóvel podem guardar a latitude e longitude exatas de onde foram tiradas?"
+      "en": "Did you know that phone photos can store the exact latitude and longitude where they were taken?"
     },
     "description": {
       "pt": "Os metadados EXIF guardam a data, modelo da câmara e a localização GPS da foto. Antes de publicar fotos publicamente, é aconselhável desligar a geolocalização nas definições da câmara para ninguém descobrir onde vives.",
-      "en": "Os metadados EXIF guardam a data, modelo da câmara e a localização GPS da foto. Antes de publicar fotos publicamente, é aconselhável desligar a geolocalização nas definições da câmara para ninguém descobrir onde vives."
+      "en": "EXIF metadata can store the date, camera model, and GPS location of a photo. Before publishing photos publicly, it is a good idea to turn off geolocation in the camera settings so people cannot discover where you live."
     },
     "whyItMatters": {
       "pt": "No Tema 3 aprendemos como funcionam os dados invisíveis que os dispositivos anexam aos ficheiros.",
-      "en": "No Tema 3 aprendemos como funcionam os dados invisíveis que os dispositivos anexam aos ficheiros."
+      "en": "In Topic 3, we learn how invisible data can be attached to files by devices."
     },
     "funFact": {
       "pt": "Fotos tiradas dentro de casa nunca devem mostrar janelas com placas do nome da rua ou números de polícia!",
-      "en": "Fotos tiradas dentro de casa nunca devem mostrar janelas com placas do nome da rua ou números de polícia!"
+      "en": "Photos taken inside your home should never show windows with street-name signs or house numbers!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -2411,28 +2411,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Gestores de Palavras-passe",
-      "en": "Gestores de Palavras-passe"
+      "en": "Password Managers"
     },
     "icon": "🗄️",
     "title": {
       "pt": "Nunca repitas a mesma palavra-passe em todos os sites e aplicações!",
-      "en": "Nunca repitas a mesma palavra-passe em todos os sites e aplicações!"
+      "en": "Never reuse the same password on every website and app!"
     },
     "teaser": {
       "pt": "Se um site de jogos sofrer uma fuga de informação, a tua conta de email também fica em risco.",
-      "en": "Se um site de jogos sofrer uma fuga de informação, a tua conta de email também fica em risco."
+      "en": "If a gaming website suffers a data breach, your email account may also be at risk."
     },
     "description": {
       "pt": "Quando usas a mesma palavra-passe em todo o lado, basta um site ter falhas de segurança para os criminosos tentarem entrar nas tuas restantes contas. Usa palavras-passe diferentes ou um gestor de palavras-passe protegido.",
-      "en": "Quando usas a mesma palavra-passe em todo o lado, basta um site ter falhas de segurança para os criminosos tentarem entrar nas tuas restantes contas. Usa palavras-passe diferentes ou um gestor de palavras-passe protegido."
+      "en": "When you use the same password everywhere, one security failure can give criminals a chance to try your password on your other accounts. Use different passwords or a protected password manager."
     },
     "whyItMatters": {
-      "pt": "Higiene e diversificação de credenciais em plataformas digitais no 5. º ano.",
-      "en": "Higiene e diversificação de credenciais em plataformas digitais no 5. º ano."
+      "pt": "Higiene e diversificação de credenciais em plataformas digitais no 5.º ano.",
+      "en": "Good credential hygiene and password diversification in digital platforms in 5th grade."
     },
     "funFact": {
       "pt": "Podes usar gestores de palavras-passe seguros integrados nos navegadores com a ajuda dos teus pais!",
-      "en": "Podes usar gestores de palavras-passe seguros integrados nos navegadores com a ajuda dos teus pais!"
+      "en": "You can use secure password managers built into browsers with help from your parents!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -2486,28 +2486,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Phishing por Email",
-      "en": "Phishing por Email"
+      "en": "Email Phishing"
     },
     "icon": "🎣",
     "title": {
       "pt": "Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!",
-      "en": "Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!"
+      "en": "Phishing: the digital \"fisher\" trying to steal your password!"
     },
     "teaser": {
       "pt": "\"A sua conta vai ser apagada em 24 horas! Clique aqui urgente! \" — É Phishing!",
-      "en": "\"A sua conta vai ser apagada em 24 horas! Clique aqui urgente! \" — É Phishing!"
+      "en": "\"Your account will be deleted in 24 hours! Click here urgently!\" — That is phishing!"
     },
     "description": {
       "pt": "O termo vem de \"fishing\" (pesca). Os burlões lançam um isco assustador para te fazer clicar num link falso que imita a tua escola ou banco. Repara com atenção no endereço do remetente: costuma ter erros estranhos!",
-      "en": "O termo vem de \"fishing\" (pesca). Os burlões lançam um isco assustador para te fazer clicar num link falso que imita a tua escola ou banco. Repara com atenção no endereço do remetente: costuma ter erros estranhos!"
+      "en": "The term comes from \"fishing\". Scammers use a frightening bait to make you click a fake link that imitates your school or bank. Look carefully at the sender's address: it often contains strange mistakes!"
     },
     "whyItMatters": {
       "pt": "Identificação de sinais de alerta em emails fraudulentos e mensagens de phishing.",
-      "en": "Identificação de sinais de alerta em emails fraudulentos e mensagens de phishing."
+      "en": "Identifying warning signs in fraudulent emails and phishing messages."
     },
     "funFact": {
       "pt": "Nenhum serviço legítimo te ameaça com fecho imediato de conta sem contacto oficial prévio!",
-      "en": "Nenhum serviço legítimo te ameaça com fecho imediato de conta sem contacto oficial prévio!"
+      "en": "No legitimate service threatens to close your account immediately without prior official contact!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -2561,28 +2561,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Aranhas da Web",
-      "en": "Aranhas da Web"
+      "en": "Web Spiders"
     },
     "icon": "🕷️",
     "title": {
       "pt": "As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!",
-      "en": "As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!"
+      "en": "The invisible \"spiders\" of the Internet that crawl the Web while you sleep!"
     },
     "teaser": {
       "pt": "Como é que o motor de busca sabe o que existe em milhares de milhões de sites?",
-      "en": "Como é que o motor de busca sabe o que existe em milhares de milhões de sites?"
+      "en": "How does a search engine know what exists across billions of websites?"
     },
     "description": {
       "pt": "Os motores de busca usam programas automáticos chamados rastreadores Web (web crawlers ou spiders). Elas viajam de link em link dia e noite, lendo o conteúdo das páginas e organizando uma biblioteca gigante chamada Índice.",
-      "en": "Os motores de busca usam programas automáticos chamados rastreadores Web (web crawlers ou spiders). Elas viajam de link em link dia e noite, lendo o conteúdo das páginas e organizando uma biblioteca gigante chamada Índice."
+      "en": "Search engines use automatic programs called web crawlers or spiders. They travel from link to link day and night, reading page content and organising a giant library called an index."
     },
     "whyItMatters": {
       "pt": "Compreender como a informação é indexada e recuperada nos motores de pesquisa.",
-      "en": "Compreender como a informação é indexada e recuperada nos motores de pesquisa."
+      "en": "Understanding how information is indexed and retrieved by search engines."
     },
     "funFact": {
       "pt": "O Google começou com um robô de busca criado por dois estudantes de doutoramento em Stanford em 1996!",
-      "en": "O Google começou com um robô de busca criado por dois estudantes de doutoramento em Stanford em 1996!"
+      "en": "Google began with a search robot created by two Stanford graduate students in 1996!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -2636,28 +2636,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Domínio Público",
-      "en": "Domínio Público"
+      "en": "Public Domain"
     },
     "icon": "🏛️",
     "title": {
       "pt": "O que é o Domínio Público? O tesouro cultural que pertence a toda a humanidade!",
-      "en": "O que é o Domínio Público? O tesouro cultural que pertence a toda a humanidade!"
+      "en": "What is the Public Domain? Cultural treasure that belongs to everyone!"
     },
     "teaser": {
       "pt": "Sabias que podes usar quadros de Leonardo da Vinci e músicas de Mozart sem pedir licença?",
-      "en": "Sabias que podes usar quadros de Leonardo da Vinci e músicas de Mozart sem pedir licença?"
+      "en": "Did you know you can use paintings by Leonardo da Vinci and music by Mozart without asking for copyright permission?"
     },
     "description": {
       "pt": "Uma obra no domínio público pode, em geral, ser utilizada e partilhada sem pedir autorização por direitos de autor.",
-      "en": "Uma obra no domínio público pode, em geral, ser utilizada e partilhada sem pedir autorização por direitos de autor."
+      "en": "A work in the public domain can generally be used and shared without asking for copyright permission."
     },
     "whyItMatters": {
       "pt": "Compreensão dos prazos de proteção de direitos de autor e acesso ao património comum.",
-      "en": "Compreensão dos prazos de proteção de direitos de autor e acesso ao património comum."
+      "en": "Understanding copyright protection periods and access to the common cultural heritage."
     },
     "funFact": {
       "pt": "As primeiras versões do Rato Mickey dos anos 20 entraram recentemente no Domínio Público!",
-      "en": "As primeiras versões do Rato Mickey dos anos 20 entraram recentemente no Domínio Público!"
+      "en": "The earliest Mickey Mouse versions from the 1920s recently entered the public domain!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -2711,28 +2711,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "História do Rato",
-      "en": "História do Rato"
+      "en": "History of the Mouse"
     },
     "icon": "🖱️",
     "title": {
       "pt": "O primeiro rato do mundo foi feito de madeira com rodas de metal!",
-      "en": "O primeiro rato do mundo foi feito de madeira com rodas de metal!"
+      "en": "The world's first computer mouse was made of wood with metal wheels!"
     },
     "teaser": {
       "pt": "Inventado em 1964 por Douglas Engelbart, tinha apenas um botão vermelho no topo.",
-      "en": "Inventado em 1964 por Douglas Engelbart, tinha apenas um botão vermelho no topo."
+      "en": "Invented in 1964 by Douglas Engelbart, it had just one red button on top."
     },
     "description": {
       "pt": "Antes do rato, para abrir um ficheiro era preciso escrever linhas de código difíceis num teclado. Engelbart inventou uma caixinha de madeira com duas rodas em baixo para mover uma setinha no ecrã e facilitar o uso para qualquer pessoa!",
-      "en": "Antes do rato, para abrir um ficheiro era preciso escrever linhas de código difíceis num teclado. Engelbart inventou uma caixinha de madeira com duas rodas em baixo para mover uma setinha no ecrã e facilitar o uso para qualquer pessoa!"
+      "en": "Before the mouse, opening a file meant typing difficult lines of code on a keyboard. Engelbart invented a small wooden box with two wheels underneath to move an arrow on the screen and make computers easier for people to use!"
     },
     "whyItMatters": {
       "pt": "Estudamos a evolução das interfaces gráficas (GUI) e periféricos no 1. º tema de TIC.",
-      "en": "Estudamos a evolução das interfaces gráficas (GUI) e periféricos no 1. º tema de TIC."
+      "en": "We study the evolution of graphical user interfaces (GUIs) and peripherals in ICT Topic 1."
     },
     "funFact": {
       "pt": "Recebeu o nome de rato porque o cabo que saía da parte de trás parecia uma cauda!",
-      "en": "Recebeu o nome de rato porque o cabo que saía da parte de trás parecia uma cauda!"
+      "en": "It was called a mouse because the cable coming out of the back looked like a tail!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -2786,28 +2786,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Mochila Escolar",
-      "en": "Mochila Escolar"
+      "en": "School Backpack"
     },
     "icon": "🎒",
     "title": {
       "pt": "O peso da mochila não deve ultrapassar 10% do teu peso corporal!",
-      "en": "O peso da mochila não deve ultrapassar 10% do teu peso corporal!"
+      "en": "The weight of your backpack should not exceed 10% of your body weight!"
     },
     "teaser": {
       "pt": "Levar o computador portátil e cadernos pesados nas costas exige bons hábitos de organização.",
-      "en": "Levar o computador portátil e cadernos pesados nas costas exige bons hábitos de organização."
+      "en": "Carrying a laptop and heavy notebooks on your back requires good organisational habits."
     },
     "description": {
       "pt": "Se pesas 40 kg, a tua mochila não devia pesar mais do que 4 kg! Coloca os objetos mais pesados colados às costas e usa sempre as duas alças bem ajustadas, nunca pendurada num ombro só.",
-      "en": "Se pesas 40 kg, a tua mochila não devia pesar mais do que 4 kg! Coloca os objetos mais pesados colados às costas e usa sempre as duas alças bem ajustadas, nunca pendurada num ombro só."
+      "en": "If you weigh 40 kg, your backpack should not weigh more than 4 kg! Put the heaviest items close to your back and always use both straps, adjusted properly, never hanging from one shoulder."
     },
     "whyItMatters": {
       "pt": "A ergonomia estende-se ao transporte de materiais escolares e tecnologias portáteis.",
-      "en": "A ergonomia estende-se ao transporte de materiais escolares e tecnologias portáteis."
+      "en": "Ergonomics also applies to carrying school materials and portable technology."
     },
     "funFact": {
       "pt": "Uma mochila desregulada pode causar desvios na coluna como a escoliose na adolescência!",
-      "en": "Uma mochila desregulada pode causar desvios na coluna como a escoliose na adolescência!"
+      "en": "An improperly adjusted backpack can contribute to spinal problems such as scoliosis during adolescence!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -2936,28 +2936,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Post-its no Monitor",
-      "en": "Post-its no Monitor"
+      "en": "Post-it Notes on the Monitor"
     },
     "icon": "📝",
     "title": {
       "pt": "O erro clássico: colar papéis com a palavra-passe no ecrã do computador!",
-      "en": "O erro clássico: colar papéis com a palavra-passe no ecrã do computador!"
+      "en": "The classic mistake: sticking notes with your password on the computer screen!"
     },
     "teaser": {
       "pt": "Escrever a palavra-passe num post-it amarelo e colar no monitor é como deixar a chave na fechadura.",
-      "en": "Escrever a palavra-passe num post-it amarelo e colar no monitor é como deixar a chave na fechadura."
+      "en": "Writing your password on a yellow Post-it and sticking it to the monitor is like leaving the key in the lock."
     },
     "description": {
       "pt": "Qualquer colega ou pessoa que passe pela secretária consegue ver e anotar a tua palavra-passe num instante. Guarda as tuas credenciais de memória ou em ferramentas digitais encriptadas e protegidas.",
-      "en": "Qualquer colega ou pessoa que passe pela secretária consegue ver e anotar a tua palavra-passe num instante. Guarda as tuas credenciais de memória ou em ferramentas digitais encriptadas e protegidas."
+      "en": "Any classmate or person passing your desk can see and write down your password in seconds. Keep your credentials in memory or in encrypted, protected digital tools."
     },
     "whyItMatters": {
       "pt": "Práticas de segurança física e lógica no manuseamento de acessos no computador.",
-      "en": "Práticas de segurança física e lógica no manuseamento de acessos no computador."
+      "en": "Physical and logical security practices when handling computer access."
     },
     "funFact": {
       "pt": "Nos escritórios e bancos, é estritamente proibido ter papéis com palavras-passe à vista na secretária!",
-      "en": "Nos escritórios e bancos, é estritamente proibido ter papéis com palavras-passe à vista na secretária!"
+      "en": "In offices and banks, having passwords written on visible notes on the desk is strictly forbidden!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -3011,28 +3011,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "O Campo Assunto",
-      "en": "O Campo Assunto"
+      "en": "The Subject Field"
     },
     "icon": "🏷️",
     "title": {
       "pt": "Nunca envies um email com o campo \"Assunto\" vazio!",
-      "en": "Nunca envies um email com o campo \"Assunto\" vazio!"
+      "en": "Never send an email with the \"Subject\" field empty!"
     },
     "teaser": {
       "pt": "O Assunto deve resumir em poucas palavras o objetivo exato da mensagem.",
-      "en": "O Assunto deve resumir em poucas palavras o objetivo exato da mensagem."
+      "en": "The Subject should summarise the exact purpose of the message in a few words."
     },
     "description": {
-      "pt": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5. º B\".",
-      "en": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5. º B\"."
+      "pt": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5.º B\".",
+      "en": "Sending an email without a subject is like handing someone a letter inside a completely blank envelope. Write a clear subject, for example: \"ICT Project - Topic 5 - João Silva No. 12 - 5th B\"."
     },
     "whyItMatters": {
       "pt": "Composição correta dos elementos essenciais de uma mensagem de correio eletrónico.",
-      "en": "Composição correta dos elementos essenciais de uma mensagem de correio eletrónico."
+      "en": "Correct composition of the essential elements of an email message."
     },
     "funFact": {
       "pt": "Emails sem assunto vão frequentemente parar à pasta de Spam ou Lixo Eletrónico de forma automática!",
-      "en": "Emails sem assunto vão frequentemente parar à pasta de Spam ou Lixo Eletrónico de forma automática!"
+      "en": "Emails without a subject often end up automatically in the Spam or Junk folder!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -3063,7 +3063,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Um assunto claro como 'Trabalho de TIC - 5. º A - João Silva' ajuda a professora a responder rápido!",
+      "pt": "Um assunto claro como 'Trabalho de TIC - 5.º A - João Silva' ajuda a professora a responder rápido!",
       "en": "A clear subject line like 'ICT Project - Class 5A - John Doe' helps teachers respond fast!"
     }
   },
@@ -3086,28 +3086,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Histórico e Cookies",
-      "en": "Histórico e Cookies"
+      "en": "History and Cookies"
     },
     "icon": "🍪",
     "title": {
       "pt": "Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!",
-      "en": "Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!"
+      "en": "Cookies on the Internet: they are not chocolate biscuits, but small text notes!"
     },
     "teaser": {
       "pt": "Porque é que todos os sites perguntam se aceitas cookies?",
-      "en": "Porque é que todos os sites perguntam se aceitas cookies?"
+      "en": "Why do all websites ask whether you accept cookies?"
     },
     "description": {
       "pt": "Um cookie é um pequeno ficheiro de texto que o site guarda no teu navegador para se lembrar de quem és, que língua preferes ou que itens tens no carrinho de compras. Cookies de terceiros podem seguir a tua navegação entre sites.",
-      "en": "Um cookie é um pequeno ficheiro de texto que o site guarda no teu navegador para se lembrar de quem és, que língua preferes ou que itens tens no carrinho de compras. Cookies de terceiros podem seguir a tua navegação entre sites."
+      "en": "A cookie is a small text file that a website stores in your browser to remember who you are, your preferred language, or items in your shopping cart. Third-party cookies can track your browsing across websites."
     },
     "whyItMatters": {
       "pt": "Gestão de privacidade, cookies e limpeza de histórico de navegação no Tema 6 de TIC.",
-      "en": "Gestão de privacidade, cookies e limpeza de histórico de navegação no Tema 6 de TIC."
+      "en": "Managing privacy, cookies, and clearing browsing history in ICT Topic 6."
     },
     "funFact": {
       "pt": "O nome \"cookie\" foi inspirado nos \"biscoitos da sorte\" chineses que trazem uma mensagem secreta dentro!",
-      "en": "O nome \"cookie\" foi inspirado nos \"biscoitos da sorte\" chineses que trazem uma mensagem secreta dentro!"
+      "en": "The name \"cookie\" was inspired by fortune cookies that contain a hidden message!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -3161,28 +3161,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Música e Sons Livres",
-      "en": "Música e Sons Livres"
+      "en": "Free Music and Sounds"
     },
     "icon": "🎵",
     "title": {
       "pt": "Bancos de som e música livre para os teus vídeos e jogos no Scratch!",
-      "en": "Bancos de som e música livre para os teus vídeos e jogos no Scratch!"
+      "en": "Free music and sound libraries for your videos and Scratch games!"
     },
     "teaser": {
       "pt": "Usar músicas famosas da rádio no teu vídeo do YouTube pode fazer o vídeo ser bloqueado.",
-      "en": "Usar músicas famosas da rádio no teu vídeo do YouTube pode fazer o vídeo ser bloqueado."
+      "en": "Using famous radio music in your YouTube video may cause the video to be blocked."
     },
     "description": {
       "pt": "Plataformas de vídeo usam algoritmos automáticos de reconhecimento de áudio que bloqueiam músicas protegidas por direitos comerciais. Usa bancos de áudio livres como a YouTube Audio Library ou sons de Domínio Público.",
-      "en": "Plataformas de vídeo usam algoritmos automáticos de reconhecimento de áudio que bloqueiam músicas protegidas por direitos comerciais. Usa bancos de áudio livres como a YouTube Audio Library ou sons de Domínio Público."
+      "en": "Video platforms use automatic audio-recognition systems that can block music protected by commercial copyright. Use free audio libraries such as the YouTube Audio Library or public-domain sounds."
     },
     "whyItMatters": {
       "pt": "Pesquisa e integração ética de recursos multimédia em projetos digitais escolares.",
-      "en": "Pesquisa e integração ética de recursos multimédia em projetos digitais escolares."
+      "en": "Ethical research and integration of multimedia resources in school digital projects."
     },
     "funFact": {
       "pt": "Muitos músicos famosos gravam canções e lançam-nas voluntariamente sob a licença livre CC0!",
-      "en": "Muitos músicos famosos gravam canções e lançam-nas voluntariamente sob a licença livre CC0!"
+      "en": "Many musicians release songs voluntarily under free licences such as CC0!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -3236,28 +3236,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Robótica e Exploração",
-      "en": "Robótica e Exploração"
+      "en": "Robotics and Exploration"
     },
     "icon": "🤖",
     "title": {
       "pt": "Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!",
-      "en": "Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!"
+      "en": "Robots on Mars: scientists drive rovers millions of kilometres from Earth!"
     },
     "teaser": {
       "pt": "Os robôs Curiosity e Perseverance usam computadores de bordo para analisar rochas em Marte.",
-      "en": "Os robôs Curiosity e Perseverance usam computadores de bordo para analisar rochas em Marte."
+      "en": "The Curiosity and Perseverance robots use onboard computers to analyse rocks on Mars."
     },
     "description": {
       "pt": "Os sinais de rádio demoram até 20 minutos a viajar da Terra até Marte! Por isso, os robôs marcianos têm de ter inteligência a bordo para evitar rochas e buracos sozinhos sem esperar pela resposta imediata dos cientistas.",
-      "en": "Os sinais de rádio demoram até 20 minutos a viajar da Terra até Marte! Por isso, os robôs marcianos têm de ter inteligência a bordo para evitar rochas e buracos sozinhos sem esperar pela resposta imediata dos cientistas."
+      "en": "Radio signals can take up to 20 minutes to travel from Earth to Mars! That is why Mars rovers need onboard systems to avoid rocks and holes without waiting for an immediate response from scientists."
     },
     "whyItMatters": {
       "pt": "Exploramos como a robótica e a automação transformam a ciência e a sociedade moderna.",
-      "en": "Exploramos como a robótica e a automação transformam a ciência e a sociedade moderna."
+      "en": "We explore how robotics and automation transform modern science and society."
     },
     "funFact": {
       "pt": "O rover Perseverance tem um pequeno helicóptero chamado Ingenuity que voou na atmosfera rarefeita de Marte!",
-      "en": "O rover Perseverance tem um pequeno helicóptero chamado Ingenuity que voou na atmosfera rarefeita de Marte!"
+      "en": "The Perseverance rover has a small helicopter called Ingenuity that flew in Mars's thin atmosphere!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -3311,28 +3311,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Iluminação do Espaço",
-      "en": "Iluminação do Espaço"
+      "en": "Lighting the Workspace"
     },
     "icon": "💡",
     "title": {
       "pt": "Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!",
-      "en": "Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!"
+      "en": "Avoid screen glare: the window should never be directly behind you!"
     },
     "teaser": {
       "pt": "Como deves orientar a tua mesa de computador em relação à luz natural da janela?",
-      "en": "Como deves orientar a tua mesa de computador em relação à luz natural da janela?"
+      "en": "How should you position your computer desk in relation to natural window light?"
     },
     "description": {
       "pt": "Se a janela ficar diretamente atrás de ti, o sol cria reflexos ofuscantes no ecrã. Se ficar mesmo atrás do monitor, ficas encandeado. O ideal é a luz natural entrar de lado em relação à mesa de trabalho.",
-      "en": "Se a janela ficar diretamente atrás de ti, o sol cria reflexos ofuscantes no ecrã. Se ficar mesmo atrás do monitor, ficas encandeado. O ideal é a luz natural entrar de lado em relação à mesa de trabalho."
+      "en": "If the window is directly behind you, sunlight can create glare on the screen. If it is directly behind the monitor, you may be dazzled. Ideally, natural light should enter from the side of the desk."
     },
     "whyItMatters": {
       "pt": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado.",
-      "en": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado."
+      "en": "In Topic 2, we learn to organise a pleasant, well-lit, and well-ventilated workstation."
     },
     "funFact": {
       "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!",
-      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!"
+      "en": "Keeping the room ventilated helps renew the air and can improve your comfort and concentration when using a computer!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -3386,28 +3386,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Engenharia Social",
-      "en": "Engenharia Social"
+      "en": "Social Engineering"
     },
     "icon": "🎣",
     "title": {
       "pt": "Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!",
-      "en": "Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!"
+      "en": "Beware the bait: \"Free Coins\" offers in games are almost always traps!"
     },
     "teaser": {
       "pt": "\"Clica aqui para ganhares 10. 000 Robux ou V-Bucks de graça! \" — Desconfia sempre!",
-      "en": "\"Clica aqui para ganhares 10. 000 Robux ou V-Bucks de graça! \" — Desconfia sempre!"
+      "en": "\"Click here to get 10,000 Robux or V-Bucks for free!\" — Always be suspicious!"
     },
     "description": {
       "pt": "Cibercriminosos usam sites falsos com promessas de moedas virtuais grátis para roubar palavras-passe e contas. A regra é simples: se parece bom demais para ser verdade, desconfia. Pode ser uma tentativa de fraude.",
-      "en": "Cibercriminosos usam sites falsos com promessas de moedas virtuais grátis para roubar palavras-passe e contas. A regra é simples: se parece bom demais para ser verdade, desconfia. Pode ser uma tentativa de fraude."
+      "en": "Cybercriminals use fake websites promising free virtual coins to steal passwords and accounts. The rule is simple: if it looks too good to be true, be suspicious. It may be an attempted scam."
     },
     "whyItMatters": {
       "pt": "Identificação de técnicas básicas de engenharia social e enganos virtuais.",
-      "en": "Identificação de técnicas básicas de engenharia social e enganos virtuais."
+      "en": "Identifying basic social-engineering techniques and online deception."
     },
     "funFact": {
       "pt": "As empresas oficiais dos jogos nunca pedem a tua palavra-passe para te darem prémios!",
-      "en": "As empresas oficiais dos jogos nunca pedem a tua palavra-passe para te darem prémios!"
+      "en": "Official game companies never ask for your password to give you prizes!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -3461,28 +3461,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Bloqueio de Sessão",
-      "en": "Bloqueio de Sessão"
+      "en": "Session Lock"
     },
     "icon": "🔒",
     "title": {
       "pt": "Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!",
-      "en": "Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!"
+      "en": "Ninja shortcut: Windows key + L locks the screen in 1 second!"
     },
     "teaser": {
       "pt": "Vais ao intervalo ou à casa de banho na sala de informática? Bloqueia a sessão!",
-      "en": "Vais ao intervalo ou à casa de banho na sala de informática? Bloqueia a sessão!"
+      "en": "Going to break or to the bathroom in the computer room? Lock your session!"
     },
     "description": {
       "pt": "No Windows, pressionar a tecla Windows junto com a letra \"L\" bloqueia o ecrã instantaneamente. Assim ninguém mexe no teu trabalho escolar enquanto estás ausente da sala de aula.",
-      "en": "No Windows, pressionar a tecla Windows junto com a letra \"L\" bloqueia o ecrã instantaneamente. Assim ninguém mexe no teu trabalho escolar enquanto estás ausente da sala de aula."
+      "en": "On Windows, pressing the Windows key together with the letter \"L\" locks the screen instantly. This stops other people from using your schoolwork while you are away from the classroom."
     },
     "whyItMatters": {
       "pt": "Utilização correta dos atalhos de sistema operativo para proteger sessões de utilizador.",
-      "en": "Utilização correta dos atalhos de sistema operativo para proteger sessões de utilizador."
+      "en": "Correct use of operating-system shortcuts to protect user sessions."
     },
     "funFact": {
       "pt": "No computador Mac da Apple, o atalho equivalente é Control + Command + Q!",
-      "en": "No computador Mac da Apple, o atalho equivalente é Control + Command + Q!"
+      "en": "On an Apple Mac, the equivalent shortcut is Control + Command + Q!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -3536,28 +3536,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Spam e Cadeias",
-      "en": "Spam e Cadeias"
+      "en": "Spam and Chain Messages"
     },
     "icon": "🗑️",
     "title": {
       "pt": "A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!",
-      "en": "A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!"
+      "en": "The origin of the word \"SPAM\": a canned meat brand made famous in the 1970s!"
     },
     "teaser": {
       "pt": "Mensagens publicitárias não solicitadas receberam o nome de uma comida enlatada!",
-      "en": "Mensagens publicitárias não solicitadas receberam o nome de uma comida enlatada!"
+      "en": "Unwanted advertising messages were named after a canned food!"
     },
     "description": {
       "pt": "A palavra SPAM era originalmente o nome de uma marca de carne enlatada. Ficou famosa num programa de humor dos Monty Python, onde a palavra era repetida sem parar, inspirando mais tarde o uso do termo para mensagens indesejadas em massa.",
-      "en": "A palavra SPAM era originalmente o nome de uma marca de carne enlatada. Ficou famosa num programa de humor dos Monty Python, onde a palavra era repetida sem parar, inspirando mais tarde o uso do termo para mensagens indesejadas em massa."
+      "en": "The word SPAM was originally the name of a canned meat brand. It became famous in a Monty Python comedy sketch where the word was repeated over and over, later inspiring the term for unwanted mass messages."
     },
     "whyItMatters": {
       "pt": "Gestão de pastas de correio: Caixa de Entrada, Itens Enviados, Rascunhos e Spam.",
-      "en": "Gestão de pastas de correio: Caixa de Entrada, Itens Enviados, Rascunhos e Spam."
+      "en": "Managing email folders: Inbox, Sent Items, Drafts, and Spam."
     },
     "funFact": {
       "pt": "Cartas em cadeia que dizem \"Reenvia a 10 amigos ou terás azar\" são mitos falsos: apaga-as logo!",
-      "en": "Cartas em cadeia que dizem \"Reenvia a 10 amigos ou terás azar\" são mitos falsos: apaga-as logo!"
+      "en": "Chain letters saying \"Forward this to 10 friends or you will have bad luck\" are false myths: delete them!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -3611,28 +3611,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Separadores e Janelas",
-      "en": "Separadores e Janelas"
+      "en": "Tabs and Windows"
     },
     "icon": "📑",
     "title": {
       "pt": "Atalhos de mestre no navegador: Control + T abre um novo separador!",
-      "en": "Atalhos de mestre no navegador: Control + T abre um novo separador!"
+      "en": "Master browser shortcuts: Control + T opens a new tab!"
     },
     "teaser": {
       "pt": "Dominar o teclado faz-te navegar como um verdadeiro profissional de informática.",
-      "en": "Dominar o teclado faz-te navegar como um verdadeiro profissional de informática."
+      "en": "Mastering the keyboard helps you browse like a real computer professional."
     },
     "description": {
       "pt": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!",
-      "en": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!"
+      "en": "Use Control + T to open a new tab, Control + W to close the current tab, and if you accidentally close the page you were on, Control + Shift + T magically reopens the last closed tab!"
     },
     "whyItMatters": {
       "pt": "Eficiência e atalhos de teclado na navegação Web no dia a dia.",
-      "en": "Eficiência e atalhos de teclado na navegação Web no dia a dia."
+      "en": "Efficiency and keyboard shortcuts for everyday Web browsing."
     },
     "funFact": {
       "pt": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!",
-      "en": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!"
+      "en": "On a Mac, replace the Control key with the Command key in the same shortcuts!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -3686,28 +3686,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Software Livre vs Proprietário",
-      "en": "Software Livre vs Proprietário"
+      "en": "Free vs Proprietary Software"
     },
     "icon": "🐧",
     "title": {
       "pt": "Software Livre: o código aberto onde todos podem aprender e colaborar!",
-      "en": "Software Livre: o código aberto onde todos podem aprender e colaborar!"
+      "en": "Free Software: open code where everyone can learn and collaborate!"
     },
     "teaser": {
       "pt": "Qual é a diferença entre programas comerciais fechados e aplicações como o Linux e o Scratch?",
-      "en": "Qual é a diferença entre programas comerciais fechados e aplicações como o Linux e o Scratch?"
+      "en": "What is the difference between closed commercial programs and applications such as Linux and Scratch?"
     },
     "description": {
       "pt": "Software Proprietário não permite ver como foi feito por dentro. O Software Livre e de Código Aberto (Open Source) partilha o código para que qualquer estudante ou programador possa estudar, melhorar e partilhar livremente com a comunidade.",
-      "en": "Software Proprietário não permite ver como foi feito por dentro. O Software Livre e de Código Aberto (Open Source) partilha o código para que qualquer estudante ou programador possa estudar, melhorar e partilhar livremente com a comunidade."
+      "en": "Proprietary software does not let you see how it was made internally. Free and Open Source Software shares its source code so students and programmers can study, improve, and share it with the community."
     },
     "whyItMatters": {
       "pt": "Diferença entre licenças de software comercial, freeware, shareware e software livre.",
-      "en": "Diferença entre licenças de software comercial, freeware, shareware e software livre."
+      "en": "The difference between commercial software, freeware, shareware, and free software licences."
     },
     "funFact": {
       "pt": "A mascote do sistema operativo livre Linux é um simpático pinguim chamado Tux!",
-      "en": "A mascote do sistema operativo livre Linux é um simpático pinguim chamado Tux!"
+      "en": "The mascot of the free Linux operating system is a friendly penguin called Tux!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -3761,28 +3761,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Ambiente e Sustentabilidade",
-      "en": "Ambiente e Sustentabilidade"
+      "en": "Environment and Sustainability"
     },
     "icon": "♻️",
     "title": {
       "pt": "O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!",
-      "en": "O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!"
+      "en": "Electronic Waste (E-Waste): old computers do not belong in ordinary rubbish!"
     },
     "teaser": {
       "pt": "O que deves fazer quando um telemóvel, teclado ou comando de consola avaria de vez?",
-      "en": "O que deves fazer quando um telemóvel, teclado ou comando de consola avaria de vez?"
+      "en": "What should you do when a phone, keyboard, or game controller breaks for good?"
     },
     "description": {
       "pt": "Os equipamentos de TIC contêm metais preciosos (como ouro, prata e cobre) e substâncias químicas que não podem poluir a natureza. Devem ser entregues no Eletrão ou em lojas com contentores de reciclagem elétrica adequados.",
-      "en": "Os equipamentos de TIC contêm metais preciosos (como ouro, prata e cobre) e substâncias químicas que não podem poluir a natureza. Devem ser entregues no Eletrão ou em lojas com contentores de reciclagem elétrica adequados."
+      "en": "ICT equipment contains valuable metals such as gold, silver, and copper, as well as substances that can harm nature. It should be taken to an authorised e-waste collection point or a shop with suitable electrical recycling containers."
     },
     "whyItMatters": {
-      "pt": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5. º ano.",
-      "en": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5. º ano."
+      "pt": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5.º ano.",
+      "en": "Environmental citizenship and the ecological footprint of ICT are part of the 5th-grade goals."
     },
     "funFact": {
       "pt": "Com o circuito de 40 telemóveis reciclados consegue-se recuperar ouro suficiente para fazer uma aliança!",
-      "en": "Com o circuito de 40 telemóveis reciclados consegue-se recuperar ouro suficiente para fazer uma aliança!"
+      "en": "Recycling a batch of 40 mobile phones can recover enough gold to make a wedding ring!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -3836,24 +3836,24 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Pausas Ativas",
-      "en": "Pausas Ativas"
+      "en": "Active Breaks"
     },
     "icon": "🏃‍♂️",
     "title": {
       "pt": "Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!",
-      "en": "Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!"
+      "en": "Quick stretches: stretch your arms and rotate your wrists every hour!"
     },
     "teaser": {
       "pt": "Ficar sentado horas seguidas na mesma posição cansa o corpo mais do que pensas.",
-      "en": "Ficar sentado horas seguidas na mesma posição cansa o corpo mais do que pensas."
+      "en": "Sitting for hours in the same position tires your body more than you might think."
     },
     "description": {
       "pt": "A cada 50 ou 60 minutos de aula ou estudo no computador, levanta-te, caminha até à janela, bebe um copo de água e roda suavemente os pulsos para prevenir dores nas mãos e dedos.",
-      "en": "A cada 50 ou 60 minutos de aula ou estudo no computador, levanta-te, caminha até à janela, bebe um copo de água e roda suavemente os pulsos para prevenir dores nas mãos e dedos."
+      "en": "Every 50 or 60 minutes of a computer lesson or study session, stand up, walk to the window, drink some water, and gently rotate your wrists to help prevent pain in your hands and fingers."
     },
     "whyItMatters": {
-      "pt": "A promoção de estilos de vida ativos e a quebra do sedentarismo são essenciais no 5. º ano.",
-      "en": "A promoção de estilos de vida ativos e a quebra do sedentarismo são essenciais no 5. º ano."
+      "pt": "A promoção de estilos de vida ativos e a quebra do sedentarismo são essenciais no 5.º ano.",
+      "en": "Promoting active lifestyles and breaking up sedentary time are essential in 5th grade."
     },
     "funFact": {
       "pt": "Beber água regularmente hidrata o cérebro e melhora o tempo de resposta em jogos e testes!",
@@ -3911,7 +3911,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Direito à Imagem",
-      "en": "Direito à Imagem"
+      "en": "Right to One's Image"
     },
     "icon": "📸",
     "title": {
@@ -3927,7 +3927,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "Even at school, photographing or filming a classmate and posting it on social media without their consent and their parents' permission is a serious violation of privacy and school rules."
     },
     "whyItMatters": {
-      "pt": "Compreender o direito à imagem e à reserva da intimidade da vida privada no 5. º ano de escolaridade.",
+      "pt": "Compreender o direito à imagem e à reserva da intimidade da vida privada no 5.º ano de escolaridade.",
       "en": "Understanding the right to one's image and the preservation of privacy in the 5th grade."
     },
     "funFact": {
@@ -3986,7 +3986,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Biometria",
-      "en": "Biometria"
+      "en": "Biometrics"
     },
     "icon": "👁️",
     "title": {
@@ -3995,7 +3995,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "teaser": {
       "pt": "A biometria utiliza características do corpo, como a impressão digital ou o rosto, para ajudar a confirmar a identidade de uma pessoa.",
-      "en": "A biometria usa caraterísticas físicas únicas que é muito difícil de copiar."
+      "en": "Biometrics use unique physical characteristics that are very difficult to copy."
     },
     "description": {
       "pt": "Sensores biométricos leem as linhas do teu dedo ou a geometria do teu rosto para desbloquear tablets e telemóveis. É rápido, prático e muito mais difícil de adivinhar do que uma palavra-passe de 4 algarismos.",
@@ -4007,7 +4007,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "Nem sequer gémeos verdadeiros têm impressões digitais exatamente idênticas!",
-      "en": "Nem sequer gémeos verdadeiros têm impressões digitais exatamente idênticas!"
+      "en": "Even identical twins do not have exactly the same fingerprints!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -4061,7 +4061,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Responder a Todos",
-      "en": "Responder a Todos"
+      "en": "Reply All"
     },
     "icon": "👥",
     "title": {
@@ -4077,7 +4077,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "If the teacher sends an assignment to all 25 students and you reply 'Thank you! ' using 'Reply All', all 25 classmates will receive an unnecessary notification!"
     },
     "whyItMatters": {
-      "pt": "Uso responsável e ponderado das ferramentas de comunicação coletiva no 5. º ano.",
+      "pt": "Uso responsável e ponderado das ferramentas de comunicação coletiva no 5.º ano.",
       "en": "Responsible and thoughtful use of collective communication tools in 5th grade."
     },
     "funFact": {
@@ -4136,7 +4136,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Domínios e Extensões",
-      "en": "Domínios e Extensões"
+      "en": "Domains and Extensions"
     },
     "icon": "🌐",
     "title": {
@@ -4145,7 +4145,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "teaser": {
       "pt": "A terminação do endereço da página Web revela muito sobre quem a criou.",
-      "en": "A terminação do endereço da página Web revela muito sobre quem a criou."
+      "en": "The ending of a web address reveals a lot about who created it."
     },
     "description": {
       "pt": "O domínio \". pt\" indica Portugal, \". gov\" pertence a organismos de governo oficial, \". edu\" a escolas e universidades, e \". org\" a organizações sem fins lucrativos. Sites educativos e governamentais são fontes muito mais fiáveis para trabalhos!",
@@ -4211,7 +4211,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Citação Direta entre Aspas",
-      "en": "Citação Direta entre Aspas"
+      "en": "Direct Quotation in Quotation Marks"
     },
     "icon": "💬",
     "title": {
@@ -4286,12 +4286,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Hardware Interno",
-      "en": "Hardware Interno"
+      "en": "Internal Hardware"
     },
     "icon": "🧠",
     "title": {
       "pt": "Em detalhe: A CPU, ou processador, é um dos principais componentes do computador. Executa instruções e ajuda o computador a realizar tarefas.",
-      "en": "Em detalhe: A CPU, ou processador, é um dos principais componentes do computador. Executa instruções e ajuda o computador a realizar tarefas."
+      "en": "In detail: The CPU, or processor, is one of the main components of a computer. It executes instructions and helps the computer perform tasks."
     },
     "teaser": {
       "pt": "Sabias que o processador do teu computador consegue resolver contas mais depressa do que um raio?",
@@ -4361,12 +4361,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Postura na Cadeira",
-      "en": "Postura na Cadeira"
+      "en": "Chair Posture"
     },
     "icon": "🪑",
     "title": {
       "pt": "Dica Prática: Postura Confortável ao Computador",
-      "en": "Practical Tip: Postura Confortável ao Computador"
+      "en": "Practical Tip: Comfortable Computer Posture"
     },
     "teaser": {
       "pt": "Sabias que os cotovelos e joelhos devem ficar, aproximadamente, num ângulo de 90°, numa posição confortável?",
@@ -4374,7 +4374,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "description": {
       "pt": "Como podemos aplicar isto no nosso dia a dia? Ao sentar em frente ao computador, apoia as costas no encosto da cadeira e mantém os pés bem assentes no chão. Os cotovelos e os joelhos devem ficar, aproximadamente, num ângulo de 90°, numa posição confortável. Tenta colocar este hábito em prática no teu telemóvel, tablet ou computador da escola hoje mesmo!",
-      "en": "Como podemos aplicar isto no nosso dia a dia? When sitting in front of the computer, rest your back against the chair backrest and keep your feet flat on the floor. Elbows and knees should be at approximately a 90° angle in a comfortable position. Tenta colocar este hábito em prática no teu telemóvel, tablet ou computador da escola hoje mesmo!"
+      "en": "How can we apply this in everyday life? When sitting in front of the computer, rest your back against the chair backrest and keep your feet flat on the floor. Elbows and knees should be at approximately a 90° angle in a comfortable position. Try putting this habit into practice today on your phone, tablet, or school computer!"
     },
     "whyItMatters": {
       "pt": "No Tema 2 de TIC aprendemos como regular a cadeira, secretária e ecrã para um bem-estar perfeito.",
@@ -4436,39 +4436,39 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Pegada Digital",
-      "en": "Pegada Digital"
+      "en": "Digital Footprint"
     },
     "icon": "👣",
     "title": {
       "pt": "Dica Prática: A tua Pegada Digital é como uma pegada no cimento fresco!",
-      "en": "Dica Prática: A tua Pegada Digital é como uma pegada no cimento fresco!"
+      "en": "Practical Tip: Your Digital Footprint is like a footprint in wet cement!"
     },
     "teaser": {
       "pt": "Algumas das nossas atividades online deixam registos. Publicações, comentários e conteúdos que partilhamos podem fazer parte da nossa pegada digital.",
       "en": "Some of our online activities leave records. Posts, comments, and content we share can form part of our digital footprint."
     },
     "description": {
-      "pt": "Como podemos aplicar isto no nosso dia a dia? Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã (captura de ecrã). Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes. Tenta colocar este hábito em prática no teu telemóvel, tablet ou computador da escola hoje mesmo!",
-      "en": "Como podemos aplicar isto no nosso dia a dia? Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã (captura de ecrã). Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes. Tenta colocar este hábito em prática no teu telemóvel, tablet ou computador da escola hoje mesmo!"
+      "pt": "Como podemos aplicar isto no nosso dia a dia? Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã. Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes. Tenta colocar este hábito em prática no teu telemóvel, tablet ou computador da escola hoje mesmo!",
+      "en": "How can we apply this in everyday life? Every click, video you watch, and comment builds your online reputation. Even if you delete a photo, someone may have taken a screenshot. So build a positive digital footprint by sharing thoughtfully and kindly. Try putting this habit into practice today on your phone, tablet, or school computer!"
     },
     "whyItMatters": {
       "pt": "No Tema 3 de TIC aprendemos a refletir criticamente sobre as consequências das nossas ações online.",
-      "en": "No Tema 3 de TIC aprendemos a refletir criticamente sobre as consequências das nossas ações online."
+      "en": "In ICT Topic 3, we learn to think critically about the consequences of our online actions."
     },
     "funFact": {
       "pt": "Para a dica prática sobre \"A tua Pegada Digital é como uma pegada no cimento fresco! \" \": Dica Bónus: Sabias que pequenos hábitos saudáveis, quando repetidos todos os dias, tornam as nossas competências digitais automáticas e muito mais fortes? Pequenos hábitos saudáveis repetidos todos os dias tornam as nossas competências automáticas!",
-      "en": "Para a dica prática sobre \"A tua Pegada Digital é como uma pegada no cimento fresco! \" \": Dica Bónus: Sabias que pequenos hábitos saudáveis, quando repetidos todos os dias, tornam as nossas competências digitais automáticas e muito mais fortes? Pequenos hábitos saudáveis repetidos todos os dias tornam as nossas competências automáticas!"
+      "en": "For the practical tip about \"Your Digital Footprint is like a footprint in wet cement!\": Bonus Tip: Did you know that small healthy habits, when repeated every day, make our digital skills automatic and much stronger? Small healthy habits repeated every day make our skills automatic!"
     },
     "isSpecialMilestone": false,
     "question": {
       "pt": "Qual é a melhor forma de colocar em prática no dia a dia a dica sobre \"A tua Pegada Digital é como uma pegada no cimento fresco! \" \"?",
-      "en": "Qual é a melhor forma de colocar em prática no dia a dia a dica sobre \"A tua Pegada Digital é como uma pegada no cimento fresco! \" \"?"
+      "en": "What is the best way to put the tip about \"Your Digital Footprint is like a footprint in wet cement!\" into practice every day?"
     },
     "options": [
       {
         "id": "a",
         "pt": "Fazer uma verificação ativa dos meus dispositivos e aplicar o conselho sobre \"A tua Pegada Digital é como uma pegada no cimento fresco! \".",
-        "en": "Fazer uma verificação ativa dos meus dispositivos e aplicar o conselho sobre \"A tua Pegada Digital é como uma pegada no cimento fresco! \"."
+        "en": "Actively check my devices and apply the advice about \"Your Digital Footprint is like a footprint in wet cement!\"."
       },
       {
         "id": "b",
@@ -4489,7 +4489,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "correctOptionId": "a",
     "explanation": {
       "pt": "Muito bem! Pequenas ações preventivas diárias sobre \"A tua Pegada Digital é como uma pegada no cimento fresco! \" criam comportamentos digitais saudáveis e de grande valor.",
-      "en": "Muito bem! Pequenas ações preventivas diárias sobre \"A tua Pegada Digital é como uma pegada no cimento fresco! \" criam comportamentos digitais saudáveis e de grande valor."
+      "en": "Very good! Small daily preventive actions about \"Your Digital Footprint is like a footprint in wet cement!\" create healthy and valuable digital habits."
     }
   },
   {
@@ -4586,12 +4586,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Campos do Email",
-      "en": "Campos do Email"
+      "en": "Email Fields"
     },
     "icon": "🕶️",
     "title": {
       "pt": "Dica Prática: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade",
-      "en": "Dica Prática: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade"
+      "en": "Practical Tip: The Bcc field lets you send emails to several people while protecting their privacy."
     },
     "teaser": {
       "pt": "Vais convidar 25 colegas da turma para uma festa por email? Usa o Cco!",
@@ -4599,7 +4599,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "description": {
       "pt": "Como podemos aplicar isto no nosso dia a dia? No email tens: \"Para\" (destinatários principais), \"Cc\" (Com Cópia, visível a todos) e \"Cco\" (Com Cópia Oculta). Ao colocar os contactos em Cco, ninguém vê o endereço privado dos outros, evitando spam e exposição indesejada de contactos. Tenta colocar este hábito em prática no teu telemóvel, tablet ou computador da escola hoje mesmo!",
-      "en": "Como podemos aplicar isto no nosso dia a dia? No email tens: \"Para\" (destinatários principais), \"Cc\" (Com Cópia, visível a todos) e \"Cco\" (Com Cópia Oculta). Ao colocar os contactos em Cco, ninguém vê o endereço privado dos outros, evitando spam e exposição indesejada de contactos. Tenta colocar este hábito em prática no teu telemóvel, tablet ou computador da escola hoje mesmo!"
+      "en": "How can we apply this in everyday life? In an email you have: \"To\" (main recipients), \"Cc\" (Carbon Copy, visible to everyone), and \"Bcc\" (Blind Carbon Copy). When you put contacts in Bcc, no one can see the other people's private addresses, helping prevent spam and unwanted exposure of contacts. Try putting this habit into practice today on your phone, tablet, or school computer!"
     },
     "whyItMatters": {
       "pt": "No Tema 5 de TIC aprendemos a usar os campos Para, Cc e Cco de acordo com as regras do RGPD.",
@@ -4612,7 +4612,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "isSpecialMilestone": false,
     "question": {
       "pt": "Qual é a melhor forma de colocar em prática no dia a dia a dica sobre \"Em detalhe: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade\"?",
-      "en": "Qual é a melhor forma de colocar em prática no dia a dia a dica sobre \"Dica Prática: Em detalhe: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade\"?"
+      "en": "What is the best way to put the practical tip into practice in everyday life?"
     },
     "options": [
       {
@@ -4661,28 +4661,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Navegador vs Motor",
-      "en": "Navegador vs Motor"
+      "en": "Browser vs Search Engine"
     },
     "icon": "🚗",
     "title": {
       "pt": "Dica Prática: O Navegador é o Automóvel, o Motor de Busca é o GPS!",
-      "en": "Practical Tip: O Navegador é o Automóvel, o Motor de Busca é o GPS!"
+      "en": "Practical Tip: The Browser is the Car, the Search Engine is the GPS!"
     },
     "teaser": {
       "pt": "Muitos alunos confundem o Chrome com o Google. Sabes qual é a diferença real?",
-      "en": "Muitos alunos confundem o Chrome com o Google. Sabes qual é a diferença real?"
+      "en": "Many students confuse Chrome with Google. Do you know the real difference?"
     },
     "description": {
       "pt": "O Navegador (Browser, como Chrome, Edge, Firefox ou Safari) é a aplicação instalada que abre e desenha páginas Web. O Motor de Busca (Google, Bing, DuckDuckGo) é um site especial que cataloga a rede para responder a perguntas.",
-      "en": "O Navegador (Browser, como Chrome, Edge, Firefox ou Safari) é a aplicação instalada que abre e desenha páginas Web. O Motor de Busca (Google, Bing, DuckDuckGo) é um site especial que cataloga a rede para responder a perguntas."
+      "en": "The Browser (such as Chrome, Edge, Firefox, or Safari) is the application that opens and displays web pages. A Search Engine (such as Google, Bing, or DuckDuckGo) is a special website that indexes the web to answer searches."
     },
     "whyItMatters": {
       "pt": "No Tema 6 de TIC aprendemos a usar a barra de endereços (URL) diretamente sem passar pelo motor de busca.",
-      "en": "No Tema 6 de TIC aprendemos a usar a barra de endereços (URL) diretamente sem passar pelo motor de busca."
+      "en": "In ICT Topic 6, we learn to use the address bar (URL) directly instead of going through a search engine."
     },
     "funFact": {
       "pt": "A primeira janela de navegação inventada em 1990 chamava-se \"WorldWideWeb\"!",
-      "en": "A primeira janela de navegação inventada em 1990 chamava-se \"WorldWideWeb\"!"
+      "en": "The first web browser, created in 1990, was called \"WorldWideWeb\"!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -4736,28 +4736,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Google Imagens",
-      "en": "Google Imagens"
+      "en": "Google Images"
     },
     "icon": "🎨",
     "title": {
       "pt": "Dica Prática: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!",
-      "en": "Practical Tip: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!"
+      "en": "Practical Tip: Photos from Google Images are NOT free to use however you want!"
     },
     "teaser": {
       "pt": "Copiar uma foto qualquer e colar num trabalho sem autorização pode violar a lei.",
-      "en": "Copiar uma foto qualquer e colar num trabalho sem autorização pode violar a lei."
+      "en": "Copying any photo and putting it into a school project without permission may violate copyright law."
     },
     "description": {
       "pt": "Quando um fotógrafo ou ilustrador cria uma imagem, ela fica logo protegida por Direitos de Autor (Copyright). Não a podes descarregar e reutilizar sem autorização. Para trabalhos escolares, usa imagens com licenças Creative Commons ou de Domínio Público.",
-      "en": "Quando um fotógrafo ou ilustrador cria uma imagem, ela fica logo protegida por Direitos de Autor (Copyright). Não a podes descarregar e reutilizar sem autorização. Para trabalhos escolares, usa imagens com licenças Creative Commons ou de Domínio Público."
+      "en": "When a photographer or illustrator creates an image, it is generally protected by copyright. You cannot download and reuse it without permission. For school projects, use images with suitable Creative Commons licences or in the public domain."
     },
     "whyItMatters": {
       "pt": "No Tema 7 de TIC aprendemos a respeitar a propriedade intelectual e o trabalho dos artistas.",
-      "en": "No Tema 7 de TIC aprendemos a respeitar a propriedade intelectual e o trabalho dos artistas."
+      "en": "In ICT Topic 7, we learn to respect intellectual property and the work of artists."
     },
     "funFact": {
       "pt": "Quando encontras uma imagem na Internet, lembra-te de verificar sempre a sua fonte original e qual é a licença de utilização específica. Mesmo nas licenças Creative Commons, deves respeitar regras como indicar o nome do autor (atribuição) e verificar se podes usar a imagem no teu trabalho!",
-      "en": "Quando encontras uma imagem na Internet, lembra-te de verificar sempre a sua fonte original e qual é a licença de utilização específica. Mesmo nas licenças Creative Commons, deves respeitar regras como indicar o nome do autor (atribuição) e verificar se podes usar a imagem no teu trabalho!"
+      "en": "When you find an image online, always check its original source and its specific licence. Even with Creative Commons licences, follow rules such as crediting the author and checking whether you may use the image in your project!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -4811,28 +4811,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Memória do Computador",
-      "en": "Memória do Computador"
+      "en": "Computer Memory"
     },
     "icon": "⚡",
     "title": {
       "pt": "Dica Prática: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!",
-      "en": "Practical Tip: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!"
+      "en": "Practical Tip: RAM vs SSD: the work desk vs the cupboard!"
     },
     "teaser": {
       "pt": "Qual é a diferença entre a memória que apaga tudo quando desligas e a que guarda ficheiros?",
-      "en": "Qual é a diferença entre a memória que apaga tudo quando desligas e a que guarda ficheiros?"
+      "en": "What is the difference between memory that is cleared when you switch off the computer and storage that keeps files?"
     },
     "description": {
       "pt": "O Disco SSD é o armário com gavetas: guarda os teus trabalhos a longo prazo, mas lembra-te de que os discos também se podem avariar, pelo que deves fazer sempre cópias de segurança (backups) dos teus ficheiros mais importantes!",
-      "en": "O Disco SSD é o armário com gavetas: guarda os teus trabalhos a longo prazo, mas lembra-te de que os discos também se podem avariar, pelo que deves fazer sempre cópias de segurança (backups) dos teus ficheiros mais importantes!"
+      "en": "The SSD is like a cupboard with drawers: it stores your work for the long term. Remember that storage devices can fail, so always make backups of your most important files!"
     },
     "whyItMatters": {
       "pt": "Identificar a diferença entre memória primária (RAM) e armazenamento secundário (SSD/HDD) é uma competência essencial de TIC.",
-      "en": "Identificar a diferença entre memória primária (RAM) e armazenamento secundário (SSD/HDD) é uma competência essencial de TIC."
+      "en": "Knowing the difference between primary memory (RAM) and secondary storage (SSD/HDD) is an essential ICT skill."
     },
     "funFact": {
       "pt": "Os novos discos SSD não têm peças móveis e usam chips de memória flash super rápidos!",
-      "en": "Os novos discos SSD não têm peças móveis e usam chips de memória flash super rápidos!"
+      "en": "Modern SSDs have no moving parts and use very fast flash-memory chips!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -4886,7 +4886,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Cuidado com os Olhos",
-      "en": "Cuidado com os Olhos"
+      "en": "Eye Care"
     },
     "icon": "👀",
     "title": {
@@ -4961,28 +4961,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Privacidade e Redes",
-      "en": "Privacidade e Redes"
+      "en": "Privacy and Networks"
     },
     "icon": "🕵️‍♂️",
     "title": {
       "pt": "Dica Prática: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!",
-      "en": "Practical Tip: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!"
+      "en": "Practical Tip: The \"Stranger in the Garden\" rule: never share your address in online games!"
     },
     "teaser": {
       "pt": "Roblox, Fortnite, Brawl Stars... avatares simpáticos podem esconder qualquer pessoa.",
-      "en": "Roblox, Fortnite, Brawl Stars... avatares simpáticos podem esconder qualquer pessoa."
+      "en": "Roblox, Fortnite, Brawl Stars... friendly-looking avatars can hide the identity of any person."
     },
     "description": {
       "pt": "Nunca partilhes o teu nome completo, número de telemóvel, nome da escola ou fotos onde se veja o emblema do teu clube ou a rua de tua casa com desconhecidos em salas de conversação ou jogos online.",
-      "en": "Nunca partilhes o teu nome completo, número de telemóvel, nome da escola ou fotos onde se veja o emblema do teu clube ou a rua de tua casa com desconhecidos em salas de conversação ou jogos online."
+      "en": "Never share your full name, phone number, school name, or photos showing your club badge or the street where you live with strangers in chats or online games."
     },
     "whyItMatters": {
       "pt": "A proteção de dados pessoais e a defesa da privacidade individual são prioridades de Cidadania Digital.",
-      "en": "A proteção de dados pessoais e a defesa da privacidade individual são prioridades de Cidadania Digital."
+      "en": "Protecting personal data and defending individual privacy are priorities of Digital Citizenship."
     },
     "funFact": {
       "pt": "É por isso que nos jogos é muito mais seguro e divertido usar nomes de código como \"FalcãoVeloz_99\"!",
-      "en": "É por isso que nos jogos é muito mais seguro e divertido usar nomes de código como \"FalcãoVeloz_99\"!"
+      "en": "That is why using code names such as \"FalcãoVeloz_99\" in games is safer and more fun!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -5036,28 +5036,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "O Segredo da Frase-Passe",
-      "en": "O Segredo da Frase-Passe"
+      "en": "The Secret of the Passphrase"
     },
     "icon": "🍕",
     "title": {
       "pt": "Dica Prática: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!",
-      "en": "Practical Tip: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!"
+      "en": "Practical Tip: The \"Passphrase\" method: O_Meu_Cao_Adora_Comer_99_Gelados!"
     },
     "teaser": {
-      "pt": "Uma frase longa com espaços ou travessões é fácil de decorar e quase altamente seguro.",
-      "en": "Uma frase longa com espaços ou travessões é fácil de decorar e quase altamente seguro."
+      "pt": "Uma frase longa com espaços ou travessões é fácil de decorar e muito segura.",
+      "en": "A long phrase with spaces or dashes is easy to remember and can be very secure."
     },
     "description": {
       "pt": "Em vez de uma palavra-passe curta e confusa que esqueces amanhã, inventa uma frase maluca com 4 ou 5 palavras e junta números e símbolos. Uma frase-passe longa e difícil de adivinhar é geralmente mais segura do que uma palavra-passe curta e previsível.",
-      "en": "Em vez de uma palavra-passe curta e confusa que esqueces amanhã, inventa uma frase maluca com 4 ou 5 palavras e junta números e símbolos. Uma frase-passe longa e difícil de adivinhar é geralmente mais segura do que uma palavra-passe curta e previsível."
+      "en": "Instead of a short, confusing password that you will forget tomorrow, invent a funny phrase with 4 or 5 words and add numbers and symbols. A long, hard-to-guess passphrase is generally safer than a short, predictable password."
     },
     "whyItMatters": {
       "pt": "Construção de palavras-passe fortes com base em frases mnemónicas compridas.",
-      "en": "Construção de palavras-passe fortes com base em frases mnemónicas compridas."
+      "en": "Creating strong passwords based on long memorable phrases."
     },
     "funFact": {
       "pt": "Quanto mais comprida for a palavra-passe, mais combinações matemáticas o invasor tem de testar!",
-      "en": "Quanto mais comprida for a palavra-passe, mais combinações matemáticas o invasor tem de testar!"
+      "en": "The longer the password, the more mathematical combinations an attacker has to test!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -5111,28 +5111,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "O Símbolo Arroba",
-      "en": "O Símbolo Arroba"
+      "en": "The At Symbol"
     },
     "icon": "🐌",
     "title": {
       "pt": "Dica Prática: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!",
-      "en": "Practical Tip: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!"
+      "en": "Practical Tip: The @ symbol is called \"snail\" in Italy and \"elephant trunk\" in Sweden!"
     },
     "teaser": {
       "pt": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico.",
-      "en": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico."
+      "en": "In 1971, Ray Tomlinson carried out one of the first experiments sending messages between networked computers and popularised the use of @ in email addresses."
     },
     "description": {
       "pt": "Em inglês lê-se \"at\" (no local de). Em Portugal chamamos-lhe arroba, mas outros países dão-lhe nomes animais engraçados: os italianos dizem \"chiocciola\" (caracol) e os israelitas \"strudel\" (bolo enrolado)!",
-      "en": "Em inglês lê-se \"at\" (no local de). Em Portugal chamamos-lhe arroba, mas outros países dão-lhe nomes animais engraçados: os italianos dizem \"chiocciola\" (caracol) e os israelitas \"strudel\" (bolo enrolado)!"
+      "en": "In English it is read as \"at\". In Portugal we call it \"arroba\", while other countries have funny animal names for it: Italians say \"chiocciola\" (snail) and Israelis say \"strudel\" (a rolled pastry)!"
     },
     "whyItMatters": {
-      "pt": "Estrutura padrão de um endereço de correio eletrónico: utilizador@dominio. extensao.",
-      "en": "Estrutura padrão de um endereço de correio eletrónico: utilizador@dominio. extensao."
+      "pt": "Estrutura padrão de um endereço de correio eletrónico: utilizador@domínio.extensão.",
+      "en": "Standard structure of an email address: username@domain.extension."
     },
     "funFact": {
       "pt": "Antigamente, a arroba era uma medida de peso usada no comércio que valia cerca de 15 quilogramas!",
-      "en": "Antigamente, a arroba era uma medida de peso usada no comércio que valia cerca de 15 quilogramas!"
+      "en": "In the past, the arroba was a unit of weight used in trade, worth about 15 kilograms!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -5186,28 +5186,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Truque das Aspas",
-      "en": "Truque das Aspas"
+      "en": "Quotation Marks Trick"
     },
     "icon": "🔍",
     "title": {
       "pt": "Dica Prática: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!",
-      "en": "Practical Tip: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!"
+      "en": "Practical Tip: Search like a detective: the magic quotation-mark trick \"\" in a search engine!"
     },
     "teaser": {
       "pt": "Sabias que podes obrigar o motor de busca a encontrar exatamente a frase que queres?",
-      "en": "Sabias que podes obrigar o motor de busca a encontrar exatamente a frase que queres?"
+      "en": "Did you know you can make a search engine find exactly the phrase you want?"
     },
     "description": {
       "pt": "Se colocares uma frase entre aspas (ex: \"energia eólica em Portugal\"), o motor de busca só mostra páginas que tenham essas palavras exatamente nessa ordem, filtrando milhares de páginas irrelevantes!",
-      "en": "Se colocares uma frase entre aspas (ex: \"energia eólica em Portugal\"), o motor de busca só mostra páginas que tenham essas palavras exatamente nessa ordem, filtrando milhares de páginas irrelevantes!"
+      "en": "If you put a phrase in quotation marks (e.g. \"wind energy in Portugal\"), the search engine looks for pages containing those words in that exact order, filtering out thousands of irrelevant pages!"
     },
     "whyItMatters": {
-      "pt": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5. º ano.",
-      "en": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5. º ano."
+      "pt": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5.º ano.",
+      "en": "Advanced search techniques using Boolean operators and delimiters in 5th grade."
     },
     "funFact": {
       "pt": "Se usares o sinal de menos (ex: jaguar -carro), ele procura o felino e elimina as páginas sobre automóveis!",
-      "en": "Se usares o sinal de menos (ex: jaguar -carro), ele procura o felino e elimina as páginas sobre automóveis!"
+      "en": "If you use the minus sign (e.g. jaguar -car), it searches for the animal and removes pages about cars!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -5261,28 +5261,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "O que é Plágio",
-      "en": "O que é Plágio"
+      "en": "What Is Plagiarism"
     },
     "icon": "✂️",
     "title": {
       "pt": "Dica Prática: Plágio: roubar a medalha de ouro de outra pessoa!",
-      "en": "Practical Tip: Plágio: roubar a medalha de ouro de outra pessoa!"
+      "en": "Practical Tip: Plagiarism: stealing someone else's gold medal!"
     },
     "teaser": {
       "pt": "Fazer \"Copiar e Colar\" da Wikipédia e assinar com o teu nome é desonestidade académica.",
-      "en": "Fazer \"Copiar e Colar\" da Wikipédia e assinar com o teu nome é desonestidade académica."
+      "en": "Copying and pasting from Wikipedia and signing it with your own name is academic dishonesty."
     },
     "description": {
       "pt": "Plágio é copiar textos, ideias, desenhos ou código de outra pessoa fingindo que foste tu a criar. É como alguém correr uma maratona e tu roubares a medalha para dizer que venceste. O correto é ler, explicar pelas tuas próprias palavras e citar a fonte de onde aprendeste.",
-      "en": "Plágio é copiar textos, ideias, desenhos ou código de outra pessoa fingindo que foste tu a criar. É como alguém correr uma maratona e tu roubares a medalha para dizer que venceste. O correto é ler, explicar pelas tuas próprias palavras e citar a fonte de onde aprendeste."
+      "en": "Plagiarism is copying another person's texts, ideas, drawings, or code and pretending you created them. It is like someone running a marathon and you stealing the medal to say you won. The right thing is to read, explain in your own words, and cite the source you learned from."
     },
     "whyItMatters": {
-      "pt": "Compreensão de plágio vs autoria original e integridade académica no 5. º ano.",
-      "en": "Compreensão de plágio vs autoria original e integridade académica no 5. º ano."
+      "pt": "Compreensão de plágio vs autoria original e integridade académica no 5.º ano.",
+      "en": "Understanding plagiarism versus original authorship and academic integrity in 5th grade."
     },
     "funFact": {
       "pt": "Os professores têm ferramentas de software que detetam plágio em trabalhos escolares em segundos!",
-      "en": "Os professores têm ferramentas de software que detetam plágio em trabalhos escolares em segundos!"
+      "en": "Teachers have software tools that can detect plagiarism in schoolwork within seconds!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -5336,28 +5336,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Placa Principal",
-      "en": "Placa Principal"
+      "en": "Main Board"
     },
     "icon": "🛣️",
     "title": {
       "pt": "Dica Prática: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!",
-      "en": "Practical Tip: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!"
+      "en": "Practical Tip: The Motherboard is the motorway that connects all the computer's components!"
     },
     "teaser": {
       "pt": "Como é que a placa gráfica fala com o processador e com o disco rígido?",
-      "en": "Como é que a placa gráfica fala com o processador e com o disco rígido?"
+      "en": "How does the graphics card communicate with the processor and the hard drive?"
     },
     "description": {
       "pt": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI.",
-      "en": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI."
+      "en": "The Motherboard is a large green or black circuit board filled with copper tracks. The CPU, RAM, sound card, and network card connect to it, along with USB and HDMI ports."
     },
     "whyItMatters": {
-      "pt": "Os os componentes físicos comunicam através do barramento de dados (Bus).",
-      "en": "Os os componentes físicos comunicam através do barramento de dados (Bus)."
+      "pt": "Os componentes físicos comunicam através do barramento de dados (Bus).",
+      "en": "The physical components communicate through the data bus (Bus)."
     },
     "funFact": {
       "pt": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!",
-      "en": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!"
+      "en": "It is called a \"motherboard\" because it houses and connects all the other boards and components attached to the system!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -5411,28 +5411,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Sono e Tecnologia",
-      "en": "Sono e Tecnologia"
+      "en": "Sleep and Technology"
     },
     "icon": "🌙",
     "title": {
       "pt": "Dica Prática: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \"",
-      "en": "Practical Tip: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \""
+      "en": "Practical Tip: Blue Light from the screen tells your brain: \"Wake up, it is still beach time!\""
     },
     "teaser": {
       "pt": "Porque deves desligar os ecrãs 30 a 60 minutos antes de dormir para acordares com energia?",
-      "en": "Porque deves desligar os ecrãs 30 a 60 minutos antes de dormir para acordares com energia?"
+      "en": "Why should you turn off screens 30 to 60 minutes before bed so you can wake up with energy?"
     },
     "description": {
       "pt": "A luz azul emitida por ecrãs bloqueia a melatonina, a hormona que dá sono. Quando usas o telemóvel na cama, o teu cérebro fica confuso, demoras mais tempo a adormecer e acordas cansado para a escola.",
-      "en": "A luz azul emitida por ecrãs bloqueia a melatonina, a hormona que dá sono. Quando usas o telemóvel na cama, o teu cérebro fica confuso, demoras mais tempo a adormecer e acordas cansado para a escola."
+      "en": "Blue light from screens can affect melatonin, the hormone involved in sleep. Using a phone in bed can make it harder to fall asleep and may leave you tired for school."
     },
     "whyItMatters": {
       "pt": "Estudamos o equilíbrio entre o tempo de ecrã e o descanso reparador de 9 a 12 horas diárias.",
-      "en": "Estudamos o equilíbrio entre o tempo de ecrã e o descanso reparador de 9 a 12 horas diárias."
+      "en": "We study the balance between screen time and restorative sleep of 9 to 12 hours per day."
     },
     "funFact": {
       "pt": "Substituir o telemóvel antes de dormir por um livro em papel melhora as tuas notas escolares!",
-      "en": "Substituir o telemóvel antes de dormir por um livro em papel melhora as tuas notas escolares!"
+      "en": "Replacing your phone with a paper book before bed can help your sleep and school performance!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -5486,28 +5486,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Apoio e Helplines",
-      "en": "Apoio e Helplines"
+      "en": "Support and Helplines"
     },
     "icon": "📞",
     "title": {
       "pt": "Dica Prática: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!",
-      "en": "Practical Tip: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!"
+      "en": "Practical Tip: Portugal's Safe Internet Line: 800 21 90 90 (free and confidential)!"
     },
     "teaser": {
       "pt": "Se algo correr mal online, existe uma equipa simpática pronta para te ajudar.",
-      "en": "Se algo correr mal online, existe uma equipa simpática pronta para te ajudar."
+      "en": "If something goes wrong online, there is a friendly team ready to help you."
     },
     "description": {
       "pt": "Se vires conteúdos assustadores, sofreres cyberbullying ou tiveres dúvidas sobre a tua segurança, podes ligar gratuitamente para o 800 21 90 90 ou para o SOS Criança (116 111). Nunca guardes medos só para ti!",
-      "en": "Se vires conteúdos assustadores, sofreres cyberbullying ou tiveres dúvidas sobre a tua segurança, podes ligar gratuitamente para o 800 21 90 90 ou para o SOS Criança (116 111). Nunca guardes medos só para ti!"
+      "en": "If you see frightening content, experience cyberbullying, or have concerns about your safety, you can call 800 21 90 90 or SOS Criança (116 111) for free. Never keep your worries to yourself!"
     },
     "whyItMatters": {
       "pt": "Conhecer as linhas de apoio e saber a quem recorrer perante incidentes digitais é fundamental.",
-      "en": "Conhecer as linhas de apoio e saber a quem recorrer perante incidentes digitais é fundamental."
+      "en": "Knowing support lines and knowing who to turn to when digital incidents happen is essential."
     },
     "funFact": {
       "pt": "Lembra-te: falar com os pais ou professores de confiança é sempre o primeiro e melhor passo!",
-      "en": "Lembra-te: falar com os pais ou professores de confiança é sempre o primeiro e melhor passo!"
+      "en": "Remember: talking to a trusted parent or teacher is always the first and best step!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -5561,28 +5561,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Partilha de Palavras-passe",
-      "en": "Partilha de Palavras-passe"
+      "en": "Password Sharing"
     },
     "icon": "🪥",
     "title": {
       "pt": "Dica Prática: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!",
-      "en": "Practical Tip: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!"
+      "en": "Practical Tip: Passwords are like toothbrushes: you do not lend them to anyone!"
     },
     "teaser": {
       "pt": "Nem ao melhor amigo da turma deves confiar a chave da tua vida digital.",
-      "en": "Nem ao melhor amigo da turma deves confiar a chave da tua vida digital."
+      "en": "Even your best friend in class should not be trusted with the key to your digital life."
     },
     "description": {
       "pt": "A tua palavra-passe é pessoal e intransmissível. Se a emprestares, perdes o controlo sobre quem acede aos teus emails e notas. A única exceção são os teus pais ou encarregados de educação para te protegerem.",
-      "en": "A tua palavra-passe é pessoal e intransmissível. Se a emprestares, perdes o controlo sobre quem acede aos teus emails e notas. A única exceção são os teus pais ou encarregados de educação para te protegerem."
+      "en": "Your password is personal and should not be shared. If you lend it to someone, you lose control over who can access your emails and grades. The exception is your parents or guardians, who may need it to protect you."
     },
     "whyItMatters": {
       "pt": "Responsabilidade e sigilo de credenciais de acesso no ambiente escolar e pessoal.",
-      "en": "Responsabilidade e sigilo de credenciais de acesso no ambiente escolar e pessoal."
+      "en": "Responsible and confidential handling of access credentials at school and in personal life."
     },
     "funFact": {
       "pt": "Se um dia tiveres de introduzir a tua palavra-passe à frente de alguém, tapa o teclado com a outra mão!",
-      "en": "Se um dia tiveres de introduzir a tua palavra-passe à frente de alguém, tapa o teclado com a outra mão!"
+      "en": "If you ever have to enter your password in front of someone, cover the keyboard with your other hand!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -5636,28 +5636,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Netiqueta em Emails",
-      "en": "Netiqueta em Emails"
+      "en": "Email Netiquette"
     },
     "icon": "📢",
     "title": {
       "pt": "Dica Prática: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!",
-      "en": "Practical Tip: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!"
+      "en": "Practical Tip: Writing in CAPITAL LETTERS in an email is like SHOUTING!"
     },
     "teaser": {
       "pt": "Ao redigir mensagens para professores ou colegas, usa sempre letras maiúsculas e minúsculas normais.",
-      "en": "Ao redigir mensagens para professores ou colegas, usa sempre letras maiúsculas e minúsculas normais."
+      "en": "When writing messages to teachers or classmates, use normal upper- and lower-case letters."
     },
     "description": {
       "pt": "Na etiqueta digital, escrever palavras ou frases inteiras em maiúsculas soa agressivo e irritado. Além disso, blocos de texto em maiúsculas são muito mais difíceis e cansativos de ler no ecrã.",
-      "en": "Na etiqueta digital, escrever palavras ou frases inteiras em maiúsculas soa agressivo e irritado. Além disso, blocos de texto em maiúsculas são muito mais difíceis e cansativos de ler no ecrã."
+      "en": "In digital etiquette, writing whole words or sentences in capital letters can sound aggressive and angry. Blocks of capital letters are also much harder and more tiring to read on screen."
     },
     "whyItMatters": {
       "pt": "Regras de cortesia, pontuação e comunicação assertiva no correio eletrónico.",
-      "en": "Regras de cortesia, pontuação e comunicação assertiva no correio eletrónico."
+      "en": "Rules of courtesy, punctuation, and assertive communication in email."
     },
     "funFact": {
       "pt": "Começa sempre com uma saudação formal (\"Bom dia, Professora\") e termina com assinatura e turma!",
-      "en": "Começa sempre com uma saudação formal (\"Bom dia, Professora\") e termina com assinatura e turma!"
+      "en": "Always start with a polite greeting (\"Good morning, Teacher\") and finish with your name and class!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -5711,28 +5711,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Segurança HTTPS",
-      "en": "Segurança HTTPS"
+      "en": "HTTPS Security"
     },
     "icon": "🔒",
     "title": {
       "pt": "Dica Prática: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!",
-      "en": "Practical Tip: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!"
+      "en": "Practical Tip: The \"S\" in HTTPS is the invisible safe that encrypts your data!"
     },
     "teaser": {
       "pt": "Nunca introduzas palavras-passe em páginas que comecem apenas por \"http://\" sem o \"s\".",
-      "en": "Nunca introduzas palavras-passe em páginas que comecem apenas por \"http://\" sem o \"s\"."
+      "en": "Never enter passwords on pages that start only with \"http://\" without the \"s\"."
     },
     "description": {
       "pt": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias.",
-      "en": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias."
+      "en": "The \"S\" means Secure. It indicates that the connection between your computer and the website is encrypted using a digital certificate: people on the Wi-Fi network cannot simply read the information you send."
     },
     "whyItMatters": {
       "pt": "Verificação de certificados de segurança e protocolos de navegação segura na Internet.",
-      "en": "Verificação de certificados de segurança e protocolos de navegação segura na Internet."
+      "en": "Checking security certificates and secure browsing protocols on the Internet."
     },
     "funFact": {
       "pt": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!",
-      "en": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!"
+      "en": "More than 95% of modern websites use the HTTPS protocol!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -5791,23 +5791,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🤝",
     "title": {
       "pt": "Dica Prática: Creative Commons: o convite amigável para partilhar criatividade com o mundo!",
-      "en": "Practical Tip: Creative Commons: o convite amigável para partilhar criatividade com o mundo!"
+      "en": "Practical Tip: Creative Commons: a friendly invitation to share creativity with the world!"
     },
     "teaser": {
       "pt": "Conheces o símbolo com dois \"C\" (CC) que vês na Wikipédia, no Scratch e no YouTube?",
-      "en": "Conheces o símbolo com dois \"C\" (CC) que vês na Wikipédia, no Scratch e no YouTube?"
+      "en": "Do you know the symbol with two \"C\"s (CC) that you see on Wikipedia, Scratch, and YouTube?"
     },
     "description": {
       "pt": "Em 2001, o professor Lawrence Lessig criou as licenças Creative Commons. Elas permitem que autores digam: \"Podes usar a minha música ou foto de graça para o teu trabalho escolar, desde que me dês o devido crédito (CC-BY)! \".",
-      "en": "Em 2001, o professor Lawrence Lessig criou as licenças Creative Commons. Elas permitem que autores digam: \"Podes usar a minha música ou foto de graça para o teu trabalho escolar, desde que me dês o devido crédito (CC-BY)! \"."
+      "en": "In 2001, professor Lawrence Lessig helped create the Creative Commons licences. They let authors say: \"You may use my music or photo for your school project, as long as you give me proper credit (CC-BY)!\""
     },
     "whyItMatters": {
       "pt": "Identificação dos símbolos de partilha Creative Commons (BY, NC, ND, SA) no Tema 7.",
-      "en": "Identificação dos símbolos de partilha Creative Commons (BY, NC, ND, SA) no Tema 7."
+      "en": "Identifying Creative Commons sharing symbols (BY, NC, ND, SA) in Topic 7."
     },
     "funFact": {
       "pt": "A enciclopédia Wikipédia e os projetos remixados no Scratch funcionam sob licenças Creative Commons!",
-      "en": "A enciclopédia Wikipédia e os projetos remixados no Scratch funcionam sob licenças Creative Commons!"
+      "en": "Wikipedia and remixed projects on Scratch can use Creative Commons licences!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -5861,28 +5861,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Linguagem dos Computadores",
-      "en": "Linguagem dos Computadores"
+      "en": "Computer Language"
     },
     "icon": "0️⃣",
     "title": {
       "pt": "Dica Prática: Tudo no computador são apenas ZEROS e UNS (0 e 1)!",
-      "en": "Practical Tip: Tudo no computador são apenas ZEROS e UNS (0 e 1)!"
+      "en": "Practical Tip: Everything in a computer is represented using ZEROS and ONES (0 and 1)!"
     },
     "teaser": {
       "pt": "Fotos, músicas, jogos 3D e vídeos do YouTube... como é que cabem em apenas dois números?",
-      "en": "Fotos, músicas, jogos 3D e vídeos do YouTube... como é que cabem em apenas dois números?"
+      "en": "Photos, music, 3D games, and YouTube videos... how can they fit into just two numbers?"
     },
     "description": {
       "pt": "Os circuitos do computador funcionam com eletricidade: ou passa corrente (1) ou não passa (0). A este sistema chamamos Código Binário. Combinando 8 zeros e uns (um Byte), o computador consegue representar qualquer letra, som ou cor de um píxel!",
-      "en": "Os circuitos do computador funcionam com eletricidade: ou passa corrente (1) ou não passa (0). A este sistema chamamos Código Binário. Combinando 8 zeros e uns (um Byte), o computador consegue representar qualquer letra, som ou cor de um píxel!"
+      "en": "Computer circuits use electricity: current is represented as 1 and no current as 0. This system is called Binary Code. By combining 8 zeros and ones (one byte), a computer can represent letters, sounds, or pixel colours!"
     },
     "whyItMatters": {
-      "pt": "No 5. º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte.",
-      "en": "No 5. º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte."
+      "pt": "No 5.º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte.",
+      "en": "In 5th grade ICT, we learn the fundamental concept of a bit (Binary Digit) and a byte."
     },
     "funFact": {
       "pt": "A letra \"A\" maiúscula em binário escreve-se assim: 01000001!",
-      "en": "A letra \"A\" maiúscula em binário escreve-se assim: 01000001!"
+      "en": "The capital letter \"A\" in binary is written as 01000001!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -5936,28 +5936,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Pescoço e Coluna",
-      "en": "Pescoço e Coluna"
+      "en": "Neck and Spine"
     },
     "icon": "🦒",
     "title": {
       "pt": "Dica Prática: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!",
-      "en": "Practical Tip: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!"
+      "en": "Practical Tip: \"Text Neck\": putting 27 kg of force on your spine!"
     },
     "teaser": {
       "pt": "Inclinar a cabeça para baixo sobre o telemóvel esforça o pescoço como carregar um saco de cimento.",
-      "en": "Inclinar a cabeça para baixo sobre o telemóvel esforça o pescoço como carregar um saco de cimento."
+      "en": "Looking down at a phone puts strain on your neck like carrying a bag of cement."
     },
     "description": {
       "pt": "Uma cabeça humana em posição direita pesa cerca de 5 kg. Mas quando a inclinas a 60 graus sobre um telemóvel ou tablet, a força exercida no pescoço sobe para 27 kg! Levanta os braços e traz o ecrã até aos olhos!",
-      "en": "Uma cabeça humana em posição direita pesa cerca de 5 kg. Mas quando a inclinas a 60 graus sobre um telemóvel ou tablet, a força exercida no pescoço sobe para 27 kg! Levanta os braços e traz o ecrã até aos olhos!"
+      "en": "A human head in an upright position weighs about 5 kg. When you tilt it 60 degrees over a phone or tablet, the force on the neck can rise greatly. Raise your arms and bring the screen up to eye level!"
     },
     "whyItMatters": {
       "pt": "Aprender a posicionar o topo do monitor ao nível da linha dos olhos é uma regra ergonómica essencial.",
-      "en": "Aprender a posicionar o topo do monitor ao nível da linha dos olhos é uma regra ergonómica essencial."
+      "en": "Learning to position the top of the monitor around eye level is an essential ergonomic rule."
     },
     "funFact": {
       "pt": "Fazer rotações suaves com a cabeça de vez em quando alivia a tensão acumulada nos ombros!",
-      "en": "Fazer rotações suaves com a cabeça de vez em quando alivia a tensão acumulada nos ombros!"
+      "en": "Gently rotating your head from time to time can relieve built-up tension in your shoulders!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -6011,28 +6011,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Netiqueta e Empatia",
-      "en": "Netiqueta e Empatia"
+      "en": "Netiquette and Empathy"
     },
     "icon": "💬",
     "title": {
       "pt": "Dica Prática: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!",
-      "en": "Practical Tip: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!"
+      "en": "Practical Tip: Netiquette: kindness and respect in messages and virtual classrooms!"
     },
     "teaser": {
       "pt": "Como ser um colega cinco estrelas em grupos de WhatsApp e fóruns da turma?",
-      "en": "Como ser um colega cinco estrelas em grupos de WhatsApp e fóruns da turma?"
+      "en": "How can you be a five-star classmate in WhatsApp groups and class forums?"
     },
     "description": {
       "pt": "Netiqueta é a etiqueta da Net. Significa não insultar, não espalhar boatos, não partilhar fotos de colegas sem autorização expressa deles e respeitar as opiniões diferentes com cordialidade e espírito de equipa.",
-      "en": "Netiqueta é a etiqueta da Net. Significa não insultar, não espalhar boatos, não partilhar fotos de colegas sem autorização expressa deles e respeitar as opiniões diferentes com cordialidade e espírito de equipa."
+      "en": "Netiquette means Internet etiquette. It means not insulting people, spreading rumours, or sharing classmates' photos without their permission, and respecting different opinions with kindness and team spirit."
     },
     "whyItMatters": {
-      "pt": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5. º ano.",
-      "en": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5. º ano."
+      "pt": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5.º ano.",
+      "en": "Promoting peaceful coexistence and combating all forms of cyberbullying in 5th grade."
     },
     "funFact": {
       "pt": "Um emoji sorridente ajuda a demonstrar que a tua mensagem é amigável e sem má intenção!",
-      "en": "Um emoji sorridente ajuda a demonstrar que a tua mensagem é amigável e sem má intenção!"
+      "en": "A smiling emoji can help show that your message is friendly and not meant badly!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -6086,28 +6086,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Autenticação de 2 Fatores",
-      "en": "Autenticação de 2 Fatores"
+      "en": "Two-Factor Authentication"
     },
     "icon": "📲",
     "title": {
       "pt": "Dica Prática: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!",
-      "en": "Practical Tip: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!"
+      "en": "Practical Tip: Two-Factor Authentication (2FA): the double lock on your digital door!"
     },
     "teaser": {
       "pt": "Mesmo que alguém descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro.",
-      "en": "Mesmo que alguém descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro."
+      "en": "Even if someone discovers your password, a second authentication factor adds an extra layer of protection and makes access much safer."
     },
     "description": {
       "pt": "O 2FA combina algo que sabes (a tua palavra-passe) com algo que tens (um código enviado por SMS ou gerado numa aplicação segura). É a proteção mais recomendada para contas de email e jogos importantes.",
-      "en": "O 2FA combina algo que sabes (a tua palavra-passe) com algo que tens (um código enviado por SMS ou gerado numa aplicação segura). É a proteção mais recomendada para contas de email e jogos importantes."
+      "en": "2FA combines something you know (your password) with something you have (a code sent by SMS or generated by a secure app). It is strongly recommended for important email and gaming accounts."
     },
     "whyItMatters": {
       "pt": "Conhecer mecanismos modernos de autenticação multifator no Tema 4 de TIC.",
-      "en": "Conhecer mecanismos modernos de autenticação multifator no Tema 4 de TIC."
+      "en": "Learning about modern multi-factor authentication mechanisms in ICT Topic 4."
     },
     "funFact": {
       "pt": "É exatamente como o cartão multibanco: precisas do cartão físico e do código PIN para levantar dinheiro!",
-      "en": "É exatamente como o cartão multibanco: precisas do cartão físico e do código PIN para levantar dinheiro!"
+      "en": "It is just like a bank card: you need the physical card and the PIN to withdraw money!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -6161,28 +6161,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Anexos Perigosos",
-      "en": "Anexos Perigosos"
+      "en": "Dangerous Attachments"
     },
     "icon": "📎",
     "title": {
       "pt": "Dica Prática: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!",
-      "en": "Practical Tip: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!"
+      "en": "Practical Tip: Beware of attachments: never open files with suspicious extensions!"
     },
     "teaser": {
       "pt": "Ficheiros como . exe, . bat, . vbs ou ficheiros . zip desconhecidos podem esconder vírus perigosos.",
-      "en": "Ficheiros como . exe, . bat, . vbs ou ficheiros . zip desconhecidos podem esconder vírus perigosos."
+      "en": "Files such as .exe, .bat, .vbs, or unknown .zip files can hide dangerous malware."
     },
     "description": {
       "pt": "Se receberes um email de alguém que não conheces com um anexo que diz \"fatura. exe\" ou \"fotos. zip\", não abras! Os criminosos usam anexos disfarçados para infetar o computador e roubar ficheiros.",
-      "en": "Se receberes um email de alguém que não conheces com um anexo que diz \"fatura. exe\" ou \"fotos. zip\", não abras! Os criminosos usam anexos disfarçados para infetar o computador e roubar ficheiros."
+      "en": "If you receive an email from someone you do not know with an attachment called \"invoice.exe\" or \"photos.zip\", do not open it! Criminals use disguised attachments to infect computers and steal files."
     },
     "whyItMatters": {
       "pt": "Reconhecimento de tipos de ficheiros e extensões seguras (. pdf, . docx, . png) no Tema 5 de TIC.",
-      "en": "Reconhecimento de tipos de ficheiros e extensões seguras (. pdf, . docx, . png) no Tema 5 de TIC."
+      "en": "Recognising file types and safer extensions (.pdf, .docx, .png) in ICT Topic 5."
     },
     "funFact": {
       "pt": "Na dúvida, pede ao teu professor ou pais para analisarem o email com o programa antivírus!",
-      "en": "Na dúvida, pede ao teu professor ou pais para analisarem o email com o programa antivírus!"
+      "en": "When in doubt, ask your teacher or parents to check the email with antivirus software!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -6236,28 +6236,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Combate a Fake News",
-      "en": "Combate a Fake News"
+      "en": "Fighting Fake News"
     },
     "icon": "🕵️‍♀️",
     "title": {
       "pt": "Dica Prática: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!",
-      "en": "Practical Tip: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!"
+      "en": "Practical Tip: The 3-Question Detective Test against Fake News!"
     },
     "teaser": {
       "pt": "Nem tudo o que está na Internet é verdade! Qualquer pessoa pode publicar invenções.",
-      "en": "Nem tudo o que está na Internet é verdade! Qualquer pessoa pode publicar invenções."
+      "en": "Not everything on the Internet is true! Anyone can publish made-up information."
     },
     "description": {
       "pt": "Antes de usar uma informação num trabalho escolar, pergunta: 1) QUEM escreveu? (É um especialista respeitado? ); 2) QUANDO foi publicado? (É recente ou de há 10 anos? ); 3) OUTROS jornais sérios e enciclopédias confirmam a mesma notícia?",
-      "en": "Antes de usar uma informação num trabalho escolar, pergunta: 1) QUEM escreveu? (É um especialista respeitado? ); 2) QUANDO foi publicado? (É recente ou de há 10 anos? ); 3) OUTROS jornais sérios e enciclopédias confirmam a mesma notícia?"
+      "en": "Before using information in a school project, ask: 1) WHO wrote it? (Are they a respected expert?); 2) WHEN was it published? (Is it recent or 10 years old?); 3) Do other reliable newspapers and encyclopedias confirm the same information?"
     },
     "whyItMatters": {
       "pt": "Literacia da informação e espírito crítico na avaliação de fontes da Web.",
-      "en": "Literacia da informação e espírito crítico na avaliação de fontes da Web."
+      "en": "Information literacy and critical thinking when evaluating Web sources."
     },
     "funFact": {
       "pt": "Em 1998, um biólogo criou o site falso do \"Polvo das Árvores\" para provar como as pessoas acreditam em tudo online!",
-      "en": "Em 1998, um biólogo criou o site falso do \"Polvo das Árvores\" para provar como as pessoas acreditam em tudo online!"
+      "en": "In 1998, a biologist created the fake \"Tree Octopus\" website to show how easily people can believe things online!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -6311,28 +6311,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Citação e Bibliografia",
-      "en": "Citação e Bibliografia"
+      "en": "Citation and Bibliography"
     },
     "icon": "📚",
     "title": {
       "pt": "Dica Prática: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!",
-      "en": "Practical Tip: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!"
+      "en": "Practical Tip: Citing sources is not weakness: it is the mark of real scientists!"
     },
     "teaser": {
       "pt": "Indicar os livros e sites consultados valoriza o teu trabalho e dá-te notas melhores!",
-      "en": "Indicar os livros e sites consultados valoriza o teu trabalho e dá-te notas melhores!"
+      "en": "Listing the books and websites you consulted adds value to your work and can help you earn better marks!"
     },
     "description": {
       "pt": "Alguns alunos têm vergonha de dizer de onde tiraram a informação, pensando que deviam saber tudo de cabeça. Pelo contrário! Cientistas e historiadores indicam sempre a \"Webgrafia\" no final com autor, título do artigo, link e data de acesso.",
-      "en": "Alguns alunos têm vergonha de dizer de onde tiraram a informação, pensando que deviam saber tudo de cabeça. Pelo contrário! Cientistas e historiadores indicam sempre a \"Webgrafia\" no final com autor, título do artigo, link e data de acesso."
+      "en": "Some students are embarrassed to say where they got information, thinking they should know everything by heart. The opposite is true! Scientists and historians always list their sources at the end, with the author, article title, link, and access date."
     },
     "whyItMatters": {
       "pt": "Elaboração rigorosa de bibliografias e webgrafias de acordo com as normas escolares de TIC.",
-      "en": "Elaboração rigorosa de bibliografias e webgrafias de acordo com as normas escolares de TIC."
+      "en": "Careful preparation of bibliographies and web references according to school ICT guidelines."
     },
     "funFact": {
       "pt": "Grandes cientistas como Einstein e Newton sempre agradeceram publicamente aos autores que leram!",
-      "en": "Grandes cientistas como Einstein e Newton sempre agradeceram publicamente aos autores que leram!"
+      "en": "Great scientists such as Einstein and Newton always publicly acknowledged the authors they read!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -6386,28 +6386,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Periféricos de TIC",
-      "en": "Periféricos de TIC"
+      "en": "ICT Peripherals"
     },
     "icon": "🖨️",
     "title": {
       "pt": "Dica Prática: Periféricos: a ponte mágica entre o ser humano e a máquina!",
-      "en": "Practical Tip: Periféricos: a ponte mágica entre o ser humano e a máquina!"
+      "en": "Practical Tip: Peripherals: the magic bridge between people and machines!"
     },
     "teaser": {
       "pt": "Sabes dizer se os teus auscultadores são de entrada ou de saída de informação?",
-      "en": "Sabes dizer se os teus auscultadores são de entrada ou de saída de informação?"
+      "en": "Can you tell whether your headphones are input or output devices?"
     },
     "description": {
       "pt": "Periféricos de Entrada enviam dados para o computador (rato, teclado, microfone, câmara). Periféricos de Saída mostram o resultado (monitor, colunas de som, impressora). E periféricos Mistos fazem as duas coisas (ecrãs táteis e auscultadores com microfone integrado)!",
-      "en": "Periféricos de Entrada enviam dados para o computador (rato, teclado, microfone, câmara). Periféricos de Saída mostram o resultado (monitor, colunas de som, impressora). E periféricos Mistos fazem as duas coisas (ecrãs táteis e auscultadores com microfone integrado)!"
+      "en": "Input peripherals send data to the computer (mouse, keyboard, microphone, camera). Output peripherals show the result (monitor, speakers, printer). Mixed peripherals do both (touchscreens and headsets with a built-in microphone)!"
     },
     "whyItMatters": {
       "pt": "Classificar periféricos em Entrada, Saída e Mistos é uma das matérias mais importantes do Tema 1.",
-      "en": "Classificar periféricos em Entrada, Saída e Mistos é uma das matérias mais importantes do Tema 1."
+      "en": "Classifying peripherals as Input, Output, and Mixed is one of the most important subjects in Topic 1."
     },
     "funFact": {
       "pt": "Os óculos de realidade virtual são periféricos mistos: mostram imagem e leem o movimento da cabeça!",
-      "en": "Os óculos de realidade virtual são periféricos mistos: mostram imagem e leem o movimento da cabeça!"
+      "en": "Virtual reality headsets are mixed peripherals: they display images and read head movement!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -6461,28 +6461,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Volume e Audição",
-      "en": "Volume e Audição"
+      "en": "Volume and Hearing"
     },
     "icon": "🎧",
     "title": {
       "pt": "Dica Prática: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!",
-      "en": "Practical Tip: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!"
+      "en": "Practical Tip: The 60/60 rule for headphones: protect your ears for life!"
     },
     "teaser": {
       "pt": "Ouvir música ou jogos aos berros nos fones pode causar danos irreversíveis na audição.",
-      "en": "Ouvir música ou jogos aos berros nos fones pode causar danos irreversíveis na audição."
+      "en": "Listening to music or games at full volume through headphones can cause permanent hearing damage."
     },
     "description": {
       "pt": "Os médicos recomendam a regra dos 60/60: nunca usar auscultadores a mais de 60% do volume máximo, e fazer uma pausa a cada 60 minutos. Se a pessoa ao teu lado consegue ouvir o som dos teus fones, está alto demais!",
-      "en": "Os médicos recomendam a regra dos 60/60: nunca usar auscultadores a mais de 60% do volume máximo, e fazer uma pausa a cada 60 minutos. Se a pessoa ao teu lado consegue ouvir o som dos teus fones, está alto demais!"
+      "en": "Doctors recommend the 60/60 rule: never use headphones above 60% of maximum volume, and take a break every 60 minutes. If the person next to you can hear your headphones, the volume is too high!"
     },
     "whyItMatters": {
       "pt": "O bem-estar e a saúde no uso de periféricos de som fazem parte do programa curricular de TIC.",
-      "en": "O bem-estar e a saúde no uso de periféricos de som fazem parte do programa curricular de TIC."
+      "en": "Well-being and health when using audio peripherals are part of the ICT curriculum."
     },
     "funFact": {
       "pt": "As pequenas células ciliadas do ouvido interno não se regeneram se forem destruídas por som estridente!",
-      "en": "As pequenas células ciliadas do ouvido interno não se regeneram se forem destruídas por som estridente!"
+      "en": "The tiny hair cells in the inner ear do not grow back if they are destroyed by very loud sound!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -6536,28 +6536,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Localização GPS",
-      "en": "Localização GPS"
+      "en": "GPS Location"
     },
     "icon": "📍",
     "title": {
       "pt": "Dica Prática: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!",
-      "en": "Practical Tip: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!"
+      "en": "Practical Tip: Beware of geolocation: your photos may contain hidden coordinates!"
     },
     "teaser": {
       "pt": "Sabias que as fotos do telemóvel podem guardar a latitude e longitude exatas de onde foram tiradas?",
-      "en": "Sabias que as fotos do telemóvel podem guardar a latitude e longitude exatas de onde foram tiradas?"
+      "en": "Did you know that phone photos can store the exact latitude and longitude where they were taken?"
     },
     "description": {
       "pt": "Os metadados EXIF guardam a data, modelo da câmara e a localização GPS da foto. Antes de publicar fotos publicamente, é aconselhável desligar a geolocalização nas definições da câmara para ninguém descobrir onde vives.",
-      "en": "Os metadados EXIF guardam a data, modelo da câmara e a localização GPS da foto. Antes de publicar fotos publicamente, é aconselhável desligar a geolocalização nas definições da câmara para ninguém descobrir onde vives."
+      "en": "EXIF metadata can store the date, camera model, and GPS location of a photo. Before publishing photos publicly, it is a good idea to turn off geolocation in the camera settings so people cannot discover where you live."
     },
     "whyItMatters": {
       "pt": "No Tema 3 aprendemos como funcionam os dados invisíveis que os dispositivos anexam aos ficheiros.",
-      "en": "No Tema 3 aprendemos como funcionam os dados invisíveis que os dispositivos anexam aos ficheiros."
+      "en": "In Topic 3, we learn how invisible data can be attached to files by devices."
     },
     "funFact": {
       "pt": "Fotos tiradas dentro de casa nunca devem mostrar janelas com placas do nome da rua ou números de polícia!",
-      "en": "Fotos tiradas dentro de casa nunca devem mostrar janelas com placas do nome da rua ou números de polícia!"
+      "en": "Photos taken inside your home should never show windows with street-name signs or house numbers!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -6611,28 +6611,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Gestores de Palavras-passe",
-      "en": "Gestores de Palavras-passe"
+      "en": "Password Managers"
     },
     "icon": "🗄️",
     "title": {
       "pt": "Dica Prática: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!",
-      "en": "Practical Tip: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!"
+      "en": "Practical Tip: Never reuse the same password on every website and app!"
     },
     "teaser": {
       "pt": "Se um site de jogos sofrer uma fuga de informação, a tua conta de email também fica em risco.",
-      "en": "Se um site de jogos sofrer uma fuga de informação, a tua conta de email também fica em risco."
+      "en": "If a gaming website suffers a data breach, your email account may also be at risk."
     },
     "description": {
       "pt": "Quando usas a mesma palavra-passe em todo o lado, basta um site ter falhas de segurança para os criminosos tentarem entrar nas tuas restantes contas. Usa palavras-passe diferentes ou um gestor de palavras-passe protegido.",
-      "en": "Quando usas a mesma palavra-passe em todo o lado, basta um site ter falhas de segurança para os criminosos tentarem entrar nas tuas restantes contas. Usa palavras-passe diferentes ou um gestor de palavras-passe protegido."
+      "en": "When you use the same password everywhere, one security failure can give criminals a chance to try your password on your other accounts. Use different passwords or a protected password manager."
     },
     "whyItMatters": {
-      "pt": "Higiene e diversificação de credenciais em plataformas digitais no 5. º ano.",
-      "en": "Higiene e diversificação de credenciais em plataformas digitais no 5. º ano."
+      "pt": "Higiene e diversificação de credenciais em plataformas digitais no 5.º ano.",
+      "en": "Good credential hygiene and password diversification in digital platforms in 5th grade."
     },
     "funFact": {
       "pt": "Podes usar gestores de palavras-passe seguros integrados nos navegadores com a ajuda dos teus pais!",
-      "en": "Podes usar gestores de palavras-passe seguros integrados nos navegadores com a ajuda dos teus pais!"
+      "en": "You can use secure password managers built into browsers with help from your parents!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -6686,28 +6686,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Phishing por Email",
-      "en": "Phishing por Email"
+      "en": "Email Phishing"
     },
     "icon": "🎣",
     "title": {
       "pt": "Dica Prática: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!",
-      "en": "Practical Tip: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!"
+      "en": "Practical Tip: Phishing: the digital \"fisher\" trying to steal your password!"
     },
     "teaser": {
       "pt": "\"A sua conta vai ser apagada em 24 horas! Clique aqui urgente! \" — É Phishing!",
-      "en": "\"A sua conta vai ser apagada em 24 horas! Clique aqui urgente! \" — É Phishing!"
+      "en": "\"Your account will be deleted in 24 hours! Click here urgently!\" — That is phishing!"
     },
     "description": {
       "pt": "O termo vem de \"fishing\" (pesca). Os burlões lançam um isco assustador para te fazer clicar num link falso que imita a tua escola ou banco. Repara com atenção no endereço do remetente: costuma ter erros estranhos!",
-      "en": "O termo vem de \"fishing\" (pesca). Os burlões lançam um isco assustador para te fazer clicar num link falso que imita a tua escola ou banco. Repara com atenção no endereço do remetente: costuma ter erros estranhos!"
+      "en": "The term comes from \"fishing\". Scammers use a frightening bait to make you click a fake link that imitates your school or bank. Look carefully at the sender's address: it often contains strange mistakes!"
     },
     "whyItMatters": {
       "pt": "Identificação de sinais de alerta em emails fraudulentos e mensagens de phishing.",
-      "en": "Identificação de sinais de alerta em emails fraudulentos e mensagens de phishing."
+      "en": "Identifying warning signs in fraudulent emails and phishing messages."
     },
     "funFact": {
       "pt": "Nenhum serviço legítimo te ameaça com fecho imediato de conta sem contacto oficial prévio!",
-      "en": "Nenhum serviço legítimo te ameaça com fecho imediato de conta sem contacto oficial prévio!"
+      "en": "No legitimate service threatens to close your account immediately without prior official contact!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -6761,28 +6761,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Aranhas da Web",
-      "en": "Aranhas da Web"
+      "en": "Web Spiders"
     },
     "icon": "🕷️",
     "title": {
       "pt": "Dica Prática: As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!",
-      "en": "Practical Tip: As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!"
+      "en": "Practical Tip: The invisible \"spiders\" of the Internet that crawl the Web while you sleep!"
     },
     "teaser": {
       "pt": "Como é que o motor de busca sabe o que existe em milhares de milhões de sites?",
-      "en": "Como é que o motor de busca sabe o que existe em milhares de milhões de sites?"
+      "en": "How does a search engine know what exists across billions of websites?"
     },
     "description": {
       "pt": "Os motores de busca usam programas automáticos chamados rastreadores Web (web crawlers ou spiders). Elas viajam de link em link dia e noite, lendo o conteúdo das páginas e organizando uma biblioteca gigante chamada Índice.",
-      "en": "Os motores de busca usam programas automáticos chamados rastreadores Web (web crawlers ou spiders). Elas viajam de link em link dia e noite, lendo o conteúdo das páginas e organizando uma biblioteca gigante chamada Índice."
+      "en": "Search engines use automatic programs called web crawlers or spiders. They travel from link to link day and night, reading page content and organising a giant library called an index."
     },
     "whyItMatters": {
       "pt": "Compreender como a informação é indexada e recuperada nos motores de pesquisa.",
-      "en": "Compreender como a informação é indexada e recuperada nos motores de pesquisa."
+      "en": "Understanding how information is indexed and retrieved by search engines."
     },
     "funFact": {
       "pt": "O Google começou com um robô de busca criado por dois estudantes de doutoramento em Stanford em 1996!",
-      "en": "O Google começou com um robô de busca criado por dois estudantes de doutoramento em Stanford em 1996!"
+      "en": "Google began with a search robot created by two Stanford graduate students in 1996!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -6911,28 +6911,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "História do Rato",
-      "en": "História do Rato"
+      "en": "History of the Mouse"
     },
     "icon": "🖱️",
     "title": {
       "pt": "Dica Prática: O primeiro rato do mundo foi feito de madeira com rodas de metal!",
-      "en": "Practical Tip: O primeiro rato do mundo foi feito de madeira com rodas de metal!"
+      "en": "Practical Tip: The world's first computer mouse was made of wood with metal wheels!"
     },
     "teaser": {
       "pt": "Inventado em 1964 por Douglas Engelbart, tinha apenas um botão vermelho no topo.",
-      "en": "Inventado em 1964 por Douglas Engelbart, tinha apenas um botão vermelho no topo."
+      "en": "Invented in 1964 by Douglas Engelbart, it had just one red button on top."
     },
     "description": {
       "pt": "Antes do rato, para abrir um ficheiro era preciso escrever linhas de código difíceis num teclado. Engelbart inventou uma caixinha de madeira com duas rodas em baixo para mover uma setinha no ecrã e facilitar o uso para qualquer pessoa!",
-      "en": "Antes do rato, para abrir um ficheiro era preciso escrever linhas de código difíceis num teclado. Engelbart inventou uma caixinha de madeira com duas rodas em baixo para mover uma setinha no ecrã e facilitar o uso para qualquer pessoa!"
+      "en": "Before the mouse, opening a file meant typing difficult lines of code on a keyboard. Engelbart invented a small wooden box with two wheels underneath to move an arrow on the screen and make computers easier for people to use!"
     },
     "whyItMatters": {
       "pt": "Estudamos a evolução das interfaces gráficas (GUI) e periféricos no 1. º tema de TIC.",
-      "en": "Estudamos a evolução das interfaces gráficas (GUI) e periféricos no 1. º tema de TIC."
+      "en": "We study the evolution of graphical user interfaces (GUIs) and peripherals in ICT Topic 1."
     },
     "funFact": {
       "pt": "Recebeu o nome de rato porque o cabo que saía da parte de trás parecia uma cauda!",
-      "en": "Recebeu o nome de rato porque o cabo que saía da parte de trás parecia uma cauda!"
+      "en": "It was called a mouse because the cable coming out of the back looked like a tail!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -6986,28 +6986,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Mochila Escolar",
-      "en": "Mochila Escolar"
+      "en": "School Backpack"
     },
     "icon": "🎒",
     "title": {
       "pt": "Dica Prática: O peso da mochila não deve ultrapassar 10% do teu peso corporal!",
-      "en": "Practical Tip: O peso da mochila não deve ultrapassar 10% do teu peso corporal!"
+      "en": "Practical Tip: The weight of your backpack should not exceed 10% of your body weight!"
     },
     "teaser": {
       "pt": "Levar o computador portátil e cadernos pesados nas costas exige bons hábitos de organização.",
-      "en": "Levar o computador portátil e cadernos pesados nas costas exige bons hábitos de organização."
+      "en": "Carrying a laptop and heavy notebooks on your back requires good organisational habits."
     },
     "description": {
       "pt": "Se pesas 40 kg, a tua mochila não devia pesar mais do que 4 kg! Coloca os objetos mais pesados colados às costas e usa sempre as duas alças bem ajustadas, nunca pendurada num ombro só.",
-      "en": "Se pesas 40 kg, a tua mochila não devia pesar mais do que 4 kg! Coloca os objetos mais pesados colados às costas e usa sempre as duas alças bem ajustadas, nunca pendurada num ombro só."
+      "en": "If you weigh 40 kg, your backpack should not weigh more than 4 kg! Put the heaviest items close to your back and always use both straps, adjusted properly, never hanging from one shoulder."
     },
     "whyItMatters": {
       "pt": "A ergonomia estende-se ao transporte de materiais escolares e tecnologias portáteis.",
-      "en": "A ergonomia estende-se ao transporte de materiais escolares e tecnologias portáteis."
+      "en": "Ergonomics also applies to carrying school materials and portable technology."
     },
     "funFact": {
       "pt": "Uma mochila desregulada pode causar desvios na coluna como a escoliose na adolescência!",
-      "en": "Uma mochila desregulada pode causar desvios na coluna como a escoliose na adolescência!"
+      "en": "An improperly adjusted backpack can contribute to spinal problems such as scoliosis during adolescence!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -7061,7 +7061,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Câmaras e Microfones",
-      "en": "Câmaras e Microfones"
+      "en": "Cameras and Microphones"
     },
     "icon": "📹",
     "title": {
@@ -7136,28 +7136,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Post-its no Monitor",
-      "en": "Post-its no Monitor"
+      "en": "Post-it Notes on the Monitor"
     },
     "icon": "📝",
     "title": {
       "pt": "Dica Prática: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!",
-      "en": "Practical Tip: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!"
+      "en": "Practical Tip: The classic mistake: sticking notes with your password on the computer screen!"
     },
     "teaser": {
       "pt": "Escrever a palavra-passe num post-it amarelo e colar no monitor é como deixar a chave na fechadura.",
-      "en": "Escrever a palavra-passe num post-it amarelo e colar no monitor é como deixar a chave na fechadura."
+      "en": "Writing your password on a yellow Post-it and sticking it to the monitor is like leaving the key in the lock."
     },
     "description": {
       "pt": "Qualquer colega ou pessoa que passe pela secretária consegue ver e anotar a tua palavra-passe num instante. Guarda as tuas credenciais de memória ou em ferramentas digitais encriptadas e protegidas.",
-      "en": "Qualquer colega ou pessoa que passe pela secretária consegue ver e anotar a tua palavra-passe num instante. Guarda as tuas credenciais de memória ou em ferramentas digitais encriptadas e protegidas."
+      "en": "Any classmate or person passing your desk can see and write down your password in seconds. Keep your credentials in memory or in encrypted, protected digital tools."
     },
     "whyItMatters": {
       "pt": "Práticas de segurança física e lógica no manuseamento de acessos no computador.",
-      "en": "Práticas de segurança física e lógica no manuseamento de acessos no computador."
+      "en": "Physical and logical security practices when handling computer access."
     },
     "funFact": {
       "pt": "Nos escritórios e bancos, é estritamente proibido ter papéis com palavras-passe à vista na secretária!",
-      "en": "Nos escritórios e bancos, é estritamente proibido ter papéis com palavras-passe à vista na secretária!"
+      "en": "In offices and banks, having passwords written on visible notes on the desk is strictly forbidden!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -7211,28 +7211,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "O Campo Assunto",
-      "en": "O Campo Assunto"
+      "en": "The Subject Field"
     },
     "icon": "🏷️",
     "title": {
       "pt": "Dica Prática: Nunca envies um email com o campo \"Assunto\" vazio!",
-      "en": "Practical Tip: Nunca envies um email com o campo \"Assunto\" vazio!"
+      "en": "Practical Tip: Never send an email with the \"Subject\" field empty!"
     },
     "teaser": {
       "pt": "O Assunto deve resumir em poucas palavras o objetivo exato da mensagem.",
-      "en": "O Assunto deve resumir em poucas palavras o objetivo exato da mensagem."
+      "en": "The Subject should summarise the exact purpose of the message in a few words."
     },
     "description": {
-      "pt": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5. º B\".",
-      "en": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5. º B\"."
+      "pt": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5.º B\".",
+      "en": "Sending an email without a subject is like handing someone a letter inside a completely blank envelope. Write a clear subject, for example: \"ICT Project - Topic 5 - João Silva No. 12 - 5th B\"."
     },
     "whyItMatters": {
       "pt": "Composição correta dos elementos essenciais de uma mensagem de correio eletrónico.",
-      "en": "Composição correta dos elementos essenciais de uma mensagem de correio eletrónico."
+      "en": "Correct composition of the essential elements of an email message."
     },
     "funFact": {
       "pt": "Emails sem assunto vão frequentemente parar à pasta de Spam ou Lixo Eletrónico de forma automática!",
-      "en": "Emails sem assunto vão frequentemente parar à pasta de Spam ou Lixo Eletrónico de forma automática!"
+      "en": "Emails without a subject often end up automatically in the Spam or Junk folder!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -7263,7 +7263,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Um assunto claro como 'Trabalho de TIC - 5. º A - João Silva' ajuda a professora a responder rápido!",
+      "pt": "Um assunto claro como 'Trabalho de TIC - 5.º A - João Silva' ajuda a professora a responder rápido!",
       "en": "A clear subject line like 'ICT Project - Class 5A - John Doe' helps teachers respond fast!"
     }
   },
@@ -7286,28 +7286,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Histórico e Cookies",
-      "en": "Histórico e Cookies"
+      "en": "History and Cookies"
     },
     "icon": "🍪",
     "title": {
       "pt": "Dica Prática: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!",
-      "en": "Practical Tip: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!"
+      "en": "Practical Tip: Cookies on the Internet: they are not chocolate biscuits, but small text notes!"
     },
     "teaser": {
       "pt": "Porque é que todos os sites perguntam se aceitas cookies?",
-      "en": "Porque é que todos os sites perguntam se aceitas cookies?"
+      "en": "Why do all websites ask whether you accept cookies?"
     },
     "description": {
       "pt": "Um cookie é um pequeno ficheiro de texto que o site guarda no teu navegador para se lembrar de quem és, que língua preferes ou que itens tens no carrinho de compras. Cookies de terceiros podem seguir a tua navegação entre sites.",
-      "en": "Um cookie é um pequeno ficheiro de texto que o site guarda no teu navegador para se lembrar de quem és, que língua preferes ou que itens tens no carrinho de compras. Cookies de terceiros podem seguir a tua navegação entre sites."
+      "en": "A cookie is a small text file that a website stores in your browser to remember who you are, your preferred language, or items in your shopping cart. Third-party cookies can track your browsing across websites."
     },
     "whyItMatters": {
       "pt": "Gestão de privacidade, cookies e limpeza de histórico de navegação no Tema 6 de TIC.",
-      "en": "Gestão de privacidade, cookies e limpeza de histórico de navegação no Tema 6 de TIC."
+      "en": "Managing privacy, cookies, and clearing browsing history in ICT Topic 6."
     },
     "funFact": {
       "pt": "O nome \"cookie\" foi inspirado nos \"biscoitos da sorte\" chineses que trazem uma mensagem secreta dentro!",
-      "en": "O nome \"cookie\" foi inspirado nos \"biscoitos da sorte\" chineses que trazem uma mensagem secreta dentro!"
+      "en": "The name \"cookie\" was inspired by fortune cookies that contain a hidden message!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -7361,28 +7361,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Música e Sons Livres",
-      "en": "Música e Sons Livres"
+      "en": "Free Music and Sounds"
     },
     "icon": "🎵",
     "title": {
       "pt": "Dica Prática: Bancos de som e música livre para os teus vídeos e jogos no Scratch!",
-      "en": "Practical Tip: Bancos de som e música livre para os teus vídeos e jogos no Scratch!"
+      "en": "Practical Tip: Free music and sound libraries for your videos and Scratch games!"
     },
     "teaser": {
       "pt": "Usar músicas famosas da rádio no teu vídeo do YouTube pode fazer o vídeo ser bloqueado.",
-      "en": "Usar músicas famosas da rádio no teu vídeo do YouTube pode fazer o vídeo ser bloqueado."
+      "en": "Using famous radio music in your YouTube video may cause the video to be blocked."
     },
     "description": {
       "pt": "Plataformas de vídeo usam algoritmos automáticos de reconhecimento de áudio que bloqueiam músicas protegidas por direitos comerciais. Usa bancos de áudio livres como a YouTube Audio Library ou sons de Domínio Público.",
-      "en": "Plataformas de vídeo usam algoritmos automáticos de reconhecimento de áudio que bloqueiam músicas protegidas por direitos comerciais. Usa bancos de áudio livres como a YouTube Audio Library ou sons de Domínio Público."
+      "en": "Video platforms use automatic audio-recognition systems that can block music protected by commercial copyright. Use free audio libraries such as the YouTube Audio Library or public-domain sounds."
     },
     "whyItMatters": {
       "pt": "Pesquisa e integração ética de recursos multimédia em projetos digitais escolares.",
-      "en": "Pesquisa e integração ética de recursos multimédia em projetos digitais escolares."
+      "en": "Ethical research and integration of multimedia resources in school digital projects."
     },
     "funFact": {
       "pt": "Muitos músicos famosos gravam canções e lançam-nas voluntariamente sob a licença livre CC0!",
-      "en": "Muitos músicos famosos gravam canções e lançam-nas voluntariamente sob a licença livre CC0!"
+      "en": "Many musicians release songs voluntarily under free licences such as CC0!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -7436,28 +7436,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Robótica e Exploração",
-      "en": "Robótica e Exploração"
+      "en": "Robotics and Exploration"
     },
     "icon": "🤖",
     "title": {
       "pt": "Dica Prática: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!",
-      "en": "Practical Tip: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!"
+      "en": "Practical Tip: Robots on Mars: scientists drive rovers millions of kilometres from Earth!"
     },
     "teaser": {
       "pt": "Os robôs Curiosity e Perseverance usam computadores de bordo para analisar rochas em Marte.",
-      "en": "Os robôs Curiosity e Perseverance usam computadores de bordo para analisar rochas em Marte."
+      "en": "The Curiosity and Perseverance robots use onboard computers to analyse rocks on Mars."
     },
     "description": {
       "pt": "Os sinais de rádio demoram até 20 minutos a viajar da Terra até Marte! Por isso, os robôs marcianos têm de ter inteligência a bordo para evitar rochas e buracos sozinhos sem esperar pela resposta imediata dos cientistas.",
-      "en": "Os sinais de rádio demoram até 20 minutos a viajar da Terra até Marte! Por isso, os robôs marcianos têm de ter inteligência a bordo para evitar rochas e buracos sozinhos sem esperar pela resposta imediata dos cientistas."
+      "en": "Radio signals can take up to 20 minutes to travel from Earth to Mars! That is why Mars rovers need onboard systems to avoid rocks and holes without waiting for an immediate response from scientists."
     },
     "whyItMatters": {
       "pt": "Exploramos como a robótica e a automação transformam a ciência e a sociedade moderna.",
-      "en": "Exploramos como a robótica e a automação transformam a ciência e a sociedade moderna."
+      "en": "We explore how robotics and automation transform modern science and society."
     },
     "funFact": {
       "pt": "O rover Perseverance tem um pequeno helicóptero chamado Ingenuity que voou na atmosfera rarefeita de Marte!",
-      "en": "O rover Perseverance tem um pequeno helicóptero chamado Ingenuity que voou na atmosfera rarefeita de Marte!"
+      "en": "The Perseverance rover has a small helicopter called Ingenuity that flew in Mars's thin atmosphere!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -7511,28 +7511,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Iluminação do Espaço",
-      "en": "Iluminação do Espaço"
+      "en": "Lighting the Workspace"
     },
     "icon": "💡",
     "title": {
       "pt": "Dica Prática: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!",
-      "en": "Practical Tip: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!"
+      "en": "Practical Tip: Avoid screen glare: the window should never be directly behind you!"
     },
     "teaser": {
       "pt": "Como deves orientar a tua mesa de computador em relação à luz natural da janela?",
-      "en": "Como deves orientar a tua mesa de computador em relação à luz natural da janela?"
+      "en": "How should you position your computer desk in relation to natural window light?"
     },
     "description": {
       "pt": "Se a janela ficar diretamente atrás de ti, o sol cria reflexos ofuscantes no ecrã. Se ficar mesmo atrás do monitor, ficas encandeado. O ideal é a luz natural entrar de lado em relação à mesa de trabalho.",
-      "en": "Se a janela ficar diretamente atrás de ti, o sol cria reflexos ofuscantes no ecrã. Se ficar mesmo atrás do monitor, ficas encandeado. O ideal é a luz natural entrar de lado em relação à mesa de trabalho."
+      "en": "If the window is directly behind you, sunlight can create glare on the screen. If it is directly behind the monitor, you may be dazzled. Ideally, natural light should enter from the side of the desk."
     },
     "whyItMatters": {
       "pt": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado.",
-      "en": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado."
+      "en": "In Topic 2, we learn to organise a pleasant, well-lit, and well-ventilated workstation."
     },
     "funFact": {
       "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!",
-      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!"
+      "en": "Keeping the room ventilated helps renew the air and can improve your comfort and concentration when using a computer!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -7586,28 +7586,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Engenharia Social",
-      "en": "Engenharia Social"
+      "en": "Social Engineering"
     },
     "icon": "🎣",
     "title": {
       "pt": "Dica Prática: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!",
-      "en": "Practical Tip: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!"
+      "en": "Practical Tip: Beware the bait: \"Free Coins\" offers in games are almost always traps!"
     },
     "teaser": {
       "pt": "\"Clica aqui para ganhares 10. 000 Robux ou V-Bucks de graça! \" — Desconfia sempre!",
-      "en": "\"Clica aqui para ganhares 10. 000 Robux ou V-Bucks de graça! \" — Desconfia sempre!"
+      "en": "\"Click here to get 10,000 Robux or V-Bucks for free!\" — Always be suspicious!"
     },
     "description": {
       "pt": "Cibercriminosos usam sites falsos com promessas de moedas virtuais grátis para roubar palavras-passe e contas. A regra é simples: se parece bom demais para ser verdade, desconfia. Pode ser uma tentativa de fraude.",
-      "en": "Cibercriminosos usam sites falsos com promessas de moedas virtuais grátis para roubar palavras-passe e contas. A regra é simples: se parece bom demais para ser verdade, desconfia. Pode ser uma tentativa de fraude."
+      "en": "Cybercriminals use fake websites promising free virtual coins to steal passwords and accounts. The rule is simple: if it looks too good to be true, be suspicious. It may be an attempted scam."
     },
     "whyItMatters": {
       "pt": "Identificação de técnicas básicas de engenharia social e enganos virtuais.",
-      "en": "Identificação de técnicas básicas de engenharia social e enganos virtuais."
+      "en": "Identifying basic social-engineering techniques and online deception."
     },
     "funFact": {
       "pt": "As empresas oficiais dos jogos nunca pedem a tua palavra-passe para te darem prémios!",
-      "en": "As empresas oficiais dos jogos nunca pedem a tua palavra-passe para te darem prémios!"
+      "en": "Official game companies never ask for your password to give you prizes!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -7661,28 +7661,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Bloqueio de Sessão",
-      "en": "Bloqueio de Sessão"
+      "en": "Session Lock"
     },
     "icon": "🔒",
     "title": {
       "pt": "Dica Prática: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!",
-      "en": "Practical Tip: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!"
+      "en": "Practical Tip: Ninja shortcut: Windows key + L locks the screen in 1 second!"
     },
     "teaser": {
       "pt": "Vais ao intervalo ou à casa de banho na sala de informática? Bloqueia a sessão!",
-      "en": "Vais ao intervalo ou à casa de banho na sala de informática? Bloqueia a sessão!"
+      "en": "Going to break or to the bathroom in the computer room? Lock your session!"
     },
     "description": {
       "pt": "No Windows, pressionar a tecla Windows junto com a letra \"L\" bloqueia o ecrã instantaneamente. Assim ninguém mexe no teu trabalho escolar enquanto estás ausente da sala de aula.",
-      "en": "No Windows, pressionar a tecla Windows junto com a letra \"L\" bloqueia o ecrã instantaneamente. Assim ninguém mexe no teu trabalho escolar enquanto estás ausente da sala de aula."
+      "en": "On Windows, pressing the Windows key together with the letter \"L\" locks the screen instantly. This stops other people from using your schoolwork while you are away from the classroom."
     },
     "whyItMatters": {
       "pt": "Utilização correta dos atalhos de sistema operativo para proteger sessões de utilizador.",
-      "en": "Utilização correta dos atalhos de sistema operativo para proteger sessões de utilizador."
+      "en": "Correct use of operating-system shortcuts to protect user sessions."
     },
     "funFact": {
       "pt": "No computador Mac da Apple, o atalho equivalente é Control + Command + Q!",
-      "en": "No computador Mac da Apple, o atalho equivalente é Control + Command + Q!"
+      "en": "On an Apple Mac, the equivalent shortcut is Control + Command + Q!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -7736,28 +7736,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Spam e Cadeias",
-      "en": "Spam e Cadeias"
+      "en": "Spam and Chain Messages"
     },
     "icon": "🗑️",
     "title": {
       "pt": "Dica Prática: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!",
-      "en": "Practical Tip: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!"
+      "en": "Practical Tip: The origin of the word \"SPAM\": a canned meat brand made famous in the 1970s!"
     },
     "teaser": {
       "pt": "Mensagens publicitárias não solicitadas receberam o nome de uma comida enlatada!",
-      "en": "Mensagens publicitárias não solicitadas receberam o nome de uma comida enlatada!"
+      "en": "Unwanted advertising messages were named after a canned food!"
     },
     "description": {
       "pt": "A palavra SPAM era originalmente o nome de uma marca de carne enlatada. Ficou famosa num programa de humor dos Monty Python, onde a palavra era repetida sem parar, inspirando mais tarde o uso do termo para mensagens indesejadas em massa.",
-      "en": "A palavra SPAM era originalmente o nome de uma marca de carne enlatada. Ficou famosa num programa de humor dos Monty Python, onde a palavra era repetida sem parar, inspirando mais tarde o uso do termo para mensagens indesejadas em massa."
+      "en": "The word SPAM was originally the name of a canned meat brand. It became famous in a Monty Python comedy sketch where the word was repeated over and over, later inspiring the term for unwanted mass messages."
     },
     "whyItMatters": {
       "pt": "Gestão de pastas de correio: Caixa de Entrada, Itens Enviados, Rascunhos e Spam.",
-      "en": "Gestão de pastas de correio: Caixa de Entrada, Itens Enviados, Rascunhos e Spam."
+      "en": "Managing email folders: Inbox, Sent Items, Drafts, and Spam."
     },
     "funFact": {
       "pt": "Cartas em cadeia que dizem \"Reenvia a 10 amigos ou terás azar\" são mitos falsos: apaga-as logo!",
-      "en": "Cartas em cadeia que dizem \"Reenvia a 10 amigos ou terás azar\" são mitos falsos: apaga-as logo!"
+      "en": "Chain letters saying \"Forward this to 10 friends or you will have bad luck\" are false myths: delete them!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -7811,28 +7811,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Separadores e Janelas",
-      "en": "Separadores e Janelas"
+      "en": "Tabs and Windows"
     },
     "icon": "📑",
     "title": {
       "pt": "Dica Prática: Atalhos de mestre no navegador: Control + T abre um novo separador!",
-      "en": "Practical Tip: Atalhos de mestre no navegador: Control + T abre um novo separador!"
+      "en": "Practical Tip: Master browser shortcuts: Control + T opens a new tab!"
     },
     "teaser": {
       "pt": "Dominar o teclado faz-te navegar como um verdadeiro profissional de informática.",
-      "en": "Dominar o teclado faz-te navegar como um verdadeiro profissional de informática."
+      "en": "Mastering the keyboard helps you browse like a real computer professional."
     },
     "description": {
       "pt": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!",
-      "en": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!"
+      "en": "Use Control + T to open a new tab, Control + W to close the current tab, and if you accidentally close the page you were on, Control + Shift + T magically reopens the last closed tab!"
     },
     "whyItMatters": {
       "pt": "Eficiência e atalhos de teclado na navegação Web no dia a dia.",
-      "en": "Eficiência e atalhos de teclado na navegação Web no dia a dia."
+      "en": "Efficiency and keyboard shortcuts for everyday Web browsing."
     },
     "funFact": {
       "pt": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!",
-      "en": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!"
+      "en": "On a Mac, replace the Control key with the Command key in the same shortcuts!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -7886,28 +7886,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Software Livre vs Proprietário",
-      "en": "Software Livre vs Proprietário"
+      "en": "Free vs Proprietary Software"
     },
     "icon": "🐧",
     "title": {
       "pt": "Dica Prática: Software Livre: o código aberto onde todos podem aprender e colaborar!",
-      "en": "Practical Tip: Software Livre: o código aberto onde todos podem aprender e colaborar!"
+      "en": "Practical Tip: Free Software: open code where everyone can learn and collaborate!"
     },
     "teaser": {
       "pt": "Qual é a diferença entre programas comerciais fechados e aplicações como o Linux e o Scratch?",
-      "en": "Qual é a diferença entre programas comerciais fechados e aplicações como o Linux e o Scratch?"
+      "en": "What is the difference between closed commercial programs and applications such as Linux and Scratch?"
     },
     "description": {
       "pt": "Software Proprietário não permite ver como foi feito por dentro. O Software Livre e de Código Aberto (Open Source) partilha o código para que qualquer estudante ou programador possa estudar, melhorar e partilhar livremente com a comunidade.",
-      "en": "Software Proprietário não permite ver como foi feito por dentro. O Software Livre e de Código Aberto (Open Source) partilha o código para que qualquer estudante ou programador possa estudar, melhorar e partilhar livremente com a comunidade."
+      "en": "Proprietary software does not let you see how it was made internally. Free and Open Source Software shares its source code so students and programmers can study, improve, and share it with the community."
     },
     "whyItMatters": {
       "pt": "Diferença entre licenças de software comercial, freeware, shareware e software livre.",
-      "en": "Diferença entre licenças de software comercial, freeware, shareware e software livre."
+      "en": "The difference between commercial software, freeware, shareware, and free software licences."
     },
     "funFact": {
       "pt": "A mascote do sistema operativo livre Linux é um simpático pinguim chamado Tux!",
-      "en": "A mascote do sistema operativo livre Linux é um simpático pinguim chamado Tux!"
+      "en": "The mascot of the free Linux operating system is a friendly penguin called Tux!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -7961,28 +7961,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Ambiente e Sustentabilidade",
-      "en": "Ambiente e Sustentabilidade"
+      "en": "Environment and Sustainability"
     },
     "icon": "♻️",
     "title": {
       "pt": "Dica Prática: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!",
-      "en": "Practical Tip: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!"
+      "en": "Practical Tip: Electronic Waste (E-Waste): old computers do not belong in ordinary rubbish!"
     },
     "teaser": {
       "pt": "O que deves fazer quando um telemóvel, teclado ou comando de consola avaria de vez?",
-      "en": "O que deves fazer quando um telemóvel, teclado ou comando de consola avaria de vez?"
+      "en": "What should you do when a phone, keyboard, or game controller breaks for good?"
     },
     "description": {
       "pt": "Os equipamentos de TIC contêm metais preciosos (como ouro, prata e cobre) e substâncias químicas que não podem poluir a natureza. Devem ser entregues no Eletrão ou em lojas com contentores de reciclagem elétrica adequados.",
-      "en": "Os equipamentos de TIC contêm metais preciosos (como ouro, prata e cobre) e substâncias químicas que não podem poluir a natureza. Devem ser entregues no Eletrão ou em lojas com contentores de reciclagem elétrica adequados."
+      "en": "ICT equipment contains valuable metals such as gold, silver, and copper, as well as substances that can harm nature. It should be taken to an authorised e-waste collection point or a shop with suitable electrical recycling containers."
     },
     "whyItMatters": {
-      "pt": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5. º ano.",
-      "en": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5. º ano."
+      "pt": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5.º ano.",
+      "en": "Environmental citizenship and the ecological footprint of ICT are part of the 5th-grade goals."
     },
     "funFact": {
       "pt": "Com o circuito de 40 telemóveis reciclados consegue-se recuperar ouro suficiente para fazer uma aliança!",
-      "en": "Com o circuito de 40 telemóveis reciclados consegue-se recuperar ouro suficiente para fazer uma aliança!"
+      "en": "Recycling a batch of 40 mobile phones can recover enough gold to make a wedding ring!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -8036,24 +8036,24 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Pausas Ativas",
-      "en": "Pausas Ativas"
+      "en": "Active Breaks"
     },
     "icon": "🏃‍♂️",
     "title": {
       "pt": "Dica Prática: Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!",
-      "en": "Practical Tip: Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!"
+      "en": "Practical Tip: Quick stretches: stretch your arms and rotate your wrists every hour!"
     },
     "teaser": {
       "pt": "Ficar sentado horas seguidas na mesma posição cansa o corpo mais do que pensas.",
-      "en": "Ficar sentado horas seguidas na mesma posição cansa o corpo mais do que pensas."
+      "en": "Sitting for hours in the same position tires your body more than you might think."
     },
     "description": {
       "pt": "A cada 50 ou 60 minutos de aula ou estudo no computador, levanta-te, caminha até à janela, bebe um copo de água e roda suavemente os pulsos para prevenir dores nas mãos e dedos.",
-      "en": "A cada 50 ou 60 minutos de aula ou estudo no computador, levanta-te, caminha até à janela, bebe um copo de água e roda suavemente os pulsos para prevenir dores nas mãos e dedos."
+      "en": "Every 50 or 60 minutes of a computer lesson or study session, stand up, walk to the window, drink some water, and gently rotate your wrists to help prevent pain in your hands and fingers."
     },
     "whyItMatters": {
-      "pt": "A promoção de estilos de vida ativos e a quebra do sedentarismo são essenciais no 5. º ano.",
-      "en": "A promoção de estilos de vida ativos e a quebra do sedentarismo são essenciais no 5. º ano."
+      "pt": "A promoção de estilos de vida ativos e a quebra do sedentarismo são essenciais no 5.º ano.",
+      "en": "Promoting active lifestyles and breaking up sedentary time are essential in 5th grade."
     },
     "funFact": {
       "pt": "Beber água regularmente hidrata o cérebro e melhora o tempo de resposta em jogos e testes!",
@@ -8111,12 +8111,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Direito à Imagem",
-      "en": "Direito à Imagem"
+      "en": "Right to One's Image"
     },
     "icon": "📸",
     "title": {
       "pt": "Dica Prática: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!",
-      "en": "Practical Tip: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!"
+      "en": "Practical Tip: Always ask permission before taking or sharing photos of friends!"
     },
     "teaser": {
       "pt": "Cada pessoa é dona da sua própria imagem e tem o direito de não querer ser fotografada.",
@@ -8127,7 +8127,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "Even at school, photographing or filming a classmate and posting it on social media without their consent and their parents' permission is a serious violation of privacy and school rules."
     },
     "whyItMatters": {
-      "pt": "Compreender o direito à imagem e à reserva da intimidade da vida privada no 5. º ano de escolaridade.",
+      "pt": "Compreender o direito à imagem e à reserva da intimidade da vida privada no 5.º ano de escolaridade.",
       "en": "Understanding the right to one's image and the preservation of privacy in the 5th grade."
     },
     "funFact": {
@@ -8186,16 +8186,16 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Biometria",
-      "en": "Biometria"
+      "en": "Biometrics"
     },
     "icon": "👁️",
     "title": {
       "pt": "Dica Prática: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade.",
-      "en": "Practical Tip: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade."
+      "en": "Practical Tip: Fingerprints and facial recognition: using body characteristics to confirm identity."
     },
     "teaser": {
       "pt": "A biometria utiliza características do corpo, como a impressão digital ou o rosto, para ajudar a confirmar a identidade de uma pessoa.",
-      "en": "A biometria usa caraterísticas físicas únicas que é muito difícil de copiar."
+      "en": "Biometrics use unique physical characteristics that are very difficult to copy."
     },
     "description": {
       "pt": "Sensores biométricos leem as linhas do teu dedo ou a geometria do teu rosto para desbloquear tablets e telemóveis. É rápido, prático e muito mais difícil de adivinhar do que uma palavra-passe de 4 algarismos.",
@@ -8207,7 +8207,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "Nem sequer gémeos verdadeiros têm impressões digitais exatamente idênticas!",
-      "en": "Nem sequer gémeos verdadeiros têm impressões digitais exatamente idênticas!"
+      "en": "Even identical twins do not have exactly the same fingerprints!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -8261,12 +8261,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Responder a Todos",
-      "en": "Responder a Todos"
+      "en": "Reply All"
     },
     "icon": "👥",
     "title": {
       "pt": "Dica Prática: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!",
-      "en": "Practical Tip: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!"
+      "en": "Practical Tip: Be careful with the \"Reply All\" button: do not fill your classmates’ inboxes!"
     },
     "teaser": {
       "pt": "Se queres responder apenas à professora, clica em \"Responder\" e não em \"Responder a Todos\".",
@@ -8277,7 +8277,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "If the teacher sends an assignment to all 25 students and you reply 'Thank you! ' using 'Reply All', all 25 classmates will receive an unnecessary notification!"
     },
     "whyItMatters": {
-      "pt": "Uso responsável e ponderado das ferramentas de comunicação coletiva no 5. º ano.",
+      "pt": "Uso responsável e ponderado das ferramentas de comunicação coletiva no 5.º ano.",
       "en": "Responsible and thoughtful use of collective communication tools in 5th grade."
     },
     "funFact": {
@@ -8336,16 +8336,16 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Domínios e Extensões",
-      "en": "Domínios e Extensões"
+      "en": "Domains and Extensions"
     },
     "icon": "🌐",
     "title": {
       "pt": "Dica Prática: O que significa . pt, . org, . edu e . gov no final dos sites?",
-      "en": "Practical Tip: O que significa . pt, . org, . edu e . gov no final dos sites?"
+      "en": "Practical Tip: What do .pt, .org, .edu, and .gov mean at the end of websites?"
     },
     "teaser": {
       "pt": "A terminação do endereço da página Web revela muito sobre quem a criou.",
-      "en": "A terminação do endereço da página Web revela muito sobre quem a criou."
+      "en": "The ending of a web address reveals a lot about who created it."
     },
     "description": {
       "pt": "O domínio \". pt\" indica Portugal, \". gov\" pertence a organismos de governo oficial, \". edu\" a escolas e universidades, e \". org\" a organizações sem fins lucrativos. Sites educativos e governamentais são fontes muito mais fiáveis para trabalhos!",
@@ -8411,12 +8411,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Citação Direta entre Aspas",
-      "en": "Citação Direta entre Aspas"
+      "en": "Direct Quotation in Quotation Marks"
     },
     "icon": "💬",
     "title": {
       "pt": "Dica Prática: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?",
-      "en": "Practical Tip: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?"
+      "en": "Practical Tip: How can you quote a sentence from a book in a school project without plagiarising?"
     },
     "teaser": {
       "pt": "Se copiares uma frase palavra por palavra, deves colocá-la entre aspas e dizer de quem é!",
@@ -8486,12 +8486,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Hardware Interno",
-      "en": "Hardware Interno"
+      "en": "Internal Hardware"
     },
     "icon": "🧠",
     "title": {
       "pt": "Dica Prática: A CPU, ou processador, é um dos principais componentes do computador. Executa instruções e ajuda o computador a realizar tarefas.",
-      "en": "Practical Tip: A CPU, ou processador, é um dos principais componentes do computador. Executa instruções e ajuda o computador a realizar tarefas."
+      "en": "Practical Tip: The CPU, or processor, is one of the main components of a computer. It executes instructions and helps the computer perform tasks."
     },
     "teaser": {
       "pt": "Sabias que o processador do teu computador consegue resolver contas mais depressa do que um raio?",
@@ -8636,28 +8636,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Pegada Digital",
-      "en": "Pegada Digital"
+      "en": "Digital Footprint"
     },
     "icon": "👣",
     "title": {
       "pt": "Segurança Avançada: A tua Pegada Digital é como uma pegada no cimento fresco!",
-      "en": "Advanced Safety: A tua Pegada Digital é como uma pegada no cimento fresco!"
+      "en": "Advanced Safety: Your Digital Footprint is like a footprint in wet cement!"
     },
     "teaser": {
       "pt": "Algumas das nossas atividades online deixam registos. Publicações, comentários e conteúdos que partilhamos podem fazer parte da nossa pegada digital.",
       "en": "Some of our online activities leave records. Posts, comments, and content we share can form part of our digital footprint."
     },
     "description": {
-      "pt": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã (captura de ecrã). Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes.",
-      "en": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã (captura de ecrã). Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes."
+      "pt": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã. Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes.",
+      "en": "Every click, video you watch, and comment builds your online reputation. Even if you delete a photo, someone may have taken a screenshot. So build a positive digital footprint by sharing thoughtfully and kindly."
     },
     "whyItMatters": {
       "pt": "No Tema 3 de TIC aprendemos a refletir criticamente sobre as consequências das nossas ações online.",
-      "en": "No Tema 3 de TIC aprendemos a refletir criticamente sobre as consequências das nossas ações online."
+      "en": "In ICT Topic 3, we learn to think critically about the consequences of our online actions."
     },
     "funFact": {
       "pt": "A regra de ouro: só deves publicar algo se não tiveres vergonha que a tua professora ou avó vejam!",
-      "en": "A regra de ouro: só deves publicar algo se não tiveres vergonha que a tua professora ou avó vejam!"
+      "en": "The golden rule: only post something if you would be comfortable with your teacher or grandmother seeing it!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -8711,28 +8711,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Força de Palavras-passe",
-      "en": "Força de Palavras-passe"
+      "en": "Password Strength"
     },
     "icon": "⚡",
     "title": {
       "pt": "Dica Prática: 123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar.",
-      "en": "Practical Tip: 123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar."
+      "en": "Practical Tip: 123456 is an extremely predictable password and is among the first combinations automated systems may try."
     },
     "teaser": {
       "pt": "Inacreditavelmente, continua a ser uma das palavras-passe mais usadas no planeta!",
-      "en": "Inacreditavelmente, continua a ser uma das palavras-passe mais usadas no planeta!"
+      "en": "Unbelievably, it is still one of the most commonly used passwords in the world!"
     },
     "description": {
       "pt": "Programas automáticos usam listas de palavras comuns e sequências de teclado simples. Palavras-passe como \"123456\", \"qwerty\", \"password\" ou a tua data de aniversário são adivinhadas instantaneamente por computadores.",
-      "en": "Programas automáticos usam listas de palavras comuns e sequências de teclado simples. Palavras-passe como \"123456\", \"qwerty\", \"password\" ou a tua data de aniversário são adivinhadas instantaneamente por computadores."
+      "en": "Automated programs use lists of common words and simple keyboard sequences. Passwords such as \"123456\", \"qwerty\", \"password\", or your birthday can be guessed instantly by computers."
     },
     "whyItMatters": {
       "pt": "No Tema 4 de TIC aprendemos a criar palavras-passe robustas que protegem as nossas contas escolares.",
-      "en": "No Tema 4 de TIC aprendemos a criar palavras-passe robustas que protegem as nossas contas escolares."
+      "en": "In ICT Topic 4, we learn to create strong passwords that protect our school accounts."
     },
     "funFact": {
       "pt": "Outra palavra-passe péssima muito usada é \"admin\" ou o nome do clube de futebol favorito!",
-      "en": "Outra palavra-passe péssima muito usada é \"admin\" ou o nome do clube de futebol favorito!"
+      "en": "Another very poor password that is widely used is \"admin\" or the name of a favourite football club!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -8786,12 +8786,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Campos do Email",
-      "en": "Campos do Email"
+      "en": "Email Fields"
     },
     "icon": "🕶️",
     "title": {
       "pt": "Segurança Avançada: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade",
-      "en": "Advanced Safety: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade"
+      "en": "Advanced Safety: The Bcc field lets you send emails to several people while protecting their privacy."
     },
     "teaser": {
       "pt": "Vais convidar 25 colegas da turma para uma festa por email? Usa o Cco!",
@@ -8799,7 +8799,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "description": {
       "pt": "No email tens: \"Para\" (destinatários principais), \"Cc\" (Com Cópia, visível a todos) e \"Cco\" (Com Cópia Oculta). Ao colocar os contactos em Cco, ninguém vê o endereço privado dos outros, evitando spam e exposição indesejada de contactos.",
-      "en": "No email tens: \"Para\" (destinatários principais), \"Cc\" (Com Cópia, visível a todos) e \"Cco\" (Com Cópia Oculta). Ao colocar os contactos em Cco, ninguém vê o endereço privado dos outros, evitando spam e exposição indesejada de contactos."
+      "en": "In an email you have: \"To\" (main recipients), \"Cc\" (Carbon Copy, visible to everyone), and \"Bcc\" (Blind Carbon Copy). When you put contacts in Bcc, no one can see the other people's private addresses, helping prevent spam and unwanted exposure of contacts."
     },
     "whyItMatters": {
       "pt": "No Tema 5 de TIC aprendemos a usar os campos Para, Cc e Cco de acordo com as regras do RGPD.",
@@ -8807,7 +8807,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "A sigla Cc vem do papel químico (\"Carbon Copy\") que se usava antigamente nas máquinas de escrever!",
-      "en": "A sigla Cc vem do papel químico (\"Carbon Copy\") que se usava antigamente nas máquinas de escrever!"
+      "en": "The abbreviation Cc comes from carbon paper (\"Carbon Copy\"), which was once used with typewriters!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -8861,28 +8861,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Navegador vs Motor",
-      "en": "Navegador vs Motor"
+      "en": "Browser vs Search Engine"
     },
     "icon": "🚗",
     "title": {
       "pt": "Segurança Avançada: O Navegador é o Automóvel, o Motor de Busca é o GPS!",
-      "en": "Advanced Safety: O Navegador é o Automóvel, o Motor de Busca é o GPS!"
+      "en": "Advanced Safety: The Browser is the Car, the Search Engine is the GPS!"
     },
     "teaser": {
       "pt": "Muitos alunos confundem o Chrome com o Google. Sabes qual é a diferença real?",
-      "en": "Muitos alunos confundem o Chrome com o Google. Sabes qual é a diferença real?"
+      "en": "Many students confuse Chrome with Google. Do you know the real difference?"
     },
     "description": {
       "pt": "O Navegador (Browser, como Chrome, Edge, Firefox ou Safari) é a aplicação instalada que abre e desenha páginas Web. O Motor de Busca (Google, Bing, DuckDuckGo) é um site especial que cataloga a rede para responder a perguntas.",
-      "en": "O Navegador (Browser, como Chrome, Edge, Firefox ou Safari) é a aplicação instalada que abre e desenha páginas Web. O Motor de Busca (Google, Bing, DuckDuckGo) é um site especial que cataloga a rede para responder a perguntas."
+      "en": "The Browser (such as Chrome, Edge, Firefox, or Safari) is the application that opens and displays web pages. A Search Engine (such as Google, Bing, or DuckDuckGo) is a special website that indexes the web to answer searches."
     },
     "whyItMatters": {
       "pt": "No Tema 6 de TIC aprendemos a usar a barra de endereços (URL) diretamente sem passar pelo motor de busca.",
-      "en": "No Tema 6 de TIC aprendemos a usar a barra de endereços (URL) diretamente sem passar pelo motor de busca."
+      "en": "In ICT Topic 6, we learn to use the address bar (URL) directly instead of going through a search engine."
     },
     "funFact": {
       "pt": "A primeira janela de navegação inventada em 1990 chamava-se \"WorldWideWeb\"!",
-      "en": "A primeira janela de navegação inventada em 1990 chamava-se \"WorldWideWeb\"!"
+      "en": "The first web browser, created in 1990, was called \"WorldWideWeb\"!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -8936,28 +8936,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Google Imagens",
-      "en": "Google Imagens"
+      "en": "Google Images"
     },
     "icon": "🎨",
     "title": {
       "pt": "Segurança Avançada: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!",
-      "en": "Advanced Safety: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!"
+      "en": "Advanced Safety: Photos from Google Images are NOT free to use however you want!"
     },
     "teaser": {
       "pt": "Copiar uma foto qualquer e colar num trabalho sem autorização pode violar a lei.",
-      "en": "Copiar uma foto qualquer e colar num trabalho sem autorização pode violar a lei."
+      "en": "Copying any photo and putting it into a school project without permission may violate copyright law."
     },
     "description": {
       "pt": "Quando um fotógrafo ou ilustrador cria uma imagem, ela fica logo protegida por Direitos de Autor (Copyright). Não a podes descarregar e reutilizar sem autorização. Para trabalhos escolares, usa imagens com licenças Creative Commons ou de Domínio Público.",
-      "en": "Quando um fotógrafo ou ilustrador cria uma imagem, ela fica logo protegida por Direitos de Autor (Copyright). Não a podes descarregar e reutilizar sem autorização. Para trabalhos escolares, usa imagens com licenças Creative Commons ou de Domínio Público."
+      "en": "When a photographer or illustrator creates an image, it is generally protected by copyright. You cannot download and reuse it without permission. For school projects, use images with suitable Creative Commons licences or in the public domain."
     },
     "whyItMatters": {
       "pt": "No Tema 7 de TIC aprendemos a respeitar a propriedade intelectual e o trabalho dos artistas.",
-      "en": "No Tema 7 de TIC aprendemos a respeitar a propriedade intelectual e o trabalho dos artistas."
+      "en": "In ICT Topic 7, we learn to respect intellectual property and the work of artists."
     },
     "funFact": {
       "pt": "Quando encontras uma imagem na Internet, lembra-te de verificar sempre a sua fonte original e qual é a licença de utilização específica. Mesmo nas licenças Creative Commons, deves respeitar regras como indicar o nome do autor (atribuição) e verificar se podes usar a imagem no teu trabalho!",
-      "en": "Quando encontras uma imagem na Internet, lembra-te de verificar sempre a sua fonte original e qual é a licença de utilização específica. Mesmo nas licenças Creative Commons, deves respeitar regras como indicar o nome do autor (atribuição) e verificar se podes usar a imagem no teu trabalho!"
+      "en": "When you find an image online, always check its original source and its specific licence. Even with Creative Commons licences, follow rules such as crediting the author and checking whether you may use the image in your project!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -9011,28 +9011,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Memória do Computador",
-      "en": "Memória do Computador"
+      "en": "Computer Memory"
     },
     "icon": "⚡",
     "title": {
       "pt": "Segurança Avançada: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!",
-      "en": "Advanced Safety: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!"
+      "en": "Advanced Safety: RAM vs SSD: the work desk vs the cupboard!"
     },
     "teaser": {
       "pt": "Qual é a diferença entre a memória que apaga tudo quando desligas e a que guarda ficheiros?",
-      "en": "Qual é a diferença entre a memória que apaga tudo quando desligas e a que guarda ficheiros?"
+      "en": "What is the difference between memory that is cleared when you switch off the computer and storage that keeps files?"
     },
     "description": {
       "pt": "O Disco SSD é o armário com gavetas: guarda os teus trabalhos a longo prazo, mas lembra-te de que os discos também se podem avariar, pelo que deves fazer sempre cópias de segurança (backups) dos teus ficheiros mais importantes!",
-      "en": "O Disco SSD é o armário com gavetas: guarda os teus trabalhos a longo prazo, mas lembra-te de que os discos também se podem avariar, pelo que deves fazer sempre cópias de segurança (backups) dos teus ficheiros mais importantes!"
+      "en": "The SSD is like a cupboard with drawers: it stores your work for the long term. Remember that storage devices can fail, so always make backups of your most important files!"
     },
     "whyItMatters": {
       "pt": "Identificar a diferença entre memória primária (RAM) e armazenamento secundário (SSD/HDD) é uma competência essencial de TIC.",
-      "en": "Identificar a diferença entre memória primária (RAM) e armazenamento secundário (SSD/HDD) é uma competência essencial de TIC."
+      "en": "Knowing the difference between primary memory (RAM) and secondary storage (SSD/HDD) is an essential ICT skill."
     },
     "funFact": {
       "pt": "Os novos discos SSD não têm peças móveis e usam chips de memória flash super rápidos!",
-      "en": "Os novos discos SSD não têm peças móveis e usam chips de memória flash super rápidos!"
+      "en": "Modern SSDs have no moving parts and use very fast flash-memory chips!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -9086,7 +9086,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Cuidado com os Olhos",
-      "en": "Cuidado com os Olhos"
+      "en": "Eye Care"
     },
     "icon": "👀",
     "title": {
@@ -9161,28 +9161,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Privacidade e Redes",
-      "en": "Privacidade e Redes"
+      "en": "Privacy and Networks"
     },
     "icon": "🕵️‍♂️",
     "title": {
       "pt": "Segurança Avançada: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!",
-      "en": "Advanced Safety: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!"
+      "en": "Advanced Safety: The \"Stranger in the Garden\" rule: never share your address in online games!"
     },
     "teaser": {
       "pt": "Roblox, Fortnite, Brawl Stars... avatares simpáticos podem esconder qualquer pessoa.",
-      "en": "Roblox, Fortnite, Brawl Stars... avatares simpáticos podem esconder qualquer pessoa."
+      "en": "Roblox, Fortnite, Brawl Stars... friendly-looking avatars can hide the identity of any person."
     },
     "description": {
       "pt": "Nunca partilhes o teu nome completo, número de telemóvel, nome da escola ou fotos onde se veja o emblema do teu clube ou a rua de tua casa com desconhecidos em salas de conversação ou jogos online.",
-      "en": "Nunca partilhes o teu nome completo, número de telemóvel, nome da escola ou fotos onde se veja o emblema do teu clube ou a rua de tua casa com desconhecidos em salas de conversação ou jogos online."
+      "en": "Never share your full name, phone number, school name, or photos showing your club badge or the street where you live with strangers in chats or online games."
     },
     "whyItMatters": {
       "pt": "A proteção de dados pessoais e a defesa da privacidade individual são prioridades de Cidadania Digital.",
-      "en": "A proteção de dados pessoais e a defesa da privacidade individual são prioridades de Cidadania Digital."
+      "en": "Protecting personal data and defending individual privacy are priorities of Digital Citizenship."
     },
     "funFact": {
       "pt": "É por isso que nos jogos é muito mais seguro e divertido usar nomes de código como \"FalcãoVeloz_99\"!",
-      "en": "É por isso que nos jogos é muito mais seguro e divertido usar nomes de código como \"FalcãoVeloz_99\"!"
+      "en": "That is why using code names such as \"FalcãoVeloz_99\" in games is safer and more fun!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -9236,28 +9236,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "O Segredo da Frase-Passe",
-      "en": "O Segredo da Frase-Passe"
+      "en": "The Secret of the Passphrase"
     },
     "icon": "🍕",
     "title": {
       "pt": "Segurança Avançada: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!",
-      "en": "Advanced Safety: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!"
+      "en": "Advanced Safety: The \"Passphrase\" method: O_Meu_Cao_Adora_Comer_99_Gelados!"
     },
     "teaser": {
-      "pt": "Uma frase longa com espaços ou travessões é fácil de decorar e quase altamente seguro.",
-      "en": "Uma frase longa com espaços ou travessões é fácil de decorar e quase altamente seguro."
+      "pt": "Uma frase longa com espaços ou travessões é fácil de decorar e muito segura.",
+      "en": "A long phrase with spaces or dashes is easy to remember and can be very secure."
     },
     "description": {
       "pt": "Em vez de uma palavra-passe curta e confusa que esqueces amanhã, inventa uma frase maluca com 4 ou 5 palavras e junta números e símbolos. Uma frase-passe longa e difícil de adivinhar é geralmente mais segura do que uma palavra-passe curta e previsível.",
-      "en": "Em vez de uma palavra-passe curta e confusa que esqueces amanhã, inventa uma frase maluca com 4 ou 5 palavras e junta números e símbolos. Uma frase-passe longa e difícil de adivinhar é geralmente mais segura do que uma palavra-passe curta e previsível."
+      "en": "Instead of a short, confusing password that you will forget tomorrow, invent a funny phrase with 4 or 5 words and add numbers and symbols. A long, hard-to-guess passphrase is generally safer than a short, predictable password."
     },
     "whyItMatters": {
       "pt": "Construção de palavras-passe fortes com base em frases mnemónicas compridas.",
-      "en": "Construção de palavras-passe fortes com base em frases mnemónicas compridas."
+      "en": "Creating strong passwords based on long memorable phrases."
     },
     "funFact": {
       "pt": "Quanto mais comprida for a palavra-passe, mais combinações matemáticas o invasor tem de testar!",
-      "en": "Quanto mais comprida for a palavra-passe, mais combinações matemáticas o invasor tem de testar!"
+      "en": "The longer the password, the more mathematical combinations an attacker has to test!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -9311,28 +9311,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "O Símbolo Arroba",
-      "en": "O Símbolo Arroba"
+      "en": "The At Symbol"
     },
     "icon": "🐌",
     "title": {
       "pt": "Segurança Avançada: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!",
-      "en": "Advanced Safety: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!"
+      "en": "Advanced Safety: The @ symbol is called \"snail\" in Italy and \"elephant trunk\" in Sweden!"
     },
     "teaser": {
       "pt": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico.",
-      "en": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico."
+      "en": "In 1971, Ray Tomlinson carried out one of the first experiments sending messages between networked computers and popularised the use of @ in email addresses."
     },
     "description": {
       "pt": "Em inglês lê-se \"at\" (no local de). Em Portugal chamamos-lhe arroba, mas outros países dão-lhe nomes animais engraçados: os italianos dizem \"chiocciola\" (caracol) e os israelitas \"strudel\" (bolo enrolado)!",
-      "en": "Em inglês lê-se \"at\" (no local de). Em Portugal chamamos-lhe arroba, mas outros países dão-lhe nomes animais engraçados: os italianos dizem \"chiocciola\" (caracol) e os israelitas \"strudel\" (bolo enrolado)!"
+      "en": "In English it is read as \"at\". In Portugal we call it \"arroba\", while other countries have funny animal names for it: Italians say \"chiocciola\" (snail) and Israelis say \"strudel\" (a rolled pastry)!"
     },
     "whyItMatters": {
-      "pt": "Estrutura padrão de um endereço de correio eletrónico: utilizador@dominio. extensao.",
-      "en": "Estrutura padrão de um endereço de correio eletrónico: utilizador@dominio. extensao."
+      "pt": "Estrutura padrão de um endereço de correio eletrónico: utilizador@domínio.extensão.",
+      "en": "Standard structure of an email address: username@domain.extension."
     },
     "funFact": {
       "pt": "Antigamente, a arroba era uma medida de peso usada no comércio que valia cerca de 15 quilogramas!",
-      "en": "Antigamente, a arroba era uma medida de peso usada no comércio que valia cerca de 15 quilogramas!"
+      "en": "In the past, the arroba was a unit of weight used in trade, worth about 15 kilograms!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -9461,28 +9461,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "O que é Plágio",
-      "en": "O que é Plágio"
+      "en": "What Is Plagiarism"
     },
     "icon": "✂️",
     "title": {
       "pt": "Segurança Avançada: Plágio: roubar a medalha de ouro de outra pessoa!",
-      "en": "Advanced Safety: Plágio: roubar a medalha de ouro de outra pessoa!"
+      "en": "Advanced Safety: Plagiarism: stealing someone else's gold medal!"
     },
     "teaser": {
       "pt": "Fazer \"Copiar e Colar\" da Wikipédia e assinar com o teu nome é desonestidade académica.",
-      "en": "Fazer \"Copiar e Colar\" da Wikipédia e assinar com o teu nome é desonestidade académica."
+      "en": "Copying and pasting from Wikipedia and signing it with your own name is academic dishonesty."
     },
     "description": {
       "pt": "Plágio é copiar textos, ideias, desenhos ou código de outra pessoa fingindo que foste tu a criar. É como alguém correr uma maratona e tu roubares a medalha para dizer que venceste. O correto é ler, explicar pelas tuas próprias palavras e citar a fonte de onde aprendeste.",
-      "en": "Plágio é copiar textos, ideias, desenhos ou código de outra pessoa fingindo que foste tu a criar. É como alguém correr uma maratona e tu roubares a medalha para dizer que venceste. O correto é ler, explicar pelas tuas próprias palavras e citar a fonte de onde aprendeste."
+      "en": "Plagiarism is copying another person's texts, ideas, drawings, or code and pretending you created them. It is like someone running a marathon and you stealing the medal to say you won. The right thing is to read, explain in your own words, and cite the source you learned from."
     },
     "whyItMatters": {
-      "pt": "Compreensão de plágio vs autoria original e integridade académica no 5. º ano.",
-      "en": "Compreensão de plágio vs autoria original e integridade académica no 5. º ano."
+      "pt": "Compreensão de plágio vs autoria original e integridade académica no 5.º ano.",
+      "en": "Understanding plagiarism versus original authorship and academic integrity in 5th grade."
     },
     "funFact": {
       "pt": "Os professores têm ferramentas de software que detetam plágio em trabalhos escolares em segundos!",
-      "en": "Os professores têm ferramentas de software que detetam plágio em trabalhos escolares em segundos!"
+      "en": "Teachers have software tools that can detect plagiarism in schoolwork within seconds!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -9536,28 +9536,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Placa Principal",
-      "en": "Placa Principal"
+      "en": "Main Board"
     },
     "icon": "🛣️",
     "title": {
       "pt": "Segurança Avançada: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!",
-      "en": "Advanced Safety: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!"
+      "en": "Advanced Safety: The Motherboard is the motorway that connects all the computer's components!"
     },
     "teaser": {
       "pt": "Como é que a placa gráfica fala com o processador e com o disco rígido?",
-      "en": "Como é que a placa gráfica fala com o processador e com o disco rígido?"
+      "en": "How does the graphics card communicate with the processor and the hard drive?"
     },
     "description": {
       "pt": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI.",
-      "en": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI."
+      "en": "The Motherboard is a large green or black circuit board filled with copper tracks. The CPU, RAM, sound card, and network card connect to it, along with USB and HDMI ports."
     },
     "whyItMatters": {
-      "pt": "Os os componentes físicos comunicam através do barramento de dados (Bus).",
-      "en": "Os os componentes físicos comunicam através do barramento de dados (Bus)."
+      "pt": "Os componentes físicos comunicam através do barramento de dados (Bus).",
+      "en": "The physical components communicate through the data bus (Bus)."
     },
     "funFact": {
       "pt": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!",
-      "en": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!"
+      "en": "It is called a \"motherboard\" because it houses and connects all the other boards and components attached to the system!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -9611,28 +9611,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Sono e Tecnologia",
-      "en": "Sono e Tecnologia"
+      "en": "Sleep and Technology"
     },
     "icon": "🌙",
     "title": {
       "pt": "Segurança Avançada: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \"",
-      "en": "Advanced Safety: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \""
+      "en": "Advanced Safety: Blue Light from the screen tells your brain: \"Wake up, it is still beach time!\""
     },
     "teaser": {
       "pt": "Porque deves desligar os ecrãs 30 a 60 minutos antes de dormir para acordares com energia?",
-      "en": "Porque deves desligar os ecrãs 30 a 60 minutos antes de dormir para acordares com energia?"
+      "en": "Why should you turn off screens 30 to 60 minutes before bed so you can wake up with energy?"
     },
     "description": {
       "pt": "A luz azul emitida por ecrãs bloqueia a melatonina, a hormona que dá sono. Quando usas o telemóvel na cama, o teu cérebro fica confuso, demoras mais tempo a adormecer e acordas cansado para a escola.",
-      "en": "A luz azul emitida por ecrãs bloqueia a melatonina, a hormona que dá sono. Quando usas o telemóvel na cama, o teu cérebro fica confuso, demoras mais tempo a adormecer e acordas cansado para a escola."
+      "en": "Blue light from screens can affect melatonin, the hormone involved in sleep. Using a phone in bed can make it harder to fall asleep and may leave you tired for school."
     },
     "whyItMatters": {
       "pt": "Estudamos o equilíbrio entre o tempo de ecrã e o descanso reparador de 9 a 12 horas diárias.",
-      "en": "Estudamos o equilíbrio entre o tempo de ecrã e o descanso reparador de 9 a 12 horas diárias."
+      "en": "We study the balance between screen time and restorative sleep of 9 to 12 hours per day."
     },
     "funFact": {
       "pt": "Substituir o telemóvel antes de dormir por um livro em papel melhora as tuas notas escolares!",
-      "en": "Substituir o telemóvel antes de dormir por um livro em papel melhora as tuas notas escolares!"
+      "en": "Replacing your phone with a paper book before bed can help your sleep and school performance!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -9686,28 +9686,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Apoio e Helplines",
-      "en": "Apoio e Helplines"
+      "en": "Support and Helplines"
     },
     "icon": "📞",
     "title": {
       "pt": "Segurança Avançada: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!",
-      "en": "Advanced Safety: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!"
+      "en": "Advanced Safety: Portugal's Safe Internet Line: 800 21 90 90 (free and confidential)!"
     },
     "teaser": {
       "pt": "Se algo correr mal online, existe uma equipa simpática pronta para te ajudar.",
-      "en": "Se algo correr mal online, existe uma equipa simpática pronta para te ajudar."
+      "en": "If something goes wrong online, there is a friendly team ready to help you."
     },
     "description": {
       "pt": "Se vires conteúdos assustadores, sofreres cyberbullying ou tiveres dúvidas sobre a tua segurança, podes ligar gratuitamente para o 800 21 90 90 ou para o SOS Criança (116 111). Nunca guardes medos só para ti!",
-      "en": "Se vires conteúdos assustadores, sofreres cyberbullying ou tiveres dúvidas sobre a tua segurança, podes ligar gratuitamente para o 800 21 90 90 ou para o SOS Criança (116 111). Nunca guardes medos só para ti!"
+      "en": "If you see frightening content, experience cyberbullying, or have concerns about your safety, you can call 800 21 90 90 or SOS Criança (116 111) for free. Never keep your worries to yourself!"
     },
     "whyItMatters": {
       "pt": "Conhecer as linhas de apoio e saber a quem recorrer perante incidentes digitais é fundamental.",
-      "en": "Conhecer as linhas de apoio e saber a quem recorrer perante incidentes digitais é fundamental."
+      "en": "Knowing support lines and knowing who to turn to when digital incidents happen is essential."
     },
     "funFact": {
       "pt": "Lembra-te: falar com os pais ou professores de confiança é sempre o primeiro e melhor passo!",
-      "en": "Lembra-te: falar com os pais ou professores de confiança é sempre o primeiro e melhor passo!"
+      "en": "Remember: talking to a trusted parent or teacher is always the first and best step!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -9761,28 +9761,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Partilha de Palavras-passe",
-      "en": "Partilha de Palavras-passe"
+      "en": "Password Sharing"
     },
     "icon": "🪥",
     "title": {
       "pt": "Segurança Avançada: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!",
-      "en": "Advanced Safety: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!"
+      "en": "Advanced Safety: Passwords are like toothbrushes: you do not lend them to anyone!"
     },
     "teaser": {
       "pt": "Nem ao melhor amigo da turma deves confiar a chave da tua vida digital.",
-      "en": "Nem ao melhor amigo da turma deves confiar a chave da tua vida digital."
+      "en": "Even your best friend in class should not be trusted with the key to your digital life."
     },
     "description": {
       "pt": "A tua palavra-passe é pessoal e intransmissível. Se a emprestares, perdes o controlo sobre quem acede aos teus emails e notas. A única exceção são os teus pais ou encarregados de educação para te protegerem.",
-      "en": "A tua palavra-passe é pessoal e intransmissível. Se a emprestares, perdes o controlo sobre quem acede aos teus emails e notas. A única exceção são os teus pais ou encarregados de educação para te protegerem."
+      "en": "Your password is personal and should not be shared. If you lend it to someone, you lose control over who can access your emails and grades. The exception is your parents or guardians, who may need it to protect you."
     },
     "whyItMatters": {
       "pt": "Responsabilidade e sigilo de credenciais de acesso no ambiente escolar e pessoal.",
-      "en": "Responsabilidade e sigilo de credenciais de acesso no ambiente escolar e pessoal."
+      "en": "Responsible and confidential handling of access credentials at school and in personal life."
     },
     "funFact": {
       "pt": "Se um dia tiveres de introduzir a tua palavra-passe à frente de alguém, tapa o teclado com a outra mão!",
-      "en": "Se um dia tiveres de introduzir a tua palavra-passe à frente de alguém, tapa o teclado com a outra mão!"
+      "en": "If you ever have to enter your password in front of someone, cover the keyboard with your other hand!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -9836,28 +9836,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Netiqueta em Emails",
-      "en": "Netiqueta em Emails"
+      "en": "Email Netiquette"
     },
     "icon": "📢",
     "title": {
       "pt": "Segurança Avançada: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!",
-      "en": "Advanced Safety: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!"
+      "en": "Advanced Safety: Writing in CAPITAL LETTERS in an email is like SHOUTING!"
     },
     "teaser": {
       "pt": "Ao redigir mensagens para professores ou colegas, usa sempre letras maiúsculas e minúsculas normais.",
-      "en": "Ao redigir mensagens para professores ou colegas, usa sempre letras maiúsculas e minúsculas normais."
+      "en": "When writing messages to teachers or classmates, use normal upper- and lower-case letters."
     },
     "description": {
       "pt": "Na etiqueta digital, escrever palavras ou frases inteiras em maiúsculas soa agressivo e irritado. Além disso, blocos de texto em maiúsculas são muito mais difíceis e cansativos de ler no ecrã.",
-      "en": "Na etiqueta digital, escrever palavras ou frases inteiras em maiúsculas soa agressivo e irritado. Além disso, blocos de texto em maiúsculas são muito mais difíceis e cansativos de ler no ecrã."
+      "en": "In digital etiquette, writing whole words or sentences in capital letters can sound aggressive and angry. Blocks of capital letters are also much harder and more tiring to read on screen."
     },
     "whyItMatters": {
       "pt": "Regras de cortesia, pontuação e comunicação assertiva no correio eletrónico.",
-      "en": "Regras de cortesia, pontuação e comunicação assertiva no correio eletrónico."
+      "en": "Rules of courtesy, punctuation, and assertive communication in email."
     },
     "funFact": {
       "pt": "Começa sempre com uma saudação formal (\"Bom dia, Professora\") e termina com assinatura e turma!",
-      "en": "Começa sempre com uma saudação formal (\"Bom dia, Professora\") e termina com assinatura e turma!"
+      "en": "Always start with a polite greeting (\"Good morning, Teacher\") and finish with your name and class!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -9911,28 +9911,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Segurança HTTPS",
-      "en": "Segurança HTTPS"
+      "en": "HTTPS Security"
     },
     "icon": "🔒",
     "title": {
       "pt": "Segurança Avançada: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!",
-      "en": "Advanced Safety: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!"
+      "en": "Advanced Safety: The \"S\" in HTTPS is the invisible safe that encrypts your data!"
     },
     "teaser": {
       "pt": "Nunca introduzas palavras-passe em páginas que comecem apenas por \"http://\" sem o \"s\".",
-      "en": "Nunca introduzas palavras-passe em páginas que comecem apenas por \"http://\" sem o \"s\"."
+      "en": "Never enter passwords on pages that start only with \"http://\" without the \"s\"."
     },
     "description": {
       "pt": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias.",
-      "en": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias."
+      "en": "The \"S\" means Secure. It indicates that the connection between your computer and the website is encrypted using a digital certificate: people on the Wi-Fi network cannot simply read the information you send."
     },
     "whyItMatters": {
       "pt": "Verificação de certificados de segurança e protocolos de navegação segura na Internet.",
-      "en": "Verificação de certificados de segurança e protocolos de navegação segura na Internet."
+      "en": "Checking security certificates and secure browsing protocols on the Internet."
     },
     "funFact": {
       "pt": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!",
-      "en": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!"
+      "en": "More than 95% of modern websites use the HTTPS protocol!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -9991,23 +9991,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🤝",
     "title": {
       "pt": "Segurança Avançada: Creative Commons: o convite amigável para partilhar criatividade com o mundo!",
-      "en": "Advanced Safety: Creative Commons: o convite amigável para partilhar criatividade com o mundo!"
+      "en": "Advanced Safety: Creative Commons: a friendly invitation to share creativity with the world!"
     },
     "teaser": {
       "pt": "Conheces o símbolo com dois \"C\" (CC) que vês na Wikipédia, no Scratch e no YouTube?",
-      "en": "Conheces o símbolo com dois \"C\" (CC) que vês na Wikipédia, no Scratch e no YouTube?"
+      "en": "Do you know the symbol with two \"C\"s (CC) that you see on Wikipedia, Scratch, and YouTube?"
     },
     "description": {
       "pt": "Em 2001, o professor Lawrence Lessig criou as licenças Creative Commons. Elas permitem que autores digam: \"Podes usar a minha música ou foto de graça para o teu trabalho escolar, desde que me dês o devido crédito (CC-BY)! \".",
-      "en": "Em 2001, o professor Lawrence Lessig criou as licenças Creative Commons. Elas permitem que autores digam: \"Podes usar a minha música ou foto de graça para o teu trabalho escolar, desde que me dês o devido crédito (CC-BY)! \"."
+      "en": "In 2001, professor Lawrence Lessig helped create the Creative Commons licences. They let authors say: \"You may use my music or photo for your school project, as long as you give me proper credit (CC-BY)!\""
     },
     "whyItMatters": {
       "pt": "Identificação dos símbolos de partilha Creative Commons (BY, NC, ND, SA) no Tema 7.",
-      "en": "Identificação dos símbolos de partilha Creative Commons (BY, NC, ND, SA) no Tema 7."
+      "en": "Identifying Creative Commons sharing symbols (BY, NC, ND, SA) in Topic 7."
     },
     "funFact": {
       "pt": "A enciclopédia Wikipédia e os projetos remixados no Scratch funcionam sob licenças Creative Commons!",
-      "en": "A enciclopédia Wikipédia e os projetos remixados no Scratch funcionam sob licenças Creative Commons!"
+      "en": "Wikipedia and remixed projects on Scratch can use Creative Commons licences!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -10061,28 +10061,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Linguagem dos Computadores",
-      "en": "Linguagem dos Computadores"
+      "en": "Computer Language"
     },
     "icon": "0️⃣",
     "title": {
       "pt": "Segurança Avançada: Tudo no computador são apenas ZEROS e UNS (0 e 1)!",
-      "en": "Advanced Safety: Tudo no computador são apenas ZEROS e UNS (0 e 1)!"
+      "en": "Advanced Safety: Everything in a computer is represented using ZEROS and ONES (0 and 1)!"
     },
     "teaser": {
       "pt": "Fotos, músicas, jogos 3D e vídeos do YouTube... como é que cabem em apenas dois números?",
-      "en": "Fotos, músicas, jogos 3D e vídeos do YouTube... como é que cabem em apenas dois números?"
+      "en": "Photos, music, 3D games, and YouTube videos... how can they fit into just two numbers?"
     },
     "description": {
       "pt": "Os circuitos do computador funcionam com eletricidade: ou passa corrente (1) ou não passa (0). A este sistema chamamos Código Binário. Combinando 8 zeros e uns (um Byte), o computador consegue representar qualquer letra, som ou cor de um píxel!",
-      "en": "Os circuitos do computador funcionam com eletricidade: ou passa corrente (1) ou não passa (0). A este sistema chamamos Código Binário. Combinando 8 zeros e uns (um Byte), o computador consegue representar qualquer letra, som ou cor de um píxel!"
+      "en": "Computer circuits use electricity: current is represented as 1 and no current as 0. This system is called Binary Code. By combining 8 zeros and ones (one byte), a computer can represent letters, sounds, or pixel colours!"
     },
     "whyItMatters": {
-      "pt": "No 5. º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte.",
-      "en": "No 5. º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte."
+      "pt": "No 5.º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte.",
+      "en": "In 5th grade ICT, we learn the fundamental concept of a bit (Binary Digit) and a byte."
     },
     "funFact": {
       "pt": "A letra \"A\" maiúscula em binário escreve-se assim: 01000001!",
-      "en": "A letra \"A\" maiúscula em binário escreve-se assim: 01000001!"
+      "en": "The capital letter \"A\" in binary is written as 01000001!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -10136,28 +10136,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Pescoço e Coluna",
-      "en": "Pescoço e Coluna"
+      "en": "Neck and Spine"
     },
     "icon": "🦒",
     "title": {
       "pt": "Segurança Avançada: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!",
-      "en": "Advanced Safety: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!"
+      "en": "Advanced Safety: \"Text Neck\": putting 27 kg of force on your spine!"
     },
     "teaser": {
       "pt": "Inclinar a cabeça para baixo sobre o telemóvel esforça o pescoço como carregar um saco de cimento.",
-      "en": "Inclinar a cabeça para baixo sobre o telemóvel esforça o pescoço como carregar um saco de cimento."
+      "en": "Looking down at a phone puts strain on your neck like carrying a bag of cement."
     },
     "description": {
       "pt": "Uma cabeça humana em posição direita pesa cerca de 5 kg. Mas quando a inclinas a 60 graus sobre um telemóvel ou tablet, a força exercida no pescoço sobe para 27 kg! Levanta os braços e traz o ecrã até aos olhos!",
-      "en": "Uma cabeça humana em posição direita pesa cerca de 5 kg. Mas quando a inclinas a 60 graus sobre um telemóvel ou tablet, a força exercida no pescoço sobe para 27 kg! Levanta os braços e traz o ecrã até aos olhos!"
+      "en": "A human head in an upright position weighs about 5 kg. When you tilt it 60 degrees over a phone or tablet, the force on the neck can rise greatly. Raise your arms and bring the screen up to eye level!"
     },
     "whyItMatters": {
       "pt": "Aprender a posicionar o topo do monitor ao nível da linha dos olhos é uma regra ergonómica essencial.",
-      "en": "Aprender a posicionar o topo do monitor ao nível da linha dos olhos é uma regra ergonómica essencial."
+      "en": "Learning to position the top of the monitor around eye level is an essential ergonomic rule."
     },
     "funFact": {
       "pt": "Fazer rotações suaves com a cabeça de vez em quando alivia a tensão acumulada nos ombros!",
-      "en": "Fazer rotações suaves com a cabeça de vez em quando alivia a tensão acumulada nos ombros!"
+      "en": "Gently rotating your head from time to time can relieve built-up tension in your shoulders!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -10211,28 +10211,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Netiqueta e Empatia",
-      "en": "Netiqueta e Empatia"
+      "en": "Netiquette and Empathy"
     },
     "icon": "💬",
     "title": {
       "pt": "Segurança Avançada: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!",
-      "en": "Advanced Safety: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!"
+      "en": "Advanced Safety: Netiquette: kindness and respect in messages and virtual classrooms!"
     },
     "teaser": {
       "pt": "Como ser um colega cinco estrelas em grupos de WhatsApp e fóruns da turma?",
-      "en": "Como ser um colega cinco estrelas em grupos de WhatsApp e fóruns da turma?"
+      "en": "How can you be a five-star classmate in WhatsApp groups and class forums?"
     },
     "description": {
       "pt": "Netiqueta é a etiqueta da Net. Significa não insultar, não espalhar boatos, não partilhar fotos de colegas sem autorização expressa deles e respeitar as opiniões diferentes com cordialidade e espírito de equipa.",
-      "en": "Netiqueta é a etiqueta da Net. Significa não insultar, não espalhar boatos, não partilhar fotos de colegas sem autorização expressa deles e respeitar as opiniões diferentes com cordialidade e espírito de equipa."
+      "en": "Netiquette means Internet etiquette. It means not insulting people, spreading rumours, or sharing classmates' photos without their permission, and respecting different opinions with kindness and team spirit."
     },
     "whyItMatters": {
-      "pt": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5. º ano.",
-      "en": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5. º ano."
+      "pt": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5.º ano.",
+      "en": "Promoting peaceful coexistence and combating all forms of cyberbullying in 5th grade."
     },
     "funFact": {
       "pt": "Um emoji sorridente ajuda a demonstrar que a tua mensagem é amigável e sem má intenção!",
-      "en": "Um emoji sorridente ajuda a demonstrar que a tua mensagem é amigável e sem má intenção!"
+      "en": "A smiling emoji can help show that your message is friendly and not meant badly!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -10286,28 +10286,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Autenticação de 2 Fatores",
-      "en": "Autenticação de 2 Fatores"
+      "en": "Two-Factor Authentication"
     },
     "icon": "📲",
     "title": {
       "pt": "Segurança Avançada: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!",
-      "en": "Advanced Safety: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!"
+      "en": "Advanced Safety: Two-Factor Authentication (2FA): the double lock on your digital door!"
     },
     "teaser": {
       "pt": "Mesmo que alguém descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro.",
-      "en": "Mesmo que alguém descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro."
+      "en": "Even if someone discovers your password, a second authentication factor adds an extra layer of protection and makes access much safer."
     },
     "description": {
       "pt": "O 2FA combina algo que sabes (a tua palavra-passe) com algo que tens (um código enviado por SMS ou gerado numa aplicação segura). É a proteção mais recomendada para contas de email e jogos importantes.",
-      "en": "O 2FA combina algo que sabes (a tua palavra-passe) com algo que tens (um código enviado por SMS ou gerado numa aplicação segura). É a proteção mais recomendada para contas de email e jogos importantes."
+      "en": "2FA combines something you know (your password) with something you have (a code sent by SMS or generated by a secure app). It is strongly recommended for important email and gaming accounts."
     },
     "whyItMatters": {
       "pt": "Conhecer mecanismos modernos de autenticação multifator no Tema 4 de TIC.",
-      "en": "Conhecer mecanismos modernos de autenticação multifator no Tema 4 de TIC."
+      "en": "Learning about modern multi-factor authentication mechanisms in ICT Topic 4."
     },
     "funFact": {
       "pt": "É exatamente como o cartão multibanco: precisas do cartão físico e do código PIN para levantar dinheiro!",
-      "en": "É exatamente como o cartão multibanco: precisas do cartão físico e do código PIN para levantar dinheiro!"
+      "en": "It is just like a bank card: you need the physical card and the PIN to withdraw money!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -10436,28 +10436,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Combate a Fake News",
-      "en": "Combate a Fake News"
+      "en": "Fighting Fake News"
     },
     "icon": "🕵️‍♀️",
     "title": {
       "pt": "Segurança Avançada: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!",
-      "en": "Advanced Safety: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!"
+      "en": "Advanced Safety: The 3-Question Detective Test against Fake News!"
     },
     "teaser": {
       "pt": "Nem tudo o que está na Internet é verdade! Qualquer pessoa pode publicar invenções.",
-      "en": "Nem tudo o que está na Internet é verdade! Qualquer pessoa pode publicar invenções."
+      "en": "Not everything on the Internet is true! Anyone can publish made-up information."
     },
     "description": {
       "pt": "Antes de usar uma informação num trabalho escolar, pergunta: 1) QUEM escreveu? (É um especialista respeitado? ); 2) QUANDO foi publicado? (É recente ou de há 10 anos? ); 3) OUTROS jornais sérios e enciclopédias confirmam a mesma notícia?",
-      "en": "Antes de usar uma informação num trabalho escolar, pergunta: 1) QUEM escreveu? (É um especialista respeitado? ); 2) QUANDO foi publicado? (É recente ou de há 10 anos? ); 3) OUTROS jornais sérios e enciclopédias confirmam a mesma notícia?"
+      "en": "Before using information in a school project, ask: 1) WHO wrote it? (Are they a respected expert?); 2) WHEN was it published? (Is it recent or 10 years old?); 3) Do other reliable newspapers and encyclopedias confirm the same information?"
     },
     "whyItMatters": {
       "pt": "Literacia da informação e espírito crítico na avaliação de fontes da Web.",
-      "en": "Literacia da informação e espírito crítico na avaliação de fontes da Web."
+      "en": "Information literacy and critical thinking when evaluating Web sources."
     },
     "funFact": {
       "pt": "Em 1998, um biólogo criou o site falso do \"Polvo das Árvores\" para provar como as pessoas acreditam em tudo online!",
-      "en": "Em 1998, um biólogo criou o site falso do \"Polvo das Árvores\" para provar como as pessoas acreditam em tudo online!"
+      "en": "In 1998, a biologist created the fake \"Tree Octopus\" website to show how easily people can believe things online!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -10511,28 +10511,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Citação e Bibliografia",
-      "en": "Citação e Bibliografia"
+      "en": "Citation and Bibliography"
     },
     "icon": "📚",
     "title": {
       "pt": "Segurança Avançada: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!",
-      "en": "Advanced Safety: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!"
+      "en": "Advanced Safety: Citing sources is not weakness: it is the mark of real scientists!"
     },
     "teaser": {
       "pt": "Indicar os livros e sites consultados valoriza o teu trabalho e dá-te notas melhores!",
-      "en": "Indicar os livros e sites consultados valoriza o teu trabalho e dá-te notas melhores!"
+      "en": "Listing the books and websites you consulted adds value to your work and can help you earn better marks!"
     },
     "description": {
       "pt": "Alguns alunos têm vergonha de dizer de onde tiraram a informação, pensando que deviam saber tudo de cabeça. Pelo contrário! Cientistas e historiadores indicam sempre a \"Webgrafia\" no final com autor, título do artigo, link e data de acesso.",
-      "en": "Alguns alunos têm vergonha de dizer de onde tiraram a informação, pensando que deviam saber tudo de cabeça. Pelo contrário! Cientistas e historiadores indicam sempre a \"Webgrafia\" no final com autor, título do artigo, link e data de acesso."
+      "en": "Some students are embarrassed to say where they got information, thinking they should know everything by heart. The opposite is true! Scientists and historians always list their sources at the end, with the author, article title, link, and access date."
     },
     "whyItMatters": {
       "pt": "Elaboração rigorosa de bibliografias e webgrafias de acordo com as normas escolares de TIC.",
-      "en": "Elaboração rigorosa de bibliografias e webgrafias de acordo com as normas escolares de TIC."
+      "en": "Careful preparation of bibliographies and web references according to school ICT guidelines."
     },
     "funFact": {
       "pt": "Grandes cientistas como Einstein e Newton sempre agradeceram publicamente aos autores que leram!",
-      "en": "Grandes cientistas como Einstein e Newton sempre agradeceram publicamente aos autores que leram!"
+      "en": "Great scientists such as Einstein and Newton always publicly acknowledged the authors they read!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -10586,28 +10586,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Periféricos de TIC",
-      "en": "Periféricos de TIC"
+      "en": "ICT Peripherals"
     },
     "icon": "🖨️",
     "title": {
       "pt": "Segurança Avançada: Periféricos: a ponte mágica entre o ser humano e a máquina!",
-      "en": "Advanced Safety: Periféricos: a ponte mágica entre o ser humano e a máquina!"
+      "en": "Advanced Safety: Peripherals: the magic bridge between people and machines!"
     },
     "teaser": {
       "pt": "Sabes dizer se os teus auscultadores são de entrada ou de saída de informação?",
-      "en": "Sabes dizer se os teus auscultadores são de entrada ou de saída de informação?"
+      "en": "Can you tell whether your headphones are input or output devices?"
     },
     "description": {
       "pt": "Periféricos de Entrada enviam dados para o computador (rato, teclado, microfone, câmara). Periféricos de Saída mostram o resultado (monitor, colunas de som, impressora). E periféricos Mistos fazem as duas coisas (ecrãs táteis e auscultadores com microfone integrado)!",
-      "en": "Periféricos de Entrada enviam dados para o computador (rato, teclado, microfone, câmara). Periféricos de Saída mostram o resultado (monitor, colunas de som, impressora). E periféricos Mistos fazem as duas coisas (ecrãs táteis e auscultadores com microfone integrado)!"
+      "en": "Input peripherals send data to the computer (mouse, keyboard, microphone, camera). Output peripherals show the result (monitor, speakers, printer). Mixed peripherals do both (touchscreens and headsets with a built-in microphone)!"
     },
     "whyItMatters": {
       "pt": "Classificar periféricos em Entrada, Saída e Mistos é uma das matérias mais importantes do Tema 1.",
-      "en": "Classificar periféricos em Entrada, Saída e Mistos é uma das matérias mais importantes do Tema 1."
+      "en": "Classifying peripherals as Input, Output, and Mixed is one of the most important subjects in Topic 1."
     },
     "funFact": {
       "pt": "Os óculos de realidade virtual são periféricos mistos: mostram imagem e leem o movimento da cabeça!",
-      "en": "Os óculos de realidade virtual são periféricos mistos: mostram imagem e leem o movimento da cabeça!"
+      "en": "Virtual reality headsets are mixed peripherals: they display images and read head movement!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -10661,28 +10661,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Volume e Audição",
-      "en": "Volume e Audição"
+      "en": "Volume and Hearing"
     },
     "icon": "🎧",
     "title": {
       "pt": "Segurança Avançada: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!",
-      "en": "Advanced Safety: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!"
+      "en": "Advanced Safety: The 60/60 rule for headphones: protect your ears for life!"
     },
     "teaser": {
       "pt": "Ouvir música ou jogos aos berros nos fones pode causar danos irreversíveis na audição.",
-      "en": "Ouvir música ou jogos aos berros nos fones pode causar danos irreversíveis na audição."
+      "en": "Listening to music or games at full volume through headphones can cause permanent hearing damage."
     },
     "description": {
       "pt": "Os médicos recomendam a regra dos 60/60: nunca usar auscultadores a mais de 60% do volume máximo, e fazer uma pausa a cada 60 minutos. Se a pessoa ao teu lado consegue ouvir o som dos teus fones, está alto demais!",
-      "en": "Os médicos recomendam a regra dos 60/60: nunca usar auscultadores a mais de 60% do volume máximo, e fazer uma pausa a cada 60 minutos. Se a pessoa ao teu lado consegue ouvir o som dos teus fones, está alto demais!"
+      "en": "Doctors recommend the 60/60 rule: never use headphones above 60% of maximum volume, and take a break every 60 minutes. If the person next to you can hear your headphones, the volume is too high!"
     },
     "whyItMatters": {
       "pt": "O bem-estar e a saúde no uso de periféricos de som fazem parte do programa curricular de TIC.",
-      "en": "O bem-estar e a saúde no uso de periféricos de som fazem parte do programa curricular de TIC."
+      "en": "Well-being and health when using audio peripherals are part of the ICT curriculum."
     },
     "funFact": {
       "pt": "As pequenas células ciliadas do ouvido interno não se regeneram se forem destruídas por som estridente!",
-      "en": "As pequenas células ciliadas do ouvido interno não se regeneram se forem destruídas por som estridente!"
+      "en": "The tiny hair cells in the inner ear do not grow back if they are destroyed by very loud sound!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -10736,28 +10736,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Localização GPS",
-      "en": "Localização GPS"
+      "en": "GPS Location"
     },
     "icon": "📍",
     "title": {
       "pt": "Segurança Avançada: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!",
-      "en": "Advanced Safety: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!"
+      "en": "Advanced Safety: Beware of geolocation: your photos may contain hidden coordinates!"
     },
     "teaser": {
       "pt": "Sabias que as fotos do telemóvel podem guardar a latitude e longitude exatas de onde foram tiradas?",
-      "en": "Sabias que as fotos do telemóvel podem guardar a latitude e longitude exatas de onde foram tiradas?"
+      "en": "Did you know that phone photos can store the exact latitude and longitude where they were taken?"
     },
     "description": {
       "pt": "Os metadados EXIF guardam a data, modelo da câmara e a localização GPS da foto. Antes de publicar fotos publicamente, é aconselhável desligar a geolocalização nas definições da câmara para ninguém descobrir onde vives.",
-      "en": "Os metadados EXIF guardam a data, modelo da câmara e a localização GPS da foto. Antes de publicar fotos publicamente, é aconselhável desligar a geolocalização nas definições da câmara para ninguém descobrir onde vives."
+      "en": "EXIF metadata can store the date, camera model, and GPS location of a photo. Before publishing photos publicly, it is a good idea to turn off geolocation in the camera settings so people cannot discover where you live."
     },
     "whyItMatters": {
       "pt": "No Tema 3 aprendemos como funcionam os dados invisíveis que os dispositivos anexam aos ficheiros.",
-      "en": "No Tema 3 aprendemos como funcionam os dados invisíveis que os dispositivos anexam aos ficheiros."
+      "en": "In Topic 3, we learn how invisible data can be attached to files by devices."
     },
     "funFact": {
       "pt": "Fotos tiradas dentro de casa nunca devem mostrar janelas com placas do nome da rua ou números de polícia!",
-      "en": "Fotos tiradas dentro de casa nunca devem mostrar janelas com placas do nome da rua ou números de polícia!"
+      "en": "Photos taken inside your home should never show windows with street-name signs or house numbers!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -10811,28 +10811,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Gestores de Palavras-passe",
-      "en": "Gestores de Palavras-passe"
+      "en": "Password Managers"
     },
     "icon": "🗄️",
     "title": {
       "pt": "Segurança Avançada: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!",
-      "en": "Advanced Safety: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!"
+      "en": "Advanced Safety: Never reuse the same password on every website and app!"
     },
     "teaser": {
       "pt": "Se um site de jogos sofrer uma fuga de informação, a tua conta de email também fica em risco.",
-      "en": "Se um site de jogos sofrer uma fuga de informação, a tua conta de email também fica em risco."
+      "en": "If a gaming website suffers a data breach, your email account may also be at risk."
     },
     "description": {
       "pt": "Quando usas a mesma palavra-passe em todo o lado, basta um site ter falhas de segurança para os criminosos tentarem entrar nas tuas restantes contas. Usa palavras-passe diferentes ou um gestor de palavras-passe protegido.",
-      "en": "Quando usas a mesma palavra-passe em todo o lado, basta um site ter falhas de segurança para os criminosos tentarem entrar nas tuas restantes contas. Usa palavras-passe diferentes ou um gestor de palavras-passe protegido."
+      "en": "When you use the same password everywhere, one security failure can give criminals a chance to try your password on your other accounts. Use different passwords or a protected password manager."
     },
     "whyItMatters": {
-      "pt": "Higiene e diversificação de credenciais em plataformas digitais no 5. º ano.",
-      "en": "Higiene e diversificação de credenciais em plataformas digitais no 5. º ano."
+      "pt": "Higiene e diversificação de credenciais em plataformas digitais no 5.º ano.",
+      "en": "Good credential hygiene and password diversification in digital platforms in 5th grade."
     },
     "funFact": {
       "pt": "Podes usar gestores de palavras-passe seguros integrados nos navegadores com a ajuda dos teus pais!",
-      "en": "Podes usar gestores de palavras-passe seguros integrados nos navegadores com a ajuda dos teus pais!"
+      "en": "You can use secure password managers built into browsers with help from your parents!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -10886,28 +10886,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Phishing por Email",
-      "en": "Phishing por Email"
+      "en": "Email Phishing"
     },
     "icon": "🎣",
     "title": {
       "pt": "Segurança Avançada: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!",
-      "en": "Advanced Safety: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!"
+      "en": "Advanced Safety: Phishing: the digital \"fisher\" trying to steal your password!"
     },
     "teaser": {
       "pt": "\"A sua conta vai ser apagada em 24 horas! Clique aqui urgente! \" — É Phishing!",
-      "en": "\"A sua conta vai ser apagada em 24 horas! Clique aqui urgente! \" — É Phishing!"
+      "en": "\"Your account will be deleted in 24 hours! Click here urgently!\" — That is phishing!"
     },
     "description": {
       "pt": "O termo vem de \"fishing\" (pesca). Os burlões lançam um isco assustador para te fazer clicar num link falso que imita a tua escola ou banco. Repara com atenção no endereço do remetente: costuma ter erros estranhos!",
-      "en": "O termo vem de \"fishing\" (pesca). Os burlões lançam um isco assustador para te fazer clicar num link falso que imita a tua escola ou banco. Repara com atenção no endereço do remetente: costuma ter erros estranhos!"
+      "en": "The term comes from \"fishing\". Scammers use a frightening bait to make you click a fake link that imitates your school or bank. Look carefully at the sender's address: it often contains strange mistakes!"
     },
     "whyItMatters": {
       "pt": "Identificação de sinais de alerta em emails fraudulentos e mensagens de phishing.",
-      "en": "Identificação de sinais de alerta em emails fraudulentos e mensagens de phishing."
+      "en": "Identifying warning signs in fraudulent emails and phishing messages."
     },
     "funFact": {
       "pt": "Nenhum serviço legítimo te ameaça com fecho imediato de conta sem contacto oficial prévio!",
-      "en": "Nenhum serviço legítimo te ameaça com fecho imediato de conta sem contacto oficial prévio!"
+      "en": "No legitimate service threatens to close your account immediately without prior official contact!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -10961,28 +10961,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Aranhas da Web",
-      "en": "Aranhas da Web"
+      "en": "Web Spiders"
     },
     "icon": "🕷️",
     "title": {
       "pt": "Segurança Avançada: As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!",
-      "en": "Advanced Safety: As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!"
+      "en": "Advanced Safety: The invisible \"spiders\" of the Internet that crawl the Web while you sleep!"
     },
     "teaser": {
       "pt": "Como é que o motor de busca sabe o que existe em milhares de milhões de sites?",
-      "en": "Como é que o motor de busca sabe o que existe em milhares de milhões de sites?"
+      "en": "How does a search engine know what exists across billions of websites?"
     },
     "description": {
       "pt": "Os motores de busca usam programas automáticos chamados rastreadores Web (web crawlers ou spiders). Elas viajam de link em link dia e noite, lendo o conteúdo das páginas e organizando uma biblioteca gigante chamada Índice.",
-      "en": "Os motores de busca usam programas automáticos chamados rastreadores Web (web crawlers ou spiders). Elas viajam de link em link dia e noite, lendo o conteúdo das páginas e organizando uma biblioteca gigante chamada Índice."
+      "en": "Search engines use automatic programs called web crawlers or spiders. They travel from link to link day and night, reading page content and organising a giant library called an index."
     },
     "whyItMatters": {
       "pt": "Compreender como a informação é indexada e recuperada nos motores de pesquisa.",
-      "en": "Compreender como a informação é indexada e recuperada nos motores de pesquisa."
+      "en": "Understanding how information is indexed and retrieved by search engines."
     },
     "funFact": {
       "pt": "O Google começou com um robô de busca criado por dois estudantes de doutoramento em Stanford em 1996!",
-      "en": "O Google começou com um robô de busca criado por dois estudantes de doutoramento em Stanford em 1996!"
+      "en": "Google began with a search robot created by two Stanford graduate students in 1996!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -11036,28 +11036,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Domínio Público",
-      "en": "Domínio Público"
+      "en": "Public Domain"
     },
     "icon": "🏛️",
     "title": {
       "pt": "Dica Prática: O que é o Domínio Público? O tesouro cultural que pertence a toda a humanidade!",
-      "en": "Practical Tip: O que é o Domínio Público? O tesouro cultural que pertence a toda a humanidade!"
+      "en": "Practical Tip: What is the Public Domain? Cultural treasure that belongs to everyone!"
     },
     "teaser": {
       "pt": "Sabias que podes usar quadros de Leonardo da Vinci e músicas de Mozart sem pedir licença?",
-      "en": "Sabias que podes usar quadros de Leonardo da Vinci e músicas de Mozart sem pedir licença?"
+      "en": "Did you know you can use paintings by Leonardo da Vinci and music by Mozart without asking for copyright permission?"
     },
     "description": {
       "pt": "Uma obra no domínio público pode, em geral, ser utilizada e partilhada sem pedir autorização por direitos de autor.",
-      "en": "Uma obra no domínio público pode, em geral, ser utilizada e partilhada sem pedir autorização por direitos de autor."
+      "en": "A work in the public domain can generally be used and shared without asking for copyright permission."
     },
     "whyItMatters": {
       "pt": "Compreensão dos prazos de proteção de direitos de autor e acesso ao património comum.",
-      "en": "Compreensão dos prazos de proteção de direitos de autor e acesso ao património comum."
+      "en": "Understanding copyright protection periods and access to the common cultural heritage."
     },
     "funFact": {
       "pt": "As primeiras versões do Rato Mickey dos anos 20 entraram recentemente no Domínio Público!",
-      "en": "As primeiras versões do Rato Mickey dos anos 20 entraram recentemente no Domínio Público!"
+      "en": "The earliest Mickey Mouse versions from the 1920s recently entered the public domain!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -11111,28 +11111,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "História do Rato",
-      "en": "História do Rato"
+      "en": "History of the Mouse"
     },
     "icon": "🖱️",
     "title": {
       "pt": "Segurança Avançada: O primeiro rato do mundo foi feito de madeira com rodas de metal!",
-      "en": "Advanced Safety: O primeiro rato do mundo foi feito de madeira com rodas de metal!"
+      "en": "Advanced Safety: The world's first computer mouse was made of wood with metal wheels!"
     },
     "teaser": {
       "pt": "Inventado em 1964 por Douglas Engelbart, tinha apenas um botão vermelho no topo.",
-      "en": "Inventado em 1964 por Douglas Engelbart, tinha apenas um botão vermelho no topo."
+      "en": "Invented in 1964 by Douglas Engelbart, it had just one red button on top."
     },
     "description": {
       "pt": "Antes do rato, para abrir um ficheiro era preciso escrever linhas de código difíceis num teclado. Engelbart inventou uma caixinha de madeira com duas rodas em baixo para mover uma setinha no ecrã e facilitar o uso para qualquer pessoa!",
-      "en": "Antes do rato, para abrir um ficheiro era preciso escrever linhas de código difíceis num teclado. Engelbart inventou uma caixinha de madeira com duas rodas em baixo para mover uma setinha no ecrã e facilitar o uso para qualquer pessoa!"
+      "en": "Before the mouse, opening a file meant typing difficult lines of code on a keyboard. Engelbart invented a small wooden box with two wheels underneath to move an arrow on the screen and make computers easier for people to use!"
     },
     "whyItMatters": {
       "pt": "Estudamos a evolução das interfaces gráficas (GUI) e periféricos no 1. º tema de TIC.",
-      "en": "Estudamos a evolução das interfaces gráficas (GUI) e periféricos no 1. º tema de TIC."
+      "en": "We study the evolution of graphical user interfaces (GUIs) and peripherals in ICT Topic 1."
     },
     "funFact": {
       "pt": "Recebeu o nome de rato porque o cabo que saía da parte de trás parecia uma cauda!",
-      "en": "Recebeu o nome de rato porque o cabo que saía da parte de trás parecia uma cauda!"
+      "en": "It was called a mouse because the cable coming out of the back looked like a tail!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -11186,28 +11186,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Mochila Escolar",
-      "en": "Mochila Escolar"
+      "en": "School Backpack"
     },
     "icon": "🎒",
     "title": {
       "pt": "Segurança Avançada: O peso da mochila não deve ultrapassar 10% do teu peso corporal!",
-      "en": "Advanced Safety: O peso da mochila não deve ultrapassar 10% do teu peso corporal!"
+      "en": "Advanced Safety: The weight of your backpack should not exceed 10% of your body weight!"
     },
     "teaser": {
       "pt": "Levar o computador portátil e cadernos pesados nas costas exige bons hábitos de organização.",
-      "en": "Levar o computador portátil e cadernos pesados nas costas exige bons hábitos de organização."
+      "en": "Carrying a laptop and heavy notebooks on your back requires good organisational habits."
     },
     "description": {
       "pt": "Se pesas 40 kg, a tua mochila não devia pesar mais do que 4 kg! Coloca os objetos mais pesados colados às costas e usa sempre as duas alças bem ajustadas, nunca pendurada num ombro só.",
-      "en": "Se pesas 40 kg, a tua mochila não devia pesar mais do que 4 kg! Coloca os objetos mais pesados colados às costas e usa sempre as duas alças bem ajustadas, nunca pendurada num ombro só."
+      "en": "If you weigh 40 kg, your backpack should not weigh more than 4 kg! Put the heaviest items close to your back and always use both straps, adjusted properly, never hanging from one shoulder."
     },
     "whyItMatters": {
       "pt": "A ergonomia estende-se ao transporte de materiais escolares e tecnologias portáteis.",
-      "en": "A ergonomia estende-se ao transporte de materiais escolares e tecnologias portáteis."
+      "en": "Ergonomics also applies to carrying school materials and portable technology."
     },
     "funFact": {
       "pt": "Uma mochila desregulada pode causar desvios na coluna como a escoliose na adolescência!",
-      "en": "Uma mochila desregulada pode causar desvios na coluna como a escoliose na adolescência!"
+      "en": "An improperly adjusted backpack can contribute to spinal problems such as scoliosis during adolescence!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -11261,7 +11261,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Câmaras e Microfones",
-      "en": "Câmaras e Microfones"
+      "en": "Cameras and Microphones"
     },
     "icon": "📹",
     "title": {
@@ -11336,28 +11336,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Post-its no Monitor",
-      "en": "Post-its no Monitor"
+      "en": "Post-it Notes on the Monitor"
     },
     "icon": "📝",
     "title": {
       "pt": "Segurança Avançada: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!",
-      "en": "Advanced Safety: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!"
+      "en": "Advanced Safety: The classic mistake: sticking notes with your password on the computer screen!"
     },
     "teaser": {
       "pt": "Escrever a palavra-passe num post-it amarelo e colar no monitor é como deixar a chave na fechadura.",
-      "en": "Escrever a palavra-passe num post-it amarelo e colar no monitor é como deixar a chave na fechadura."
+      "en": "Writing your password on a yellow Post-it and sticking it to the monitor is like leaving the key in the lock."
     },
     "description": {
       "pt": "Qualquer colega ou pessoa que passe pela secretária consegue ver e anotar a tua palavra-passe num instante. Guarda as tuas credenciais de memória ou em ferramentas digitais encriptadas e protegidas.",
-      "en": "Qualquer colega ou pessoa que passe pela secretária consegue ver e anotar a tua palavra-passe num instante. Guarda as tuas credenciais de memória ou em ferramentas digitais encriptadas e protegidas."
+      "en": "Any classmate or person passing your desk can see and write down your password in seconds. Keep your credentials in memory or in encrypted, protected digital tools."
     },
     "whyItMatters": {
       "pt": "Práticas de segurança física e lógica no manuseamento de acessos no computador.",
-      "en": "Práticas de segurança física e lógica no manuseamento de acessos no computador."
+      "en": "Physical and logical security practices when handling computer access."
     },
     "funFact": {
       "pt": "Nos escritórios e bancos, é estritamente proibido ter papéis com palavras-passe à vista na secretária!",
-      "en": "Nos escritórios e bancos, é estritamente proibido ter papéis com palavras-passe à vista na secretária!"
+      "en": "In offices and banks, having passwords written on visible notes on the desk is strictly forbidden!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -11411,28 +11411,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "O Campo Assunto",
-      "en": "O Campo Assunto"
+      "en": "The Subject Field"
     },
     "icon": "🏷️",
     "title": {
       "pt": "Segurança Avançada: Nunca envies um email com o campo \"Assunto\" vazio!",
-      "en": "Advanced Safety: Nunca envies um email com o campo \"Assunto\" vazio!"
+      "en": "Advanced Safety: Never send an email with the \"Subject\" field empty!"
     },
     "teaser": {
       "pt": "O Assunto deve resumir em poucas palavras o objetivo exato da mensagem.",
-      "en": "O Assunto deve resumir em poucas palavras o objetivo exato da mensagem."
+      "en": "The Subject should summarise the exact purpose of the message in a few words."
     },
     "description": {
-      "pt": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5. º B\".",
-      "en": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5. º B\"."
+      "pt": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5.º B\".",
+      "en": "Sending an email without a subject is like handing someone a letter inside a completely blank envelope. Write a clear subject, for example: \"ICT Project - Topic 5 - João Silva No. 12 - 5th B\"."
     },
     "whyItMatters": {
       "pt": "Composição correta dos elementos essenciais de uma mensagem de correio eletrónico.",
-      "en": "Composição correta dos elementos essenciais de uma mensagem de correio eletrónico."
+      "en": "Correct composition of the essential elements of an email message."
     },
     "funFact": {
       "pt": "Emails sem assunto vão frequentemente parar à pasta de Spam ou Lixo Eletrónico de forma automática!",
-      "en": "Emails sem assunto vão frequentemente parar à pasta de Spam ou Lixo Eletrónico de forma automática!"
+      "en": "Emails without a subject often end up automatically in the Spam or Junk folder!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -11463,7 +11463,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Um assunto claro como 'Trabalho de TIC - 5. º A - João Silva' ajuda a professora a responder rápido!",
+      "pt": "Um assunto claro como 'Trabalho de TIC - 5.º A - João Silva' ajuda a professora a responder rápido!",
       "en": "A clear subject line like 'ICT Project - Class 5A - John Doe' helps teachers respond fast!"
     }
   },
@@ -11486,28 +11486,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Histórico e Cookies",
-      "en": "Histórico e Cookies"
+      "en": "History and Cookies"
     },
     "icon": "🍪",
     "title": {
       "pt": "Segurança Avançada: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!",
-      "en": "Advanced Safety: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!"
+      "en": "Advanced Safety: Cookies on the Internet: they are not chocolate biscuits, but small text notes!"
     },
     "teaser": {
       "pt": "Porque é que todos os sites perguntam se aceitas cookies?",
-      "en": "Porque é que todos os sites perguntam se aceitas cookies?"
+      "en": "Why do all websites ask whether you accept cookies?"
     },
     "description": {
       "pt": "Um cookie é um pequeno ficheiro de texto que o site guarda no teu navegador para se lembrar de quem és, que língua preferes ou que itens tens no carrinho de compras. Cookies de terceiros podem seguir a tua navegação entre sites.",
-      "en": "Um cookie é um pequeno ficheiro de texto que o site guarda no teu navegador para se lembrar de quem és, que língua preferes ou que itens tens no carrinho de compras. Cookies de terceiros podem seguir a tua navegação entre sites."
+      "en": "A cookie is a small text file that a website stores in your browser to remember who you are, your preferred language, or items in your shopping cart. Third-party cookies can track your browsing across websites."
     },
     "whyItMatters": {
       "pt": "Gestão de privacidade, cookies e limpeza de histórico de navegação no Tema 6 de TIC.",
-      "en": "Gestão de privacidade, cookies e limpeza de histórico de navegação no Tema 6 de TIC."
+      "en": "Managing privacy, cookies, and clearing browsing history in ICT Topic 6."
     },
     "funFact": {
       "pt": "O nome \"cookie\" foi inspirado nos \"biscoitos da sorte\" chineses que trazem uma mensagem secreta dentro!",
-      "en": "O nome \"cookie\" foi inspirado nos \"biscoitos da sorte\" chineses que trazem uma mensagem secreta dentro!"
+      "en": "The name \"cookie\" was inspired by fortune cookies that contain a hidden message!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -11561,28 +11561,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Música e Sons Livres",
-      "en": "Música e Sons Livres"
+      "en": "Free Music and Sounds"
     },
     "icon": "🎵",
     "title": {
       "pt": "Segurança Avançada: Bancos de som e música livre para os teus vídeos e jogos no Scratch!",
-      "en": "Advanced Safety: Bancos de som e música livre para os teus vídeos e jogos no Scratch!"
+      "en": "Advanced Safety: Free music and sound libraries for your videos and Scratch games!"
     },
     "teaser": {
       "pt": "Usar músicas famosas da rádio no teu vídeo do YouTube pode fazer o vídeo ser bloqueado.",
-      "en": "Usar músicas famosas da rádio no teu vídeo do YouTube pode fazer o vídeo ser bloqueado."
+      "en": "Using famous radio music in your YouTube video may cause the video to be blocked."
     },
     "description": {
       "pt": "Plataformas de vídeo usam algoritmos automáticos de reconhecimento de áudio que bloqueiam músicas protegidas por direitos comerciais. Usa bancos de áudio livres como a YouTube Audio Library ou sons de Domínio Público.",
-      "en": "Plataformas de vídeo usam algoritmos automáticos de reconhecimento de áudio que bloqueiam músicas protegidas por direitos comerciais. Usa bancos de áudio livres como a YouTube Audio Library ou sons de Domínio Público."
+      "en": "Video platforms use automatic audio-recognition systems that can block music protected by commercial copyright. Use free audio libraries such as the YouTube Audio Library or public-domain sounds."
     },
     "whyItMatters": {
       "pt": "Pesquisa e integração ética de recursos multimédia em projetos digitais escolares.",
-      "en": "Pesquisa e integração ética de recursos multimédia em projetos digitais escolares."
+      "en": "Ethical research and integration of multimedia resources in school digital projects."
     },
     "funFact": {
       "pt": "Muitos músicos famosos gravam canções e lançam-nas voluntariamente sob a licença livre CC0!",
-      "en": "Muitos músicos famosos gravam canções e lançam-nas voluntariamente sob a licença livre CC0!"
+      "en": "Many musicians release songs voluntarily under free licences such as CC0!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -11636,28 +11636,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Robótica e Exploração",
-      "en": "Robótica e Exploração"
+      "en": "Robotics and Exploration"
     },
     "icon": "🤖",
     "title": {
       "pt": "Segurança Avançada: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!",
-      "en": "Advanced Safety: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!"
+      "en": "Advanced Safety: Robots on Mars: scientists drive rovers millions of kilometres from Earth!"
     },
     "teaser": {
       "pt": "Os robôs Curiosity e Perseverance usam computadores de bordo para analisar rochas em Marte.",
-      "en": "Os robôs Curiosity e Perseverance usam computadores de bordo para analisar rochas em Marte."
+      "en": "The Curiosity and Perseverance robots use onboard computers to analyse rocks on Mars."
     },
     "description": {
       "pt": "Os sinais de rádio demoram até 20 minutos a viajar da Terra até Marte! Por isso, os robôs marcianos têm de ter inteligência a bordo para evitar rochas e buracos sozinhos sem esperar pela resposta imediata dos cientistas.",
-      "en": "Os sinais de rádio demoram até 20 minutos a viajar da Terra até Marte! Por isso, os robôs marcianos têm de ter inteligência a bordo para evitar rochas e buracos sozinhos sem esperar pela resposta imediata dos cientistas."
+      "en": "Radio signals can take up to 20 minutes to travel from Earth to Mars! That is why Mars rovers need onboard systems to avoid rocks and holes without waiting for an immediate response from scientists."
     },
     "whyItMatters": {
       "pt": "Exploramos como a robótica e a automação transformam a ciência e a sociedade moderna.",
-      "en": "Exploramos como a robótica e a automação transformam a ciência e a sociedade moderna."
+      "en": "We explore how robotics and automation transform modern science and society."
     },
     "funFact": {
       "pt": "O rover Perseverance tem um pequeno helicóptero chamado Ingenuity que voou na atmosfera rarefeita de Marte!",
-      "en": "O rover Perseverance tem um pequeno helicóptero chamado Ingenuity que voou na atmosfera rarefeita de Marte!"
+      "en": "The Perseverance rover has a small helicopter called Ingenuity that flew in Mars's thin atmosphere!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -11711,28 +11711,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Iluminação do Espaço",
-      "en": "Iluminação do Espaço"
+      "en": "Lighting the Workspace"
     },
     "icon": "💡",
     "title": {
       "pt": "Segurança Avançada: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!",
-      "en": "Advanced Safety: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!"
+      "en": "Advanced Safety: Avoid screen glare: the window should never be directly behind you!"
     },
     "teaser": {
       "pt": "Como deves orientar a tua mesa de computador em relação à luz natural da janela?",
-      "en": "Como deves orientar a tua mesa de computador em relação à luz natural da janela?"
+      "en": "How should you position your computer desk in relation to natural window light?"
     },
     "description": {
       "pt": "Se a janela ficar diretamente atrás de ti, o sol cria reflexos ofuscantes no ecrã. Se ficar mesmo atrás do monitor, ficas encandeado. O ideal é a luz natural entrar de lado em relação à mesa de trabalho.",
-      "en": "Se a janela ficar diretamente atrás de ti, o sol cria reflexos ofuscantes no ecrã. Se ficar mesmo atrás do monitor, ficas encandeado. O ideal é a luz natural entrar de lado em relação à mesa de trabalho."
+      "en": "If the window is directly behind you, sunlight can create glare on the screen. If it is directly behind the monitor, you may be dazzled. Ideally, natural light should enter from the side of the desk."
     },
     "whyItMatters": {
       "pt": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado.",
-      "en": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado."
+      "en": "In Topic 2, we learn to organise a pleasant, well-lit, and well-ventilated workstation."
     },
     "funFact": {
       "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!",
-      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!"
+      "en": "Keeping the room ventilated helps renew the air and can improve your comfort and concentration when using a computer!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -11786,28 +11786,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Engenharia Social",
-      "en": "Engenharia Social"
+      "en": "Social Engineering"
     },
     "icon": "🎣",
     "title": {
       "pt": "Segurança Avançada: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!",
-      "en": "Advanced Safety: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!"
+      "en": "Advanced Safety: Beware the bait: \"Free Coins\" offers in games are almost always traps!"
     },
     "teaser": {
       "pt": "\"Clica aqui para ganhares 10. 000 Robux ou V-Bucks de graça! \" — Desconfia sempre!",
-      "en": "\"Clica aqui para ganhares 10. 000 Robux ou V-Bucks de graça! \" — Desconfia sempre!"
+      "en": "\"Click here to get 10,000 Robux or V-Bucks for free!\" — Always be suspicious!"
     },
     "description": {
       "pt": "Cibercriminosos usam sites falsos com promessas de moedas virtuais grátis para roubar palavras-passe e contas. A regra é simples: se parece bom demais para ser verdade, desconfia. Pode ser uma tentativa de fraude.",
-      "en": "Cibercriminosos usam sites falsos com promessas de moedas virtuais grátis para roubar palavras-passe e contas. A regra é simples: se parece bom demais para ser verdade, desconfia. Pode ser uma tentativa de fraude."
+      "en": "Cybercriminals use fake websites promising free virtual coins to steal passwords and accounts. The rule is simple: if it looks too good to be true, be suspicious. It may be an attempted scam."
     },
     "whyItMatters": {
       "pt": "Identificação de técnicas básicas de engenharia social e enganos virtuais.",
-      "en": "Identificação de técnicas básicas de engenharia social e enganos virtuais."
+      "en": "Identifying basic social-engineering techniques and online deception."
     },
     "funFact": {
       "pt": "As empresas oficiais dos jogos nunca pedem a tua palavra-passe para te darem prémios!",
-      "en": "As empresas oficiais dos jogos nunca pedem a tua palavra-passe para te darem prémios!"
+      "en": "Official game companies never ask for your password to give you prizes!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -11861,28 +11861,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Bloqueio de Sessão",
-      "en": "Bloqueio de Sessão"
+      "en": "Session Lock"
     },
     "icon": "🔒",
     "title": {
       "pt": "Segurança Avançada: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!",
-      "en": "Advanced Safety: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!"
+      "en": "Advanced Safety: Ninja shortcut: Windows key + L locks the screen in 1 second!"
     },
     "teaser": {
       "pt": "Vais ao intervalo ou à casa de banho na sala de informática? Bloqueia a sessão!",
-      "en": "Vais ao intervalo ou à casa de banho na sala de informática? Bloqueia a sessão!"
+      "en": "Going to break or to the bathroom in the computer room? Lock your session!"
     },
     "description": {
       "pt": "No Windows, pressionar a tecla Windows junto com a letra \"L\" bloqueia o ecrã instantaneamente. Assim ninguém mexe no teu trabalho escolar enquanto estás ausente da sala de aula.",
-      "en": "No Windows, pressionar a tecla Windows junto com a letra \"L\" bloqueia o ecrã instantaneamente. Assim ninguém mexe no teu trabalho escolar enquanto estás ausente da sala de aula."
+      "en": "On Windows, pressing the Windows key together with the letter \"L\" locks the screen instantly. This stops other people from using your schoolwork while you are away from the classroom."
     },
     "whyItMatters": {
       "pt": "Utilização correta dos atalhos de sistema operativo para proteger sessões de utilizador.",
-      "en": "Utilização correta dos atalhos de sistema operativo para proteger sessões de utilizador."
+      "en": "Correct use of operating-system shortcuts to protect user sessions."
     },
     "funFact": {
       "pt": "No computador Mac da Apple, o atalho equivalente é Control + Command + Q!",
-      "en": "No computador Mac da Apple, o atalho equivalente é Control + Command + Q!"
+      "en": "On an Apple Mac, the equivalent shortcut is Control + Command + Q!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -11936,28 +11936,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Spam e Cadeias",
-      "en": "Spam e Cadeias"
+      "en": "Spam and Chain Messages"
     },
     "icon": "🗑️",
     "title": {
       "pt": "Segurança Avançada: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!",
-      "en": "Advanced Safety: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!"
+      "en": "Advanced Safety: The origin of the word \"SPAM\": a canned meat brand made famous in the 1970s!"
     },
     "teaser": {
       "pt": "Mensagens publicitárias não solicitadas receberam o nome de uma comida enlatada!",
-      "en": "Mensagens publicitárias não solicitadas receberam o nome de uma comida enlatada!"
+      "en": "Unwanted advertising messages were named after a canned food!"
     },
     "description": {
       "pt": "A palavra SPAM era originalmente o nome de uma marca de carne enlatada. Ficou famosa num programa de humor dos Monty Python, onde a palavra era repetida sem parar, inspirando mais tarde o uso do termo para mensagens indesejadas em massa.",
-      "en": "A palavra SPAM era originalmente o nome de uma marca de carne enlatada. Ficou famosa num programa de humor dos Monty Python, onde a palavra era repetida sem parar, inspirando mais tarde o uso do termo para mensagens indesejadas em massa."
+      "en": "The word SPAM was originally the name of a canned meat brand. It became famous in a Monty Python comedy sketch where the word was repeated over and over, later inspiring the term for unwanted mass messages."
     },
     "whyItMatters": {
       "pt": "Gestão de pastas de correio: Caixa de Entrada, Itens Enviados, Rascunhos e Spam.",
-      "en": "Gestão de pastas de correio: Caixa de Entrada, Itens Enviados, Rascunhos e Spam."
+      "en": "Managing email folders: Inbox, Sent Items, Drafts, and Spam."
     },
     "funFact": {
       "pt": "Cartas em cadeia que dizem \"Reenvia a 10 amigos ou terás azar\" são mitos falsos: apaga-as logo!",
-      "en": "Cartas em cadeia que dizem \"Reenvia a 10 amigos ou terás azar\" são mitos falsos: apaga-as logo!"
+      "en": "Chain letters saying \"Forward this to 10 friends or you will have bad luck\" are false myths: delete them!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -12011,28 +12011,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Separadores e Janelas",
-      "en": "Separadores e Janelas"
+      "en": "Tabs and Windows"
     },
     "icon": "📑",
     "title": {
       "pt": "Segurança Avançada: Atalhos de mestre no navegador: Control + T abre um novo separador!",
-      "en": "Advanced Safety: Atalhos de mestre no navegador: Control + T abre um novo separador!"
+      "en": "Advanced Safety: Master browser shortcuts: Control + T opens a new tab!"
     },
     "teaser": {
       "pt": "Dominar o teclado faz-te navegar como um verdadeiro profissional de informática.",
-      "en": "Dominar o teclado faz-te navegar como um verdadeiro profissional de informática."
+      "en": "Mastering the keyboard helps you browse like a real computer professional."
     },
     "description": {
       "pt": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!",
-      "en": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!"
+      "en": "Use Control + T to open a new tab, Control + W to close the current tab, and if you accidentally close the page you were on, Control + Shift + T magically reopens the last closed tab!"
     },
     "whyItMatters": {
       "pt": "Eficiência e atalhos de teclado na navegação Web no dia a dia.",
-      "en": "Eficiência e atalhos de teclado na navegação Web no dia a dia."
+      "en": "Efficiency and keyboard shortcuts for everyday Web browsing."
     },
     "funFact": {
       "pt": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!",
-      "en": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!"
+      "en": "On a Mac, replace the Control key with the Command key in the same shortcuts!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -12086,28 +12086,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Software Livre vs Proprietário",
-      "en": "Software Livre vs Proprietário"
+      "en": "Free vs Proprietary Software"
     },
     "icon": "🐧",
     "title": {
       "pt": "Segurança Avançada: Software Livre: o código aberto onde todos podem aprender e colaborar!",
-      "en": "Advanced Safety: Software Livre: o código aberto onde todos podem aprender e colaborar!"
+      "en": "Advanced Safety: Free Software: open code where everyone can learn and collaborate!"
     },
     "teaser": {
       "pt": "Qual é a diferença entre programas comerciais fechados e aplicações como o Linux e o Scratch?",
-      "en": "Qual é a diferença entre programas comerciais fechados e aplicações como o Linux e o Scratch?"
+      "en": "What is the difference between closed commercial programs and applications such as Linux and Scratch?"
     },
     "description": {
       "pt": "Software Proprietário não permite ver como foi feito por dentro. O Software Livre e de Código Aberto (Open Source) partilha o código para que qualquer estudante ou programador possa estudar, melhorar e partilhar livremente com a comunidade.",
-      "en": "Software Proprietário não permite ver como foi feito por dentro. O Software Livre e de Código Aberto (Open Source) partilha o código para que qualquer estudante ou programador possa estudar, melhorar e partilhar livremente com a comunidade."
+      "en": "Proprietary software does not let you see how it was made internally. Free and Open Source Software shares its source code so students and programmers can study, improve, and share it with the community."
     },
     "whyItMatters": {
       "pt": "Diferença entre licenças de software comercial, freeware, shareware e software livre.",
-      "en": "Diferença entre licenças de software comercial, freeware, shareware e software livre."
+      "en": "The difference between commercial software, freeware, shareware, and free software licences."
     },
     "funFact": {
       "pt": "A mascote do sistema operativo livre Linux é um simpático pinguim chamado Tux!",
-      "en": "A mascote do sistema operativo livre Linux é um simpático pinguim chamado Tux!"
+      "en": "The mascot of the free Linux operating system is a friendly penguin called Tux!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -12161,28 +12161,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Ambiente e Sustentabilidade",
-      "en": "Ambiente e Sustentabilidade"
+      "en": "Environment and Sustainability"
     },
     "icon": "♻️",
     "title": {
       "pt": "Segurança Avançada: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!",
-      "en": "Advanced Safety: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!"
+      "en": "Advanced Safety: Electronic Waste (E-Waste): old computers do not belong in ordinary rubbish!"
     },
     "teaser": {
       "pt": "O que deves fazer quando um telemóvel, teclado ou comando de consola avaria de vez?",
-      "en": "O que deves fazer quando um telemóvel, teclado ou comando de consola avaria de vez?"
+      "en": "What should you do when a phone, keyboard, or game controller breaks for good?"
     },
     "description": {
       "pt": "Os equipamentos de TIC contêm metais preciosos (como ouro, prata e cobre) e substâncias químicas que não podem poluir a natureza. Devem ser entregues no Eletrão ou em lojas com contentores de reciclagem elétrica adequados.",
-      "en": "Os equipamentos de TIC contêm metais preciosos (como ouro, prata e cobre) e substâncias químicas que não podem poluir a natureza. Devem ser entregues no Eletrão ou em lojas com contentores de reciclagem elétrica adequados."
+      "en": "ICT equipment contains valuable metals such as gold, silver, and copper, as well as substances that can harm nature. It should be taken to an authorised e-waste collection point or a shop with suitable electrical recycling containers."
     },
     "whyItMatters": {
-      "pt": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5. º ano.",
-      "en": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5. º ano."
+      "pt": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5.º ano.",
+      "en": "Environmental citizenship and the ecological footprint of ICT are part of the 5th-grade goals."
     },
     "funFact": {
       "pt": "Com o circuito de 40 telemóveis reciclados consegue-se recuperar ouro suficiente para fazer uma aliança!",
-      "en": "Com o circuito de 40 telemóveis reciclados consegue-se recuperar ouro suficiente para fazer uma aliança!"
+      "en": "Recycling a batch of 40 mobile phones can recover enough gold to make a wedding ring!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -12236,24 +12236,24 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Pausas Ativas",
-      "en": "Pausas Ativas"
+      "en": "Active Breaks"
     },
     "icon": "🏃‍♂️",
     "title": {
       "pt": "Segurança Avançada: Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!",
-      "en": "Advanced Safety: Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!"
+      "en": "Advanced Safety: Quick stretches: stretch your arms and rotate your wrists every hour!"
     },
     "teaser": {
       "pt": "Ficar sentado horas seguidas na mesma posição cansa o corpo mais do que pensas.",
-      "en": "Ficar sentado horas seguidas na mesma posição cansa o corpo mais do que pensas."
+      "en": "Sitting for hours in the same position tires your body more than you might think."
     },
     "description": {
       "pt": "A cada 50 ou 60 minutos de aula ou estudo no computador, levanta-te, caminha até à janela, bebe um copo de água e roda suavemente os pulsos para prevenir dores nas mãos e dedos.",
-      "en": "A cada 50 ou 60 minutos de aula ou estudo no computador, levanta-te, caminha até à janela, bebe um copo de água e roda suavemente os pulsos para prevenir dores nas mãos e dedos."
+      "en": "Every 50 or 60 minutes of a computer lesson or study session, stand up, walk to the window, drink some water, and gently rotate your wrists to help prevent pain in your hands and fingers."
     },
     "whyItMatters": {
-      "pt": "A promoção de estilos de vida ativos e a quebra do sedentarismo são essenciais no 5. º ano.",
-      "en": "A promoção de estilos de vida ativos e a quebra do sedentarismo são essenciais no 5. º ano."
+      "pt": "A promoção de estilos de vida ativos e a quebra do sedentarismo são essenciais no 5.º ano.",
+      "en": "Promoting active lifestyles and breaking up sedentary time are essential in 5th grade."
     },
     "funFact": {
       "pt": "Beber água regularmente hidrata o cérebro e melhora o tempo de resposta em jogos e testes!",
@@ -12311,12 +12311,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Direito à Imagem",
-      "en": "Direito à Imagem"
+      "en": "Right to One's Image"
     },
     "icon": "📸",
     "title": {
       "pt": "Segurança Avançada: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!",
-      "en": "Advanced Safety: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!"
+      "en": "Advanced Safety: Always ask permission before taking or sharing photos of friends!"
     },
     "teaser": {
       "pt": "Cada pessoa é dona da sua própria imagem e tem o direito de não querer ser fotografada.",
@@ -12327,7 +12327,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "Even at school, photographing or filming a classmate and posting it on social media without their consent and their parents' permission is a serious violation of privacy and school rules."
     },
     "whyItMatters": {
-      "pt": "Compreender o direito à imagem e à reserva da intimidade da vida privada no 5. º ano de escolaridade.",
+      "pt": "Compreender o direito à imagem e à reserva da intimidade da vida privada no 5.º ano de escolaridade.",
       "en": "Understanding the right to one's image and the preservation of privacy in the 5th grade."
     },
     "funFact": {
@@ -12386,16 +12386,16 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Biometria",
-      "en": "Biometria"
+      "en": "Biometrics"
     },
     "icon": "👁️",
     "title": {
       "pt": "Segurança Avançada: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade.",
-      "en": "Advanced Safety: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade."
+      "en": "Advanced Safety: Fingerprints and facial recognition: using body characteristics to confirm identity."
     },
     "teaser": {
       "pt": "A biometria utiliza características do corpo, como a impressão digital ou o rosto, para ajudar a confirmar a identidade de uma pessoa.",
-      "en": "A biometria usa caraterísticas físicas únicas que é muito difícil de copiar."
+      "en": "Biometrics use unique physical characteristics that are very difficult to copy."
     },
     "description": {
       "pt": "Sensores biométricos leem as linhas do teu dedo ou a geometria do teu rosto para desbloquear tablets e telemóveis. É rápido, prático e muito mais difícil de adivinhar do que uma palavra-passe de 4 algarismos.",
@@ -12407,7 +12407,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "Nem sequer gémeos verdadeiros têm impressões digitais exatamente idênticas!",
-      "en": "Nem sequer gémeos verdadeiros têm impressões digitais exatamente idênticas!"
+      "en": "Even identical twins do not have exactly the same fingerprints!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -12461,12 +12461,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Responder a Todos",
-      "en": "Responder a Todos"
+      "en": "Reply All"
     },
     "icon": "👥",
     "title": {
       "pt": "Segurança Avançada: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!",
-      "en": "Advanced Safety: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!"
+      "en": "Advanced Safety: Be careful with the \"Reply All\" button: do not fill your classmates’ inboxes!"
     },
     "teaser": {
       "pt": "Se queres responder apenas à professora, clica em \"Responder\" e não em \"Responder a Todos\".",
@@ -12477,7 +12477,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "If the teacher sends an assignment to all 25 students and you reply 'Thank you! ' using 'Reply All', all 25 classmates will receive an unnecessary notification!"
     },
     "whyItMatters": {
-      "pt": "Uso responsável e ponderado das ferramentas de comunicação coletiva no 5. º ano.",
+      "pt": "Uso responsável e ponderado das ferramentas de comunicação coletiva no 5.º ano.",
       "en": "Responsible and thoughtful use of collective communication tools in 5th grade."
     },
     "funFact": {
@@ -12536,16 +12536,16 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Domínios e Extensões",
-      "en": "Domínios e Extensões"
+      "en": "Domains and Extensions"
     },
     "icon": "🌐",
     "title": {
       "pt": "Segurança Avançada: O que significa . pt, . org, . edu e . gov no final dos sites?",
-      "en": "Advanced Safety: O que significa . pt, . org, . edu e . gov no final dos sites?"
+      "en": "Advanced Safety: What do .pt, .org, .edu, and .gov mean at the end of websites?"
     },
     "teaser": {
       "pt": "A terminação do endereço da página Web revela muito sobre quem a criou.",
-      "en": "A terminação do endereço da página Web revela muito sobre quem a criou."
+      "en": "The ending of a web address reveals a lot about who created it."
     },
     "description": {
       "pt": "O domínio \". pt\" indica Portugal, \". gov\" pertence a organismos de governo oficial, \". edu\" a escolas e universidades, e \". org\" a organizações sem fins lucrativos. Sites educativos e governamentais são fontes muito mais fiáveis para trabalhos!",
@@ -12611,12 +12611,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Citação Direta entre Aspas",
-      "en": "Citação Direta entre Aspas"
+      "en": "Direct Quotation in Quotation Marks"
     },
     "icon": "💬",
     "title": {
       "pt": "Segurança Avançada: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?",
-      "en": "Advanced Safety: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?"
+      "en": "Advanced Safety: How can you quote a sentence from a book in a school project without plagiarising?"
     },
     "teaser": {
       "pt": "Se copiares uma frase palavra por palavra, deves colocá-la entre aspas e dizer de quem é!",
@@ -12686,12 +12686,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Hardware Interno",
-      "en": "Hardware Interno"
+      "en": "Internal Hardware"
     },
     "icon": "🧠",
     "title": {
       "pt": "Segurança Avançada: A CPU, ou processador, é um dos principais componentes do computador. Executa instruções e ajuda o computador a realizar tarefas.",
-      "en": "Advanced Safety: A CPU, ou processador, é um dos principais componentes do computador. Executa instruções e ajuda o computador a realizar tarefas."
+      "en": "Advanced Safety: The CPU, or processor, is one of the main components of a computer. It executes instructions and helps the computer perform tasks."
     },
     "teaser": {
       "pt": "Sabias que o processador do teu computador consegue resolver contas mais depressa do que um raio?",
@@ -12761,12 +12761,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Postura na Cadeira",
-      "en": "Postura na Cadeira"
+      "en": "Chair Posture"
     },
     "icon": "🪑",
     "title": {
       "pt": "Segurança Avançada: Postura Confortável: a posição ideal para estudar ao computador!",
-      "en": "Advanced Safety: Postura Confortável: a posição ideal para estudar ao computador!"
+      "en": "Advanced Safety: Comfortable Posture: the ideal position for studying at a computer!"
     },
     "teaser": {
       "pt": "Sabias que os cotovelos e joelhos devem ficar, aproximadamente, num ângulo de 90°, numa posição confortável?",
@@ -12782,7 +12782,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "Se os teus pés não chegarem ao chão na escola, pede um apoio de pés para manter a postura certa!",
-      "en": "Se os teus pés não chegarem ao chão na escola, pede um apoio de pés para manter a postura certa!"
+      "en": "If your feet do not reach the floor at school, ask for a footrest to help you keep the correct posture!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -12836,28 +12836,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Pegada Digital",
-      "en": "Pegada Digital"
+      "en": "Digital Footprint"
     },
     "icon": "👣",
     "title": {
       "pt": "Evolução Histórica: A tua Pegada Digital é como uma pegada no cimento fresco!",
-      "en": "Historical Evolution: A tua Pegada Digital é como uma pegada no cimento fresco!"
+      "en": "Historical Evolution: Your Digital Footprint is like a footprint in wet cement!"
     },
     "teaser": {
       "pt": "Algumas das nossas atividades online deixam registos. Publicações, comentários e conteúdos que partilhamos podem fazer parte da nossa pegada digital.",
       "en": "Some of our online activities leave records. Posts, comments, and content we share can form part of our digital footprint."
     },
     "description": {
-      "pt": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã (captura de ecrã). Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes.",
-      "en": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã (captura de ecrã). Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes."
+      "pt": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã. Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes.",
+      "en": "Every click, video you watch, and comment builds your online reputation. Even if you delete a photo, someone may have taken a screenshot. So build a positive digital footprint by sharing thoughtfully and kindly."
     },
     "whyItMatters": {
       "pt": "No Tema 3 de TIC aprendemos a refletir criticamente sobre as consequências das nossas ações online.",
-      "en": "No Tema 3 de TIC aprendemos a refletir criticamente sobre as consequências das nossas ações online."
+      "en": "In ICT Topic 3, we learn to think critically about the consequences of our online actions."
     },
     "funFact": {
       "pt": "A regra de ouro: só deves publicar algo se não tiveres vergonha que a tua professora ou avó vejam!",
-      "en": "A regra de ouro: só deves publicar algo se não tiveres vergonha que a tua professora ou avó vejam!"
+      "en": "The golden rule: only post something if you would be comfortable with your teacher or grandmother seeing it!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -12911,28 +12911,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Força de Palavras-passe",
-      "en": "Força de Palavras-passe"
+      "en": "Password Strength"
     },
     "icon": "⚡",
     "title": {
       "pt": "Segurança Avançada: 123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar.",
-      "en": "Advanced Safety: 123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar."
+      "en": "Advanced Safety: 123456 is an extremely predictable password and is among the first combinations automated systems may try."
     },
     "teaser": {
       "pt": "Inacreditavelmente, continua a ser uma das palavras-passe mais usadas no planeta!",
-      "en": "Inacreditavelmente, continua a ser uma das palavras-passe mais usadas no planeta!"
+      "en": "Unbelievably, it is still one of the most commonly used passwords in the world!"
     },
     "description": {
       "pt": "Programas automáticos usam listas de palavras comuns e sequências de teclado simples. Palavras-passe como \"123456\", \"qwerty\", \"password\" ou a tua data de aniversário são adivinhadas instantaneamente por computadores.",
-      "en": "Programas automáticos usam listas de palavras comuns e sequências de teclado simples. Palavras-passe como \"123456\", \"qwerty\", \"password\" ou a tua data de aniversário são adivinhadas instantaneamente por computadores."
+      "en": "Automated programs use lists of common words and simple keyboard sequences. Passwords such as \"123456\", \"qwerty\", \"password\", or your birthday can be guessed instantly by computers."
     },
     "whyItMatters": {
       "pt": "No Tema 4 de TIC aprendemos a criar palavras-passe robustas que protegem as nossas contas escolares.",
-      "en": "No Tema 4 de TIC aprendemos a criar palavras-passe robustas que protegem as nossas contas escolares."
+      "en": "In ICT Topic 4, we learn to create strong passwords that protect our school accounts."
     },
     "funFact": {
       "pt": "Outra palavra-passe péssima muito usada é \"admin\" ou o nome do clube de futebol favorito!",
-      "en": "Outra palavra-passe péssima muito usada é \"admin\" ou o nome do clube de futebol favorito!"
+      "en": "Another very poor password that is widely used is \"admin\" or the name of a favourite football club!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -12986,12 +12986,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Campos do Email",
-      "en": "Campos do Email"
+      "en": "Email Fields"
     },
     "icon": "🕶️",
     "title": {
       "pt": "Evolução Histórica: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade",
-      "en": "Historical Evolution: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade"
+      "en": "Historical Evolution: The Bcc field lets you send emails to several people while protecting their privacy."
     },
     "teaser": {
       "pt": "Vais convidar 25 colegas da turma para uma festa por email? Usa o Cco!",
@@ -12999,7 +12999,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "description": {
       "pt": "No email tens: \"Para\" (destinatários principais), \"Cc\" (Com Cópia, visível a todos) e \"Cco\" (Com Cópia Oculta). Ao colocar os contactos em Cco, ninguém vê o endereço privado dos outros, evitando spam e exposição indesejada de contactos.",
-      "en": "No email tens: \"Para\" (destinatários principais), \"Cc\" (Com Cópia, visível a todos) e \"Cco\" (Com Cópia Oculta). Ao colocar os contactos em Cco, ninguém vê o endereço privado dos outros, evitando spam e exposição indesejada de contactos."
+      "en": "In an email you have: \"To\" (main recipients), \"Cc\" (Carbon Copy, visible to everyone), and \"Bcc\" (Blind Carbon Copy). When you put contacts in Bcc, no one can see the other people's private addresses, helping prevent spam and unwanted exposure of contacts."
     },
     "whyItMatters": {
       "pt": "No Tema 5 de TIC aprendemos a usar os campos Para, Cc e Cco de acordo com as regras do RGPD.",
@@ -13007,7 +13007,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "A sigla Cc vem do papel químico (\"Carbon Copy\") que se usava antigamente nas máquinas de escrever!",
-      "en": "A sigla Cc vem do papel químico (\"Carbon Copy\") que se usava antigamente nas máquinas de escrever!"
+      "en": "The abbreviation Cc comes from carbon paper (\"Carbon Copy\"), which was once used with typewriters!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -13061,28 +13061,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Navegador vs Motor",
-      "en": "Navegador vs Motor"
+      "en": "Browser vs Search Engine"
     },
     "icon": "🚗",
     "title": {
       "pt": "Evolução Histórica: O Navegador é o Automóvel, o Motor de Busca é o GPS!",
-      "en": "Historical Evolution: O Navegador é o Automóvel, o Motor de Busca é o GPS!"
+      "en": "Historical Evolution: The Browser is the Car, the Search Engine is the GPS!"
     },
     "teaser": {
       "pt": "Muitos alunos confundem o Chrome com o Google. Sabes qual é a diferença real?",
-      "en": "Muitos alunos confundem o Chrome com o Google. Sabes qual é a diferença real?"
+      "en": "Many students confuse Chrome with Google. Do you know the real difference?"
     },
     "description": {
       "pt": "O Navegador (Browser, como Chrome, Edge, Firefox ou Safari) é a aplicação instalada que abre e desenha páginas Web. O Motor de Busca (Google, Bing, DuckDuckGo) é um site especial que cataloga a rede para responder a perguntas.",
-      "en": "O Navegador (Browser, como Chrome, Edge, Firefox ou Safari) é a aplicação instalada que abre e desenha páginas Web. O Motor de Busca (Google, Bing, DuckDuckGo) é um site especial que cataloga a rede para responder a perguntas."
+      "en": "The Browser (such as Chrome, Edge, Firefox, or Safari) is the application that opens and displays web pages. A Search Engine (such as Google, Bing, or DuckDuckGo) is a special website that indexes the web to answer searches."
     },
     "whyItMatters": {
       "pt": "No Tema 6 de TIC aprendemos a usar a barra de endereços (URL) diretamente sem passar pelo motor de busca.",
-      "en": "No Tema 6 de TIC aprendemos a usar a barra de endereços (URL) diretamente sem passar pelo motor de busca."
+      "en": "In ICT Topic 6, we learn to use the address bar (URL) directly instead of going through a search engine."
     },
     "funFact": {
       "pt": "A primeira janela de navegação inventada em 1990 chamava-se \"WorldWideWeb\"!",
-      "en": "A primeira janela de navegação inventada em 1990 chamava-se \"WorldWideWeb\"!"
+      "en": "The first web browser, created in 1990, was called \"WorldWideWeb\"!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -13211,28 +13211,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Memória do Computador",
-      "en": "Memória do Computador"
+      "en": "Computer Memory"
     },
     "icon": "⚡",
     "title": {
       "pt": "Evolução Histórica: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!",
-      "en": "Historical Evolution: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!"
+      "en": "Historical Evolution: RAM vs SSD: the work desk vs the cupboard!"
     },
     "teaser": {
       "pt": "Qual é a diferença entre a memória que apaga tudo quando desligas e a que guarda ficheiros?",
-      "en": "Qual é a diferença entre a memória que apaga tudo quando desligas e a que guarda ficheiros?"
+      "en": "What is the difference between memory that is cleared when you switch off the computer and storage that keeps files?"
     },
     "description": {
       "pt": "O Disco SSD é o armário com gavetas: guarda os teus trabalhos a longo prazo, mas lembra-te de que os discos também se podem avariar, pelo que deves fazer sempre cópias de segurança (backups) dos teus ficheiros mais importantes!",
-      "en": "O Disco SSD é o armário com gavetas: guarda os teus trabalhos a longo prazo, mas lembra-te de que os discos também se podem avariar, pelo que deves fazer sempre cópias de segurança (backups) dos teus ficheiros mais importantes!"
+      "en": "The SSD is like a cupboard with drawers: it stores your work for the long term. Remember that storage devices can fail, so always make backups of your most important files!"
     },
     "whyItMatters": {
       "pt": "Identificar a diferença entre memória primária (RAM) e armazenamento secundário (SSD/HDD) é uma competência essencial de TIC.",
-      "en": "Identificar a diferença entre memória primária (RAM) e armazenamento secundário (SSD/HDD) é uma competência essencial de TIC."
+      "en": "Knowing the difference between primary memory (RAM) and secondary storage (SSD/HDD) is an essential ICT skill."
     },
     "funFact": {
       "pt": "Os novos discos SSD não têm peças móveis e usam chips de memória flash super rápidos!",
-      "en": "Os novos discos SSD não têm peças móveis e usam chips de memória flash super rápidos!"
+      "en": "Modern SSDs have no moving parts and use very fast flash-memory chips!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -13286,7 +13286,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Cuidado com os Olhos",
-      "en": "Cuidado com os Olhos"
+      "en": "Eye Care"
     },
     "icon": "👀",
     "title": {
@@ -13361,28 +13361,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Privacidade e Redes",
-      "en": "Privacidade e Redes"
+      "en": "Privacy and Networks"
     },
     "icon": "🕵️‍♂️",
     "title": {
       "pt": "Evolução Histórica: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!",
-      "en": "Historical Evolution: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!"
+      "en": "Historical Evolution: The \"Stranger in the Garden\" rule: never share your address in online games!"
     },
     "teaser": {
       "pt": "Roblox, Fortnite, Brawl Stars... avatares simpáticos podem esconder qualquer pessoa.",
-      "en": "Roblox, Fortnite, Brawl Stars... avatares simpáticos podem esconder qualquer pessoa."
+      "en": "Roblox, Fortnite, Brawl Stars... friendly-looking avatars can hide the identity of any person."
     },
     "description": {
       "pt": "Nunca partilhes o teu nome completo, número de telemóvel, nome da escola ou fotos onde se veja o emblema do teu clube ou a rua de tua casa com desconhecidos em salas de conversação ou jogos online.",
-      "en": "Nunca partilhes o teu nome completo, número de telemóvel, nome da escola ou fotos onde se veja o emblema do teu clube ou a rua de tua casa com desconhecidos em salas de conversação ou jogos online."
+      "en": "Never share your full name, phone number, school name, or photos showing your club badge or the street where you live with strangers in chats or online games."
     },
     "whyItMatters": {
       "pt": "A proteção de dados pessoais e a defesa da privacidade individual são prioridades de Cidadania Digital.",
-      "en": "A proteção de dados pessoais e a defesa da privacidade individual são prioridades de Cidadania Digital."
+      "en": "Protecting personal data and defending individual privacy are priorities of Digital Citizenship."
     },
     "funFact": {
       "pt": "É por isso que nos jogos é muito mais seguro e divertido usar nomes de código como \"FalcãoVeloz_99\"!",
-      "en": "É por isso que nos jogos é muito mais seguro e divertido usar nomes de código como \"FalcãoVeloz_99\"!"
+      "en": "That is why using code names such as \"FalcãoVeloz_99\" in games is safer and more fun!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -13436,28 +13436,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "O Segredo da Frase-Passe",
-      "en": "O Segredo da Frase-Passe"
+      "en": "The Secret of the Passphrase"
     },
     "icon": "🍕",
     "title": {
       "pt": "Evolução Histórica: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!",
-      "en": "Historical Evolution: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!"
+      "en": "Historical Evolution: The \"Passphrase\" method: O_Meu_Cao_Adora_Comer_99_Gelados!"
     },
     "teaser": {
-      "pt": "Uma frase longa com espaços ou travessões é fácil de decorar e quase altamente seguro.",
-      "en": "Uma frase longa com espaços ou travessões é fácil de decorar e quase altamente seguro."
+      "pt": "Uma frase longa com espaços ou travessões é fácil de decorar e muito segura.",
+      "en": "A long phrase with spaces or dashes is easy to remember and can be very secure."
     },
     "description": {
       "pt": "Em vez de uma palavra-passe curta e confusa que esqueces amanhã, inventa uma frase maluca com 4 ou 5 palavras e junta números e símbolos. Uma frase-passe longa e difícil de adivinhar é geralmente mais segura do que uma palavra-passe curta e previsível.",
-      "en": "Em vez de uma palavra-passe curta e confusa que esqueces amanhã, inventa uma frase maluca com 4 ou 5 palavras e junta números e símbolos. Uma frase-passe longa e difícil de adivinhar é geralmente mais segura do que uma palavra-passe curta e previsível."
+      "en": "Instead of a short, confusing password that you will forget tomorrow, invent a funny phrase with 4 or 5 words and add numbers and symbols. A long, hard-to-guess passphrase is generally safer than a short, predictable password."
     },
     "whyItMatters": {
       "pt": "Construção de palavras-passe fortes com base em frases mnemónicas compridas.",
-      "en": "Construção de palavras-passe fortes com base em frases mnemónicas compridas."
+      "en": "Creating strong passwords based on long memorable phrases."
     },
     "funFact": {
       "pt": "Quanto mais comprida for a palavra-passe, mais combinações matemáticas o invasor tem de testar!",
-      "en": "Quanto mais comprida for a palavra-passe, mais combinações matemáticas o invasor tem de testar!"
+      "en": "The longer the password, the more mathematical combinations an attacker has to test!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -13511,28 +13511,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "O Símbolo Arroba",
-      "en": "O Símbolo Arroba"
+      "en": "The At Symbol"
     },
     "icon": "🐌",
     "title": {
       "pt": "Evolução Histórica: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!",
-      "en": "Historical Evolution: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!"
+      "en": "Historical Evolution: The @ symbol is called \"snail\" in Italy and \"elephant trunk\" in Sweden!"
     },
     "teaser": {
       "pt": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico.",
-      "en": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico."
+      "en": "In 1971, Ray Tomlinson carried out one of the first experiments sending messages between networked computers and popularised the use of @ in email addresses."
     },
     "description": {
       "pt": "Em inglês lê-se \"at\" (no local de). Em Portugal chamamos-lhe arroba, mas outros países dão-lhe nomes animais engraçados: os italianos dizem \"chiocciola\" (caracol) e os israelitas \"strudel\" (bolo enrolado)!",
-      "en": "Em inglês lê-se \"at\" (no local de). Em Portugal chamamos-lhe arroba, mas outros países dão-lhe nomes animais engraçados: os italianos dizem \"chiocciola\" (caracol) e os israelitas \"strudel\" (bolo enrolado)!"
+      "en": "In English it is read as \"at\". In Portugal we call it \"arroba\", while other countries have funny animal names for it: Italians say \"chiocciola\" (snail) and Israelis say \"strudel\" (a rolled pastry)!"
     },
     "whyItMatters": {
-      "pt": "Estrutura padrão de um endereço de correio eletrónico: utilizador@dominio. extensao.",
-      "en": "Estrutura padrão de um endereço de correio eletrónico: utilizador@dominio. extensao."
+      "pt": "Estrutura padrão de um endereço de correio eletrónico: utilizador@domínio.extensão.",
+      "en": "Standard structure of an email address: username@domain.extension."
     },
     "funFact": {
       "pt": "Antigamente, a arroba era uma medida de peso usada no comércio que valia cerca de 15 quilogramas!",
-      "en": "Antigamente, a arroba era uma medida de peso usada no comércio que valia cerca de 15 quilogramas!"
+      "en": "In the past, the arroba was a unit of weight used in trade, worth about 15 kilograms!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -13586,28 +13586,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Truque das Aspas",
-      "en": "Truque das Aspas"
+      "en": "Quotation Marks Trick"
     },
     "icon": "🔍",
     "title": {
       "pt": "Segurança Avançada: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!",
-      "en": "Advanced Safety: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!"
+      "en": "Advanced Safety: Search like a detective: the magic quotation-mark trick \"\" in a search engine!"
     },
     "teaser": {
       "pt": "Sabias que podes obrigar o motor de busca a encontrar exatamente a frase que queres?",
-      "en": "Sabias que podes obrigar o motor de busca a encontrar exatamente a frase que queres?"
+      "en": "Did you know you can make a search engine find exactly the phrase you want?"
     },
     "description": {
       "pt": "Se colocares uma frase entre aspas (ex: \"energia eólica em Portugal\"), o motor de busca só mostra páginas que tenham essas palavras exatamente nessa ordem, filtrando milhares de páginas irrelevantes!",
-      "en": "Se colocares uma frase entre aspas (ex: \"energia eólica em Portugal\"), o motor de busca só mostra páginas que tenham essas palavras exatamente nessa ordem, filtrando milhares de páginas irrelevantes!"
+      "en": "If you put a phrase in quotation marks (e.g. \"wind energy in Portugal\"), the search engine looks for pages containing those words in that exact order, filtering out thousands of irrelevant pages!"
     },
     "whyItMatters": {
-      "pt": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5. º ano.",
-      "en": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5. º ano."
+      "pt": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5.º ano.",
+      "en": "Advanced search techniques using Boolean operators and delimiters in 5th grade."
     },
     "funFact": {
       "pt": "Se usares o sinal de menos (ex: jaguar -carro), ele procura o felino e elimina as páginas sobre automóveis!",
-      "en": "Se usares o sinal de menos (ex: jaguar -carro), ele procura o felino e elimina as páginas sobre automóveis!"
+      "en": "If you use the minus sign (e.g. jaguar -car), it searches for the animal and removes pages about cars!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -13661,28 +13661,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "O que é Plágio",
-      "en": "O que é Plágio"
+      "en": "What Is Plagiarism"
     },
     "icon": "✂️",
     "title": {
       "pt": "Evolução Histórica: Plágio: roubar a medalha de ouro de outra pessoa!",
-      "en": "Historical Evolution: Plágio: roubar a medalha de ouro de outra pessoa!"
+      "en": "Historical Evolution: Plagiarism: stealing someone else's gold medal!"
     },
     "teaser": {
       "pt": "Fazer \"Copiar e Colar\" da Wikipédia e assinar com o teu nome é desonestidade académica.",
-      "en": "Fazer \"Copiar e Colar\" da Wikipédia e assinar com o teu nome é desonestidade académica."
+      "en": "Copying and pasting from Wikipedia and signing it with your own name is academic dishonesty."
     },
     "description": {
       "pt": "Plágio é copiar textos, ideias, desenhos ou código de outra pessoa fingindo que foste tu a criar. É como alguém correr uma maratona e tu roubares a medalha para dizer que venceste. O correto é ler, explicar pelas tuas próprias palavras e citar a fonte de onde aprendeste.",
-      "en": "Plágio é copiar textos, ideias, desenhos ou código de outra pessoa fingindo que foste tu a criar. É como alguém correr uma maratona e tu roubares a medalha para dizer que venceste. O correto é ler, explicar pelas tuas próprias palavras e citar a fonte de onde aprendeste."
+      "en": "Plagiarism is copying another person's texts, ideas, drawings, or code and pretending you created them. It is like someone running a marathon and you stealing the medal to say you won. The right thing is to read, explain in your own words, and cite the source you learned from."
     },
     "whyItMatters": {
-      "pt": "Compreensão de plágio vs autoria original e integridade académica no 5. º ano.",
-      "en": "Compreensão de plágio vs autoria original e integridade académica no 5. º ano."
+      "pt": "Compreensão de plágio vs autoria original e integridade académica no 5.º ano.",
+      "en": "Understanding plagiarism versus original authorship and academic integrity in 5th grade."
     },
     "funFact": {
       "pt": "Os professores têm ferramentas de software que detetam plágio em trabalhos escolares em segundos!",
-      "en": "Os professores têm ferramentas de software que detetam plágio em trabalhos escolares em segundos!"
+      "en": "Teachers have software tools that can detect plagiarism in schoolwork within seconds!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -13736,28 +13736,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Placa Principal",
-      "en": "Placa Principal"
+      "en": "Main Board"
     },
     "icon": "🛣️",
     "title": {
       "pt": "Evolução Histórica: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!",
-      "en": "Historical Evolution: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!"
+      "en": "Historical Evolution: The Motherboard is the motorway that connects all the computer's components!"
     },
     "teaser": {
       "pt": "Como é que a placa gráfica fala com o processador e com o disco rígido?",
-      "en": "Como é que a placa gráfica fala com o processador e com o disco rígido?"
+      "en": "How does the graphics card communicate with the processor and the hard drive?"
     },
     "description": {
       "pt": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI.",
-      "en": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI."
+      "en": "The Motherboard is a large green or black circuit board filled with copper tracks. The CPU, RAM, sound card, and network card connect to it, along with USB and HDMI ports."
     },
     "whyItMatters": {
-      "pt": "Os os componentes físicos comunicam através do barramento de dados (Bus).",
-      "en": "Os os componentes físicos comunicam através do barramento de dados (Bus)."
+      "pt": "Os componentes físicos comunicam através do barramento de dados (Bus).",
+      "en": "The physical components communicate through the data bus (Bus)."
     },
     "funFact": {
       "pt": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!",
-      "en": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!"
+      "en": "It is called a \"motherboard\" because it houses and connects all the other boards and components attached to the system!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -13811,28 +13811,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Sono e Tecnologia",
-      "en": "Sono e Tecnologia"
+      "en": "Sleep and Technology"
     },
     "icon": "🌙",
     "title": {
       "pt": "Evolução Histórica: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \"",
-      "en": "Historical Evolution: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \""
+      "en": "Historical Evolution: Blue Light from the screen tells your brain: \"Wake up, it is still beach time!\""
     },
     "teaser": {
       "pt": "Porque deves desligar os ecrãs 30 a 60 minutos antes de dormir para acordares com energia?",
-      "en": "Porque deves desligar os ecrãs 30 a 60 minutos antes de dormir para acordares com energia?"
+      "en": "Why should you turn off screens 30 to 60 minutes before bed so you can wake up with energy?"
     },
     "description": {
       "pt": "A luz azul emitida por ecrãs bloqueia a melatonina, a hormona que dá sono. Quando usas o telemóvel na cama, o teu cérebro fica confuso, demoras mais tempo a adormecer e acordas cansado para a escola.",
-      "en": "A luz azul emitida por ecrãs bloqueia a melatonina, a hormona que dá sono. Quando usas o telemóvel na cama, o teu cérebro fica confuso, demoras mais tempo a adormecer e acordas cansado para a escola."
+      "en": "Blue light from screens can affect melatonin, the hormone involved in sleep. Using a phone in bed can make it harder to fall asleep and may leave you tired for school."
     },
     "whyItMatters": {
       "pt": "Estudamos o equilíbrio entre o tempo de ecrã e o descanso reparador de 9 a 12 horas diárias.",
-      "en": "Estudamos o equilíbrio entre o tempo de ecrã e o descanso reparador de 9 a 12 horas diárias."
+      "en": "We study the balance between screen time and restorative sleep of 9 to 12 hours per day."
     },
     "funFact": {
       "pt": "Substituir o telemóvel antes de dormir por um livro em papel melhora as tuas notas escolares!",
-      "en": "Substituir o telemóvel antes de dormir por um livro em papel melhora as tuas notas escolares!"
+      "en": "Replacing your phone with a paper book before bed can help your sleep and school performance!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -13886,28 +13886,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Apoio e Helplines",
-      "en": "Apoio e Helplines"
+      "en": "Support and Helplines"
     },
     "icon": "📞",
     "title": {
       "pt": "Evolução Histórica: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!",
-      "en": "Historical Evolution: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!"
+      "en": "Historical Evolution: Portugal's Safe Internet Line: 800 21 90 90 (free and confidential)!"
     },
     "teaser": {
       "pt": "Se algo correr mal online, existe uma equipa simpática pronta para te ajudar.",
-      "en": "Se algo correr mal online, existe uma equipa simpática pronta para te ajudar."
+      "en": "If something goes wrong online, there is a friendly team ready to help you."
     },
     "description": {
       "pt": "Se vires conteúdos assustadores, sofreres cyberbullying ou tiveres dúvidas sobre a tua segurança, podes ligar gratuitamente para o 800 21 90 90 ou para o SOS Criança (116 111). Nunca guardes medos só para ti!",
-      "en": "Se vires conteúdos assustadores, sofreres cyberbullying ou tiveres dúvidas sobre a tua segurança, podes ligar gratuitamente para o 800 21 90 90 ou para o SOS Criança (116 111). Nunca guardes medos só para ti!"
+      "en": "If you see frightening content, experience cyberbullying, or have concerns about your safety, you can call 800 21 90 90 or SOS Criança (116 111) for free. Never keep your worries to yourself!"
     },
     "whyItMatters": {
       "pt": "Conhecer as linhas de apoio e saber a quem recorrer perante incidentes digitais é fundamental.",
-      "en": "Conhecer as linhas de apoio e saber a quem recorrer perante incidentes digitais é fundamental."
+      "en": "Knowing support lines and knowing who to turn to when digital incidents happen is essential."
     },
     "funFact": {
       "pt": "Lembra-te: falar com os pais ou professores de confiança é sempre o primeiro e melhor passo!",
-      "en": "Lembra-te: falar com os pais ou professores de confiança é sempre o primeiro e melhor passo!"
+      "en": "Remember: talking to a trusted parent or teacher is always the first and best step!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -13961,28 +13961,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Partilha de Palavras-passe",
-      "en": "Partilha de Palavras-passe"
+      "en": "Password Sharing"
     },
     "icon": "🪥",
     "title": {
       "pt": "Evolução Histórica: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!",
-      "en": "Historical Evolution: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!"
+      "en": "Historical Evolution: Passwords are like toothbrushes: you do not lend them to anyone!"
     },
     "teaser": {
       "pt": "Nem ao melhor amigo da turma deves confiar a chave da tua vida digital.",
-      "en": "Nem ao melhor amigo da turma deves confiar a chave da tua vida digital."
+      "en": "Even your best friend in class should not be trusted with the key to your digital life."
     },
     "description": {
       "pt": "A tua palavra-passe é pessoal e intransmissível. Se a emprestares, perdes o controlo sobre quem acede aos teus emails e notas. A única exceção são os teus pais ou encarregados de educação para te protegerem.",
-      "en": "A tua palavra-passe é pessoal e intransmissível. Se a emprestares, perdes o controlo sobre quem acede aos teus emails e notas. A única exceção são os teus pais ou encarregados de educação para te protegerem."
+      "en": "Your password is personal and should not be shared. If you lend it to someone, you lose control over who can access your emails and grades. The exception is your parents or guardians, who may need it to protect you."
     },
     "whyItMatters": {
       "pt": "Responsabilidade e sigilo de credenciais de acesso no ambiente escolar e pessoal.",
-      "en": "Responsabilidade e sigilo de credenciais de acesso no ambiente escolar e pessoal."
+      "en": "Responsible and confidential handling of access credentials at school and in personal life."
     },
     "funFact": {
       "pt": "Se um dia tiveres de introduzir a tua palavra-passe à frente de alguém, tapa o teclado com a outra mão!",
-      "en": "Se um dia tiveres de introduzir a tua palavra-passe à frente de alguém, tapa o teclado com a outra mão!"
+      "en": "If you ever have to enter your password in front of someone, cover the keyboard with your other hand!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -14036,28 +14036,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Netiqueta em Emails",
-      "en": "Netiqueta em Emails"
+      "en": "Email Netiquette"
     },
     "icon": "📢",
     "title": {
       "pt": "Evolução Histórica: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!",
-      "en": "Historical Evolution: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!"
+      "en": "Historical Evolution: Writing in CAPITAL LETTERS in an email is like SHOUTING!"
     },
     "teaser": {
       "pt": "Ao redigir mensagens para professores ou colegas, usa sempre letras maiúsculas e minúsculas normais.",
-      "en": "Ao redigir mensagens para professores ou colegas, usa sempre letras maiúsculas e minúsculas normais."
+      "en": "When writing messages to teachers or classmates, use normal upper- and lower-case letters."
     },
     "description": {
       "pt": "Na etiqueta digital, escrever palavras ou frases inteiras em maiúsculas soa agressivo e irritado. Além disso, blocos de texto em maiúsculas são muito mais difíceis e cansativos de ler no ecrã.",
-      "en": "Na etiqueta digital, escrever palavras ou frases inteiras em maiúsculas soa agressivo e irritado. Além disso, blocos de texto em maiúsculas são muito mais difíceis e cansativos de ler no ecrã."
+      "en": "In digital etiquette, writing whole words or sentences in capital letters can sound aggressive and angry. Blocks of capital letters are also much harder and more tiring to read on screen."
     },
     "whyItMatters": {
       "pt": "Regras de cortesia, pontuação e comunicação assertiva no correio eletrónico.",
-      "en": "Regras de cortesia, pontuação e comunicação assertiva no correio eletrónico."
+      "en": "Rules of courtesy, punctuation, and assertive communication in email."
     },
     "funFact": {
       "pt": "Começa sempre com uma saudação formal (\"Bom dia, Professora\") e termina com assinatura e turma!",
-      "en": "Começa sempre com uma saudação formal (\"Bom dia, Professora\") e termina com assinatura e turma!"
+      "en": "Always start with a polite greeting (\"Good morning, Teacher\") and finish with your name and class!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -14111,28 +14111,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Segurança HTTPS",
-      "en": "Segurança HTTPS"
+      "en": "HTTPS Security"
     },
     "icon": "🔒",
     "title": {
       "pt": "Evolução Histórica: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!",
-      "en": "Historical Evolution: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!"
+      "en": "Historical Evolution: The \"S\" in HTTPS is the invisible safe that encrypts your data!"
     },
     "teaser": {
       "pt": "Nunca introduzas palavras-passe em páginas que comecem apenas por \"http://\" sem o \"s\".",
-      "en": "Nunca introduzas palavras-passe em páginas que comecem apenas por \"http://\" sem o \"s\"."
+      "en": "Never enter passwords on pages that start only with \"http://\" without the \"s\"."
     },
     "description": {
       "pt": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias.",
-      "en": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias."
+      "en": "The \"S\" means Secure. It indicates that the connection between your computer and the website is encrypted using a digital certificate: people on the Wi-Fi network cannot simply read the information you send."
     },
     "whyItMatters": {
       "pt": "Verificação de certificados de segurança e protocolos de navegação segura na Internet.",
-      "en": "Verificação de certificados de segurança e protocolos de navegação segura na Internet."
+      "en": "Checking security certificates and secure browsing protocols on the Internet."
     },
     "funFact": {
       "pt": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!",
-      "en": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!"
+      "en": "More than 95% of modern websites use the HTTPS protocol!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -14191,23 +14191,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🤝",
     "title": {
       "pt": "Evolução Histórica: Creative Commons: o convite amigável para partilhar criatividade com o mundo!",
-      "en": "Historical Evolution: Creative Commons: o convite amigável para partilhar criatividade com o mundo!"
+      "en": "Historical Evolution: Creative Commons: a friendly invitation to share creativity with the world!"
     },
     "teaser": {
       "pt": "Conheces o símbolo com dois \"C\" (CC) que vês na Wikipédia, no Scratch e no YouTube?",
-      "en": "Conheces o símbolo com dois \"C\" (CC) que vês na Wikipédia, no Scratch e no YouTube?"
+      "en": "Do you know the symbol with two \"C\"s (CC) that you see on Wikipedia, Scratch, and YouTube?"
     },
     "description": {
       "pt": "Em 2001, o professor Lawrence Lessig criou as licenças Creative Commons. Elas permitem que autores digam: \"Podes usar a minha música ou foto de graça para o teu trabalho escolar, desde que me dês o devido crédito (CC-BY)! \".",
-      "en": "Em 2001, o professor Lawrence Lessig criou as licenças Creative Commons. Elas permitem que autores digam: \"Podes usar a minha música ou foto de graça para o teu trabalho escolar, desde que me dês o devido crédito (CC-BY)! \"."
+      "en": "In 2001, professor Lawrence Lessig helped create the Creative Commons licences. They let authors say: \"You may use my music or photo for your school project, as long as you give me proper credit (CC-BY)!\""
     },
     "whyItMatters": {
       "pt": "Identificação dos símbolos de partilha Creative Commons (BY, NC, ND, SA) no Tema 7.",
-      "en": "Identificação dos símbolos de partilha Creative Commons (BY, NC, ND, SA) no Tema 7."
+      "en": "Identifying Creative Commons sharing symbols (BY, NC, ND, SA) in Topic 7."
     },
     "funFact": {
       "pt": "A enciclopédia Wikipédia e os projetos remixados no Scratch funcionam sob licenças Creative Commons!",
-      "en": "A enciclopédia Wikipédia e os projetos remixados no Scratch funcionam sob licenças Creative Commons!"
+      "en": "Wikipedia and remixed projects on Scratch can use Creative Commons licences!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -14261,28 +14261,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Linguagem dos Computadores",
-      "en": "Linguagem dos Computadores"
+      "en": "Computer Language"
     },
     "icon": "0️⃣",
     "title": {
       "pt": "Evolução Histórica: Tudo no computador são apenas ZEROS e UNS (0 e 1)!",
-      "en": "Historical Evolution: Tudo no computador são apenas ZEROS e UNS (0 e 1)!"
+      "en": "Historical Evolution: Everything in a computer is represented using ZEROS and ONES (0 and 1)!"
     },
     "teaser": {
       "pt": "Fotos, músicas, jogos 3D e vídeos do YouTube... como é que cabem em apenas dois números?",
-      "en": "Fotos, músicas, jogos 3D e vídeos do YouTube... como é que cabem em apenas dois números?"
+      "en": "Photos, music, 3D games, and YouTube videos... how can they fit into just two numbers?"
     },
     "description": {
       "pt": "Os circuitos do computador funcionam com eletricidade: ou passa corrente (1) ou não passa (0). A este sistema chamamos Código Binário. Combinando 8 zeros e uns (um Byte), o computador consegue representar qualquer letra, som ou cor de um píxel!",
-      "en": "Os circuitos do computador funcionam com eletricidade: ou passa corrente (1) ou não passa (0). A este sistema chamamos Código Binário. Combinando 8 zeros e uns (um Byte), o computador consegue representar qualquer letra, som ou cor de um píxel!"
+      "en": "Computer circuits use electricity: current is represented as 1 and no current as 0. This system is called Binary Code. By combining 8 zeros and ones (one byte), a computer can represent letters, sounds, or pixel colours!"
     },
     "whyItMatters": {
-      "pt": "No 5. º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte.",
-      "en": "No 5. º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte."
+      "pt": "No 5.º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte.",
+      "en": "In 5th grade ICT, we learn the fundamental concept of a bit (Binary Digit) and a byte."
     },
     "funFact": {
       "pt": "A letra \"A\" maiúscula em binário escreve-se assim: 01000001!",
-      "en": "A letra \"A\" maiúscula em binário escreve-se assim: 01000001!"
+      "en": "The capital letter \"A\" in binary is written as 01000001!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -14336,28 +14336,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Pescoço e Coluna",
-      "en": "Pescoço e Coluna"
+      "en": "Neck and Spine"
     },
     "icon": "🦒",
     "title": {
       "pt": "Evolução Histórica: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!",
-      "en": "Historical Evolution: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!"
+      "en": "Historical Evolution: \"Text Neck\": putting 27 kg of force on your spine!"
     },
     "teaser": {
       "pt": "Inclinar a cabeça para baixo sobre o telemóvel esforça o pescoço como carregar um saco de cimento.",
-      "en": "Inclinar a cabeça para baixo sobre o telemóvel esforça o pescoço como carregar um saco de cimento."
+      "en": "Looking down at a phone puts strain on your neck like carrying a bag of cement."
     },
     "description": {
       "pt": "Uma cabeça humana em posição direita pesa cerca de 5 kg. Mas quando a inclinas a 60 graus sobre um telemóvel ou tablet, a força exercida no pescoço sobe para 27 kg! Levanta os braços e traz o ecrã até aos olhos!",
-      "en": "Uma cabeça humana em posição direita pesa cerca de 5 kg. Mas quando a inclinas a 60 graus sobre um telemóvel ou tablet, a força exercida no pescoço sobe para 27 kg! Levanta os braços e traz o ecrã até aos olhos!"
+      "en": "A human head in an upright position weighs about 5 kg. When you tilt it 60 degrees over a phone or tablet, the force on the neck can rise greatly. Raise your arms and bring the screen up to eye level!"
     },
     "whyItMatters": {
       "pt": "Aprender a posicionar o topo do monitor ao nível da linha dos olhos é uma regra ergonómica essencial.",
-      "en": "Aprender a posicionar o topo do monitor ao nível da linha dos olhos é uma regra ergonómica essencial."
+      "en": "Learning to position the top of the monitor around eye level is an essential ergonomic rule."
     },
     "funFact": {
       "pt": "Fazer rotações suaves com a cabeça de vez em quando alivia a tensão acumulada nos ombros!",
-      "en": "Fazer rotações suaves com a cabeça de vez em quando alivia a tensão acumulada nos ombros!"
+      "en": "Gently rotating your head from time to time can relieve built-up tension in your shoulders!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -14411,28 +14411,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Netiqueta e Empatia",
-      "en": "Netiqueta e Empatia"
+      "en": "Netiquette and Empathy"
     },
     "icon": "💬",
     "title": {
       "pt": "Evolução Histórica: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!",
-      "en": "Historical Evolution: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!"
+      "en": "Historical Evolution: Netiquette: kindness and respect in messages and virtual classrooms!"
     },
     "teaser": {
       "pt": "Como ser um colega cinco estrelas em grupos de WhatsApp e fóruns da turma?",
-      "en": "Como ser um colega cinco estrelas em grupos de WhatsApp e fóruns da turma?"
+      "en": "How can you be a five-star classmate in WhatsApp groups and class forums?"
     },
     "description": {
       "pt": "Netiqueta é a etiqueta da Net. Significa não insultar, não espalhar boatos, não partilhar fotos de colegas sem autorização expressa deles e respeitar as opiniões diferentes com cordialidade e espírito de equipa.",
-      "en": "Netiqueta é a etiqueta da Net. Significa não insultar, não espalhar boatos, não partilhar fotos de colegas sem autorização expressa deles e respeitar as opiniões diferentes com cordialidade e espírito de equipa."
+      "en": "Netiquette means Internet etiquette. It means not insulting people, spreading rumours, or sharing classmates' photos without their permission, and respecting different opinions with kindness and team spirit."
     },
     "whyItMatters": {
-      "pt": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5. º ano.",
-      "en": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5. º ano."
+      "pt": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5.º ano.",
+      "en": "Promoting peaceful coexistence and combating all forms of cyberbullying in 5th grade."
     },
     "funFact": {
       "pt": "Um emoji sorridente ajuda a demonstrar que a tua mensagem é amigável e sem má intenção!",
-      "en": "Um emoji sorridente ajuda a demonstrar que a tua mensagem é amigável e sem má intenção!"
+      "en": "A smiling emoji can help show that your message is friendly and not meant badly!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -14486,28 +14486,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Autenticação de 2 Fatores",
-      "en": "Autenticação de 2 Fatores"
+      "en": "Two-Factor Authentication"
     },
     "icon": "📲",
     "title": {
       "pt": "Evolução Histórica: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!",
-      "en": "Historical Evolution: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!"
+      "en": "Historical Evolution: Two-Factor Authentication (2FA): the double lock on your digital door!"
     },
     "teaser": {
       "pt": "Mesmo que alguém descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro.",
-      "en": "Mesmo que alguém descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro."
+      "en": "Even if someone discovers your password, a second authentication factor adds an extra layer of protection and makes access much safer."
     },
     "description": {
       "pt": "O 2FA combina algo que sabes (a tua palavra-passe) com algo que tens (um código enviado por SMS ou gerado numa aplicação segura). É a proteção mais recomendada para contas de email e jogos importantes.",
-      "en": "O 2FA combina algo que sabes (a tua palavra-passe) com algo que tens (um código enviado por SMS ou gerado numa aplicação segura). É a proteção mais recomendada para contas de email e jogos importantes."
+      "en": "2FA combines something you know (your password) with something you have (a code sent by SMS or generated by a secure app). It is strongly recommended for important email and gaming accounts."
     },
     "whyItMatters": {
       "pt": "Conhecer mecanismos modernos de autenticação multifator no Tema 4 de TIC.",
-      "en": "Conhecer mecanismos modernos de autenticação multifator no Tema 4 de TIC."
+      "en": "Learning about modern multi-factor authentication mechanisms in ICT Topic 4."
     },
     "funFact": {
       "pt": "É exatamente como o cartão multibanco: precisas do cartão físico e do código PIN para levantar dinheiro!",
-      "en": "É exatamente como o cartão multibanco: precisas do cartão físico e do código PIN para levantar dinheiro!"
+      "en": "It is just like a bank card: you need the physical card and the PIN to withdraw money!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -14561,28 +14561,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Anexos Perigosos",
-      "en": "Anexos Perigosos"
+      "en": "Dangerous Attachments"
     },
     "icon": "📎",
     "title": {
       "pt": "Segurança Avançada: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!",
-      "en": "Advanced Safety: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!"
+      "en": "Advanced Safety: Beware of attachments: never open files with suspicious extensions!"
     },
     "teaser": {
       "pt": "Ficheiros como . exe, . bat, . vbs ou ficheiros . zip desconhecidos podem esconder vírus perigosos.",
-      "en": "Ficheiros como . exe, . bat, . vbs ou ficheiros . zip desconhecidos podem esconder vírus perigosos."
+      "en": "Files such as .exe, .bat, .vbs, or unknown .zip files can hide dangerous malware."
     },
     "description": {
       "pt": "Se receberes um email de alguém que não conheces com um anexo que diz \"fatura. exe\" ou \"fotos. zip\", não abras! Os criminosos usam anexos disfarçados para infetar o computador e roubar ficheiros.",
-      "en": "Se receberes um email de alguém que não conheces com um anexo que diz \"fatura. exe\" ou \"fotos. zip\", não abras! Os criminosos usam anexos disfarçados para infetar o computador e roubar ficheiros."
+      "en": "If you receive an email from someone you do not know with an attachment called \"invoice.exe\" or \"photos.zip\", do not open it! Criminals use disguised attachments to infect computers and steal files."
     },
     "whyItMatters": {
       "pt": "Reconhecimento de tipos de ficheiros e extensões seguras (. pdf, . docx, . png) no Tema 5 de TIC.",
-      "en": "Reconhecimento de tipos de ficheiros e extensões seguras (. pdf, . docx, . png) no Tema 5 de TIC."
+      "en": "Recognising file types and safer extensions (.pdf, .docx, .png) in ICT Topic 5."
     },
     "funFact": {
       "pt": "Na dúvida, pede ao teu professor ou pais para analisarem o email com o programa antivírus!",
-      "en": "Na dúvida, pede ao teu professor ou pais para analisarem o email com o programa antivírus!"
+      "en": "When in doubt, ask your teacher or parents to check the email with antivirus software!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -14636,28 +14636,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Combate a Fake News",
-      "en": "Combate a Fake News"
+      "en": "Fighting Fake News"
     },
     "icon": "🕵️‍♀️",
     "title": {
       "pt": "Evolução Histórica: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!",
-      "en": "Historical Evolution: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!"
+      "en": "Historical Evolution: The 3-Question Detective Test against Fake News!"
     },
     "teaser": {
       "pt": "Nem tudo o que está na Internet é verdade! Qualquer pessoa pode publicar invenções.",
-      "en": "Nem tudo o que está na Internet é verdade! Qualquer pessoa pode publicar invenções."
+      "en": "Not everything on the Internet is true! Anyone can publish made-up information."
     },
     "description": {
       "pt": "Antes de usar uma informação num trabalho escolar, pergunta: 1) QUEM escreveu? (É um especialista respeitado? ); 2) QUANDO foi publicado? (É recente ou de há 10 anos? ); 3) OUTROS jornais sérios e enciclopédias confirmam a mesma notícia?",
-      "en": "Antes de usar uma informação num trabalho escolar, pergunta: 1) QUEM escreveu? (É um especialista respeitado? ); 2) QUANDO foi publicado? (É recente ou de há 10 anos? ); 3) OUTROS jornais sérios e enciclopédias confirmam a mesma notícia?"
+      "en": "Before using information in a school project, ask: 1) WHO wrote it? (Are they a respected expert?); 2) WHEN was it published? (Is it recent or 10 years old?); 3) Do other reliable newspapers and encyclopedias confirm the same information?"
     },
     "whyItMatters": {
       "pt": "Literacia da informação e espírito crítico na avaliação de fontes da Web.",
-      "en": "Literacia da informação e espírito crítico na avaliação de fontes da Web."
+      "en": "Information literacy and critical thinking when evaluating Web sources."
     },
     "funFact": {
       "pt": "Em 1998, um biólogo criou o site falso do \"Polvo das Árvores\" para provar como as pessoas acreditam em tudo online!",
-      "en": "Em 1998, um biólogo criou o site falso do \"Polvo das Árvores\" para provar como as pessoas acreditam em tudo online!"
+      "en": "In 1998, a biologist created the fake \"Tree Octopus\" website to show how easily people can believe things online!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -14711,28 +14711,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Citação e Bibliografia",
-      "en": "Citação e Bibliografia"
+      "en": "Citation and Bibliography"
     },
     "icon": "📚",
     "title": {
       "pt": "Evolução Histórica: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!",
-      "en": "Historical Evolution: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!"
+      "en": "Historical Evolution: Citing sources is not weakness: it is the mark of real scientists!"
     },
     "teaser": {
       "pt": "Indicar os livros e sites consultados valoriza o teu trabalho e dá-te notas melhores!",
-      "en": "Indicar os livros e sites consultados valoriza o teu trabalho e dá-te notas melhores!"
+      "en": "Listing the books and websites you consulted adds value to your work and can help you earn better marks!"
     },
     "description": {
       "pt": "Alguns alunos têm vergonha de dizer de onde tiraram a informação, pensando que deviam saber tudo de cabeça. Pelo contrário! Cientistas e historiadores indicam sempre a \"Webgrafia\" no final com autor, título do artigo, link e data de acesso.",
-      "en": "Alguns alunos têm vergonha de dizer de onde tiraram a informação, pensando que deviam saber tudo de cabeça. Pelo contrário! Cientistas e historiadores indicam sempre a \"Webgrafia\" no final com autor, título do artigo, link e data de acesso."
+      "en": "Some students are embarrassed to say where they got information, thinking they should know everything by heart. The opposite is true! Scientists and historians always list their sources at the end, with the author, article title, link, and access date."
     },
     "whyItMatters": {
       "pt": "Elaboração rigorosa de bibliografias e webgrafias de acordo com as normas escolares de TIC.",
-      "en": "Elaboração rigorosa de bibliografias e webgrafias de acordo com as normas escolares de TIC."
+      "en": "Careful preparation of bibliographies and web references according to school ICT guidelines."
     },
     "funFact": {
       "pt": "Grandes cientistas como Einstein e Newton sempre agradeceram publicamente aos autores que leram!",
-      "en": "Grandes cientistas como Einstein e Newton sempre agradeceram publicamente aos autores que leram!"
+      "en": "Great scientists such as Einstein and Newton always publicly acknowledged the authors they read!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -14786,28 +14786,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Periféricos de TIC",
-      "en": "Periféricos de TIC"
+      "en": "ICT Peripherals"
     },
     "icon": "🖨️",
     "title": {
       "pt": "Evolução Histórica: Periféricos: a ponte mágica entre o ser humano e a máquina!",
-      "en": "Historical Evolution: Periféricos: a ponte mágica entre o ser humano e a máquina!"
+      "en": "Historical Evolution: Peripherals: the magic bridge between people and machines!"
     },
     "teaser": {
       "pt": "Sabes dizer se os teus auscultadores são de entrada ou de saída de informação?",
-      "en": "Sabes dizer se os teus auscultadores são de entrada ou de saída de informação?"
+      "en": "Can you tell whether your headphones are input or output devices?"
     },
     "description": {
       "pt": "Periféricos de Entrada enviam dados para o computador (rato, teclado, microfone, câmara). Periféricos de Saída mostram o resultado (monitor, colunas de som, impressora). E periféricos Mistos fazem as duas coisas (ecrãs táteis e auscultadores com microfone integrado)!",
-      "en": "Periféricos de Entrada enviam dados para o computador (rato, teclado, microfone, câmara). Periféricos de Saída mostram o resultado (monitor, colunas de som, impressora). E periféricos Mistos fazem as duas coisas (ecrãs táteis e auscultadores com microfone integrado)!"
+      "en": "Input peripherals send data to the computer (mouse, keyboard, microphone, camera). Output peripherals show the result (monitor, speakers, printer). Mixed peripherals do both (touchscreens and headsets with a built-in microphone)!"
     },
     "whyItMatters": {
       "pt": "Classificar periféricos em Entrada, Saída e Mistos é uma das matérias mais importantes do Tema 1.",
-      "en": "Classificar periféricos em Entrada, Saída e Mistos é uma das matérias mais importantes do Tema 1."
+      "en": "Classifying peripherals as Input, Output, and Mixed is one of the most important subjects in Topic 1."
     },
     "funFact": {
       "pt": "Os óculos de realidade virtual são periféricos mistos: mostram imagem e leem o movimento da cabeça!",
-      "en": "Os óculos de realidade virtual são periféricos mistos: mostram imagem e leem o movimento da cabeça!"
+      "en": "Virtual reality headsets are mixed peripherals: they display images and read head movement!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -14861,28 +14861,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Volume e Audição",
-      "en": "Volume e Audição"
+      "en": "Volume and Hearing"
     },
     "icon": "🎧",
     "title": {
       "pt": "Evolução Histórica: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!",
-      "en": "Historical Evolution: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!"
+      "en": "Historical Evolution: The 60/60 rule for headphones: protect your ears for life!"
     },
     "teaser": {
       "pt": "Ouvir música ou jogos aos berros nos fones pode causar danos irreversíveis na audição.",
-      "en": "Ouvir música ou jogos aos berros nos fones pode causar danos irreversíveis na audição."
+      "en": "Listening to music or games at full volume through headphones can cause permanent hearing damage."
     },
     "description": {
       "pt": "Os médicos recomendam a regra dos 60/60: nunca usar auscultadores a mais de 60% do volume máximo, e fazer uma pausa a cada 60 minutos. Se a pessoa ao teu lado consegue ouvir o som dos teus fones, está alto demais!",
-      "en": "Os médicos recomendam a regra dos 60/60: nunca usar auscultadores a mais de 60% do volume máximo, e fazer uma pausa a cada 60 minutos. Se a pessoa ao teu lado consegue ouvir o som dos teus fones, está alto demais!"
+      "en": "Doctors recommend the 60/60 rule: never use headphones above 60% of maximum volume, and take a break every 60 minutes. If the person next to you can hear your headphones, the volume is too high!"
     },
     "whyItMatters": {
       "pt": "O bem-estar e a saúde no uso de periféricos de som fazem parte do programa curricular de TIC.",
-      "en": "O bem-estar e a saúde no uso de periféricos de som fazem parte do programa curricular de TIC."
+      "en": "Well-being and health when using audio peripherals are part of the ICT curriculum."
     },
     "funFact": {
       "pt": "As pequenas células ciliadas do ouvido interno não se regeneram se forem destruídas por som estridente!",
-      "en": "As pequenas células ciliadas do ouvido interno não se regeneram se forem destruídas por som estridente!"
+      "en": "The tiny hair cells in the inner ear do not grow back if they are destroyed by very loud sound!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -14936,28 +14936,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Localização GPS",
-      "en": "Localização GPS"
+      "en": "GPS Location"
     },
     "icon": "📍",
     "title": {
       "pt": "Evolução Histórica: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!",
-      "en": "Historical Evolution: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!"
+      "en": "Historical Evolution: Beware of geolocation: your photos may contain hidden coordinates!"
     },
     "teaser": {
       "pt": "Sabias que as fotos do telemóvel podem guardar a latitude e longitude exatas de onde foram tiradas?",
-      "en": "Sabias que as fotos do telemóvel podem guardar a latitude e longitude exatas de onde foram tiradas?"
+      "en": "Did you know that phone photos can store the exact latitude and longitude where they were taken?"
     },
     "description": {
       "pt": "Os metadados EXIF guardam a data, modelo da câmara e a localização GPS da foto. Antes de publicar fotos publicamente, é aconselhável desligar a geolocalização nas definições da câmara para ninguém descobrir onde vives.",
-      "en": "Os metadados EXIF guardam a data, modelo da câmara e a localização GPS da foto. Antes de publicar fotos publicamente, é aconselhável desligar a geolocalização nas definições da câmara para ninguém descobrir onde vives."
+      "en": "EXIF metadata can store the date, camera model, and GPS location of a photo. Before publishing photos publicly, it is a good idea to turn off geolocation in the camera settings so people cannot discover where you live."
     },
     "whyItMatters": {
       "pt": "No Tema 3 aprendemos como funcionam os dados invisíveis que os dispositivos anexam aos ficheiros.",
-      "en": "No Tema 3 aprendemos como funcionam os dados invisíveis que os dispositivos anexam aos ficheiros."
+      "en": "In Topic 3, we learn how invisible data can be attached to files by devices."
     },
     "funFact": {
       "pt": "Fotos tiradas dentro de casa nunca devem mostrar janelas com placas do nome da rua ou números de polícia!",
-      "en": "Fotos tiradas dentro de casa nunca devem mostrar janelas com placas do nome da rua ou números de polícia!"
+      "en": "Photos taken inside your home should never show windows with street-name signs or house numbers!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -15011,28 +15011,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Gestores de Palavras-passe",
-      "en": "Gestores de Palavras-passe"
+      "en": "Password Managers"
     },
     "icon": "🗄️",
     "title": {
       "pt": "Evolução Histórica: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!",
-      "en": "Historical Evolution: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!"
+      "en": "Historical Evolution: Never reuse the same password on every website and app!"
     },
     "teaser": {
       "pt": "Se um site de jogos sofrer uma fuga de informação, a tua conta de email também fica em risco.",
-      "en": "Se um site de jogos sofrer uma fuga de informação, a tua conta de email também fica em risco."
+      "en": "If a gaming website suffers a data breach, your email account may also be at risk."
     },
     "description": {
       "pt": "Quando usas a mesma palavra-passe em todo o lado, basta um site ter falhas de segurança para os criminosos tentarem entrar nas tuas restantes contas. Usa palavras-passe diferentes ou um gestor de palavras-passe protegido.",
-      "en": "Quando usas a mesma palavra-passe em todo o lado, basta um site ter falhas de segurança para os criminosos tentarem entrar nas tuas restantes contas. Usa palavras-passe diferentes ou um gestor de palavras-passe protegido."
+      "en": "When you use the same password everywhere, one security failure can give criminals a chance to try your password on your other accounts. Use different passwords or a protected password manager."
     },
     "whyItMatters": {
-      "pt": "Higiene e diversificação de credenciais em plataformas digitais no 5. º ano.",
-      "en": "Higiene e diversificação de credenciais em plataformas digitais no 5. º ano."
+      "pt": "Higiene e diversificação de credenciais em plataformas digitais no 5.º ano.",
+      "en": "Good credential hygiene and password diversification in digital platforms in 5th grade."
     },
     "funFact": {
       "pt": "Podes usar gestores de palavras-passe seguros integrados nos navegadores com a ajuda dos teus pais!",
-      "en": "Podes usar gestores de palavras-passe seguros integrados nos navegadores com a ajuda dos teus pais!"
+      "en": "You can use secure password managers built into browsers with help from your parents!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -15086,28 +15086,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Phishing por Email",
-      "en": "Phishing por Email"
+      "en": "Email Phishing"
     },
     "icon": "🎣",
     "title": {
       "pt": "Evolução Histórica: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!",
-      "en": "Historical Evolution: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!"
+      "en": "Historical Evolution: Phishing: the digital \"fisher\" trying to steal your password!"
     },
     "teaser": {
       "pt": "\"A sua conta vai ser apagada em 24 horas! Clique aqui urgente! \" — É Phishing!",
-      "en": "\"A sua conta vai ser apagada em 24 horas! Clique aqui urgente! \" — É Phishing!"
+      "en": "\"Your account will be deleted in 24 hours! Click here urgently!\" — That is phishing!"
     },
     "description": {
       "pt": "O termo vem de \"fishing\" (pesca). Os burlões lançam um isco assustador para te fazer clicar num link falso que imita a tua escola ou banco. Repara com atenção no endereço do remetente: costuma ter erros estranhos!",
-      "en": "O termo vem de \"fishing\" (pesca). Os burlões lançam um isco assustador para te fazer clicar num link falso que imita a tua escola ou banco. Repara com atenção no endereço do remetente: costuma ter erros estranhos!"
+      "en": "The term comes from \"fishing\". Scammers use a frightening bait to make you click a fake link that imitates your school or bank. Look carefully at the sender's address: it often contains strange mistakes!"
     },
     "whyItMatters": {
       "pt": "Identificação de sinais de alerta em emails fraudulentos e mensagens de phishing.",
-      "en": "Identificação de sinais de alerta em emails fraudulentos e mensagens de phishing."
+      "en": "Identifying warning signs in fraudulent emails and phishing messages."
     },
     "funFact": {
       "pt": "Nenhum serviço legítimo te ameaça com fecho imediato de conta sem contacto oficial prévio!",
-      "en": "Nenhum serviço legítimo te ameaça com fecho imediato de conta sem contacto oficial prévio!"
+      "en": "No legitimate service threatens to close your account immediately without prior official contact!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -15236,28 +15236,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Domínio Público",
-      "en": "Domínio Público"
+      "en": "Public Domain"
     },
     "icon": "🏛️",
     "title": {
       "pt": "Segurança Avançada: O que é o Domínio Público? O tesouro cultural que pertence a toda a humanidade!",
-      "en": "Advanced Safety: O que é o Domínio Público? O tesouro cultural que pertence a toda a humanidade!"
+      "en": "Advanced Safety: What is the Public Domain? Cultural treasure that belongs to everyone!"
     },
     "teaser": {
       "pt": "Sabias que podes usar quadros de Leonardo da Vinci e músicas de Mozart sem pedir licença?",
-      "en": "Sabias que podes usar quadros de Leonardo da Vinci e músicas de Mozart sem pedir licença?"
+      "en": "Did you know you can use paintings by Leonardo da Vinci and music by Mozart without asking for copyright permission?"
     },
     "description": {
       "pt": "Uma obra no domínio público pode, em geral, ser utilizada e partilhada sem pedir autorização por direitos de autor.",
-      "en": "Uma obra no domínio público pode, em geral, ser utilizada e partilhada sem pedir autorização por direitos de autor."
+      "en": "A work in the public domain can generally be used and shared without asking for copyright permission."
     },
     "whyItMatters": {
       "pt": "Compreensão dos prazos de proteção de direitos de autor e acesso ao património comum.",
-      "en": "Compreensão dos prazos de proteção de direitos de autor e acesso ao património comum."
+      "en": "Understanding copyright protection periods and access to the common cultural heritage."
     },
     "funFact": {
       "pt": "As primeiras versões do Rato Mickey dos anos 20 entraram recentemente no Domínio Público!",
-      "en": "As primeiras versões do Rato Mickey dos anos 20 entraram recentemente no Domínio Público!"
+      "en": "The earliest Mickey Mouse versions from the 1920s recently entered the public domain!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -15311,28 +15311,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "História do Rato",
-      "en": "História do Rato"
+      "en": "History of the Mouse"
     },
     "icon": "🖱️",
     "title": {
       "pt": "Evolução Histórica: O primeiro rato do mundo foi feito de madeira com rodas de metal!",
-      "en": "Historical Evolution: O primeiro rato do mundo foi feito de madeira com rodas de metal!"
+      "en": "Historical Evolution: The world's first computer mouse was made of wood with metal wheels!"
     },
     "teaser": {
       "pt": "Inventado em 1964 por Douglas Engelbart, tinha apenas um botão vermelho no topo.",
-      "en": "Inventado em 1964 por Douglas Engelbart, tinha apenas um botão vermelho no topo."
+      "en": "Invented in 1964 by Douglas Engelbart, it had just one red button on top."
     },
     "description": {
       "pt": "Antes do rato, para abrir um ficheiro era preciso escrever linhas de código difíceis num teclado. Engelbart inventou uma caixinha de madeira com duas rodas em baixo para mover uma setinha no ecrã e facilitar o uso para qualquer pessoa!",
-      "en": "Antes do rato, para abrir um ficheiro era preciso escrever linhas de código difíceis num teclado. Engelbart inventou uma caixinha de madeira com duas rodas em baixo para mover uma setinha no ecrã e facilitar o uso para qualquer pessoa!"
+      "en": "Before the mouse, opening a file meant typing difficult lines of code on a keyboard. Engelbart invented a small wooden box with two wheels underneath to move an arrow on the screen and make computers easier for people to use!"
     },
     "whyItMatters": {
       "pt": "Estudamos a evolução das interfaces gráficas (GUI) e periféricos no 1. º tema de TIC.",
-      "en": "Estudamos a evolução das interfaces gráficas (GUI) e periféricos no 1. º tema de TIC."
+      "en": "We study the evolution of graphical user interfaces (GUIs) and peripherals in ICT Topic 1."
     },
     "funFact": {
       "pt": "Recebeu o nome de rato porque o cabo que saía da parte de trás parecia uma cauda!",
-      "en": "Recebeu o nome de rato porque o cabo que saía da parte de trás parecia uma cauda!"
+      "en": "It was called a mouse because the cable coming out of the back looked like a tail!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -15386,28 +15386,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Mochila Escolar",
-      "en": "Mochila Escolar"
+      "en": "School Backpack"
     },
     "icon": "🎒",
     "title": {
       "pt": "Evolução Histórica: O peso da mochila não deve ultrapassar 10% do teu peso corporal!",
-      "en": "Historical Evolution: O peso da mochila não deve ultrapassar 10% do teu peso corporal!"
+      "en": "Historical Evolution: The weight of your backpack should not exceed 10% of your body weight!"
     },
     "teaser": {
       "pt": "Levar o computador portátil e cadernos pesados nas costas exige bons hábitos de organização.",
-      "en": "Levar o computador portátil e cadernos pesados nas costas exige bons hábitos de organização."
+      "en": "Carrying a laptop and heavy notebooks on your back requires good organisational habits."
     },
     "description": {
       "pt": "Se pesas 40 kg, a tua mochila não devia pesar mais do que 4 kg! Coloca os objetos mais pesados colados às costas e usa sempre as duas alças bem ajustadas, nunca pendurada num ombro só.",
-      "en": "Se pesas 40 kg, a tua mochila não devia pesar mais do que 4 kg! Coloca os objetos mais pesados colados às costas e usa sempre as duas alças bem ajustadas, nunca pendurada num ombro só."
+      "en": "If you weigh 40 kg, your backpack should not weigh more than 4 kg! Put the heaviest items close to your back and always use both straps, adjusted properly, never hanging from one shoulder."
     },
     "whyItMatters": {
       "pt": "A ergonomia estende-se ao transporte de materiais escolares e tecnologias portáteis.",
-      "en": "A ergonomia estende-se ao transporte de materiais escolares e tecnologias portáteis."
+      "en": "Ergonomics also applies to carrying school materials and portable technology."
     },
     "funFact": {
       "pt": "Uma mochila desregulada pode causar desvios na coluna como a escoliose na adolescência!",
-      "en": "Uma mochila desregulada pode causar desvios na coluna como a escoliose na adolescência!"
+      "en": "An improperly adjusted backpack can contribute to spinal problems such as scoliosis during adolescence!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -15461,7 +15461,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Câmaras e Microfones",
-      "en": "Câmaras e Microfones"
+      "en": "Cameras and Microphones"
     },
     "icon": "📹",
     "title": {
@@ -15536,28 +15536,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Post-its no Monitor",
-      "en": "Post-its no Monitor"
+      "en": "Post-it Notes on the Monitor"
     },
     "icon": "📝",
     "title": {
       "pt": "Evolução Histórica: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!",
-      "en": "Historical Evolution: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!"
+      "en": "Historical Evolution: The classic mistake: sticking notes with your password on the computer screen!"
     },
     "teaser": {
       "pt": "Escrever a palavra-passe num post-it amarelo e colar no monitor é como deixar a chave na fechadura.",
-      "en": "Escrever a palavra-passe num post-it amarelo e colar no monitor é como deixar a chave na fechadura."
+      "en": "Writing your password on a yellow Post-it and sticking it to the monitor is like leaving the key in the lock."
     },
     "description": {
       "pt": "Qualquer colega ou pessoa que passe pela secretária consegue ver e anotar a tua palavra-passe num instante. Guarda as tuas credenciais de memória ou em ferramentas digitais encriptadas e protegidas.",
-      "en": "Qualquer colega ou pessoa que passe pela secretária consegue ver e anotar a tua palavra-passe num instante. Guarda as tuas credenciais de memória ou em ferramentas digitais encriptadas e protegidas."
+      "en": "Any classmate or person passing your desk can see and write down your password in seconds. Keep your credentials in memory or in encrypted, protected digital tools."
     },
     "whyItMatters": {
       "pt": "Práticas de segurança física e lógica no manuseamento de acessos no computador.",
-      "en": "Práticas de segurança física e lógica no manuseamento de acessos no computador."
+      "en": "Physical and logical security practices when handling computer access."
     },
     "funFact": {
       "pt": "Nos escritórios e bancos, é estritamente proibido ter papéis com palavras-passe à vista na secretária!",
-      "en": "Nos escritórios e bancos, é estritamente proibido ter papéis com palavras-passe à vista na secretária!"
+      "en": "In offices and banks, having passwords written on visible notes on the desk is strictly forbidden!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -15611,28 +15611,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "O Campo Assunto",
-      "en": "O Campo Assunto"
+      "en": "The Subject Field"
     },
     "icon": "🏷️",
     "title": {
       "pt": "Evolução Histórica: Nunca envies um email com o campo \"Assunto\" vazio!",
-      "en": "Historical Evolution: Nunca envies um email com o campo \"Assunto\" vazio!"
+      "en": "Historical Evolution: Never send an email with the \"Subject\" field empty!"
     },
     "teaser": {
       "pt": "O Assunto deve resumir em poucas palavras o objetivo exato da mensagem.",
-      "en": "O Assunto deve resumir em poucas palavras o objetivo exato da mensagem."
+      "en": "The Subject should summarise the exact purpose of the message in a few words."
     },
     "description": {
-      "pt": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5. º B\".",
-      "en": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5. º B\"."
+      "pt": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5.º B\".",
+      "en": "Sending an email without a subject is like handing someone a letter inside a completely blank envelope. Write a clear subject, for example: \"ICT Project - Topic 5 - João Silva No. 12 - 5th B\"."
     },
     "whyItMatters": {
       "pt": "Composição correta dos elementos essenciais de uma mensagem de correio eletrónico.",
-      "en": "Composição correta dos elementos essenciais de uma mensagem de correio eletrónico."
+      "en": "Correct composition of the essential elements of an email message."
     },
     "funFact": {
       "pt": "Emails sem assunto vão frequentemente parar à pasta de Spam ou Lixo Eletrónico de forma automática!",
-      "en": "Emails sem assunto vão frequentemente parar à pasta de Spam ou Lixo Eletrónico de forma automática!"
+      "en": "Emails without a subject often end up automatically in the Spam or Junk folder!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -15663,7 +15663,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Um assunto claro como 'Trabalho de TIC - 5. º A - João Silva' ajuda a professora a responder rápido!",
+      "pt": "Um assunto claro como 'Trabalho de TIC - 5.º A - João Silva' ajuda a professora a responder rápido!",
       "en": "A clear subject line like 'ICT Project - Class 5A - John Doe' helps teachers respond fast!"
     }
   },
@@ -15686,28 +15686,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Histórico e Cookies",
-      "en": "Histórico e Cookies"
+      "en": "History and Cookies"
     },
     "icon": "🍪",
     "title": {
       "pt": "Evolução Histórica: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!",
-      "en": "Historical Evolution: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!"
+      "en": "Historical Evolution: Cookies on the Internet: they are not chocolate biscuits, but small text notes!"
     },
     "teaser": {
       "pt": "Porque é que todos os sites perguntam se aceitas cookies?",
-      "en": "Porque é que todos os sites perguntam se aceitas cookies?"
+      "en": "Why do all websites ask whether you accept cookies?"
     },
     "description": {
       "pt": "Um cookie é um pequeno ficheiro de texto que o site guarda no teu navegador para se lembrar de quem és, que língua preferes ou que itens tens no carrinho de compras. Cookies de terceiros podem seguir a tua navegação entre sites.",
-      "en": "Um cookie é um pequeno ficheiro de texto que o site guarda no teu navegador para se lembrar de quem és, que língua preferes ou que itens tens no carrinho de compras. Cookies de terceiros podem seguir a tua navegação entre sites."
+      "en": "A cookie is a small text file that a website stores in your browser to remember who you are, your preferred language, or items in your shopping cart. Third-party cookies can track your browsing across websites."
     },
     "whyItMatters": {
       "pt": "Gestão de privacidade, cookies e limpeza de histórico de navegação no Tema 6 de TIC.",
-      "en": "Gestão de privacidade, cookies e limpeza de histórico de navegação no Tema 6 de TIC."
+      "en": "Managing privacy, cookies, and clearing browsing history in ICT Topic 6."
     },
     "funFact": {
       "pt": "O nome \"cookie\" foi inspirado nos \"biscoitos da sorte\" chineses que trazem uma mensagem secreta dentro!",
-      "en": "O nome \"cookie\" foi inspirado nos \"biscoitos da sorte\" chineses que trazem uma mensagem secreta dentro!"
+      "en": "The name \"cookie\" was inspired by fortune cookies that contain a hidden message!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -15761,28 +15761,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Música e Sons Livres",
-      "en": "Música e Sons Livres"
+      "en": "Free Music and Sounds"
     },
     "icon": "🎵",
     "title": {
       "pt": "Evolução Histórica: Bancos de som e música livre para os teus vídeos e jogos no Scratch!",
-      "en": "Historical Evolution: Bancos de som e música livre para os teus vídeos e jogos no Scratch!"
+      "en": "Historical Evolution: Free music and sound libraries for your videos and Scratch games!"
     },
     "teaser": {
       "pt": "Usar músicas famosas da rádio no teu vídeo do YouTube pode fazer o vídeo ser bloqueado.",
-      "en": "Usar músicas famosas da rádio no teu vídeo do YouTube pode fazer o vídeo ser bloqueado."
+      "en": "Using famous radio music in your YouTube video may cause the video to be blocked."
     },
     "description": {
       "pt": "Plataformas de vídeo usam algoritmos automáticos de reconhecimento de áudio que bloqueiam músicas protegidas por direitos comerciais. Usa bancos de áudio livres como a YouTube Audio Library ou sons de Domínio Público.",
-      "en": "Plataformas de vídeo usam algoritmos automáticos de reconhecimento de áudio que bloqueiam músicas protegidas por direitos comerciais. Usa bancos de áudio livres como a YouTube Audio Library ou sons de Domínio Público."
+      "en": "Video platforms use automatic audio-recognition systems that can block music protected by commercial copyright. Use free audio libraries such as the YouTube Audio Library or public-domain sounds."
     },
     "whyItMatters": {
       "pt": "Pesquisa e integração ética de recursos multimédia em projetos digitais escolares.",
-      "en": "Pesquisa e integração ética de recursos multimédia em projetos digitais escolares."
+      "en": "Ethical research and integration of multimedia resources in school digital projects."
     },
     "funFact": {
       "pt": "Muitos músicos famosos gravam canções e lançam-nas voluntariamente sob a licença livre CC0!",
-      "en": "Muitos músicos famosos gravam canções e lançam-nas voluntariamente sob a licença livre CC0!"
+      "en": "Many musicians release songs voluntarily under free licences such as CC0!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -15836,28 +15836,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Robótica e Exploração",
-      "en": "Robótica e Exploração"
+      "en": "Robotics and Exploration"
     },
     "icon": "🤖",
     "title": {
       "pt": "Evolução Histórica: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!",
-      "en": "Historical Evolution: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!"
+      "en": "Historical Evolution: Robots on Mars: scientists drive rovers millions of kilometres from Earth!"
     },
     "teaser": {
       "pt": "Os robôs Curiosity e Perseverance usam computadores de bordo para analisar rochas em Marte.",
-      "en": "Os robôs Curiosity e Perseverance usam computadores de bordo para analisar rochas em Marte."
+      "en": "The Curiosity and Perseverance robots use onboard computers to analyse rocks on Mars."
     },
     "description": {
       "pt": "Os sinais de rádio demoram até 20 minutos a viajar da Terra até Marte! Por isso, os robôs marcianos têm de ter inteligência a bordo para evitar rochas e buracos sozinhos sem esperar pela resposta imediata dos cientistas.",
-      "en": "Os sinais de rádio demoram até 20 minutos a viajar da Terra até Marte! Por isso, os robôs marcianos têm de ter inteligência a bordo para evitar rochas e buracos sozinhos sem esperar pela resposta imediata dos cientistas."
+      "en": "Radio signals can take up to 20 minutes to travel from Earth to Mars! That is why Mars rovers need onboard systems to avoid rocks and holes without waiting for an immediate response from scientists."
     },
     "whyItMatters": {
       "pt": "Exploramos como a robótica e a automação transformam a ciência e a sociedade moderna.",
-      "en": "Exploramos como a robótica e a automação transformam a ciência e a sociedade moderna."
+      "en": "We explore how robotics and automation transform modern science and society."
     },
     "funFact": {
       "pt": "O rover Perseverance tem um pequeno helicóptero chamado Ingenuity que voou na atmosfera rarefeita de Marte!",
-      "en": "O rover Perseverance tem um pequeno helicóptero chamado Ingenuity que voou na atmosfera rarefeita de Marte!"
+      "en": "The Perseverance rover has a small helicopter called Ingenuity that flew in Mars's thin atmosphere!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -15911,28 +15911,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Iluminação do Espaço",
-      "en": "Iluminação do Espaço"
+      "en": "Lighting the Workspace"
     },
     "icon": "💡",
     "title": {
       "pt": "Evolução Histórica: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!",
-      "en": "Historical Evolution: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!"
+      "en": "Historical Evolution: Avoid screen glare: the window should never be directly behind you!"
     },
     "teaser": {
       "pt": "Como deves orientar a tua mesa de computador em relação à luz natural da janela?",
-      "en": "Como deves orientar a tua mesa de computador em relação à luz natural da janela?"
+      "en": "How should you position your computer desk in relation to natural window light?"
     },
     "description": {
       "pt": "Se a janela ficar diretamente atrás de ti, o sol cria reflexos ofuscantes no ecrã. Se ficar mesmo atrás do monitor, ficas encandeado. O ideal é a luz natural entrar de lado em relação à mesa de trabalho.",
-      "en": "Se a janela ficar diretamente atrás de ti, o sol cria reflexos ofuscantes no ecrã. Se ficar mesmo atrás do monitor, ficas encandeado. O ideal é a luz natural entrar de lado em relação à mesa de trabalho."
+      "en": "If the window is directly behind you, sunlight can create glare on the screen. If it is directly behind the monitor, you may be dazzled. Ideally, natural light should enter from the side of the desk."
     },
     "whyItMatters": {
       "pt": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado.",
-      "en": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado."
+      "en": "In Topic 2, we learn to organise a pleasant, well-lit, and well-ventilated workstation."
     },
     "funFact": {
       "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!",
-      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!"
+      "en": "Keeping the room ventilated helps renew the air and can improve your comfort and concentration when using a computer!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -15986,28 +15986,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Engenharia Social",
-      "en": "Engenharia Social"
+      "en": "Social Engineering"
     },
     "icon": "🎣",
     "title": {
       "pt": "Evolução Histórica: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!",
-      "en": "Historical Evolution: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!"
+      "en": "Historical Evolution: Beware the bait: \"Free Coins\" offers in games are almost always traps!"
     },
     "teaser": {
       "pt": "\"Clica aqui para ganhares 10. 000 Robux ou V-Bucks de graça! \" — Desconfia sempre!",
-      "en": "\"Clica aqui para ganhares 10. 000 Robux ou V-Bucks de graça! \" — Desconfia sempre!"
+      "en": "\"Click here to get 10,000 Robux or V-Bucks for free!\" — Always be suspicious!"
     },
     "description": {
       "pt": "Cibercriminosos usam sites falsos com promessas de moedas virtuais grátis para roubar palavras-passe e contas. A regra é simples: se parece bom demais para ser verdade, desconfia. Pode ser uma tentativa de fraude.",
-      "en": "Cibercriminosos usam sites falsos com promessas de moedas virtuais grátis para roubar palavras-passe e contas. A regra é simples: se parece bom demais para ser verdade, desconfia. Pode ser uma tentativa de fraude."
+      "en": "Cybercriminals use fake websites promising free virtual coins to steal passwords and accounts. The rule is simple: if it looks too good to be true, be suspicious. It may be an attempted scam."
     },
     "whyItMatters": {
       "pt": "Identificação de técnicas básicas de engenharia social e enganos virtuais.",
-      "en": "Identificação de técnicas básicas de engenharia social e enganos virtuais."
+      "en": "Identifying basic social-engineering techniques and online deception."
     },
     "funFact": {
       "pt": "As empresas oficiais dos jogos nunca pedem a tua palavra-passe para te darem prémios!",
-      "en": "As empresas oficiais dos jogos nunca pedem a tua palavra-passe para te darem prémios!"
+      "en": "Official game companies never ask for your password to give you prizes!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -16061,28 +16061,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Bloqueio de Sessão",
-      "en": "Bloqueio de Sessão"
+      "en": "Session Lock"
     },
     "icon": "🔒",
     "title": {
       "pt": "Evolução Histórica: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!",
-      "en": "Historical Evolution: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!"
+      "en": "Historical Evolution: Ninja shortcut: Windows key + L locks the screen in 1 second!"
     },
     "teaser": {
       "pt": "Vais ao intervalo ou à casa de banho na sala de informática? Bloqueia a sessão!",
-      "en": "Vais ao intervalo ou à casa de banho na sala de informática? Bloqueia a sessão!"
+      "en": "Going to break or to the bathroom in the computer room? Lock your session!"
     },
     "description": {
       "pt": "No Windows, pressionar a tecla Windows junto com a letra \"L\" bloqueia o ecrã instantaneamente. Assim ninguém mexe no teu trabalho escolar enquanto estás ausente da sala de aula.",
-      "en": "No Windows, pressionar a tecla Windows junto com a letra \"L\" bloqueia o ecrã instantaneamente. Assim ninguém mexe no teu trabalho escolar enquanto estás ausente da sala de aula."
+      "en": "On Windows, pressing the Windows key together with the letter \"L\" locks the screen instantly. This stops other people from using your schoolwork while you are away from the classroom."
     },
     "whyItMatters": {
       "pt": "Utilização correta dos atalhos de sistema operativo para proteger sessões de utilizador.",
-      "en": "Utilização correta dos atalhos de sistema operativo para proteger sessões de utilizador."
+      "en": "Correct use of operating-system shortcuts to protect user sessions."
     },
     "funFact": {
       "pt": "No computador Mac da Apple, o atalho equivalente é Control + Command + Q!",
-      "en": "No computador Mac da Apple, o atalho equivalente é Control + Command + Q!"
+      "en": "On an Apple Mac, the equivalent shortcut is Control + Command + Q!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -16136,28 +16136,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Spam e Cadeias",
-      "en": "Spam e Cadeias"
+      "en": "Spam and Chain Messages"
     },
     "icon": "🗑️",
     "title": {
       "pt": "Evolução Histórica: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!",
-      "en": "Historical Evolution: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!"
+      "en": "Historical Evolution: The origin of the word \"SPAM\": a canned meat brand made famous in the 1970s!"
     },
     "teaser": {
       "pt": "Mensagens publicitárias não solicitadas receberam o nome de uma comida enlatada!",
-      "en": "Mensagens publicitárias não solicitadas receberam o nome de uma comida enlatada!"
+      "en": "Unwanted advertising messages were named after a canned food!"
     },
     "description": {
       "pt": "A palavra SPAM era originalmente o nome de uma marca de carne enlatada. Ficou famosa num programa de humor dos Monty Python, onde a palavra era repetida sem parar, inspirando mais tarde o uso do termo para mensagens indesejadas em massa.",
-      "en": "A palavra SPAM era originalmente o nome de uma marca de carne enlatada. Ficou famosa num programa de humor dos Monty Python, onde a palavra era repetida sem parar, inspirando mais tarde o uso do termo para mensagens indesejadas em massa."
+      "en": "The word SPAM was originally the name of a canned meat brand. It became famous in a Monty Python comedy sketch where the word was repeated over and over, later inspiring the term for unwanted mass messages."
     },
     "whyItMatters": {
       "pt": "Gestão de pastas de correio: Caixa de Entrada, Itens Enviados, Rascunhos e Spam.",
-      "en": "Gestão de pastas de correio: Caixa de Entrada, Itens Enviados, Rascunhos e Spam."
+      "en": "Managing email folders: Inbox, Sent Items, Drafts, and Spam."
     },
     "funFact": {
       "pt": "Cartas em cadeia que dizem \"Reenvia a 10 amigos ou terás azar\" são mitos falsos: apaga-as logo!",
-      "en": "Cartas em cadeia que dizem \"Reenvia a 10 amigos ou terás azar\" são mitos falsos: apaga-as logo!"
+      "en": "Chain letters saying \"Forward this to 10 friends or you will have bad luck\" are false myths: delete them!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -16211,28 +16211,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Separadores e Janelas",
-      "en": "Separadores e Janelas"
+      "en": "Tabs and Windows"
     },
     "icon": "📑",
     "title": {
       "pt": "Evolução Histórica: Atalhos de mestre no navegador: Control + T abre um novo separador!",
-      "en": "Historical Evolution: Atalhos de mestre no navegador: Control + T abre um novo separador!"
+      "en": "Historical Evolution: Master browser shortcuts: Control + T opens a new tab!"
     },
     "teaser": {
       "pt": "Dominar o teclado faz-te navegar como um verdadeiro profissional de informática.",
-      "en": "Dominar o teclado faz-te navegar como um verdadeiro profissional de informática."
+      "en": "Mastering the keyboard helps you browse like a real computer professional."
     },
     "description": {
       "pt": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!",
-      "en": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!"
+      "en": "Use Control + T to open a new tab, Control + W to close the current tab, and if you accidentally close the page you were on, Control + Shift + T magically reopens the last closed tab!"
     },
     "whyItMatters": {
       "pt": "Eficiência e atalhos de teclado na navegação Web no dia a dia.",
-      "en": "Eficiência e atalhos de teclado na navegação Web no dia a dia."
+      "en": "Efficiency and keyboard shortcuts for everyday Web browsing."
     },
     "funFact": {
       "pt": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!",
-      "en": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!"
+      "en": "On a Mac, replace the Control key with the Command key in the same shortcuts!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -16286,28 +16286,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Software Livre vs Proprietário",
-      "en": "Software Livre vs Proprietário"
+      "en": "Free vs Proprietary Software"
     },
     "icon": "🐧",
     "title": {
       "pt": "Evolução Histórica: Software Livre: o código aberto onde todos podem aprender e colaborar!",
-      "en": "Historical Evolution: Software Livre: o código aberto onde todos podem aprender e colaborar!"
+      "en": "Historical Evolution: Free Software: open code where everyone can learn and collaborate!"
     },
     "teaser": {
       "pt": "Qual é a diferença entre programas comerciais fechados e aplicações como o Linux e o Scratch?",
-      "en": "Qual é a diferença entre programas comerciais fechados e aplicações como o Linux e o Scratch?"
+      "en": "What is the difference between closed commercial programs and applications such as Linux and Scratch?"
     },
     "description": {
       "pt": "Software Proprietário não permite ver como foi feito por dentro. O Software Livre e de Código Aberto (Open Source) partilha o código para que qualquer estudante ou programador possa estudar, melhorar e partilhar livremente com a comunidade.",
-      "en": "Software Proprietário não permite ver como foi feito por dentro. O Software Livre e de Código Aberto (Open Source) partilha o código para que qualquer estudante ou programador possa estudar, melhorar e partilhar livremente com a comunidade."
+      "en": "Proprietary software does not let you see how it was made internally. Free and Open Source Software shares its source code so students and programmers can study, improve, and share it with the community."
     },
     "whyItMatters": {
       "pt": "Diferença entre licenças de software comercial, freeware, shareware e software livre.",
-      "en": "Diferença entre licenças de software comercial, freeware, shareware e software livre."
+      "en": "The difference between commercial software, freeware, shareware, and free software licences."
     },
     "funFact": {
       "pt": "A mascote do sistema operativo livre Linux é um simpático pinguim chamado Tux!",
-      "en": "A mascote do sistema operativo livre Linux é um simpático pinguim chamado Tux!"
+      "en": "The mascot of the free Linux operating system is a friendly penguin called Tux!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -16361,28 +16361,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Ambiente e Sustentabilidade",
-      "en": "Ambiente e Sustentabilidade"
+      "en": "Environment and Sustainability"
     },
     "icon": "♻️",
     "title": {
       "pt": "Evolução Histórica: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!",
-      "en": "Historical Evolution: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!"
+      "en": "Historical Evolution: Electronic Waste (E-Waste): old computers do not belong in ordinary rubbish!"
     },
     "teaser": {
       "pt": "O que deves fazer quando um telemóvel, teclado ou comando de consola avaria de vez?",
-      "en": "O que deves fazer quando um telemóvel, teclado ou comando de consola avaria de vez?"
+      "en": "What should you do when a phone, keyboard, or game controller breaks for good?"
     },
     "description": {
       "pt": "Os equipamentos de TIC contêm metais preciosos (como ouro, prata e cobre) e substâncias químicas que não podem poluir a natureza. Devem ser entregues no Eletrão ou em lojas com contentores de reciclagem elétrica adequados.",
-      "en": "Os equipamentos de TIC contêm metais preciosos (como ouro, prata e cobre) e substâncias químicas que não podem poluir a natureza. Devem ser entregues no Eletrão ou em lojas com contentores de reciclagem elétrica adequados."
+      "en": "ICT equipment contains valuable metals such as gold, silver, and copper, as well as substances that can harm nature. It should be taken to an authorised e-waste collection point or a shop with suitable electrical recycling containers."
     },
     "whyItMatters": {
-      "pt": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5. º ano.",
-      "en": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5. º ano."
+      "pt": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5.º ano.",
+      "en": "Environmental citizenship and the ecological footprint of ICT are part of the 5th-grade goals."
     },
     "funFact": {
       "pt": "Com o circuito de 40 telemóveis reciclados consegue-se recuperar ouro suficiente para fazer uma aliança!",
-      "en": "Com o circuito de 40 telemóveis reciclados consegue-se recuperar ouro suficiente para fazer uma aliança!"
+      "en": "Recycling a batch of 40 mobile phones can recover enough gold to make a wedding ring!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -16511,12 +16511,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Direito à Imagem",
-      "en": "Direito à Imagem"
+      "en": "Right to One's Image"
     },
     "icon": "📸",
     "title": {
       "pt": "Evolução Histórica: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!",
-      "en": "Historical Evolution: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!"
+      "en": "Historical Evolution: Always ask permission before taking or sharing photos of friends!"
     },
     "teaser": {
       "pt": "Cada pessoa é dona da sua própria imagem e tem o direito de não querer ser fotografada.",
@@ -16527,7 +16527,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "Even at school, photographing or filming a classmate and posting it on social media without their consent and their parents' permission is a serious violation of privacy and school rules."
     },
     "whyItMatters": {
-      "pt": "Compreender o direito à imagem e à reserva da intimidade da vida privada no 5. º ano de escolaridade.",
+      "pt": "Compreender o direito à imagem e à reserva da intimidade da vida privada no 5.º ano de escolaridade.",
       "en": "Understanding the right to one's image and the preservation of privacy in the 5th grade."
     },
     "funFact": {
@@ -16586,16 +16586,16 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Biometria",
-      "en": "Biometria"
+      "en": "Biometrics"
     },
     "icon": "👁️",
     "title": {
       "pt": "Evolução Histórica: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade.",
-      "en": "Historical Evolution: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade."
+      "en": "Historical Evolution: Fingerprints and facial recognition: using body characteristics to confirm identity."
     },
     "teaser": {
       "pt": "A biometria utiliza características do corpo, como a impressão digital ou o rosto, para ajudar a confirmar a identidade de uma pessoa.",
-      "en": "A biometria usa caraterísticas físicas únicas que é muito difícil de copiar."
+      "en": "Biometrics use unique physical characteristics that are very difficult to copy."
     },
     "description": {
       "pt": "Sensores biométricos leem as linhas do teu dedo ou a geometria do teu rosto para desbloquear tablets e telemóveis. É rápido, prático e muito mais difícil de adivinhar do que uma palavra-passe de 4 algarismos.",
@@ -16607,7 +16607,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "Nem sequer gémeos verdadeiros têm impressões digitais exatamente idênticas!",
-      "en": "Nem sequer gémeos verdadeiros têm impressões digitais exatamente idênticas!"
+      "en": "Even identical twins do not have exactly the same fingerprints!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -16661,12 +16661,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Responder a Todos",
-      "en": "Responder a Todos"
+      "en": "Reply All"
     },
     "icon": "👥",
     "title": {
       "pt": "Evolução Histórica: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!",
-      "en": "Historical Evolution: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!"
+      "en": "Historical Evolution: Be careful with the \"Reply All\" button: do not fill your classmates’ inboxes!"
     },
     "teaser": {
       "pt": "Se queres responder apenas à professora, clica em \"Responder\" e não em \"Responder a Todos\".",
@@ -16677,7 +16677,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "If the teacher sends an assignment to all 25 students and you reply 'Thank you! ' using 'Reply All', all 25 classmates will receive an unnecessary notification!"
     },
     "whyItMatters": {
-      "pt": "Uso responsável e ponderado das ferramentas de comunicação coletiva no 5. º ano.",
+      "pt": "Uso responsável e ponderado das ferramentas de comunicação coletiva no 5.º ano.",
       "en": "Responsible and thoughtful use of collective communication tools in 5th grade."
     },
     "funFact": {
@@ -16736,16 +16736,16 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Domínios e Extensões",
-      "en": "Domínios e Extensões"
+      "en": "Domains and Extensions"
     },
     "icon": "🌐",
     "title": {
       "pt": "Evolução Histórica: O que significa . pt, . org, . edu e . gov no final dos sites?",
-      "en": "Historical Evolution: O que significa . pt, . org, . edu e . gov no final dos sites?"
+      "en": "Historical Evolution: What do .pt, .org, .edu, and .gov mean at the end of websites?"
     },
     "teaser": {
       "pt": "A terminação do endereço da página Web revela muito sobre quem a criou.",
-      "en": "A terminação do endereço da página Web revela muito sobre quem a criou."
+      "en": "The ending of a web address reveals a lot about who created it."
     },
     "description": {
       "pt": "O domínio \". pt\" indica Portugal, \". gov\" pertence a organismos de governo oficial, \". edu\" a escolas e universidades, e \". org\" a organizações sem fins lucrativos. Sites educativos e governamentais são fontes muito mais fiáveis para trabalhos!",
@@ -16811,12 +16811,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Citação Direta entre Aspas",
-      "en": "Citação Direta entre Aspas"
+      "en": "Direct Quotation in Quotation Marks"
     },
     "icon": "💬",
     "title": {
       "pt": "Evolução Histórica: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?",
-      "en": "Historical Evolution: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?"
+      "en": "Historical Evolution: How can you quote a sentence from a book in a school project without plagiarising?"
     },
     "teaser": {
       "pt": "Se copiares uma frase palavra por palavra, deves colocá-la entre aspas e dizer de quem é!",
@@ -16886,12 +16886,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Hardware Interno",
-      "en": "Hardware Interno"
+      "en": "Internal Hardware"
     },
     "icon": "🧠",
     "title": {
       "pt": "Evolução Histórica: A CPU, ou processador, é um dos principais componentes do computador. Executa instruções e ajuda o computador a realizar tarefas.",
-      "en": "Historical Evolution: A CPU, ou processador, é um dos principais componentes do computador. Executa instruções e ajuda o computador a realizar tarefas."
+      "en": "Historical Evolution: The CPU, or processor, is one of the main components of a computer. It executes instructions and helps the computer perform tasks."
     },
     "teaser": {
       "pt": "Sabias que o processador do teu computador consegue resolver contas mais depressa do que um raio?",
@@ -16961,12 +16961,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Postura na Cadeira",
-      "en": "Postura na Cadeira"
+      "en": "Chair Posture"
     },
     "icon": "🪑",
     "title": {
       "pt": "Evolução Histórica: Postura Confortável: a posição ideal para estudar ao computador!",
-      "en": "Historical Evolution: Postura Confortável: a posição ideal para estudar ao computador!"
+      "en": "Historical Evolution: Comfortable Posture: the ideal position for studying at a computer!"
     },
     "teaser": {
       "pt": "Sabias que os cotovelos e joelhos devem ficar, aproximadamente, num ângulo de 90°, numa posição confortável?",
@@ -16982,7 +16982,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "Se os teus pés não chegarem ao chão na escola, pede um apoio de pés para manter a postura certa!",
-      "en": "Se os teus pés não chegarem ao chão na escola, pede um apoio de pés para manter a postura certa!"
+      "en": "If your feet do not reach the floor at school, ask for a footrest to help you keep the correct posture!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -17036,28 +17036,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Pegada Digital",
-      "en": "Pegada Digital"
+      "en": "Digital Footprint"
     },
     "icon": "👣",
     "title": {
       "pt": "Desafio Escolar: A tua Pegada Digital é como uma pegada no cimento fresco!",
-      "en": "School Challenge: A tua Pegada Digital é como uma pegada no cimento fresco!"
+      "en": "School Challenge: Your Digital Footprint is like a footprint in wet cement!"
     },
     "teaser": {
       "pt": "Algumas das nossas atividades online deixam registos. Publicações, comentários e conteúdos que partilhamos podem fazer parte da nossa pegada digital.",
       "en": "Some of our online activities leave records. Posts, comments, and content we share can form part of our digital footprint."
     },
     "description": {
-      "pt": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã (captura de ecrã). Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes.",
-      "en": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã (captura de ecrã). Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes."
+      "pt": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã. Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes.",
+      "en": "Every click, video you watch, and comment builds your online reputation. Even if you delete a photo, someone may have taken a screenshot. So build a positive digital footprint by sharing thoughtfully and kindly."
     },
     "whyItMatters": {
       "pt": "No Tema 3 de TIC aprendemos a refletir criticamente sobre as consequências das nossas ações online.",
-      "en": "No Tema 3 de TIC aprendemos a refletir criticamente sobre as consequências das nossas ações online."
+      "en": "In ICT Topic 3, we learn to think critically about the consequences of our online actions."
     },
     "funFact": {
       "pt": "A regra de ouro: só deves publicar algo se não tiveres vergonha que a tua professora ou avó vejam!",
-      "en": "A regra de ouro: só deves publicar algo se não tiveres vergonha que a tua professora ou avó vejam!"
+      "en": "The golden rule: only post something if you would be comfortable with your teacher or grandmother seeing it!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -17111,28 +17111,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Força de Palavras-passe",
-      "en": "Força de Palavras-passe"
+      "en": "Password Strength"
     },
     "icon": "⚡",
     "title": {
       "pt": "Evolução Histórica: 123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar.",
-      "en": "Historical Evolution: 123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar."
+      "en": "Historical Evolution: 123456 is an extremely predictable password and is among the first combinations automated systems may try."
     },
     "teaser": {
       "pt": "Inacreditavelmente, continua a ser uma das palavras-passe mais usadas no planeta!",
-      "en": "Inacreditavelmente, continua a ser uma das palavras-passe mais usadas no planeta!"
+      "en": "Unbelievably, it is still one of the most commonly used passwords in the world!"
     },
     "description": {
       "pt": "Programas automáticos usam listas de palavras comuns e sequências de teclado simples. Palavras-passe como \"123456\", \"qwerty\", \"password\" ou a tua data de aniversário são adivinhadas instantaneamente por computadores.",
-      "en": "Programas automáticos usam listas de palavras comuns e sequências de teclado simples. Palavras-passe como \"123456\", \"qwerty\", \"password\" ou a tua data de aniversário são adivinhadas instantaneamente por computadores."
+      "en": "Automated programs use lists of common words and simple keyboard sequences. Passwords such as \"123456\", \"qwerty\", \"password\", or your birthday can be guessed instantly by computers."
     },
     "whyItMatters": {
       "pt": "No Tema 4 de TIC aprendemos a criar palavras-passe robustas que protegem as nossas contas escolares.",
-      "en": "No Tema 4 de TIC aprendemos a criar palavras-passe robustas que protegem as nossas contas escolares."
+      "en": "In ICT Topic 4, we learn to create strong passwords that protect our school accounts."
     },
     "funFact": {
       "pt": "Outra palavra-passe péssima muito usada é \"admin\" ou o nome do clube de futebol favorito!",
-      "en": "Outra palavra-passe péssima muito usada é \"admin\" ou o nome do clube de futebol favorito!"
+      "en": "Another very poor password that is widely used is \"admin\" or the name of a favourite football club!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -17186,12 +17186,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Campos do Email",
-      "en": "Campos do Email"
+      "en": "Email Fields"
     },
     "icon": "🕶️",
     "title": {
       "pt": "Desafio Escolar: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade",
-      "en": "School Challenge: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade"
+      "en": "School Challenge: The Bcc field lets you send emails to several people while protecting their privacy."
     },
     "teaser": {
       "pt": "Vais convidar 25 colegas da turma para uma festa por email? Usa o Cco!",
@@ -17199,7 +17199,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "description": {
       "pt": "No email tens: \"Para\" (destinatários principais), \"Cc\" (Com Cópia, visível a todos) e \"Cco\" (Com Cópia Oculta). Ao colocar os contactos em Cco, ninguém vê o endereço privado dos outros, evitando spam e exposição indesejada de contactos.",
-      "en": "No email tens: \"Para\" (destinatários principais), \"Cc\" (Com Cópia, visível a todos) e \"Cco\" (Com Cópia Oculta). Ao colocar os contactos em Cco, ninguém vê o endereço privado dos outros, evitando spam e exposição indesejada de contactos."
+      "en": "In an email you have: \"To\" (main recipients), \"Cc\" (Carbon Copy, visible to everyone), and \"Bcc\" (Blind Carbon Copy). When you put contacts in Bcc, no one can see the other people's private addresses, helping prevent spam and unwanted exposure of contacts."
     },
     "whyItMatters": {
       "pt": "No Tema 5 de TIC aprendemos a usar os campos Para, Cc e Cco de acordo com as regras do RGPD.",
@@ -17207,7 +17207,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "A sigla Cc vem do papel químico (\"Carbon Copy\") que se usava antigamente nas máquinas de escrever!",
-      "en": "A sigla Cc vem do papel químico (\"Carbon Copy\") que se usava antigamente nas máquinas de escrever!"
+      "en": "The abbreviation Cc comes from carbon paper (\"Carbon Copy\"), which was once used with typewriters!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -17261,28 +17261,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Navegador vs Motor",
-      "en": "Navegador vs Motor"
+      "en": "Browser vs Search Engine"
     },
     "icon": "🚗",
     "title": {
       "pt": "Desafio Escolar: O Navegador é o Automóvel, o Motor de Busca é o GPS!",
-      "en": "School Challenge: O Navegador é o Automóvel, o Motor de Busca é o GPS!"
+      "en": "School Challenge: The Browser is the Car, the Search Engine is the GPS!"
     },
     "teaser": {
       "pt": "Muitos alunos confundem o Chrome com o Google. Sabes qual é a diferença real?",
-      "en": "Muitos alunos confundem o Chrome com o Google. Sabes qual é a diferença real?"
+      "en": "Many students confuse Chrome with Google. Do you know the real difference?"
     },
     "description": {
       "pt": "O Navegador (Browser, como Chrome, Edge, Firefox ou Safari) é a aplicação instalada que abre e desenha páginas Web. O Motor de Busca (Google, Bing, DuckDuckGo) é um site especial que cataloga a rede para responder a perguntas.",
-      "en": "O Navegador (Browser, como Chrome, Edge, Firefox ou Safari) é a aplicação instalada que abre e desenha páginas Web. O Motor de Busca (Google, Bing, DuckDuckGo) é um site especial que cataloga a rede para responder a perguntas."
+      "en": "The Browser (such as Chrome, Edge, Firefox, or Safari) is the application that opens and displays web pages. A Search Engine (such as Google, Bing, or DuckDuckGo) is a special website that indexes the web to answer searches."
     },
     "whyItMatters": {
       "pt": "No Tema 6 de TIC aprendemos a usar a barra de endereços (URL) diretamente sem passar pelo motor de busca.",
-      "en": "No Tema 6 de TIC aprendemos a usar a barra de endereços (URL) diretamente sem passar pelo motor de busca."
+      "en": "In ICT Topic 6, we learn to use the address bar (URL) directly instead of going through a search engine."
     },
     "funFact": {
       "pt": "A primeira janela de navegação inventada em 1990 chamava-se \"WorldWideWeb\"!",
-      "en": "A primeira janela de navegação inventada em 1990 chamava-se \"WorldWideWeb\"!"
+      "en": "The first web browser, created in 1990, was called \"WorldWideWeb\"!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -17336,28 +17336,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Google Imagens",
-      "en": "Google Imagens"
+      "en": "Google Images"
     },
     "icon": "🎨",
     "title": {
       "pt": "Evolução Histórica: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!",
-      "en": "Historical Evolution: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!"
+      "en": "Historical Evolution: Photos from Google Images are NOT free to use however you want!"
     },
     "teaser": {
       "pt": "Copiar uma foto qualquer e colar num trabalho sem autorização pode violar a lei.",
-      "en": "Copiar uma foto qualquer e colar num trabalho sem autorização pode violar a lei."
+      "en": "Copying any photo and putting it into a school project without permission may violate copyright law."
     },
     "description": {
       "pt": "Quando um fotógrafo ou ilustrador cria uma imagem, ela fica logo protegida por Direitos de Autor (Copyright). Não a podes descarregar e reutilizar sem autorização. Para trabalhos escolares, usa imagens com licenças Creative Commons ou de Domínio Público.",
-      "en": "Quando um fotógrafo ou ilustrador cria uma imagem, ela fica logo protegida por Direitos de Autor (Copyright). Não a podes descarregar e reutilizar sem autorização. Para trabalhos escolares, usa imagens com licenças Creative Commons ou de Domínio Público."
+      "en": "When a photographer or illustrator creates an image, it is generally protected by copyright. You cannot download and reuse it without permission. For school projects, use images with suitable Creative Commons licences or in the public domain."
     },
     "whyItMatters": {
       "pt": "No Tema 7 de TIC aprendemos a respeitar a propriedade intelectual e o trabalho dos artistas.",
-      "en": "No Tema 7 de TIC aprendemos a respeitar a propriedade intelectual e o trabalho dos artistas."
+      "en": "In ICT Topic 7, we learn to respect intellectual property and the work of artists."
     },
     "funFact": {
       "pt": "Quando encontras uma imagem na Internet, lembra-te de verificar sempre a sua fonte original e qual é a licença de utilização específica. Mesmo nas licenças Creative Commons, deves respeitar regras como indicar o nome do autor (atribuição) e verificar se podes usar a imagem no teu trabalho!",
-      "en": "Quando encontras uma imagem na Internet, lembra-te de verificar sempre a sua fonte original e qual é a licença de utilização específica. Mesmo nas licenças Creative Commons, deves respeitar regras como indicar o nome do autor (atribuição) e verificar se podes usar a imagem no teu trabalho!"
+      "en": "When you find an image online, always check its original source and its specific licence. Even with Creative Commons licences, follow rules such as crediting the author and checking whether you may use the image in your project!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -17411,28 +17411,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Memória do Computador",
-      "en": "Memória do Computador"
+      "en": "Computer Memory"
     },
     "icon": "⚡",
     "title": {
       "pt": "Desafio Escolar: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!",
-      "en": "School Challenge: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!"
+      "en": "School Challenge: RAM vs SSD: the work desk vs the cupboard!"
     },
     "teaser": {
       "pt": "Qual é a diferença entre a memória que apaga tudo quando desligas e a que guarda ficheiros?",
-      "en": "Qual é a diferença entre a memória que apaga tudo quando desligas e a que guarda ficheiros?"
+      "en": "What is the difference between memory that is cleared when you switch off the computer and storage that keeps files?"
     },
     "description": {
       "pt": "O Disco SSD é o armário com gavetas: guarda os teus trabalhos a longo prazo, mas lembra-te de que os discos também se podem avariar, pelo que deves fazer sempre cópias de segurança (backups) dos teus ficheiros mais importantes!",
-      "en": "O Disco SSD é o armário com gavetas: guarda os teus trabalhos a longo prazo, mas lembra-te de que os discos também se podem avariar, pelo que deves fazer sempre cópias de segurança (backups) dos teus ficheiros mais importantes!"
+      "en": "The SSD is like a cupboard with drawers: it stores your work for the long term. Remember that storage devices can fail, so always make backups of your most important files!"
     },
     "whyItMatters": {
       "pt": "Identificar a diferença entre memória primária (RAM) e armazenamento secundário (SSD/HDD) é uma competência essencial de TIC.",
-      "en": "Identificar a diferença entre memória primária (RAM) e armazenamento secundário (SSD/HDD) é uma competência essencial de TIC."
+      "en": "Knowing the difference between primary memory (RAM) and secondary storage (SSD/HDD) is an essential ICT skill."
     },
     "funFact": {
       "pt": "Os novos discos SSD não têm peças móveis e usam chips de memória flash super rápidos!",
-      "en": "Os novos discos SSD não têm peças móveis e usam chips de memória flash super rápidos!"
+      "en": "Modern SSDs have no moving parts and use very fast flash-memory chips!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -17486,7 +17486,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Cuidado com os Olhos",
-      "en": "Cuidado com os Olhos"
+      "en": "Eye Care"
     },
     "icon": "👀",
     "title": {
@@ -17561,28 +17561,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Privacidade e Redes",
-      "en": "Privacidade e Redes"
+      "en": "Privacy and Networks"
     },
     "icon": "🕵️‍♂️",
     "title": {
       "pt": "Desafio Escolar: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!",
-      "en": "School Challenge: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!"
+      "en": "School Challenge: The \"Stranger in the Garden\" rule: never share your address in online games!"
     },
     "teaser": {
       "pt": "Roblox, Fortnite, Brawl Stars... avatares simpáticos podem esconder qualquer pessoa.",
-      "en": "Roblox, Fortnite, Brawl Stars... avatares simpáticos podem esconder qualquer pessoa."
+      "en": "Roblox, Fortnite, Brawl Stars... friendly-looking avatars can hide the identity of any person."
     },
     "description": {
       "pt": "Nunca partilhes o teu nome completo, número de telemóvel, nome da escola ou fotos onde se veja o emblema do teu clube ou a rua de tua casa com desconhecidos em salas de conversação ou jogos online.",
-      "en": "Nunca partilhes o teu nome completo, número de telemóvel, nome da escola ou fotos onde se veja o emblema do teu clube ou a rua de tua casa com desconhecidos em salas de conversação ou jogos online."
+      "en": "Never share your full name, phone number, school name, or photos showing your club badge or the street where you live with strangers in chats or online games."
     },
     "whyItMatters": {
       "pt": "A proteção de dados pessoais e a defesa da privacidade individual são prioridades de Cidadania Digital.",
-      "en": "A proteção de dados pessoais e a defesa da privacidade individual são prioridades de Cidadania Digital."
+      "en": "Protecting personal data and defending individual privacy are priorities of Digital Citizenship."
     },
     "funFact": {
       "pt": "É por isso que nos jogos é muito mais seguro e divertido usar nomes de código como \"FalcãoVeloz_99\"!",
-      "en": "É por isso que nos jogos é muito mais seguro e divertido usar nomes de código como \"FalcãoVeloz_99\"!"
+      "en": "That is why using code names such as \"FalcãoVeloz_99\" in games is safer and more fun!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -17636,28 +17636,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "O Segredo da Frase-Passe",
-      "en": "O Segredo da Frase-Passe"
+      "en": "The Secret of the Passphrase"
     },
     "icon": "🍕",
     "title": {
       "pt": "Desafio Escolar: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!",
-      "en": "School Challenge: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!"
+      "en": "School Challenge: The \"Passphrase\" method: O_Meu_Cao_Adora_Comer_99_Gelados!"
     },
     "teaser": {
-      "pt": "Uma frase longa com espaços ou travessões é fácil de decorar e quase altamente seguro.",
-      "en": "Uma frase longa com espaços ou travessões é fácil de decorar e quase altamente seguro."
+      "pt": "Uma frase longa com espaços ou travessões é fácil de decorar e muito segura.",
+      "en": "A long phrase with spaces or dashes is easy to remember and can be very secure."
     },
     "description": {
       "pt": "Em vez de uma palavra-passe curta e confusa que esqueces amanhã, inventa uma frase maluca com 4 ou 5 palavras e junta números e símbolos. Uma frase-passe longa e difícil de adivinhar é geralmente mais segura do que uma palavra-passe curta e previsível.",
-      "en": "Em vez de uma palavra-passe curta e confusa que esqueces amanhã, inventa uma frase maluca com 4 ou 5 palavras e junta números e símbolos. Uma frase-passe longa e difícil de adivinhar é geralmente mais segura do que uma palavra-passe curta e previsível."
+      "en": "Instead of a short, confusing password that you will forget tomorrow, invent a funny phrase with 4 or 5 words and add numbers and symbols. A long, hard-to-guess passphrase is generally safer than a short, predictable password."
     },
     "whyItMatters": {
       "pt": "Construção de palavras-passe fortes com base em frases mnemónicas compridas.",
-      "en": "Construção de palavras-passe fortes com base em frases mnemónicas compridas."
+      "en": "Creating strong passwords based on long memorable phrases."
     },
     "funFact": {
       "pt": "Quanto mais comprida for a palavra-passe, mais combinações matemáticas o invasor tem de testar!",
-      "en": "Quanto mais comprida for a palavra-passe, mais combinações matemáticas o invasor tem de testar!"
+      "en": "The longer the password, the more mathematical combinations an attacker has to test!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -17711,28 +17711,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "O Símbolo Arroba",
-      "en": "O Símbolo Arroba"
+      "en": "The At Symbol"
     },
     "icon": "🐌",
     "title": {
       "pt": "Desafio Escolar: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!",
-      "en": "School Challenge: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!"
+      "en": "School Challenge: The @ symbol is called \"snail\" in Italy and \"elephant trunk\" in Sweden!"
     },
     "teaser": {
       "pt": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico.",
-      "en": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico."
+      "en": "In 1971, Ray Tomlinson carried out one of the first experiments sending messages between networked computers and popularised the use of @ in email addresses."
     },
     "description": {
       "pt": "Em inglês lê-se \"at\" (no local de). Em Portugal chamamos-lhe arroba, mas outros países dão-lhe nomes animais engraçados: os italianos dizem \"chiocciola\" (caracol) e os israelitas \"strudel\" (bolo enrolado)!",
-      "en": "Em inglês lê-se \"at\" (no local de). Em Portugal chamamos-lhe arroba, mas outros países dão-lhe nomes animais engraçados: os italianos dizem \"chiocciola\" (caracol) e os israelitas \"strudel\" (bolo enrolado)!"
+      "en": "In English it is read as \"at\". In Portugal we call it \"arroba\", while other countries have funny animal names for it: Italians say \"chiocciola\" (snail) and Israelis say \"strudel\" (a rolled pastry)!"
     },
     "whyItMatters": {
-      "pt": "Estrutura padrão de um endereço de correio eletrónico: utilizador@dominio. extensao.",
-      "en": "Estrutura padrão de um endereço de correio eletrónico: utilizador@dominio. extensao."
+      "pt": "Estrutura padrão de um endereço de correio eletrónico: utilizador@domínio.extensão.",
+      "en": "Standard structure of an email address: username@domain.extension."
     },
     "funFact": {
       "pt": "Antigamente, a arroba era uma medida de peso usada no comércio que valia cerca de 15 quilogramas!",
-      "en": "Antigamente, a arroba era uma medida de peso usada no comércio que valia cerca de 15 quilogramas!"
+      "en": "In the past, the arroba was a unit of weight used in trade, worth about 15 kilograms!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -17786,28 +17786,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Truque das Aspas",
-      "en": "Truque das Aspas"
+      "en": "Quotation Marks Trick"
     },
     "icon": "🔍",
     "title": {
       "pt": "Evolução Histórica: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!",
-      "en": "Historical Evolution: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!"
+      "en": "Historical Evolution: Search like a detective: the magic quotation-mark trick \"\" in a search engine!"
     },
     "teaser": {
       "pt": "Sabias que podes obrigar o motor de busca a encontrar exatamente a frase que queres?",
-      "en": "Sabias que podes obrigar o motor de busca a encontrar exatamente a frase que queres?"
+      "en": "Did you know you can make a search engine find exactly the phrase you want?"
     },
     "description": {
       "pt": "Se colocares uma frase entre aspas (ex: \"energia eólica em Portugal\"), o motor de busca só mostra páginas que tenham essas palavras exatamente nessa ordem, filtrando milhares de páginas irrelevantes!",
-      "en": "Se colocares uma frase entre aspas (ex: \"energia eólica em Portugal\"), o motor de busca só mostra páginas que tenham essas palavras exatamente nessa ordem, filtrando milhares de páginas irrelevantes!"
+      "en": "If you put a phrase in quotation marks (e.g. \"wind energy in Portugal\"), the search engine looks for pages containing those words in that exact order, filtering out thousands of irrelevant pages!"
     },
     "whyItMatters": {
-      "pt": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5. º ano.",
-      "en": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5. º ano."
+      "pt": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5.º ano.",
+      "en": "Advanced search techniques using Boolean operators and delimiters in 5th grade."
     },
     "funFact": {
       "pt": "Se usares o sinal de menos (ex: jaguar -carro), ele procura o felino e elimina as páginas sobre automóveis!",
-      "en": "Se usares o sinal de menos (ex: jaguar -carro), ele procura o felino e elimina as páginas sobre automóveis!"
+      "en": "If you use the minus sign (e.g. jaguar -car), it searches for the animal and removes pages about cars!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -17861,28 +17861,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "O que é Plágio",
-      "en": "O que é Plágio"
+      "en": "What Is Plagiarism"
     },
     "icon": "✂️",
     "title": {
       "pt": "Desafio Escolar: Plágio: roubar a medalha de ouro de outra pessoa!",
-      "en": "School Challenge: Plágio: roubar a medalha de ouro de outra pessoa!"
+      "en": "School Challenge: Plagiarism: stealing someone else's gold medal!"
     },
     "teaser": {
       "pt": "Fazer \"Copiar e Colar\" da Wikipédia e assinar com o teu nome é desonestidade académica.",
-      "en": "Fazer \"Copiar e Colar\" da Wikipédia e assinar com o teu nome é desonestidade académica."
+      "en": "Copying and pasting from Wikipedia and signing it with your own name is academic dishonesty."
     },
     "description": {
       "pt": "Plágio é copiar textos, ideias, desenhos ou código de outra pessoa fingindo que foste tu a criar. É como alguém correr uma maratona e tu roubares a medalha para dizer que venceste. O correto é ler, explicar pelas tuas próprias palavras e citar a fonte de onde aprendeste.",
-      "en": "Plágio é copiar textos, ideias, desenhos ou código de outra pessoa fingindo que foste tu a criar. É como alguém correr uma maratona e tu roubares a medalha para dizer que venceste. O correto é ler, explicar pelas tuas próprias palavras e citar a fonte de onde aprendeste."
+      "en": "Plagiarism is copying another person's texts, ideas, drawings, or code and pretending you created them. It is like someone running a marathon and you stealing the medal to say you won. The right thing is to read, explain in your own words, and cite the source you learned from."
     },
     "whyItMatters": {
-      "pt": "Compreensão de plágio vs autoria original e integridade académica no 5. º ano.",
-      "en": "Compreensão de plágio vs autoria original e integridade académica no 5. º ano."
+      "pt": "Compreensão de plágio vs autoria original e integridade académica no 5.º ano.",
+      "en": "Understanding plagiarism versus original authorship and academic integrity in 5th grade."
     },
     "funFact": {
       "pt": "Os professores têm ferramentas de software que detetam plágio em trabalhos escolares em segundos!",
-      "en": "Os professores têm ferramentas de software que detetam plágio em trabalhos escolares em segundos!"
+      "en": "Teachers have software tools that can detect plagiarism in schoolwork within seconds!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -17936,28 +17936,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Placa Principal",
-      "en": "Placa Principal"
+      "en": "Main Board"
     },
     "icon": "🛣️",
     "title": {
       "pt": "Desafio Escolar: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!",
-      "en": "School Challenge: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!"
+      "en": "School Challenge: The Motherboard is the motorway that connects all the computer's components!"
     },
     "teaser": {
       "pt": "Como é que a placa gráfica fala com o processador e com o disco rígido?",
-      "en": "Como é que a placa gráfica fala com o processador e com o disco rígido?"
+      "en": "How does the graphics card communicate with the processor and the hard drive?"
     },
     "description": {
       "pt": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI.",
-      "en": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI."
+      "en": "The Motherboard is a large green or black circuit board filled with copper tracks. The CPU, RAM, sound card, and network card connect to it, along with USB and HDMI ports."
     },
     "whyItMatters": {
-      "pt": "Os os componentes físicos comunicam através do barramento de dados (Bus).",
-      "en": "Os os componentes físicos comunicam através do barramento de dados (Bus)."
+      "pt": "Os componentes físicos comunicam através do barramento de dados (Bus).",
+      "en": "The physical components communicate through the data bus (Bus)."
     },
     "funFact": {
       "pt": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!",
-      "en": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!"
+      "en": "It is called a \"motherboard\" because it houses and connects all the other boards and components attached to the system!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -18011,28 +18011,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Sono e Tecnologia",
-      "en": "Sono e Tecnologia"
+      "en": "Sleep and Technology"
     },
     "icon": "🌙",
     "title": {
       "pt": "Desafio Escolar: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \"",
-      "en": "School Challenge: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \""
+      "en": "School Challenge: Blue Light from the screen tells your brain: \"Wake up, it is still beach time!\""
     },
     "teaser": {
       "pt": "Porque deves desligar os ecrãs 30 a 60 minutos antes de dormir para acordares com energia?",
-      "en": "Porque deves desligar os ecrãs 30 a 60 minutos antes de dormir para acordares com energia?"
+      "en": "Why should you turn off screens 30 to 60 minutes before bed so you can wake up with energy?"
     },
     "description": {
       "pt": "A luz azul emitida por ecrãs bloqueia a melatonina, a hormona que dá sono. Quando usas o telemóvel na cama, o teu cérebro fica confuso, demoras mais tempo a adormecer e acordas cansado para a escola.",
-      "en": "A luz azul emitida por ecrãs bloqueia a melatonina, a hormona que dá sono. Quando usas o telemóvel na cama, o teu cérebro fica confuso, demoras mais tempo a adormecer e acordas cansado para a escola."
+      "en": "Blue light from screens can affect melatonin, the hormone involved in sleep. Using a phone in bed can make it harder to fall asleep and may leave you tired for school."
     },
     "whyItMatters": {
       "pt": "Estudamos o equilíbrio entre o tempo de ecrã e o descanso reparador de 9 a 12 horas diárias.",
-      "en": "Estudamos o equilíbrio entre o tempo de ecrã e o descanso reparador de 9 a 12 horas diárias."
+      "en": "We study the balance between screen time and restorative sleep of 9 to 12 hours per day."
     },
     "funFact": {
       "pt": "Substituir o telemóvel antes de dormir por um livro em papel melhora as tuas notas escolares!",
-      "en": "Substituir o telemóvel antes de dormir por um livro em papel melhora as tuas notas escolares!"
+      "en": "Replacing your phone with a paper book before bed can help your sleep and school performance!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -18086,28 +18086,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Apoio e Helplines",
-      "en": "Apoio e Helplines"
+      "en": "Support and Helplines"
     },
     "icon": "📞",
     "title": {
       "pt": "Desafio Escolar: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!",
-      "en": "School Challenge: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!"
+      "en": "School Challenge: Portugal's Safe Internet Line: 800 21 90 90 (free and confidential)!"
     },
     "teaser": {
       "pt": "Se algo correr mal online, existe uma equipa simpática pronta para te ajudar.",
-      "en": "Se algo correr mal online, existe uma equipa simpática pronta para te ajudar."
+      "en": "If something goes wrong online, there is a friendly team ready to help you."
     },
     "description": {
       "pt": "Se vires conteúdos assustadores, sofreres cyberbullying ou tiveres dúvidas sobre a tua segurança, podes ligar gratuitamente para o 800 21 90 90 ou para o SOS Criança (116 111). Nunca guardes medos só para ti!",
-      "en": "Se vires conteúdos assustadores, sofreres cyberbullying ou tiveres dúvidas sobre a tua segurança, podes ligar gratuitamente para o 800 21 90 90 ou para o SOS Criança (116 111). Nunca guardes medos só para ti!"
+      "en": "If you see frightening content, experience cyberbullying, or have concerns about your safety, you can call 800 21 90 90 or SOS Criança (116 111) for free. Never keep your worries to yourself!"
     },
     "whyItMatters": {
       "pt": "Conhecer as linhas de apoio e saber a quem recorrer perante incidentes digitais é fundamental.",
-      "en": "Conhecer as linhas de apoio e saber a quem recorrer perante incidentes digitais é fundamental."
+      "en": "Knowing support lines and knowing who to turn to when digital incidents happen is essential."
     },
     "funFact": {
       "pt": "Lembra-te: falar com os pais ou professores de confiança é sempre o primeiro e melhor passo!",
-      "en": "Lembra-te: falar com os pais ou professores de confiança é sempre o primeiro e melhor passo!"
+      "en": "Remember: talking to a trusted parent or teacher is always the first and best step!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -18161,28 +18161,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Partilha de Palavras-passe",
-      "en": "Partilha de Palavras-passe"
+      "en": "Password Sharing"
     },
     "icon": "🪥",
     "title": {
       "pt": "Desafio Escolar: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!",
-      "en": "School Challenge: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!"
+      "en": "School Challenge: Passwords are like toothbrushes: you do not lend them to anyone!"
     },
     "teaser": {
       "pt": "Nem ao melhor amigo da turma deves confiar a chave da tua vida digital.",
-      "en": "Nem ao melhor amigo da turma deves confiar a chave da tua vida digital."
+      "en": "Even your best friend in class should not be trusted with the key to your digital life."
     },
     "description": {
       "pt": "A tua palavra-passe é pessoal e intransmissível. Se a emprestares, perdes o controlo sobre quem acede aos teus emails e notas. A única exceção são os teus pais ou encarregados de educação para te protegerem.",
-      "en": "A tua palavra-passe é pessoal e intransmissível. Se a emprestares, perdes o controlo sobre quem acede aos teus emails e notas. A única exceção são os teus pais ou encarregados de educação para te protegerem."
+      "en": "Your password is personal and should not be shared. If you lend it to someone, you lose control over who can access your emails and grades. The exception is your parents or guardians, who may need it to protect you."
     },
     "whyItMatters": {
       "pt": "Responsabilidade e sigilo de credenciais de acesso no ambiente escolar e pessoal.",
-      "en": "Responsabilidade e sigilo de credenciais de acesso no ambiente escolar e pessoal."
+      "en": "Responsible and confidential handling of access credentials at school and in personal life."
     },
     "funFact": {
       "pt": "Se um dia tiveres de introduzir a tua palavra-passe à frente de alguém, tapa o teclado com a outra mão!",
-      "en": "Se um dia tiveres de introduzir a tua palavra-passe à frente de alguém, tapa o teclado com a outra mão!"
+      "en": "If you ever have to enter your password in front of someone, cover the keyboard with your other hand!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -18236,28 +18236,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Netiqueta em Emails",
-      "en": "Netiqueta em Emails"
+      "en": "Email Netiquette"
     },
     "icon": "📢",
     "title": {
       "pt": "Desafio Escolar: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!",
-      "en": "School Challenge: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!"
+      "en": "School Challenge: Writing in CAPITAL LETTERS in an email is like SHOUTING!"
     },
     "teaser": {
       "pt": "Ao redigir mensagens para professores ou colegas, usa sempre letras maiúsculas e minúsculas normais.",
-      "en": "Ao redigir mensagens para professores ou colegas, usa sempre letras maiúsculas e minúsculas normais."
+      "en": "When writing messages to teachers or classmates, use normal upper- and lower-case letters."
     },
     "description": {
       "pt": "Na etiqueta digital, escrever palavras ou frases inteiras em maiúsculas soa agressivo e irritado. Além disso, blocos de texto em maiúsculas são muito mais difíceis e cansativos de ler no ecrã.",
-      "en": "Na etiqueta digital, escrever palavras ou frases inteiras em maiúsculas soa agressivo e irritado. Além disso, blocos de texto em maiúsculas são muito mais difíceis e cansativos de ler no ecrã."
+      "en": "In digital etiquette, writing whole words or sentences in capital letters can sound aggressive and angry. Blocks of capital letters are also much harder and more tiring to read on screen."
     },
     "whyItMatters": {
       "pt": "Regras de cortesia, pontuação e comunicação assertiva no correio eletrónico.",
-      "en": "Regras de cortesia, pontuação e comunicação assertiva no correio eletrónico."
+      "en": "Rules of courtesy, punctuation, and assertive communication in email."
     },
     "funFact": {
       "pt": "Começa sempre com uma saudação formal (\"Bom dia, Professora\") e termina com assinatura e turma!",
-      "en": "Começa sempre com uma saudação formal (\"Bom dia, Professora\") e termina com assinatura e turma!"
+      "en": "Always start with a polite greeting (\"Good morning, Teacher\") and finish with your name and class!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -18311,28 +18311,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Segurança HTTPS",
-      "en": "Segurança HTTPS"
+      "en": "HTTPS Security"
     },
     "icon": "🔒",
     "title": {
       "pt": "Desafio Escolar: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!",
-      "en": "School Challenge: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!"
+      "en": "School Challenge: The \"S\" in HTTPS is the invisible safe that encrypts your data!"
     },
     "teaser": {
       "pt": "Nunca introduzas palavras-passe em páginas que comecem apenas por \"http://\" sem o \"s\".",
-      "en": "Nunca introduzas palavras-passe em páginas que comecem apenas por \"http://\" sem o \"s\"."
+      "en": "Never enter passwords on pages that start only with \"http://\" without the \"s\"."
     },
     "description": {
       "pt": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias.",
-      "en": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias."
+      "en": "The \"S\" means Secure. It indicates that the connection between your computer and the website is encrypted using a digital certificate: people on the Wi-Fi network cannot simply read the information you send."
     },
     "whyItMatters": {
       "pt": "Verificação de certificados de segurança e protocolos de navegação segura na Internet.",
-      "en": "Verificação de certificados de segurança e protocolos de navegação segura na Internet."
+      "en": "Checking security certificates and secure browsing protocols on the Internet."
     },
     "funFact": {
       "pt": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!",
-      "en": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!"
+      "en": "More than 95% of modern websites use the HTTPS protocol!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -18391,23 +18391,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🤝",
     "title": {
       "pt": "Desafio Escolar: Creative Commons: o convite amigável para partilhar criatividade com o mundo!",
-      "en": "School Challenge: Creative Commons: o convite amigável para partilhar criatividade com o mundo!"
+      "en": "School Challenge: Creative Commons: a friendly invitation to share creativity with the world!"
     },
     "teaser": {
       "pt": "Conheces o símbolo com dois \"C\" (CC) que vês na Wikipédia, no Scratch e no YouTube?",
-      "en": "Conheces o símbolo com dois \"C\" (CC) que vês na Wikipédia, no Scratch e no YouTube?"
+      "en": "Do you know the symbol with two \"C\"s (CC) that you see on Wikipedia, Scratch, and YouTube?"
     },
     "description": {
       "pt": "Em 2001, o professor Lawrence Lessig criou as licenças Creative Commons. Elas permitem que autores digam: \"Podes usar a minha música ou foto de graça para o teu trabalho escolar, desde que me dês o devido crédito (CC-BY)! \".",
-      "en": "Em 2001, o professor Lawrence Lessig criou as licenças Creative Commons. Elas permitem que autores digam: \"Podes usar a minha música ou foto de graça para o teu trabalho escolar, desde que me dês o devido crédito (CC-BY)! \"."
+      "en": "In 2001, professor Lawrence Lessig helped create the Creative Commons licences. They let authors say: \"You may use my music or photo for your school project, as long as you give me proper credit (CC-BY)!\""
     },
     "whyItMatters": {
       "pt": "Identificação dos símbolos de partilha Creative Commons (BY, NC, ND, SA) no Tema 7.",
-      "en": "Identificação dos símbolos de partilha Creative Commons (BY, NC, ND, SA) no Tema 7."
+      "en": "Identifying Creative Commons sharing symbols (BY, NC, ND, SA) in Topic 7."
     },
     "funFact": {
       "pt": "A enciclopédia Wikipédia e os projetos remixados no Scratch funcionam sob licenças Creative Commons!",
-      "en": "A enciclopédia Wikipédia e os projetos remixados no Scratch funcionam sob licenças Creative Commons!"
+      "en": "Wikipedia and remixed projects on Scratch can use Creative Commons licences!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -18461,28 +18461,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Linguagem dos Computadores",
-      "en": "Linguagem dos Computadores"
+      "en": "Computer Language"
     },
     "icon": "0️⃣",
     "title": {
       "pt": "Desafio Escolar: Tudo no computador são apenas ZEROS e UNS (0 e 1)!",
-      "en": "School Challenge: Tudo no computador são apenas ZEROS e UNS (0 e 1)!"
+      "en": "School Challenge: Everything in a computer is represented using ZEROS and ONES (0 and 1)!"
     },
     "teaser": {
       "pt": "Fotos, músicas, jogos 3D e vídeos do YouTube... como é que cabem em apenas dois números?",
-      "en": "Fotos, músicas, jogos 3D e vídeos do YouTube... como é que cabem em apenas dois números?"
+      "en": "Photos, music, 3D games, and YouTube videos... how can they fit into just two numbers?"
     },
     "description": {
       "pt": "Os circuitos do computador funcionam com eletricidade: ou passa corrente (1) ou não passa (0). A este sistema chamamos Código Binário. Combinando 8 zeros e uns (um Byte), o computador consegue representar qualquer letra, som ou cor de um píxel!",
-      "en": "Os circuitos do computador funcionam com eletricidade: ou passa corrente (1) ou não passa (0). A este sistema chamamos Código Binário. Combinando 8 zeros e uns (um Byte), o computador consegue representar qualquer letra, som ou cor de um píxel!"
+      "en": "Computer circuits use electricity: current is represented as 1 and no current as 0. This system is called Binary Code. By combining 8 zeros and ones (one byte), a computer can represent letters, sounds, or pixel colours!"
     },
     "whyItMatters": {
-      "pt": "No 5. º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte.",
-      "en": "No 5. º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte."
+      "pt": "No 5.º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte.",
+      "en": "In 5th grade ICT, we learn the fundamental concept of a bit (Binary Digit) and a byte."
     },
     "funFact": {
       "pt": "A letra \"A\" maiúscula em binário escreve-se assim: 01000001!",
-      "en": "A letra \"A\" maiúscula em binário escreve-se assim: 01000001!"
+      "en": "The capital letter \"A\" in binary is written as 01000001!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -18536,28 +18536,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Pescoço e Coluna",
-      "en": "Pescoço e Coluna"
+      "en": "Neck and Spine"
     },
     "icon": "🦒",
     "title": {
       "pt": "Desafio Escolar: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!",
-      "en": "School Challenge: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!"
+      "en": "School Challenge: \"Text Neck\": putting 27 kg of force on your spine!"
     },
     "teaser": {
       "pt": "Inclinar a cabeça para baixo sobre o telemóvel esforça o pescoço como carregar um saco de cimento.",
-      "en": "Inclinar a cabeça para baixo sobre o telemóvel esforça o pescoço como carregar um saco de cimento."
+      "en": "Looking down at a phone puts strain on your neck like carrying a bag of cement."
     },
     "description": {
       "pt": "Uma cabeça humana em posição direita pesa cerca de 5 kg. Mas quando a inclinas a 60 graus sobre um telemóvel ou tablet, a força exercida no pescoço sobe para 27 kg! Levanta os braços e traz o ecrã até aos olhos!",
-      "en": "Uma cabeça humana em posição direita pesa cerca de 5 kg. Mas quando a inclinas a 60 graus sobre um telemóvel ou tablet, a força exercida no pescoço sobe para 27 kg! Levanta os braços e traz o ecrã até aos olhos!"
+      "en": "A human head in an upright position weighs about 5 kg. When you tilt it 60 degrees over a phone or tablet, the force on the neck can rise greatly. Raise your arms and bring the screen up to eye level!"
     },
     "whyItMatters": {
       "pt": "Aprender a posicionar o topo do monitor ao nível da linha dos olhos é uma regra ergonómica essencial.",
-      "en": "Aprender a posicionar o topo do monitor ao nível da linha dos olhos é uma regra ergonómica essencial."
+      "en": "Learning to position the top of the monitor around eye level is an essential ergonomic rule."
     },
     "funFact": {
       "pt": "Fazer rotações suaves com a cabeça de vez em quando alivia a tensão acumulada nos ombros!",
-      "en": "Fazer rotações suaves com a cabeça de vez em quando alivia a tensão acumulada nos ombros!"
+      "en": "Gently rotating your head from time to time can relieve built-up tension in your shoulders!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -18611,28 +18611,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Netiqueta e Empatia",
-      "en": "Netiqueta e Empatia"
+      "en": "Netiquette and Empathy"
     },
     "icon": "💬",
     "title": {
       "pt": "Desafio Escolar: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!",
-      "en": "School Challenge: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!"
+      "en": "School Challenge: Netiquette: kindness and respect in messages and virtual classrooms!"
     },
     "teaser": {
       "pt": "Como ser um colega cinco estrelas em grupos de WhatsApp e fóruns da turma?",
-      "en": "Como ser um colega cinco estrelas em grupos de WhatsApp e fóruns da turma?"
+      "en": "How can you be a five-star classmate in WhatsApp groups and class forums?"
     },
     "description": {
       "pt": "Netiqueta é a etiqueta da Net. Significa não insultar, não espalhar boatos, não partilhar fotos de colegas sem autorização expressa deles e respeitar as opiniões diferentes com cordialidade e espírito de equipa.",
-      "en": "Netiqueta é a etiqueta da Net. Significa não insultar, não espalhar boatos, não partilhar fotos de colegas sem autorização expressa deles e respeitar as opiniões diferentes com cordialidade e espírito de equipa."
+      "en": "Netiquette means Internet etiquette. It means not insulting people, spreading rumours, or sharing classmates' photos without their permission, and respecting different opinions with kindness and team spirit."
     },
     "whyItMatters": {
-      "pt": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5. º ano.",
-      "en": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5. º ano."
+      "pt": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5.º ano.",
+      "en": "Promoting peaceful coexistence and combating all forms of cyberbullying in 5th grade."
     },
     "funFact": {
       "pt": "Um emoji sorridente ajuda a demonstrar que a tua mensagem é amigável e sem má intenção!",
-      "en": "Um emoji sorridente ajuda a demonstrar que a tua mensagem é amigável e sem má intenção!"
+      "en": "A smiling emoji can help show that your message is friendly and not meant badly!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -18686,28 +18686,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Autenticação de 2 Fatores",
-      "en": "Autenticação de 2 Fatores"
+      "en": "Two-Factor Authentication"
     },
     "icon": "📲",
     "title": {
       "pt": "Desafio Escolar: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!",
-      "en": "School Challenge: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!"
+      "en": "School Challenge: Two-Factor Authentication (2FA): the double lock on your digital door!"
     },
     "teaser": {
       "pt": "Mesmo que alguém descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro.",
-      "en": "Mesmo que alguém descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro."
+      "en": "Even if someone discovers your password, a second authentication factor adds an extra layer of protection and makes access much safer."
     },
     "description": {
       "pt": "O 2FA combina algo que sabes (a tua palavra-passe) com algo que tens (um código enviado por SMS ou gerado numa aplicação segura). É a proteção mais recomendada para contas de email e jogos importantes.",
-      "en": "O 2FA combina algo que sabes (a tua palavra-passe) com algo que tens (um código enviado por SMS ou gerado numa aplicação segura). É a proteção mais recomendada para contas de email e jogos importantes."
+      "en": "2FA combines something you know (your password) with something you have (a code sent by SMS or generated by a secure app). It is strongly recommended for important email and gaming accounts."
     },
     "whyItMatters": {
       "pt": "Conhecer mecanismos modernos de autenticação multifator no Tema 4 de TIC.",
-      "en": "Conhecer mecanismos modernos de autenticação multifator no Tema 4 de TIC."
+      "en": "Learning about modern multi-factor authentication mechanisms in ICT Topic 4."
     },
     "funFact": {
       "pt": "É exatamente como o cartão multibanco: precisas do cartão físico e do código PIN para levantar dinheiro!",
-      "en": "É exatamente como o cartão multibanco: precisas do cartão físico e do código PIN para levantar dinheiro!"
+      "en": "It is just like a bank card: you need the physical card and the PIN to withdraw money!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -18761,28 +18761,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Anexos Perigosos",
-      "en": "Anexos Perigosos"
+      "en": "Dangerous Attachments"
     },
     "icon": "📎",
     "title": {
       "pt": "Evolução Histórica: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!",
-      "en": "Historical Evolution: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!"
+      "en": "Historical Evolution: Beware of attachments: never open files with suspicious extensions!"
     },
     "teaser": {
       "pt": "Ficheiros como . exe, . bat, . vbs ou ficheiros . zip desconhecidos podem esconder vírus perigosos.",
-      "en": "Ficheiros como . exe, . bat, . vbs ou ficheiros . zip desconhecidos podem esconder vírus perigosos."
+      "en": "Files such as .exe, .bat, .vbs, or unknown .zip files can hide dangerous malware."
     },
     "description": {
       "pt": "Se receberes um email de alguém que não conheces com um anexo que diz \"fatura. exe\" ou \"fotos. zip\", não abras! Os criminosos usam anexos disfarçados para infetar o computador e roubar ficheiros.",
-      "en": "Se receberes um email de alguém que não conheces com um anexo que diz \"fatura. exe\" ou \"fotos. zip\", não abras! Os criminosos usam anexos disfarçados para infetar o computador e roubar ficheiros."
+      "en": "If you receive an email from someone you do not know with an attachment called \"invoice.exe\" or \"photos.zip\", do not open it! Criminals use disguised attachments to infect computers and steal files."
     },
     "whyItMatters": {
       "pt": "Reconhecimento de tipos de ficheiros e extensões seguras (. pdf, . docx, . png) no Tema 5 de TIC.",
-      "en": "Reconhecimento de tipos de ficheiros e extensões seguras (. pdf, . docx, . png) no Tema 5 de TIC."
+      "en": "Recognising file types and safer extensions (.pdf, .docx, .png) in ICT Topic 5."
     },
     "funFact": {
       "pt": "Na dúvida, pede ao teu professor ou pais para analisarem o email com o programa antivírus!",
-      "en": "Na dúvida, pede ao teu professor ou pais para analisarem o email com o programa antivírus!"
+      "en": "When in doubt, ask your teacher or parents to check the email with antivirus software!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -18836,28 +18836,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Combate a Fake News",
-      "en": "Combate a Fake News"
+      "en": "Fighting Fake News"
     },
     "icon": "🕵️‍♀️",
     "title": {
       "pt": "Desafio Escolar: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!",
-      "en": "School Challenge: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!"
+      "en": "School Challenge: The 3-Question Detective Test against Fake News!"
     },
     "teaser": {
       "pt": "Nem tudo o que está na Internet é verdade! Qualquer pessoa pode publicar invenções.",
-      "en": "Nem tudo o que está na Internet é verdade! Qualquer pessoa pode publicar invenções."
+      "en": "Not everything on the Internet is true! Anyone can publish made-up information."
     },
     "description": {
       "pt": "Antes de usar uma informação num trabalho escolar, pergunta: 1) QUEM escreveu? (É um especialista respeitado? ); 2) QUANDO foi publicado? (É recente ou de há 10 anos? ); 3) OUTROS jornais sérios e enciclopédias confirmam a mesma notícia?",
-      "en": "Antes de usar uma informação num trabalho escolar, pergunta: 1) QUEM escreveu? (É um especialista respeitado? ); 2) QUANDO foi publicado? (É recente ou de há 10 anos? ); 3) OUTROS jornais sérios e enciclopédias confirmam a mesma notícia?"
+      "en": "Before using information in a school project, ask: 1) WHO wrote it? (Are they a respected expert?); 2) WHEN was it published? (Is it recent or 10 years old?); 3) Do other reliable newspapers and encyclopedias confirm the same information?"
     },
     "whyItMatters": {
       "pt": "Literacia da informação e espírito crítico na avaliação de fontes da Web.",
-      "en": "Literacia da informação e espírito crítico na avaliação de fontes da Web."
+      "en": "Information literacy and critical thinking when evaluating Web sources."
     },
     "funFact": {
       "pt": "Em 1998, um biólogo criou o site falso do \"Polvo das Árvores\" para provar como as pessoas acreditam em tudo online!",
-      "en": "Em 1998, um biólogo criou o site falso do \"Polvo das Árvores\" para provar como as pessoas acreditam em tudo online!"
+      "en": "In 1998, a biologist created the fake \"Tree Octopus\" website to show how easily people can believe things online!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -18911,28 +18911,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Citação e Bibliografia",
-      "en": "Citação e Bibliografia"
+      "en": "Citation and Bibliography"
     },
     "icon": "📚",
     "title": {
       "pt": "Desafio Escolar: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!",
-      "en": "School Challenge: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!"
+      "en": "School Challenge: Citing sources is not weakness: it is the mark of real scientists!"
     },
     "teaser": {
       "pt": "Indicar os livros e sites consultados valoriza o teu trabalho e dá-te notas melhores!",
-      "en": "Indicar os livros e sites consultados valoriza o teu trabalho e dá-te notas melhores!"
+      "en": "Listing the books and websites you consulted adds value to your work and can help you earn better marks!"
     },
     "description": {
       "pt": "Alguns alunos têm vergonha de dizer de onde tiraram a informação, pensando que deviam saber tudo de cabeça. Pelo contrário! Cientistas e historiadores indicam sempre a \"Webgrafia\" no final com autor, título do artigo, link e data de acesso.",
-      "en": "Alguns alunos têm vergonha de dizer de onde tiraram a informação, pensando que deviam saber tudo de cabeça. Pelo contrário! Cientistas e historiadores indicam sempre a \"Webgrafia\" no final com autor, título do artigo, link e data de acesso."
+      "en": "Some students are embarrassed to say where they got information, thinking they should know everything by heart. The opposite is true! Scientists and historians always list their sources at the end, with the author, article title, link, and access date."
     },
     "whyItMatters": {
       "pt": "Elaboração rigorosa de bibliografias e webgrafias de acordo com as normas escolares de TIC.",
-      "en": "Elaboração rigorosa de bibliografias e webgrafias de acordo com as normas escolares de TIC."
+      "en": "Careful preparation of bibliographies and web references according to school ICT guidelines."
     },
     "funFact": {
       "pt": "Grandes cientistas como Einstein e Newton sempre agradeceram publicamente aos autores que leram!",
-      "en": "Grandes cientistas como Einstein e Newton sempre agradeceram publicamente aos autores que leram!"
+      "en": "Great scientists such as Einstein and Newton always publicly acknowledged the authors they read!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -19061,28 +19061,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Volume e Audição",
-      "en": "Volume e Audição"
+      "en": "Volume and Hearing"
     },
     "icon": "🎧",
     "title": {
       "pt": "Desafio Escolar: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!",
-      "en": "School Challenge: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!"
+      "en": "School Challenge: The 60/60 rule for headphones: protect your ears for life!"
     },
     "teaser": {
       "pt": "Ouvir música ou jogos aos berros nos fones pode causar danos irreversíveis na audição.",
-      "en": "Ouvir música ou jogos aos berros nos fones pode causar danos irreversíveis na audição."
+      "en": "Listening to music or games at full volume through headphones can cause permanent hearing damage."
     },
     "description": {
       "pt": "Os médicos recomendam a regra dos 60/60: nunca usar auscultadores a mais de 60% do volume máximo, e fazer uma pausa a cada 60 minutos. Se a pessoa ao teu lado consegue ouvir o som dos teus fones, está alto demais!",
-      "en": "Os médicos recomendam a regra dos 60/60: nunca usar auscultadores a mais de 60% do volume máximo, e fazer uma pausa a cada 60 minutos. Se a pessoa ao teu lado consegue ouvir o som dos teus fones, está alto demais!"
+      "en": "Doctors recommend the 60/60 rule: never use headphones above 60% of maximum volume, and take a break every 60 minutes. If the person next to you can hear your headphones, the volume is too high!"
     },
     "whyItMatters": {
       "pt": "O bem-estar e a saúde no uso de periféricos de som fazem parte do programa curricular de TIC.",
-      "en": "O bem-estar e a saúde no uso de periféricos de som fazem parte do programa curricular de TIC."
+      "en": "Well-being and health when using audio peripherals are part of the ICT curriculum."
     },
     "funFact": {
       "pt": "As pequenas células ciliadas do ouvido interno não se regeneram se forem destruídas por som estridente!",
-      "en": "As pequenas células ciliadas do ouvido interno não se regeneram se forem destruídas por som estridente!"
+      "en": "The tiny hair cells in the inner ear do not grow back if they are destroyed by very loud sound!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -19136,28 +19136,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Localização GPS",
-      "en": "Localização GPS"
+      "en": "GPS Location"
     },
     "icon": "📍",
     "title": {
       "pt": "Desafio Escolar: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!",
-      "en": "School Challenge: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!"
+      "en": "School Challenge: Beware of geolocation: your photos may contain hidden coordinates!"
     },
     "teaser": {
       "pt": "Sabias que as fotos do telemóvel podem guardar a latitude e longitude exatas de onde foram tiradas?",
-      "en": "Sabias que as fotos do telemóvel podem guardar a latitude e longitude exatas de onde foram tiradas?"
+      "en": "Did you know that phone photos can store the exact latitude and longitude where they were taken?"
     },
     "description": {
       "pt": "Os metadados EXIF guardam a data, modelo da câmara e a localização GPS da foto. Antes de publicar fotos publicamente, é aconselhável desligar a geolocalização nas definições da câmara para ninguém descobrir onde vives.",
-      "en": "Os metadados EXIF guardam a data, modelo da câmara e a localização GPS da foto. Antes de publicar fotos publicamente, é aconselhável desligar a geolocalização nas definições da câmara para ninguém descobrir onde vives."
+      "en": "EXIF metadata can store the date, camera model, and GPS location of a photo. Before publishing photos publicly, it is a good idea to turn off geolocation in the camera settings so people cannot discover where you live."
     },
     "whyItMatters": {
       "pt": "No Tema 3 aprendemos como funcionam os dados invisíveis que os dispositivos anexam aos ficheiros.",
-      "en": "No Tema 3 aprendemos como funcionam os dados invisíveis que os dispositivos anexam aos ficheiros."
+      "en": "In Topic 3, we learn how invisible data can be attached to files by devices."
     },
     "funFact": {
       "pt": "Fotos tiradas dentro de casa nunca devem mostrar janelas com placas do nome da rua ou números de polícia!",
-      "en": "Fotos tiradas dentro de casa nunca devem mostrar janelas com placas do nome da rua ou números de polícia!"
+      "en": "Photos taken inside your home should never show windows with street-name signs or house numbers!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -19286,28 +19286,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Phishing por Email",
-      "en": "Phishing por Email"
+      "en": "Email Phishing"
     },
     "icon": "🎣",
     "title": {
       "pt": "Desafio Escolar: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!",
-      "en": "School Challenge: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!"
+      "en": "School Challenge: Phishing: the digital \"fisher\" trying to steal your password!"
     },
     "teaser": {
       "pt": "\"A sua conta vai ser apagada em 24 horas! Clique aqui urgente! \" — É Phishing!",
-      "en": "\"A sua conta vai ser apagada em 24 horas! Clique aqui urgente! \" — É Phishing!"
+      "en": "\"Your account will be deleted in 24 hours! Click here urgently!\" — That is phishing!"
     },
     "description": {
       "pt": "O termo vem de \"fishing\" (pesca). Os burlões lançam um isco assustador para te fazer clicar num link falso que imita a tua escola ou banco. Repara com atenção no endereço do remetente: costuma ter erros estranhos!",
-      "en": "O termo vem de \"fishing\" (pesca). Os burlões lançam um isco assustador para te fazer clicar num link falso que imita a tua escola ou banco. Repara com atenção no endereço do remetente: costuma ter erros estranhos!"
+      "en": "The term comes from \"fishing\". Scammers use a frightening bait to make you click a fake link that imitates your school or bank. Look carefully at the sender's address: it often contains strange mistakes!"
     },
     "whyItMatters": {
       "pt": "Identificação de sinais de alerta em emails fraudulentos e mensagens de phishing.",
-      "en": "Identificação de sinais de alerta em emails fraudulentos e mensagens de phishing."
+      "en": "Identifying warning signs in fraudulent emails and phishing messages."
     },
     "funFact": {
       "pt": "Nenhum serviço legítimo te ameaça com fecho imediato de conta sem contacto oficial prévio!",
-      "en": "Nenhum serviço legítimo te ameaça com fecho imediato de conta sem contacto oficial prévio!"
+      "en": "No legitimate service threatens to close your account immediately without prior official contact!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -19361,28 +19361,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Aranhas da Web",
-      "en": "Aranhas da Web"
+      "en": "Web Spiders"
     },
     "icon": "🕷️",
     "title": {
       "pt": "Evolução Histórica: As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!",
-      "en": "Historical Evolution: As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!"
+      "en": "Historical Evolution: The invisible \"spiders\" of the Internet that crawl the Web while you sleep!"
     },
     "teaser": {
       "pt": "Como é que o motor de busca sabe o que existe em milhares de milhões de sites?",
-      "en": "Como é que o motor de busca sabe o que existe em milhares de milhões de sites?"
+      "en": "How does a search engine know what exists across billions of websites?"
     },
     "description": {
       "pt": "Os motores de busca usam programas automáticos chamados rastreadores Web (web crawlers ou spiders). Elas viajam de link em link dia e noite, lendo o conteúdo das páginas e organizando uma biblioteca gigante chamada Índice.",
-      "en": "Os motores de busca usam programas automáticos chamados rastreadores Web (web crawlers ou spiders). Elas viajam de link em link dia e noite, lendo o conteúdo das páginas e organizando uma biblioteca gigante chamada Índice."
+      "en": "Search engines use automatic programs called web crawlers or spiders. They travel from link to link day and night, reading page content and organising a giant library called an index."
     },
     "whyItMatters": {
       "pt": "Compreender como a informação é indexada e recuperada nos motores de pesquisa.",
-      "en": "Compreender como a informação é indexada e recuperada nos motores de pesquisa."
+      "en": "Understanding how information is indexed and retrieved by search engines."
     },
     "funFact": {
       "pt": "O Google começou com um robô de busca criado por dois estudantes de doutoramento em Stanford em 1996!",
-      "en": "O Google começou com um robô de busca criado por dois estudantes de doutoramento em Stanford em 1996!"
+      "en": "Google began with a search robot created by two Stanford graduate students in 1996!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -19436,28 +19436,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Domínio Público",
-      "en": "Domínio Público"
+      "en": "Public Domain"
     },
     "icon": "🏛️",
     "title": {
       "pt": "Evolução Histórica: O que é o Domínio Público? O tesouro cultural que pertence a toda a humanidade!",
-      "en": "Historical Evolution: O que é o Domínio Público? O tesouro cultural que pertence a toda a humanidade!"
+      "en": "Historical Evolution: What is the Public Domain? Cultural treasure that belongs to everyone!"
     },
     "teaser": {
       "pt": "Sabias que podes usar quadros de Leonardo da Vinci e músicas de Mozart sem pedir licença?",
-      "en": "Sabias que podes usar quadros de Leonardo da Vinci e músicas de Mozart sem pedir licença?"
+      "en": "Did you know you can use paintings by Leonardo da Vinci and music by Mozart without asking for copyright permission?"
     },
     "description": {
       "pt": "Uma obra no domínio público pode, em geral, ser utilizada e partilhada sem pedir autorização por direitos de autor.",
-      "en": "Uma obra no domínio público pode, em geral, ser utilizada e partilhada sem pedir autorização por direitos de autor."
+      "en": "A work in the public domain can generally be used and shared without asking for copyright permission."
     },
     "whyItMatters": {
       "pt": "Compreensão dos prazos de proteção de direitos de autor e acesso ao património comum.",
-      "en": "Compreensão dos prazos de proteção de direitos de autor e acesso ao património comum."
+      "en": "Understanding copyright protection periods and access to the common cultural heritage."
     },
     "funFact": {
       "pt": "As primeiras versões do Rato Mickey dos anos 20 entraram recentemente no Domínio Público!",
-      "en": "As primeiras versões do Rato Mickey dos anos 20 entraram recentemente no Domínio Público!"
+      "en": "The earliest Mickey Mouse versions from the 1920s recently entered the public domain!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -19511,28 +19511,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "História do Rato",
-      "en": "História do Rato"
+      "en": "History of the Mouse"
     },
     "icon": "🖱️",
     "title": {
       "pt": "Desafio Escolar: O primeiro rato do mundo foi feito de madeira com rodas de metal!",
-      "en": "School Challenge: O primeiro rato do mundo foi feito de madeira com rodas de metal!"
+      "en": "School Challenge: The world's first computer mouse was made of wood with metal wheels!"
     },
     "teaser": {
       "pt": "Inventado em 1964 por Douglas Engelbart, tinha apenas um botão vermelho no topo.",
-      "en": "Inventado em 1964 por Douglas Engelbart, tinha apenas um botão vermelho no topo."
+      "en": "Invented in 1964 by Douglas Engelbart, it had just one red button on top."
     },
     "description": {
       "pt": "Antes do rato, para abrir um ficheiro era preciso escrever linhas de código difíceis num teclado. Engelbart inventou uma caixinha de madeira com duas rodas em baixo para mover uma setinha no ecrã e facilitar o uso para qualquer pessoa!",
-      "en": "Antes do rato, para abrir um ficheiro era preciso escrever linhas de código difíceis num teclado. Engelbart inventou uma caixinha de madeira com duas rodas em baixo para mover uma setinha no ecrã e facilitar o uso para qualquer pessoa!"
+      "en": "Before the mouse, opening a file meant typing difficult lines of code on a keyboard. Engelbart invented a small wooden box with two wheels underneath to move an arrow on the screen and make computers easier for people to use!"
     },
     "whyItMatters": {
       "pt": "Estudamos a evolução das interfaces gráficas (GUI) e periféricos no 1. º tema de TIC.",
-      "en": "Estudamos a evolução das interfaces gráficas (GUI) e periféricos no 1. º tema de TIC."
+      "en": "We study the evolution of graphical user interfaces (GUIs) and peripherals in ICT Topic 1."
     },
     "funFact": {
       "pt": "Recebeu o nome de rato porque o cabo que saía da parte de trás parecia uma cauda!",
-      "en": "Recebeu o nome de rato porque o cabo que saía da parte de trás parecia uma cauda!"
+      "en": "It was called a mouse because the cable coming out of the back looked like a tail!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -19586,28 +19586,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Mochila Escolar",
-      "en": "Mochila Escolar"
+      "en": "School Backpack"
     },
     "icon": "🎒",
     "title": {
       "pt": "Desafio Escolar: O peso da mochila não deve ultrapassar 10% do teu peso corporal!",
-      "en": "School Challenge: O peso da mochila não deve ultrapassar 10% do teu peso corporal!"
+      "en": "School Challenge: The weight of your backpack should not exceed 10% of your body weight!"
     },
     "teaser": {
       "pt": "Levar o computador portátil e cadernos pesados nas costas exige bons hábitos de organização.",
-      "en": "Levar o computador portátil e cadernos pesados nas costas exige bons hábitos de organização."
+      "en": "Carrying a laptop and heavy notebooks on your back requires good organisational habits."
     },
     "description": {
       "pt": "Se pesas 40 kg, a tua mochila não devia pesar mais do que 4 kg! Coloca os objetos mais pesados colados às costas e usa sempre as duas alças bem ajustadas, nunca pendurada num ombro só.",
-      "en": "Se pesas 40 kg, a tua mochila não devia pesar mais do que 4 kg! Coloca os objetos mais pesados colados às costas e usa sempre as duas alças bem ajustadas, nunca pendurada num ombro só."
+      "en": "If you weigh 40 kg, your backpack should not weigh more than 4 kg! Put the heaviest items close to your back and always use both straps, adjusted properly, never hanging from one shoulder."
     },
     "whyItMatters": {
       "pt": "A ergonomia estende-se ao transporte de materiais escolares e tecnologias portáteis.",
-      "en": "A ergonomia estende-se ao transporte de materiais escolares e tecnologias portáteis."
+      "en": "Ergonomics also applies to carrying school materials and portable technology."
     },
     "funFact": {
       "pt": "Uma mochila desregulada pode causar desvios na coluna como a escoliose na adolescência!",
-      "en": "Uma mochila desregulada pode causar desvios na coluna como a escoliose na adolescência!"
+      "en": "An improperly adjusted backpack can contribute to spinal problems such as scoliosis during adolescence!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -19661,7 +19661,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Câmaras e Microfones",
-      "en": "Câmaras e Microfones"
+      "en": "Cameras and Microphones"
     },
     "icon": "📹",
     "title": {
@@ -19736,28 +19736,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Post-its no Monitor",
-      "en": "Post-its no Monitor"
+      "en": "Post-it Notes on the Monitor"
     },
     "icon": "📝",
     "title": {
       "pt": "Desafio Escolar: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!",
-      "en": "School Challenge: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!"
+      "en": "School Challenge: The classic mistake: sticking notes with your password on the computer screen!"
     },
     "teaser": {
       "pt": "Escrever a palavra-passe num post-it amarelo e colar no monitor é como deixar a chave na fechadura.",
-      "en": "Escrever a palavra-passe num post-it amarelo e colar no monitor é como deixar a chave na fechadura."
+      "en": "Writing your password on a yellow Post-it and sticking it to the monitor is like leaving the key in the lock."
     },
     "description": {
       "pt": "Qualquer colega ou pessoa que passe pela secretária consegue ver e anotar a tua palavra-passe num instante. Guarda as tuas credenciais de memória ou em ferramentas digitais encriptadas e protegidas.",
-      "en": "Qualquer colega ou pessoa que passe pela secretária consegue ver e anotar a tua palavra-passe num instante. Guarda as tuas credenciais de memória ou em ferramentas digitais encriptadas e protegidas."
+      "en": "Any classmate or person passing your desk can see and write down your password in seconds. Keep your credentials in memory or in encrypted, protected digital tools."
     },
     "whyItMatters": {
       "pt": "Práticas de segurança física e lógica no manuseamento de acessos no computador.",
-      "en": "Práticas de segurança física e lógica no manuseamento de acessos no computador."
+      "en": "Physical and logical security practices when handling computer access."
     },
     "funFact": {
       "pt": "Nos escritórios e bancos, é estritamente proibido ter papéis com palavras-passe à vista na secretária!",
-      "en": "Nos escritórios e bancos, é estritamente proibido ter papéis com palavras-passe à vista na secretária!"
+      "en": "In offices and banks, having passwords written on visible notes on the desk is strictly forbidden!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -19811,28 +19811,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "O Campo Assunto",
-      "en": "O Campo Assunto"
+      "en": "The Subject Field"
     },
     "icon": "🏷️",
     "title": {
       "pt": "Desafio Escolar: Nunca envies um email com o campo \"Assunto\" vazio!",
-      "en": "School Challenge: Nunca envies um email com o campo \"Assunto\" vazio!"
+      "en": "School Challenge: Never send an email with the \"Subject\" field empty!"
     },
     "teaser": {
       "pt": "O Assunto deve resumir em poucas palavras o objetivo exato da mensagem.",
-      "en": "O Assunto deve resumir em poucas palavras o objetivo exato da mensagem."
+      "en": "The Subject should summarise the exact purpose of the message in a few words."
     },
     "description": {
-      "pt": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5. º B\".",
-      "en": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5. º B\"."
+      "pt": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5.º B\".",
+      "en": "Sending an email without a subject is like handing someone a letter inside a completely blank envelope. Write a clear subject, for example: \"ICT Project - Topic 5 - João Silva No. 12 - 5th B\"."
     },
     "whyItMatters": {
       "pt": "Composição correta dos elementos essenciais de uma mensagem de correio eletrónico.",
-      "en": "Composição correta dos elementos essenciais de uma mensagem de correio eletrónico."
+      "en": "Correct composition of the essential elements of an email message."
     },
     "funFact": {
       "pt": "Emails sem assunto vão frequentemente parar à pasta de Spam ou Lixo Eletrónico de forma automática!",
-      "en": "Emails sem assunto vão frequentemente parar à pasta de Spam ou Lixo Eletrónico de forma automática!"
+      "en": "Emails without a subject often end up automatically in the Spam or Junk folder!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -19863,7 +19863,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Um assunto claro como 'Trabalho de TIC - 5. º A - João Silva' ajuda a professora a responder rápido!",
+      "pt": "Um assunto claro como 'Trabalho de TIC - 5.º A - João Silva' ajuda a professora a responder rápido!",
       "en": "A clear subject line like 'ICT Project - Class 5A - John Doe' helps teachers respond fast!"
     }
   },
@@ -19886,28 +19886,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Histórico e Cookies",
-      "en": "Histórico e Cookies"
+      "en": "History and Cookies"
     },
     "icon": "🍪",
     "title": {
       "pt": "Desafio Escolar: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!",
-      "en": "School Challenge: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!"
+      "en": "School Challenge: Cookies on the Internet: they are not chocolate biscuits, but small text notes!"
     },
     "teaser": {
       "pt": "Porque é que todos os sites perguntam se aceitas cookies?",
-      "en": "Porque é que todos os sites perguntam se aceitas cookies?"
+      "en": "Why do all websites ask whether you accept cookies?"
     },
     "description": {
       "pt": "Um cookie é um pequeno ficheiro de texto que o site guarda no teu navegador para se lembrar de quem és, que língua preferes ou que itens tens no carrinho de compras. Cookies de terceiros podem seguir a tua navegação entre sites.",
-      "en": "Um cookie é um pequeno ficheiro de texto que o site guarda no teu navegador para se lembrar de quem és, que língua preferes ou que itens tens no carrinho de compras. Cookies de terceiros podem seguir a tua navegação entre sites."
+      "en": "A cookie is a small text file that a website stores in your browser to remember who you are, your preferred language, or items in your shopping cart. Third-party cookies can track your browsing across websites."
     },
     "whyItMatters": {
       "pt": "Gestão de privacidade, cookies e limpeza de histórico de navegação no Tema 6 de TIC.",
-      "en": "Gestão de privacidade, cookies e limpeza de histórico de navegação no Tema 6 de TIC."
+      "en": "Managing privacy, cookies, and clearing browsing history in ICT Topic 6."
     },
     "funFact": {
       "pt": "O nome \"cookie\" foi inspirado nos \"biscoitos da sorte\" chineses que trazem uma mensagem secreta dentro!",
-      "en": "O nome \"cookie\" foi inspirado nos \"biscoitos da sorte\" chineses que trazem uma mensagem secreta dentro!"
+      "en": "The name \"cookie\" was inspired by fortune cookies that contain a hidden message!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -19961,28 +19961,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Música e Sons Livres",
-      "en": "Música e Sons Livres"
+      "en": "Free Music and Sounds"
     },
     "icon": "🎵",
     "title": {
       "pt": "Desafio Escolar: Bancos de som e música livre para os teus vídeos e jogos no Scratch!",
-      "en": "School Challenge: Bancos de som e música livre para os teus vídeos e jogos no Scratch!"
+      "en": "School Challenge: Free music and sound libraries for your videos and Scratch games!"
     },
     "teaser": {
       "pt": "Usar músicas famosas da rádio no teu vídeo do YouTube pode fazer o vídeo ser bloqueado.",
-      "en": "Usar músicas famosas da rádio no teu vídeo do YouTube pode fazer o vídeo ser bloqueado."
+      "en": "Using famous radio music in your YouTube video may cause the video to be blocked."
     },
     "description": {
       "pt": "Plataformas de vídeo usam algoritmos automáticos de reconhecimento de áudio que bloqueiam músicas protegidas por direitos comerciais. Usa bancos de áudio livres como a YouTube Audio Library ou sons de Domínio Público.",
-      "en": "Plataformas de vídeo usam algoritmos automáticos de reconhecimento de áudio que bloqueiam músicas protegidas por direitos comerciais. Usa bancos de áudio livres como a YouTube Audio Library ou sons de Domínio Público."
+      "en": "Video platforms use automatic audio-recognition systems that can block music protected by commercial copyright. Use free audio libraries such as the YouTube Audio Library or public-domain sounds."
     },
     "whyItMatters": {
       "pt": "Pesquisa e integração ética de recursos multimédia em projetos digitais escolares.",
-      "en": "Pesquisa e integração ética de recursos multimédia em projetos digitais escolares."
+      "en": "Ethical research and integration of multimedia resources in school digital projects."
     },
     "funFact": {
       "pt": "Muitos músicos famosos gravam canções e lançam-nas voluntariamente sob a licença livre CC0!",
-      "en": "Muitos músicos famosos gravam canções e lançam-nas voluntariamente sob a licença livre CC0!"
+      "en": "Many musicians release songs voluntarily under free licences such as CC0!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -20036,28 +20036,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Robótica e Exploração",
-      "en": "Robótica e Exploração"
+      "en": "Robotics and Exploration"
     },
     "icon": "🤖",
     "title": {
       "pt": "Desafio Escolar: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!",
-      "en": "School Challenge: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!"
+      "en": "School Challenge: Robots on Mars: scientists drive rovers millions of kilometres from Earth!"
     },
     "teaser": {
       "pt": "Os robôs Curiosity e Perseverance usam computadores de bordo para analisar rochas em Marte.",
-      "en": "Os robôs Curiosity e Perseverance usam computadores de bordo para analisar rochas em Marte."
+      "en": "The Curiosity and Perseverance robots use onboard computers to analyse rocks on Mars."
     },
     "description": {
       "pt": "Os sinais de rádio demoram até 20 minutos a viajar da Terra até Marte! Por isso, os robôs marcianos têm de ter inteligência a bordo para evitar rochas e buracos sozinhos sem esperar pela resposta imediata dos cientistas.",
-      "en": "Os sinais de rádio demoram até 20 minutos a viajar da Terra até Marte! Por isso, os robôs marcianos têm de ter inteligência a bordo para evitar rochas e buracos sozinhos sem esperar pela resposta imediata dos cientistas."
+      "en": "Radio signals can take up to 20 minutes to travel from Earth to Mars! That is why Mars rovers need onboard systems to avoid rocks and holes without waiting for an immediate response from scientists."
     },
     "whyItMatters": {
       "pt": "Exploramos como a robótica e a automação transformam a ciência e a sociedade moderna.",
-      "en": "Exploramos como a robótica e a automação transformam a ciência e a sociedade moderna."
+      "en": "We explore how robotics and automation transform modern science and society."
     },
     "funFact": {
       "pt": "O rover Perseverance tem um pequeno helicóptero chamado Ingenuity que voou na atmosfera rarefeita de Marte!",
-      "en": "O rover Perseverance tem um pequeno helicóptero chamado Ingenuity que voou na atmosfera rarefeita de Marte!"
+      "en": "The Perseverance rover has a small helicopter called Ingenuity that flew in Mars's thin atmosphere!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -20111,28 +20111,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Iluminação do Espaço",
-      "en": "Iluminação do Espaço"
+      "en": "Lighting the Workspace"
     },
     "icon": "💡",
     "title": {
       "pt": "Desafio Escolar: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!",
-      "en": "School Challenge: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!"
+      "en": "School Challenge: Avoid screen glare: the window should never be directly behind you!"
     },
     "teaser": {
       "pt": "Como deves orientar a tua mesa de computador em relação à luz natural da janela?",
-      "en": "Como deves orientar a tua mesa de computador em relação à luz natural da janela?"
+      "en": "How should you position your computer desk in relation to natural window light?"
     },
     "description": {
       "pt": "Se a janela ficar diretamente atrás de ti, o sol cria reflexos ofuscantes no ecrã. Se ficar mesmo atrás do monitor, ficas encandeado. O ideal é a luz natural entrar de lado em relação à mesa de trabalho.",
-      "en": "Se a janela ficar diretamente atrás de ti, o sol cria reflexos ofuscantes no ecrã. Se ficar mesmo atrás do monitor, ficas encandeado. O ideal é a luz natural entrar de lado em relação à mesa de trabalho."
+      "en": "If the window is directly behind you, sunlight can create glare on the screen. If it is directly behind the monitor, you may be dazzled. Ideally, natural light should enter from the side of the desk."
     },
     "whyItMatters": {
       "pt": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado.",
-      "en": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado."
+      "en": "In Topic 2, we learn to organise a pleasant, well-lit, and well-ventilated workstation."
     },
     "funFact": {
       "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!",
-      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!"
+      "en": "Keeping the room ventilated helps renew the air and can improve your comfort and concentration when using a computer!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -20186,28 +20186,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Engenharia Social",
-      "en": "Engenharia Social"
+      "en": "Social Engineering"
     },
     "icon": "🎣",
     "title": {
       "pt": "Desafio Escolar: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!",
-      "en": "School Challenge: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!"
+      "en": "School Challenge: Beware the bait: \"Free Coins\" offers in games are almost always traps!"
     },
     "teaser": {
       "pt": "\"Clica aqui para ganhares 10. 000 Robux ou V-Bucks de graça! \" — Desconfia sempre!",
-      "en": "\"Clica aqui para ganhares 10. 000 Robux ou V-Bucks de graça! \" — Desconfia sempre!"
+      "en": "\"Click here to get 10,000 Robux or V-Bucks for free!\" — Always be suspicious!"
     },
     "description": {
       "pt": "Cibercriminosos usam sites falsos com promessas de moedas virtuais grátis para roubar palavras-passe e contas. A regra é simples: se parece bom demais para ser verdade, desconfia. Pode ser uma tentativa de fraude.",
-      "en": "Cibercriminosos usam sites falsos com promessas de moedas virtuais grátis para roubar palavras-passe e contas. A regra é simples: se parece bom demais para ser verdade, desconfia. Pode ser uma tentativa de fraude."
+      "en": "Cybercriminals use fake websites promising free virtual coins to steal passwords and accounts. The rule is simple: if it looks too good to be true, be suspicious. It may be an attempted scam."
     },
     "whyItMatters": {
       "pt": "Identificação de técnicas básicas de engenharia social e enganos virtuais.",
-      "en": "Identificação de técnicas básicas de engenharia social e enganos virtuais."
+      "en": "Identifying basic social-engineering techniques and online deception."
     },
     "funFact": {
       "pt": "As empresas oficiais dos jogos nunca pedem a tua palavra-passe para te darem prémios!",
-      "en": "As empresas oficiais dos jogos nunca pedem a tua palavra-passe para te darem prémios!"
+      "en": "Official game companies never ask for your password to give you prizes!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -20261,28 +20261,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Bloqueio de Sessão",
-      "en": "Bloqueio de Sessão"
+      "en": "Session Lock"
     },
     "icon": "🔒",
     "title": {
       "pt": "Desafio Escolar: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!",
-      "en": "School Challenge: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!"
+      "en": "School Challenge: Ninja shortcut: Windows key + L locks the screen in 1 second!"
     },
     "teaser": {
       "pt": "Vais ao intervalo ou à casa de banho na sala de informática? Bloqueia a sessão!",
-      "en": "Vais ao intervalo ou à casa de banho na sala de informática? Bloqueia a sessão!"
+      "en": "Going to break or to the bathroom in the computer room? Lock your session!"
     },
     "description": {
       "pt": "No Windows, pressionar a tecla Windows junto com a letra \"L\" bloqueia o ecrã instantaneamente. Assim ninguém mexe no teu trabalho escolar enquanto estás ausente da sala de aula.",
-      "en": "No Windows, pressionar a tecla Windows junto com a letra \"L\" bloqueia o ecrã instantaneamente. Assim ninguém mexe no teu trabalho escolar enquanto estás ausente da sala de aula."
+      "en": "On Windows, pressing the Windows key together with the letter \"L\" locks the screen instantly. This stops other people from using your schoolwork while you are away from the classroom."
     },
     "whyItMatters": {
       "pt": "Utilização correta dos atalhos de sistema operativo para proteger sessões de utilizador.",
-      "en": "Utilização correta dos atalhos de sistema operativo para proteger sessões de utilizador."
+      "en": "Correct use of operating-system shortcuts to protect user sessions."
     },
     "funFact": {
       "pt": "No computador Mac da Apple, o atalho equivalente é Control + Command + Q!",
-      "en": "No computador Mac da Apple, o atalho equivalente é Control + Command + Q!"
+      "en": "On an Apple Mac, the equivalent shortcut is Control + Command + Q!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -20336,28 +20336,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Spam e Cadeias",
-      "en": "Spam e Cadeias"
+      "en": "Spam and Chain Messages"
     },
     "icon": "🗑️",
     "title": {
       "pt": "Desafio Escolar: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!",
-      "en": "School Challenge: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!"
+      "en": "School Challenge: The origin of the word \"SPAM\": a canned meat brand made famous in the 1970s!"
     },
     "teaser": {
       "pt": "Mensagens publicitárias não solicitadas receberam o nome de uma comida enlatada!",
-      "en": "Mensagens publicitárias não solicitadas receberam o nome de uma comida enlatada!"
+      "en": "Unwanted advertising messages were named after a canned food!"
     },
     "description": {
       "pt": "A palavra SPAM era originalmente o nome de uma marca de carne enlatada. Ficou famosa num programa de humor dos Monty Python, onde a palavra era repetida sem parar, inspirando mais tarde o uso do termo para mensagens indesejadas em massa.",
-      "en": "A palavra SPAM era originalmente o nome de uma marca de carne enlatada. Ficou famosa num programa de humor dos Monty Python, onde a palavra era repetida sem parar, inspirando mais tarde o uso do termo para mensagens indesejadas em massa."
+      "en": "The word SPAM was originally the name of a canned meat brand. It became famous in a Monty Python comedy sketch where the word was repeated over and over, later inspiring the term for unwanted mass messages."
     },
     "whyItMatters": {
       "pt": "Gestão de pastas de correio: Caixa de Entrada, Itens Enviados, Rascunhos e Spam.",
-      "en": "Gestão de pastas de correio: Caixa de Entrada, Itens Enviados, Rascunhos e Spam."
+      "en": "Managing email folders: Inbox, Sent Items, Drafts, and Spam."
     },
     "funFact": {
       "pt": "Cartas em cadeia que dizem \"Reenvia a 10 amigos ou terás azar\" são mitos falsos: apaga-as logo!",
-      "en": "Cartas em cadeia que dizem \"Reenvia a 10 amigos ou terás azar\" são mitos falsos: apaga-as logo!"
+      "en": "Chain letters saying \"Forward this to 10 friends or you will have bad luck\" are false myths: delete them!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -20411,28 +20411,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Separadores e Janelas",
-      "en": "Separadores e Janelas"
+      "en": "Tabs and Windows"
     },
     "icon": "📑",
     "title": {
       "pt": "Desafio Escolar: Atalhos de mestre no navegador: Control + T abre um novo separador!",
-      "en": "School Challenge: Atalhos de mestre no navegador: Control + T abre um novo separador!"
+      "en": "School Challenge: Master browser shortcuts: Control + T opens a new tab!"
     },
     "teaser": {
       "pt": "Dominar o teclado faz-te navegar como um verdadeiro profissional de informática.",
-      "en": "Dominar o teclado faz-te navegar como um verdadeiro profissional de informática."
+      "en": "Mastering the keyboard helps you browse like a real computer professional."
     },
     "description": {
       "pt": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!",
-      "en": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!"
+      "en": "Use Control + T to open a new tab, Control + W to close the current tab, and if you accidentally close the page you were on, Control + Shift + T magically reopens the last closed tab!"
     },
     "whyItMatters": {
       "pt": "Eficiência e atalhos de teclado na navegação Web no dia a dia.",
-      "en": "Eficiência e atalhos de teclado na navegação Web no dia a dia."
+      "en": "Efficiency and keyboard shortcuts for everyday Web browsing."
     },
     "funFact": {
       "pt": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!",
-      "en": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!"
+      "en": "On a Mac, replace the Control key with the Command key in the same shortcuts!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -20486,28 +20486,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Software Livre vs Proprietário",
-      "en": "Software Livre vs Proprietário"
+      "en": "Free vs Proprietary Software"
     },
     "icon": "🐧",
     "title": {
       "pt": "Desafio Escolar: Software Livre: o código aberto onde todos podem aprender e colaborar!",
-      "en": "School Challenge: Software Livre: o código aberto onde todos podem aprender e colaborar!"
+      "en": "School Challenge: Free Software: open code where everyone can learn and collaborate!"
     },
     "teaser": {
       "pt": "Qual é a diferença entre programas comerciais fechados e aplicações como o Linux e o Scratch?",
-      "en": "Qual é a diferença entre programas comerciais fechados e aplicações como o Linux e o Scratch?"
+      "en": "What is the difference between closed commercial programs and applications such as Linux and Scratch?"
     },
     "description": {
       "pt": "Software Proprietário não permite ver como foi feito por dentro. O Software Livre e de Código Aberto (Open Source) partilha o código para que qualquer estudante ou programador possa estudar, melhorar e partilhar livremente com a comunidade.",
-      "en": "Software Proprietário não permite ver como foi feito por dentro. O Software Livre e de Código Aberto (Open Source) partilha o código para que qualquer estudante ou programador possa estudar, melhorar e partilhar livremente com a comunidade."
+      "en": "Proprietary software does not let you see how it was made internally. Free and Open Source Software shares its source code so students and programmers can study, improve, and share it with the community."
     },
     "whyItMatters": {
       "pt": "Diferença entre licenças de software comercial, freeware, shareware e software livre.",
-      "en": "Diferença entre licenças de software comercial, freeware, shareware e software livre."
+      "en": "The difference between commercial software, freeware, shareware, and free software licences."
     },
     "funFact": {
       "pt": "A mascote do sistema operativo livre Linux é um simpático pinguim chamado Tux!",
-      "en": "A mascote do sistema operativo livre Linux é um simpático pinguim chamado Tux!"
+      "en": "The mascot of the free Linux operating system is a friendly penguin called Tux!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -20561,28 +20561,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Ambiente e Sustentabilidade",
-      "en": "Ambiente e Sustentabilidade"
+      "en": "Environment and Sustainability"
     },
     "icon": "♻️",
     "title": {
       "pt": "Desafio Escolar: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!",
-      "en": "School Challenge: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!"
+      "en": "School Challenge: Electronic Waste (E-Waste): old computers do not belong in ordinary rubbish!"
     },
     "teaser": {
       "pt": "O que deves fazer quando um telemóvel, teclado ou comando de consola avaria de vez?",
-      "en": "O que deves fazer quando um telemóvel, teclado ou comando de consola avaria de vez?"
+      "en": "What should you do when a phone, keyboard, or game controller breaks for good?"
     },
     "description": {
       "pt": "Os equipamentos de TIC contêm metais preciosos (como ouro, prata e cobre) e substâncias químicas que não podem poluir a natureza. Devem ser entregues no Eletrão ou em lojas com contentores de reciclagem elétrica adequados.",
-      "en": "Os equipamentos de TIC contêm metais preciosos (como ouro, prata e cobre) e substâncias químicas que não podem poluir a natureza. Devem ser entregues no Eletrão ou em lojas com contentores de reciclagem elétrica adequados."
+      "en": "ICT equipment contains valuable metals such as gold, silver, and copper, as well as substances that can harm nature. It should be taken to an authorised e-waste collection point or a shop with suitable electrical recycling containers."
     },
     "whyItMatters": {
-      "pt": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5. º ano.",
-      "en": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5. º ano."
+      "pt": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5.º ano.",
+      "en": "Environmental citizenship and the ecological footprint of ICT are part of the 5th-grade goals."
     },
     "funFact": {
       "pt": "Com o circuito de 40 telemóveis reciclados consegue-se recuperar ouro suficiente para fazer uma aliança!",
-      "en": "Com o circuito de 40 telemóveis reciclados consegue-se recuperar ouro suficiente para fazer uma aliança!"
+      "en": "Recycling a batch of 40 mobile phones can recover enough gold to make a wedding ring!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -20636,24 +20636,24 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Pausas Ativas",
-      "en": "Pausas Ativas"
+      "en": "Active Breaks"
     },
     "icon": "🏃‍♂️",
     "title": {
       "pt": "Evolução Histórica: Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!",
-      "en": "Historical Evolution: Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!"
+      "en": "Historical Evolution: Quick stretches: stretch your arms and rotate your wrists every hour!"
     },
     "teaser": {
       "pt": "Ficar sentado horas seguidas na mesma posição cansa o corpo mais do que pensas.",
-      "en": "Ficar sentado horas seguidas na mesma posição cansa o corpo mais do que pensas."
+      "en": "Sitting for hours in the same position tires your body more than you might think."
     },
     "description": {
       "pt": "A cada 50 ou 60 minutos de aula ou estudo no computador, levanta-te, caminha até à janela, bebe um copo de água e roda suavemente os pulsos para prevenir dores nas mãos e dedos.",
-      "en": "A cada 50 ou 60 minutos de aula ou estudo no computador, levanta-te, caminha até à janela, bebe um copo de água e roda suavemente os pulsos para prevenir dores nas mãos e dedos."
+      "en": "Every 50 or 60 minutes of a computer lesson or study session, stand up, walk to the window, drink some water, and gently rotate your wrists to help prevent pain in your hands and fingers."
     },
     "whyItMatters": {
-      "pt": "A promoção de estilos de vida ativos e a quebra do sedentarismo são essenciais no 5. º ano.",
-      "en": "A promoção de estilos de vida ativos e a quebra do sedentarismo são essenciais no 5. º ano."
+      "pt": "A promoção de estilos de vida ativos e a quebra do sedentarismo são essenciais no 5.º ano.",
+      "en": "Promoting active lifestyles and breaking up sedentary time are essential in 5th grade."
     },
     "funFact": {
       "pt": "Beber água regularmente hidrata o cérebro e melhora o tempo de resposta em jogos e testes!",
@@ -20711,12 +20711,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Direito à Imagem",
-      "en": "Direito à Imagem"
+      "en": "Right to One's Image"
     },
     "icon": "📸",
     "title": {
       "pt": "Desafio Escolar: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!",
-      "en": "School Challenge: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!"
+      "en": "School Challenge: Always ask permission before taking or sharing photos of friends!"
     },
     "teaser": {
       "pt": "Cada pessoa é dona da sua própria imagem e tem o direito de não querer ser fotografada.",
@@ -20727,7 +20727,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "Even at school, photographing or filming a classmate and posting it on social media without their consent and their parents' permission is a serious violation of privacy and school rules."
     },
     "whyItMatters": {
-      "pt": "Compreender o direito à imagem e à reserva da intimidade da vida privada no 5. º ano de escolaridade.",
+      "pt": "Compreender o direito à imagem e à reserva da intimidade da vida privada no 5.º ano de escolaridade.",
       "en": "Understanding the right to one's image and the preservation of privacy in the 5th grade."
     },
     "funFact": {
@@ -20786,16 +20786,16 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Biometria",
-      "en": "Biometria"
+      "en": "Biometrics"
     },
     "icon": "👁️",
     "title": {
       "pt": "Desafio Escolar: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade.",
-      "en": "School Challenge: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade."
+      "en": "School Challenge: Fingerprints and facial recognition: using body characteristics to confirm identity."
     },
     "teaser": {
       "pt": "A biometria utiliza características do corpo, como a impressão digital ou o rosto, para ajudar a confirmar a identidade de uma pessoa.",
-      "en": "A biometria usa caraterísticas físicas únicas que é muito difícil de copiar."
+      "en": "Biometrics use unique physical characteristics that are very difficult to copy."
     },
     "description": {
       "pt": "Sensores biométricos leem as linhas do teu dedo ou a geometria do teu rosto para desbloquear tablets e telemóveis. É rápido, prático e muito mais difícil de adivinhar do que uma palavra-passe de 4 algarismos.",
@@ -20807,7 +20807,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "Nem sequer gémeos verdadeiros têm impressões digitais exatamente idênticas!",
-      "en": "Nem sequer gémeos verdadeiros têm impressões digitais exatamente idênticas!"
+      "en": "Even identical twins do not have exactly the same fingerprints!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -20861,12 +20861,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Responder a Todos",
-      "en": "Responder a Todos"
+      "en": "Reply All"
     },
     "icon": "👥",
     "title": {
       "pt": "Desafio Escolar: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!",
-      "en": "School Challenge: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!"
+      "en": "School Challenge: Be careful with the \"Reply All\" button: do not fill your classmates’ inboxes!"
     },
     "teaser": {
       "pt": "Se queres responder apenas à professora, clica em \"Responder\" e não em \"Responder a Todos\".",
@@ -20877,7 +20877,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "If the teacher sends an assignment to all 25 students and you reply 'Thank you! ' using 'Reply All', all 25 classmates will receive an unnecessary notification!"
     },
     "whyItMatters": {
-      "pt": "Uso responsável e ponderado das ferramentas de comunicação coletiva no 5. º ano.",
+      "pt": "Uso responsável e ponderado das ferramentas de comunicação coletiva no 5.º ano.",
       "en": "Responsible and thoughtful use of collective communication tools in 5th grade."
     },
     "funFact": {
@@ -20936,16 +20936,16 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Domínios e Extensões",
-      "en": "Domínios e Extensões"
+      "en": "Domains and Extensions"
     },
     "icon": "🌐",
     "title": {
       "pt": "Desafio Escolar: O que significa . pt, . org, . edu e . gov no final dos sites?",
-      "en": "School Challenge: O que significa . pt, . org, . edu e . gov no final dos sites?"
+      "en": "School Challenge: What do .pt, .org, .edu, and .gov mean at the end of websites?"
     },
     "teaser": {
       "pt": "A terminação do endereço da página Web revela muito sobre quem a criou.",
-      "en": "A terminação do endereço da página Web revela muito sobre quem a criou."
+      "en": "The ending of a web address reveals a lot about who created it."
     },
     "description": {
       "pt": "O domínio \". pt\" indica Portugal, \". gov\" pertence a organismos de governo oficial, \". edu\" a escolas e universidades, e \". org\" a organizações sem fins lucrativos. Sites educativos e governamentais são fontes muito mais fiáveis para trabalhos!",
@@ -21011,12 +21011,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Citação Direta entre Aspas",
-      "en": "Citação Direta entre Aspas"
+      "en": "Direct Quotation in Quotation Marks"
     },
     "icon": "💬",
     "title": {
       "pt": "Desafio Escolar: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?",
-      "en": "School Challenge: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?"
+      "en": "School Challenge: How can you quote a sentence from a book in a school project without plagiarising?"
     },
     "teaser": {
       "pt": "Se copiares uma frase palavra por palavra, deves colocá-la entre aspas e dizer de quem é!",
@@ -21086,12 +21086,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Hardware Interno",
-      "en": "Hardware Interno"
+      "en": "Internal Hardware"
     },
     "icon": "🧠",
     "title": {
       "pt": "Desafio Escolar: A CPU, ou processador, é um dos principais componentes do computador. Executa instruções e ajuda o computador a realizar tarefas.",
-      "en": "School Challenge: A CPU, ou processador, é um dos principais componentes do computador. Executa instruções e ajuda o computador a realizar tarefas."
+      "en": "School Challenge: The CPU, or processor, is one of the main components of a computer. It executes instructions and helps the computer perform tasks."
     },
     "teaser": {
       "pt": "Sabias que o processador do teu computador consegue resolver contas mais depressa do que um raio?",
@@ -21161,12 +21161,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Postura na Cadeira",
-      "en": "Postura na Cadeira"
+      "en": "Chair Posture"
     },
     "icon": "🪑",
     "title": {
       "pt": "Desafio Escolar: Postura Confortável: a posição ideal para estudar ao computador!",
-      "en": "School Challenge: Postura Confortável: a posição ideal para estudar ao computador!"
+      "en": "School Challenge: Comfortable Posture: the ideal position for studying at a computer!"
     },
     "teaser": {
       "pt": "Sabias que os cotovelos e joelhos devem ficar, aproximadamente, num ângulo de 90°, numa posição confortável?",
@@ -21182,7 +21182,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "Se os teus pés não chegarem ao chão na escola, pede um apoio de pés para manter a postura certa!",
-      "en": "Se os teus pés não chegarem ao chão na escola, pede um apoio de pés para manter a postura certa!"
+      "en": "If your feet do not reach the floor at school, ask for a footrest to help you keep the correct posture!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -21236,28 +21236,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Pegada Digital",
-      "en": "Pegada Digital"
+      "en": "Digital Footprint"
     },
     "icon": "👣",
     "title": {
       "pt": "Como Funciona por Dentro: A tua Pegada Digital é como uma pegada no cimento fresco!",
-      "en": "How It Works Inside: A tua Pegada Digital é como uma pegada no cimento fresco!"
+      "en": "How It Works Inside: Your Digital Footprint is like a footprint in wet cement!"
     },
     "teaser": {
       "pt": "Algumas das nossas atividades online deixam registos. Publicações, comentários e conteúdos que partilhamos podem fazer parte da nossa pegada digital.",
       "en": "Some of our online activities leave records. Posts, comments, and content we share can form part of our digital footprint."
     },
     "description": {
-      "pt": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã (captura de ecrã). Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes.",
-      "en": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã (captura de ecrã). Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes."
+      "pt": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã. Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes.",
+      "en": "Every click, video you watch, and comment builds your online reputation. Even if you delete a photo, someone may have taken a screenshot. So build a positive digital footprint by sharing thoughtfully and kindly."
     },
     "whyItMatters": {
       "pt": "No Tema 3 de TIC aprendemos a refletir criticamente sobre as consequências das nossas ações online.",
-      "en": "No Tema 3 de TIC aprendemos a refletir criticamente sobre as consequências das nossas ações online."
+      "en": "In ICT Topic 3, we learn to think critically about the consequences of our online actions."
     },
     "funFact": {
       "pt": "A regra de ouro: só deves publicar algo se não tiveres vergonha que a tua professora ou avó vejam!",
-      "en": "A regra de ouro: só deves publicar algo se não tiveres vergonha que a tua professora ou avó vejam!"
+      "en": "The golden rule: only post something if you would be comfortable with your teacher or grandmother seeing it!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -21386,12 +21386,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Campos do Email",
-      "en": "Campos do Email"
+      "en": "Email Fields"
     },
     "icon": "🕶️",
     "title": {
       "pt": "Como Funciona por Dentro: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade",
-      "en": "How It Works Inside: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade"
+      "en": "How It Works Inside: The Bcc field lets you send emails to several people while protecting their privacy."
     },
     "teaser": {
       "pt": "Vais convidar 25 colegas da turma para uma festa por email? Usa o Cco!",
@@ -21399,7 +21399,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "description": {
       "pt": "No email tens: \"Para\" (destinatários principais), \"Cc\" (Com Cópia, visível a todos) e \"Cco\" (Com Cópia Oculta). Ao colocar os contactos em Cco, ninguém vê o endereço privado dos outros, evitando spam e exposição indesejada de contactos.",
-      "en": "No email tens: \"Para\" (destinatários principais), \"Cc\" (Com Cópia, visível a todos) e \"Cco\" (Com Cópia Oculta). Ao colocar os contactos em Cco, ninguém vê o endereço privado dos outros, evitando spam e exposição indesejada de contactos."
+      "en": "In an email you have: \"To\" (main recipients), \"Cc\" (Carbon Copy, visible to everyone), and \"Bcc\" (Blind Carbon Copy). When you put contacts in Bcc, no one can see the other people's private addresses, helping prevent spam and unwanted exposure of contacts."
     },
     "whyItMatters": {
       "pt": "No Tema 5 de TIC aprendemos a usar os campos Para, Cc e Cco de acordo com as regras do RGPD.",
@@ -21407,7 +21407,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "A sigla Cc vem do papel químico (\"Carbon Copy\") que se usava antigamente nas máquinas de escrever!",
-      "en": "A sigla Cc vem do papel químico (\"Carbon Copy\") que se usava antigamente nas máquinas de escrever!"
+      "en": "The abbreviation Cc comes from carbon paper (\"Carbon Copy\"), which was once used with typewriters!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -21461,28 +21461,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Navegador vs Motor",
-      "en": "Navegador vs Motor"
+      "en": "Browser vs Search Engine"
     },
     "icon": "🚗",
     "title": {
       "pt": "Como Funciona por Dentro: O Navegador é o Automóvel, o Motor de Busca é o GPS!",
-      "en": "How It Works Inside: O Navegador é o Automóvel, o Motor de Busca é o GPS!"
+      "en": "How It Works Inside: The Browser is the Car, the Search Engine is the GPS!"
     },
     "teaser": {
       "pt": "Muitos alunos confundem o Chrome com o Google. Sabes qual é a diferença real?",
-      "en": "Muitos alunos confundem o Chrome com o Google. Sabes qual é a diferença real?"
+      "en": "Many students confuse Chrome with Google. Do you know the real difference?"
     },
     "description": {
       "pt": "O Navegador (Browser, como Chrome, Edge, Firefox ou Safari) é a aplicação instalada que abre e desenha páginas Web. O Motor de Busca (Google, Bing, DuckDuckGo) é um site especial que cataloga a rede para responder a perguntas.",
-      "en": "O Navegador (Browser, como Chrome, Edge, Firefox ou Safari) é a aplicação instalada que abre e desenha páginas Web. O Motor de Busca (Google, Bing, DuckDuckGo) é um site especial que cataloga a rede para responder a perguntas."
+      "en": "The Browser (such as Chrome, Edge, Firefox, or Safari) is the application that opens and displays web pages. A Search Engine (such as Google, Bing, or DuckDuckGo) is a special website that indexes the web to answer searches."
     },
     "whyItMatters": {
       "pt": "No Tema 6 de TIC aprendemos a usar a barra de endereços (URL) diretamente sem passar pelo motor de busca.",
-      "en": "No Tema 6 de TIC aprendemos a usar a barra de endereços (URL) diretamente sem passar pelo motor de busca."
+      "en": "In ICT Topic 6, we learn to use the address bar (URL) directly instead of going through a search engine."
     },
     "funFact": {
       "pt": "A primeira janela de navegação inventada em 1990 chamava-se \"WorldWideWeb\"!",
-      "en": "A primeira janela de navegação inventada em 1990 chamava-se \"WorldWideWeb\"!"
+      "en": "The first web browser, created in 1990, was called \"WorldWideWeb\"!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -21536,28 +21536,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Google Imagens",
-      "en": "Google Imagens"
+      "en": "Google Images"
     },
     "icon": "🎨",
     "title": {
       "pt": "Desafio Escolar: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!",
-      "en": "School Challenge: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!"
+      "en": "School Challenge: Photos from Google Images are NOT free to use however you want!"
     },
     "teaser": {
       "pt": "Copiar uma foto qualquer e colar num trabalho sem autorização pode violar a lei.",
-      "en": "Copiar uma foto qualquer e colar num trabalho sem autorização pode violar a lei."
+      "en": "Copying any photo and putting it into a school project without permission may violate copyright law."
     },
     "description": {
       "pt": "Quando um fotógrafo ou ilustrador cria uma imagem, ela fica logo protegida por Direitos de Autor (Copyright). Não a podes descarregar e reutilizar sem autorização. Para trabalhos escolares, usa imagens com licenças Creative Commons ou de Domínio Público.",
-      "en": "Quando um fotógrafo ou ilustrador cria uma imagem, ela fica logo protegida por Direitos de Autor (Copyright). Não a podes descarregar e reutilizar sem autorização. Para trabalhos escolares, usa imagens com licenças Creative Commons ou de Domínio Público."
+      "en": "When a photographer or illustrator creates an image, it is generally protected by copyright. You cannot download and reuse it without permission. For school projects, use images with suitable Creative Commons licences or in the public domain."
     },
     "whyItMatters": {
       "pt": "No Tema 7 de TIC aprendemos a respeitar a propriedade intelectual e o trabalho dos artistas.",
-      "en": "No Tema 7 de TIC aprendemos a respeitar a propriedade intelectual e o trabalho dos artistas."
+      "en": "In ICT Topic 7, we learn to respect intellectual property and the work of artists."
     },
     "funFact": {
       "pt": "Quando encontras uma imagem na Internet, lembra-te de verificar sempre a sua fonte original e qual é a licença de utilização específica. Mesmo nas licenças Creative Commons, deves respeitar regras como indicar o nome do autor (atribuição) e verificar se podes usar a imagem no teu trabalho!",
-      "en": "Quando encontras uma imagem na Internet, lembra-te de verificar sempre a sua fonte original e qual é a licença de utilização específica. Mesmo nas licenças Creative Commons, deves respeitar regras como indicar o nome do autor (atribuição) e verificar se podes usar a imagem no teu trabalho!"
+      "en": "When you find an image online, always check its original source and its specific licence. Even with Creative Commons licences, follow rules such as crediting the author and checking whether you may use the image in your project!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -21611,28 +21611,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Memória do Computador",
-      "en": "Memória do Computador"
+      "en": "Computer Memory"
     },
     "icon": "⚡",
     "title": {
       "pt": "Como Funciona por Dentro: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!",
-      "en": "How It Works Inside: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!"
+      "en": "How It Works Inside: RAM vs SSD: the work desk vs the cupboard!"
     },
     "teaser": {
       "pt": "Qual é a diferença entre a memória que apaga tudo quando desligas e a que guarda ficheiros?",
-      "en": "Qual é a diferença entre a memória que apaga tudo quando desligas e a que guarda ficheiros?"
+      "en": "What is the difference between memory that is cleared when you switch off the computer and storage that keeps files?"
     },
     "description": {
       "pt": "O Disco SSD é o armário com gavetas: guarda os teus trabalhos a longo prazo, mas lembra-te de que os discos também se podem avariar, pelo que deves fazer sempre cópias de segurança (backups) dos teus ficheiros mais importantes!",
-      "en": "O Disco SSD é o armário com gavetas: guarda os teus trabalhos a longo prazo, mas lembra-te de que os discos também se podem avariar, pelo que deves fazer sempre cópias de segurança (backups) dos teus ficheiros mais importantes!"
+      "en": "The SSD is like a cupboard with drawers: it stores your work for the long term. Remember that storage devices can fail, so always make backups of your most important files!"
     },
     "whyItMatters": {
       "pt": "Identificar a diferença entre memória primária (RAM) e armazenamento secundário (SSD/HDD) é uma competência essencial de TIC.",
-      "en": "Identificar a diferença entre memória primária (RAM) e armazenamento secundário (SSD/HDD) é uma competência essencial de TIC."
+      "en": "Knowing the difference between primary memory (RAM) and secondary storage (SSD/HDD) is an essential ICT skill."
     },
     "funFact": {
       "pt": "Os novos discos SSD não têm peças móveis e usam chips de memória flash super rápidos!",
-      "en": "Os novos discos SSD não têm peças móveis e usam chips de memória flash super rápidos!"
+      "en": "Modern SSDs have no moving parts and use very fast flash-memory chips!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -21686,7 +21686,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Cuidado com os Olhos",
-      "en": "Cuidado com os Olhos"
+      "en": "Eye Care"
     },
     "icon": "👀",
     "title": {
@@ -21761,28 +21761,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Privacidade e Redes",
-      "en": "Privacidade e Redes"
+      "en": "Privacy and Networks"
     },
     "icon": "🕵️‍♂️",
     "title": {
       "pt": "Como Funciona por Dentro: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!",
-      "en": "How It Works Inside: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!"
+      "en": "How It Works Inside: The \"Stranger in the Garden\" rule: never share your address in online games!"
     },
     "teaser": {
       "pt": "Roblox, Fortnite, Brawl Stars... avatares simpáticos podem esconder qualquer pessoa.",
-      "en": "Roblox, Fortnite, Brawl Stars... avatares simpáticos podem esconder qualquer pessoa."
+      "en": "Roblox, Fortnite, Brawl Stars... friendly-looking avatars can hide the identity of any person."
     },
     "description": {
       "pt": "Nunca partilhes o teu nome completo, número de telemóvel, nome da escola ou fotos onde se veja o emblema do teu clube ou a rua de tua casa com desconhecidos em salas de conversação ou jogos online.",
-      "en": "Nunca partilhes o teu nome completo, número de telemóvel, nome da escola ou fotos onde se veja o emblema do teu clube ou a rua de tua casa com desconhecidos em salas de conversação ou jogos online."
+      "en": "Never share your full name, phone number, school name, or photos showing your club badge or the street where you live with strangers in chats or online games."
     },
     "whyItMatters": {
       "pt": "A proteção de dados pessoais e a defesa da privacidade individual são prioridades de Cidadania Digital.",
-      "en": "A proteção de dados pessoais e a defesa da privacidade individual são prioridades de Cidadania Digital."
+      "en": "Protecting personal data and defending individual privacy are priorities of Digital Citizenship."
     },
     "funFact": {
       "pt": "É por isso que nos jogos é muito mais seguro e divertido usar nomes de código como \"FalcãoVeloz_99\"!",
-      "en": "É por isso que nos jogos é muito mais seguro e divertido usar nomes de código como \"FalcãoVeloz_99\"!"
+      "en": "That is why using code names such as \"FalcãoVeloz_99\" in games is safer and more fun!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -21836,28 +21836,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "O Segredo da Frase-Passe",
-      "en": "O Segredo da Frase-Passe"
+      "en": "The Secret of the Passphrase"
     },
     "icon": "🍕",
     "title": {
       "pt": "Como Funciona por Dentro: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!",
-      "en": "How It Works Inside: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!"
+      "en": "How It Works Inside: The \"Passphrase\" method: O_Meu_Cao_Adora_Comer_99_Gelados!"
     },
     "teaser": {
-      "pt": "Uma frase longa com espaços ou travessões é fácil de decorar e quase altamente seguro.",
-      "en": "Uma frase longa com espaços ou travessões é fácil de decorar e quase altamente seguro."
+      "pt": "Uma frase longa com espaços ou travessões é fácil de decorar e muito segura.",
+      "en": "A long phrase with spaces or dashes is easy to remember and can be very secure."
     },
     "description": {
       "pt": "Em vez de uma palavra-passe curta e confusa que esqueces amanhã, inventa uma frase maluca com 4 ou 5 palavras e junta números e símbolos. Uma frase-passe longa e difícil de adivinhar é geralmente mais segura do que uma palavra-passe curta e previsível.",
-      "en": "Em vez de uma palavra-passe curta e confusa que esqueces amanhã, inventa uma frase maluca com 4 ou 5 palavras e junta números e símbolos. Uma frase-passe longa e difícil de adivinhar é geralmente mais segura do que uma palavra-passe curta e previsível."
+      "en": "Instead of a short, confusing password that you will forget tomorrow, invent a funny phrase with 4 or 5 words and add numbers and symbols. A long, hard-to-guess passphrase is generally safer than a short, predictable password."
     },
     "whyItMatters": {
       "pt": "Construção de palavras-passe fortes com base em frases mnemónicas compridas.",
-      "en": "Construção de palavras-passe fortes com base em frases mnemónicas compridas."
+      "en": "Creating strong passwords based on long memorable phrases."
     },
     "funFact": {
       "pt": "Quanto mais comprida for a palavra-passe, mais combinações matemáticas o invasor tem de testar!",
-      "en": "Quanto mais comprida for a palavra-passe, mais combinações matemáticas o invasor tem de testar!"
+      "en": "The longer the password, the more mathematical combinations an attacker has to test!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -21911,28 +21911,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "O Símbolo Arroba",
-      "en": "O Símbolo Arroba"
+      "en": "The At Symbol"
     },
     "icon": "🐌",
     "title": {
       "pt": "Como Funciona por Dentro: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!",
-      "en": "How It Works Inside: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!"
+      "en": "How It Works Inside: The @ symbol is called \"snail\" in Italy and \"elephant trunk\" in Sweden!"
     },
     "teaser": {
       "pt": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico.",
-      "en": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico."
+      "en": "In 1971, Ray Tomlinson carried out one of the first experiments sending messages between networked computers and popularised the use of @ in email addresses."
     },
     "description": {
       "pt": "Em inglês lê-se \"at\" (no local de). Em Portugal chamamos-lhe arroba, mas outros países dão-lhe nomes animais engraçados: os italianos dizem \"chiocciola\" (caracol) e os israelitas \"strudel\" (bolo enrolado)!",
-      "en": "Em inglês lê-se \"at\" (no local de). Em Portugal chamamos-lhe arroba, mas outros países dão-lhe nomes animais engraçados: os italianos dizem \"chiocciola\" (caracol) e os israelitas \"strudel\" (bolo enrolado)!"
+      "en": "In English it is read as \"at\". In Portugal we call it \"arroba\", while other countries have funny animal names for it: Italians say \"chiocciola\" (snail) and Israelis say \"strudel\" (a rolled pastry)!"
     },
     "whyItMatters": {
-      "pt": "Estrutura padrão de um endereço de correio eletrónico: utilizador@dominio. extensao.",
-      "en": "Estrutura padrão de um endereço de correio eletrónico: utilizador@dominio. extensao."
+      "pt": "Estrutura padrão de um endereço de correio eletrónico: utilizador@domínio.extensão.",
+      "en": "Standard structure of an email address: username@domain.extension."
     },
     "funFact": {
       "pt": "Antigamente, a arroba era uma medida de peso usada no comércio que valia cerca de 15 quilogramas!",
-      "en": "Antigamente, a arroba era uma medida de peso usada no comércio que valia cerca de 15 quilogramas!"
+      "en": "In the past, the arroba was a unit of weight used in trade, worth about 15 kilograms!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -21986,28 +21986,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Truque das Aspas",
-      "en": "Truque das Aspas"
+      "en": "Quotation Marks Trick"
     },
     "icon": "🔍",
     "title": {
       "pt": "Desafio Escolar: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!",
-      "en": "School Challenge: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!"
+      "en": "School Challenge: Search like a detective: the magic quotation-mark trick \"\" in a search engine!"
     },
     "teaser": {
       "pt": "Sabias que podes obrigar o motor de busca a encontrar exatamente a frase que queres?",
-      "en": "Sabias que podes obrigar o motor de busca a encontrar exatamente a frase que queres?"
+      "en": "Did you know you can make a search engine find exactly the phrase you want?"
     },
     "description": {
       "pt": "Se colocares uma frase entre aspas (ex: \"energia eólica em Portugal\"), o motor de busca só mostra páginas que tenham essas palavras exatamente nessa ordem, filtrando milhares de páginas irrelevantes!",
-      "en": "Se colocares uma frase entre aspas (ex: \"energia eólica em Portugal\"), o motor de busca só mostra páginas que tenham essas palavras exatamente nessa ordem, filtrando milhares de páginas irrelevantes!"
+      "en": "If you put a phrase in quotation marks (e.g. \"wind energy in Portugal\"), the search engine looks for pages containing those words in that exact order, filtering out thousands of irrelevant pages!"
     },
     "whyItMatters": {
-      "pt": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5. º ano.",
-      "en": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5. º ano."
+      "pt": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5.º ano.",
+      "en": "Advanced search techniques using Boolean operators and delimiters in 5th grade."
     },
     "funFact": {
       "pt": "Se usares o sinal de menos (ex: jaguar -carro), ele procura o felino e elimina as páginas sobre automóveis!",
-      "en": "Se usares o sinal de menos (ex: jaguar -carro), ele procura o felino e elimina as páginas sobre automóveis!"
+      "en": "If you use the minus sign (e.g. jaguar -car), it searches for the animal and removes pages about cars!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -22061,28 +22061,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "O que é Plágio",
-      "en": "O que é Plágio"
+      "en": "What Is Plagiarism"
     },
     "icon": "✂️",
     "title": {
       "pt": "Como Funciona por Dentro: Plágio: roubar a medalha de ouro de outra pessoa!",
-      "en": "How It Works Inside: Plágio: roubar a medalha de ouro de outra pessoa!"
+      "en": "How It Works Inside: Plagiarism: stealing someone else's gold medal!"
     },
     "teaser": {
       "pt": "Fazer \"Copiar e Colar\" da Wikipédia e assinar com o teu nome é desonestidade académica.",
-      "en": "Fazer \"Copiar e Colar\" da Wikipédia e assinar com o teu nome é desonestidade académica."
+      "en": "Copying and pasting from Wikipedia and signing it with your own name is academic dishonesty."
     },
     "description": {
       "pt": "Plágio é copiar textos, ideias, desenhos ou código de outra pessoa fingindo que foste tu a criar. É como alguém correr uma maratona e tu roubares a medalha para dizer que venceste. O correto é ler, explicar pelas tuas próprias palavras e citar a fonte de onde aprendeste.",
-      "en": "Plágio é copiar textos, ideias, desenhos ou código de outra pessoa fingindo que foste tu a criar. É como alguém correr uma maratona e tu roubares a medalha para dizer que venceste. O correto é ler, explicar pelas tuas próprias palavras e citar a fonte de onde aprendeste."
+      "en": "Plagiarism is copying another person's texts, ideas, drawings, or code and pretending you created them. It is like someone running a marathon and you stealing the medal to say you won. The right thing is to read, explain in your own words, and cite the source you learned from."
     },
     "whyItMatters": {
-      "pt": "Compreensão de plágio vs autoria original e integridade académica no 5. º ano.",
-      "en": "Compreensão de plágio vs autoria original e integridade académica no 5. º ano."
+      "pt": "Compreensão de plágio vs autoria original e integridade académica no 5.º ano.",
+      "en": "Understanding plagiarism versus original authorship and academic integrity in 5th grade."
     },
     "funFact": {
       "pt": "Os professores têm ferramentas de software que detetam plágio em trabalhos escolares em segundos!",
-      "en": "Os professores têm ferramentas de software que detetam plágio em trabalhos escolares em segundos!"
+      "en": "Teachers have software tools that can detect plagiarism in schoolwork within seconds!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -22136,28 +22136,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Placa Principal",
-      "en": "Placa Principal"
+      "en": "Main Board"
     },
     "icon": "🛣️",
     "title": {
       "pt": "Como Funciona por Dentro: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!",
-      "en": "How It Works Inside: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!"
+      "en": "How It Works Inside: The Motherboard is the motorway that connects all the computer's components!"
     },
     "teaser": {
       "pt": "Como é que a placa gráfica fala com o processador e com o disco rígido?",
-      "en": "Como é que a placa gráfica fala com o processador e com o disco rígido?"
+      "en": "How does the graphics card communicate with the processor and the hard drive?"
     },
     "description": {
       "pt": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI.",
-      "en": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI."
+      "en": "The Motherboard is a large green or black circuit board filled with copper tracks. The CPU, RAM, sound card, and network card connect to it, along with USB and HDMI ports."
     },
     "whyItMatters": {
-      "pt": "Os os componentes físicos comunicam através do barramento de dados (Bus).",
-      "en": "Os os componentes físicos comunicam através do barramento de dados (Bus)."
+      "pt": "Os componentes físicos comunicam através do barramento de dados (Bus).",
+      "en": "The physical components communicate through the data bus (Bus)."
     },
     "funFact": {
       "pt": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!",
-      "en": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!"
+      "en": "It is called a \"motherboard\" because it houses and connects all the other boards and components attached to the system!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -22211,28 +22211,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Sono e Tecnologia",
-      "en": "Sono e Tecnologia"
+      "en": "Sleep and Technology"
     },
     "icon": "🌙",
     "title": {
       "pt": "Como Funciona por Dentro: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \"",
-      "en": "How It Works Inside: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \""
+      "en": "How It Works Inside: Blue Light from the screen tells your brain: \"Wake up, it is still beach time!\""
     },
     "teaser": {
       "pt": "Porque deves desligar os ecrãs 30 a 60 minutos antes de dormir para acordares com energia?",
-      "en": "Porque deves desligar os ecrãs 30 a 60 minutos antes de dormir para acordares com energia?"
+      "en": "Why should you turn off screens 30 to 60 minutes before bed so you can wake up with energy?"
     },
     "description": {
       "pt": "A luz azul emitida por ecrãs bloqueia a melatonina, a hormona que dá sono. Quando usas o telemóvel na cama, o teu cérebro fica confuso, demoras mais tempo a adormecer e acordas cansado para a escola.",
-      "en": "A luz azul emitida por ecrãs bloqueia a melatonina, a hormona que dá sono. Quando usas o telemóvel na cama, o teu cérebro fica confuso, demoras mais tempo a adormecer e acordas cansado para a escola."
+      "en": "Blue light from screens can affect melatonin, the hormone involved in sleep. Using a phone in bed can make it harder to fall asleep and may leave you tired for school."
     },
     "whyItMatters": {
       "pt": "Estudamos o equilíbrio entre o tempo de ecrã e o descanso reparador de 9 a 12 horas diárias.",
-      "en": "Estudamos o equilíbrio entre o tempo de ecrã e o descanso reparador de 9 a 12 horas diárias."
+      "en": "We study the balance between screen time and restorative sleep of 9 to 12 hours per day."
     },
     "funFact": {
       "pt": "Substituir o telemóvel antes de dormir por um livro em papel melhora as tuas notas escolares!",
-      "en": "Substituir o telemóvel antes de dormir por um livro em papel melhora as tuas notas escolares!"
+      "en": "Replacing your phone with a paper book before bed can help your sleep and school performance!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -22286,28 +22286,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Apoio e Helplines",
-      "en": "Apoio e Helplines"
+      "en": "Support and Helplines"
     },
     "icon": "📞",
     "title": {
       "pt": "Como Funciona por Dentro: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!",
-      "en": "How It Works Inside: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!"
+      "en": "How It Works Inside: Portugal's Safe Internet Line: 800 21 90 90 (free and confidential)!"
     },
     "teaser": {
       "pt": "Se algo correr mal online, existe uma equipa simpática pronta para te ajudar.",
-      "en": "Se algo correr mal online, existe uma equipa simpática pronta para te ajudar."
+      "en": "If something goes wrong online, there is a friendly team ready to help you."
     },
     "description": {
       "pt": "Se vires conteúdos assustadores, sofreres cyberbullying ou tiveres dúvidas sobre a tua segurança, podes ligar gratuitamente para o 800 21 90 90 ou para o SOS Criança (116 111). Nunca guardes medos só para ti!",
-      "en": "Se vires conteúdos assustadores, sofreres cyberbullying ou tiveres dúvidas sobre a tua segurança, podes ligar gratuitamente para o 800 21 90 90 ou para o SOS Criança (116 111). Nunca guardes medos só para ti!"
+      "en": "If you see frightening content, experience cyberbullying, or have concerns about your safety, you can call 800 21 90 90 or SOS Criança (116 111) for free. Never keep your worries to yourself!"
     },
     "whyItMatters": {
       "pt": "Conhecer as linhas de apoio e saber a quem recorrer perante incidentes digitais é fundamental.",
-      "en": "Conhecer as linhas de apoio e saber a quem recorrer perante incidentes digitais é fundamental."
+      "en": "Knowing support lines and knowing who to turn to when digital incidents happen is essential."
     },
     "funFact": {
       "pt": "Lembra-te: falar com os pais ou professores de confiança é sempre o primeiro e melhor passo!",
-      "en": "Lembra-te: falar com os pais ou professores de confiança é sempre o primeiro e melhor passo!"
+      "en": "Remember: talking to a trusted parent or teacher is always the first and best step!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -22361,28 +22361,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Partilha de Palavras-passe",
-      "en": "Partilha de Palavras-passe"
+      "en": "Password Sharing"
     },
     "icon": "🪥",
     "title": {
       "pt": "Como Funciona por Dentro: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!",
-      "en": "How It Works Inside: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!"
+      "en": "How It Works Inside: Passwords are like toothbrushes: you do not lend them to anyone!"
     },
     "teaser": {
       "pt": "Nem ao melhor amigo da turma deves confiar a chave da tua vida digital.",
-      "en": "Nem ao melhor amigo da turma deves confiar a chave da tua vida digital."
+      "en": "Even your best friend in class should not be trusted with the key to your digital life."
     },
     "description": {
       "pt": "A tua palavra-passe é pessoal e intransmissível. Se a emprestares, perdes o controlo sobre quem acede aos teus emails e notas. A única exceção são os teus pais ou encarregados de educação para te protegerem.",
-      "en": "A tua palavra-passe é pessoal e intransmissível. Se a emprestares, perdes o controlo sobre quem acede aos teus emails e notas. A única exceção são os teus pais ou encarregados de educação para te protegerem."
+      "en": "Your password is personal and should not be shared. If you lend it to someone, you lose control over who can access your emails and grades. The exception is your parents or guardians, who may need it to protect you."
     },
     "whyItMatters": {
       "pt": "Responsabilidade e sigilo de credenciais de acesso no ambiente escolar e pessoal.",
-      "en": "Responsabilidade e sigilo de credenciais de acesso no ambiente escolar e pessoal."
+      "en": "Responsible and confidential handling of access credentials at school and in personal life."
     },
     "funFact": {
       "pt": "Se um dia tiveres de introduzir a tua palavra-passe à frente de alguém, tapa o teclado com a outra mão!",
-      "en": "Se um dia tiveres de introduzir a tua palavra-passe à frente de alguém, tapa o teclado com a outra mão!"
+      "en": "If you ever have to enter your password in front of someone, cover the keyboard with your other hand!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -22436,28 +22436,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Netiqueta em Emails",
-      "en": "Netiqueta em Emails"
+      "en": "Email Netiquette"
     },
     "icon": "📢",
     "title": {
       "pt": "Como Funciona por Dentro: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!",
-      "en": "How It Works Inside: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!"
+      "en": "How It Works Inside: Writing in CAPITAL LETTERS in an email is like SHOUTING!"
     },
     "teaser": {
       "pt": "Ao redigir mensagens para professores ou colegas, usa sempre letras maiúsculas e minúsculas normais.",
-      "en": "Ao redigir mensagens para professores ou colegas, usa sempre letras maiúsculas e minúsculas normais."
+      "en": "When writing messages to teachers or classmates, use normal upper- and lower-case letters."
     },
     "description": {
       "pt": "Na etiqueta digital, escrever palavras ou frases inteiras em maiúsculas soa agressivo e irritado. Além disso, blocos de texto em maiúsculas são muito mais difíceis e cansativos de ler no ecrã.",
-      "en": "Na etiqueta digital, escrever palavras ou frases inteiras em maiúsculas soa agressivo e irritado. Além disso, blocos de texto em maiúsculas são muito mais difíceis e cansativos de ler no ecrã."
+      "en": "In digital etiquette, writing whole words or sentences in capital letters can sound aggressive and angry. Blocks of capital letters are also much harder and more tiring to read on screen."
     },
     "whyItMatters": {
       "pt": "Regras de cortesia, pontuação e comunicação assertiva no correio eletrónico.",
-      "en": "Regras de cortesia, pontuação e comunicação assertiva no correio eletrónico."
+      "en": "Rules of courtesy, punctuation, and assertive communication in email."
     },
     "funFact": {
       "pt": "Começa sempre com uma saudação formal (\"Bom dia, Professora\") e termina com assinatura e turma!",
-      "en": "Começa sempre com uma saudação formal (\"Bom dia, Professora\") e termina com assinatura e turma!"
+      "en": "Always start with a polite greeting (\"Good morning, Teacher\") and finish with your name and class!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -22511,28 +22511,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Segurança HTTPS",
-      "en": "Segurança HTTPS"
+      "en": "HTTPS Security"
     },
     "icon": "🔒",
     "title": {
       "pt": "Como Funciona por Dentro: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!",
-      "en": "How It Works Inside: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!"
+      "en": "How It Works Inside: The \"S\" in HTTPS is the invisible safe that encrypts your data!"
     },
     "teaser": {
       "pt": "Nunca introduzas palavras-passe em páginas que comecem apenas por \"http://\" sem o \"s\".",
-      "en": "Nunca introduzas palavras-passe em páginas que comecem apenas por \"http://\" sem o \"s\"."
+      "en": "Never enter passwords on pages that start only with \"http://\" without the \"s\"."
     },
     "description": {
       "pt": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias.",
-      "en": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias."
+      "en": "The \"S\" means Secure. It indicates that the connection between your computer and the website is encrypted using a digital certificate: people on the Wi-Fi network cannot simply read the information you send."
     },
     "whyItMatters": {
       "pt": "Verificação de certificados de segurança e protocolos de navegação segura na Internet.",
-      "en": "Verificação de certificados de segurança e protocolos de navegação segura na Internet."
+      "en": "Checking security certificates and secure browsing protocols on the Internet."
     },
     "funFact": {
       "pt": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!",
-      "en": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!"
+      "en": "More than 95% of modern websites use the HTTPS protocol!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -22591,23 +22591,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🤝",
     "title": {
       "pt": "Como Funciona por Dentro: Creative Commons: o convite amigável para partilhar criatividade com o mundo!",
-      "en": "How It Works Inside: Creative Commons: o convite amigável para partilhar criatividade com o mundo!"
+      "en": "How It Works Inside: Creative Commons: a friendly invitation to share creativity with the world!"
     },
     "teaser": {
       "pt": "Conheces o símbolo com dois \"C\" (CC) que vês na Wikipédia, no Scratch e no YouTube?",
-      "en": "Conheces o símbolo com dois \"C\" (CC) que vês na Wikipédia, no Scratch e no YouTube?"
+      "en": "Do you know the symbol with two \"C\"s (CC) that you see on Wikipedia, Scratch, and YouTube?"
     },
     "description": {
       "pt": "Em 2001, o professor Lawrence Lessig criou as licenças Creative Commons. Elas permitem que autores digam: \"Podes usar a minha música ou foto de graça para o teu trabalho escolar, desde que me dês o devido crédito (CC-BY)! \".",
-      "en": "Em 2001, o professor Lawrence Lessig criou as licenças Creative Commons. Elas permitem que autores digam: \"Podes usar a minha música ou foto de graça para o teu trabalho escolar, desde que me dês o devido crédito (CC-BY)! \"."
+      "en": "In 2001, professor Lawrence Lessig helped create the Creative Commons licences. They let authors say: \"You may use my music or photo for your school project, as long as you give me proper credit (CC-BY)!\""
     },
     "whyItMatters": {
       "pt": "Identificação dos símbolos de partilha Creative Commons (BY, NC, ND, SA) no Tema 7.",
-      "en": "Identificação dos símbolos de partilha Creative Commons (BY, NC, ND, SA) no Tema 7."
+      "en": "Identifying Creative Commons sharing symbols (BY, NC, ND, SA) in Topic 7."
     },
     "funFact": {
       "pt": "A enciclopédia Wikipédia e os projetos remixados no Scratch funcionam sob licenças Creative Commons!",
-      "en": "A enciclopédia Wikipédia e os projetos remixados no Scratch funcionam sob licenças Creative Commons!"
+      "en": "Wikipedia and remixed projects on Scratch can use Creative Commons licences!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -22661,28 +22661,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Linguagem dos Computadores",
-      "en": "Linguagem dos Computadores"
+      "en": "Computer Language"
     },
     "icon": "0️⃣",
     "title": {
       "pt": "Como Funciona por Dentro: Tudo no computador são apenas ZEROS e UNS (0 e 1)!",
-      "en": "How It Works Inside: Tudo no computador são apenas ZEROS e UNS (0 e 1)!"
+      "en": "How It Works Inside: Everything in a computer is represented using ZEROS and ONES (0 and 1)!"
     },
     "teaser": {
       "pt": "Fotos, músicas, jogos 3D e vídeos do YouTube... como é que cabem em apenas dois números?",
-      "en": "Fotos, músicas, jogos 3D e vídeos do YouTube... como é que cabem em apenas dois números?"
+      "en": "Photos, music, 3D games, and YouTube videos... how can they fit into just two numbers?"
     },
     "description": {
       "pt": "Os circuitos do computador funcionam com eletricidade: ou passa corrente (1) ou não passa (0). A este sistema chamamos Código Binário. Combinando 8 zeros e uns (um Byte), o computador consegue representar qualquer letra, som ou cor de um píxel!",
-      "en": "Os circuitos do computador funcionam com eletricidade: ou passa corrente (1) ou não passa (0). A este sistema chamamos Código Binário. Combinando 8 zeros e uns (um Byte), o computador consegue representar qualquer letra, som ou cor de um píxel!"
+      "en": "Computer circuits use electricity: current is represented as 1 and no current as 0. This system is called Binary Code. By combining 8 zeros and ones (one byte), a computer can represent letters, sounds, or pixel colours!"
     },
     "whyItMatters": {
-      "pt": "No 5. º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte.",
-      "en": "No 5. º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte."
+      "pt": "No 5.º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte.",
+      "en": "In 5th grade ICT, we learn the fundamental concept of a bit (Binary Digit) and a byte."
     },
     "funFact": {
       "pt": "A letra \"A\" maiúscula em binário escreve-se assim: 01000001!",
-      "en": "A letra \"A\" maiúscula em binário escreve-se assim: 01000001!"
+      "en": "The capital letter \"A\" in binary is written as 01000001!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -22811,28 +22811,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Netiqueta e Empatia",
-      "en": "Netiqueta e Empatia"
+      "en": "Netiquette and Empathy"
     },
     "icon": "💬",
     "title": {
       "pt": "Como Funciona por Dentro: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!",
-      "en": "How It Works Inside: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!"
+      "en": "How It Works Inside: Netiquette: kindness and respect in messages and virtual classrooms!"
     },
     "teaser": {
       "pt": "Como ser um colega cinco estrelas em grupos de WhatsApp e fóruns da turma?",
-      "en": "Como ser um colega cinco estrelas em grupos de WhatsApp e fóruns da turma?"
+      "en": "How can you be a five-star classmate in WhatsApp groups and class forums?"
     },
     "description": {
       "pt": "Netiqueta é a etiqueta da Net. Significa não insultar, não espalhar boatos, não partilhar fotos de colegas sem autorização expressa deles e respeitar as opiniões diferentes com cordialidade e espírito de equipa.",
-      "en": "Netiqueta é a etiqueta da Net. Significa não insultar, não espalhar boatos, não partilhar fotos de colegas sem autorização expressa deles e respeitar as opiniões diferentes com cordialidade e espírito de equipa."
+      "en": "Netiquette means Internet etiquette. It means not insulting people, spreading rumours, or sharing classmates' photos without their permission, and respecting different opinions with kindness and team spirit."
     },
     "whyItMatters": {
-      "pt": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5. º ano.",
-      "en": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5. º ano."
+      "pt": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5.º ano.",
+      "en": "Promoting peaceful coexistence and combating all forms of cyberbullying in 5th grade."
     },
     "funFact": {
       "pt": "Um emoji sorridente ajuda a demonstrar que a tua mensagem é amigável e sem má intenção!",
-      "en": "Um emoji sorridente ajuda a demonstrar que a tua mensagem é amigável e sem má intenção!"
+      "en": "A smiling emoji can help show that your message is friendly and not meant badly!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -22886,28 +22886,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Autenticação de 2 Fatores",
-      "en": "Autenticação de 2 Fatores"
+      "en": "Two-Factor Authentication"
     },
     "icon": "📲",
     "title": {
       "pt": "Como Funciona por Dentro: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!",
-      "en": "How It Works Inside: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!"
+      "en": "How It Works Inside: Two-Factor Authentication (2FA): the double lock on your digital door!"
     },
     "teaser": {
       "pt": "Mesmo que alguém descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro.",
-      "en": "Mesmo que alguém descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro."
+      "en": "Even if someone discovers your password, a second authentication factor adds an extra layer of protection and makes access much safer."
     },
     "description": {
       "pt": "O 2FA combina algo que sabes (a tua palavra-passe) com algo que tens (um código enviado por SMS ou gerado numa aplicação segura). É a proteção mais recomendada para contas de email e jogos importantes.",
-      "en": "O 2FA combina algo que sabes (a tua palavra-passe) com algo que tens (um código enviado por SMS ou gerado numa aplicação segura). É a proteção mais recomendada para contas de email e jogos importantes."
+      "en": "2FA combines something you know (your password) with something you have (a code sent by SMS or generated by a secure app). It is strongly recommended for important email and gaming accounts."
     },
     "whyItMatters": {
       "pt": "Conhecer mecanismos modernos de autenticação multifator no Tema 4 de TIC.",
-      "en": "Conhecer mecanismos modernos de autenticação multifator no Tema 4 de TIC."
+      "en": "Learning about modern multi-factor authentication mechanisms in ICT Topic 4."
     },
     "funFact": {
       "pt": "É exatamente como o cartão multibanco: precisas do cartão físico e do código PIN para levantar dinheiro!",
-      "en": "É exatamente como o cartão multibanco: precisas do cartão físico e do código PIN para levantar dinheiro!"
+      "en": "It is just like a bank card: you need the physical card and the PIN to withdraw money!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -22961,28 +22961,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Anexos Perigosos",
-      "en": "Anexos Perigosos"
+      "en": "Dangerous Attachments"
     },
     "icon": "📎",
     "title": {
       "pt": "Desafio Escolar: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!",
-      "en": "School Challenge: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!"
+      "en": "School Challenge: Beware of attachments: never open files with suspicious extensions!"
     },
     "teaser": {
       "pt": "Ficheiros como . exe, . bat, . vbs ou ficheiros . zip desconhecidos podem esconder vírus perigosos.",
-      "en": "Ficheiros como . exe, . bat, . vbs ou ficheiros . zip desconhecidos podem esconder vírus perigosos."
+      "en": "Files such as .exe, .bat, .vbs, or unknown .zip files can hide dangerous malware."
     },
     "description": {
       "pt": "Se receberes um email de alguém que não conheces com um anexo que diz \"fatura. exe\" ou \"fotos. zip\", não abras! Os criminosos usam anexos disfarçados para infetar o computador e roubar ficheiros.",
-      "en": "Se receberes um email de alguém que não conheces com um anexo que diz \"fatura. exe\" ou \"fotos. zip\", não abras! Os criminosos usam anexos disfarçados para infetar o computador e roubar ficheiros."
+      "en": "If you receive an email from someone you do not know with an attachment called \"invoice.exe\" or \"photos.zip\", do not open it! Criminals use disguised attachments to infect computers and steal files."
     },
     "whyItMatters": {
       "pt": "Reconhecimento de tipos de ficheiros e extensões seguras (. pdf, . docx, . png) no Tema 5 de TIC.",
-      "en": "Reconhecimento de tipos de ficheiros e extensões seguras (. pdf, . docx, . png) no Tema 5 de TIC."
+      "en": "Recognising file types and safer extensions (.pdf, .docx, .png) in ICT Topic 5."
     },
     "funFact": {
       "pt": "Na dúvida, pede ao teu professor ou pais para analisarem o email com o programa antivírus!",
-      "en": "Na dúvida, pede ao teu professor ou pais para analisarem o email com o programa antivírus!"
+      "en": "When in doubt, ask your teacher or parents to check the email with antivirus software!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -23036,28 +23036,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Combate a Fake News",
-      "en": "Combate a Fake News"
+      "en": "Fighting Fake News"
     },
     "icon": "🕵️‍♀️",
     "title": {
       "pt": "Como Funciona por Dentro: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!",
-      "en": "How It Works Inside: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!"
+      "en": "How It Works Inside: The 3-Question Detective Test against Fake News!"
     },
     "teaser": {
       "pt": "Nem tudo o que está na Internet é verdade! Qualquer pessoa pode publicar invenções.",
-      "en": "Nem tudo o que está na Internet é verdade! Qualquer pessoa pode publicar invenções."
+      "en": "Not everything on the Internet is true! Anyone can publish made-up information."
     },
     "description": {
       "pt": "Antes de usar uma informação num trabalho escolar, pergunta: 1) QUEM escreveu? (É um especialista respeitado? ); 2) QUANDO foi publicado? (É recente ou de há 10 anos? ); 3) OUTROS jornais sérios e enciclopédias confirmam a mesma notícia?",
-      "en": "Antes de usar uma informação num trabalho escolar, pergunta: 1) QUEM escreveu? (É um especialista respeitado? ); 2) QUANDO foi publicado? (É recente ou de há 10 anos? ); 3) OUTROS jornais sérios e enciclopédias confirmam a mesma notícia?"
+      "en": "Before using information in a school project, ask: 1) WHO wrote it? (Are they a respected expert?); 2) WHEN was it published? (Is it recent or 10 years old?); 3) Do other reliable newspapers and encyclopedias confirm the same information?"
     },
     "whyItMatters": {
       "pt": "Literacia da informação e espírito crítico na avaliação de fontes da Web.",
-      "en": "Literacia da informação e espírito crítico na avaliação de fontes da Web."
+      "en": "Information literacy and critical thinking when evaluating Web sources."
     },
     "funFact": {
       "pt": "Em 1998, um biólogo criou o site falso do \"Polvo das Árvores\" para provar como as pessoas acreditam em tudo online!",
-      "en": "Em 1998, um biólogo criou o site falso do \"Polvo das Árvores\" para provar como as pessoas acreditam em tudo online!"
+      "en": "In 1998, a biologist created the fake \"Tree Octopus\" website to show how easily people can believe things online!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -23111,28 +23111,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Citação e Bibliografia",
-      "en": "Citação e Bibliografia"
+      "en": "Citation and Bibliography"
     },
     "icon": "📚",
     "title": {
       "pt": "Como Funciona por Dentro: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!",
-      "en": "How It Works Inside: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!"
+      "en": "How It Works Inside: Citing sources is not weakness: it is the mark of real scientists!"
     },
     "teaser": {
       "pt": "Indicar os livros e sites consultados valoriza o teu trabalho e dá-te notas melhores!",
-      "en": "Indicar os livros e sites consultados valoriza o teu trabalho e dá-te notas melhores!"
+      "en": "Listing the books and websites you consulted adds value to your work and can help you earn better marks!"
     },
     "description": {
       "pt": "Alguns alunos têm vergonha de dizer de onde tiraram a informação, pensando que deviam saber tudo de cabeça. Pelo contrário! Cientistas e historiadores indicam sempre a \"Webgrafia\" no final com autor, título do artigo, link e data de acesso.",
-      "en": "Alguns alunos têm vergonha de dizer de onde tiraram a informação, pensando que deviam saber tudo de cabeça. Pelo contrário! Cientistas e historiadores indicam sempre a \"Webgrafia\" no final com autor, título do artigo, link e data de acesso."
+      "en": "Some students are embarrassed to say where they got information, thinking they should know everything by heart. The opposite is true! Scientists and historians always list their sources at the end, with the author, article title, link, and access date."
     },
     "whyItMatters": {
       "pt": "Elaboração rigorosa de bibliografias e webgrafias de acordo com as normas escolares de TIC.",
-      "en": "Elaboração rigorosa de bibliografias e webgrafias de acordo com as normas escolares de TIC."
+      "en": "Careful preparation of bibliographies and web references according to school ICT guidelines."
     },
     "funFact": {
       "pt": "Grandes cientistas como Einstein e Newton sempre agradeceram publicamente aos autores que leram!",
-      "en": "Grandes cientistas como Einstein e Newton sempre agradeceram publicamente aos autores que leram!"
+      "en": "Great scientists such as Einstein and Newton always publicly acknowledged the authors they read!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -23186,28 +23186,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Periféricos de TIC",
-      "en": "Periféricos de TIC"
+      "en": "ICT Peripherals"
     },
     "icon": "🖨️",
     "title": {
       "pt": "Desafio Escolar: Periféricos: a ponte mágica entre o ser humano e a máquina!",
-      "en": "School Challenge: Periféricos: a ponte mágica entre o ser humano e a máquina!"
+      "en": "School Challenge: Peripherals: the magic bridge between people and machines!"
     },
     "teaser": {
       "pt": "Sabes dizer se os teus auscultadores são de entrada ou de saída de informação?",
-      "en": "Sabes dizer se os teus auscultadores são de entrada ou de saída de informação?"
+      "en": "Can you tell whether your headphones are input or output devices?"
     },
     "description": {
       "pt": "Periféricos de Entrada enviam dados para o computador (rato, teclado, microfone, câmara). Periféricos de Saída mostram o resultado (monitor, colunas de som, impressora). E periféricos Mistos fazem as duas coisas (ecrãs táteis e auscultadores com microfone integrado)!",
-      "en": "Periféricos de Entrada enviam dados para o computador (rato, teclado, microfone, câmara). Periféricos de Saída mostram o resultado (monitor, colunas de som, impressora). E periféricos Mistos fazem as duas coisas (ecrãs táteis e auscultadores com microfone integrado)!"
+      "en": "Input peripherals send data to the computer (mouse, keyboard, microphone, camera). Output peripherals show the result (monitor, speakers, printer). Mixed peripherals do both (touchscreens and headsets with a built-in microphone)!"
     },
     "whyItMatters": {
       "pt": "Classificar periféricos em Entrada, Saída e Mistos é uma das matérias mais importantes do Tema 1.",
-      "en": "Classificar periféricos em Entrada, Saída e Mistos é uma das matérias mais importantes do Tema 1."
+      "en": "Classifying peripherals as Input, Output, and Mixed is one of the most important subjects in Topic 1."
     },
     "funFact": {
       "pt": "Os óculos de realidade virtual são periféricos mistos: mostram imagem e leem o movimento da cabeça!",
-      "en": "Os óculos de realidade virtual são periféricos mistos: mostram imagem e leem o movimento da cabeça!"
+      "en": "Virtual reality headsets are mixed peripherals: they display images and read head movement!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -23261,28 +23261,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Volume e Audição",
-      "en": "Volume e Audição"
+      "en": "Volume and Hearing"
     },
     "icon": "🎧",
     "title": {
       "pt": "Como Funciona por Dentro: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!",
-      "en": "How It Works Inside: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!"
+      "en": "How It Works Inside: The 60/60 rule for headphones: protect your ears for life!"
     },
     "teaser": {
       "pt": "Ouvir música ou jogos aos berros nos fones pode causar danos irreversíveis na audição.",
-      "en": "Ouvir música ou jogos aos berros nos fones pode causar danos irreversíveis na audição."
+      "en": "Listening to music or games at full volume through headphones can cause permanent hearing damage."
     },
     "description": {
       "pt": "Os médicos recomendam a regra dos 60/60: nunca usar auscultadores a mais de 60% do volume máximo, e fazer uma pausa a cada 60 minutos. Se a pessoa ao teu lado consegue ouvir o som dos teus fones, está alto demais!",
-      "en": "Os médicos recomendam a regra dos 60/60: nunca usar auscultadores a mais de 60% do volume máximo, e fazer uma pausa a cada 60 minutos. Se a pessoa ao teu lado consegue ouvir o som dos teus fones, está alto demais!"
+      "en": "Doctors recommend the 60/60 rule: never use headphones above 60% of maximum volume, and take a break every 60 minutes. If the person next to you can hear your headphones, the volume is too high!"
     },
     "whyItMatters": {
       "pt": "O bem-estar e a saúde no uso de periféricos de som fazem parte do programa curricular de TIC.",
-      "en": "O bem-estar e a saúde no uso de periféricos de som fazem parte do programa curricular de TIC."
+      "en": "Well-being and health when using audio peripherals are part of the ICT curriculum."
     },
     "funFact": {
       "pt": "As pequenas células ciliadas do ouvido interno não se regeneram se forem destruídas por som estridente!",
-      "en": "As pequenas células ciliadas do ouvido interno não se regeneram se forem destruídas por som estridente!"
+      "en": "The tiny hair cells in the inner ear do not grow back if they are destroyed by very loud sound!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -23336,28 +23336,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Localização GPS",
-      "en": "Localização GPS"
+      "en": "GPS Location"
     },
     "icon": "📍",
     "title": {
       "pt": "Como Funciona por Dentro: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!",
-      "en": "How It Works Inside: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!"
+      "en": "How It Works Inside: Beware of geolocation: your photos may contain hidden coordinates!"
     },
     "teaser": {
       "pt": "Sabias que as fotos do telemóvel podem guardar a latitude e longitude exatas de onde foram tiradas?",
-      "en": "Sabias que as fotos do telemóvel podem guardar a latitude e longitude exatas de onde foram tiradas?"
+      "en": "Did you know that phone photos can store the exact latitude and longitude where they were taken?"
     },
     "description": {
       "pt": "Os metadados EXIF guardam a data, modelo da câmara e a localização GPS da foto. Antes de publicar fotos publicamente, é aconselhável desligar a geolocalização nas definições da câmara para ninguém descobrir onde vives.",
-      "en": "Os metadados EXIF guardam a data, modelo da câmara e a localização GPS da foto. Antes de publicar fotos publicamente, é aconselhável desligar a geolocalização nas definições da câmara para ninguém descobrir onde vives."
+      "en": "EXIF metadata can store the date, camera model, and GPS location of a photo. Before publishing photos publicly, it is a good idea to turn off geolocation in the camera settings so people cannot discover where you live."
     },
     "whyItMatters": {
       "pt": "No Tema 3 aprendemos como funcionam os dados invisíveis que os dispositivos anexam aos ficheiros.",
-      "en": "No Tema 3 aprendemos como funcionam os dados invisíveis que os dispositivos anexam aos ficheiros."
+      "en": "In Topic 3, we learn how invisible data can be attached to files by devices."
     },
     "funFact": {
       "pt": "Fotos tiradas dentro de casa nunca devem mostrar janelas com placas do nome da rua ou números de polícia!",
-      "en": "Fotos tiradas dentro de casa nunca devem mostrar janelas com placas do nome da rua ou números de polícia!"
+      "en": "Photos taken inside your home should never show windows with street-name signs or house numbers!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -23411,28 +23411,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Gestores de Palavras-passe",
-      "en": "Gestores de Palavras-passe"
+      "en": "Password Managers"
     },
     "icon": "🗄️",
     "title": {
       "pt": "Desafio Escolar: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!",
-      "en": "School Challenge: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!"
+      "en": "School Challenge: Never reuse the same password on every website and app!"
     },
     "teaser": {
       "pt": "Se um site de jogos sofrer uma fuga de informação, a tua conta de email também fica em risco.",
-      "en": "Se um site de jogos sofrer uma fuga de informação, a tua conta de email também fica em risco."
+      "en": "If a gaming website suffers a data breach, your email account may also be at risk."
     },
     "description": {
       "pt": "Quando usas a mesma palavra-passe em todo o lado, basta um site ter falhas de segurança para os criminosos tentarem entrar nas tuas restantes contas. Usa palavras-passe diferentes ou um gestor de palavras-passe protegido.",
-      "en": "Quando usas a mesma palavra-passe em todo o lado, basta um site ter falhas de segurança para os criminosos tentarem entrar nas tuas restantes contas. Usa palavras-passe diferentes ou um gestor de palavras-passe protegido."
+      "en": "When you use the same password everywhere, one security failure can give criminals a chance to try your password on your other accounts. Use different passwords or a protected password manager."
     },
     "whyItMatters": {
-      "pt": "Higiene e diversificação de credenciais em plataformas digitais no 5. º ano.",
-      "en": "Higiene e diversificação de credenciais em plataformas digitais no 5. º ano."
+      "pt": "Higiene e diversificação de credenciais em plataformas digitais no 5.º ano.",
+      "en": "Good credential hygiene and password diversification in digital platforms in 5th grade."
     },
     "funFact": {
       "pt": "Podes usar gestores de palavras-passe seguros integrados nos navegadores com a ajuda dos teus pais!",
-      "en": "Podes usar gestores de palavras-passe seguros integrados nos navegadores com a ajuda dos teus pais!"
+      "en": "You can use secure password managers built into browsers with help from your parents!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -23486,28 +23486,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Phishing por Email",
-      "en": "Phishing por Email"
+      "en": "Email Phishing"
     },
     "icon": "🎣",
     "title": {
       "pt": "Como Funciona por Dentro: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!",
-      "en": "How It Works Inside: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!"
+      "en": "How It Works Inside: Phishing: the digital \"fisher\" trying to steal your password!"
     },
     "teaser": {
       "pt": "\"A sua conta vai ser apagada em 24 horas! Clique aqui urgente! \" — É Phishing!",
-      "en": "\"A sua conta vai ser apagada em 24 horas! Clique aqui urgente! \" — É Phishing!"
+      "en": "\"Your account will be deleted in 24 hours! Click here urgently!\" — That is phishing!"
     },
     "description": {
       "pt": "O termo vem de \"fishing\" (pesca). Os burlões lançam um isco assustador para te fazer clicar num link falso que imita a tua escola ou banco. Repara com atenção no endereço do remetente: costuma ter erros estranhos!",
-      "en": "O termo vem de \"fishing\" (pesca). Os burlões lançam um isco assustador para te fazer clicar num link falso que imita a tua escola ou banco. Repara com atenção no endereço do remetente: costuma ter erros estranhos!"
+      "en": "The term comes from \"fishing\". Scammers use a frightening bait to make you click a fake link that imitates your school or bank. Look carefully at the sender's address: it often contains strange mistakes!"
     },
     "whyItMatters": {
       "pt": "Identificação de sinais de alerta em emails fraudulentos e mensagens de phishing.",
-      "en": "Identificação de sinais de alerta em emails fraudulentos e mensagens de phishing."
+      "en": "Identifying warning signs in fraudulent emails and phishing messages."
     },
     "funFact": {
       "pt": "Nenhum serviço legítimo te ameaça com fecho imediato de conta sem contacto oficial prévio!",
-      "en": "Nenhum serviço legítimo te ameaça com fecho imediato de conta sem contacto oficial prévio!"
+      "en": "No legitimate service threatens to close your account immediately without prior official contact!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -23561,28 +23561,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Aranhas da Web",
-      "en": "Aranhas da Web"
+      "en": "Web Spiders"
     },
     "icon": "🕷️",
     "title": {
       "pt": "Desafio Escolar: As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!",
-      "en": "School Challenge: As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!"
+      "en": "School Challenge: The invisible \"spiders\" of the Internet that crawl the Web while you sleep!"
     },
     "teaser": {
       "pt": "Como é que o motor de busca sabe o que existe em milhares de milhões de sites?",
-      "en": "Como é que o motor de busca sabe o que existe em milhares de milhões de sites?"
+      "en": "How does a search engine know what exists across billions of websites?"
     },
     "description": {
       "pt": "Os motores de busca usam programas automáticos chamados rastreadores Web (web crawlers ou spiders). Elas viajam de link em link dia e noite, lendo o conteúdo das páginas e organizando uma biblioteca gigante chamada Índice.",
-      "en": "Os motores de busca usam programas automáticos chamados rastreadores Web (web crawlers ou spiders). Elas viajam de link em link dia e noite, lendo o conteúdo das páginas e organizando uma biblioteca gigante chamada Índice."
+      "en": "Search engines use automatic programs called web crawlers or spiders. They travel from link to link day and night, reading page content and organising a giant library called an index."
     },
     "whyItMatters": {
       "pt": "Compreender como a informação é indexada e recuperada nos motores de pesquisa.",
-      "en": "Compreender como a informação é indexada e recuperada nos motores de pesquisa."
+      "en": "Understanding how information is indexed and retrieved by search engines."
     },
     "funFact": {
       "pt": "O Google começou com um robô de busca criado por dois estudantes de doutoramento em Stanford em 1996!",
-      "en": "O Google começou com um robô de busca criado por dois estudantes de doutoramento em Stanford em 1996!"
+      "en": "Google began with a search robot created by two Stanford graduate students in 1996!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -23636,28 +23636,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Domínio Público",
-      "en": "Domínio Público"
+      "en": "Public Domain"
     },
     "icon": "🏛️",
     "title": {
       "pt": "Desafio Escolar: O que é o Domínio Público? O tesouro cultural que pertence a toda a humanidade!",
-      "en": "School Challenge: O que é o Domínio Público? O tesouro cultural que pertence a toda a humanidade!"
+      "en": "School Challenge: What is the Public Domain? Cultural treasure that belongs to everyone!"
     },
     "teaser": {
       "pt": "Sabias que podes usar quadros de Leonardo da Vinci e músicas de Mozart sem pedir licença?",
-      "en": "Sabias que podes usar quadros de Leonardo da Vinci e músicas de Mozart sem pedir licença?"
+      "en": "Did you know you can use paintings by Leonardo da Vinci and music by Mozart without asking for copyright permission?"
     },
     "description": {
       "pt": "Uma obra no domínio público pode, em geral, ser utilizada e partilhada sem pedir autorização por direitos de autor.",
-      "en": "Uma obra no domínio público pode, em geral, ser utilizada e partilhada sem pedir autorização por direitos de autor."
+      "en": "A work in the public domain can generally be used and shared without asking for copyright permission."
     },
     "whyItMatters": {
       "pt": "Compreensão dos prazos de proteção de direitos de autor e acesso ao património comum.",
-      "en": "Compreensão dos prazos de proteção de direitos de autor e acesso ao património comum."
+      "en": "Understanding copyright protection periods and access to the common cultural heritage."
     },
     "funFact": {
       "pt": "As primeiras versões do Rato Mickey dos anos 20 entraram recentemente no Domínio Público!",
-      "en": "As primeiras versões do Rato Mickey dos anos 20 entraram recentemente no Domínio Público!"
+      "en": "The earliest Mickey Mouse versions from the 1920s recently entered the public domain!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -23711,28 +23711,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "História do Rato",
-      "en": "História do Rato"
+      "en": "History of the Mouse"
     },
     "icon": "🖱️",
     "title": {
       "pt": "Como Funciona por Dentro: O primeiro rato do mundo foi feito de madeira com rodas de metal!",
-      "en": "How It Works Inside: O primeiro rato do mundo foi feito de madeira com rodas de metal!"
+      "en": "How It Works Inside: The world's first computer mouse was made of wood with metal wheels!"
     },
     "teaser": {
       "pt": "Inventado em 1964 por Douglas Engelbart, tinha apenas um botão vermelho no topo.",
-      "en": "Inventado em 1964 por Douglas Engelbart, tinha apenas um botão vermelho no topo."
+      "en": "Invented in 1964 by Douglas Engelbart, it had just one red button on top."
     },
     "description": {
       "pt": "Antes do rato, para abrir um ficheiro era preciso escrever linhas de código difíceis num teclado. Engelbart inventou uma caixinha de madeira com duas rodas em baixo para mover uma setinha no ecrã e facilitar o uso para qualquer pessoa!",
-      "en": "Antes do rato, para abrir um ficheiro era preciso escrever linhas de código difíceis num teclado. Engelbart inventou uma caixinha de madeira com duas rodas em baixo para mover uma setinha no ecrã e facilitar o uso para qualquer pessoa!"
+      "en": "Before the mouse, opening a file meant typing difficult lines of code on a keyboard. Engelbart invented a small wooden box with two wheels underneath to move an arrow on the screen and make computers easier for people to use!"
     },
     "whyItMatters": {
       "pt": "Estudamos a evolução das interfaces gráficas (GUI) e periféricos no 1. º tema de TIC.",
-      "en": "Estudamos a evolução das interfaces gráficas (GUI) e periféricos no 1. º tema de TIC."
+      "en": "We study the evolution of graphical user interfaces (GUIs) and peripherals in ICT Topic 1."
     },
     "funFact": {
       "pt": "Recebeu o nome de rato porque o cabo que saía da parte de trás parecia uma cauda!",
-      "en": "Recebeu o nome de rato porque o cabo que saía da parte de trás parecia uma cauda!"
+      "en": "It was called a mouse because the cable coming out of the back looked like a tail!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -23786,28 +23786,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Mochila Escolar",
-      "en": "Mochila Escolar"
+      "en": "School Backpack"
     },
     "icon": "🎒",
     "title": {
       "pt": "Como Funciona por Dentro: O peso da mochila não deve ultrapassar 10% do teu peso corporal!",
-      "en": "How It Works Inside: O peso da mochila não deve ultrapassar 10% do teu peso corporal!"
+      "en": "How It Works Inside: The weight of your backpack should not exceed 10% of your body weight!"
     },
     "teaser": {
       "pt": "Levar o computador portátil e cadernos pesados nas costas exige bons hábitos de organização.",
-      "en": "Levar o computador portátil e cadernos pesados nas costas exige bons hábitos de organização."
+      "en": "Carrying a laptop and heavy notebooks on your back requires good organisational habits."
     },
     "description": {
       "pt": "Se pesas 40 kg, a tua mochila não devia pesar mais do que 4 kg! Coloca os objetos mais pesados colados às costas e usa sempre as duas alças bem ajustadas, nunca pendurada num ombro só.",
-      "en": "Se pesas 40 kg, a tua mochila não devia pesar mais do que 4 kg! Coloca os objetos mais pesados colados às costas e usa sempre as duas alças bem ajustadas, nunca pendurada num ombro só."
+      "en": "If you weigh 40 kg, your backpack should not weigh more than 4 kg! Put the heaviest items close to your back and always use both straps, adjusted properly, never hanging from one shoulder."
     },
     "whyItMatters": {
       "pt": "A ergonomia estende-se ao transporte de materiais escolares e tecnologias portáteis.",
-      "en": "A ergonomia estende-se ao transporte de materiais escolares e tecnologias portáteis."
+      "en": "Ergonomics also applies to carrying school materials and portable technology."
     },
     "funFact": {
       "pt": "Uma mochila desregulada pode causar desvios na coluna como a escoliose na adolescência!",
-      "en": "Uma mochila desregulada pode causar desvios na coluna como a escoliose na adolescência!"
+      "en": "An improperly adjusted backpack can contribute to spinal problems such as scoliosis during adolescence!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -23861,7 +23861,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Câmaras e Microfones",
-      "en": "Câmaras e Microfones"
+      "en": "Cameras and Microphones"
     },
     "icon": "📹",
     "title": {
@@ -23936,28 +23936,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Post-its no Monitor",
-      "en": "Post-its no Monitor"
+      "en": "Post-it Notes on the Monitor"
     },
     "icon": "📝",
     "title": {
       "pt": "Como Funciona por Dentro: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!",
-      "en": "How It Works Inside: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!"
+      "en": "How It Works Inside: The classic mistake: sticking notes with your password on the computer screen!"
     },
     "teaser": {
       "pt": "Escrever a palavra-passe num post-it amarelo e colar no monitor é como deixar a chave na fechadura.",
-      "en": "Escrever a palavra-passe num post-it amarelo e colar no monitor é como deixar a chave na fechadura."
+      "en": "Writing your password on a yellow Post-it and sticking it to the monitor is like leaving the key in the lock."
     },
     "description": {
       "pt": "Qualquer colega ou pessoa que passe pela secretária consegue ver e anotar a tua palavra-passe num instante. Guarda as tuas credenciais de memória ou em ferramentas digitais encriptadas e protegidas.",
-      "en": "Qualquer colega ou pessoa que passe pela secretária consegue ver e anotar a tua palavra-passe num instante. Guarda as tuas credenciais de memória ou em ferramentas digitais encriptadas e protegidas."
+      "en": "Any classmate or person passing your desk can see and write down your password in seconds. Keep your credentials in memory or in encrypted, protected digital tools."
     },
     "whyItMatters": {
       "pt": "Práticas de segurança física e lógica no manuseamento de acessos no computador.",
-      "en": "Práticas de segurança física e lógica no manuseamento de acessos no computador."
+      "en": "Physical and logical security practices when handling computer access."
     },
     "funFact": {
       "pt": "Nos escritórios e bancos, é estritamente proibido ter papéis com palavras-passe à vista na secretária!",
-      "en": "Nos escritórios e bancos, é estritamente proibido ter papéis com palavras-passe à vista na secretária!"
+      "en": "In offices and banks, having passwords written on visible notes on the desk is strictly forbidden!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -24011,28 +24011,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "O Campo Assunto",
-      "en": "O Campo Assunto"
+      "en": "The Subject Field"
     },
     "icon": "🏷️",
     "title": {
       "pt": "Como Funciona por Dentro: Nunca envies um email com o campo \"Assunto\" vazio!",
-      "en": "How It Works Inside: Nunca envies um email com o campo \"Assunto\" vazio!"
+      "en": "How It Works Inside: Never send an email with the \"Subject\" field empty!"
     },
     "teaser": {
       "pt": "O Assunto deve resumir em poucas palavras o objetivo exato da mensagem.",
-      "en": "O Assunto deve resumir em poucas palavras o objetivo exato da mensagem."
+      "en": "The Subject should summarise the exact purpose of the message in a few words."
     },
     "description": {
-      "pt": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5. º B\".",
-      "en": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5. º B\"."
+      "pt": "Enviar um email sem assunto é como entregar uma carta dentro de um envelope completamente em branco. Escreve um assunto claro, por exemplo: \"Trabalho de TIC - Tema 5 - João Silva N. º 12 - 5.º B\".",
+      "en": "Sending an email without a subject is like handing someone a letter inside a completely blank envelope. Write a clear subject, for example: \"ICT Project - Topic 5 - João Silva No. 12 - 5th B\"."
     },
     "whyItMatters": {
       "pt": "Composição correta dos elementos essenciais de uma mensagem de correio eletrónico.",
-      "en": "Composição correta dos elementos essenciais de uma mensagem de correio eletrónico."
+      "en": "Correct composition of the essential elements of an email message."
     },
     "funFact": {
       "pt": "Emails sem assunto vão frequentemente parar à pasta de Spam ou Lixo Eletrónico de forma automática!",
-      "en": "Emails sem assunto vão frequentemente parar à pasta de Spam ou Lixo Eletrónico de forma automática!"
+      "en": "Emails without a subject often end up automatically in the Spam or Junk folder!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -24063,7 +24063,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Um assunto claro como 'Trabalho de TIC - 5. º A - João Silva' ajuda a professora a responder rápido!",
+      "pt": "Um assunto claro como 'Trabalho de TIC - 5.º A - João Silva' ajuda a professora a responder rápido!",
       "en": "A clear subject line like 'ICT Project - Class 5A - John Doe' helps teachers respond fast!"
     }
   },
@@ -24086,28 +24086,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Histórico e Cookies",
-      "en": "Histórico e Cookies"
+      "en": "History and Cookies"
     },
     "icon": "🍪",
     "title": {
       "pt": "Como Funciona por Dentro: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!",
-      "en": "How It Works Inside: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!"
+      "en": "How It Works Inside: Cookies on the Internet: they are not chocolate biscuits, but small text notes!"
     },
     "teaser": {
       "pt": "Porque é que todos os sites perguntam se aceitas cookies?",
-      "en": "Porque é que todos os sites perguntam se aceitas cookies?"
+      "en": "Why do all websites ask whether you accept cookies?"
     },
     "description": {
       "pt": "Um cookie é um pequeno ficheiro de texto que o site guarda no teu navegador para se lembrar de quem és, que língua preferes ou que itens tens no carrinho de compras. Cookies de terceiros podem seguir a tua navegação entre sites.",
-      "en": "Um cookie é um pequeno ficheiro de texto que o site guarda no teu navegador para se lembrar de quem és, que língua preferes ou que itens tens no carrinho de compras. Cookies de terceiros podem seguir a tua navegação entre sites."
+      "en": "A cookie is a small text file that a website stores in your browser to remember who you are, your preferred language, or items in your shopping cart. Third-party cookies can track your browsing across websites."
     },
     "whyItMatters": {
       "pt": "Gestão de privacidade, cookies e limpeza de histórico de navegação no Tema 6 de TIC.",
-      "en": "Gestão de privacidade, cookies e limpeza de histórico de navegação no Tema 6 de TIC."
+      "en": "Managing privacy, cookies, and clearing browsing history in ICT Topic 6."
     },
     "funFact": {
       "pt": "O nome \"cookie\" foi inspirado nos \"biscoitos da sorte\" chineses que trazem uma mensagem secreta dentro!",
-      "en": "O nome \"cookie\" foi inspirado nos \"biscoitos da sorte\" chineses que trazem uma mensagem secreta dentro!"
+      "en": "The name \"cookie\" was inspired by fortune cookies that contain a hidden message!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -24161,28 +24161,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Música e Sons Livres",
-      "en": "Música e Sons Livres"
+      "en": "Free Music and Sounds"
     },
     "icon": "🎵",
     "title": {
       "pt": "Como Funciona por Dentro: Bancos de som e música livre para os teus vídeos e jogos no Scratch!",
-      "en": "How It Works Inside: Bancos de som e música livre para os teus vídeos e jogos no Scratch!"
+      "en": "How It Works Inside: Free music and sound libraries for your videos and Scratch games!"
     },
     "teaser": {
       "pt": "Usar músicas famosas da rádio no teu vídeo do YouTube pode fazer o vídeo ser bloqueado.",
-      "en": "Usar músicas famosas da rádio no teu vídeo do YouTube pode fazer o vídeo ser bloqueado."
+      "en": "Using famous radio music in your YouTube video may cause the video to be blocked."
     },
     "description": {
       "pt": "Plataformas de vídeo usam algoritmos automáticos de reconhecimento de áudio que bloqueiam músicas protegidas por direitos comerciais. Usa bancos de áudio livres como a YouTube Audio Library ou sons de Domínio Público.",
-      "en": "Plataformas de vídeo usam algoritmos automáticos de reconhecimento de áudio que bloqueiam músicas protegidas por direitos comerciais. Usa bancos de áudio livres como a YouTube Audio Library ou sons de Domínio Público."
+      "en": "Video platforms use automatic audio-recognition systems that can block music protected by commercial copyright. Use free audio libraries such as the YouTube Audio Library or public-domain sounds."
     },
     "whyItMatters": {
       "pt": "Pesquisa e integração ética de recursos multimédia em projetos digitais escolares.",
-      "en": "Pesquisa e integração ética de recursos multimédia em projetos digitais escolares."
+      "en": "Ethical research and integration of multimedia resources in school digital projects."
     },
     "funFact": {
       "pt": "Muitos músicos famosos gravam canções e lançam-nas voluntariamente sob a licença livre CC0!",
-      "en": "Muitos músicos famosos gravam canções e lançam-nas voluntariamente sob a licença livre CC0!"
+      "en": "Many musicians release songs voluntarily under free licences such as CC0!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -24236,28 +24236,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Robótica e Exploração",
-      "en": "Robótica e Exploração"
+      "en": "Robotics and Exploration"
     },
     "icon": "🤖",
     "title": {
       "pt": "Como Funciona por Dentro: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!",
-      "en": "How It Works Inside: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!"
+      "en": "How It Works Inside: Robots on Mars: scientists drive rovers millions of kilometres from Earth!"
     },
     "teaser": {
       "pt": "Os robôs Curiosity e Perseverance usam computadores de bordo para analisar rochas em Marte.",
-      "en": "Os robôs Curiosity e Perseverance usam computadores de bordo para analisar rochas em Marte."
+      "en": "The Curiosity and Perseverance robots use onboard computers to analyse rocks on Mars."
     },
     "description": {
       "pt": "Os sinais de rádio demoram até 20 minutos a viajar da Terra até Marte! Por isso, os robôs marcianos têm de ter inteligência a bordo para evitar rochas e buracos sozinhos sem esperar pela resposta imediata dos cientistas.",
-      "en": "Os sinais de rádio demoram até 20 minutos a viajar da Terra até Marte! Por isso, os robôs marcianos têm de ter inteligência a bordo para evitar rochas e buracos sozinhos sem esperar pela resposta imediata dos cientistas."
+      "en": "Radio signals can take up to 20 minutes to travel from Earth to Mars! That is why Mars rovers need onboard systems to avoid rocks and holes without waiting for an immediate response from scientists."
     },
     "whyItMatters": {
       "pt": "Exploramos como a robótica e a automação transformam a ciência e a sociedade moderna.",
-      "en": "Exploramos como a robótica e a automação transformam a ciência e a sociedade moderna."
+      "en": "We explore how robotics and automation transform modern science and society."
     },
     "funFact": {
       "pt": "O rover Perseverance tem um pequeno helicóptero chamado Ingenuity que voou na atmosfera rarefeita de Marte!",
-      "en": "O rover Perseverance tem um pequeno helicóptero chamado Ingenuity que voou na atmosfera rarefeita de Marte!"
+      "en": "The Perseverance rover has a small helicopter called Ingenuity that flew in Mars's thin atmosphere!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -24311,28 +24311,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Iluminação do Espaço",
-      "en": "Iluminação do Espaço"
+      "en": "Lighting the Workspace"
     },
     "icon": "💡",
     "title": {
       "pt": "Como Funciona por Dentro: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!",
-      "en": "How It Works Inside: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!"
+      "en": "How It Works Inside: Avoid screen glare: the window should never be directly behind you!"
     },
     "teaser": {
       "pt": "Como deves orientar a tua mesa de computador em relação à luz natural da janela?",
-      "en": "Como deves orientar a tua mesa de computador em relação à luz natural da janela?"
+      "en": "How should you position your computer desk in relation to natural window light?"
     },
     "description": {
       "pt": "Se a janela ficar diretamente atrás de ti, o sol cria reflexos ofuscantes no ecrã. Se ficar mesmo atrás do monitor, ficas encandeado. O ideal é a luz natural entrar de lado em relação à mesa de trabalho.",
-      "en": "Se a janela ficar diretamente atrás de ti, o sol cria reflexos ofuscantes no ecrã. Se ficar mesmo atrás do monitor, ficas encandeado. O ideal é a luz natural entrar de lado em relação à mesa de trabalho."
+      "en": "If the window is directly behind you, sunlight can create glare on the screen. If it is directly behind the monitor, you may be dazzled. Ideally, natural light should enter from the side of the desk."
     },
     "whyItMatters": {
       "pt": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado.",
-      "en": "No Tema 2 aprendemos a organizar um posto de trabalho agradável, bem iluminado e arejado."
+      "en": "In Topic 2, we learn to organise a pleasant, well-lit, and well-ventilated workstation."
     },
     "funFact": {
       "pt": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!",
-      "en": "Manter a sala arejada ajuda a renovar o oxigénio e melhora o teu bem-estar e concentração ao usar o computador!"
+      "en": "Keeping the room ventilated helps renew the air and can improve your comfort and concentration when using a computer!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -24386,28 +24386,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Engenharia Social",
-      "en": "Engenharia Social"
+      "en": "Social Engineering"
     },
     "icon": "🎣",
     "title": {
       "pt": "Como Funciona por Dentro: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!",
-      "en": "How It Works Inside: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!"
+      "en": "How It Works Inside: Beware the bait: \"Free Coins\" offers in games are almost always traps!"
     },
     "teaser": {
       "pt": "\"Clica aqui para ganhares 10. 000 Robux ou V-Bucks de graça! \" — Desconfia sempre!",
-      "en": "\"Clica aqui para ganhares 10. 000 Robux ou V-Bucks de graça! \" — Desconfia sempre!"
+      "en": "\"Click here to get 10,000 Robux or V-Bucks for free!\" — Always be suspicious!"
     },
     "description": {
       "pt": "Cibercriminosos usam sites falsos com promessas de moedas virtuais grátis para roubar palavras-passe e contas. A regra é simples: se parece bom demais para ser verdade, desconfia. Pode ser uma tentativa de fraude.",
-      "en": "Cibercriminosos usam sites falsos com promessas de moedas virtuais grátis para roubar palavras-passe e contas. A regra é simples: se parece bom demais para ser verdade, desconfia. Pode ser uma tentativa de fraude."
+      "en": "Cybercriminals use fake websites promising free virtual coins to steal passwords and accounts. The rule is simple: if it looks too good to be true, be suspicious. It may be an attempted scam."
     },
     "whyItMatters": {
       "pt": "Identificação de técnicas básicas de engenharia social e enganos virtuais.",
-      "en": "Identificação de técnicas básicas de engenharia social e enganos virtuais."
+      "en": "Identifying basic social-engineering techniques and online deception."
     },
     "funFact": {
       "pt": "As empresas oficiais dos jogos nunca pedem a tua palavra-passe para te darem prémios!",
-      "en": "As empresas oficiais dos jogos nunca pedem a tua palavra-passe para te darem prémios!"
+      "en": "Official game companies never ask for your password to give you prizes!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -24461,28 +24461,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Bloqueio de Sessão",
-      "en": "Bloqueio de Sessão"
+      "en": "Session Lock"
     },
     "icon": "🔒",
     "title": {
       "pt": "Como Funciona por Dentro: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!",
-      "en": "How It Works Inside: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!"
+      "en": "How It Works Inside: Ninja shortcut: Windows key + L locks the screen in 1 second!"
     },
     "teaser": {
       "pt": "Vais ao intervalo ou à casa de banho na sala de informática? Bloqueia a sessão!",
-      "en": "Vais ao intervalo ou à casa de banho na sala de informática? Bloqueia a sessão!"
+      "en": "Going to break or to the bathroom in the computer room? Lock your session!"
     },
     "description": {
       "pt": "No Windows, pressionar a tecla Windows junto com a letra \"L\" bloqueia o ecrã instantaneamente. Assim ninguém mexe no teu trabalho escolar enquanto estás ausente da sala de aula.",
-      "en": "No Windows, pressionar a tecla Windows junto com a letra \"L\" bloqueia o ecrã instantaneamente. Assim ninguém mexe no teu trabalho escolar enquanto estás ausente da sala de aula."
+      "en": "On Windows, pressing the Windows key together with the letter \"L\" locks the screen instantly. This stops other people from using your schoolwork while you are away from the classroom."
     },
     "whyItMatters": {
       "pt": "Utilização correta dos atalhos de sistema operativo para proteger sessões de utilizador.",
-      "en": "Utilização correta dos atalhos de sistema operativo para proteger sessões de utilizador."
+      "en": "Correct use of operating-system shortcuts to protect user sessions."
     },
     "funFact": {
       "pt": "No computador Mac da Apple, o atalho equivalente é Control + Command + Q!",
-      "en": "No computador Mac da Apple, o atalho equivalente é Control + Command + Q!"
+      "en": "On an Apple Mac, the equivalent shortcut is Control + Command + Q!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -24536,28 +24536,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Spam e Cadeias",
-      "en": "Spam e Cadeias"
+      "en": "Spam and Chain Messages"
     },
     "icon": "🗑️",
     "title": {
       "pt": "Como Funciona por Dentro: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!",
-      "en": "How It Works Inside: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!"
+      "en": "How It Works Inside: The origin of the word \"SPAM\": a canned meat brand made famous in the 1970s!"
     },
     "teaser": {
       "pt": "Mensagens publicitárias não solicitadas receberam o nome de uma comida enlatada!",
-      "en": "Mensagens publicitárias não solicitadas receberam o nome de uma comida enlatada!"
+      "en": "Unwanted advertising messages were named after a canned food!"
     },
     "description": {
       "pt": "A palavra SPAM era originalmente o nome de uma marca de carne enlatada. Ficou famosa num programa de humor dos Monty Python, onde a palavra era repetida sem parar, inspirando mais tarde o uso do termo para mensagens indesejadas em massa.",
-      "en": "A palavra SPAM era originalmente o nome de uma marca de carne enlatada. Ficou famosa num programa de humor dos Monty Python, onde a palavra era repetida sem parar, inspirando mais tarde o uso do termo para mensagens indesejadas em massa."
+      "en": "The word SPAM was originally the name of a canned meat brand. It became famous in a Monty Python comedy sketch where the word was repeated over and over, later inspiring the term for unwanted mass messages."
     },
     "whyItMatters": {
       "pt": "Gestão de pastas de correio: Caixa de Entrada, Itens Enviados, Rascunhos e Spam.",
-      "en": "Gestão de pastas de correio: Caixa de Entrada, Itens Enviados, Rascunhos e Spam."
+      "en": "Managing email folders: Inbox, Sent Items, Drafts, and Spam."
     },
     "funFact": {
       "pt": "Cartas em cadeia que dizem \"Reenvia a 10 amigos ou terás azar\" são mitos falsos: apaga-as logo!",
-      "en": "Cartas em cadeia que dizem \"Reenvia a 10 amigos ou terás azar\" são mitos falsos: apaga-as logo!"
+      "en": "Chain letters saying \"Forward this to 10 friends or you will have bad luck\" are false myths: delete them!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -24611,28 +24611,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Separadores e Janelas",
-      "en": "Separadores e Janelas"
+      "en": "Tabs and Windows"
     },
     "icon": "📑",
     "title": {
       "pt": "Como Funciona por Dentro: Atalhos de mestre no navegador: Control + T abre um novo separador!",
-      "en": "How It Works Inside: Atalhos de mestre no navegador: Control + T abre um novo separador!"
+      "en": "How It Works Inside: Master browser shortcuts: Control + T opens a new tab!"
     },
     "teaser": {
       "pt": "Dominar o teclado faz-te navegar como um verdadeiro profissional de informática.",
-      "en": "Dominar o teclado faz-te navegar como um verdadeiro profissional de informática."
+      "en": "Mastering the keyboard helps you browse like a real computer professional."
     },
     "description": {
       "pt": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!",
-      "en": "Usa Control + T para abrir um novo separador, Control + W para fechar o separador atual, e se fechares sem querer a página onde estavas, Control + Shift + T reabre milagrosamente o último separador fechado!"
+      "en": "Use Control + T to open a new tab, Control + W to close the current tab, and if you accidentally close the page you were on, Control + Shift + T magically reopens the last closed tab!"
     },
     "whyItMatters": {
       "pt": "Eficiência e atalhos de teclado na navegação Web no dia a dia.",
-      "en": "Eficiência e atalhos de teclado na navegação Web no dia a dia."
+      "en": "Efficiency and keyboard shortcuts for everyday Web browsing."
     },
     "funFact": {
       "pt": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!",
-      "en": "No computador Mac, substitui a tecla Control pela tecla Command nos mesmos atalhos!"
+      "en": "On a Mac, replace the Control key with the Command key in the same shortcuts!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -24686,28 +24686,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Software Livre vs Proprietário",
-      "en": "Software Livre vs Proprietário"
+      "en": "Free vs Proprietary Software"
     },
     "icon": "🐧",
     "title": {
       "pt": "Como Funciona por Dentro: Software Livre: o código aberto onde todos podem aprender e colaborar!",
-      "en": "How It Works Inside: Software Livre: o código aberto onde todos podem aprender e colaborar!"
+      "en": "How It Works Inside: Free Software: open code where everyone can learn and collaborate!"
     },
     "teaser": {
       "pt": "Qual é a diferença entre programas comerciais fechados e aplicações como o Linux e o Scratch?",
-      "en": "Qual é a diferença entre programas comerciais fechados e aplicações como o Linux e o Scratch?"
+      "en": "What is the difference between closed commercial programs and applications such as Linux and Scratch?"
     },
     "description": {
       "pt": "Software Proprietário não permite ver como foi feito por dentro. O Software Livre e de Código Aberto (Open Source) partilha o código para que qualquer estudante ou programador possa estudar, melhorar e partilhar livremente com a comunidade.",
-      "en": "Software Proprietário não permite ver como foi feito por dentro. O Software Livre e de Código Aberto (Open Source) partilha o código para que qualquer estudante ou programador possa estudar, melhorar e partilhar livremente com a comunidade."
+      "en": "Proprietary software does not let you see how it was made internally. Free and Open Source Software shares its source code so students and programmers can study, improve, and share it with the community."
     },
     "whyItMatters": {
       "pt": "Diferença entre licenças de software comercial, freeware, shareware e software livre.",
-      "en": "Diferença entre licenças de software comercial, freeware, shareware e software livre."
+      "en": "The difference between commercial software, freeware, shareware, and free software licences."
     },
     "funFact": {
       "pt": "A mascote do sistema operativo livre Linux é um simpático pinguim chamado Tux!",
-      "en": "A mascote do sistema operativo livre Linux é um simpático pinguim chamado Tux!"
+      "en": "The mascot of the free Linux operating system is a friendly penguin called Tux!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -24761,28 +24761,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Ambiente e Sustentabilidade",
-      "en": "Ambiente e Sustentabilidade"
+      "en": "Environment and Sustainability"
     },
     "icon": "♻️",
     "title": {
       "pt": "Como Funciona por Dentro: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!",
-      "en": "How It Works Inside: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!"
+      "en": "How It Works Inside: Electronic Waste (E-Waste): old computers do not belong in ordinary rubbish!"
     },
     "teaser": {
       "pt": "O que deves fazer quando um telemóvel, teclado ou comando de consola avaria de vez?",
-      "en": "O que deves fazer quando um telemóvel, teclado ou comando de consola avaria de vez?"
+      "en": "What should you do when a phone, keyboard, or game controller breaks for good?"
     },
     "description": {
       "pt": "Os equipamentos de TIC contêm metais preciosos (como ouro, prata e cobre) e substâncias químicas que não podem poluir a natureza. Devem ser entregues no Eletrão ou em lojas com contentores de reciclagem elétrica adequados.",
-      "en": "Os equipamentos de TIC contêm metais preciosos (como ouro, prata e cobre) e substâncias químicas que não podem poluir a natureza. Devem ser entregues no Eletrão ou em lojas com contentores de reciclagem elétrica adequados."
+      "en": "ICT equipment contains valuable metals such as gold, silver, and copper, as well as substances that can harm nature. It should be taken to an authorised e-waste collection point or a shop with suitable electrical recycling containers."
     },
     "whyItMatters": {
-      "pt": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5. º ano.",
-      "en": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5. º ano."
+      "pt": "A cidadania ambiental e a pegada ecológica das TIC fazem parte das metas do 5.º ano.",
+      "en": "Environmental citizenship and the ecological footprint of ICT are part of the 5th-grade goals."
     },
     "funFact": {
       "pt": "Com o circuito de 40 telemóveis reciclados consegue-se recuperar ouro suficiente para fazer uma aliança!",
-      "en": "Com o circuito de 40 telemóveis reciclados consegue-se recuperar ouro suficiente para fazer uma aliança!"
+      "en": "Recycling a batch of 40 mobile phones can recover enough gold to make a wedding ring!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -24836,24 +24836,24 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Pausas Ativas",
-      "en": "Pausas Ativas"
+      "en": "Active Breaks"
     },
     "icon": "🏃‍♂️",
     "title": {
       "pt": "Desafio Escolar: Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!",
-      "en": "School Challenge: Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!"
+      "en": "School Challenge: Quick stretches: stretch your arms and rotate your wrists every hour!"
     },
     "teaser": {
       "pt": "Ficar sentado horas seguidas na mesma posição cansa o corpo mais do que pensas.",
-      "en": "Ficar sentado horas seguidas na mesma posição cansa o corpo mais do que pensas."
+      "en": "Sitting for hours in the same position tires your body more than you might think."
     },
     "description": {
       "pt": "A cada 50 ou 60 minutos de aula ou estudo no computador, levanta-te, caminha até à janela, bebe um copo de água e roda suavemente os pulsos para prevenir dores nas mãos e dedos.",
-      "en": "A cada 50 ou 60 minutos de aula ou estudo no computador, levanta-te, caminha até à janela, bebe um copo de água e roda suavemente os pulsos para prevenir dores nas mãos e dedos."
+      "en": "Every 50 or 60 minutes of a computer lesson or study session, stand up, walk to the window, drink some water, and gently rotate your wrists to help prevent pain in your hands and fingers."
     },
     "whyItMatters": {
-      "pt": "A promoção de estilos de vida ativos e a quebra do sedentarismo são essenciais no 5. º ano.",
-      "en": "A promoção de estilos de vida ativos e a quebra do sedentarismo são essenciais no 5. º ano."
+      "pt": "A promoção de estilos de vida ativos e a quebra do sedentarismo são essenciais no 5.º ano.",
+      "en": "Promoting active lifestyles and breaking up sedentary time are essential in 5th grade."
     },
     "funFact": {
       "pt": "Beber água regularmente hidrata o cérebro e melhora o tempo de resposta em jogos e testes!",
@@ -24911,12 +24911,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Direito à Imagem",
-      "en": "Direito à Imagem"
+      "en": "Right to One's Image"
     },
     "icon": "📸",
     "title": {
       "pt": "Como Funciona por Dentro: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!",
-      "en": "How It Works Inside: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!"
+      "en": "How It Works Inside: Always ask permission before taking or sharing photos of friends!"
     },
     "teaser": {
       "pt": "Cada pessoa é dona da sua própria imagem e tem o direito de não querer ser fotografada.",
@@ -24927,7 +24927,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "Even at school, photographing or filming a classmate and posting it on social media without their consent and their parents' permission is a serious violation of privacy and school rules."
     },
     "whyItMatters": {
-      "pt": "Compreender o direito à imagem e à reserva da intimidade da vida privada no 5. º ano de escolaridade.",
+      "pt": "Compreender o direito à imagem e à reserva da intimidade da vida privada no 5.º ano de escolaridade.",
       "en": "Understanding the right to one's image and the preservation of privacy in the 5th grade."
     },
     "funFact": {
@@ -24986,16 +24986,16 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Biometria",
-      "en": "Biometria"
+      "en": "Biometrics"
     },
     "icon": "👁️",
     "title": {
       "pt": "Como Funciona por Dentro: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade.",
-      "en": "How It Works Inside: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade."
+      "en": "How It Works Inside: Fingerprints and facial recognition: using body characteristics to confirm identity."
     },
     "teaser": {
       "pt": "A biometria utiliza características do corpo, como a impressão digital ou o rosto, para ajudar a confirmar a identidade de uma pessoa.",
-      "en": "A biometria usa caraterísticas físicas únicas que é muito difícil de copiar."
+      "en": "Biometrics use unique physical characteristics that are very difficult to copy."
     },
     "description": {
       "pt": "Sensores biométricos leem as linhas do teu dedo ou a geometria do teu rosto para desbloquear tablets e telemóveis. É rápido, prático e muito mais difícil de adivinhar do que uma palavra-passe de 4 algarismos.",
@@ -25007,7 +25007,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "Nem sequer gémeos verdadeiros têm impressões digitais exatamente idênticas!",
-      "en": "Nem sequer gémeos verdadeiros têm impressões digitais exatamente idênticas!"
+      "en": "Even identical twins do not have exactly the same fingerprints!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -25061,12 +25061,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Responder a Todos",
-      "en": "Responder a Todos"
+      "en": "Reply All"
     },
     "icon": "👥",
     "title": {
       "pt": "Como Funciona por Dentro: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!",
-      "en": "How It Works Inside: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!"
+      "en": "How It Works Inside: Be careful with the \"Reply All\" button: do not fill your classmates’ inboxes!"
     },
     "teaser": {
       "pt": "Se queres responder apenas à professora, clica em \"Responder\" e não em \"Responder a Todos\".",
@@ -25077,7 +25077,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "If the teacher sends an assignment to all 25 students and you reply 'Thank you! ' using 'Reply All', all 25 classmates will receive an unnecessary notification!"
     },
     "whyItMatters": {
-      "pt": "Uso responsável e ponderado das ferramentas de comunicação coletiva no 5. º ano.",
+      "pt": "Uso responsável e ponderado das ferramentas de comunicação coletiva no 5.º ano.",
       "en": "Responsible and thoughtful use of collective communication tools in 5th grade."
     },
     "funFact": {
@@ -25211,12 +25211,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Citação Direta entre Aspas",
-      "en": "Citação Direta entre Aspas"
+      "en": "Direct Quotation in Quotation Marks"
     },
     "icon": "💬",
     "title": {
       "pt": "Como Funciona por Dentro: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?",
-      "en": "How It Works Inside: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?"
+      "en": "How It Works Inside: How can you quote a sentence from a book in a school project without plagiarising?"
     },
     "teaser": {
       "pt": "Se copiares uma frase palavra por palavra, deves colocá-la entre aspas e dizer de quem é!",
@@ -25286,12 +25286,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Hardware Interno",
-      "en": "Hardware Interno"
+      "en": "Internal Hardware"
     },
     "icon": "🧠",
     "title": {
       "pt": "Como Funciona por Dentro: A CPU, ou processador, é um dos principais componentes do computador. Executa instruções e ajuda o computador a realizar tarefas.",
-      "en": "How It Works Inside: A CPU, ou processador, é um dos principais componentes do computador. Executa instruções e ajuda o computador a realizar tarefas."
+      "en": "How It Works Inside: The CPU, or processor, is one of the main components of a computer. It executes instructions and helps the computer perform tasks."
     },
     "teaser": {
       "pt": "Sabias que o processador do teu computador consegue resolver contas mais depressa do que um raio?",
@@ -25361,12 +25361,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Postura na Cadeira",
-      "en": "Postura na Cadeira"
+      "en": "Chair Posture"
     },
     "icon": "🪑",
     "title": {
       "pt": "Como Funciona por Dentro: Postura Confortável: a posição ideal para estudar ao computador!",
-      "en": "How It Works Inside: Postura Confortável: a posição ideal para estudar ao computador!"
+      "en": "How It Works Inside: Comfortable Posture: the ideal position for studying at a computer!"
     },
     "teaser": {
       "pt": "Sabias que os cotovelos e joelhos devem ficar, aproximadamente, num ângulo de 90°, numa posição confortável?",
@@ -25382,7 +25382,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "Se os teus pés não chegarem ao chão na escola, pede um apoio de pés para manter a postura certa!",
-      "en": "Se os teus pés não chegarem ao chão na escola, pede um apoio de pés para manter a postura certa!"
+      "en": "If your feet do not reach the floor at school, ask for a footrest to help you keep the correct posture!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -25436,28 +25436,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Pegada Digital",
-      "en": "Pegada Digital"
+      "en": "Digital Footprint"
     },
     "icon": "👣",
     "title": {
       "pt": "Visão de Futuro: A tua Pegada Digital é como uma pegada no cimento fresco!",
-      "en": "Future Vision: A tua Pegada Digital é como uma pegada no cimento fresco!"
+      "en": "Future Vision: Your Digital Footprint is like a footprint in wet cement!"
     },
     "teaser": {
       "pt": "Algumas das nossas atividades online deixam registos. Publicações, comentários e conteúdos que partilhamos podem fazer parte da nossa pegada digital.",
       "en": "Some of our online activities leave records. Posts, comments, and content we share can form part of our digital footprint."
     },
     "description": {
-      "pt": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã (captura de ecrã). Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes.",
-      "en": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã (captura de ecrã). Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes."
+      "pt": "Cada clique, vídeo visto e comentário constrói a tua reputação online. Mesmo que apagues uma foto, alguém pode ter tirado uma captura de ecrã. Por isso, cultiva uma pegada digital positiva, com partilhas generosas e inteligentes.",
+      "en": "Every click, video you watch, and comment builds your online reputation. Even if you delete a photo, someone may have taken a screenshot. So build a positive digital footprint by sharing thoughtfully and kindly."
     },
     "whyItMatters": {
       "pt": "No Tema 3 de TIC aprendemos a refletir criticamente sobre as consequências das nossas ações online.",
-      "en": "No Tema 3 de TIC aprendemos a refletir criticamente sobre as consequências das nossas ações online."
+      "en": "In ICT Topic 3, we learn to think critically about the consequences of our online actions."
     },
     "funFact": {
       "pt": "A regra de ouro: só deves publicar algo se não tiveres vergonha que a tua professora ou avó vejam!",
-      "en": "A regra de ouro: só deves publicar algo se não tiveres vergonha que a tua professora ou avó vejam!"
+      "en": "The golden rule: only post something if you would be comfortable with your teacher or grandmother seeing it!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -25511,28 +25511,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Força de Palavras-passe",
-      "en": "Força de Palavras-passe"
+      "en": "Password Strength"
     },
     "icon": "⚡",
     "title": {
       "pt": "Desafio Escolar: 123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar.",
-      "en": "School Challenge: 123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar."
+      "en": "School Challenge: 123456 is an extremely predictable password and is among the first combinations automated systems may try."
     },
     "teaser": {
       "pt": "Inacreditavelmente, continua a ser uma das palavras-passe mais usadas no planeta!",
-      "en": "Inacreditavelmente, continua a ser uma das palavras-passe mais usadas no planeta!"
+      "en": "Unbelievably, it is still one of the most commonly used passwords in the world!"
     },
     "description": {
       "pt": "Programas automáticos usam listas de palavras comuns e sequências de teclado simples. Palavras-passe como \"123456\", \"qwerty\", \"password\" ou a tua data de aniversário são adivinhadas instantaneamente por computadores.",
-      "en": "Programas automáticos usam listas de palavras comuns e sequências de teclado simples. Palavras-passe como \"123456\", \"qwerty\", \"password\" ou a tua data de aniversário são adivinhadas instantaneamente por computadores."
+      "en": "Automated programs use lists of common words and simple keyboard sequences. Passwords such as \"123456\", \"qwerty\", \"password\", or your birthday can be guessed instantly by computers."
     },
     "whyItMatters": {
       "pt": "No Tema 4 de TIC aprendemos a criar palavras-passe robustas que protegem as nossas contas escolares.",
-      "en": "No Tema 4 de TIC aprendemos a criar palavras-passe robustas que protegem as nossas contas escolares."
+      "en": "In ICT Topic 4, we learn to create strong passwords that protect our school accounts."
     },
     "funFact": {
       "pt": "Outra palavra-passe péssima muito usada é \"admin\" ou o nome do clube de futebol favorito!",
-      "en": "Outra palavra-passe péssima muito usada é \"admin\" ou o nome do clube de futebol favorito!"
+      "en": "Another very poor password that is widely used is \"admin\" or the name of a favourite football club!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -25586,12 +25586,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Campos do Email",
-      "en": "Campos do Email"
+      "en": "Email Fields"
     },
     "icon": "🕶️",
     "title": {
       "pt": "Visão de Futuro: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade",
-      "en": "Future Vision: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade"
+      "en": "Future Vision: The Bcc field lets you send emails to several people while protecting their privacy."
     },
     "teaser": {
       "pt": "Vais convidar 25 colegas da turma para uma festa por email? Usa o Cco!",
@@ -25599,7 +25599,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "description": {
       "pt": "No email tens: \"Para\" (destinatários principais), \"Cc\" (Com Cópia, visível a todos) e \"Cco\" (Com Cópia Oculta). Ao colocar os contactos em Cco, ninguém vê o endereço privado dos outros, evitando spam e exposição indesejada de contactos.",
-      "en": "No email tens: \"Para\" (destinatários principais), \"Cc\" (Com Cópia, visível a todos) e \"Cco\" (Com Cópia Oculta). Ao colocar os contactos em Cco, ninguém vê o endereço privado dos outros, evitando spam e exposição indesejada de contactos."
+      "en": "In an email you have: \"To\" (main recipients), \"Cc\" (Carbon Copy, visible to everyone), and \"Bcc\" (Blind Carbon Copy). When you put contacts in Bcc, no one can see the other people's private addresses, helping prevent spam and unwanted exposure of contacts."
     },
     "whyItMatters": {
       "pt": "No Tema 5 de TIC aprendemos a usar os campos Para, Cc e Cco de acordo com as regras do RGPD.",
@@ -25607,7 +25607,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "funFact": {
       "pt": "A sigla Cc vem do papel químico (\"Carbon Copy\") que se usava antigamente nas máquinas de escrever!",
-      "en": "A sigla Cc vem do papel químico (\"Carbon Copy\") que se usava antigamente nas máquinas de escrever!"
+      "en": "The abbreviation Cc comes from carbon paper (\"Carbon Copy\"), which was once used with typewriters!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -25661,28 +25661,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Navegador vs Motor",
-      "en": "Navegador vs Motor"
+      "en": "Browser vs Search Engine"
     },
     "icon": "🚗",
     "title": {
       "pt": "Visão de Futuro: O Navegador é o Automóvel, o Motor de Busca é o GPS!",
-      "en": "Future Vision: O Navegador é o Automóvel, o Motor de Busca é o GPS!"
+      "en": "Future Vision: The Browser is the Car, the Search Engine is the GPS!"
     },
     "teaser": {
       "pt": "Muitos alunos confundem o Chrome com o Google. Sabes qual é a diferença real?",
-      "en": "Muitos alunos confundem o Chrome com o Google. Sabes qual é a diferença real?"
+      "en": "Many students confuse Chrome with Google. Do you know the real difference?"
     },
     "description": {
       "pt": "O Navegador (Browser, como Chrome, Edge, Firefox ou Safari) é a aplicação instalada que abre e desenha páginas Web. O Motor de Busca (Google, Bing, DuckDuckGo) é um site especial que cataloga a rede para responder a perguntas.",
-      "en": "O Navegador (Browser, como Chrome, Edge, Firefox ou Safari) é a aplicação instalada que abre e desenha páginas Web. O Motor de Busca (Google, Bing, DuckDuckGo) é um site especial que cataloga a rede para responder a perguntas."
+      "en": "The Browser (such as Chrome, Edge, Firefox, or Safari) is the application that opens and displays web pages. A Search Engine (such as Google, Bing, or DuckDuckGo) is a special website that indexes the web to answer searches."
     },
     "whyItMatters": {
       "pt": "No Tema 6 de TIC aprendemos a usar a barra de endereços (URL) diretamente sem passar pelo motor de busca.",
-      "en": "No Tema 6 de TIC aprendemos a usar a barra de endereços (URL) diretamente sem passar pelo motor de busca."
+      "en": "In ICT Topic 6, we learn to use the address bar (URL) directly instead of going through a search engine."
     },
     "funFact": {
       "pt": "A primeira janela de navegação inventada em 1990 chamava-se \"WorldWideWeb\"!",
-      "en": "A primeira janela de navegação inventada em 1990 chamava-se \"WorldWideWeb\"!"
+      "en": "The first web browser, created in 1990, was called \"WorldWideWeb\"!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -25736,28 +25736,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Google Imagens",
-      "en": "Google Imagens"
+      "en": "Google Images"
     },
     "icon": "🎨",
     "title": {
       "pt": "Como Funciona por Dentro: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!",
-      "en": "How It Works Inside: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!"
+      "en": "How It Works Inside: Photos from Google Images are NOT free to use however you want!"
     },
     "teaser": {
       "pt": "Copiar uma foto qualquer e colar num trabalho sem autorização pode violar a lei.",
-      "en": "Copiar uma foto qualquer e colar num trabalho sem autorização pode violar a lei."
+      "en": "Copying any photo and putting it into a school project without permission may violate copyright law."
     },
     "description": {
       "pt": "Quando um fotógrafo ou ilustrador cria uma imagem, ela fica logo protegida por Direitos de Autor (Copyright). Não a podes descarregar e reutilizar sem autorização. Para trabalhos escolares, usa imagens com licenças Creative Commons ou de Domínio Público.",
-      "en": "Quando um fotógrafo ou ilustrador cria uma imagem, ela fica logo protegida por Direitos de Autor (Copyright). Não a podes descarregar e reutilizar sem autorização. Para trabalhos escolares, usa imagens com licenças Creative Commons ou de Domínio Público."
+      "en": "When a photographer or illustrator creates an image, it is generally protected by copyright. You cannot download and reuse it without permission. For school projects, use images with suitable Creative Commons licences or in the public domain."
     },
     "whyItMatters": {
       "pt": "No Tema 7 de TIC aprendemos a respeitar a propriedade intelectual e o trabalho dos artistas.",
-      "en": "No Tema 7 de TIC aprendemos a respeitar a propriedade intelectual e o trabalho dos artistas."
+      "en": "In ICT Topic 7, we learn to respect intellectual property and the work of artists."
     },
     "funFact": {
       "pt": "Quando encontras uma imagem na Internet, lembra-te de verificar sempre a sua fonte original e qual é a licença de utilização específica. Mesmo nas licenças Creative Commons, deves respeitar regras como indicar o nome do autor (atribuição) e verificar se podes usar a imagem no teu trabalho!",
-      "en": "Quando encontras uma imagem na Internet, lembra-te de verificar sempre a sua fonte original e qual é a licença de utilização específica. Mesmo nas licenças Creative Commons, deves respeitar regras como indicar o nome do autor (atribuição) e verificar se podes usar a imagem no teu trabalho!"
+      "en": "When you find an image online, always check its original source and its specific licence. Even with Creative Commons licences, follow rules such as crediting the author and checking whether you may use the image in your project!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -25961,28 +25961,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Privacidade e Redes",
-      "en": "Privacidade e Redes"
+      "en": "Privacy and Networks"
     },
     "icon": "🕵️‍♂️",
     "title": {
       "pt": "Visão de Futuro: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!",
-      "en": "Future Vision: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!"
+      "en": "Future Vision: The \"Stranger in the Garden\" rule: never share your address in online games!"
     },
     "teaser": {
       "pt": "Roblox, Fortnite, Brawl Stars... avatares simpáticos podem esconder qualquer pessoa.",
-      "en": "Roblox, Fortnite, Brawl Stars... avatares simpáticos podem esconder qualquer pessoa."
+      "en": "Roblox, Fortnite, Brawl Stars... friendly-looking avatars can hide the identity of any person."
     },
     "description": {
       "pt": "Nunca partilhes o teu nome completo, número de telemóvel, nome da escola ou fotos onde se veja o emblema do teu clube ou a rua de tua casa com desconhecidos em salas de conversação ou jogos online.",
-      "en": "Nunca partilhes o teu nome completo, número de telemóvel, nome da escola ou fotos onde se veja o emblema do teu clube ou a rua de tua casa com desconhecidos em salas de conversação ou jogos online."
+      "en": "Never share your full name, phone number, school name, or photos showing your club badge or the street where you live with strangers in chats or online games."
     },
     "whyItMatters": {
       "pt": "A proteção de dados pessoais e a defesa da privacidade individual são prioridades de Cidadania Digital.",
-      "en": "A proteção de dados pessoais e a defesa da privacidade individual são prioridades de Cidadania Digital."
+      "en": "Protecting personal data and defending individual privacy are priorities of Digital Citizenship."
     },
     "funFact": {
       "pt": "É por isso que nos jogos é muito mais seguro e divertido usar nomes de código como \"FalcãoVeloz_99\"!",
-      "en": "É por isso que nos jogos é muito mais seguro e divertido usar nomes de código como \"FalcãoVeloz_99\"!"
+      "en": "That is why using code names such as \"FalcãoVeloz_99\" in games is safer and more fun!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -26036,28 +26036,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "O Segredo da Frase-Passe",
-      "en": "O Segredo da Frase-Passe"
+      "en": "The Secret of the Passphrase"
     },
     "icon": "🍕",
     "title": {
       "pt": "Visão de Futuro: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!",
-      "en": "Future Vision: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!"
+      "en": "Future Vision: The \"Passphrase\" method: O_Meu_Cao_Adora_Comer_99_Gelados!"
     },
     "teaser": {
-      "pt": "Uma frase longa com espaços ou travessões é fácil de decorar e quase altamente seguro.",
-      "en": "Uma frase longa com espaços ou travessões é fácil de decorar e quase altamente seguro."
+      "pt": "Uma frase longa com espaços ou travessões é fácil de decorar e muito segura.",
+      "en": "A long phrase with spaces or dashes is easy to remember and can be very secure."
     },
     "description": {
       "pt": "Em vez de uma palavra-passe curta e confusa que esqueces amanhã, inventa uma frase maluca com 4 ou 5 palavras e junta números e símbolos. Uma frase-passe longa e difícil de adivinhar é geralmente mais segura do que uma palavra-passe curta e previsível.",
-      "en": "Em vez de uma palavra-passe curta e confusa que esqueces amanhã, inventa uma frase maluca com 4 ou 5 palavras e junta números e símbolos. Uma frase-passe longa e difícil de adivinhar é geralmente mais segura do que uma palavra-passe curta e previsível."
+      "en": "Instead of a short, confusing password that you will forget tomorrow, invent a funny phrase with 4 or 5 words and add numbers and symbols. A long, hard-to-guess passphrase is generally safer than a short, predictable password."
     },
     "whyItMatters": {
       "pt": "Construção de palavras-passe fortes com base em frases mnemónicas compridas.",
-      "en": "Construção de palavras-passe fortes com base em frases mnemónicas compridas."
+      "en": "Creating strong passwords based on long memorable phrases."
     },
     "funFact": {
       "pt": "Quanto mais comprida for a palavra-passe, mais combinações matemáticas o invasor tem de testar!",
-      "en": "Quanto mais comprida for a palavra-passe, mais combinações matemáticas o invasor tem de testar!"
+      "en": "The longer the password, the more mathematical combinations an attacker has to test!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -26111,28 +26111,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "O Símbolo Arroba",
-      "en": "O Símbolo Arroba"
+      "en": "The At Symbol"
     },
     "icon": "🐌",
     "title": {
       "pt": "Visão de Futuro: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!",
-      "en": "Future Vision: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!"
+      "en": "Future Vision: The @ symbol is called \"snail\" in Italy and \"elephant trunk\" in Sweden!"
     },
     "teaser": {
       "pt": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico.",
-      "en": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico."
+      "en": "In 1971, Ray Tomlinson carried out one of the first experiments sending messages between networked computers and popularised the use of @ in email addresses."
     },
     "description": {
       "pt": "Em inglês lê-se \"at\" (no local de). Em Portugal chamamos-lhe arroba, mas outros países dão-lhe nomes animais engraçados: os italianos dizem \"chiocciola\" (caracol) e os israelitas \"strudel\" (bolo enrolado)!",
-      "en": "Em inglês lê-se \"at\" (no local de). Em Portugal chamamos-lhe arroba, mas outros países dão-lhe nomes animais engraçados: os italianos dizem \"chiocciola\" (caracol) e os israelitas \"strudel\" (bolo enrolado)!"
+      "en": "In English it is read as \"at\". In Portugal we call it \"arroba\", while other countries have funny animal names for it: Italians say \"chiocciola\" (snail) and Israelis say \"strudel\" (a rolled pastry)!"
     },
     "whyItMatters": {
-      "pt": "Estrutura padrão de um endereço de correio eletrónico: utilizador@dominio. extensao.",
-      "en": "Estrutura padrão de um endereço de correio eletrónico: utilizador@dominio. extensao."
+      "pt": "Estrutura padrão de um endereço de correio eletrónico: utilizador@domínio.extensão.",
+      "en": "Standard structure of an email address: username@domain.extension."
     },
     "funFact": {
       "pt": "Antigamente, a arroba era uma medida de peso usada no comércio que valia cerca de 15 quilogramas!",
-      "en": "Antigamente, a arroba era uma medida de peso usada no comércio que valia cerca de 15 quilogramas!"
+      "en": "In the past, the arroba was a unit of weight used in trade, worth about 15 kilograms!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -26186,28 +26186,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Truque das Aspas",
-      "en": "Truque das Aspas"
+      "en": "Quotation Marks Trick"
     },
     "icon": "🔍",
     "title": {
       "pt": "Como Funciona por Dentro: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!",
-      "en": "How It Works Inside: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!"
+      "en": "How It Works Inside: Search like a detective: the magic quotation-mark trick \"\" in a search engine!"
     },
     "teaser": {
       "pt": "Sabias que podes obrigar o motor de busca a encontrar exatamente a frase que queres?",
-      "en": "Sabias que podes obrigar o motor de busca a encontrar exatamente a frase que queres?"
+      "en": "Did you know you can make a search engine find exactly the phrase you want?"
     },
     "description": {
       "pt": "Se colocares uma frase entre aspas (ex: \"energia eólica em Portugal\"), o motor de busca só mostra páginas que tenham essas palavras exatamente nessa ordem, filtrando milhares de páginas irrelevantes!",
-      "en": "Se colocares uma frase entre aspas (ex: \"energia eólica em Portugal\"), o motor de busca só mostra páginas que tenham essas palavras exatamente nessa ordem, filtrando milhares de páginas irrelevantes!"
+      "en": "If you put a phrase in quotation marks (e.g. \"wind energy in Portugal\"), the search engine looks for pages containing those words in that exact order, filtering out thousands of irrelevant pages!"
     },
     "whyItMatters": {
-      "pt": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5. º ano.",
-      "en": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5. º ano."
+      "pt": "Técnicas de pesquisa avançada com operadores booleanos e delimitadores no 5.º ano.",
+      "en": "Advanced search techniques using Boolean operators and delimiters in 5th grade."
     },
     "funFact": {
       "pt": "Se usares o sinal de menos (ex: jaguar -carro), ele procura o felino e elimina as páginas sobre automóveis!",
-      "en": "Se usares o sinal de menos (ex: jaguar -carro), ele procura o felino e elimina as páginas sobre automóveis!"
+      "en": "If you use the minus sign (e.g. jaguar -car), it searches for the animal and removes pages about cars!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -26261,28 +26261,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "O que é Plágio",
-      "en": "O que é Plágio"
+      "en": "What Is Plagiarism"
     },
     "icon": "✂️",
     "title": {
       "pt": "Visão de Futuro: Plágio: roubar a medalha de ouro de outra pessoa!",
-      "en": "Future Vision: Plágio: roubar a medalha de ouro de outra pessoa!"
+      "en": "Future Vision: Plagiarism: stealing someone else's gold medal!"
     },
     "teaser": {
       "pt": "Fazer \"Copiar e Colar\" da Wikipédia e assinar com o teu nome é desonestidade académica.",
-      "en": "Fazer \"Copiar e Colar\" da Wikipédia e assinar com o teu nome é desonestidade académica."
+      "en": "Copying and pasting from Wikipedia and signing it with your own name is academic dishonesty."
     },
     "description": {
       "pt": "Plágio é copiar textos, ideias, desenhos ou código de outra pessoa fingindo que foste tu a criar. É como alguém correr uma maratona e tu roubares a medalha para dizer que venceste. O correto é ler, explicar pelas tuas próprias palavras e citar a fonte de onde aprendeste.",
-      "en": "Plágio é copiar textos, ideias, desenhos ou código de outra pessoa fingindo que foste tu a criar. É como alguém correr uma maratona e tu roubares a medalha para dizer que venceste. O correto é ler, explicar pelas tuas próprias palavras e citar a fonte de onde aprendeste."
+      "en": "Plagiarism is copying another person's texts, ideas, drawings, or code and pretending you created them. It is like someone running a marathon and you stealing the medal to say you won. The right thing is to read, explain in your own words, and cite the source you learned from."
     },
     "whyItMatters": {
-      "pt": "Compreensão de plágio vs autoria original e integridade académica no 5. º ano.",
-      "en": "Compreensão de plágio vs autoria original e integridade académica no 5. º ano."
+      "pt": "Compreensão de plágio vs autoria original e integridade académica no 5.º ano.",
+      "en": "Understanding plagiarism versus original authorship and academic integrity in 5th grade."
     },
     "funFact": {
       "pt": "Os professores têm ferramentas de software que detetam plágio em trabalhos escolares em segundos!",
-      "en": "Os professores têm ferramentas de software que detetam plágio em trabalhos escolares em segundos!"
+      "en": "Teachers have software tools that can detect plagiarism in schoolwork within seconds!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -26336,28 +26336,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Placa Principal",
-      "en": "Placa Principal"
+      "en": "Main Board"
     },
     "icon": "🛣️",
     "title": {
       "pt": "Visão de Futuro: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!",
-      "en": "Future Vision: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!"
+      "en": "Future Vision: The Motherboard is the motorway that connects all the computer's components!"
     },
     "teaser": {
       "pt": "Como é que a placa gráfica fala com o processador e com o disco rígido?",
-      "en": "Como é que a placa gráfica fala com o processador e com o disco rígido?"
+      "en": "How does the graphics card communicate with the processor and the hard drive?"
     },
     "description": {
       "pt": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI.",
-      "en": "A Motherboard é uma grande placa de circuito verde ou preta cheia de pistas metálicas de cobre. É nela que encaixam a CPU, a RAM, a placa de som, a placa de rede e onde se ligam as portas USB e HDMI."
+      "en": "The Motherboard is a large green or black circuit board filled with copper tracks. The CPU, RAM, sound card, and network card connect to it, along with USB and HDMI ports."
     },
     "whyItMatters": {
-      "pt": "Os os componentes físicos comunicam através do barramento de dados (Bus).",
-      "en": "Os os componentes físicos comunicam através do barramento de dados (Bus)."
+      "pt": "Os componentes físicos comunicam através do barramento de dados (Bus).",
+      "en": "The physical components communicate through the data bus (Bus)."
     },
     "funFact": {
       "pt": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!",
-      "en": "Chama-se \"motherboard\" (mãe) porque abriga e alimenta todas as placas filhas que ligamos ao sistema!"
+      "en": "It is called a \"motherboard\" because it houses and connects all the other boards and components attached to the system!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -26411,28 +26411,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Sono e Tecnologia",
-      "en": "Sono e Tecnologia"
+      "en": "Sleep and Technology"
     },
     "icon": "🌙",
     "title": {
       "pt": "Visão de Futuro: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \"",
-      "en": "Future Vision: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \""
+      "en": "Future Vision: Blue Light from the screen tells your brain: \"Wake up, it is still beach time!\""
     },
     "teaser": {
       "pt": "Porque deves desligar os ecrãs 30 a 60 minutos antes de dormir para acordares com energia?",
-      "en": "Porque deves desligar os ecrãs 30 a 60 minutos antes de dormir para acordares com energia?"
+      "en": "Why should you turn off screens 30 to 60 minutes before bed so you can wake up with energy?"
     },
     "description": {
       "pt": "A luz azul emitida por ecrãs bloqueia a melatonina, a hormona que dá sono. Quando usas o telemóvel na cama, o teu cérebro fica confuso, demoras mais tempo a adormecer e acordas cansado para a escola.",
-      "en": "A luz azul emitida por ecrãs bloqueia a melatonina, a hormona que dá sono. Quando usas o telemóvel na cama, o teu cérebro fica confuso, demoras mais tempo a adormecer e acordas cansado para a escola."
+      "en": "Blue light from screens can affect melatonin, the hormone involved in sleep. Using a phone in bed can make it harder to fall asleep and may leave you tired for school."
     },
     "whyItMatters": {
       "pt": "Estudamos o equilíbrio entre o tempo de ecrã e o descanso reparador de 9 a 12 horas diárias.",
-      "en": "Estudamos o equilíbrio entre o tempo de ecrã e o descanso reparador de 9 a 12 horas diárias."
+      "en": "We study the balance between screen time and restorative sleep of 9 to 12 hours per day."
     },
     "funFact": {
       "pt": "Substituir o telemóvel antes de dormir por um livro em papel melhora as tuas notas escolares!",
-      "en": "Substituir o telemóvel antes de dormir por um livro em papel melhora as tuas notas escolares!"
+      "en": "Replacing your phone with a paper book before bed can help your sleep and school performance!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -26486,28 +26486,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Apoio e Helplines",
-      "en": "Apoio e Helplines"
+      "en": "Support and Helplines"
     },
     "icon": "📞",
     "title": {
       "pt": "Visão de Futuro: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!",
-      "en": "Future Vision: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!"
+      "en": "Future Vision: Portugal's Safe Internet Line: 800 21 90 90 (free and confidential)!"
     },
     "teaser": {
       "pt": "Se algo correr mal online, existe uma equipa simpática pronta para te ajudar.",
-      "en": "Se algo correr mal online, existe uma equipa simpática pronta para te ajudar."
+      "en": "If something goes wrong online, there is a friendly team ready to help you."
     },
     "description": {
       "pt": "Se vires conteúdos assustadores, sofreres cyberbullying ou tiveres dúvidas sobre a tua segurança, podes ligar gratuitamente para o 800 21 90 90 ou para o SOS Criança (116 111). Nunca guardes medos só para ti!",
-      "en": "Se vires conteúdos assustadores, sofreres cyberbullying ou tiveres dúvidas sobre a tua segurança, podes ligar gratuitamente para o 800 21 90 90 ou para o SOS Criança (116 111). Nunca guardes medos só para ti!"
+      "en": "If you see frightening content, experience cyberbullying, or have concerns about your safety, you can call 800 21 90 90 or SOS Criança (116 111) for free. Never keep your worries to yourself!"
     },
     "whyItMatters": {
       "pt": "Conhecer as linhas de apoio e saber a quem recorrer perante incidentes digitais é fundamental.",
-      "en": "Conhecer as linhas de apoio e saber a quem recorrer perante incidentes digitais é fundamental."
+      "en": "Knowing support lines and knowing who to turn to when digital incidents happen is essential."
     },
     "funFact": {
       "pt": "Lembra-te: falar com os pais ou professores de confiança é sempre o primeiro e melhor passo!",
-      "en": "Lembra-te: falar com os pais ou professores de confiança é sempre o primeiro e melhor passo!"
+      "en": "Remember: talking to a trusted parent or teacher is always the first and best step!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -26561,28 +26561,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Partilha de Palavras-passe",
-      "en": "Partilha de Palavras-passe"
+      "en": "Password Sharing"
     },
     "icon": "🪥",
     "title": {
       "pt": "Visão de Futuro: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!",
-      "en": "Future Vision: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!"
+      "en": "Future Vision: Passwords are like toothbrushes: you do not lend them to anyone!"
     },
     "teaser": {
       "pt": "Nem ao melhor amigo da turma deves confiar a chave da tua vida digital.",
-      "en": "Nem ao melhor amigo da turma deves confiar a chave da tua vida digital."
+      "en": "Even your best friend in class should not be trusted with the key to your digital life."
     },
     "description": {
       "pt": "A tua palavra-passe é pessoal e intransmissível. Se a emprestares, perdes o controlo sobre quem acede aos teus emails e notas. A única exceção são os teus pais ou encarregados de educação para te protegerem.",
-      "en": "A tua palavra-passe é pessoal e intransmissível. Se a emprestares, perdes o controlo sobre quem acede aos teus emails e notas. A única exceção são os teus pais ou encarregados de educação para te protegerem."
+      "en": "Your password is personal and should not be shared. If you lend it to someone, you lose control over who can access your emails and grades. The exception is your parents or guardians, who may need it to protect you."
     },
     "whyItMatters": {
       "pt": "Responsabilidade e sigilo de credenciais de acesso no ambiente escolar e pessoal.",
-      "en": "Responsabilidade e sigilo de credenciais de acesso no ambiente escolar e pessoal."
+      "en": "Responsible and confidential handling of access credentials at school and in personal life."
     },
     "funFact": {
       "pt": "Se um dia tiveres de introduzir a tua palavra-passe à frente de alguém, tapa o teclado com a outra mão!",
-      "en": "Se um dia tiveres de introduzir a tua palavra-passe à frente de alguém, tapa o teclado com a outra mão!"
+      "en": "If you ever have to enter your password in front of someone, cover the keyboard with your other hand!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -26636,28 +26636,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Netiqueta em Emails",
-      "en": "Netiqueta em Emails"
+      "en": "Email Netiquette"
     },
     "icon": "📢",
     "title": {
       "pt": "Visão de Futuro: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!",
-      "en": "Future Vision: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!"
+      "en": "Future Vision: Writing in CAPITAL LETTERS in an email is like SHOUTING!"
     },
     "teaser": {
       "pt": "Ao redigir mensagens para professores ou colegas, usa sempre letras maiúsculas e minúsculas normais.",
-      "en": "Ao redigir mensagens para professores ou colegas, usa sempre letras maiúsculas e minúsculas normais."
+      "en": "When writing messages to teachers or classmates, use normal upper- and lower-case letters."
     },
     "description": {
       "pt": "Na etiqueta digital, escrever palavras ou frases inteiras em maiúsculas soa agressivo e irritado. Além disso, blocos de texto em maiúsculas são muito mais difíceis e cansativos de ler no ecrã.",
-      "en": "Na etiqueta digital, escrever palavras ou frases inteiras em maiúsculas soa agressivo e irritado. Além disso, blocos de texto em maiúsculas são muito mais difíceis e cansativos de ler no ecrã."
+      "en": "In digital etiquette, writing whole words or sentences in capital letters can sound aggressive and angry. Blocks of capital letters are also much harder and more tiring to read on screen."
     },
     "whyItMatters": {
       "pt": "Regras de cortesia, pontuação e comunicação assertiva no correio eletrónico.",
-      "en": "Regras de cortesia, pontuação e comunicação assertiva no correio eletrónico."
+      "en": "Rules of courtesy, punctuation, and assertive communication in email."
     },
     "funFact": {
       "pt": "Começa sempre com uma saudação formal (\"Bom dia, Professora\") e termina com assinatura e turma!",
-      "en": "Começa sempre com uma saudação formal (\"Bom dia, Professora\") e termina com assinatura e turma!"
+      "en": "Always start with a polite greeting (\"Good morning, Teacher\") and finish with your name and class!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -26711,28 +26711,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Segurança HTTPS",
-      "en": "Segurança HTTPS"
+      "en": "HTTPS Security"
     },
     "icon": "🔒",
     "title": {
       "pt": "Visão de Futuro: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!",
-      "en": "Future Vision: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!"
+      "en": "Future Vision: The \"S\" in HTTPS is the invisible safe that encrypts your data!"
     },
     "teaser": {
       "pt": "Nunca introduzas palavras-passe em páginas que comecem apenas por \"http://\" sem o \"s\".",
-      "en": "Nunca introduzas palavras-passe em páginas que comecem apenas por \"http://\" sem o \"s\"."
+      "en": "Never enter passwords on pages that start only with \"http://\" without the \"s\"."
     },
     "description": {
       "pt": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias.",
-      "en": "O \"S\" significa Seguro (Secure). Indica que a ligação entre o teu computador e o site é encriptada por um certificado digital: ninguém na rede Wi-Fi consegue espreitar as informações que envias."
+      "en": "The \"S\" means Secure. It indicates that the connection between your computer and the website is encrypted using a digital certificate: people on the Wi-Fi network cannot simply read the information you send."
     },
     "whyItMatters": {
       "pt": "Verificação de certificados de segurança e protocolos de navegação segura na Internet.",
-      "en": "Verificação de certificados de segurança e protocolos de navegação segura na Internet."
+      "en": "Checking security certificates and secure browsing protocols on the Internet."
     },
     "funFact": {
       "pt": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!",
-      "en": "Mais de 95% de todas as páginas da Internet moderna já utilizam o protocolo HTTPS!"
+      "en": "More than 95% of modern websites use the HTTPS protocol!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -26791,23 +26791,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🤝",
     "title": {
       "pt": "Visão de Futuro: Creative Commons: o convite amigável para partilhar criatividade com o mundo!",
-      "en": "Future Vision: Creative Commons: o convite amigável para partilhar criatividade com o mundo!"
+      "en": "Future Vision: Creative Commons: a friendly invitation to share creativity with the world!"
     },
     "teaser": {
       "pt": "Conheces o símbolo com dois \"C\" (CC) que vês na Wikipédia, no Scratch e no YouTube?",
-      "en": "Conheces o símbolo com dois \"C\" (CC) que vês na Wikipédia, no Scratch e no YouTube?"
+      "en": "Do you know the symbol with two \"C\"s (CC) that you see on Wikipedia, Scratch, and YouTube?"
     },
     "description": {
       "pt": "Em 2001, o professor Lawrence Lessig criou as licenças Creative Commons. Elas permitem que autores digam: \"Podes usar a minha música ou foto de graça para o teu trabalho escolar, desde que me dês o devido crédito (CC-BY)! \".",
-      "en": "Em 2001, o professor Lawrence Lessig criou as licenças Creative Commons. Elas permitem que autores digam: \"Podes usar a minha música ou foto de graça para o teu trabalho escolar, desde que me dês o devido crédito (CC-BY)! \"."
+      "en": "In 2001, professor Lawrence Lessig helped create the Creative Commons licences. They let authors say: \"You may use my music or photo for your school project, as long as you give me proper credit (CC-BY)!\""
     },
     "whyItMatters": {
       "pt": "Identificação dos símbolos de partilha Creative Commons (BY, NC, ND, SA) no Tema 7.",
-      "en": "Identificação dos símbolos de partilha Creative Commons (BY, NC, ND, SA) no Tema 7."
+      "en": "Identifying Creative Commons sharing symbols (BY, NC, ND, SA) in Topic 7."
     },
     "funFact": {
       "pt": "A enciclopédia Wikipédia e os projetos remixados no Scratch funcionam sob licenças Creative Commons!",
-      "en": "A enciclopédia Wikipédia e os projetos remixados no Scratch funcionam sob licenças Creative Commons!"
+      "en": "Wikipedia and remixed projects on Scratch can use Creative Commons licences!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -26861,28 +26861,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Linguagem dos Computadores",
-      "en": "Linguagem dos Computadores"
+      "en": "Computer Language"
     },
     "icon": "0️⃣",
     "title": {
       "pt": "Visão de Futuro: Tudo no computador são apenas ZEROS e UNS (0 e 1)!",
-      "en": "Future Vision: Tudo no computador são apenas ZEROS e UNS (0 e 1)!"
+      "en": "Future Vision: Everything in a computer is represented using ZEROS and ONES (0 and 1)!"
     },
     "teaser": {
       "pt": "Fotos, músicas, jogos 3D e vídeos do YouTube... como é que cabem em apenas dois números?",
-      "en": "Fotos, músicas, jogos 3D e vídeos do YouTube... como é que cabem em apenas dois números?"
+      "en": "Photos, music, 3D games, and YouTube videos... how can they fit into just two numbers?"
     },
     "description": {
       "pt": "Os circuitos do computador funcionam com eletricidade: ou passa corrente (1) ou não passa (0). A este sistema chamamos Código Binário. Combinando 8 zeros e uns (um Byte), o computador consegue representar qualquer letra, som ou cor de um píxel!",
-      "en": "Os circuitos do computador funcionam com eletricidade: ou passa corrente (1) ou não passa (0). A este sistema chamamos Código Binário. Combinando 8 zeros e uns (um Byte), o computador consegue representar qualquer letra, som ou cor de um píxel!"
+      "en": "Computer circuits use electricity: current is represented as 1 and no current as 0. This system is called Binary Code. By combining 8 zeros and ones (one byte), a computer can represent letters, sounds, or pixel colours!"
     },
     "whyItMatters": {
-      "pt": "No 5. º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte.",
-      "en": "No 5. º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte."
+      "pt": "No 5.º ano de TIC compreendemos o conceito fundamental de bit (Binary Digit) e byte.",
+      "en": "In 5th grade ICT, we learn the fundamental concept of a bit (Binary Digit) and a byte."
     },
     "funFact": {
       "pt": "A letra \"A\" maiúscula em binário escreve-se assim: 01000001!",
-      "en": "A letra \"A\" maiúscula em binário escreve-se assim: 01000001!"
+      "en": "The capital letter \"A\" in binary is written as 01000001!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -26936,28 +26936,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "emerald",
     "category": {
       "pt": "Pescoço e Coluna",
-      "en": "Pescoço e Coluna"
+      "en": "Neck and Spine"
     },
     "icon": "🦒",
     "title": {
       "pt": "Como Funciona por Dentro: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!",
-      "en": "How It Works Inside: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!"
+      "en": "How It Works Inside: \"Text Neck\": putting 27 kg of force on your spine!"
     },
     "teaser": {
       "pt": "Inclinar a cabeça para baixo sobre o telemóvel esforça o pescoço como carregar um saco de cimento.",
-      "en": "Inclinar a cabeça para baixo sobre o telemóvel esforça o pescoço como carregar um saco de cimento."
+      "en": "Looking down at a phone puts strain on your neck like carrying a bag of cement."
     },
     "description": {
       "pt": "Uma cabeça humana em posição direita pesa cerca de 5 kg. Mas quando a inclinas a 60 graus sobre um telemóvel ou tablet, a força exercida no pescoço sobe para 27 kg! Levanta os braços e traz o ecrã até aos olhos!",
-      "en": "Uma cabeça humana em posição direita pesa cerca de 5 kg. Mas quando a inclinas a 60 graus sobre um telemóvel ou tablet, a força exercida no pescoço sobe para 27 kg! Levanta os braços e traz o ecrã até aos olhos!"
+      "en": "A human head in an upright position weighs about 5 kg. When you tilt it 60 degrees over a phone or tablet, the force on the neck can rise greatly. Raise your arms and bring the screen up to eye level!"
     },
     "whyItMatters": {
       "pt": "Aprender a posicionar o topo do monitor ao nível da linha dos olhos é uma regra ergonómica essencial.",
-      "en": "Aprender a posicionar o topo do monitor ao nível da linha dos olhos é uma regra ergonómica essencial."
+      "en": "Learning to position the top of the monitor around eye level is an essential ergonomic rule."
     },
     "funFact": {
       "pt": "Fazer rotações suaves com a cabeça de vez em quando alivia a tensão acumulada nos ombros!",
-      "en": "Fazer rotações suaves com a cabeça de vez em quando alivia a tensão acumulada nos ombros!"
+      "en": "Gently rotating your head from time to time can relieve built-up tension in your shoulders!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -27011,28 +27011,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "rose",
     "category": {
       "pt": "Netiqueta e Empatia",
-      "en": "Netiqueta e Empatia"
+      "en": "Netiquette and Empathy"
     },
     "icon": "💬",
     "title": {
       "pt": "Visão de Futuro: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!",
-      "en": "Future Vision: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!"
+      "en": "Future Vision: Netiquette: kindness and respect in messages and virtual classrooms!"
     },
     "teaser": {
       "pt": "Como ser um colega cinco estrelas em grupos de WhatsApp e fóruns da turma?",
-      "en": "Como ser um colega cinco estrelas em grupos de WhatsApp e fóruns da turma?"
+      "en": "How can you be a five-star classmate in WhatsApp groups and class forums?"
     },
     "description": {
       "pt": "Netiqueta é a etiqueta da Net. Significa não insultar, não espalhar boatos, não partilhar fotos de colegas sem autorização expressa deles e respeitar as opiniões diferentes com cordialidade e espírito de equipa.",
-      "en": "Netiqueta é a etiqueta da Net. Significa não insultar, não espalhar boatos, não partilhar fotos de colegas sem autorização expressa deles e respeitar as opiniões diferentes com cordialidade e espírito de equipa."
+      "en": "Netiquette means Internet etiquette. It means not insulting people, spreading rumours, or sharing classmates' photos without their permission, and respecting different opinions with kindness and team spirit."
     },
     "whyItMatters": {
-      "pt": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5. º ano.",
-      "en": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5. º ano."
+      "pt": "Promover a convivência pacífica e combater todas as formas de cyberbullying no 5.º ano.",
+      "en": "Promoting peaceful coexistence and combating all forms of cyberbullying in 5th grade."
     },
     "funFact": {
       "pt": "Um emoji sorridente ajuda a demonstrar que a tua mensagem é amigável e sem má intenção!",
-      "en": "Um emoji sorridente ajuda a demonstrar que a tua mensagem é amigável e sem má intenção!"
+      "en": "A smiling emoji can help show that your message is friendly and not meant badly!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -27086,28 +27086,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "amber",
     "category": {
       "pt": "Autenticação de 2 Fatores",
-      "en": "Autenticação de 2 Fatores"
+      "en": "Two-Factor Authentication"
     },
     "icon": "📲",
     "title": {
       "pt": "Visão de Futuro: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!",
-      "en": "Future Vision: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!"
+      "en": "Future Vision: Two-Factor Authentication (2FA): the double lock on your digital door!"
     },
     "teaser": {
       "pt": "Mesmo que alguém descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro.",
-      "en": "Mesmo que alguém descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro."
+      "en": "Even if someone discovers your password, a second authentication factor adds an extra layer of protection and makes access much safer."
     },
     "description": {
       "pt": "O 2FA combina algo que sabes (a tua palavra-passe) com algo que tens (um código enviado por SMS ou gerado numa aplicação segura). É a proteção mais recomendada para contas de email e jogos importantes.",
-      "en": "O 2FA combina algo que sabes (a tua palavra-passe) com algo que tens (um código enviado por SMS ou gerado numa aplicação segura). É a proteção mais recomendada para contas de email e jogos importantes."
+      "en": "2FA combines something you know (your password) with something you have (a code sent by SMS or generated by a secure app). It is strongly recommended for important email and gaming accounts."
     },
     "whyItMatters": {
       "pt": "Conhecer mecanismos modernos de autenticação multifator no Tema 4 de TIC.",
-      "en": "Conhecer mecanismos modernos de autenticação multifator no Tema 4 de TIC."
+      "en": "Learning about modern multi-factor authentication mechanisms in ICT Topic 4."
     },
     "funFact": {
       "pt": "É exatamente como o cartão multibanco: precisas do cartão físico e do código PIN para levantar dinheiro!",
-      "en": "É exatamente como o cartão multibanco: precisas do cartão físico e do código PIN para levantar dinheiro!"
+      "en": "It is just like a bank card: you need the physical card and the PIN to withdraw money!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -27161,28 +27161,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "sky",
     "category": {
       "pt": "Anexos Perigosos",
-      "en": "Anexos Perigosos"
+      "en": "Dangerous Attachments"
     },
     "icon": "📎",
     "title": {
       "pt": "Como Funciona por Dentro: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!",
-      "en": "How It Works Inside: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!"
+      "en": "How It Works Inside: Beware of attachments: never open files with suspicious extensions!"
     },
     "teaser": {
       "pt": "Ficheiros como . exe, . bat, . vbs ou ficheiros . zip desconhecidos podem esconder vírus perigosos.",
-      "en": "Ficheiros como . exe, . bat, . vbs ou ficheiros . zip desconhecidos podem esconder vírus perigosos."
+      "en": "Files such as .exe, .bat, .vbs, or unknown .zip files can hide dangerous malware."
     },
     "description": {
       "pt": "Se receberes um email de alguém que não conheces com um anexo que diz \"fatura. exe\" ou \"fotos. zip\", não abras! Os criminosos usam anexos disfarçados para infetar o computador e roubar ficheiros.",
-      "en": "Se receberes um email de alguém que não conheces com um anexo que diz \"fatura. exe\" ou \"fotos. zip\", não abras! Os criminosos usam anexos disfarçados para infetar o computador e roubar ficheiros."
+      "en": "If you receive an email from someone you do not know with an attachment called \"invoice.exe\" or \"photos.zip\", do not open it! Criminals use disguised attachments to infect computers and steal files."
     },
     "whyItMatters": {
       "pt": "Reconhecimento de tipos de ficheiros e extensões seguras (. pdf, . docx, . png) no Tema 5 de TIC.",
-      "en": "Reconhecimento de tipos de ficheiros e extensões seguras (. pdf, . docx, . png) no Tema 5 de TIC."
+      "en": "Recognising file types and safer extensions (.pdf, .docx, .png) in ICT Topic 5."
     },
     "funFact": {
       "pt": "Na dúvida, pede ao teu professor ou pais para analisarem o email com o programa antivírus!",
-      "en": "Na dúvida, pede ao teu professor ou pais para analisarem o email com o programa antivírus!"
+      "en": "When in doubt, ask your teacher or parents to check the email with antivirus software!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -27236,28 +27236,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "blue",
     "category": {
       "pt": "Combate a Fake News",
-      "en": "Combate a Fake News"
+      "en": "Fighting Fake News"
     },
     "icon": "🕵️‍♀️",
     "title": {
       "pt": "Visão de Futuro: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!",
-      "en": "Future Vision: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!"
+      "en": "Future Vision: The 3-Question Detective Test against Fake News!"
     },
     "teaser": {
       "pt": "Nem tudo o que está na Internet é verdade! Qualquer pessoa pode publicar invenções.",
-      "en": "Nem tudo o que está na Internet é verdade! Qualquer pessoa pode publicar invenções."
+      "en": "Not everything on the Internet is true! Anyone can publish made-up information."
     },
     "description": {
       "pt": "Antes de usar uma informação num trabalho escolar, pergunta: 1) QUEM escreveu? (É um especialista respeitado? ); 2) QUANDO foi publicado? (É recente ou de há 10 anos? ); 3) OUTROS jornais sérios e enciclopédias confirmam a mesma notícia?",
-      "en": "Antes de usar uma informação num trabalho escolar, pergunta: 1) QUEM escreveu? (É um especialista respeitado? ); 2) QUANDO foi publicado? (É recente ou de há 10 anos? ); 3) OUTROS jornais sérios e enciclopédias confirmam a mesma notícia?"
+      "en": "Before using information in a school project, ask: 1) WHO wrote it? (Are they a respected expert?); 2) WHEN was it published? (Is it recent or 10 years old?); 3) Do other reliable newspapers and encyclopedias confirm the same information?"
     },
     "whyItMatters": {
       "pt": "Literacia da informação e espírito crítico na avaliação de fontes da Web.",
-      "en": "Literacia da informação e espírito crítico na avaliação de fontes da Web."
+      "en": "Information literacy and critical thinking when evaluating Web sources."
     },
     "funFact": {
       "pt": "Em 1998, um biólogo criou o site falso do \"Polvo das Árvores\" para provar como as pessoas acreditam em tudo online!",
-      "en": "Em 1998, um biólogo criou o site falso do \"Polvo das Árvores\" para provar como as pessoas acreditam em tudo online!"
+      "en": "In 1998, a biologist created the fake \"Tree Octopus\" website to show how easily people can believe things online!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -27311,28 +27311,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "purple",
     "category": {
       "pt": "Citação e Bibliografia",
-      "en": "Citação e Bibliografia"
+      "en": "Citation and Bibliography"
     },
     "icon": "📚",
     "title": {
       "pt": "Visão de Futuro: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!",
-      "en": "Future Vision: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!"
+      "en": "Future Vision: Citing sources is not weakness: it is the mark of real scientists!"
     },
     "teaser": {
       "pt": "Indicar os livros e sites consultados valoriza o teu trabalho e dá-te notas melhores!",
-      "en": "Indicar os livros e sites consultados valoriza o teu trabalho e dá-te notas melhores!"
+      "en": "Listing the books and websites you consulted adds value to your work and can help you earn better marks!"
     },
     "description": {
       "pt": "Alguns alunos têm vergonha de dizer de onde tiraram a informação, pensando que deviam saber tudo de cabeça. Pelo contrário! Cientistas e historiadores indicam sempre a \"Webgrafia\" no final com autor, título do artigo, link e data de acesso.",
-      "en": "Alguns alunos têm vergonha de dizer de onde tiraram a informação, pensando que deviam saber tudo de cabeça. Pelo contrário! Cientistas e historiadores indicam sempre a \"Webgrafia\" no final com autor, título do artigo, link e data de acesso."
+      "en": "Some students are embarrassed to say where they got information, thinking they should know everything by heart. The opposite is true! Scientists and historians always list their sources at the end, with the author, article title, link, and access date."
     },
     "whyItMatters": {
       "pt": "Elaboração rigorosa de bibliografias e webgrafias de acordo com as normas escolares de TIC.",
-      "en": "Elaboração rigorosa de bibliografias e webgrafias de acordo com as normas escolares de TIC."
+      "en": "Careful preparation of bibliographies and web references according to school ICT guidelines."
     },
     "funFact": {
       "pt": "Grandes cientistas como Einstein e Newton sempre agradeceram publicamente aos autores que leram!",
-      "en": "Grandes cientistas como Einstein e Newton sempre agradeceram publicamente aos autores que leram!"
+      "en": "Great scientists such as Einstein and Newton always publicly acknowledged the authors they read!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -27386,28 +27386,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "badgeColor": "indigo",
     "category": {
       "pt": "Periféricos de TIC",
-      "en": "Periféricos de TIC"
+      "en": "ICT Peripherals"
     },
     "icon": "🖨️",
     "title": {
       "pt": "Como Funciona por Dentro: Periféricos: a ponte mágica entre o ser humano e a máquina!",
-      "en": "How It Works Inside: Periféricos: a ponte mágica entre o ser humano e a máquina!"
+      "en": "How It Works Inside: Peripherals: the magic bridge between people and machines!"
     },
     "teaser": {
       "pt": "Sabes dizer se os teus auscultadores são de entrada ou de saída de informação?",
-      "en": "Sabes dizer se os teus auscultadores são de entrada ou de saída de informação?"
+      "en": "Can you tell whether your headphones are input or output devices?"
     },
     "description": {
       "pt": "Periféricos de Entrada enviam dados para o computador (rato, teclado, microfone, câmara). Periféricos de Saída mostram o resultado (monitor, colunas de som, impressora). E periféricos Mistos fazem as duas coisas (ecrãs táteis e auscultadores com microfone integrado)!",
-      "en": "Periféricos de Entrada enviam dados para o computador (rato, teclado, microfone, câmara). Periféricos de Saída mostram o resultado (monitor, colunas de som, impressora). E periféricos Mistos fazem as duas coisas (ecrãs táteis e auscultadores com microfone integrado)!"
+      "en": "Input peripherals send data to the computer (mouse, keyboard, microphone, camera). Output peripherals show the result (monitor, speakers, printer). Mixed peripherals do both (touchscreens and headsets with a built-in microphone)!"
     },
     "whyItMatters": {
       "pt": "Classificar periféricos em Entrada, Saída e Mistos é uma das matérias mais importantes do Tema 1.",
-      "en": "Classificar periféricos em Entrada, Saída e Mistos é uma das matérias mais importantes do Tema 1."
+      "en": "Classifying peripherals as Input, Output, and Mixed is one of the most important subjects in Topic 1."
     },
     "funFact": {
       "pt": "Os óculos de realidade virtual são periféricos mistos: mostram imagem e leem o movimento da cabeça!",
-      "en": "Os óculos de realidade virtual são periféricos mistos: mostram imagem e leem o movimento da cabeça!"
+      "en": "Virtual reality headsets are mixed peripherals: they display images and read head movement!"
     },
     "isSpecialMilestone": false,
     "question": {
@@ -27517,7 +27517,6 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "Y2K taught the global software industry to architect software with robust long-term data structures!"
     }
   }
-
 ];
 
 export const TOTAL_366_TIPS_COUNT = ALL_366_DAILY_TIPS.length;
