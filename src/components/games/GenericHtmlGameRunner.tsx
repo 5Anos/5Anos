@@ -552,28 +552,28 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
         {isMatch && !completed && (
           <div className="space-y-6">
             <div className="flex items-center justify-between gap-3">
-              <p className="text-xs sm:text-sm text-slate-600">
+              <p className="text-xs sm:text-sm text-slate-600 font-medium">
                 {language === 'pt'
-                  ? 'Clica num item da coluna da esquerda e, em seguida, no item correspondente da coluna da direita.'
-                  : 'Click an item on the left column, then click its corresponding match on the right.'}
+                  ? 'Clica num conceito da coluna da esquerda e, em seguida, na resposta correspondente da coluna da direita.'
+                  : 'Click a concept on the left column, then click its corresponding match on the right.'}
               </p>
               <AudioSpeakButton
                 id="match-instructions"
                 text={language === 'pt'
-                  ? 'Clica num item da coluna da esquerda e, em seguida, no item correspondente da coluna da direita.'
-                  : 'Click an item on the left column, then click its corresponding match on the right.'}
+                  ? 'Clica num conceito da coluna da esquerda e, em seguida, na resposta correspondente da coluna da direita.'
+                  : 'Click a concept on the left column, then click its corresponding match on the right.'}
                 language={language}
                 variant="icon"
                 size="xs"
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Left Column */}
-              <div className="space-y-2.5">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                  {language === 'pt' ? 'Conceitos' : 'Concepts'}
-                </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {/* Left Column - CONCEITOS */}
+              <div className="space-y-3">
+                <div className="bg-[#102a43] text-white font-black text-xs sm:text-sm uppercase tracking-widest py-2.5 px-4 rounded-xl text-center shadow-xs">
+                  {language === 'pt' ? 'CONCEITOS' : 'CONCEPTS'}
+                </div>
                 {data.pairs.map((p: any, i: number) => {
                   const isMatched = matched.includes(i);
                   const isSel = picked[0] === i;
@@ -581,6 +581,44 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                   const leftText = p.left || '';
                   const image = p.image;
                   const icon = p.icon;
+                  const lower = leftText.toLowerCase();
+
+                  let themeStyle = {
+                    border: 'border-indigo-200',
+                    bg: 'bg-indigo-50/50 hover:bg-indigo-50/90',
+                    text: 'text-indigo-950',
+                    iconBg: 'bg-indigo-100 border-indigo-300 text-indigo-900',
+                  };
+
+                  if (lower.includes('copyright') || lower.includes('©') || p.colorTheme === 'purple') {
+                    themeStyle = {
+                      border: 'border-purple-200',
+                      bg: 'bg-purple-50/70 hover:bg-purple-100/70',
+                      text: 'text-purple-950',
+                      iconBg: 'bg-purple-200/80 border-purple-300 text-purple-900',
+                    };
+                  } else if (lower.includes('copyleft') || p.colorTheme === 'green') {
+                    themeStyle = {
+                      border: 'border-emerald-200',
+                      bg: 'bg-emerald-50/70 hover:bg-emerald-100/70',
+                      text: 'text-emerald-950',
+                      iconBg: 'bg-emerald-200/80 border-emerald-300 text-emerald-900',
+                    };
+                  } else if (lower.includes('cc-by') || lower.includes('creative commons') || lower.includes('licença cc') || p.colorTheme === 'blue') {
+                    themeStyle = {
+                      border: 'border-sky-200',
+                      bg: 'bg-sky-50/70 hover:bg-sky-100/70',
+                      text: 'text-sky-950',
+                      iconBg: 'bg-sky-200/80 border-sky-300 text-sky-900',
+                    };
+                  } else if (lower.includes('royalty') || lower.includes('free') || p.colorTheme === 'amber') {
+                    themeStyle = {
+                      border: 'border-amber-200',
+                      bg: 'bg-amber-50/70 hover:bg-amber-100/70',
+                      text: 'text-amber-950',
+                      iconBg: 'bg-amber-200/80 border-amber-300 text-amber-900',
+                    };
+                  }
 
                   let conceptVisual = null;
                   if (image) {
@@ -593,35 +631,29 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                     );
                   } else if (icon) {
                     conceptVisual = (
-                      <div className="w-11 h-11 rounded-xl bg-indigo-100/90 text-indigo-950 border border-indigo-200 flex items-center justify-center font-black text-xl shrink-0 shadow-2xs">
-                        {icon}
+                      <div className={`w-11 h-11 rounded-xl border flex items-center justify-center font-black text-lg shrink-0 shadow-2xs ${themeStyle.iconBg}`}>
+                        {icon === '©' ? (
+                          <span className="w-8 h-8 rounded-full border-2 border-current flex items-center justify-center font-black text-base">C</span>
+                        ) : icon === 'CC' || icon === '🅒🅒' ? (
+                          <span className="w-8 h-8 rounded-full border-2 border-current flex items-center justify-center font-black text-xs tracking-tighter">CC</span>
+                        ) : icon === '📄' ? (
+                          <span className="text-xl">📄</span>
+                        ) : icon === '🚫💲' ? (
+                          <span className="relative flex items-center justify-center font-black text-base text-rose-600">
+                            <span className="w-7 h-7 rounded-full border-2 border-rose-500 flex items-center justify-center text-xs font-black relative">
+                              <span className="text-slate-900 font-bold">$</span>
+                              <span className="absolute w-full h-[2px] bg-rose-500 rotate-45" />
+                            </span>
+                          </span>
+                        ) : (
+                          icon
+                        )}
                       </div>
                     );
                   } else {
-                    let fallbackIcon = '📌';
-                    let fallbackBg = 'bg-indigo-100 text-indigo-900 border-indigo-200';
-                    const lower = leftText.toLowerCase();
-
-                    if (lower.includes('copyright') || lower.includes('©')) {
-                      fallbackIcon = '©️';
-                      fallbackBg = 'bg-sky-100 text-sky-900 border-sky-200';
-                    } else if (lower.includes('copyleft')) {
-                      fallbackIcon = '🄯';
-                      fallbackBg = 'bg-emerald-100 text-emerald-900 border-emerald-200';
-                    } else if (lower.includes('cc-by') || lower.includes('creative commons') || lower.includes('licença cc')) {
-                      fallbackIcon = '🅒🅒';
-                      fallbackBg = 'bg-amber-100 text-amber-900 border-amber-200';
-                    } else if (lower.includes('royalty') || lower.includes('free')) {
-                      fallbackIcon = '💎';
-                      fallbackBg = 'bg-purple-100 text-purple-900 border-purple-200';
-                    } else if (lower.includes('password') || lower.includes('previsível') || lower.includes('gestor')) {
-                      fallbackIcon = '🔑';
-                      fallbackBg = 'bg-slate-100 text-slate-900 border-slate-200';
-                    }
-
                     conceptVisual = (
-                      <div className={`w-11 h-11 rounded-xl border flex items-center justify-center font-black text-lg shrink-0 shadow-2xs ${fallbackBg}`}>
-                        {fallbackIcon}
+                      <div className={`w-11 h-11 rounded-xl border flex items-center justify-center font-black text-lg shrink-0 shadow-2xs ${themeStyle.iconBg}`}>
+                        📌
                       </div>
                     );
                   }
@@ -631,44 +663,54 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                       key={i}
                       onClick={() => !isMatched && handleMatchLeft(i)}
                       disabled={isMatched}
-                      className={`w-full text-left p-3 rounded-2xl border-2 text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-3.5 ${
+                      className={`w-full text-left p-3.5 rounded-2xl border-2 text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-3.5 shadow-2xs ${
                         isMatched
                           ? 'border-emerald-300 bg-emerald-50 text-emerald-800 opacity-80 cursor-default'
                           : isSel
-                          ? 'border-indigo-600 bg-indigo-50 text-indigo-900 shadow-xs ring-2 ring-indigo-200'
-                          : 'border-slate-200 bg-white hover:border-indigo-300 text-slate-800 hover:shadow-xs'
+                          ? 'border-indigo-600 bg-indigo-100/90 text-indigo-950 shadow-md ring-2 ring-indigo-300'
+                          : `${themeStyle.border} ${themeStyle.bg} ${themeStyle.text}`
                       }`}
                     >
                       {conceptVisual}
-                      <span className="flex-1 leading-snug">{leftText}</span>
+                      <span className="flex-1 font-extrabold text-sm sm:text-base leading-snug">{leftText}</span>
                     </button>
                   );
                 })}
               </div>
 
-              {/* Right Column */}
-              <div className="space-y-2.5">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                  {language === 'pt' ? 'Respostas' : 'Answers'}
-                </h4>
+              {/* Right Column - RESPOSTAS */}
+              <div className="space-y-3">
+                <div className="bg-[#102a43] text-white font-black text-xs sm:text-sm uppercase tracking-widest py-2.5 px-4 rounded-xl text-center shadow-xs">
+                  {language === 'pt' ? 'RESPOSTAS' : 'ANSWERS'}
+                </div>
                 {rightOrder.map((ri) => {
                   const p = data.pairs[ri];
                   const isMatched = matched.includes(ri);
                   const isShake = shakeIdx === ri;
+
+                  // Give answers a clean pastel card style
+                  const pastelColors = [
+                    'bg-amber-50/80 border-amber-200 hover:bg-amber-100/80 text-amber-950',
+                    'bg-emerald-50/80 border-emerald-200 hover:bg-emerald-100/80 text-emerald-950',
+                    'bg-sky-50/80 border-sky-200 hover:bg-sky-100/80 text-sky-950',
+                    'bg-rose-50/80 border-rose-200 hover:bg-rose-100/80 text-rose-950',
+                  ];
+                  const cardStyle = pastelColors[ri % pastelColors.length];
+
                   return (
                     <button
                       key={ri}
                       onClick={() => !isMatched && handleMatchRight(ri)}
                       disabled={isMatched}
-                      className={`w-full text-left p-3.5 rounded-2xl border-2 text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                      className={`w-full min-h-[64px] text-left p-4 rounded-2xl border-2 text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-2xs flex items-center ${
                         isMatched
                           ? 'border-emerald-300 bg-emerald-50 text-emerald-800 opacity-80 cursor-default'
                           : isShake
                           ? 'border-rose-500 bg-rose-100 text-rose-900 animate-bounce'
-                          : 'border-slate-200 bg-white hover:border-indigo-300 text-slate-800'
+                          : cardStyle
                       }`}
                     >
-                      {p.right}
+                      <span className="leading-relaxed font-semibold">{p.right}</span>
                     </button>
                   );
                 })}

@@ -780,9 +780,13 @@ export default function App() {
             setActiveModuleId(null);
             setActiveChallengeId(null);
           } else if (viewId === 'progress') {
-            setCurrentView('progress');
-            setActiveModuleId(null);
-            setActiveChallengeId(null);
+            if (!user) {
+              setAuthModalOpen(true);
+            } else {
+              setCurrentView('progress');
+              setActiveModuleId(null);
+              setActiveChallengeId(null);
+            }
           } else {
             // Theme navigation
             navigateToTheme(viewId);
@@ -808,8 +812,12 @@ export default function App() {
             themeVisibility={themeVisibility}
             onNavigateTheme={navigateToTheme}
             onNavigateProgress={() => {
-              setCurrentView('progress');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              if (!user) {
+                setAuthModalOpen(true);
+              } else {
+                setCurrentView('progress');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
             }}
             onOpenAuth={() => setAuthModalOpen(true)}
             onOpenAdmin={() => handleOpenAdminWithTab('students')}

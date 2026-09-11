@@ -83,8 +83,8 @@ export const Header: React.FC<HeaderProps> = ({
                 <span>{t.navHome}</span>
               </button>
 
-              {/* Progress & Badges - hidden for teachers */}
-              {!isAdmin && (
+              {/* Progress & Badges - only visible when logged in and not teacher/admin */}
+              {user && !isAdmin && (
                 <button
                   onClick={() => onNavigate('progress')}
                   className={`py-5 text-sm font-semibold transition-colors border-b-2 flex items-center gap-2 cursor-pointer ${
@@ -332,7 +332,7 @@ export const Header: React.FC<HeaderProps> = ({
             <span>{t.navHome}</span>
           </button>
 
-          {!isAdmin && (
+          {user && !isAdmin && (
             <button
               onClick={() => {
                 onNavigate('progress');

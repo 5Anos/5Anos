@@ -426,7 +426,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
       themeId: 'direitos-autor',
       number: 1,
       title: { pt: '🃏 Correspondência de Licenças e Termos', en: '🃏 Licenses & Terms Match' },
-      shortDesc: { pt: 'Liga cada símbolo de direitos de autor ao seu significado correto.', en: 'Match copyright symbols to their authentic meanings.' },
+      shortDesc: { pt: 'Liga cada conceito ou licença à sua respetiva definição.', en: 'Match each copyright concept or license to its definition.' },
       icon: '🃏',
       durationMinutes: 4,
       points: 100,
@@ -436,32 +436,32 @@ export const themeDireitosAutorData: ThemeDefinition = {
         title: 'Correspondência de Licenças e Termos',
         icon: '🃏',
         xp: 100,
-        desc: 'Encontra os pares correspondentes entre símbolos e regras de utilização.',
+        desc: 'Encontra os pares correspondentes entre conceitos e as respostas corretas.',
         data: {
           pairs: [
             {
               left: 'Símbolo © (Copyright)',
-              right: 'Indica proteção autoral e identifica o titular dos direitos de autor',
-              icon: '©️',
-              image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=160&q=80'
+              right: 'Assinala a titularidade dos direitos de autor.',
+              icon: '©',
+              colorTheme: 'purple'
             },
             {
               left: 'Copyleft',
-              right: 'Obras derivadas devem ser partilhadas sob a mesma licença',
-              icon: '🄯',
-              image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=160&q=80'
+              right: 'Obras derivadas devem ser partilhadas sob a mesma licença.',
+              icon: '📄',
+              colorTheme: 'green'
             },
             {
               left: 'Licença CC-BY',
-              right: 'Permite determinados usos da obra, desde que seja dada atribuição ao autor e respeitadas as condições da licença',
-              icon: '🅒🅒',
-              image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=160&q=80'
+              right: 'Permite determinados usos da obra, desde que seja dada atribuição ao autor e sejam respeitadas as condições da licença.',
+              icon: 'CC',
+              colorTheme: 'blue'
             },
             {
               left: 'Royalty Free',
-              right: 'Dispensa o pagamento por cada utilização, mas exige cumprir a licença',
-              icon: '💎',
-              image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=160&q=80'
+              right: 'Uso sem pagamento de direitos por cada utilização.',
+              icon: '🚫💲',
+              colorTheme: 'amber'
             }
           ]
         }
