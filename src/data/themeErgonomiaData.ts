@@ -33,8 +33,8 @@ export const themeErgonomiaData: ThemeDefinition = {
       eyebrow: { pt: 'Postura Correta', en: 'Correct Posture' },
       h: { pt: 'Como te deves sentar ao computador?', en: 'How should you sit at the computer?' },
       body: {
-        pt: 'Para manter o corpo saudável e sem cansaço enquanto estudas ao computador:<ul><li><strong>Ombros:</strong> relaxados e descontraídos.</li><li><strong>Costas:</strong> direitas, com a parte inferior bem apoiada na cadeira.</li><li><strong>Cotovelos e pulsos:</strong> Os cotovelos devem ficar aproximadamente a 90°. Os pulsos devem permanecer direitos e alinhados com os antebraços.</li><li><strong>Ecrã:</strong> topo do ecrã ao nível dos olhos (ou ligeiramente abaixo) e a 45–70 cm de distância.</li><li><strong>Pernas e joelhos:</strong> Os cotovelos e os joelhos devem ficar, aproximadamente, num ângulo de 90°, numa posição confortável.</li><li><strong>Espaço:</strong> área por baixo da secretária desobstruída para esticar confortavelmente as pernas.</li></ul>',
-        en: 'To keep your body healthy and strain-free while working at the computer:<ul><li><strong>Shoulders:</strong> relaxed and dropped.</li><li><strong>Back:</strong> straight, with lower back firmly supported by the chair.</li><li><strong>Elbows & wrists:</strong> Elbows should be bent at approximately 90°. Wrists should remain straight and aligned with the forearms.</li><li><strong>Screen:</strong> top of monitor at eye level (or slightly below) and 45–70 cm away.</li><li><strong>Legs & knees:</strong> Elbows and knees should be bent at approximately a 90° angle, in a comfortable position.</li><li><strong>Space:</strong> clear space under the desk to move your legs comfortably.</li></ul>',
+        pt: 'Para manter o corpo saudável e sem cansaço enquanto estudas ao computador:<ul><li><strong>Ombros:</strong> relaxados e descontraídos.</li><li><strong>Costas:</strong> direitas, com a parte inferior bem apoiada na cadeira.</li><li><strong>Cotovelos e pulsos:</strong> Os cotovelos devem ficar aproximadamente a 90°. Os pulsos devem permanecer direitos e alinhados com os antebraços.</li><li><strong>Ecrã:</strong> topo do ecrã ao nível dos olhos (ou ligeiramente abaixo) e a 45–70 cm de distância.</li><li><strong>Pernas e joelhos:</strong> As pernas e os joelhos devem ficar, aproximadamente, num ângulo de 90°, numa posição confortável, com os pés bem assentes no chão ou num apoio de pés.</li><li><strong>Espaço:</strong> área por baixo da secretária desobstruída para esticar confortavelmente as pernas.</li></ul>',
+        en: 'To keep your body healthy and strain-free while working at the computer:<ul><li><strong>Shoulders:</strong> relaxed and dropped.</li><li><strong>Back:</strong> straight, with lower back firmly supported by the chair.</li><li><strong>Elbows & wrists:</strong> Elbows should be bent at approximately 90°. Wrists should remain straight and aligned with the forearms.</li><li><strong>Screen:</strong> top of monitor at eye level (or slightly below) and 45–70 cm away.</li><li><strong>Legs & knees:</strong> Legs and knees should be bent at approximately a 90° angle, in a comfortable position with feet flat on the floor or footrest.</li><li><strong>Space:</strong> clear space under the desk to move your legs comfortably.</li></ul>',
       },
       icon: '🧍',
     },
@@ -85,13 +85,13 @@ export const themeErgonomiaData: ThemeDefinition = {
           'A postura corporal enquanto estudamos no computador é essencial para evitar o cansaço muscular e desconforto na coluna.',
           'Costas: devem estar direitas e bem encostadas ao encosto da cadeira, com apoio para a zona lombar (fundo das costas).',
           'Cotovelos e Pulsos: Os cotovelos devem ficar aproximadamente a 90°. Os pulsos devem permanecer direitos e alinhados com os antebraços.',
-          'Pernas e Joelhos: Os cotovelos e os joelhos devem ficar, aproximadamente, num ângulo de 90°, numa posição confortável, com os pés bem assentes no chão ou num apoio de pés.',
+          'Pernas e Joelhos: As pernas e os joelhos devem ficar, aproximadamente, num ângulo de 90°, numa posição confortável, com os pés bem assentes no chão ou num apoio de pés.',
         ],
         en: [
           'Proper posture when studying at a computer helps prevent muscle strain and back discomfort.',
           'Back: straight and resting firmly against the chair backrest, with lower back lumbar support.',
           'Elbows & Wrists: Elbows should be bent at approximately 90°. Wrists should remain straight and aligned with the forearms.',
-          'Legs & Knees: Elbows and knees should be at approximately a 90° angle, in a comfortable position, with both feet flat on the floor or footrest.',
+          'Legs & Knees: Legs and knees should be at approximately a 90° angle, in a comfortable position, with both feet flat on the floor or footrest.',
         ],
       },
       example: {

@@ -279,7 +279,7 @@ export const api = {
               publicId: data.publicId || (isAdmin ? 'Docente_TIC' : generateSecurePublicId()),
               turma: isAdmin ? undefined : (data.turma || '5.º A'),
               role: isAdmin ? 'admin' : (data.role || 'student'),
-              points: typeof data.points === 'number' ? data.points : 20,
+              points: typeof data.points === 'number' ? data.points : 0,
               language: data.language || 'pt',
               createdAt: data.createdAt || new Date().toISOString(),
               lastActivity: data.lastActivity,
@@ -313,7 +313,7 @@ export const api = {
               publicId,
               turma: isAdmin ? undefined : '5.º A',
               role: isAdmin ? 'admin' : 'student',
-              points: 20,
+              points: 0,
               language: 'pt',
               createdAt: new Date().toISOString(),
             };
@@ -372,7 +372,7 @@ export const api = {
         publicId: user.publicId,
         role: finalRole,
         language: user.language || 'pt',
-        points: user.points ?? 20,
+        points: user.points ?? 0,
         createdAt: user.createdAt || new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         ...(user.lastActivity ? { lastActivity: user.lastActivity } : {}),
@@ -401,7 +401,7 @@ export const api = {
             publicId: user.publicId,
             turma: user.turma || '5.º A',
             role: 'student',
-            points: user.points ?? 20,
+            points: user.points ?? 0,
             updatedAt: new Date().toISOString(),
           },
           { merge: true }
@@ -673,7 +673,7 @@ export const api = {
         turma: isAdmin ? undefined : (userDocData.turma || '5.º A'),
         role: isAdmin ? 'admin' : (userDocData.role || 'student'),
         language: userDocData.language || 'pt',
-        points: typeof userDocData.points === 'number' ? userDocData.points : (isAdmin ? 0 : 20),
+        points: typeof userDocData.points === 'number' ? userDocData.points : 0,
         avatar: userDocData.avatar || getDefaultAvatar(userDocData.publicId || userDocData.name || userId),
         createdAt: userDocData.createdAt || new Date().toISOString(),
         lastActivity: userDocData.lastActivity,
@@ -692,7 +692,7 @@ export const api = {
         turma: isAdmin ? undefined : '5.º A',
         role: isAdmin ? 'admin' : 'student',
         language: 'pt',
-        points: isAdmin ? 0 : 20,
+        points: 0,
         avatar: getDefaultAvatar(userId),
         createdAt: new Date().toISOString(),
       };
@@ -714,7 +714,7 @@ export const api = {
               publicId: user.publicId,
               turma: user.turma || '5.º A',
               role: 'student',
-              points: 20,
+              points: 0,
               updatedAt: new Date().toISOString(),
             },
             { merge: true }
@@ -1226,10 +1226,14 @@ export const api = {
 
       // Keep public profiles in sync for the student leaderboard (excluding admin accounts)
       if (!isUserAdmin(user.email, user.role)) {
+        const completedActivities = progressList.filter((p) => p.status === 'completed').length;
+        const badgeCount = achievements.length;
         await setDoc(
           doc(db, 'publicProfiles', userId),
           {
             points: user.points,
+            completedActivities,
+            badgeCount,
             updatedAt: new Date().toISOString(),
           },
           { merge: true }
@@ -1327,7 +1331,7 @@ export const api = {
    */
   async getTurmaRankings(): Promise<TurmaRanking[]> {
     const defaultTurmas = getTurmasList();
-    const studentMap = new Map<string, { id: string; publicId: string; turma: string; points: number; avatar?: AvatarConfig }>();
+    const studentMap = new Map<string, { id: string; publicId: string; turma: string; points: number; activitiesCount: number; badgeCount: number; avatar?: AvatarConfig }>();
 
     try {
       const q = query(collection(db, 'publicProfiles'), limit(500));
@@ -1343,6 +1347,8 @@ export const api = {
             publicId: d.publicId || 'Estudante_TIC',
             turma: studentTurma,
             points: typeof d.points === 'number' ? d.points : (Number(d.points) || 0),
+            activitiesCount: typeof d.completedActivities === 'number' ? d.completedActivities : (typeof d.activitiesCount === 'number' ? d.activitiesCount : 0),
+            badgeCount: typeof d.badgeCount === 'number' ? d.badgeCount : 0,
             avatar: d.avatar,
           });
         }
@@ -1368,14 +1374,15 @@ export const api = {
       const totalPoints = turmaStudents.reduce((sum, u) => sum + (u.points || 0), 0);
       const studentCount = turmaStudents.length;
       const avgPoints = studentCount > 0 ? Math.round(totalPoints / studentCount) : 0;
+      const totalCompletedActivities = turmaStudents.reduce((sum, u) => sum + (u.activitiesCount || 0), 0);
 
       const allStudentsInTurma = [...turmaStudents]
         .sort((a, b) => (b.points || 0) - (a.points || 0))
         .map((s) => ({
           publicId: s.publicId || 'Estudante_TIC',
           points: s.points || 0,
-          activitiesCount: Math.floor((s.points || 0) / 15),
-          badgeCount: Math.min(BADGES.length, Math.floor((s.points || 0) / 35) + 1),
+          activitiesCount: s.activitiesCount || 0,
+          badgeCount: s.badgeCount || 0,
           avatar: s.avatar,
         }));
 
@@ -1390,7 +1397,7 @@ export const api = {
         totalPoints,
         avgPoints,
         studentCount,
-        completedActivities: Math.round(totalPoints / 15),
+        completedActivities: totalCompletedActivities,
         topBadge:
           studentCount === 0
             ? '⭐ Sem Alunos'
@@ -1415,7 +1422,7 @@ export const api = {
    * Excludes all Admin / Teacher accounts.
    */
   async getStudentRankings(currentUserId?: string): Promise<StudentRanking[]> {
-    const studentList: { id: string; publicId: string; turma: string; points: number; avatar?: AvatarConfig }[] = [];
+    const studentList: { id: string; publicId: string; turma: string; points: number; activitiesCount: number; badgeCount: number; avatar?: AvatarConfig }[] = [];
 
     try {
       const q = query(collection(db, 'publicProfiles'), limit(500));
@@ -1429,6 +1436,8 @@ export const api = {
           publicId: d.publicId || 'Estudante_TIC',
           turma: d.turma ? String(d.turma).trim() : '5.º A',
           points: typeof d.points === 'number' ? d.points : (Number(d.points) || 0),
+          activitiesCount: typeof d.completedActivities === 'number' ? d.completedActivities : (typeof d.activitiesCount === 'number' ? d.activitiesCount : 0),
+          badgeCount: typeof d.badgeCount === 'number' ? d.badgeCount : 0,
           avatar: d.avatar,
         });
       });
@@ -1444,8 +1453,8 @@ export const api = {
       publicId: u.publicId || 'Estudante_TIC',
       turma: u.turma || '5.º A',
       points: u.points || 0,
-      activitiesCount: Math.floor((u.points || 0) / 15),
-      badgeCount: Math.min(BADGES.length, Math.floor((u.points || 0) / 35) + 1),
+      activitiesCount: u.activitiesCount || 0,
+      badgeCount: u.badgeCount || 0,
       isCurrentUser: u.id === currentUserId,
       avatar: u.avatar,
     }));

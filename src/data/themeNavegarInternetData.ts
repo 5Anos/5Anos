@@ -24,8 +24,8 @@ export const themeNavegarInternetData: ThemeDefinition = {
       eyebrow: { pt: 'Navegador & URL', en: 'Browser & URL' },
       h: { pt: 'A Internet, a Web e o Navegador', en: 'Internet, Web and Browser' },
       body: {
-        pt: 'A Internet é uma rede que liga computadores no mundo inteiro. A Web é o conjunto de páginas que visitamos. O Navegador (ou Browser) é o programa que usamos para viajar na Web (como o Google Chrome, Mozilla Firefox, Microsoft Edge ou Safari). Cada site tem uma morada única chamada URL (como https://www.seguranet.pt). .pt é o domínio de topo associado a Portugal. Quando tem "https://" e o símbolo do Cadeado 🔒, indica que a ligação ao site está protegida por cifragem.',
-        en: 'The Internet is a global network connecting computers. The Web is the collection of pages we visit. The Web Browser is the app we use to explore the Web (like Chrome, Firefox, Edge, or Safari). Each website has a unique address called a URL (like https://www.seguranet.pt). .pt is the top-level domain associated with Portugal. When it has "https://" and a Padlock 🔒, it indicates that the connection to the site is protected by encryption.',
+        pt: 'A Internet é uma rede que liga computadores no mundo inteiro. A Web é o conjunto de páginas que visitamos. O Navegador (ou Browser) é o programa que usamos para viajar na Web (como o Google Chrome, Mozilla Firefox, Microsoft Edge ou Safari). Cada site tem uma morada única chamada URL (como https://www.seguranet.pt). O domínio de topo .pt está associado a Portugal. Quando tem "https://" e o símbolo do Cadeado 🔒, indica que a ligação ao site está protegida por cifragem.',
+        en: 'The Internet is a global network connecting computers. The Web is the collection of pages we visit. The Web Browser is the app we use to explore the Web (like Chrome, Firefox, Edge, or Safari). Each website has a unique address called a URL (such as https://www.seguranet.pt). The top-level domain .pt is associated with Portugal. When it has "https://" and a Padlock 🔒, it indicates that the connection to the site is protected by encryption.',
       },
       icon: '🌐',
     },
@@ -255,14 +255,14 @@ export const themeNavegarInternetData: ThemeDefinition = {
       icon: '🚦',
       explanation: {
         pt: [
-          'Anúncios de Falsos Prémios: janelas a dizer "Ganhaste um telemóvel!" ou "Ganhaste 1000 euros!" são 100% falsas (scams). Fecha logo a janela e nunca dês dados.',
+          'Anúncios de Falsos Prémios: janelas a dizer "Ganhaste um telemóvel!" ou "Ganhaste 1000 euros!" são armadilhas fraudulentas (scams). Fecha logo a janela e nunca dês dados.',
           'Passar o rato por cima do link: antes de clicares num link, passa o cursor por cima sem carregar. No canto inferior do ecrã podes ver a morada verdadeira para onde ele vai!',
           'Ficheiros Executáveis (.exe): não descarregues nem abras ficheiros executáveis (.exe) recebidos de fontes desconhecidas, porque podem conter software malicioso.',
           'Phishing: mensagens ou páginas falsas que tentam enganar-te para roubar palavras-passe ou informações pessoais.',
           'Se vires algo desagradável ou assustador: fecha a página imediatamente e conta logo a um adulto de confiança (pais ou professor).',
         ],
         en: [
-          'Fake Prize Ads: banners screaming "You won a smartphone!" or "You won money!" are 100% scams. Close them immediately and never enter details.',
+          'Fake Prize Ads: banners screaming "You won a smartphone!" or "You won money!" are deceptive traps (scams). Close them immediately and never enter details.',
           'Hover over links: before clicking, hover your cursor over the link to preview the real destination address at the bottom of the screen!',
           'Downloads and Executables (.exe): never download executable files from untrusted sources as they may carry malware.',
           'Phishing: fake websites trying to trick you into revealing passwords or personal data.',

@@ -224,11 +224,31 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
 
   // Detective game items
   const puzzlePieces = [
-    { id: 1, label: '1.º Quem fez? (Autor: Apelido, Nome)', color: 'bg-blue-500 text-white' },
-    { id: 2, label: '2.º Quando? (Data entre parênteses)', color: 'bg-emerald-500 text-white' },
-    { id: 3, label: '3.º O quê? (Título da obra)', color: 'bg-purple-500 text-white' },
-    { id: 4, label: '4.º Onde? (Jornal, Site ou Editora)', color: 'bg-amber-500 text-white' },
-    { id: 5, label: '5.º Endereço web (URL direto da página)', color: 'bg-cyan-600 text-white' },
+    {
+      id: 1,
+      label: language === 'pt' ? '1.º Quem fez? (Autor: Apelido, Nome)' : '1st: Who? (Author: Last Name, Initials)',
+      color: 'bg-blue-500 text-white',
+    },
+    {
+      id: 2,
+      label: language === 'pt' ? '2.º Quando? (Data entre parênteses)' : '2nd: When? (Date in parentheses)',
+      color: 'bg-emerald-500 text-white',
+    },
+    {
+      id: 3,
+      label: language === 'pt' ? '3.º O quê? (Título da obra)' : '3rd: What? (Title of work)',
+      color: 'bg-purple-500 text-white',
+    },
+    {
+      id: 4,
+      label: language === 'pt' ? '4.º Onde? (Jornal, Site ou Editora)' : '4th: Where? (Journal, Website, or Publisher)',
+      color: 'bg-amber-500 text-white',
+    },
+    {
+      id: 5,
+      label: language === 'pt' ? '5.º Endereço web (URL direto da página)' : '5th: Direct web address (URL)',
+      color: 'bg-cyan-600 text-white',
+    },
   ];
 
   const handlePuzzleClick = (id: number) => {
@@ -277,20 +297,22 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
         <div className="relative z-10 max-w-xl space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-black uppercase tracking-wider text-amber-100 border border-white/20">
             <Sparkles className="w-3.5 h-3.5 text-yellow-300" />
-            <span>Simulador Interativo • 5.º Ano</span>
+            <span>{language === 'pt' ? 'Simulador Interativo • 5.º Ano' : 'Interactive Simulator • 5th Grade'}</span>
           </div>
           <h3 className="text-2xl sm:text-3xl font-black tracking-tight">
-            O Meu Criador de Referências APA 7! 📚✨
+            {language === 'pt' ? 'O Meu Criador de Referências APA 7! 📚✨' : 'My APA 7 Reference Builder! 📚✨'}
           </h3>
           <p className="text-xs sm:text-sm text-amber-50 font-medium leading-relaxed">
-            Monta referências bibliográficas perfeitas como se fossem peças de Lego. Preenche os campos abaixo ou escolhe um exemplo real para ver a magia acontecer!
+            {language === 'pt'
+              ? 'Monta referências bibliográficas perfeitas como se fossem peças de Lego. Preenche os campos abaixo ou escolhe um exemplo real para ver a magia acontecer!'
+              : 'Build accurate bibliographic references step by step like Lego bricks. Fill in the fields below or select an example to see it in action!'}
           </p>
         </div>
 
         <div className="relative z-10 shrink-0 w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden shadow-md border-2 border-white/40 bg-white/10 hidden sm:block">
           <img
             src={citationBlocksImg}
-            alt="Blocos de citação"
+            alt={language === 'pt' ? 'Blocos de citação' : 'Citation blocks'}
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover"
           />
@@ -304,10 +326,12 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
         </div>
         <div className="text-xs sm:text-sm space-y-1">
           <span className="font-black text-amber-900 uppercase tracking-wide flex items-center gap-1.5">
-            <span>Regra da Norma APA (7.ª edição):</span>
+            <span>{language === 'pt' ? 'Regra da Norma APA (7.ª edição):' : 'APA Rule (7th Edition):'}</span>
           </span>
           <p className="text-amber-900 leading-relaxed font-medium">
-            Na APA 7.ª edição, a data de consulta só é indicada em alguns casos, sobretudo quando o conteúdo pode mudar ao longo do tempo.
+            {language === 'pt'
+              ? 'Na APA 7.ª edição, a data de consulta só é indicada em alguns casos, sobretudo quando o conteúdo pode mudar ao longo do tempo.'
+              : 'In APA 7th edition, retrieval dates are only included in specific cases, mainly when the content is likely to change over time.'}
           </p>
         </div>
       </div>
@@ -316,7 +340,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
       <div className="p-4 sm:p-6 space-y-6">
         <div>
           <label className="block text-xs font-black uppercase tracking-wider text-slate-600 mb-2">
-            1. Escolhe o que queres citar no teu trabalho escolar:
+            {language === 'pt' ? '1. Escolhe o que queres citar no teu trabalho escolar:' : '1. Choose what you want to cite in your school project:'}
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
             <button
@@ -329,7 +353,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
               }`}
             >
               <Globe className="w-5 h-5 text-indigo-600" />
-              <span>🌐 Notícia / Página Web</span>
+              <span>{language === 'pt' ? '🌐 Notícia / Página Web' : '🌐 News / Web Page'}</span>
             </button>
 
             <button
@@ -342,7 +366,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
               }`}
             >
               <BookOpen className="w-5 h-5 text-amber-600" />
-              <span>📖 Livro ou Manual</span>
+              <span>{language === 'pt' ? '📖 Livro ou Manual' : '📖 Book or Textbook'}</span>
             </button>
 
             <button
@@ -355,7 +379,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
               }`}
             >
               <Video className="w-5 h-5 text-rose-600" />
-              <span>🎥 Vídeo YouTube</span>
+              <span>{language === 'pt' ? '🎥 Vídeo YouTube' : '🎥 YouTube Video'}</span>
             </button>
 
             <button
@@ -368,7 +392,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
               }`}
             >
               <ImageIcon className="w-5 h-5 text-emerald-600" />
-              <span>🖼️ Foto ou Imagem</span>
+              <span>{language === 'pt' ? '🖼️ Foto ou Imagem' : '🖼️ Photo or Image'}</span>
             </button>
           </div>
         </div>
@@ -377,14 +401,14 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
         <div className="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200 space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-              <span>✍️ 2. Informação da Fonte (Podes alterar ou escrever os teus dados)</span>
+              <span>{language === 'pt' ? '✍️ 2. Informação da Fonte (Podes alterar ou escrever os teus dados)' : '✍️ 2. Source Information (You can edit or enter your details)'}</span>
             </span>
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={handleClearFields}
                 className="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors"
-                title="Limpar todos os campos para preencher de raiz"
+                title={language === 'pt' ? 'Limpar todos os campos para preencher de raiz' : 'Clear all fields'}
               >
                 <Eraser className="w-3.5 h-3.5 text-rose-600" />
                 <span>{language === 'pt' ? 'Limpar Campos' : 'Clear Fields'}</span>
@@ -393,7 +417,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
                 type="button"
                 onClick={() => loadExample(sourceType)}
                 className="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors"
-                title="Restaurar exemplo guiado"
+                title={language === 'pt' ? 'Restaurar exemplo guiado' : 'Reset example'}
               >
                 <RotateCcw className="w-3.5 h-3.5 text-indigo-600" />
                 <span>{language === 'pt' ? 'Restaurar Exemplo' : 'Reset Example'}</span>
@@ -407,25 +431,25 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
               <>
                 <div className="sm:col-span-6">
                   <label className="block text-[11px] font-bold text-slate-600 mb-1">
-                    👤 Apelido do Autor (Ex: Soares, Ribeiro, Saramago)
+                    {language === 'pt' ? '👤 Apelido do Autor (Ex: Soares, Ribeiro, Saramago)' : '👤 Author Last Name (e.g. Soares, Ribeiro)'}
                   </label>
                   <input
                     type="text"
                     value={authorLastName}
                     onChange={(e) => setAuthorLastName(e.target.value)}
-                    placeholder="Escreve o apelido..."
+                    placeholder={language === 'pt' ? 'Escreve o apelido...' : 'Enter last name...'}
                     className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                   />
                 </div>
                 <div className="sm:col-span-6">
                   <label className="block text-[11px] font-bold text-slate-600 mb-1">
-                    Inicial do Autor (Ex: R., N.)
+                    {language === 'pt' ? 'Inicial do Autor (Ex: R., N.)' : 'Author Initial (e.g. R., N.)'}
                   </label>
                   <input
                     type="text"
                     value={authorFirstName}
                     onChange={(e) => setAuthorFirstName(e.target.value)}
-                    placeholder="Ex: R."
+                    placeholder={language === 'pt' ? 'Ex: R.' : 'e.g. R.'}
                     className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                   />
                 </div>
@@ -433,13 +457,13 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
             ) : (
               <div className="sm:col-span-12">
                 <label className="block text-[11px] font-bold text-slate-600 mb-1">
-                  🏛️ Nome do Canal, Organização ou Entidade
+                  {language === 'pt' ? '🏛️ Nome do Canal, Organização ou Entidade' : '🏛️ Channel, Organization, or Entity Name'}
                 </label>
                 <input
                   type="text"
                   value={orgName}
                   onChange={(e) => setOrgName(e.target.value)}
-                  placeholder="Ex: Canal YouTube, Notícias RTP..."
+                  placeholder={language === 'pt' ? 'Ex: Canal YouTube, Notícias RTP...' : 'e.g. YouTube Channel, BBC News...'}
                   className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                 />
               </div>
@@ -455,7 +479,9 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
               className="w-4 h-4 text-indigo-600 rounded cursor-pointer"
             />
             <label htmlFor="isOrgCheck" className="text-xs text-slate-600 cursor-pointer">
-              O autor é uma instituição, jornal ou canal (ex: Público, NASA, Canal YouTube)?
+              {language === 'pt'
+                ? 'O autor é uma instituição, jornal ou canal (ex: Público, NASA, Canal YouTube)?'
+                : 'Is the author an institution, newspaper, or channel (e.g. Público, NASA, YouTube)?'}
             </label>
           </div>
 
@@ -463,13 +489,13 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
             <div className="sm:col-span-4">
               <label className="block text-[11px] font-bold text-slate-600 mb-1">
-                📅 Ano de publicação (Ex: 2024)
+                {language === 'pt' ? '📅 Ano de publicação (Ex: 2024)' : '📅 Publication Year (e.g. 2024)'}
               </label>
               <input
                 type="text"
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
-                placeholder="Ex: 2024"
+                placeholder={language === 'pt' ? 'Ex: 2024' : 'e.g. 2024'}
                 className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
@@ -477,13 +503,13 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
             {(sourceType === 'website' || sourceType === 'video') && (
               <div className="sm:col-span-4">
                 <label className="block text-[11px] font-bold text-slate-600 mb-1">
-                  Mês e Dia (Ex: 15 de março)
+                  {language === 'pt' ? 'Mês e Dia (Ex: 15 de março)' : 'Month and Day (e.g. March 15)'}
                 </label>
                 <input
                   type="text"
                   value={monthDay}
                   onChange={(e) => setMonthDay(e.target.value)}
-                  placeholder="Ex: 15 de março"
+                  placeholder={language === 'pt' ? 'Ex: 15 de março' : 'e.g. March 15'}
                   className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                 />
               </div>
@@ -491,13 +517,13 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
 
             <div className={sourceType === 'website' || sourceType === 'video' ? 'sm:col-span-4' : 'sm:col-span-8'}>
               <label className="block text-[11px] font-bold text-slate-600 mb-1">
-                🏷️ Onde foi publicado? (Site, Jornal ou Editora)
+                {language === 'pt' ? '🏷️ Onde foi publicado? (Site, Jornal ou Editora)' : '🏷️ Where was it published? (Website, Newspaper, or Publisher)'}
               </label>
               <input
                 type="text"
                 value={sourceName}
                 onChange={(e) => setSourceName(e.target.value)}
-                placeholder="Ex: Jornal Público, Editora Porto..."
+                placeholder={language === 'pt' ? 'Ex: Jornal Público, Editora Porto...' : 'e.g. Público, Porto Editora...'}
                 className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
@@ -506,13 +532,13 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
           {/* Title of work */}
           <div>
             <label className="block text-[11px] font-bold text-slate-600 mb-1">
-              📰 Título da Notícia, Artigo ou Livro
+              {language === 'pt' ? '📰 Título da Notícia, Artigo ou Livro' : '📰 Article, Book, or Page Title'}
             </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Escreve o título da obra..."
+              placeholder={language === 'pt' ? 'Escreve o título da obra...' : 'Enter the title of the work...'}
               className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
             />
           </div>
@@ -521,13 +547,13 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
           {sourceType === 'book' && (
             <div>
               <label className="block text-[11px] font-bold text-slate-600 mb-1">
-                Edição (Apenas a partir da 2.ª edição! Ex: 4.ª ed.)
+                {language === 'pt' ? 'Edição (Apenas a partir da 2.ª edição! Ex: 4.ª ed.)' : 'Edition (Only 2nd edition onward! e.g. 4th ed.)'}
               </label>
               <input
                 type="text"
                 value={edition}
                 onChange={(e) => setEdition(e.target.value)}
-                placeholder="Ex: 2.ª ed. (opcional)"
+                placeholder={language === 'pt' ? 'Ex: 2.ª ed. (opcional)' : 'e.g. 2nd ed. (optional)'}
                 className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
@@ -537,7 +563,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
           {sourceType !== 'book' && (
             <div>
               <label className="block text-[11px] font-bold text-slate-600 mb-1">
-                🔗 Endereço Web direto (URL com https://)
+                {language === 'pt' ? '🔗 Endereço Web direto (URL com https://)' : '🔗 Direct Web Address (URL starting with https://)'}
               </label>
               <input
                 type="url"
@@ -553,7 +579,9 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
         {/* Real-Time Visual Lego Blocks Preview */}
         <div>
           <span className="block text-xs font-black uppercase tracking-wider text-slate-700 mb-2.5">
-            🧩 3. Exemplo de uma referência de página Web em APA 7: Autor → Data → Título → Fonte → URL:
+            {language === 'pt'
+              ? '🧩 3. Exemplo de uma referência de página Web em APA 7: Autor → Data → Título → Fonte → URL:'
+              : '🧩 3. Example of an APA 7 Web Reference: Author → Date → Title → Source → URL:'}
           </span>
 
           <div className="flex flex-wrap items-center gap-2 p-4 bg-slate-100 rounded-2xl border border-slate-200">
@@ -630,7 +658,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
               <span>✨</span>
-              <span>Referência Pronta para o Teu Trabalho Escolar</span>
+              <span>{language === 'pt' ? 'Referência Pronta para o Teu Trabalho Escolar' : 'Reference Ready for Your School Project'}</span>
             </span>
             <button
               type="button"
@@ -647,12 +675,12 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
               {copied ? (
                 <>
                   <Check className="w-3.5 h-3.5" />
-                  <span>Copiada!</span>
+                  <span>{language === 'pt' ? 'Copiada!' : 'Copied!'}</span>
                 </>
               ) : (
                 <>
                   <Copy className="w-3.5 h-3.5" />
-                  <span>Copiar Referência</span>
+                  <span>{language === 'pt' ? 'Copiar Referência' : 'Copy Reference'}</span>
                 </>
               )}
             </button>
@@ -698,7 +726,9 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
           <div className="flex items-center gap-2 text-xs text-slate-300">
             <span>📋</span>
             <span>
-              Podes colar esta linha na secção &quot;Referências Bibliográficas&quot; do teu trabalho de TIC, Português ou História!
+              {language === 'pt'
+                ? 'Podes colar esta linha na secção "Referências Bibliográficas" do teu trabalho de TIC, Português ou História!'
+                : 'You can paste this line into the "References" section of your ICT, Portuguese, or History project!'}
             </span>
           </div>
         </div>
@@ -709,24 +739,32 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
             <div className="flex items-center gap-2">
               <Award className="w-5 h-5 text-amber-600" />
               <h4 className="text-sm sm:text-base font-black text-amber-950">
-                Desafio do Pequeno Detetive: Ordena a Citação (+25 Pontos!) 🕵️‍♂️
+                {language === 'pt'
+                  ? 'Desafio do Pequeno Detetive: Ordena a Citação (+25 Pontos!) 🕵️‍♂️'
+                  : 'Young Detective Challenge: Order the Citation (+25 Points!) 🕵️‍♂️'}
               </h4>
             </div>
             {gameCompleted && (
               <span className="text-xs font-black text-emerald-700 bg-emerald-100 border border-emerald-300 px-3 py-1 rounded-full animate-bounce">
-                🎉 Desafio Concluído! +25 Pontos
+                {language === 'pt' ? '🎉 Desafio Concluído! +25 Pontos' : '🎉 Challenge Completed! +25 Points'}
               </span>
             )}
           </div>
 
           <p className="text-xs sm:text-sm text-amber-900 font-medium">
-            Exemplo de uma referência de página Web em APA 7: Autor → Data → Título → Fonte → URL. Clica nas peças pela ordem correta para ganhares a medalha de Mestre das Referências:
+            {language === 'pt'
+              ? 'Exemplo de uma referência de página Web em APA 7: Autor → Data → Título → Fonte → URL. Clica nas peças pela ordem correta para ganhares a medalha de Mestre das Referências:'
+              : 'APA 7 web reference sequence: Author → Date → Title → Source → URL. Click the blocks in the correct order to earn the Reference Master badge:'}
           </p>
 
           {gameError && (
             <div className="p-2.5 rounded-xl bg-rose-100 border border-rose-300 text-rose-800 text-xs font-bold flex items-center gap-2 animate-shake">
               <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
-              <span>Ups! Essa não é a peça seguinte. Lembra-te: Autor ➔ Data ➔ Título ➔ Fonte ➔ URL. Tenta de novo!</span>
+              <span>
+                {language === 'pt'
+                  ? 'Ups! Essa não é a peça seguinte. Lembra-te: Autor ➔ Data ➔ Título ➔ Fonte ➔ URL. Tenta de novo!'
+                  : 'Oops! That is not the next piece. Remember: Author ➔ Date ➔ Title ➔ Source ➔ URL. Try again!'}
+              </span>
             </div>
           )}
 
@@ -763,14 +801,16 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
           {gameCompleted && (
             <div className="pt-2 flex items-center justify-between">
               <p className="text-xs sm:text-sm font-black text-emerald-900">
-                Parabéns! Aprendeste a organizar uma referência. Indicar as fontes ajuda a evitar o plágio.
+                {language === 'pt'
+                  ? 'Parabéns! Aprendeste a organizar uma referência. Indicar as fontes ajuda a evitar o plágio.'
+                  : 'Congratulations! You learned how to organize a reference. Citing sources helps prevent plagiarism.'}
               </p>
               <button
                 type="button"
                 onClick={resetGame}
                 className="text-xs font-bold text-amber-800 hover:text-amber-950 underline cursor-pointer"
               >
-                Jogar Novamente
+                {language === 'pt' ? 'Jogar Novamente' : 'Play Again'}
               </button>
             </div>
           )}

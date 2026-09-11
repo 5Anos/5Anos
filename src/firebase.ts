@@ -25,24 +25,66 @@ const databaseId = firebaseConfigJson.firestoreDatabaseId && firebaseConfigJson.
 
 export const db = databaseId ? getFirestore(app, databaseId) : getFirestore(app);
 
-// Connection test according to Firebase Integration Guidelines
-export async function testFirebaseConnection(): Promise<boolean> {
+// Connection test and diagnostic reporting
+export interface FirebaseConnectionStatus {
+  ok: boolean;
+  message: string;
+  isOffline?: boolean;
+}
+
+export async function checkFirebaseConnectionDetails(): Promise<FirebaseConnectionStatus> {
   try {
-    await getDocFromServer(doc(db, 'test', 'connection'));
-    console.log('Firebase Firestore connection verified.');
-    return true;
+    const testPromise = getDocFromServer(doc(db, 'config', 'connection_test'));
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('Connection timeout')), 5000)
+    );
+    await Promise.race([testPromise, timeoutPromise]);
+    return { ok: true, message: 'Ligação ao Firestore verificada com sucesso.' };
   } catch (error) {
-    if (error instanceof Error && error.message.includes('the client is offline')) {
-      console.warn('Firebase client is offline or initializing.');
-    } else {
-      console.log('Firebase connection ready.');
+    const errMessage = error instanceof Error ? error.message : String(error);
+    const isOffline =
+      errMessage.includes('the client is offline') ||
+      errMessage.includes('failed-precondition') ||
+      errMessage.includes('unavailable');
+    const isTimeout = errMessage.includes('Connection timeout');
+
+    if (isOffline) {
+      console.warn('Firebase client is offline or initializing:', errMessage);
+      return {
+        ok: false,
+        isOffline: true,
+        message: 'O cliente Firebase está offline ou a inicializar.',
+      };
     }
-    return true;
+
+    if (isTimeout) {
+      console.warn('Firebase connection check timed out.');
+      return {
+        ok: false,
+        message: 'Tempo limite excedido ao ligar ao Firestore.',
+      };
+    }
+
+    console.warn('Firebase connection check failed:', errMessage);
+    return {
+      ok: false,
+      message: `Falha na ligação ao Firestore: ${errMessage}`,
+    };
   }
 }
 
+export async function testFirebaseConnection(): Promise<boolean> {
+  const result = await checkFirebaseConnectionDetails();
+  if (result.ok) {
+    console.log('Firebase Firestore connection verified.');
+  } else {
+    console.warn('Firebase Firestore connection test result:', result.message);
+  }
+  return result.ok;
+}
+
 // Auto-run connection test
-testFirebaseConnection();
+testFirebaseConnection().catch(() => {});
 
 export enum OperationType {
   CREATE = 'create',

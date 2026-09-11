@@ -183,7 +183,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
             <div className="flex flex-wrap items-center gap-3">
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-black uppercase tracking-wider text-amber-300 border border-white/20 shadow-xs">
                 <span className="text-base">{theme.icon}</span>
-                <span>Tema {theme.number}</span>
+                <span>{language === 'pt' ? 'Tema' : 'Theme'} {theme.number}</span>
               </div>
             </div>
 
@@ -439,7 +439,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                             ? 'w-6 bg-indigo-600'
                             : 'w-2 bg-slate-200 hover:bg-slate-300'
                         }`}
-                        title={`Passo ${idx + 1}`}
+                        title={language === 'pt' ? `Passo ${idx + 1}` : `Step ${idx + 1}`}
                       />
                     ))}
                   </div>
@@ -516,7 +516,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                       <div className="flex items-center justify-between mb-4">
                         <span className="text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider bg-slate-200 text-slate-700 flex items-center gap-1.5">
                           <Lock className="w-3.5 h-3.5 text-amber-600" />
-                          <span>🏆 Quiz de Aprendizagem</span>
+                          <span>🏆 {language === 'pt' ? 'Quiz de Aprendizagem' : 'Learning Quiz'}</span>
                         </span>
                         <span className="text-[11px] font-bold text-amber-800 bg-amber-100/90 border border-amber-200 px-2.5 py-1 rounded-full flex items-center gap-1">
                           <Lock className="w-3 h-3 text-amber-600" />
@@ -585,7 +585,9 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                               : 'bg-slate-100 text-slate-700'
                           }`}
                         >
-                          {isFinalQuiz ? '🏆 Quiz de Aprendizagem' : `Desafio ${chal.number}`}
+                          {isFinalQuiz
+                            ? (language === 'pt' ? '🏆 Quiz de Aprendizagem' : '🏆 Learning Quiz')
+                            : (language === 'pt' ? `Desafio ${chal.number}` : `Challenge ${chal.number}`)}
                         </span>
 
                         {isFinalQuiz && isAdmin && (
@@ -595,7 +597,11 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                               : 'bg-rose-100 text-rose-900 border-rose-300'
                           }`}>
                             {isQuizVisible ? <Eye className="w-3 h-3 text-emerald-600" /> : <Lock className="w-3 h-3 text-rose-600" />}
-                            <span>{isQuizVisible ? 'Visível p/ Alunos' : 'Oculto p/ Alunos'}</span>
+                            <span>
+                              {isQuizVisible
+                                ? (language === 'pt' ? 'Visível p/ Alunos' : 'Visible to Students')
+                                : (language === 'pt' ? 'Oculto p/ Alunos' : 'Hidden from Students')}
+                            </span>
                           </span>
                         )}
                       </div>
@@ -609,7 +615,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                           <CheckCircle2 className="w-3.5 h-3.5" />
                           <span>
                             {isFinalQuiz
-                              ? getQuizMention(record.firstAttemptScore ?? record.score ?? 0)
+                              ? getQuizMention(record.firstAttemptScore ?? record.score ?? 0, language)
                               : record.bestPercentage ? `${record.bestPercentage}%` : t.completedStatus}
                           </span>
                         </span>
@@ -635,11 +641,13 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                             <div className="mt-0.5">
                               <span className="text-[11px] font-bold text-amber-900 flex items-center gap-1">
                                 <Zap className="w-3 h-3 fill-current text-amber-500" />
-                                <span>Avaliação Oficial: {getQuizMention(record?.firstAttemptScore ?? record?.score ?? 0)}</span>
+                                <span>
+                                  {language === 'pt' ? 'Avaliação Oficial:' : 'Official Evaluation:'} {getQuizMention(record?.firstAttemptScore ?? record?.score ?? 0, language)}
+                                </span>
                               </span>
                               {record?.attempts && record.attempts > 1 && (
                                 <span className="text-[10px] text-slate-500 font-semibold block">
-                                  {record.attempts} tentativas realizadas (treino)
+                                  {record.attempts} {language === 'pt' ? 'tentativas realizadas (treino)' : 'attempts completed (practice)'}
                                 </span>
                               )}
                             </div>
@@ -652,12 +660,14 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                         ) : isDone ? (
                           <span className="text-[11px] font-bold text-emerald-700 flex items-center gap-1 mt-0.5">
                             <Zap className="w-3 h-3 fill-current text-emerald-500" />
-                            <span>{record?.bestScore ?? record?.score ?? 100} / 100 XP {record?.attempts && record.attempts > 1 ? `(${record.attempts} tent.)` : ''}</span>
+                            <span>
+                              {record?.bestScore ?? record?.score ?? 100} / 100 XP {record?.attempts && record.attempts > 1 ? (language === 'pt' ? `(${record.attempts} tent.)` : `(${record.attempts} att.)`) : ''}
+                            </span>
                           </span>
                         ) : (
                           <span className="text-[11px] font-bold text-indigo-600 flex items-center gap-1 mt-0.5">
                             <Zap className="w-3 h-3 fill-current text-indigo-500" />
-                            <span>Vale 100 XP • Tentativas ilimitadas</span>
+                            <span>{language === 'pt' ? 'Vale 100 XP • Tentativas ilimitadas' : 'Worth 100 XP • Unlimited attempts'}</span>
                           </span>
                         )}
                       </div>

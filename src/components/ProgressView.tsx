@@ -30,13 +30,13 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
   const [selectedThemeFilter, setSelectedThemeFilter] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grouped' | 'list'>('grouped');
 
-  const totalActivities = ALL_THEMES.reduce(
-    (acc, theme) => acc + theme.challenges.length,
-    0
-  );
+  const allCurricularChallenges = ALL_THEMES.flatMap((theme) => theme.challenges);
+  const totalActivities = allCurricularChallenges.length;
 
-  const completedCount = progressList.filter((p) => p.status === 'completed').length;
-  const overallPercentage = totalActivities > 0 ? Math.min(100, Math.round((completedCount / totalActivities) * 100)) : 0;
+  const completedCount = allCurricularChallenges.filter((challenge) =>
+    progressList.some((p) => p.activityId === challenge.id && p.status === 'completed')
+  ).length;
+  const overallPercentage = totalActivities > 0 ? Math.max(0, Math.min(100, Math.round((completedCount / totalActivities) * 100))) : 0;
 
   const quizRecords = progressList.filter((p) => p.bestPercentage !== undefined);
   const avgQuiz = quizRecords.length > 0
@@ -58,15 +58,10 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
   const themesWithProgress = useMemo(() => {
     return ALL_THEMES.map((theme) => {
       const themeChallengeIds = new Set(theme.challenges.map((c) => c.id));
-      const items = enrichedProgress.filter(
-        (p) =>
-          themeChallengeIds.has(p.activityId) ||
-          p.meta.themeId === theme.id ||
-          p.themeId === theme.id ||
-          p.themeId === String(theme.number) ||
-          (theme.id === 'tic-sociedade' && (p.themeId === 'seguranca-digital' || p.activityId.includes('tic')))
-      );
-      const completed = items.filter((p) => p.status === 'completed').length;
+      const items = enrichedProgress.filter((p) => themeChallengeIds.has(p.activityId));
+      const completed = theme.challenges.filter((c) =>
+        progressList.some((p) => p.activityId === c.id && p.status === 'completed')
+      ).length;
       const totalThemeActivities = theme.challenges.length;
       return {
         theme,
@@ -75,7 +70,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
         totalThemeActivities,
       };
     });
-  }, [enrichedProgress]);
+  }, [enrichedProgress, progressList]);
 
   // Orphan/other activities (if any)
   const orphanItems = useMemo(() => {

@@ -734,7 +734,7 @@ export default function App() {
       );
     }
 
-    // Default Interactive Generic Game for any other challenge across the 6 themes
+    // Default Interactive Generic Game for any other challenge across the 7 themes
     return (
       <GenericChallengeGame
         challengeId={activeChallengeId}

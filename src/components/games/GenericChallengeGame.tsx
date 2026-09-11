@@ -12,7 +12,7 @@ interface ChallengeQuestion {
   explanation: { pt: string; en: string };
 }
 
-// Interactive question sets for challenges across the 6 themes
+// Interactive question sets for challenges across the 7 themes
 export const CHALLENGE_DATA: Record<string, {
   title: { pt: string; en: string };
   instructions: { pt: string; en: string };
@@ -244,13 +244,13 @@ export const CHALLENGE_DATA: Record<string, {
         },
         options: {
           pt: [
-            'ANTUNES, Carlos (2023). As Aves de Portugal. Ciência Viva. Consultado em https://cienciaviva.pt/aves',
+            'ANTUNES, Carlos (2023). As Aves de Portugal. Ciência Viva. https://cienciaviva.pt/aves',
             'Google Imagens / Internet',
             'Um senhor chamado Carlos escreveu numa página web',
             'www.google.pt',
           ],
           en: [
-            'ANTUNES, Carlos (2023). Birds of Portugal. Ciência Viva. Accessed at https://cienciaviva.pt/aves',
+            'ANTUNES, Carlos (2023). Birds of Portugal. Ciência Viva. https://cienciaviva.pt/aves',
             'Google Images / Internet',
             'Some person named Carlos wrote on a site',
             'www.google.com',
@@ -430,14 +430,20 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
       {!completed ? (
         <div className="bg-white rounded-[2rem] border border-slate-200 shadow-xs p-6 sm:p-8 space-y-6">
           <div className="flex items-center justify-between text-xs font-bold text-slate-400">
-            <span>PERGUNTA {currentIndex + 1} DE {challenge.questions.length}</span>
-            <span className="px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-bold border border-indigo-200">100 XP MÁXIMO</span>
+            <span>
+              {language === 'pt' ? 'PERGUNTA' : 'QUESTION'} {currentIndex + 1} {language === 'pt' ? 'DE' : 'OF'} {challenge.questions.length}
+            </span>
+            <span className="px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-bold border border-indigo-200">
+              {language === 'pt' ? '100 XP MÁXIMO' : '100 MAX XP'}
+            </span>
           </div>
 
           {/* Scenario box */}
           <div className="p-4 rounded-2xl bg-indigo-50/70 border border-indigo-100 text-indigo-950 flex items-start justify-between gap-3">
             <div className="flex-1">
-              <p className="text-xs font-bold uppercase tracking-wider text-indigo-700 mb-1">Cenário:</p>
+              <p className="text-xs font-bold uppercase tracking-wider text-indigo-700 mb-1">
+                {language === 'pt' ? 'Cenário:' : 'Scenario:'}
+              </p>
               <p className="text-sm font-semibold">{currentQ.situation[language]}</p>
             </div>
             <AudioSpeakButton
@@ -456,7 +462,7 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
             </h2>
             <AudioSpeakButton
               id={`challenge-question-${currentIndex}`}
-              text={`${currentQ.question[language]}. ${currentQ.options[language].map((opt, i) => `Opção ${i + 1}: ${opt}`).join('. ')}`}
+              text={`${currentQ.question[language]}. ${currentQ.options[language].map((opt, i) => `${language === 'pt' ? 'Opção' : 'Option'} ${i + 1}: ${opt}`).join('. ')}`}
               language={language}
               variant="icon"
               size="xs"
@@ -505,10 +511,14 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
               }`}
             >
               <div className="flex items-center justify-between gap-2 mb-1">
-                <p className="font-bold text-sm">{isCorrect ? '✅ Resposta Exata!' : '💡 Dica Importante:'}</p>
+                <p className="font-bold text-sm">
+                  {isCorrect
+                    ? (language === 'pt' ? '✅ Resposta Exata!' : '✅ Correct Answer!')
+                    : (language === 'pt' ? '💡 Dica Importante:' : '💡 Important Tip:')}
+                </p>
                 <AudioSpeakButton
                   id={`challenge-feedback-${currentIndex}`}
-                  text={`${isCorrect ? 'Resposta Exata.' : 'Dica importante.'} ${currentQ.explanation[language]}`}
+                  text={`${isCorrect ? (language === 'pt' ? 'Resposta Exata.' : 'Correct answer.') : (language === 'pt' ? 'Dica importante.' : 'Important tip.')} ${currentQ.explanation[language]}`}
                   language={language}
                   variant="icon"
                   size="xs"
@@ -519,7 +529,11 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
                 onClick={handleNext}
                 className="mt-4 px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-xs"
               >
-                <span>{currentIndex + 1 < challenge.questions.length ? 'Próxima Pergunta' : 'Ver Resultados'}</span>
+                <span>
+                  {currentIndex + 1 < challenge.questions.length
+                    ? (language === 'pt' ? 'Próxima Pergunta' : 'Next Question')
+                    : (language === 'pt' ? 'Ver Resultados' : 'View Results')}
+                </span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -532,9 +546,11 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
             {language === 'pt' ? 'Desafio Concluído!' : 'Challenge Completed!'}
           </h2>
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 font-extrabold text-sm">
-            <span>{finalScore} / 100 Pontos</span>
+            <span>{finalScore} / 100 {language === 'pt' ? 'Pontos' : 'Points'}</span>
             <span>•</span>
-            <span>{correctCount} de {challenge.questions.length} Corretas</span>
+            <span>
+              {correctCount} {language === 'pt' ? 'de' : 'of'} {challenge.questions.length} {language === 'pt' ? 'Corretas' : 'Correct'}
+            </span>
           </div>
           <p className="text-sm text-slate-600 max-w-md mx-auto">
             {language === 'pt'

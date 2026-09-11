@@ -12,11 +12,9 @@ import {
   HardDrive,
   CheckCircle2,
   Sparkles,
-  HelpCircle,
   ChevronRight,
   ChevronLeft,
   RotateCcw,
-  Info,
   Check,
   User,
   Users,
@@ -240,8 +238,10 @@ export const InteractiveEmailExplorer: React.FC = () => {
             </div>
             {discoveredCount > 0 && (
               <button
+                type="button"
                 onClick={handleReset}
                 title="Reiniciar exploração"
+                aria-label="Reiniciar exploração"
                 className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-indigo-200 hover:text-white transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-4 h-4" />
@@ -300,9 +300,11 @@ export const InteractiveEmailExplorer: React.FC = () => {
           {/* Email Fields Area */}
           <div className="p-4 sm:p-5 space-y-3.5 bg-slate-50/50 border-b border-slate-100">
             {/* 1. Remetente (De:) */}
-            <div
+            <button
+              type="button"
               onClick={() => handleElementClick('remetente')}
-              className={`p-2.5 ${getItemClass('remetente')} flex items-center gap-2 text-xs sm:text-sm`}
+              aria-pressed={isSelected('remetente')}
+              className={`w-full p-2.5 ${getItemClass('remetente')} flex items-center gap-2 text-xs sm:text-sm`}
             >
               <span className="font-bold text-slate-500 w-16 shrink-0 flex items-center gap-1">
                 De:
@@ -314,12 +316,14 @@ export const InteractiveEmailExplorer: React.FC = () => {
               <span className="ml-auto text-[10px] font-bold text-indigo-600 bg-indigo-100/80 px-2 py-0.5 rounded-full hidden sm:inline">
                 {isSelected('remetente') ? 'A Ver' : 'Remetente'}
               </span>
-            </div>
+            </button>
 
             {/* 2. Destinatário (Para:) */}
-            <div
+            <button
+              type="button"
               onClick={() => handleElementClick('destinatario')}
-              className={`p-2.5 ${getItemClass('destinatario')} flex items-center gap-2 text-xs sm:text-sm`}
+              aria-pressed={isSelected('destinatario')}
+              className={`w-full p-2.5 ${getItemClass('destinatario')} flex items-center gap-2 text-xs sm:text-sm`}
             >
               <span className="font-bold text-slate-500 w-16 shrink-0 flex items-center gap-1">
                 Para:
@@ -331,12 +335,14 @@ export const InteractiveEmailExplorer: React.FC = () => {
               <span className="ml-auto text-[10px] font-bold text-indigo-600 bg-indigo-100/80 px-2 py-0.5 rounded-full hidden sm:inline">
                 {isSelected('destinatario') ? 'A Ver' : 'Destinatário'}
               </span>
-            </div>
+            </button>
 
             {/* 3. Assunto */}
-            <div
+            <button
+              type="button"
               onClick={() => handleElementClick('assunto')}
-              className={`p-2.5 ${getItemClass('assunto')} flex items-center gap-2 text-xs sm:text-sm`}
+              aria-pressed={isSelected('assunto')}
+              className={`w-full p-2.5 ${getItemClass('assunto')} flex items-center gap-2 text-xs sm:text-sm`}
             >
               <span className="font-bold text-slate-500 w-16 shrink-0 flex items-center gap-1">
                 Assunto:
@@ -348,27 +354,31 @@ export const InteractiveEmailExplorer: React.FC = () => {
               <span className="ml-auto text-[10px] font-bold text-indigo-600 bg-indigo-100/80 px-2 py-0.5 rounded-full hidden sm:inline">
                 {isSelected('assunto') ? 'A Ver' : 'Assunto'}
               </span>
-            </div>
+            </button>
           </div>
 
           {/* Email Body & Composition Structure */}
           <div className="p-4 sm:p-5 space-y-3 bg-white min-h-[220px]">
             {/* 4. Saudação */}
-            <div
+            <button
+              type="button"
               onClick={() => handleElementClick('saudacao')}
-              className={`p-2.5 ${getItemClass('saudacao')} text-xs sm:text-sm font-sans font-semibold text-indigo-950 flex items-center justify-between`}
+              aria-pressed={isSelected('saudacao')}
+              className={`w-full p-2.5 ${getItemClass('saudacao')} text-xs sm:text-sm font-sans font-semibold text-indigo-950 flex items-center justify-between`}
             >
               <span>Caro Professor Silva,</span>
               <span className="text-[10px] font-bold text-slate-400 group-hover:text-indigo-600 flex items-center gap-1">
                 {isDiscovered('saudacao') && <Check className="w-3.5 h-3.5 text-emerald-600" />}
                 [Saudação]
               </span>
-            </div>
+            </button>
 
             {/* 5. Corpo da Mensagem */}
-            <div
+            <button
+              type="button"
               onClick={() => handleElementClick('corpo')}
-              className={`p-3 ${getItemClass('corpo')} text-xs sm:text-sm font-sans text-slate-800 leading-relaxed space-y-2`}
+              aria-pressed={isSelected('corpo')}
+              className={`w-full p-3 ${getItemClass('corpo')} text-xs sm:text-sm font-sans text-slate-800 leading-relaxed space-y-2`}
             >
               <p>
                 Gostaria de saber se o nosso trabalho sobre segurança na Internet pode incluir ilustrações desenhadas por nós e exemplos de palavras-passe fortes.
@@ -382,24 +392,28 @@ export const InteractiveEmailExplorer: React.FC = () => {
                   [Corpo da Mensagem]
                 </span>
               </div>
-            </div>
+            </button>
 
             {/* 6. Despedida */}
-            <div
+            <button
+              type="button"
               onClick={() => handleElementClick('despedida')}
-              className={`p-2.5 ${getItemClass('despedida')} text-xs sm:text-sm font-sans text-slate-700 font-medium flex items-center justify-between`}
+              aria-pressed={isSelected('despedida')}
+              className={`w-full p-2.5 ${getItemClass('despedida')} text-xs sm:text-sm font-sans text-slate-700 font-medium flex items-center justify-between`}
             >
               <span>Com os melhores cumprimentos,</span>
               <span className="text-[10px] font-bold text-slate-400 group-hover:text-indigo-600 flex items-center gap-1">
                 {isDiscovered('despedida') && <Check className="w-3.5 h-3.5 text-emerald-600" />}
                 [Despedida]
               </span>
-            </div>
+            </button>
 
             {/* 7. Assinatura */}
-            <div
+            <button
+              type="button"
               onClick={() => handleElementClick('assinatura')}
-              className={`p-2.5 ${getItemClass('assinatura')} text-xs sm:text-sm font-sans font-bold text-slate-900 flex items-center justify-between`}
+              aria-pressed={isSelected('assinatura')}
+              className={`w-full p-2.5 ${getItemClass('assinatura')} text-xs sm:text-sm font-sans font-bold text-slate-900 flex items-center justify-between`}
             >
               <div>
                 <span className="block">Maria Santos</span>
@@ -409,7 +423,7 @@ export const InteractiveEmailExplorer: React.FC = () => {
                 {isDiscovered('assinatura') && <Check className="w-3.5 h-3.5 text-emerald-600" />}
                 [Assinatura]
               </span>
-            </div>
+            </button>
           </div>
 
           {/* Email Bottom Action & Tool Bar */}
@@ -417,8 +431,10 @@ export const InteractiveEmailExplorer: React.FC = () => {
             {/* Left Tools Group: Send + Format + Attach + Options */}
             <div className="flex flex-wrap items-center gap-2">
               {/* 8. Botão Enviar */}
-              <div
+              <button
+                type="button"
                 onClick={() => handleElementClick('enviar')}
+                aria-pressed={isSelected('enviar')}
                 className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white shadow-sm transition-all cursor-pointer ${
                   isSelected('enviar')
                     ? 'ring-2 ring-indigo-500 bg-indigo-700'
@@ -428,11 +444,13 @@ export const InteractiveEmailExplorer: React.FC = () => {
                 <Send className="w-4 h-4" />
                 <span>Enviar</span>
                 {isDiscovered('enviar') && <Check className="w-3.5 h-3.5 text-emerald-300" />}
-              </div>
+              </button>
 
               {/* 10. Barra de Formatação */}
-              <div
+              <button
+                type="button"
                 onClick={() => handleElementClick('formatacao')}
+                aria-pressed={isSelected('formatacao')}
                 className={`flex items-center gap-1 px-2 py-1.5 rounded-xl border ${
                   isSelected('formatacao')
                     ? 'ring-2 ring-indigo-500 bg-indigo-50 border-indigo-300'
@@ -446,11 +464,13 @@ export const InteractiveEmailExplorer: React.FC = () => {
                 <span className="text-[10px] font-bold text-slate-500 hidden sm:inline ml-1">
                   {isDiscovered('formatacao') ? '✓ Formatação' : 'Formatação'}
                 </span>
-              </div>
+              </button>
 
               {/* 9. Anexar Ficheiros */}
-              <div
+              <button
+                type="button"
                 onClick={() => handleElementClick('anexar')}
+                aria-pressed={isSelected('anexar')}
                 className={`p-2 rounded-xl border flex items-center gap-1.5 text-xs font-bold text-slate-700 ${
                   isSelected('anexar')
                     ? 'ring-2 ring-indigo-500 bg-indigo-50 border-indigo-300 text-indigo-700'
@@ -462,11 +482,13 @@ export const InteractiveEmailExplorer: React.FC = () => {
                 <span className="hidden sm:inline">
                   {isDiscovered('anexar') ? '✓ Anexo' : 'Anexar'}
                 </span>
-              </div>
+              </button>
 
               {/* 11. Outras Opções */}
-              <div
+              <button
+                type="button"
                 onClick={() => handleElementClick('opcoes')}
+                aria-pressed={isSelected('opcoes')}
                 className={`p-2 rounded-xl border flex items-center gap-1.5 text-xs font-bold text-slate-700 ${
                   isSelected('opcoes')
                     ? 'ring-2 ring-indigo-500 bg-indigo-50 border-indigo-300 text-indigo-700'
@@ -480,13 +502,15 @@ export const InteractiveEmailExplorer: React.FC = () => {
                 <span className="hidden md:inline text-[10px]">
                   {isDiscovered('opcoes') ? '✓ Opções' : 'Opções'}
                 </span>
-              </div>
+              </button>
             </div>
 
             {/* Right Tools: 12. Eliminar Rascunho */}
             <div>
-              <div
+              <button
+                type="button"
                 onClick={() => handleElementClick('eliminar')}
+                aria-pressed={isSelected('eliminar')}
                 className={`p-2 rounded-xl border flex items-center gap-1.5 text-xs font-bold text-rose-600 ${
                   isSelected('eliminar')
                     ? 'ring-2 ring-rose-500 bg-rose-50 border-rose-300'
@@ -498,7 +522,7 @@ export const InteractiveEmailExplorer: React.FC = () => {
                 <span className="hidden sm:inline">
                   {isDiscovered('eliminar') ? '✓ Eliminar' : 'Eliminar'}
                 </span>
-              </div>
+              </button>
             </div>
           </div>
         </div>
@@ -573,6 +597,7 @@ export const InteractiveEmailExplorer: React.FC = () => {
             {/* Navigation between elements */}
             <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
               <button
+                type="button"
                 onClick={handlePrev}
                 className="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors cursor-pointer flex items-center gap-1"
               >
@@ -583,6 +608,7 @@ export const InteractiveEmailExplorer: React.FC = () => {
                 {currentIndex + 1} de {totalElements}
               </span>
               <button
+                type="button"
                 onClick={handleNext}
                 className="px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-colors cursor-pointer flex items-center gap-1 shadow-xs"
               >
@@ -613,8 +639,10 @@ export const InteractiveEmailExplorer: React.FC = () => {
 
             return (
               <button
+                type="button"
                 key={el.id}
                 onClick={() => handleElementClick(el.id)}
+                aria-pressed={selected}
                 className={`p-2.5 rounded-2xl border text-left transition-all cursor-pointer flex items-center justify-between gap-2 ${
                   selected
                     ? 'ring-2 ring-indigo-500 bg-indigo-50 border-indigo-300'

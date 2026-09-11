@@ -302,7 +302,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                               : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
                           }`}
                         >
-                          Verdadeiro
+                          {language === 'pt' ? 'Verdadeiro' : 'True'}
                         </button>
                         <button
                           onClick={() => handleTfSelect(i, false)}
@@ -313,18 +313,21 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                               : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
                           }`}
                         >
-                          Falso
+                          {language === 'pt' ? 'Falso' : 'False'}
                         </button>
                       </div>
                     </div>
                     {revealed && (
                       <div className={`text-xs p-2.5 rounded-xl font-medium flex items-start justify-between gap-2 ${ans === expectedAnswer ? 'bg-emerald-100 text-emerald-900' : 'bg-rose-100 text-rose-900'}`}>
                         <div>
-                          {ans === expectedAnswer ? '✅ Correto! ' : '❌ Incorreto. '}{explanationText}
+                          {ans === expectedAnswer
+                            ? (language === 'pt' ? '✅ Correto! ' : '✅ Correct! ')
+                            : (language === 'pt' ? '❌ Incorreto. ' : '❌ Incorrect. ')}
+                          {explanationText}
                         </div>
                         <AudioSpeakButton
                           id={`tf-feedback-${i}`}
-                          text={`${ans === expectedAnswer ? 'Correto.' : 'Incorreto.'} ${explanationText}`}
+                          text={`${ans === expectedAnswer ? (language === 'pt' ? 'Correto.' : 'Correct.') : (language === 'pt' ? 'Incorreto.' : 'Incorrect.')} ${explanationText}`}
                           language={language}
                           variant="icon"
                           size="xs"
@@ -342,7 +345,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                 disabled={Object.keys(answers).length < (data.items || data.questions || []).length}
                 className="w-full py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-all cursor-pointer disabled:opacity-50 mt-4"
               >
-                Concluir Desafio e Receber XP
+                {language === 'pt' ? 'Concluir Desafio e Receber XP' : 'Complete Challenge and Earn XP'}
               </button>
             )}
           </div>
@@ -409,13 +412,13 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
               <div className="bg-slate-50/90 p-4 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-2xs">
                 <div className="flex items-center gap-2">
                   <span className="text-xs sm:text-sm font-black text-indigo-900 uppercase tracking-widest">
-                    PERGUNTA {mcIndex + 1} DE {qs.length}
+                    {language === 'pt' ? 'PERGUNTA' : 'QUESTION'} {mcIndex + 1} {language === 'pt' ? 'DE' : 'OF'} {qs.length}
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3 w-full sm:w-auto">
                   <span className="text-xs sm:text-sm font-black text-indigo-700 shrink-0">
-                    PROGRESSÃO: {Math.round((mcIndex / qs.length) * 100)}%
+                    {language === 'pt' ? 'PROGRESSÃO:' : 'PROGRESS:'} {Math.round((mcIndex / qs.length) * 100)}%
                   </span>
                   <div className="w-full sm:w-44 h-3 bg-slate-200 rounded-full overflow-hidden">
                     <div
@@ -435,7 +438,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                   </h3>
                   <AudioSpeakButton
                     id={`mc-q-${mcIndex}`}
-                    text={`${q.q}. ${q.opts.map((o: string, idx: number) => `Opção ${idx + 1}: ${o}`).join('. ')}`}
+                    text={`${q.q}. ${q.opts.map((o: string, idx: number) => `${language === 'pt' ? 'Opção' : 'Option'} ${idx + 1}: ${o}`).join('. ')}`}
                     language={language}
                     variant="icon"
                     size="md"
@@ -505,12 +508,12 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                         {chosen === q.c ? (
                           <span className="text-emerald-700 flex items-center gap-1.5">
                             <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                            <span>Excelente Decisão!</span>
+                            <span>{language === 'pt' ? 'Excelente Decisão!' : 'Excellent Decision!'}</span>
                           </span>
                         ) : (
                           <span className="text-amber-800 flex items-center gap-1.5">
                             <Sparkles className="w-5 h-5 text-amber-600" />
-                            <span>Atenção ao Risco:</span>
+                            <span>{language === 'pt' ? 'Atenção ao Risco:' : 'Pay Attention to Risk:'}</span>
                           </span>
                         )}
                       </div>
@@ -521,7 +524,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
 
                     <AudioSpeakButton
                       id={`mc-expl-${mcIndex}`}
-                      text={`${chosen === q.c ? 'Excelente decisão.' : 'Atenção ao risco.'} ${q.e}`}
+                      text={`${chosen === q.c ? (language === 'pt' ? 'Excelente decisão.' : 'Excellent decision.') : (language === 'pt' ? 'Atenção ao risco.' : 'Pay attention to risk.')} ${q.e}`}
                       language={language}
                       variant="icon"
                       size="sm"
@@ -532,7 +535,11 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                     onClick={handleMcNext}
                     className="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-black text-sm sm:text-base shadow-md hover:shadow-lg transition-all cursor-pointer flex items-center justify-center gap-2"
                   >
-                    <span>{mcIndex + 1 < qs.length ? 'Próxima Pergunta' : 'Ver Resultado Final 🏆'}</span>
+                    <span>
+                      {mcIndex + 1 < qs.length
+                        ? (language === 'pt' ? 'Próxima Pergunta' : 'Next Question')
+                        : (language === 'pt' ? 'Ver Resultado Final 🏆' : 'View Final Result 🏆')}
+                    </span>
                     <span className="text-lg">→</span>
                   </button>
                 </div>
@@ -564,7 +571,9 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Left Column */}
               <div className="space-y-2.5">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Conceitos</h4>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                  {language === 'pt' ? 'Conceitos' : 'Concepts'}
+                </h4>
                 {data.pairs.map((p: any, i: number) => {
                   const isMatched = matched.includes(i);
                   const isSel = picked[0] === i;
@@ -639,7 +648,9 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
 
               {/* Right Column */}
               <div className="space-y-2.5">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Respostas</h4>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                  {language === 'pt' ? 'Respostas' : 'Answers'}
+                </h4>
                 {rightOrder.map((ri) => {
                   const p = data.pairs[ri];
                   const isMatched = matched.includes(ri);
@@ -688,7 +699,9 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
             <div className="space-y-2.5">
               <div className="space-y-2 min-h-[90px] p-3 rounded-2xl bg-slate-50 border border-slate-200">
                 {orderChosen.length === 0 ? (
-                  <p className="text-xs text-slate-400 italic text-center py-4">Clica nos passos em baixo pela ordem correta...</p>
+                  <p className="text-xs text-slate-400 italic text-center py-4">
+                    {language === 'pt' ? 'Clica nos passos em baixo pela ordem correta...' : 'Click the steps below in the correct order...'}
+                  </p>
                 ) : (
                   orderChosen.map((itemIdx, pos) => (
                     <div key={pos} className="p-3 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-3 shadow-2xs">
@@ -702,7 +715,9 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
 
             {orderChosen.length < data.items.length ? (
               <div className="space-y-2">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">Passos disponíveis</h4>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  {language === 'pt' ? 'Passos disponíveis' : 'Available steps'}
+                </h4>
                 <div className="flex flex-wrap gap-2">
                   {orderPool.filter((i) => !orderChosen.includes(i)).map((i) => (
                     <button
@@ -719,7 +734,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
               <div className="space-y-3 pt-2">
                 {orderChecked && !completed && (
                   <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold text-center">
-                    A ordem selecionada não está correta. Tenta novamente!
+                    {language === 'pt' ? 'A ordem selecionada não está correta. Tenta novamente!' : 'The selected order is not correct. Try again!'}
                   </div>
                 )}
                 <div className="flex gap-3">
@@ -727,14 +742,14 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                     onClick={handleOrderCheck}
                     className="flex-1 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-all cursor-pointer"
                   >
-                    Verificar Ordem
+                    {language === 'pt' ? 'Verificar Ordem' : 'Check Order'}
                   </button>
                   <button
                     onClick={handleOrderReset}
                     className="px-5 py-3.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm transition-all cursor-pointer flex items-center gap-1.5"
                   >
                     <RotateCcw className="w-4 h-4" />
-                    <span>Reiniciar</span>
+                    <span>{language === 'pt' ? 'Reiniciar' : 'Reset'}</span>
                   </button>
                 </div>
               </div>
@@ -1041,10 +1056,14 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
               🎉
             </div>
             <h3 className="text-xl sm:text-2xl font-black text-emerald-950">
-              Desafio Concluído com Sucesso!
+              {language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Successfully Completed!'}
             </h3>
             <p className="text-xs sm:text-sm text-emerald-800">
-              Parabéns! Ganhaste <strong>+{gameData.xp} XP</strong> e avançaste no teu progresso.
+              {language === 'pt' ? (
+                <>Parabéns! Ganhaste <strong>+{gameData.xp} XP</strong> e avançaste no teu progresso.</>
+              ) : (
+                <>Congratulations! You earned <strong>+{gameData.xp} XP</strong> and advanced your progress.</>
+              )}
             </p>
             <button
               onClick={onReturnToGames || onBack}

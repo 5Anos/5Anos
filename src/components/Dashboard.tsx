@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Award, ArrowRight, ShieldCheck, FileSpreadsheet, Lock, Eye, BookOpen, AlertCircle, X, Sparkles } from 'lucide-react';
+import React from 'react';
+import { ArrowRight, ShieldCheck, FileSpreadsheet, Lock, Eye, BookOpen } from 'lucide-react';
 import { User, ActivityProgress, UserAchievement, Language, ThemeVisibilityMap } from '../types';
 import { translations } from '../i18n/translations';
 import { ALL_THEMES } from '../data/allThemesData';
@@ -49,14 +49,18 @@ export const Dashboard: React.FC<DashboardProps> = ({
     (theme) => isAdmin || themeVisibility[theme.id] !== false
   );
 
-  // Calculate statistics across visible themes
-  const totalActivities = displayedThemes.reduce(
-    (acc, theme) => acc + theme.challenges.length,
-    0
-  );
+  // Calculate statistics across visible themes (strictly within the same defined universe of curricular challenges)
+  const allCurricularChallenges = displayedThemes.flatMap((theme) => theme.challenges);
+  const totalActivities = allCurricularChallenges.length;
 
-  const completedCount = progressList.filter((p) => p.status === 'completed').length;
-  const overallPercentage = totalActivities > 0 ? Math.min(100, Math.round((completedCount / totalActivities) * 100)) : 0;
+  const completedCount = allCurricularChallenges.filter((challenge) =>
+    progressList.some((p) => p.activityId === challenge.id && p.status === 'completed')
+  ).length;
+
+  const overallPercentage =
+    totalActivities > 0
+      ? Math.max(0, Math.min(100, Math.round((completedCount / totalActivities) * 100)))
+      : 0;
 
   // Best score among all quizzes
   const quizScores = progressList
@@ -221,17 +225,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {displayedThemes.map((theme) => {
               const isVisibleForStudents = themeVisibility[theme.id] !== false;
-              const themeChallengeIds = new Set(theme.challenges.map((c) => c.id));
               const themeActivitiesCount = theme.challenges.length;
-              const themeCompletedCount = progressList.filter(
-                (p) =>
-                  p.status === 'completed' &&
-                  (themeChallengeIds.has(p.activityId) ||
-                    p.themeId === theme.id ||
-                    p.themeId === String(theme.number) ||
-                    (theme.id === 'tic-sociedade' && (p.themeId === 'seguranca-digital' || p.activityId.includes('tic'))))
+              const themeCompletedCount = theme.challenges.filter((c) =>
+                progressList.some((p) => p.activityId === c.id && p.status === 'completed')
               ).length;
-              const themePct = themeActivitiesCount > 0 ? Math.min(100, Math.round((themeCompletedCount / themeActivitiesCount) * 100)) : 0;
+              const themePct = themeActivitiesCount > 0 ? Math.max(0, Math.min(100, Math.round((themeCompletedCount / themeActivitiesCount) * 100))) : 0;
               const colorInfo = getThemeColor(theme.number);
 
               return (

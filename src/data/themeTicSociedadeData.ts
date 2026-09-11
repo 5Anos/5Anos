@@ -33,8 +33,8 @@ export const themeTicSociedadeData: ThemeDefinition = {
       eyebrow: { pt: 'Aplicação das TIC', en: 'ICT Applications' },
       h: { pt: 'As TIC na Escola, Saúde, Transportes, Comércio e Ambiente', en: 'ICT in School, Health, Transport, Commerce & Environment' },
       body: {
-        pt: 'As Tecnologias da Informação e Comunicação estão presentes nos momentos mais importantes da sociedade moderna. Em cada setor, cumprem uma missão essencial:<br><br><ul><li><strong>🏫 Escola e Estudo:</strong> Plataformas digitais (trabalhos e avisos), catálogos da biblioteca em segundos, quadros interativos e caderneta digital escolar.</li><li><strong>🩺 Saúde e Medicina:</strong> Processos clínicos eletrónicos (fichas de saúde digitais com o teu historial médico, consultas e vacinas) acessíveis em qualquer hospital, consultas por telemedicina e robôs cirúrgicos de precisão (que auxiliam os cirurgiões humanos, sem os substituir).</li><li><strong>🚗 Transportes e Mobilidade:</strong> O sistema <em>GPS</em> recebe dados de satélites no espaço para calcular o trajeto mais rápido e indicar horários de transportes públicos em tempo real.</li><li><strong>💳 Comércio e Pagamentos:</strong> Pagamentos <em>Contactless (NFC)</em> por aproximação de ondas curtas e o circuito de 6 etapas das compras online (escolha, encomenda, pagamento seguro, armazém, envio por GPS e entrega).</li><li><strong>🌾 Agricultura, Indústria e Ambiente:</strong> Sensores de humidade de solo (IoT) que poupam milhares de litros de água, robôs industriais e satélites de previsão meteorológica.</li></ul>',
-        en: 'ICT powers the most vital sectors of our society:<br><br><ul><li><strong>🏫 School & Study:</strong> Digital platforms, instant library catalogs, interactive smartboards, and online student records.</li><li><strong>🩺 Healthcare & Medicine:</strong> Electronic health records, remote telemedicine, and precision surgical robotic tools (assisting, never replacing doctors).</li><li><strong>🚗 Transport & Mobility:</strong> Satellite GPS for turn-by-turn routing and real-time public transit schedules.</li><li><strong>💳 Commerce & Payments:</strong> Tap-to-pay Contactless (NFC) radio waves and the 6-stage e-commerce pipeline.</li><li><strong>🌾 Agriculture, Industry & Environment:</strong> IoT soil moisture sensors saving water, industrial robotics, and climate monitoring satellites.</li></ul>',
+        pt: 'As Tecnologias da Informação e Comunicação estão presentes nos momentos mais importantes da sociedade moderna. Em cada setor, cumprem uma missão essencial:<br><br><ul><li><strong>🏫 Escola e Estudo:</strong> Plataformas digitais (trabalhos e avisos), catálogos da biblioteca em segundos, quadros interativos e caderneta digital escolar.</li><li><strong>🩺 Saúde e Medicina:</strong> Processos clínicos eletrónicos (fichas de saúde digitais como o Registo de Saúde Eletrónico, que reúnem com segurança o historial médico, consultas e vacinas para profissionais de saúde autorizados), consultas por telemedicina e robôs cirúrgicos de precisão (que auxiliam os cirurgiões humanos, sem os substituir).</li><li><strong>🚗 Transportes e Mobilidade:</strong> O sistema <em>GPS</em> recebe sinais de satélites no espaço para calcular a localização exata, encontrar o trajeto mais rápido e permitir o seguimento de transportes em tempo real.</li><li><strong>💳 Comércio e Pagamentos:</strong> Pagamentos <em>Contactless (NFC)</em> por aproximação a muito curta distância e o circuito das compras online (escolha, encomenda, pagamento seguro, separação em armazém, transporte com seguimento e entrega ao destinatário).</li><li><strong>🌾 Agricultura, Indústria e Ambiente:</strong> Sensores de humidade de solo (IoT) que poupam milhares de litros de água, robôs industriais e satélites de previsão meteorológica.</li></ul>',
+        en: 'ICT powers the most vital sectors of our society:<br><br><ul><li><strong>🏫 School & Study:</strong> Digital platforms, instant library catalogs, interactive smartboards, and online student records.</li><li><strong>🩺 Healthcare & Medicine:</strong> Electronic health records (such as centralized digital records consolidating medical history, appointments, and vaccines securely for authorized healthcare professionals), remote telemedicine, and precision surgical robotic tools (assisting, never replacing doctors).</li><li><strong>🚗 Transport & Mobility:</strong> Satellite GPS receiver systems for turn-by-turn routing, optimal navigation, and real-time public transit tracking.</li><li><strong>💳 Commerce & Payments:</strong> Tap-to-pay Contactless (NFC) via very short-range wireless communication and the e-commerce fulfillment cycle (item selection, ordering, secure checkout, warehouse dispatch, tracked transport, and delivery).</li><li><strong>🌾 Agriculture, Industry & Environment:</strong> IoT soil moisture sensors saving water, industrial robotics, and climate monitoring satellites.</li></ul>',
       },
       icon: '🌐',
     },
@@ -49,10 +49,10 @@ export const themeTicSociedadeData: ThemeDefinition = {
     },
     {
       eyebrow: { pt: 'Cidadania', en: 'Citizenship' },
-      h: { pt: 'Cyberbullying, Linha 800 21 90 90 e Ponto Eletrão', en: 'Cyberbullying, Helpline 800 21 90 90 & E-Waste' },
+      h: { pt: 'Cyberbullying, Linha 800 21 90 90 e Reciclagem de Eletrónicos', en: 'Cyberbullying, Helpline 800 21 90 90 & E-Waste' },
       body: {
-        pt: '🛡️ <strong>Regra dos 5 Passos contra o Cyberbullying:</strong><br>1. 🛑 <strong>PARAR</strong> (não responder com insultos)<br>2. 📸 <strong>GUARDAR</strong> (fazer capturas de ecrã como prova)<br>3. 🚫 <strong>BLOQUEAR</strong> o contacto<br>4. 🚩 <strong>DENUNCIAR</strong> na plataforma<br>5. 🧑‍🏫 <strong>PEDIR AJUDA</strong> a pais, professores ou ligar para a <em>Linha Internet Segura (800 21 90 90 - Gratuita e Confidencial)</em>.<br><br>♻️ <strong>Lixo Eletrónico:</strong> Entrega equipamentos elétricos e eletrónicos e pilhas nos pontos de recolha adequados. Em Portugal, existem redes de recolha como o Ponto Eletrão.!',
-        en: '🛡️ <strong>5-Step Rule Against Cyberbullying:</strong><br>1. 🛑 <strong>STOP</strong><br>2. 📸 <strong>SAVE</strong> evidence<br>3. 🚫 <strong>BLOCK</strong> sender<br>4. 🚩 <strong>REPORT</strong><br>5. 🧑‍🏫 <strong>SEEK HELP</strong> from trusted adults or call the <em>Safe Internet Helpline (800 21 90 90 - Free & Confidential)</em>.<br><br>♻️ <strong>E-Waste:</strong> Deliver broken electronics to <em>Ponto Eletrão</em> recycling points!',
+        pt: '🛡️ <strong>Regra dos 5 Passos contra o Cyberbullying:</strong><br>1. 🛑 <strong>PARAR</strong> (não responder com insultos)<br>2. 📸 <strong>GUARDAR</strong> (fazer capturas de ecrã como prova)<br>3. 🚫 <strong>BLOQUEAR</strong> o contacto<br>4. 🚩 <strong>DENUNCIAR</strong> na plataforma<br>5. 🧑‍🏫 <strong>PEDIR AJUDA</strong> a pais, professores ou ligar para a <em>Linha Internet Segura (800 21 90 90 - Gratuita e Confidencial)</em>.<br><br>♻️ <strong>Lixo Eletrónico:</strong> Entrega equipamentos elétricos e eletrónicos e pilhas nos pontos de recolha adequados (como ecocentros, lojas que aceitam retoma ou redes de recolha seletiva como o Ponto Eletrão).',
+        en: '🛡️ <strong>5-Step Rule Against Cyberbullying:</strong><br>1. 🛑 <strong>STOP</strong><br>2. 📸 <strong>SAVE</strong> evidence<br>3. 🚫 <strong>BLOCK</strong> sender<br>4. 🚩 <strong>REPORT</strong><br>5. 🧑‍🏫 <strong>SEEK HELP</strong> from trusted adults or call the <em>Safe Internet Helpline (800 21 90 90 - Free & Confidential)</em>.<br><br>♻️ <strong>E-Waste:</strong> Deliver broken electronics to proper collection points (such as ecocentres, retail stores, or e-waste recycling bins like Ponto Eletrão)!',
       },
       icon: '🛡️',
     },
@@ -712,21 +712,21 @@ export const themeTicSociedadeData: ThemeDefinition = {
       options: {
         pt: [
           'Deitá-los no contentor do lixo comum da cozinha juntamente com restos de comida.',
-          'Entregá-los num ponto de recolha próprio (Ponto Eletrão) para reciclagem segura dos materiais.',
+          'Entregá-los num ponto de recolha próprio (como ecocentros, lojas aderentes ou redes como o Ponto Eletrão) para reciclagem segura.',
           'Deitá-los no ecoponto azul do papel e cartão para serem triturados.',
           'Guardá-los indefinidamente na arrecadação sem qualquer tratamento.',
         ],
         en: [
           'Toss them into household kitchen food waste bins.',
-          'Deliver them to a dedicated e-waste collection bin (Ponto Eletrão) for safe material recycling.',
+          'Deliver them to an appropriate collection point (such as ecocentres, retailers, or e-waste recycling bins like Ponto Eletrão) for safe recycling.',
           'Throw them into the blue paper and cardboard recycling bin.',
           'Keep them stored indefinitely in a drawer with no disposal plan.',
         ],
       },
       correctIndex: 1,
       explanation: {
-        pt: 'Equipamentos elétricos e eletrónicos têm componentes perigosos e metais recicláveis; devem ser sempre colocados no Ponto Eletrão.',
-        en: 'Electronics contain both hazardous chemicals and recoverable metals; they must be disposed of at dedicated e-waste recycling points.',
+        pt: 'Equipamentos elétricos e eletrónicos têm componentes perigosos e metais recicláveis; devem ser entregues em locais de recolha adequados, como ecocentros, lojas que aceitam retoma ou pontos de recolha de REEE (como o Ponto Eletrão).',
+        en: 'Electronics contain both hazardous substances and recoverable metals; they should be taken to dedicated collection points, such as municipal ecocentres, retailers, or e-waste bins.',
       },
     },
   ],

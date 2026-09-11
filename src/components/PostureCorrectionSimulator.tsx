@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CheckCircle2, XCircle, RotateCcw, Award, Sparkles, Sliders, ArrowRight, HelpCircle, ThumbsUp, ShieldCheck } from 'lucide-react';
+import { CheckCircle2, XCircle, RotateCcw, Sparkles, Sliders, ShieldCheck } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 interface PostureState {
@@ -248,7 +248,19 @@ export const PostureCorrectionSimulator: React.FC<Props> = ({ language = 'pt', o
                 <line x1="480" y1="80" x2="480" y2="365" stroke="#10b981" strokeWidth="2" strokeDasharray="5 5" opacity="0.6" />
 
                 {/* 2. CHAIR (Ergonomic Office Chair with backrest) */}
-                <g className="cursor-pointer" onClick={() => setSelectedPart('spine')}>
+                <g
+                  role="button"
+                  tabIndex={0}
+                  aria-label={language === 'pt' ? 'Cadeira e encosto: ajustar coluna' : 'Chair backrest: adjust spine'}
+                  className="cursor-pointer focus:outline-hidden"
+                  onClick={() => setSelectedPart('spine')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setSelectedPart('spine');
+                    }
+                  }}
+                >
                   {/* Base & Casters */}
                   <rect x="185" y="300" width="10" height="60" fill="#334155" rx="2" />
                   <circle cx="160" cy="360" r="5.5" fill="#1e293b" />
@@ -270,9 +282,18 @@ export const PostureCorrectionSimulator: React.FC<Props> = ({ language = 'pt', o
 
                 {/* 4. COMPUTER MONITOR & STAND (Interactive) */}
                 <g
-                  className="cursor-pointer transition-all duration-300"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={language === 'pt' ? 'Ecrã do computador: ajustar altura' : 'Monitor: adjust height'}
+                  className="cursor-pointer transition-all duration-300 focus:outline-hidden"
                   onClick={() => {
                     handleUpdate('screen', (posture.screen + 1) % 3);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleUpdate('screen', (posture.screen + 1) % 3);
+                    }
                   }}
                 >
                   {/* Stand base & riser */}
@@ -309,9 +330,18 @@ export const PostureCorrectionSimulator: React.FC<Props> = ({ language = 'pt', o
 
                 {/* 5. FOOTREST & LEGS/FEET (Interactive) */}
                 <g
-                  className="cursor-pointer transition-all duration-300"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={language === 'pt' ? 'Pés e apoio: ajustar pés' : 'Feet and footrest: adjust feet'}
+                  className="cursor-pointer transition-all duration-300 focus:outline-hidden"
                   onClick={() => {
                     handleUpdate('feet', (posture.feet + 1) % 3);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleUpdate('feet', (posture.feet + 1) % 3);
+                    }
                   }}
                 >
                   {/* Footrest Wedge */}
@@ -346,9 +376,18 @@ export const PostureCorrectionSimulator: React.FC<Props> = ({ language = 'pt', o
 
                 {/* 6. TORSO & SPINE (Interactive) */}
                 <g
-                  className="cursor-pointer transition-all duration-300"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={language === 'pt' ? 'Tronco e coluna: ajustar postura da coluna' : 'Torso and spine: adjust back posture'}
+                  className="cursor-pointer transition-all duration-300 focus:outline-hidden"
                   onClick={() => {
                     handleUpdate('spine', (posture.spine + 1) % 3);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleUpdate('spine', (posture.spine + 1) % 3);
+                    }
                   }}
                 >
                   {/* Spine colored visual curve line */}
@@ -374,9 +413,18 @@ export const PostureCorrectionSimulator: React.FC<Props> = ({ language = 'pt', o
 
                 {/* 7. ARMS & HANDS (Interactive) */}
                 <g
-                  className="cursor-pointer transition-all duration-300"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={language === 'pt' ? 'Braços e mãos: ajustar apoio dos braços' : 'Arms and hands: adjust arm support'}
+                  className="cursor-pointer transition-all duration-300 focus:outline-hidden"
                   onClick={() => {
                     handleUpdate('arms', (posture.arms + 1) % 3);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleUpdate('arms', (posture.arms + 1) % 3);
+                    }
                   }}
                 >
                   {/* Upper arm & Forearm */}
@@ -403,9 +451,18 @@ export const PostureCorrectionSimulator: React.FC<Props> = ({ language = 'pt', o
 
                 {/* 8. HEAD & EYES (Interactive) */}
                 <g
-                  className="cursor-pointer transition-all duration-300"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={language === 'pt' ? 'Cabeça e olhos: ajustar alinhamento da cabeça' : 'Head and eyes: adjust head alignment'}
+                  className="cursor-pointer transition-all duration-300 focus:outline-hidden"
                   onClick={() => {
                     handleUpdate('head', (posture.head + 1) % 3);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleUpdate('head', (posture.head + 1) % 3);
+                    }
                   }}
                 >
                   {/* Neck */}
@@ -507,9 +564,11 @@ export const PostureCorrectionSimulator: React.FC<Props> = ({ language = 'pt', o
 
             <div className="space-y-2 text-xs sm:text-sm">
               {/* 1. Costas */}
-              <div
+              <button
+                type="button"
                 onClick={() => handleUpdate('spine', posture.spine === 2 ? 0 : 2)}
-                className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
+                aria-pressed={posture.spine === 2}
+                className={`w-full text-left p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                   posture.spine === 2
                     ? 'bg-emerald-100/70 border-emerald-300 text-emerald-950 font-bold'
                     : 'bg-white border-slate-200 text-slate-700 hover:border-emerald-300'
@@ -528,12 +587,14 @@ export const PostureCorrectionSimulator: React.FC<Props> = ({ language = 'pt', o
                 <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-white/70 text-slate-600 border border-slate-200">
                   {posture.spine === 2 ? 'OK' : 'Ajustar'}
                 </span>
-              </div>
+              </button>
 
               {/* 2. Cabeça */}
-              <div
+              <button
+                type="button"
                 onClick={() => handleUpdate('head', posture.head === 2 ? 0 : 2)}
-                className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
+                aria-pressed={posture.head === 2}
+                className={`w-full text-left p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                   posture.head === 2
                     ? 'bg-emerald-100/70 border-emerald-300 text-emerald-950 font-bold'
                     : 'bg-white border-slate-200 text-slate-700 hover:border-emerald-300'
@@ -552,12 +613,14 @@ export const PostureCorrectionSimulator: React.FC<Props> = ({ language = 'pt', o
                 <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-white/70 text-slate-600 border border-slate-200">
                   {posture.head === 2 ? 'OK' : 'Ajustar'}
                 </span>
-              </div>
+              </button>
 
               {/* 3. Ecrã */}
-              <div
+              <button
+                type="button"
                 onClick={() => handleUpdate('screen', posture.screen === 2 ? 0 : 2)}
-                className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
+                aria-pressed={posture.screen === 2}
+                className={`w-full text-left p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                   posture.screen === 2
                     ? 'bg-emerald-100/70 border-emerald-300 text-emerald-950 font-bold'
                     : 'bg-white border-slate-200 text-slate-700 hover:border-emerald-300'
@@ -576,12 +639,14 @@ export const PostureCorrectionSimulator: React.FC<Props> = ({ language = 'pt', o
                 <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-white/70 text-slate-600 border border-slate-200">
                   {posture.screen === 2 ? 'OK' : 'Ajustar'}
                 </span>
-              </div>
+              </button>
 
               {/* 4. Ombros e Braços */}
-              <div
+              <button
+                type="button"
                 onClick={() => handleUpdate('arms', posture.arms === 2 ? 0 : 2)}
-                className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
+                aria-pressed={posture.arms === 2}
+                className={`w-full text-left p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                   posture.arms === 2
                     ? 'bg-emerald-100/70 border-emerald-300 text-emerald-950 font-bold'
                     : 'bg-white border-slate-200 text-slate-700 hover:border-emerald-300'
@@ -600,12 +665,14 @@ export const PostureCorrectionSimulator: React.FC<Props> = ({ language = 'pt', o
                 <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-white/70 text-slate-600 border border-slate-200">
                   {posture.arms === 2 ? 'OK' : 'Ajustar'}
                 </span>
-              </div>
+              </button>
 
               {/* 5. Pés */}
-              <div
+              <button
+                type="button"
                 onClick={() => handleUpdate('feet', posture.feet === 2 ? 0 : 2)}
-                className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
+                aria-pressed={posture.feet === 2}
+                className={`w-full text-left p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                   posture.feet === 2
                     ? 'bg-emerald-100/70 border-emerald-300 text-emerald-950 font-bold'
                     : 'bg-white border-slate-200 text-slate-700 hover:border-emerald-300'
@@ -624,7 +691,7 @@ export const PostureCorrectionSimulator: React.FC<Props> = ({ language = 'pt', o
                 <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-white/70 text-slate-600 border border-slate-200">
                   {posture.feet === 2 ? 'OK' : 'Ajustar'}
                 </span>
-              </div>
+              </button>
             </div>
           </div>
 

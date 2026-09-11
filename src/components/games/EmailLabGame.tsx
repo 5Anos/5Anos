@@ -73,7 +73,7 @@ interface EvaluationResult {
   stars: number;
 }
 
-const INITIAL_OPTIONS: DraggableOption[] = [
+const getInitialOptions = (lang: Language): DraggableOption[] => [
   {
     id: 'opt-recipient',
     type: 'recipient',
@@ -99,7 +99,7 @@ const INITIAL_OPTIONS: DraggableOption[] = [
   {
     id: 'opt-subject',
     type: 'subject',
-    content: 'Trabalho de TIC',
+    content: lang === 'pt' ? 'Trabalho de TIC' : 'ICT Assignment',
     iconType: 'file',
     colorBg: 'bg-emerald-50 hover:bg-emerald-100/80',
     colorBorder: 'border-emerald-200',
@@ -110,7 +110,10 @@ const INITIAL_OPTIONS: DraggableOption[] = [
   {
     id: 'opt-body',
     type: 'body',
-    content: 'Caro Professor,\nSegue em anexo o trabalho de TIC realizado pelo nosso grupo.\nCom os melhores cumprimentos,\nJoão Silva',
+    content:
+      lang === 'pt'
+        ? 'Caro Professor,\nSegue em anexo o trabalho de TIC realizado pelo nosso grupo.\nCom os melhores cumprimentos,\nJoão Silva'
+        : 'Dear Teacher,\nPlease find attached our group ICT assignment.\nBest regards,\nJohn Smith',
     iconType: 'message',
     colorBg: 'bg-sky-50 hover:bg-sky-100/80',
     colorBorder: 'border-sky-200',
@@ -121,7 +124,7 @@ const INITIAL_OPTIONS: DraggableOption[] = [
   {
     id: 'opt-attachment',
     type: 'attachment',
-    content: 'trabalho_tic.docx',
+    content: lang === 'pt' ? 'trabalho_tic.docx' : 'ict_assignment.docx',
     iconType: 'clip',
     colorBg: 'bg-amber-50 hover:bg-amber-100/80',
     colorBorder: 'border-amber-200',
@@ -145,6 +148,7 @@ type SlotKey = 'to' | 'cc' | 'subject' | 'body' | 'attachment';
 
 export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, onFinish }) => {
   const t = translations[language];
+  const initialOptions = React.useMemo(() => getInitialOptions(language), [language]);
 
   const [placedSlots, setPlacedSlots] = useState<{ [key in SlotKey]?: DraggableOption | null }>({
     to: null,
@@ -169,7 +173,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
       .map((opt) => opt.id)
   );
 
-  const availableOptions = INITIAL_OPTIONS.filter((opt) => !placedOptionIds.has(opt.id));
+  const availableOptions = initialOptions.filter((opt) => !placedOptionIds.has(opt.id));
 
   // Pure Drag and Drop handlers
   const handleDragStart = (e: React.DragEvent, option: DraggableOption) => {
@@ -300,7 +304,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
         feedback:
           language === 'pt'
             ? 'Muito bem! Deste conhecimento (Cc) aos colegas do grupo ("colegas_grupo@escola.pt") para que acompanhem a entrega do trabalho.'
-            : 'Great! You gave CC to your group mates (colegas_grupo@escola.pt).',
+            : 'Well done! You included your group teammates ("colegas_grupo@escola.pt") in CC so they can follow the submission.',
       });
     } else if (ccOpt) {
       details.push({
@@ -314,8 +318,8 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
         status: 'incorrect',
         feedback:
           language === 'pt'
-            ? `Incorreto. No campo "Cc" deves colocar o endereço dos colegas de grupo ("colegas_grupo@escola.pt").`
-            : `Incorrect. CC field should contain group teammates.`,
+            ? 'Incorreto. No campo "Cc" deves colocar o endereço dos colegas de grupo ("colegas_grupo@escola.pt").'
+            : 'Incorrect. In the "Cc" field you should place your group teammates address ("colegas_grupo@escola.pt").',
       });
     } else {
       details.push({
@@ -330,17 +334,18 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
         feedback:
           language === 'pt'
             ? 'Em falta. As instruções pediam para dar conhecimento (Cc) aos teus colegas de grupo ("colegas_grupo@escola.pt").'
-            : 'Missing. The instructions requested putting your teammates in CC.',
+            : 'Missing. The instructions asked to include your teammates in CC ("colegas_grupo@escola.pt").',
       });
     }
 
     // 3. Campo "Assunto" - 20 pts
     const subjectOpt = placedSlots.subject;
+    const expectedSubject = language === 'pt' ? 'Trabalho de TIC' : 'ICT Assignment';
     if (subjectOpt?.id === 'opt-subject') {
       details.push({
         id: 'subject',
         fieldLabel: language === 'pt' ? 'Assunto' : 'Subject',
-        expectedLabel: 'Trabalho de TIC',
+        expectedLabel: expectedSubject,
         userPlacedContent: subjectOpt.content,
         score: 20,
         maxScore: 20,
@@ -348,14 +353,14 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
         status: 'correct',
         feedback:
           language === 'pt'
-            ? 'Muito bem! O assunto "Trabalho de TIC" resume de forma clara e objetiva o tema da mensagem.'
-            : 'Well done! The subject "Trabalho de TIC" clearly summarizes the topic.',
+            ? 'Muito bem! O assunto resume de forma clara e objetiva o tema da mensagem.'
+            : 'Well done! The subject clearly and concisely summarizes the message topic.',
       });
     } else if (subjectOpt) {
       details.push({
         id: 'subject',
         fieldLabel: language === 'pt' ? 'Assunto' : 'Subject',
-        expectedLabel: 'Trabalho de TIC',
+        expectedLabel: expectedSubject,
         userPlacedContent: subjectOpt.content.length > 30 ? subjectOpt.content.slice(0, 30) + '...' : subjectOpt.content,
         score: 0,
         maxScore: 20,
@@ -363,14 +368,14 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
         status: 'incorrect',
         feedback:
           language === 'pt'
-            ? 'Incorreto. O assunto deve ser um título conciso ("Trabalho de TIC"), e não outro elemento do email.'
-            : 'Incorrect subject format.',
+            ? `Incorreto. O assunto deve ser um título conciso ("${expectedSubject}"), e não outro elemento do email.`
+            : `Incorrect. The subject should be a concise title ("${expectedSubject}"), not another element.`,
       });
     } else {
       details.push({
         id: 'subject',
         fieldLabel: language === 'pt' ? 'Assunto' : 'Subject',
-        expectedLabel: 'Trabalho de TIC',
+        expectedLabel: expectedSubject,
         userPlacedContent: null,
         score: 0,
         maxScore: 20,
@@ -379,7 +384,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
         feedback:
           language === 'pt'
             ? 'Em falta. O campo "Assunto" ficou em branco. Um email escolar deve ter sempre um assunto explícito.'
-            : 'Missing subject field.',
+            : 'Missing. The "Subject" field was left empty. A school email must always have an explicit subject.',
       });
     }
 
@@ -397,8 +402,8 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
         status: 'correct',
         feedback:
           language === 'pt'
-            ? 'Excelente! A mensagem tem saudação formal ("Caro Professor"), explica a entrega do trabalho e termina com despedida e identificação ("João Silva").'
-            : 'Excellent formal email body.',
+            ? 'Excelente! A mensagem tem saudação formal, explica a entrega do trabalho e termina com despedida e identificação.'
+            : 'Excellent! The message contains a formal greeting, explains the submission, and ends with a polite sign-off and student name.',
       });
     } else if (bodyOpt) {
       details.push({
@@ -413,7 +418,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
         feedback:
           language === 'pt'
             ? 'Incorreto. O campo da mensagem deve conter o texto completo estruturado.'
-            : 'Incorrect message body.',
+            : 'Incorrect. The message body must contain the complete structured text.',
       });
     } else {
       details.push({
@@ -428,17 +433,18 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
         feedback:
           language === 'pt'
             ? 'Em falta. O corpo do email está vazio. Lembra-te de incluir a saudação, a mensagem e a despedida.'
-            : 'Missing message body.',
+            : 'Missing. The email body is empty. Remember to include greeting, message, and sign-off.',
       });
     }
 
     // 5. Campo "Anexo" - 10 pts
     const attOpt = placedSlots.attachment;
+    const expectedAttachment = language === 'pt' ? 'trabalho_tic.docx' : 'ict_assignment.docx';
     if (attOpt?.id === 'opt-attachment') {
       details.push({
         id: 'attachment',
         fieldLabel: language === 'pt' ? 'Anexo do Ficheiro' : 'Attachment',
-        expectedLabel: 'trabalho_tic.docx',
+        expectedLabel: expectedAttachment,
         userPlacedContent: attOpt.content,
         score: 10,
         maxScore: 10,
@@ -446,14 +452,14 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
         status: 'correct',
         feedback:
           language === 'pt'
-            ? 'Perfeito! Anexaste o ficheiro do trabalho ("trabalho_tic.docx") ao email.'
-            : 'Perfect attachment.',
+            ? `Perfeito! Anexaste o ficheiro do trabalho ("${expectedAttachment}") ao email.`
+            : `Perfect! You attached the assignment file ("${expectedAttachment}") to the email.`,
       });
     } else if (attOpt) {
       details.push({
         id: 'attachment',
         fieldLabel: language === 'pt' ? 'Anexo do Ficheiro' : 'Attachment',
-        expectedLabel: 'trabalho_tic.docx',
+        expectedLabel: expectedAttachment,
         userPlacedContent: attOpt.content,
         score: 0,
         maxScore: 10,
@@ -461,14 +467,14 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
         status: 'incorrect',
         feedback:
           language === 'pt'
-            ? 'Incorreto. O anexo deve ser o ficheiro do trabalho ("trabalho_tic.docx").'
-            : 'Incorrect attachment.',
+            ? `Incorreto. O anexo deve ser o ficheiro do trabalho ("${expectedAttachment}").`
+            : `Incorrect. The attachment should be the assignment file ("${expectedAttachment}").`,
       });
     } else {
       details.push({
         id: 'attachment',
         fieldLabel: language === 'pt' ? 'Anexo do Ficheiro' : 'Attachment',
-        expectedLabel: 'trabalho_tic.docx',
+        expectedLabel: expectedAttachment,
         userPlacedContent: null,
         score: 0,
         maxScore: 10,
@@ -476,8 +482,8 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
         status: 'missing',
         feedback:
           language === 'pt'
-            ? 'Atenção: A mensagem refere "Segue em anexo...", mas esqueceste-te de anexar o ficheiro ("trabalho_tic.docx").'
-            : 'Missing attachment file.',
+            ? `Atenção: A mensagem refere "Segue em anexo...", mas esqueceste-te de anexar o ficheiro ("${expectedAttachment}").`
+            : `Attention: The message mentions "Please find attached...", but you forgot to attach the file ("${expectedAttachment}").`,
       });
     }
 
@@ -680,10 +686,16 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
 
           {/* Right actions */}
           <div className="flex items-center gap-1.5 sm:gap-2">
-            <button className="p-1 rounded-md hover:bg-white/10 text-white cursor-pointer" title="Definições">
+            <button
+              className="p-1 rounded-md hover:bg-white/10 text-white cursor-pointer"
+              title={language === 'pt' ? 'Definições' : 'Settings'}
+            >
               <Settings className="w-4 h-4" />
             </button>
-            <button className="p-1 rounded-md hover:bg-white/10 text-white cursor-pointer" title="Ajuda">
+            <button
+              className="p-1 rounded-md hover:bg-white/10 text-white cursor-pointer"
+              title={language === 'pt' ? 'Ajuda' : 'Help'}
+            >
               <HelpCircle className="w-4 h-4" />
             </button>
             <div className="w-7 h-7 rounded-full bg-white/20 border border-white/40 flex items-center justify-center text-xs font-bold">
@@ -825,7 +837,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
                     <button
                       onClick={(e) => handleRemoveFromSlot('attachment', e)}
                       className="ml-1 p-0.5 hover:bg-amber-200 rounded text-amber-800 cursor-pointer"
-                      title="Remover anexo"
+                      title={language === 'pt' ? 'Remover anexo' : 'Remove attachment'}
                     >
                       <X className="w-3 h-3" />
                     </button>
@@ -871,7 +883,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
                         <button
                           onClick={(e) => handleRemoveFromSlot('to', e)}
                           className="p-1 hover:bg-purple-200 rounded text-purple-700 cursor-pointer"
-                          title="Remover"
+                          title={language === 'pt' ? 'Remover' : 'Remove'}
                         >
                           <X className="w-3.5 h-3.5" />
                         </button>
@@ -909,7 +921,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
                         <button
                           onClick={(e) => handleRemoveFromSlot('cc', e)}
                           className="p-1 hover:bg-rose-200 rounded text-rose-700 cursor-pointer"
-                          title="Remover"
+                          title={language === 'pt' ? 'Remover' : 'Remove'}
                         >
                           <X className="w-3.5 h-3.5" />
                         </button>
@@ -947,7 +959,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
                         <button
                           onClick={(e) => handleRemoveFromSlot('subject', e)}
                           className="p-1 hover:bg-emerald-200 rounded text-emerald-700 cursor-pointer"
-                          title="Remover"
+                          title={language === 'pt' ? 'Remover' : 'Remove'}
                         >
                           <X className="w-3.5 h-3.5" />
                         </button>
@@ -989,7 +1001,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
                       <button
                         onClick={(e) => handleRemoveFromSlot('body', e)}
                         className="absolute top-2 right-2 p-1 hover:bg-sky-200 rounded text-sky-700 cursor-pointer"
-                        title="Remover"
+                        title={language === 'pt' ? 'Remover' : 'Remove'}
                       >
                         <X className="w-3.5 h-3.5" />
                       </button>
@@ -1028,7 +1040,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
               <button
                 onClick={handleReset}
                 className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
-                title="Limpar todos os campos"
+                title={language === 'pt' ? 'Limpar todos os campos' : 'Reset all fields'}
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>{language === 'pt' ? 'Limpar' : 'Reset'}</span>
@@ -1164,7 +1176,10 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
               <div className="text-xs font-bold text-slate-700 flex items-center justify-between pb-1 border-b border-slate-100">
                 <span>{language === 'pt' ? 'Correção dos Elementos do Email:' : 'Email Elements Diagnostic:'}</span>
                 <span className="text-[11px] font-normal text-slate-500">
-                  {evaluationResult.details.filter((d) => d.isCorrect).length} de {evaluationResult.details.length} corretos
+                  {evaluationResult.details.filter((d) => d.isCorrect).length}{' '}
+                  {language === 'pt' ? 'de' : 'of'}{' '}
+                  {evaluationResult.details.length}{' '}
+                  {language === 'pt' ? 'corretos' : 'correct'}
                 </span>
               </div>
 

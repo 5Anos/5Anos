@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import {
-  Sparkles,
   X,
   CheckCircle2,
   Award,
@@ -19,6 +18,7 @@ import {
 } from '../data/dailyTipsData';
 import { api } from '../services/api';
 import { AudioSpeakButton } from './AudioSpeakButton';
+import { SabiasQueBadge } from './SabiasQueBadge';
 
 interface DailyTipWidgetProps {
   user: User | null;
@@ -55,15 +55,14 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
   const todayDateStr = useMemo(() => getTodayDateString(), []);
   const todayTip: DailyTicTip = useMemo(() => getTodayDailyTip(), []);
 
-  // Storage key strictly for today's tip
-  const todayStorageKey = `tic_daily_tip_${todayDateStr}_${user?.id || 'guest'}`;
+  // Storage key strictly for today's tip, including year to prevent annual collisions
+  const currentYear = new Date().getFullYear();
+  const todayStorageKey = `tic_daily_tip_${currentYear}_${todayDateStr}_${user?.id || 'guest'}`;
 
   const [savedAnswer, setSavedAnswer] = useState<StoredDailyAnswer | null>(null);
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [justSubmitted, setJustSubmitted] = useState(false);
-  const [imgFailed, setImgFailed] = useState(false);
-  const [modalImgFailed, setModalImgFailed] = useState(false);
 
   // Sync modal state with forceOpen prop if provided
   useEffect(() => {
@@ -135,12 +134,20 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
         }
       }
 
-      localStorage.setItem(todayStorageKey, JSON.stringify(answerRecord));
+      try {
+        localStorage.setItem(todayStorageKey, JSON.stringify(answerRecord));
+      } catch (storageErr) {
+        console.warn('Could not persist daily tip answer to localStorage:', storageErr);
+      }
       setSavedAnswer(answerRecord);
       setJustSubmitted(true);
     } catch (err) {
       console.error('Error recording daily tip points:', err);
-      localStorage.setItem(todayStorageKey, JSON.stringify(answerRecord));
+      try {
+        localStorage.setItem(todayStorageKey, JSON.stringify(answerRecord));
+      } catch (storageErr) {
+        console.warn('Could not persist daily tip answer to localStorage:', storageErr);
+      }
       setSavedAnswer(answerRecord);
       setJustSubmitted(true);
       if (onPointsAwarded) {
@@ -160,113 +167,13 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
 
   return (
     <>
-      {/* Dashboard Card Widget (Today's Tip) */}
+      {/* Dashboard Sticker Entrance (Sabias Que? - Clica e Ganha Pontos) */}
       {!hideCard && (
-        <div
+        <SabiasQueBadge
+          language={language}
+          hasAnswered={hasAnsweredToday}
           onClick={() => setInternalModalOpen(true)}
-          className="group relative overflow-hidden bg-linear-to-br from-indigo-50 via-sky-50/70 to-blue-100/50 p-5 sm:p-6 rounded-[2rem] border border-indigo-200/80 shadow-xs hover:shadow-md transition-all cursor-pointer hover:border-indigo-300"
-        >
-          {/* Ambient Glow */}
-          <div className="absolute top-0 right-0 -mt-4 -mr-4 w-28 h-28 bg-indigo-300/20 rounded-full blur-xl pointer-events-none group-hover:scale-150 transition-transform" />
-
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-indigo-600 to-sky-600 text-white flex items-center justify-center text-2xl shrink-0 shadow-md group-hover:scale-105 transition-transform">
-              {todayTip.themeIcon || '💡'}
-            </div>
-
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between gap-2 mb-1 flex-wrap">
-                <div className="flex items-center gap-1.5 shrink-0">
-                  {!imgFailed ? (
-                    <img
-                      src="/icone.png"
-                      alt={language === 'pt' ? 'Sabias que?' : 'Did you know?'}
-                      className="h-10 sm:h-12 w-auto object-contain shrink-0"
-                      referrerPolicy="no-referrer"
-                      onError={() => setImgFailed(true)}
-                    />
-                  ) : (
-                    <div className="flex items-center gap-1.5 bg-linear-to-r from-indigo-600 via-blue-600 to-sky-600 text-white px-3 py-1 rounded-full shadow-xs border border-white/20">
-                      <span className="text-[11px] sm:text-xs font-black tracking-wide flex items-center gap-1 text-white uppercase">
-                        💡 {language === 'pt' ? 'Sabias que?' : 'Did you know?'}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {hasAnsweredToday ? (
-                  <span
-                    className={`inline-flex items-center gap-1 text-[10px] font-black px-2 py-0.5 rounded-full ${
-                      savedAnswer?.isCorrect
-                        ? 'text-emerald-900 bg-emerald-200/80'
-                        : 'text-amber-900 bg-amber-200/80'
-                    }`}
-                  >
-                    <CheckCircle2 className="w-3 h-3" />
-                    {savedAnswer?.isCorrect
-                      ? language === 'pt'
-                        ? 'Acertaste (+50 pts)'
-                        : 'Correct (+50 pts)'
-                      : language === 'pt'
-                      ? 'Participaste (+25 pts)'
-                      : 'Participated (+25 pts)'}
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center gap-1 text-[10px] font-black text-amber-950 bg-amber-200/90 px-2.5 py-0.5 rounded-full animate-bounce shadow-2xs">
-                    🎁 {language === 'pt' ? 'Até +50 Pontos' : 'Up to +50 Pts'}
-                  </span>
-                )}
-              </div>
-
-              {/* Date & Curricular Theme Badges */}
-              <div className="mb-1.5 flex items-center gap-1.5 flex-wrap">
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-white text-indigo-900 border border-indigo-200 shadow-2xs">
-                  <Calendar className="w-3 h-3 text-indigo-600" />
-                  <span>{todayTip.dateLabel[language]}</span>
-                </span>
-
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-white/90 text-slate-800 border border-slate-200 shadow-2xs">
-                  <span>{todayTip.themeIcon}</span>
-                  <span>
-                    {language === 'pt'
-                      ? `Tema ${todayTip.themeNumber}: ${todayTip.themeTitle.pt}`
-                      : `Topic ${todayTip.themeNumber}: ${todayTip.themeTitle.en}`}
-                  </span>
-                </span>
-              </div>
-
-              <div className="flex items-center justify-between gap-2">
-                <h4 className="text-sm sm:text-base font-extrabold text-slate-900 leading-snug group-hover:text-indigo-950 transition-colors line-clamp-2 flex-1">
-                  {todayTip.title[language]}
-                </h4>
-              </div>
-
-              <div className="mt-4 flex items-center justify-between gap-2 border-t border-indigo-100/40 pt-3">
-                {hasAnsweredToday ? (
-                  <div className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-black bg-indigo-50 text-indigo-700 border border-indigo-100 group-hover:bg-indigo-100 transition-all shadow-2xs">
-                    <span>{language === 'pt' ? 'Ver explicação e resultado' : 'View explanation and score'}</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                ) : (
-                  <div className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-black bg-indigo-600 text-white group-hover:bg-indigo-700 group-hover:scale-[1.02] active:scale-95 transition-all shadow-xs">
-                    <span>{language === 'pt' ? 'Lê e responde (+50pt)' : 'Read & answer (+50pt)'}</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                )}
-
-                <span className="text-[10px] font-black uppercase text-slate-500 tracking-wider shrink-0">
-                  {hasAnsweredToday
-                    ? language === 'pt'
-                      ? '✅ Concluída'
-                      : '✅ Completed'
-                    : language === 'pt'
-                    ? '50 pts acerto / 25 pts erro'
-                    : '50 pts right / 25 pts wrong'}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+        />
       )}
 
       {/* Modal: Today's Tip */}
@@ -282,21 +189,11 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                     {todayTip.themeIcon}
                   </div>
                   <div className="flex items-center gap-2">
-                    {!modalImgFailed ? (
-                      <img
-                        src="/icone.png"
-                        alt={language === 'pt' ? 'Sabias que?' : 'Did you know?'}
-                        className="h-12 w-auto object-contain"
-                        referrerPolicy="no-referrer"
-                        onError={() => setModalImgFailed(true)}
-                      />
-                    ) : (
-                      <div className="flex items-center gap-1.5 bg-white/10 text-white px-3 py-1.5 rounded-full border border-white/20">
-                        <span className="text-xs font-black tracking-wide flex items-center gap-1 text-white uppercase">
-                          💡 {language === 'pt' ? 'Sabias que?' : 'Did you know?'}
-                        </span>
-                      </div>
-                    )}
+                    <div className="flex items-center gap-1.5 bg-white/15 text-white px-3 py-1.5 rounded-full border border-white/20 shadow-xs">
+                      <span className="text-xs font-black tracking-wide flex items-center gap-1 text-white uppercase">
+                        💡 {language === 'pt' ? 'Sabias que?' : 'Did you know?'}
+                      </span>
+                    </div>
                   </div>
                 </div>
 

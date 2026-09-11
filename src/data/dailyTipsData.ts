@@ -128,7 +128,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "c",
         "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
       },
       {
         "id": "d",
@@ -1693,7 +1693,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "a",
         "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
       },
       {
         "id": "b",
@@ -3283,7 +3283,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "d",
         "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
       }
     ],
     "correctOptionId": "c",
@@ -4365,8 +4365,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🪑",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Postura Confortável ao Computador",
-      "en": "Practical Tip: Em detalhe: Postura Confortável ao Computador"
+      "pt": "Dica Prática: Postura Confortável ao Computador",
+      "en": "Practical Tip: Postura Confortável ao Computador"
     },
     "teaser": {
       "pt": "Sabias que os cotovelos e joelhos devem ficar, aproximadamente, num ângulo de 90°, numa posição confortável?",
@@ -4440,8 +4440,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "👣",
     "title": {
-      "pt": "Dica Prática: Em detalhe: A tua Pegada Digital é como uma pegada no cimento fresco!",
-      "en": "Dica Prática: Em detalhe: A tua Pegada Digital é como uma pegada no cimento fresco!"
+      "pt": "Dica Prática: A tua Pegada Digital é como uma pegada no cimento fresco!",
+      "en": "Dica Prática: A tua Pegada Digital é como uma pegada no cimento fresco!"
     },
     "teaser": {
       "pt": "Algumas das nossas atividades online deixam registos. Publicações, comentários e conteúdos que partilhamos podem fazer parte da nossa pegada digital.",
@@ -4590,8 +4590,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🕶️",
     "title": {
-      "pt": "Dica Prática: Em detalhe: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade",
-      "en": "Dica Prática: Em detalhe: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade"
+      "pt": "Dica Prática: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade",
+      "en": "Dica Prática: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade"
     },
     "teaser": {
       "pt": "Vais convidar 25 colegas da turma para uma festa por email? Usa o Cco!",
@@ -4665,7 +4665,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🚗",
     "title": {
-      "pt": "Dica Prática: Em detalhe: O Navegador é o Automóvel, o Motor de Busca é o GPS!",
+      "pt": "Dica Prática: O Navegador é o Automóvel, o Motor de Busca é o GPS!",
       "en": "Practical Tip: O Navegador é o Automóvel, o Motor de Busca é o GPS!"
     },
     "teaser": {
@@ -4740,7 +4740,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🎨",
     "title": {
-      "pt": "Dica Prática: Em detalhe: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!",
+      "pt": "Dica Prática: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!",
       "en": "Practical Tip: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!"
     },
     "teaser": {
@@ -4815,7 +4815,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "⚡",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!",
+      "pt": "Dica Prática: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!",
       "en": "Practical Tip: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!"
     },
     "teaser": {
@@ -4891,55 +4891,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "👀",
     "title": {
       "pt": "Em detalhe: A Regra 20-20-20: o descanso favorito dos teus olhos!",
-      "en": "A Regra 20-20-20: o descanso favorito dos teus olhos!"
+      "en": "In detail: The 20-20-20 Rule: your eyes' favorite screen break!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "Passas muito tempo a olhar para o ecrã? Esta regra simples protege a tua visão.",
+      "en": "Spending lots of time looking at screens? This simple rule protects your vision."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "A cada 20 minutos de uso de ecrãs, faz uma pausa de 20 segundos e olha para um objeto a pelo menos 6 metros (20 pés) de distância. Esta prática ajuda a relaxar os músculos dos olhos e reduz a fadiga visual.",
+      "en": "Every 20 minutes of screen time, take a 20-second break to look at an object at least 20 feet (about 6 meters) away. This relaxes your eye muscles and helps prevent digital eye strain."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 2 de TIC aprendemos que a ergonomia visual previne dores de cabeça e cansaço nos olhos ao estudar.",
+      "en": "In ICT Topic 2 we learn that visual ergonomics prevents headaches and eye strain during study."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "Sabias que pestanejamos cerca de 50% menos vezes quando estamos concentrados a olhar para um monitor?",
+      "en": "Did you know we blink about 50% less often when concentrating on a digital monitor?"
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "O que recomenda a regra 20-20-20 de ergonomia visual para quem usa computadores?",
+      "en": "What does the 20-20-20 visual ergonomics rule recommend for computer users?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "A cada 20 minutos, olhar 20 segundos para um ponto a cerca de 6 metros (20 pés).",
+        "en": "Every 20 minutes, look for 20 seconds at a point about 20 feet (6 meters) away."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Usar o computador durante 20 horas seguidas sem nunca pestanejar.",
+        "en": "Use the computer for 20 continuous hours without ever blinking."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Ligar 20 monitores ao mesmo tempo no quarto totalmente às escuras.",
+        "en": "Turn on 20 monitors at the same time in a completely dark room."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Lavar o ecrã com água e sabão a cada 20 minutos de jogo.",
+        "en": "Wash the screen with soap and water every 20 minutes of gaming."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "A regra 20-20-20 dá descanso aos músculos ciliares dos olhos, prevenindo a fadiga visual digital!",
+      "en": "The 20-20-20 rule gives your eyes' ciliary muscles a break, preventing digital eye strain!"
     }
   },
   {
@@ -4965,7 +4965,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🕵️‍♂️",
     "title": {
-      "pt": "Dica Prática: Em detalhe: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!",
+      "pt": "Dica Prática: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!",
       "en": "Practical Tip: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!"
     },
     "teaser": {
@@ -5040,7 +5040,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🍕",
     "title": {
-      "pt": "Dica Prática: Em detalhe: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!",
+      "pt": "Dica Prática: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!",
       "en": "Practical Tip: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!"
     },
     "teaser": {
@@ -5115,7 +5115,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🐌",
     "title": {
-      "pt": "Dica Prática: Em detalhe: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!",
+      "pt": "Dica Prática: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!",
       "en": "Practical Tip: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!"
     },
     "teaser": {
@@ -5190,7 +5190,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🔍",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!",
+      "pt": "Dica Prática: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!",
       "en": "Practical Tip: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!"
     },
     "teaser": {
@@ -5265,7 +5265,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "✂️",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Plágio: roubar a medalha de ouro de outra pessoa!",
+      "pt": "Dica Prática: Plágio: roubar a medalha de ouro de outra pessoa!",
       "en": "Practical Tip: Plágio: roubar a medalha de ouro de outra pessoa!"
     },
     "teaser": {
@@ -5340,7 +5340,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🛣️",
     "title": {
-      "pt": "Dica Prática: Em detalhe: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!",
+      "pt": "Dica Prática: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!",
       "en": "Practical Tip: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!"
     },
     "teaser": {
@@ -5415,7 +5415,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🌙",
     "title": {
-      "pt": "Dica Prática: Em detalhe: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \"",
+      "pt": "Dica Prática: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \"",
       "en": "Practical Tip: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \""
     },
     "teaser": {
@@ -5490,7 +5490,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📞",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!",
+      "pt": "Dica Prática: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!",
       "en": "Practical Tip: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!"
     },
     "teaser": {
@@ -5565,7 +5565,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🪥",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!",
+      "pt": "Dica Prática: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!",
       "en": "Practical Tip: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!"
     },
     "teaser": {
@@ -5640,7 +5640,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📢",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!",
+      "pt": "Dica Prática: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!",
       "en": "Practical Tip: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!"
     },
     "teaser": {
@@ -5715,7 +5715,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🔒",
     "title": {
-      "pt": "Dica Prática: Em detalhe: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!",
+      "pt": "Dica Prática: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!",
       "en": "Practical Tip: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!"
     },
     "teaser": {
@@ -5790,7 +5790,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🤝",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Creative Commons: o convite amigável para partilhar criatividade com o mundo!",
+      "pt": "Dica Prática: Creative Commons: o convite amigável para partilhar criatividade com o mundo!",
       "en": "Practical Tip: Creative Commons: o convite amigável para partilhar criatividade com o mundo!"
     },
     "teaser": {
@@ -5865,7 +5865,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "0️⃣",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Tudo no computador são apenas ZEROS e UNS (0 e 1)!",
+      "pt": "Dica Prática: Tudo no computador são apenas ZEROS e UNS (0 e 1)!",
       "en": "Practical Tip: Tudo no computador são apenas ZEROS e UNS (0 e 1)!"
     },
     "teaser": {
@@ -5893,7 +5893,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "a",
         "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
       },
       {
         "id": "b",
@@ -5940,7 +5940,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🦒",
     "title": {
-      "pt": "Dica Prática: Em detalhe: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!",
+      "pt": "Dica Prática: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!",
       "en": "Practical Tip: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!"
     },
     "teaser": {
@@ -6015,7 +6015,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "💬",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!",
+      "pt": "Dica Prática: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!",
       "en": "Practical Tip: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!"
     },
     "teaser": {
@@ -6090,7 +6090,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📲",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!",
+      "pt": "Dica Prática: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!",
       "en": "Practical Tip: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!"
     },
     "teaser": {
@@ -6165,7 +6165,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📎",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!",
+      "pt": "Dica Prática: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!",
       "en": "Practical Tip: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!"
     },
     "teaser": {
@@ -6240,7 +6240,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🕵️‍♀️",
     "title": {
-      "pt": "Dica Prática: Em detalhe: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!",
+      "pt": "Dica Prática: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!",
       "en": "Practical Tip: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!"
     },
     "teaser": {
@@ -6315,7 +6315,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📚",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!",
+      "pt": "Dica Prática: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!",
       "en": "Practical Tip: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!"
     },
     "teaser": {
@@ -6390,7 +6390,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🖨️",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Periféricos: a ponte mágica entre o ser humano e a máquina!",
+      "pt": "Dica Prática: Periféricos: a ponte mágica entre o ser humano e a máquina!",
       "en": "Practical Tip: Periféricos: a ponte mágica entre o ser humano e a máquina!"
     },
     "teaser": {
@@ -6465,7 +6465,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🎧",
     "title": {
-      "pt": "Dica Prática: Em detalhe: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!",
+      "pt": "Dica Prática: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!",
       "en": "Practical Tip: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!"
     },
     "teaser": {
@@ -6540,7 +6540,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📍",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!",
+      "pt": "Dica Prática: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!",
       "en": "Practical Tip: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!"
     },
     "teaser": {
@@ -6615,7 +6615,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🗄️",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!",
+      "pt": "Dica Prática: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!",
       "en": "Practical Tip: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!"
     },
     "teaser": {
@@ -6690,7 +6690,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🎣",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!",
+      "pt": "Dica Prática: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!",
       "en": "Practical Tip: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!"
     },
     "teaser": {
@@ -6765,7 +6765,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🕷️",
     "title": {
-      "pt": "Dica Prática: Em detalhe: As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!",
+      "pt": "Dica Prática: As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!",
       "en": "Practical Tip: As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!"
     },
     "teaser": {
@@ -6840,56 +6840,56 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "💾",
     "title": {
-      "pt": "Dia Mundial do Backup: \"Não sejas um tolo de Abril! \"",
-      "en": "World Backup Day: \"Don't be an April fool! \""
+      "pt": "Dia Mundial do Backup: \"Não sejas um tolo de Abril!\"",
+      "en": "World Backup Day: \"Don't be an April fool!\""
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "Celebrado a 31 de março, véspera do Dia das Mentiras, lembra a importância das cópias de segurança.",
+      "en": "Celebrated on March 31, eve of April Fools' Day, reminding us to back up our data."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "O Dia Mundial do Backup alerta para a necessidade de ter cópias de segurança dos teus trabalhos de grupo, fotografias e documentos escolares numa pen USB externa ou serviço de nuvem seguro.",
+      "en": "World Backup Day highlights the vital importance of having backups of your school projects, photos, and files on an external USB drive or secure cloud service."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 3 de TIC aprendemos que falhas de hardware, vírus ou acidentes podem apagar ficheiros se não houver backups.",
+      "en": "In ICT Topic 3 we learn that hardware failures, malware, or accidents can wipe files without backups."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "A regra de ouro profissional dos backups chama-se 3-2-1: 3 cópias, em 2 suportes diferentes, com 1 fora de casa!",
+      "en": "The professional golden rule of backups is 3-2-1: 3 copies, on 2 different media, with 1 off-site!"
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Porque se celebra o Dia Mundial do Backup precisamente a 31 de março?",
+      "en": "Why is World Backup Day celebrated specifically on March 31?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Para lembrar a todos de fazer cópias de segurança antes do Dia das Mentiras (1 de abril).",
+        "en": "To remind everyone to make backups before April Fools' Day (April 1st)."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Porque nesse dia todos os discos rígidos do planeta são formatados obrigatoriamente.",
+        "en": "Because on that day every hard drive on Earth is forcibly formatted."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Para apagar todos os ficheiros antigos dos computadores escolares sem guardar nada.",
+        "en": "To delete all old files from school computers without keeping anything."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Para colar post-its com palavras-passe na porta do frigorífico de casa.",
+        "en": "To stick post-it notes with passwords on the family refrigerator door."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "O lema oficial é: 'Faz backup dos teus dados hoje para não seres apanhado de surpresa amanhã!'",
+      "en": "The official motto is: 'Back up your data today so you won't be caught by surprise tomorrow!'"
     }
   },
   {
@@ -6915,7 +6915,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🖱️",
     "title": {
-      "pt": "Dica Prática: Em detalhe: O primeiro rato do mundo foi feito de madeira com rodas de metal!",
+      "pt": "Dica Prática: O primeiro rato do mundo foi feito de madeira com rodas de metal!",
       "en": "Practical Tip: O primeiro rato do mundo foi feito de madeira com rodas de metal!"
     },
     "teaser": {
@@ -6990,7 +6990,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🎒",
     "title": {
-      "pt": "Dica Prática: Em detalhe: O peso da mochila não deve ultrapassar 10% do teu peso corporal!",
+      "pt": "Dica Prática: O peso da mochila não deve ultrapassar 10% do teu peso corporal!",
       "en": "Practical Tip: O peso da mochila não deve ultrapassar 10% do teu peso corporal!"
     },
     "teaser": {
@@ -7066,55 +7066,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "📹",
     "title": {
       "pt": "Em detalhe: Tapa a webcam quando não estiveres em videochamada escolar!",
-      "en": "Tapa a webcam quando não estiveres em videochamada escolar!"
+      "en": "In detail: Cover your webcam when not in a school video call!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "Uma simples tampa deslizante ou adesivo protege a tua privacidade dentro de casa.",
+      "en": "A simple sliding cover or sticker protects your indoor privacy."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Quando não estás em aulas virtuais ou a falar com familiares, tapar a câmara do portátil ou tablet garante que ninguém consegue ver o interior do teu quarto, mesmo que um programa malicioso tente ativá-la em segundo plano.",
+      "en": "When you are not in online classes or talking to family, covering your laptop or tablet camera ensures no one can view inside your room, even if malware attempts to activate it in the background."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 3 de TIC aprendemos a proteger a privacidade física e a intimidade familiar ao usar dispositivos conectados.",
+      "en": "In ICT Topic 3 we learn to protect physical privacy and family intimacy when using connected devices."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "Até grandes pioneiros da tecnologia, como Mark Zuckerberg, usam uma fita para tapar a câmara do seu portátil!",
+      "en": "Even tech leaders like Mark Zuckerberg use physical tape to cover their personal laptop cameras!"
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Qual é a principal razão recomendada para tapar a webcam do computador fora das aulas virtuais?",
+      "en": "What is the recommended reason to cover your computer webcam when outside virtual classes?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Impedir que aplicações maliciosas consigam transmitir a tua imagem sem autorização.",
+        "en": "Prevent malicious applications from streaming your image without authorization."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Evitar que a luz da câmara atraia mosquitos para o ecrã do computador.",
+        "en": "Prevent the camera light from attracting mosquitoes to the screen."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Aumentar a velocidade da Internet em 300% durante os jogos online.",
+        "en": "Increase internet connection speed by 300% during online games."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Fazer com que a bateria do computador dure para sempre sem precisar de carregador.",
+        "en": "Make the laptop battery last forever without needing a charger."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "Uma barreira física como uma tampa deslizante é 100% à prova de invasões de software!",
+      "en": "A physical barrier like a webcam slider is 100% proof against software intrusion!"
     }
   },
   {
@@ -7140,7 +7140,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📝",
     "title": {
-      "pt": "Dica Prática: Em detalhe: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!",
+      "pt": "Dica Prática: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!",
       "en": "Practical Tip: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!"
     },
     "teaser": {
@@ -7215,7 +7215,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🏷️",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Nunca envies um email com o campo \"Assunto\" vazio!",
+      "pt": "Dica Prática: Nunca envies um email com o campo \"Assunto\" vazio!",
       "en": "Practical Tip: Nunca envies um email com o campo \"Assunto\" vazio!"
     },
     "teaser": {
@@ -7290,7 +7290,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🍪",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!",
+      "pt": "Dica Prática: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!",
       "en": "Practical Tip: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!"
     },
     "teaser": {
@@ -7365,7 +7365,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🎵",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Bancos de som e música livre para os teus vídeos e jogos no Scratch!",
+      "pt": "Dica Prática: Bancos de som e música livre para os teus vídeos e jogos no Scratch!",
       "en": "Practical Tip: Bancos de som e música livre para os teus vídeos e jogos no Scratch!"
     },
     "teaser": {
@@ -7440,7 +7440,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🤖",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!",
+      "pt": "Dica Prática: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!",
       "en": "Practical Tip: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!"
     },
     "teaser": {
@@ -7483,7 +7483,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "d",
         "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
       }
     ],
     "correctOptionId": "c",
@@ -7515,7 +7515,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "💡",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!",
+      "pt": "Dica Prática: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!",
       "en": "Practical Tip: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!"
     },
     "teaser": {
@@ -7590,7 +7590,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🎣",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!",
+      "pt": "Dica Prática: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!",
       "en": "Practical Tip: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!"
     },
     "teaser": {
@@ -7665,7 +7665,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🔒",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!",
+      "pt": "Dica Prática: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!",
       "en": "Practical Tip: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!"
     },
     "teaser": {
@@ -7740,7 +7740,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🗑️",
     "title": {
-      "pt": "Dica Prática: Em detalhe: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!",
+      "pt": "Dica Prática: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!",
       "en": "Practical Tip: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!"
     },
     "teaser": {
@@ -7815,7 +7815,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📑",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Atalhos de mestre no navegador: Control + T abre um novo separador!",
+      "pt": "Dica Prática: Atalhos de mestre no navegador: Control + T abre um novo separador!",
       "en": "Practical Tip: Atalhos de mestre no navegador: Control + T abre um novo separador!"
     },
     "teaser": {
@@ -7890,7 +7890,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🐧",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Software Livre: o código aberto onde todos podem aprender e colaborar!",
+      "pt": "Dica Prática: Software Livre: o código aberto onde todos podem aprender e colaborar!",
       "en": "Practical Tip: Software Livre: o código aberto onde todos podem aprender e colaborar!"
     },
     "teaser": {
@@ -7965,7 +7965,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "♻️",
     "title": {
-      "pt": "Dica Prática: Em detalhe: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!",
+      "pt": "Dica Prática: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!",
       "en": "Practical Tip: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!"
     },
     "teaser": {
@@ -8040,7 +8040,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🏃‍♂️",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!",
+      "pt": "Dica Prática: Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!",
       "en": "Practical Tip: Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!"
     },
     "teaser": {
@@ -8115,7 +8115,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📸",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!",
+      "pt": "Dica Prática: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!",
       "en": "Practical Tip: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!"
     },
     "teaser": {
@@ -8190,7 +8190,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "👁️",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade.",
+      "pt": "Dica Prática: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade.",
       "en": "Practical Tip: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade."
     },
     "teaser": {
@@ -8265,7 +8265,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "👥",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!",
+      "pt": "Dica Prática: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!",
       "en": "Practical Tip: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!"
     },
     "teaser": {
@@ -8340,7 +8340,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🌐",
     "title": {
-      "pt": "Dica Prática: Em detalhe: O que significa . pt, . org, . edu e . gov no final dos sites?",
+      "pt": "Dica Prática: O que significa . pt, . org, . edu e . gov no final dos sites?",
       "en": "Practical Tip: O que significa . pt, . org, . edu e . gov no final dos sites?"
     },
     "teaser": {
@@ -8415,7 +8415,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "💬",
     "title": {
-      "pt": "Dica Prática: Em detalhe: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?",
+      "pt": "Dica Prática: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?",
       "en": "Practical Tip: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?"
     },
     "teaser": {
@@ -8569,52 +8569,52 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "World Book and Copyright Day (UNESCO)"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "A 23 de abril, a UNESCO homenageia os autores, ilustradores e a proteção do seu trabalho.",
+      "en": "On April 23, UNESCO honors authors, illustrators, and the protection of their creative work."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Esta data homenageia grandes escritores como William Shakespeare e Miguel de Cervantes, lembrando que os criadores têm o direito moral e legal de ver o seu nome reconhecido e a sua obra respeitada quando realizamos trabalhos de investigação.",
+      "en": "This day honors great writers like Shakespeare and Cervantes, reminding us that creators have the legal and moral right to have their work recognized and credited when we research."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 7 de TIC aprendemos que respeitar os direitos de autor é um pilar da honestidade académica e cidadania.",
+      "en": "In ICT Topic 7 we learn that respecting copyright is a pillar of academic integrity and citizenship."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "Na Catalunha, no dia 23 de abril (São Jorge), a tradição manda oferecer um livro e uma rosa!",
+      "en": "In Catalonia, on April 23 (St. George's Day), tradition calls for gifting a book and a rose!"
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "O que nos ensina o Dia Mundial do Livro e dos Direitos de Autor para os nossos trabalhos de TIC?",
+      "en": "What does World Book and Copyright Day teach us for our ICT school projects?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Devemos identificar sempre o autor e a fonte das informações e imagens que utilizamos.",
+        "en": "We must always identify the author and source of the information and images we use."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Podemos copiar livros inteiros e pôr o nosso nome na capa sem pedir autorização.",
+        "en": "We can copy entire books and put our name on the cover without asking."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Que os livros antigos devem ser todos deitados fora porque agora só existe a Internet.",
+        "en": "That old books should all be thrown away because only the internet exists now."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Que nunca se deve partilhar nenhum conhecimento científico com colegas de turma.",
+        "en": "That scientific knowledge should never be shared with classmates."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "Dar crédito aos autores e criadores originais é respeitar o esforço de quem produziu a obra!",
+      "en": "Crediting original authors and creators honors the effort and talent behind their work!"
     }
   },
   {
@@ -8640,8 +8640,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "👣",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: A tua Pegada Digital é como uma pegada no cimento fresco!",
-      "en": "Advanced Safety: Advanced Safety: A tua Pegada Digital é como uma pegada no cimento fresco!"
+      "pt": "Segurança Avançada: A tua Pegada Digital é como uma pegada no cimento fresco!",
+      "en": "Advanced Safety: A tua Pegada Digital é como uma pegada no cimento fresco!"
     },
     "teaser": {
       "pt": "Algumas das nossas atividades online deixam registos. Publicações, comentários e conteúdos que partilhamos podem fazer parte da nossa pegada digital.",
@@ -8790,8 +8790,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🕶️",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade",
-      "en": "Advanced Safety: Advanced Safety: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade"
+      "pt": "Segurança Avançada: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade",
+      "en": "Advanced Safety: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade"
     },
     "teaser": {
       "pt": "Vais convidar 25 colegas da turma para uma festa por email? Usa o Cco!",
@@ -8865,8 +8865,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🚗",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: O Navegador é o Automóvel, o Motor de Busca é o GPS!",
-      "en": "Advanced Safety: Advanced Safety: O Navegador é o Automóvel, o Motor de Busca é o GPS!"
+      "pt": "Segurança Avançada: O Navegador é o Automóvel, o Motor de Busca é o GPS!",
+      "en": "Advanced Safety: O Navegador é o Automóvel, o Motor de Busca é o GPS!"
     },
     "teaser": {
       "pt": "Muitos alunos confundem o Chrome com o Google. Sabes qual é a diferença real?",
@@ -8940,8 +8940,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🎨",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!",
-      "en": "Advanced Safety: Advanced Safety: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!"
+      "pt": "Segurança Avançada: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!",
+      "en": "Advanced Safety: As fotos do Google Imagens NÃO são gratuitas para usar como quiseres!"
     },
     "teaser": {
       "pt": "Copiar uma foto qualquer e colar num trabalho sem autorização pode violar a lei.",
@@ -9015,8 +9015,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "⚡",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!",
-      "en": "Advanced Safety: Advanced Safety: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!"
+      "pt": "Segurança Avançada: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!",
+      "en": "Advanced Safety: Memória RAM vs Disco SSD: a secretária de trabalho vs o armário!"
     },
     "teaser": {
       "pt": "Qual é a diferença entre a memória que apaga tudo quando desligas e a que guarda ficheiros?",
@@ -9091,55 +9091,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "👀",
     "title": {
       "pt": "Dica Prática: A Regra 20-20-20: o descanso favorito dos teus olhos!",
-      "en": "Practical Tip: A Regra 20-20-20: o descanso favorito dos teus olhos!"
+      "en": "Practical Tip: The 20-20-20 Rule: your eyes' favorite screen break!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "Como aplicar a regra 20-20-20 na tua secretária de estudo em casa.",
+      "en": "How to apply the 20-20-20 rule right at your home study desk."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Enquanto fazes trabalhos de TIC, coloca um alarme suave ou aproveita as mudanças de tarefa: olha pela janela para uma árvore ou edifício distante durante 20 segundos. Isto permite que os olhos mudem de foco para o infinito e relaxem.",
+      "en": "While doing ICT homework, set a gentle reminder or use task breaks: glance out the window at a distant tree or building for 20 seconds. This allows your eye lens to shift focus and fully relax."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 2 de TIC aprendemos hábitos de estudo saudáveis e pausas ativas que aumentam a concentração.",
+      "en": "In ICT Topic 2 we learn healthy study habits and active breaks that boost concentration."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "Olhar para o horizonte ajuda a evitar o espasmo de acomodação visual após horas ao computador!",
+      "en": "Looking at the horizon helps prevent eye focus fatigue after hours of computer use!"
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Para onde deves olhar durante os 20 segundos da pausa visual recomendada pela ergonomia?",
+      "en": "Where should you look during the 20-second visual break recommended by ergonomics?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Para um ponto distante, como pela janela ou para o fundo da sala, a pelo menos 6 metros.",
+        "en": "At a distant point, such as out the window or across the room, at least 6 meters away."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Para o ecrã do telemóvel a 5 centímetros do nariz com brilho no máximo.",
+        "en": "At your smartphone screen 5 centimeters from your nose at maximum brightness."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Diretamente para uma lâmpada acesa sem pestanejar durante meia hora.",
+        "en": "Directly into a bright light bulb without blinking for half an hour."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Para um relógio de parede a contar cada milissegundo de forma stressante.",
+        "en": "At a ticking wall clock counting every millisecond in a stressful way."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "Focar objetos distantes relaxa o músculo ciliar, permitindo que a lente ocular volte à sua forma natural.",
+      "en": "Focusing on distant objects relaxes the ciliary muscle, letting the eye lens return to its relaxed shape."
     }
   },
   {
@@ -9165,8 +9165,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🕵️‍♂️",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!",
-      "en": "Advanced Safety: Advanced Safety: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!"
+      "pt": "Segurança Avançada: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!",
+      "en": "Advanced Safety: A regra do \"Estranho no Jardim\": nada de moradas em jogos online!"
     },
     "teaser": {
       "pt": "Roblox, Fortnite, Brawl Stars... avatares simpáticos podem esconder qualquer pessoa.",
@@ -9240,8 +9240,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🍕",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!",
-      "en": "Advanced Safety: Advanced Safety: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!"
+      "pt": "Segurança Avançada: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!",
+      "en": "Advanced Safety: O método da \"Frase-Passe\": O_Meu_Cao_Adora_Comer_99_Gelados!"
     },
     "teaser": {
       "pt": "Uma frase longa com espaços ou travessões é fácil de decorar e quase altamente seguro.",
@@ -9315,8 +9315,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🐌",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!",
-      "en": "Advanced Safety: Advanced Safety: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!"
+      "pt": "Segurança Avançada: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!",
+      "en": "Advanced Safety: O símbolo @ chama-se \"caracol\" em Itália e \"tromba de elefante\" na Suécia!"
     },
     "teaser": {
       "pt": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico.",
@@ -9391,55 +9391,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🔑",
     "title": {
       "pt": "Dia Mundial da Palavra-passe: Muda a tua palavra-passe fraca!",
-      "en": "World password Day: Update your weak password!"
+      "en": "World Password Day: Change your weak password!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "A primeira quinta-feira de maio é o momento ideal para reforçar a tua segurança digital.",
+      "en": "The first Thursday of May is the ideal moment to strengthen your digital security."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "O Dia Mundial da Palavra-passe incentiva todos a abandonar combinações simples como '123456' ou o nome do animal de estimação, adotando frases-passe compridas (passphrases) com símbolos, números e letras maiúsculas.",
+      "en": "World Password Day encourages everyone to ditch weak combinations like '123456' or pet names, adopting long passphrases with symbols, numbers, and uppercase letters."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 4 de TIC aprendemos que a palavra-passe é a primeira linha de defesa das nossas contas escolares.",
+      "en": "In ICT Topic 4 we learn that passwords are the first line of defense for our school accounts."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "Uma palavra-passe de 14 carateres com várias palavras é muito mais difícil de decifrar que uma de 8 com símbolos confusos!",
+      "en": "A 14-character passphrase using several words is much harder to crack than an 8-character jumble!"
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Qual é a melhor ação a tomar no Dia Mundial da Palavra-passe para proteger as tuas contas?",
+      "en": "What is the best action to take on World Password Day to protect your online accounts?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Criar frases-passe longas e únicas para cada serviço importante e ativar 2FA se disponível.",
+        "en": "Create long, unique passphrases for each important service and enable 2FA if available."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Mudar todas as palavras-passe para 'password2026' para ser fácil de memorizar.",
+        "en": "Change all passwords to 'password2026' so it's super easy to remember."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Partilhar a palavra-passe da conta escolar no grupo de chat da turma.",
+        "en": "Share your school account password in the public class group chat."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Escrever a palavra-passe a caneta indelével na capa exterior do portátil.",
+        "en": "Write your password in permanent marker on your laptop's outer shell."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "Palavras-passe longas e variadas protegem as tuas mensagens e trabalhos contra invasões!",
+      "en": "Long, distinct passphrases protect your messages and school projects from unauthorized access!"
     }
   },
   {
@@ -9465,8 +9465,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "✂️",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Plágio: roubar a medalha de ouro de outra pessoa!",
-      "en": "Advanced Safety: Advanced Safety: Plágio: roubar a medalha de ouro de outra pessoa!"
+      "pt": "Segurança Avançada: Plágio: roubar a medalha de ouro de outra pessoa!",
+      "en": "Advanced Safety: Plágio: roubar a medalha de ouro de outra pessoa!"
     },
     "teaser": {
       "pt": "Fazer \"Copiar e Colar\" da Wikipédia e assinar com o teu nome é desonestidade académica.",
@@ -9540,8 +9540,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🛣️",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!",
-      "en": "Advanced Safety: Advanced Safety: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!"
+      "pt": "Segurança Avançada: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!",
+      "en": "Advanced Safety: A Motherboard (Placa-mãe) é a autoestrada que liga todos os órgãos do computador!"
     },
     "teaser": {
       "pt": "Como é que a placa gráfica fala com o processador e com o disco rígido?",
@@ -9615,8 +9615,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🌙",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \"",
-      "en": "Advanced Safety: Advanced Safety: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \""
+      "pt": "Segurança Avançada: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \"",
+      "en": "Advanced Safety: A Luz Azul do ecrã diz ao teu cérebro: \"Acorda, ainda é dia de praia! \""
     },
     "teaser": {
       "pt": "Porque deves desligar os ecrãs 30 a 60 minutos antes de dormir para acordares com energia?",
@@ -9690,8 +9690,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📞",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!",
-      "en": "Advanced Safety: Advanced Safety: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!"
+      "pt": "Segurança Avançada: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!",
+      "en": "Advanced Safety: Linha Internet Segura em Portugal: 800 21 90 90 (grátis e confidencial)!"
     },
     "teaser": {
       "pt": "Se algo correr mal online, existe uma equipa simpática pronta para te ajudar.",
@@ -9765,8 +9765,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🪥",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!",
-      "en": "Advanced Safety: Advanced Safety: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!"
+      "pt": "Segurança Avançada: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!",
+      "en": "Advanced Safety: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!"
     },
     "teaser": {
       "pt": "Nem ao melhor amigo da turma deves confiar a chave da tua vida digital.",
@@ -9840,8 +9840,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📢",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!",
-      "en": "Advanced Safety: Advanced Safety: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!"
+      "pt": "Segurança Avançada: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!",
+      "en": "Advanced Safety: Escrever em MAIÚSCULAS no email equivale a GRITAR aos berros!"
     },
     "teaser": {
       "pt": "Ao redigir mensagens para professores ou colegas, usa sempre letras maiúsculas e minúsculas normais.",
@@ -9915,8 +9915,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🔒",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!",
-      "en": "Advanced Safety: Advanced Safety: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!"
+      "pt": "Segurança Avançada: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!",
+      "en": "Advanced Safety: O \"S\" do HTTPS é a caixa-forte invisível que codifica os teus dados!"
     },
     "teaser": {
       "pt": "Nunca introduzas palavras-passe em páginas que comecem apenas por \"http://\" sem o \"s\".",
@@ -9990,8 +9990,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🤝",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Creative Commons: o convite amigável para partilhar criatividade com o mundo!",
-      "en": "Advanced Safety: Advanced Safety: Creative Commons: o convite amigável para partilhar criatividade com o mundo!"
+      "pt": "Segurança Avançada: Creative Commons: o convite amigável para partilhar criatividade com o mundo!",
+      "en": "Advanced Safety: Creative Commons: o convite amigável para partilhar criatividade com o mundo!"
     },
     "teaser": {
       "pt": "Conheces o símbolo com dois \"C\" (CC) que vês na Wikipédia, no Scratch e no YouTube?",
@@ -10065,8 +10065,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "0️⃣",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Tudo no computador são apenas ZEROS e UNS (0 e 1)!",
-      "en": "Advanced Safety: Advanced Safety: Tudo no computador são apenas ZEROS e UNS (0 e 1)!"
+      "pt": "Segurança Avançada: Tudo no computador são apenas ZEROS e UNS (0 e 1)!",
+      "en": "Advanced Safety: Tudo no computador são apenas ZEROS e UNS (0 e 1)!"
     },
     "teaser": {
       "pt": "Fotos, músicas, jogos 3D e vídeos do YouTube... como é que cabem em apenas dois números?",
@@ -10093,7 +10093,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "a",
         "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
       },
       {
         "id": "b",
@@ -10140,8 +10140,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🦒",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!",
-      "en": "Advanced Safety: Advanced Safety: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!"
+      "pt": "Segurança Avançada: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!",
+      "en": "Advanced Safety: O \"Pescoço de Texto\": carregar 27 kg na coluna vertebral!"
     },
     "teaser": {
       "pt": "Inclinar a cabeça para baixo sobre o telemóvel esforça o pescoço como carregar um saco de cimento.",
@@ -10215,8 +10215,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "💬",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!",
-      "en": "Advanced Safety: Advanced Safety: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!"
+      "pt": "Segurança Avançada: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!",
+      "en": "Advanced Safety: Netiqueta: gentileza e respeito nas mensagens e salas de aula virtuais!"
     },
     "teaser": {
       "pt": "Como ser um colega cinco estrelas em grupos de WhatsApp e fóruns da turma?",
@@ -10290,8 +10290,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📲",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!",
-      "en": "Advanced Safety: Advanced Safety: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!"
+      "pt": "Segurança Avançada: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!",
+      "en": "Advanced Safety: Autenticação em Dois Fatores (2FA): a fechadura dupla da tua porta digital!"
     },
     "teaser": {
       "pt": "Mesmo que alguém descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro.",
@@ -10366,55 +10366,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🌐",
     "title": {
       "pt": "Dia Mundial das Telecomunicações e Sociedade da Informação",
-      "en": "World Telecommunication & Information Society Day"
+      "en": "World Telecommunication and Information Society Day"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "A 17 de maio celebra-se a fundação da UIT e o papel das tecnologias no desenvolvimento humano.",
+      "en": "On May 17 we celebrate the ITU's founding and technology's role in human development."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Instituído pela ONU em memória da criação da União Internacional das Telecomunicações em 1865, este dia destaca como o telégrafo, o telefone, a rádio e a Internet transformaram a forma como a humanidade comunica e coopera.",
+      "en": "Established by the UN to commemorate the founding of the ITU in 1865, this day highlights how telegraphs, phones, radio, and the Internet transformed how humanity communicates and cooperates."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 1 de TIC estudamos o impacto das tecnologias da informação na sociedade e na redução de desigualdades.",
+      "en": "In ICT Topic 1 we study the impact of information technology on society and bridging divides."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "A UIT é a agência especializada das Nações Unidas mais antiga ainda em atividade no mundo!",
+      "en": "The ITU is the oldest specialized agency of the United Nations still in active service!"
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "O que comemora o Dia Mundial das Telecomunicações e da Sociedade da Informação?",
+      "en": "What does World Telecommunication and Information Society Day celebrate?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "A evolução dos meios de comunicação que ligam os povos e o acesso de todos às TIC.",
+        "en": "The evolution of communication linking peoples together and universal access to ICT."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "A obrigatoriedade de todas as pessoas falarem apenas por walkie-talkie durante 24 horas.",
+        "en": "The requirement that all people must communicate only via walkie-talkie for 24 hours."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "O fim das cartas postais e o encerramento definitivo de todas as escolas físicas.",
+        "en": "The complete ban on postal letters and permanent closure of physical schools."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "O lançamento de um foguetão espacial feito inteiramente de teclados velhos.",
+        "en": "The launch of an orbital rocket made entirely out of discarded computer keyboards."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "As telecomunicações permitem partilhar ciência, socorrer pessoas em emergências e ligar amigos pelo mundo fora!",
+      "en": "Telecommunications enable scientific sharing, disaster relief, and connecting people globally!"
     }
   },
   {
@@ -10440,8 +10440,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🕵️‍♀️",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!",
-      "en": "Advanced Safety: Advanced Safety: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!"
+      "pt": "Segurança Avançada: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!",
+      "en": "Advanced Safety: O Teste do Detetive das 3 Perguntas contra Notícias Falsas (Fake News)!"
     },
     "teaser": {
       "pt": "Nem tudo o que está na Internet é verdade! Qualquer pessoa pode publicar invenções.",
@@ -10515,8 +10515,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📚",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!",
-      "en": "Advanced Safety: Advanced Safety: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!"
+      "pt": "Segurança Avançada: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!",
+      "en": "Advanced Safety: Citar as fontes não é fraqueza: é a marca dos verdadeiros cientistas!"
     },
     "teaser": {
       "pt": "Indicar os livros e sites consultados valoriza o teu trabalho e dá-te notas melhores!",
@@ -10590,8 +10590,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🖨️",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Periféricos: a ponte mágica entre o ser humano e a máquina!",
-      "en": "Advanced Safety: Advanced Safety: Periféricos: a ponte mágica entre o ser humano e a máquina!"
+      "pt": "Segurança Avançada: Periféricos: a ponte mágica entre o ser humano e a máquina!",
+      "en": "Advanced Safety: Periféricos: a ponte mágica entre o ser humano e a máquina!"
     },
     "teaser": {
       "pt": "Sabes dizer se os teus auscultadores são de entrada ou de saída de informação?",
@@ -10665,8 +10665,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🎧",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!",
-      "en": "Advanced Safety: Advanced Safety: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!"
+      "pt": "Segurança Avançada: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!",
+      "en": "Advanced Safety: A Regra 60/60 para auscultadores: protege os teus ouvidos para a vida!"
     },
     "teaser": {
       "pt": "Ouvir música ou jogos aos berros nos fones pode causar danos irreversíveis na audição.",
@@ -10740,8 +10740,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📍",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!",
-      "en": "Advanced Safety: Advanced Safety: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!"
+      "pt": "Segurança Avançada: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!",
+      "en": "Advanced Safety: Cuidado com a Geolocalização: as tuas fotos contêm coordenadas secretas!"
     },
     "teaser": {
       "pt": "Sabias que as fotos do telemóvel podem guardar a latitude e longitude exatas de onde foram tiradas?",
@@ -10815,8 +10815,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🗄️",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!",
-      "en": "Advanced Safety: Advanced Safety: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!"
+      "pt": "Segurança Avançada: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!",
+      "en": "Advanced Safety: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!"
     },
     "teaser": {
       "pt": "Se um site de jogos sofrer uma fuga de informação, a tua conta de email também fica em risco.",
@@ -10890,8 +10890,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🎣",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!",
-      "en": "Advanced Safety: Advanced Safety: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!"
+      "pt": "Segurança Avançada: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!",
+      "en": "Advanced Safety: Phishing: o \"pescador\" digital que tenta roubar a tua palavra-passe!"
     },
     "teaser": {
       "pt": "\"A sua conta vai ser apagada em 24 horas! Clique aqui urgente! \" — É Phishing!",
@@ -10965,8 +10965,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🕷️",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!",
-      "en": "Advanced Safety: Advanced Safety: As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!"
+      "pt": "Segurança Avançada: As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!",
+      "en": "Advanced Safety: As \"Aranhas\" invisíveis da Internet que leem a rede enquanto dormes!"
     },
     "teaser": {
       "pt": "Como é que o motor de busca sabe o que existe em milhares de milhões de sites?",
@@ -11115,8 +11115,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🖱️",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: O primeiro rato do mundo foi feito de madeira com rodas de metal!",
-      "en": "Advanced Safety: Advanced Safety: O primeiro rato do mundo foi feito de madeira com rodas de metal!"
+      "pt": "Segurança Avançada: O primeiro rato do mundo foi feito de madeira com rodas de metal!",
+      "en": "Advanced Safety: O primeiro rato do mundo foi feito de madeira com rodas de metal!"
     },
     "teaser": {
       "pt": "Inventado em 1964 por Douglas Engelbart, tinha apenas um botão vermelho no topo.",
@@ -11190,8 +11190,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🎒",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: O peso da mochila não deve ultrapassar 10% do teu peso corporal!",
-      "en": "Advanced Safety: Advanced Safety: O peso da mochila não deve ultrapassar 10% do teu peso corporal!"
+      "pt": "Segurança Avançada: O peso da mochila não deve ultrapassar 10% do teu peso corporal!",
+      "en": "Advanced Safety: O peso da mochila não deve ultrapassar 10% do teu peso corporal!"
     },
     "teaser": {
       "pt": "Levar o computador portátil e cadernos pesados nas costas exige bons hábitos de organização.",
@@ -11266,55 +11266,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "📹",
     "title": {
       "pt": "Dica Prática: Tapa a webcam quando não estiveres em videochamada escolar!",
-      "en": "Practical Tip: Tapa a webcam quando não estiveres em videochamada escolar!"
+      "en": "Practical Tip: Cover your webcam when not in a school video call!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "Diferentes formas simples e caseiras de tapar a câmara com segurança.",
+      "en": "Simple, safe everyday methods to physically shield your computer camera."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Existem tampas deslizantes de plástico muito finas próprias para webcams, mas um pequeno pedaço de fita adesiva tipo 'washi tape' ou um post-it também funciona perfeitamente sem riscar a lente nem deixar cola difícil de limpar.",
+      "en": "Thin plastic sliding webcam covers exist, but a small piece of gentle washi tape or post-it also works without scratching the lens or leaving sticky glue."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 3 de TIC aprendemos precauções simples que reforçam a privacidade dos alunos em ambiente doméstico.",
+      "en": "In ICT Topic 3 we learn simple precautions that reinforce student privacy at home."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "Muitos computadores portáteis recentes já incluem uma pequena patilha física embutida no aro do ecrã!",
+      "en": "Many modern laptops now include a physical built-in privacy shutter right in the screen bezel!"
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Se não tiveres uma tampa própria para a webcam, que material caseiro podes usar sem danificar o ecrã?",
+      "en": "If you do not have a dedicated webcam cover, what household material can you use safely?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Um pequeno pedaço de papel ou fita suave removível que não deixe cola na lente.",
+        "en": "A small piece of paper or gentle removable tape that leaves no residue on the lens."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Cola quente e cimento de construção para tapar a câmara para sempre.",
+        "en": "Hot glue and building cement to block the lens permanently."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Pintar a lente com corretor branco líquido difícil de raspar.",
+        "en": "Paint the glass lens with white correction fluid that is hard to scrape off."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Bater com um martelo no topo do monitor para partir a câmara.",
+        "en": "Smash the top bezel with a hammer to break the camera module."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "Materiais suaves e fáceis de remover garantem proteção sem estragar o vidro da lente!",
+      "en": "Gentle removable materials provide security without harming delicate lens glass!"
     }
   },
   {
@@ -11340,8 +11340,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📝",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!",
-      "en": "Advanced Safety: Advanced Safety: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!"
+      "pt": "Segurança Avançada: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!",
+      "en": "Advanced Safety: O erro clássico: colar papéis com a palavra-passe no ecrã do computador!"
     },
     "teaser": {
       "pt": "Escrever a palavra-passe num post-it amarelo e colar no monitor é como deixar a chave na fechadura.",
@@ -11415,8 +11415,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🏷️",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Nunca envies um email com o campo \"Assunto\" vazio!",
-      "en": "Advanced Safety: Advanced Safety: Nunca envies um email com o campo \"Assunto\" vazio!"
+      "pt": "Segurança Avançada: Nunca envies um email com o campo \"Assunto\" vazio!",
+      "en": "Advanced Safety: Nunca envies um email com o campo \"Assunto\" vazio!"
     },
     "teaser": {
       "pt": "O Assunto deve resumir em poucas palavras o objetivo exato da mensagem.",
@@ -11490,8 +11490,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🍪",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!",
-      "en": "Advanced Safety: Advanced Safety: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!"
+      "pt": "Segurança Avançada: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!",
+      "en": "Advanced Safety: Cookies na Internet: não são bolachas de chocolate, são pequenas notas de texto!"
     },
     "teaser": {
       "pt": "Porque é que todos os sites perguntam se aceitas cookies?",
@@ -11565,8 +11565,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🎵",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Bancos de som e música livre para os teus vídeos e jogos no Scratch!",
-      "en": "Advanced Safety: Advanced Safety: Bancos de som e música livre para os teus vídeos e jogos no Scratch!"
+      "pt": "Segurança Avançada: Bancos de som e música livre para os teus vídeos e jogos no Scratch!",
+      "en": "Advanced Safety: Bancos de som e música livre para os teus vídeos e jogos no Scratch!"
     },
     "teaser": {
       "pt": "Usar músicas famosas da rádio no teu vídeo do YouTube pode fazer o vídeo ser bloqueado.",
@@ -11640,8 +11640,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🤖",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!",
-      "en": "Advanced Safety: Advanced Safety: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!"
+      "pt": "Segurança Avançada: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!",
+      "en": "Advanced Safety: Robôs em Marte: cientistas conduzem rovers a milhões de quilómetros da Terra!"
     },
     "teaser": {
       "pt": "Os robôs Curiosity e Perseverance usam computadores de bordo para analisar rochas em Marte.",
@@ -11683,7 +11683,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "d",
         "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
       }
     ],
     "correctOptionId": "c",
@@ -11715,8 +11715,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "💡",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!",
-      "en": "Advanced Safety: Advanced Safety: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!"
+      "pt": "Segurança Avançada: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!",
+      "en": "Advanced Safety: Evita reflexos no ecrã: a janela nunca deve ficar atrás de ti!"
     },
     "teaser": {
       "pt": "Como deves orientar a tua mesa de computador em relação à luz natural da janela?",
@@ -11790,8 +11790,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🎣",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!",
-      "en": "Advanced Safety: Advanced Safety: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!"
+      "pt": "Segurança Avançada: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!",
+      "en": "Advanced Safety: Cuidado com o Isco: ofertas de \"Moedas Grátis\" em jogos são quase sempre armadilhas!"
     },
     "teaser": {
       "pt": "\"Clica aqui para ganhares 10. 000 Robux ou V-Bucks de graça! \" — Desconfia sempre!",
@@ -11865,8 +11865,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🔒",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!",
-      "en": "Advanced Safety: Advanced Safety: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!"
+      "pt": "Segurança Avançada: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!",
+      "en": "Advanced Safety: Atalho ninja: Tecla Windows + L para bloquear o ecrã em 1 segundo!"
     },
     "teaser": {
       "pt": "Vais ao intervalo ou à casa de banho na sala de informática? Bloqueia a sessão!",
@@ -11940,8 +11940,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🗑️",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!",
-      "en": "Advanced Safety: Advanced Safety: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!"
+      "pt": "Segurança Avançada: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!",
+      "en": "Advanced Safety: A origem da palavra \"SPAM\": uma lata de carne temperada dos anos 70!"
     },
     "teaser": {
       "pt": "Mensagens publicitárias não solicitadas receberam o nome de uma comida enlatada!",
@@ -12015,8 +12015,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📑",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Atalhos de mestre no navegador: Control + T abre um novo separador!",
-      "en": "Advanced Safety: Advanced Safety: Atalhos de mestre no navegador: Control + T abre um novo separador!"
+      "pt": "Segurança Avançada: Atalhos de mestre no navegador: Control + T abre um novo separador!",
+      "en": "Advanced Safety: Atalhos de mestre no navegador: Control + T abre um novo separador!"
     },
     "teaser": {
       "pt": "Dominar o teclado faz-te navegar como um verdadeiro profissional de informática.",
@@ -12090,8 +12090,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🐧",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Software Livre: o código aberto onde todos podem aprender e colaborar!",
-      "en": "Advanced Safety: Advanced Safety: Software Livre: o código aberto onde todos podem aprender e colaborar!"
+      "pt": "Segurança Avançada: Software Livre: o código aberto onde todos podem aprender e colaborar!",
+      "en": "Advanced Safety: Software Livre: o código aberto onde todos podem aprender e colaborar!"
     },
     "teaser": {
       "pt": "Qual é a diferença entre programas comerciais fechados e aplicações como o Linux e o Scratch?",
@@ -12165,8 +12165,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "♻️",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!",
-      "en": "Advanced Safety: Advanced Safety: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!"
+      "pt": "Segurança Avançada: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!",
+      "en": "Advanced Safety: O Lixo Eletrónico (E-Waste): computadores velhos não vão para o lixo comum!"
     },
     "teaser": {
       "pt": "O que deves fazer quando um telemóvel, teclado ou comando de consola avaria de vez?",
@@ -12240,8 +12240,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🏃‍♂️",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!",
-      "en": "Advanced Safety: Advanced Safety: Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!"
+      "pt": "Segurança Avançada: Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!",
+      "en": "Advanced Safety: Alongamentos rápidos: estica os braços e roda os pulsos a cada hora!"
     },
     "teaser": {
       "pt": "Ficar sentado horas seguidas na mesma posição cansa o corpo mais do que pensas.",
@@ -12315,8 +12315,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📸",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!",
-      "en": "Advanced Safety: Advanced Safety: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!"
+      "pt": "Segurança Avançada: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!",
+      "en": "Advanced Safety: Pede sempre autorização antes de tirar ou partilhar fotos de amigos!"
     },
     "teaser": {
       "pt": "Cada pessoa é dona da sua própria imagem e tem o direito de não querer ser fotografada.",
@@ -12390,8 +12390,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "👁️",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade.",
-      "en": "Advanced Safety: Advanced Safety: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade."
+      "pt": "Segurança Avançada: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade.",
+      "en": "Advanced Safety: Impressão digital e reconhecimento facial: utilizar características do corpo para confirmar a identidade."
     },
     "teaser": {
       "pt": "A biometria utiliza características do corpo, como a impressão digital ou o rosto, para ajudar a confirmar a identidade de uma pessoa.",
@@ -12465,8 +12465,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "👥",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!",
-      "en": "Advanced Safety: Advanced Safety: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!"
+      "pt": "Segurança Avançada: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!",
+      "en": "Advanced Safety: Cuidado com o botão \"Responder a Todos\": não enchas a caixa dos colegas!"
     },
     "teaser": {
       "pt": "Se queres responder apenas à professora, clica em \"Responder\" e não em \"Responder a Todos\".",
@@ -12540,8 +12540,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🌐",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: O que significa . pt, . org, . edu e . gov no final dos sites?",
-      "en": "Advanced Safety: Advanced Safety: O que significa . pt, . org, . edu e . gov no final dos sites?"
+      "pt": "Segurança Avançada: O que significa . pt, . org, . edu e . gov no final dos sites?",
+      "en": "Advanced Safety: O que significa . pt, . org, . edu e . gov no final dos sites?"
     },
     "teaser": {
       "pt": "A terminação do endereço da página Web revela muito sobre quem a criou.",
@@ -12615,8 +12615,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "💬",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?",
-      "en": "Advanced Safety: Advanced Safety: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?"
+      "pt": "Segurança Avançada: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?",
+      "en": "Advanced Safety: Como citar uma frase de um livro no trabalho escolar sem cometer plágio?"
     },
     "teaser": {
       "pt": "Se copiares uma frase palavra por palavra, deves colocá-la entre aspas e dizer de quem é!",
@@ -12690,8 +12690,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🧠",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: A CPU, ou processador, é um dos principais componentes do computador. Executa instruções e ajuda o computador a realizar tarefas.",
-      "en": "Advanced Safety: Advanced Safety: A CPU, ou processador, é um dos principais componentes do computador. Executa instruções e ajuda o computador a realizar tarefas."
+      "pt": "Segurança Avançada: A CPU, ou processador, é um dos principais componentes do computador. Executa instruções e ajuda o computador a realizar tarefas.",
+      "en": "Advanced Safety: A CPU, ou processador, é um dos principais componentes do computador. Executa instruções e ajuda o computador a realizar tarefas."
     },
     "teaser": {
       "pt": "Sabias que o processador do teu computador consegue resolver contas mais depressa do que um raio?",
@@ -12765,8 +12765,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🪑",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Postura Confortável: a posição ideal para estudar ao computador!",
-      "en": "Advanced Safety: Advanced Safety: Postura Confortável: a posição ideal para estudar ao computador!"
+      "pt": "Segurança Avançada: Postura Confortável: a posição ideal para estudar ao computador!",
+      "en": "Advanced Safety: Postura Confortável: a posição ideal para estudar ao computador!"
     },
     "teaser": {
       "pt": "Sabias que os cotovelos e joelhos devem ficar, aproximadamente, num ângulo de 90°, numa posição confortável?",
@@ -12915,8 +12915,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "⚡",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: 123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar.",
-      "en": "Advanced Safety: Advanced Safety: 123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar."
+      "pt": "Segurança Avançada: 123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar.",
+      "en": "Advanced Safety: 123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar."
     },
     "teaser": {
       "pt": "Inacreditavelmente, continua a ser uma das palavras-passe mais usadas no planeta!",
@@ -13141,55 +13141,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🧠",
     "title": {
       "pt": "Aniversário de Alan Turing: O Pai da Inteligência Artificial!",
-      "en": "Alan Turing's Birthday: Father of Artificial Intelligence!"
+      "en": "Alan Turing's Birthday: The Father of Modern Computing!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "A 23 de junho de 1912 nasceu um dos maiores génios da história dos computadores.",
+      "en": "On June 23, 1912, one of computing history's greatest minds was born."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Alan Turing foi o pioneiro que formalizou o conceito de algoritmo e máquina universal de computação. Durante a Segunda Guerra Mundial, criou máquinas eletromecânicas que decifravam mensagens secretas e propôs o famoso 'Teste de Turing' para avaliar a inteligência das máquinas.",
+      "en": "Alan Turing formalized algorithms and the concept of universal computing machines. During WWII, he developed machines that broke enemy ciphers and later proposed the 'Turing Test' for machine intelligence."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 1 de TIC compreendemos as bases teóricas do hardware, do software e da lógica de programação.",
+      "en": "In ICT Topic 1 we understand the theoretical foundations of hardware, software, and logic."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "O 'Prémio Turing' é considerado o equivalente ao Prémio Nobel da Informática!",
+      "en": "The 'Turing Award' is widely considered the Nobel Prize of Computer Science!"
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Pelo que é Alan Turing mundialmente reconhecido na história das TIC?",
+      "en": "What is Alan Turing world-renowned for in the history of ICT?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Por criar os fundamentos teóricos da computação moderna e da Inteligência Artificial.",
+        "en": "For creating the theoretical foundations of modern computing and Artificial Intelligence."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Por ter inventado o comando da televisão sem fios nos anos 90.",
+        "en": "For inventing the wireless television remote control in the 1990s."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Por desenhar o logótipo da primeira consola de videojogos a cores.",
+        "en": "For sketching the logo of the first color home videogame console."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Por descobrir as ondas de rádio enquanto passeava de bicicleta no parque.",
+        "en": "For discovering radio waves while riding a bicycle through the park."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "A sua 'Máquina de Turing' provou matematicamente o que os computadores são capazes de calcular!",
+      "en": "His 'Turing Machine' mathematically demonstrated what computers are fundamentally able to compute!"
     }
   },
   {
@@ -13290,56 +13290,56 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "👀",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: A Regra 20-20-20: o descanso favorito dos teus olhos!",
-      "en": "Advanced Safety: Advanced Safety: A Regra 20-20-20: o descanso favorito dos teus olhos!"
+      "pt": "Segurança Avançada: A Regra 20-20-20: o descanso favorito dos teus olhos!",
+      "en": "Advanced Safety: The 20-20-20 Rule: your eyes' favorite screen break!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "Como a iluminação e as pausas evitam a fadiga visual crónica em sessões longas.",
+      "en": "How lighting and planned micro-breaks prevent chronic visual fatigue in long sessions."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Aliada à regra 20-20-20, uma boa iluminação ambiente (luz indireta que não crie reflexos nem encadeamento) reduz o esforço que a pupila faz para se ajustar ao brilho do ecrã, protegendo a tua saúde ocular a longo prazo.",
+      "en": "Paired with the 20-20-20 rule, balanced ambient lighting (indirect light without glare or reflections) minimizes pupil strain adapting to screen brightness, protecting long-term eyesight."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 2 de TIC aprendemos que cuidar da iluminação e da postura protege o bem-estar durante o estudo.",
+      "en": "In ICT Topic 2 we learn that adjusting lighting and posture protects wellness while studying."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "Ajustar a temperatura de cor do ecrã para tons mais quentes à noite reduz a supressão de melatonina!",
+      "en": "Tuning your screen to warmer color tones in the evening reduces sleep melatonin disruption!"
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Como deves posicionar a luz da tua sala em relação ao ecrã para evitar cansaço ocular?",
+      "en": "How should you position room lighting relative to your computer screen to avoid eye fatigue?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Usar iluminação suave e difusa, sem fontes de luz direta a brilhar diretamente no ecrã.",
+        "en": "Use gentle, diffused lighting, avoiding direct light sources glaring onto the screen."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Apontar um projetor de luz de estádio de futebol diretamente para os teus olhos.",
+        "en": "Point a stadium floodlight directly into your face and eyes."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Estudar num quarto completamente escuro com o monitor em brilho máximo.",
+        "en": "Study in a pitch-black room with your monitor turned up to maximum brightness."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Colocar o ecrã virado de costas para uma parede preta sem nenhuma lâmpada por perto.",
+        "en": "Position the monitor against a black wall without any lamps nearby."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "Evitar reflexos e encandeamentos no ecrã protege a visão e evita que tenhas de franzir a testa!",
+      "en": "Eliminating screen reflections and harsh glare shields eyesight and stops you squinting!"
     }
   },
   {
@@ -13590,8 +13590,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🔍",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!",
-      "en": "Advanced Safety: Advanced Safety: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!"
+      "pt": "Segurança Avançada: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!",
+      "en": "Advanced Safety: Pesquisa como um detetive: o truque mágico das aspas \"\" no motor de busca!"
     },
     "teaser": {
       "pt": "Sabias que podes obrigar o motor de busca a encontrar exatamente a frase que queres?",
@@ -14293,7 +14293,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "a",
         "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
       },
       {
         "id": "b",
@@ -14565,8 +14565,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📎",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!",
-      "en": "Advanced Safety: Advanced Safety: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!"
+      "pt": "Segurança Avançada: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!",
+      "en": "Advanced Safety: Cuidado com os anexos: nunca abras ficheiros com extensões suspeitas!"
     },
     "teaser": {
       "pt": "Ficheiros como . exe, . bat, . vbs ou ficheiros . zip desconhecidos podem esconder vírus perigosos.",
@@ -15166,55 +15166,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🚀",
     "title": {
       "pt": "O computador da Apollo 11 na Lua tinha menos memória que o teu relógio!",
-      "en": "The Apollo 11 moon landing computer had less memory than your watch!"
+      "en": "The Apollo 11 Moon Computer had less memory than your wristwatch!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "A 20 de julho de 1969, astronautas pousaram na Lua guiados por um computador pioneiro.",
+      "en": "On July 20, 1969, astronauts landed on the Moon guided by a pioneering computer."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "O Apollo Guidance Computer (AGC) tinha apenas cerca de 4 KB de memória RAM e 72 KB de ROM. Toda a programação foi cosida à mão em fios de cobre magnéticos por operárias experientes, conhecida como 'memória de corda'!",
+      "en": "The Apollo Guidance Computer (AGC) carried just ~4 KB of RAM and 72 KB of ROM. Its code was hand-woven with copper wire through magnetic cores by expert craftswomen, known as 'core rope memory'!"
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 1 de TIC estudamos a incrível evolução da capacidade de memória e miniaturização do hardware.",
+      "en": "In ICT Topic 1 we study the incredible evolution of memory capacity and hardware miniaturization."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "Um smartwatch simples de hoje tem centenas de milhares de vezes mais memória que a nave Apollo 11!",
+      "en": "A simple modern smartwatch has hundreds of thousands of times more memory than Apollo 11!"
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Quanta memória RAM tinha aproximadamente o computador que guiou o pouso do ser humano na Lua?",
+      "en": "About how much RAM did the guidance computer have that landed astronauts on the Moon in 1969?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Cerca de 4 Kilobytes (milhões de vezes menos do que um telemóvel comum hoje).",
+        "en": "Around 4 Kilobytes (millions of times less than an average smartphone today)."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "500 Terabytes de discos SSD ultrarrápidos com luzes coloridas.",
+        "en": "500 Terabytes of blazing fast SSD drives with colorful RGB lights."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Zero memória, porque os computadores na época funcionavam com motores a vapor.",
+        "en": "Zero memory, because computers back then operated on steam engines."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "16 Gigabytes de memória RAM DDR5 com refrigeração líquida espacial.",
+        "en": "16 Gigabytes of high-end DDR5 RAM with liquid space cooling."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "Foi o código brilhante liderado por Margaret Hamilton que garantiu o pouso seguro da missão!",
+      "en": "It was the brilliant software led by Margaret Hamilton that prioritized vital tasks for a safe lunar landing!"
     }
   },
   {
@@ -15240,8 +15240,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "🏛️",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: O que é o Domínio Público? O tesouro cultural que pertence a toda a humanidade!",
-      "en": "Advanced Safety: Advanced Safety: O que é o Domínio Público? O tesouro cultural que pertence a toda a humanidade!"
+      "pt": "Segurança Avançada: O que é o Domínio Público? O tesouro cultural que pertence a toda a humanidade!",
+      "en": "Advanced Safety: O que é o Domínio Público? O tesouro cultural que pertence a toda a humanidade!"
     },
     "teaser": {
       "pt": "Sabias que podes usar quadros de Leonardo da Vinci e músicas de Mozart sem pedir licença?",
@@ -15465,56 +15465,56 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "📹",
     "title": {
-      "pt": "Segurança Avançada: Segurança Avançada: Tapa a webcam quando não estiveres em videochamada escolar!",
-      "en": "Advanced Safety: Advanced Safety: Tapa a webcam quando não estiveres em videochamada escolar!"
+      "pt": "Segurança Avançada: Tapa a webcam quando não estiveres em videochamada escolar!",
+      "en": "Advanced Safety: Cover your webcam when not in a school video call!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "Verifica as permissões do navegador para além de usares uma barreira física.",
+      "en": "Check browser and operating system permissions in addition to physical covers."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Para além de cobrires a lente, é boa prática aceder às definições de privacidade do teu navegador (Edge, Chrome, Firefox) e verificar que sites têm permissão para aceder à câmara e ao microfone, removendo sites que já não uses.",
+      "en": "In addition to covering the lens, it is best practice to review your browser privacy settings (Chrome, Edge, Firefox) and revoke camera and microphone permissions for websites you no longer use."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 3 de TIC aprendemos a gerir permissões de privacidade no sistema operativo e na web.",
+      "en": "In ICT Topic 3 we learn to audit system and web browser privacy permissions."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "No navegador, podes clicar no ícone de cadeado ou controlos ao lado do endereço web para ver permissões ativas!",
+      "en": "In your browser, click the site info icon right next to the URL address to see active permissions!"
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Onde podes verificar quais os sites que têm autorização para usar a câmara do teu computador?",
+      "en": "Where can you inspect which websites currently have permission to use your camera?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Nas definições de Privacidade e Segurança do navegador de Internet.",
+        "en": "In the browser's Privacy and Security settings under Site Permissions."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Escrevendo uma carta em papel para o fabricante do monitor do computador.",
+        "en": "By writing a paper letter to the monitor manufacturer."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Procurando numa caixa de sapatos debaixo da cama onde guardas cadernos.",
+        "en": "By checking inside a shoebox under your bed where you store notebooks."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Desligando a ficha da eletricidade de toda a casa durante três dias.",
+        "en": "By shutting off the electrical breaker for your whole home for three days."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "Controlar permissões no navegador impede que sites usem recursos multimédia sem tu saberes!",
+      "en": "Managing browser permissions keeps unauthorized websites from tapping media hardware silently!"
     }
   },
   {
@@ -15883,7 +15883,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "d",
         "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
       }
     ],
     "correctOptionId": "c",
@@ -16441,55 +16441,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🌐",
     "title": {
       "pt": "Abertura da World Wide Web ao mundo inteiro!",
-      "en": "The World Wide Web opens to the whole world!"
+      "en": "Opening of the World Wide Web to the entire world!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "Em agosto de 1991, Tim Berners-Lee anunciou a Web como um projeto público e livre.",
+      "en": "In August 1991, Tim Berners-Lee announced the Web as a free, open public project."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Trabalhando no laboratório CERN na Suíça, Tim Berners-Lee inventou as páginas web com hiperligações (HTML, HTTP e URL). Em agosto de 1991, disponibilizou o código publicamente para que todo o planeta pudesse aceder e partilhar conhecimento sem pagar direitos.",
+      "en": "Working at CERN in Switzerland, Tim Berners-Lee invented web pages with hyperlinks (HTML, HTTP, URL). In August 1991, he published the project openly so humanity could share knowledge freely without royalties."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 6 de TIC estudamos a distinção entre a Internet (rede global de cabos e routers) e a Web (páginas e sites).",
+      "en": "In ICT Topic 6 we learn the difference between the Internet (cables/routers) and the Web (pages/sites)."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "O primeiro website da história ainda está online no endereço info.cern.ch!",
+      "en": "The very first website in human history is still online at info.cern.ch!"
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Qual é a diferença fundamental entre a 'Internet' e a 'World Wide Web'?",
+      "en": "What is the fundamental difference between the 'Internet' and the 'World Wide Web'?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "A Internet é a infraestrutura física de redes; a Web é o serviço de páginas com hiperligações.",
+        "en": "The Internet is the network infrastructure; the Web is the system of linked web pages."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "A Internet só funciona em telemóveis e a Web só existe em televisões velhas.",
+        "en": "The Internet only runs on phones while the Web only exists on antique televisions."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "São duas palavras para exatamente a mesma coisa sem nenhuma diferença técnica.",
+        "en": "They are two names for identical things with no technical distinction whatsoever."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "A Web foi inventada no século XIX por cientistas que usavam telégrafos de corda.",
+        "en": "The Web was invented in the 19th century by scientists using mechanical pull-string telegraphs."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "A Internet é a autoestrada mundial; a Web é um dos veículos mais populares que circula nela!",
+      "en": "The Internet is the global highway system; the Web is one of the most popular vehicles traveling on it!"
     }
   },
   {
@@ -17491,55 +17491,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "👀",
     "title": {
       "pt": "Evolução Histórica: A Regra 20-20-20: o descanso favorito dos teus olhos!",
-      "en": "Historical Evolution: A Regra 20-20-20: o descanso favorito dos teus olhos!"
+      "en": "Historical Evolution: The 20-20-20 Rule: your eyes' favorite screen break!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "Como a medicina preventiva acompanhou o surgimento dos primeiros ecrãs de computador.",
+      "en": "How preventive medicine evolved alongside the emergence of early computer displays."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "A regra foi popularizada pelo optometrista Dr. Jeffrey Anshel no início dos anos 90, quando os monitores CRT pesados começaram a invadir os escritórios e escolas, provocando queixas generalizadas de olhos secos e visão turva.",
+      "en": "The rule was coined by optometrist Dr. Jeffrey Anshel in the early 1990s as bulky CRT monitors entered offices and classrooms, causing widespread complaints of dry eyes and blurry vision."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 2 de TIC aprendemos que a evolução tecnológica deve ser sempre acompanhada de cuidados de saúde.",
+      "en": "In ICT Topic 2 we learn that technological progress must always be paired with health care."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "Os antigos monitores CRT piscavam dezenas de vezes por segundo, cansando a vista muito mais depressa!",
+      "en": "Older CRT monitors flickered dozens of times per second, tiring eyes much faster than modern LCDs!"
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Porque se tornou tão urgente criar regras de ergonomia visual com a chegada dos computadores?",
+      "en": "Why did creating visual ergonomics rules become so urgent when desktop computers spread?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Porque olhar fixamente para ecrãs brilhantes a curta distância reduz o pestanejar e cansa os olhos.",
+        "en": "Because staring at bright screens close up reduces blinking and exhausts eye muscles."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Porque os ecrãs antigos explodiam se alguém olhasse para eles durante mais de 10 minutos.",
+        "en": "Because old monitors exploded if anyone looked at them for longer than 10 minutes."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Porque os computadores nos anos 90 não tinham eletricidade e precisavam de velas.",
+        "en": "Because 1990s computers had no electricity and were illuminated by candles."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Para obrigar todos os estudantes a usar óculos de sol dentro da sala de aula.",
+        "en": "To force all students to wear dark sunglasses inside classroom lessons."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "A investigação científica provou que pausas frequentes protegem a saúde dos olhos e melhoram o rendimento!",
+      "en": "Scientific research proved that frequent micro-breaks protect eye health and boost focus!"
     }
   },
   {
@@ -18493,7 +18493,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "a",
         "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
       },
       {
         "id": "b",
@@ -18991,55 +18991,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🐛",
     "title": {
       "pt": "O Primeiro \"Bug\" da História da Computação: uma traça de verdade!",
-      "en": "The First \"Bug\" in Computer History: a real live moth!"
+      "en": "The First \"Bug\" in Computer History: a real moth!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "A 9 de setembro de 1947, cientistas descobriram um inseto real a bloquear um computador.",
+      "en": "On September 9, 1947, scientists found an actual insect jamming a computer relay."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "No laboratório da Universidade de Harvard, a equipa da pioneira Grace Hopper investigava uma falha no enorme computador Mark II. Ao inspecionarem os relés, encontraram uma traça presa. Retiraram-na com uma pinça e colaram-na no diário de bordo com a nota: 'Primeiro caso real de bug encontrado'!",
+      "en": "At Harvard University, pioneer Grace Hopper's team investigated a glitch in the massive Mark II computer. In a relay, they found an actual moth trapped. They taped it into their logbook: 'First actual case of bug being found'!"
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 1 de TIC aprendemos que depurar (fazer 'debugging') significa encontrar e corrigir erros no software.",
+      "en": "In ICT Topic 1 we learn that 'debugging' means tracking down and resolving software errors."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "O caderno original com a traça verdadeira colada com fita-cola está preservado no museu Smithsonian!",
+      "en": "The original logbook page with the real moth taped to it is preserved at the Smithsonian Museum!"
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "O que deu origem à expressão famosa 'Bug' e 'Debugging' na programação e informática?",
+      "en": "What gave rise to the famous terms 'Bug' and 'Debugging' in programming and computer science?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Uma traça real que ficou presa num relé eletromecânico do computador Mark II em 1947.",
+        "en": "An actual moth that got trapped in an electromechanical relay of the Mark II computer in 1947."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Um vírus digital que desenhava formigas a andar pelo ecrã do monitor.",
+        "en": "A digital virus that animated ants crawling all over the monitor screen."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Um jogo de computador onde o herói era um escaravelho que comia cabos de rede.",
+        "en": "A video game where the main hero was a beetle that chewed through network cables."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Uma marca famosa de ratos de computador em formato de joaninha colorida.",
+        "en": "A popular brand of computer mice shaped like a colorful ladybug."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "Hoje usamos a palavra 'bug' para qualquer erro num programa e 'debug' para o corrigir!",
+      "en": "Today we use 'bug' for any code defect and 'debugging' for the problem-solving art of fixing it!"
     }
   },
   {
@@ -19215,56 +19215,56 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "icon": "💻",
     "title": {
-      "pt": "Dia Internacional do Programador (O 256. º dia do ano! )",
-      "en": "International Programmers' Day (The 256th day of the year! )"
+      "pt": "Dia Internacional do Programador (O 256. º dia do ano!)",
+      "en": "International Programmers' Day (The 256th Day of the Year!)"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "Celebrado no 256.º dia do ano (13 de setembro, ou 12 em anos bissextos) em honra dos criadores de código.",
+      "en": "Celebrated on the 256th day of the year (Sept 13, or Sept 12 in leap years) honoring coders."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Porque o dia 256? Porque 256 é 2 elevado à 8.ª potência (2^8), que é exatamente a quantidade de valores distintos que podem ser representados num único Byte de 8 bits (de 0 a 255). É o número mágico fundamental da computação!",
+      "en": "Why day 256? Because 256 equals 2 to the 8th power (2^8), the exact number of distinct values representable in an 8-bit Byte (0 to 255). It is the quintessential magic number of digital science!"
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 1 de TIC compreendemos como a arquitetura de bits e bytes constrói tudo o que vemos nos ecrãs.",
+      "en": "In ICT Topic 1 we understand how bit and byte architecture underpins everything on our screens."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "As cores nos ecrãs têm valores de Vermelho, Verde e Azul que variam precisamente entre 0 e 255 (256 valores)!",
+      "en": "RGB digital screen colors have values for Red, Green, and Blue ranging exactly from 0 to 255 (256 shades)!"
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Porque é que o Dia Internacional do Programador se celebra precisamente no 256.º dia do ano?",
+      "en": "Why is International Programmers' Day celebrated specifically on the 256th day of the year?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Porque 256 é o número de valores distintos que podem ser guardados num byte (2^8).",
+        "en": "Because 256 is the number of distinct values that can be stored in a single byte (2^8)."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Porque o primeiro programa de computador demorou 256 anos a ser escrito.",
+        "en": "Because the first computer software program took 256 years to be written."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Porque um teclado de computador profissional tem exatamente 256 teclas de plástico.",
+        "en": "Because a professional computer keyboard has exactly 256 physical plastic keys."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Porque existem 256 linguagens de programação no mundo e nenhuma mais.",
+        "en": "Because there are 256 programming languages in the world and none more."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "O número 256 é a assinatura matemática dos computadores binários modernos!",
+      "en": "The number 256 is the quintessential mathematical fingerprint of modern binary computers!"
     }
   },
   {
@@ -19666,55 +19666,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "📹",
     "title": {
       "pt": "Evolução Histórica: Tapa a webcam quando não estiveres em videochamada escolar!",
-      "en": "Historical Evolution: Tapa a webcam quando não estiveres em videochamada escolar!"
+      "en": "Historical Evolution: Cover your webcam when not in a school video call!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "A primeira webcam do mundo foi inventada para vigiar... uma cafeteira de café!",
+      "en": "The world's very first webcam was invented to watch... a coffee pot!"
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Em 1991, na Universidade de Cambridge, investigadores criaram a primeira câmara ligada à rede para saber se a cafeteira da sala de descanso tinha café antes de descerem as escadas. Hoje, as câmaras estão em todo o lado e a privacidade tornou-se um direito fundamental!",
+      "en": "In 1991 at Cambridge University, researchers rigged the first network camera to check if the Trojan Room coffee pot was full before walking downstairs. Today cameras are everywhere, making privacy a vital fundamental right!"
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 3 de TIC compreendemos a evolução dos dispositivos multimédia e o imperativo de proteger a vida privada.",
+      "en": "In ICT Topic 3 we study the evolution of multimedia devices and the imperative to protect personal privacy."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "A câmara da cafeteira transmitia imagens a preto e branco de 128x128 píxeis a 1 fotograma por segundo!",
+      "en": "The original coffee pot camera streamed tiny 128x128 greyscale images at just one frame per second!"
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Para que servia curiosamente a primeira webcam ligada a uma rede de computadores em 1991?",
+      "en": "What was the curious purpose of the first computer webcam connected to a local network in 1991?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Vigiar se uma cafeteira tinha café acabado de fazer para os cientistas não perderem a viagem.",
+        "en": "Watching whether a break-room coffee pot was full so researchers wouldn't waste a trip."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Transmitir jogos de futebol da Liga dos Campeões para o mundo inteiro.",
+        "en": "Broadcasting Champions League soccer matches live to the whole world."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Escanear os trabalhos de casa dos alunos da primária automaticamente.",
+        "en": "Scanning elementary students' homework sheets automatically."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Fazer videochamadas com astronautas que estavam na Estação Espacial.",
+        "en": "Holding video conference calls with astronauts orbiting on the Space Station."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "Começou como uma brincadeira útil para poupar passos a cientistas sedentos de café!",
+      "en": "It started as a clever hack to save steps for coffee-loving computer lab researchers!"
     }
   },
   {
@@ -20083,7 +20083,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "d",
         "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
       }
     ],
     "correctOptionId": "c",
@@ -21319,52 +21319,52 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "Ada Lovelace Day: The World's First Computer Programmer!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "Celebrado na 2.ª terça-feira de outubro, homenageia a mulher que previu o futuro dos computadores.",
+      "en": "Celebrated on the 2nd Tuesday of October, honoring the woman who envisioned computer software."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Em 1843, a matemática Ada Lovelace percebeu que a Máquina Analítica de Babbage podia fazer mais do que simples contas matemáticas: podia processar símbolos, compor música e seguir instruções lógicas complexas. Escreveu o primeiro algoritmo da história!",
+      "en": "In 1843, mathematician Ada Lovelace realized Babbage's Analytical Engine could do far more than calculate numbers: it could manipulate symbols, compose music, and follow logic. She published history's first algorithm!"
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 1 de TIC aprendemos sobre o papel pioneiro e essencial das mulheres na ciência da computação.",
+      "en": "In ICT Topic 1 we learn about the foundational and pioneering role of women in computer science."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "A linguagem de programação 'Ada', criada pelo Departamento de Defesa dos EUA, foi batizada em sua honra!",
+      "en": "The high-reliability programming language 'Ada', created by the US DoD, was named in her honor!"
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "O que realizou Ada Lovelace em 1843 que lhe valeu o título de primeira programadora do mundo?",
+      "en": "What did Ada Lovelace accomplish in 1843 that earned her the title of first computer programmer?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Escreveu o primeiro algoritmo concebido para ser executado por uma máquina computacional.",
+        "en": "Wrote the first algorithm specifically designed to be carried out by a computing machine."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Construiu a primeira consola portátil de videojogos a pilhas.",
+        "en": "Built the first handheld battery-powered video game console."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Inventou o rato de computador ótico com sensor de laser vermelho.",
+        "en": "Invented the optical computer mouse with a red laser sensor."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Criou o primeiro motor de busca da Internet usando cabos submarinos.",
+        "en": "Created the first internet search engine using undersea cables."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "Ada Lovelace compreendeu que os computadores seriam ferramentas de criatividade humana além do cálculo!",
+      "en": "Ada Lovelace foresaw that computers would become instruments of human creativity beyond pure math!"
     }
   },
   {
@@ -21691,55 +21691,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "👀",
     "title": {
       "pt": "Desafio Escolar: A Regra 20-20-20: o descanso favorito dos teus olhos!",
-      "en": "School Challenge: A Regra 20-20-20: o descanso favorito dos teus olhos!"
+      "en": "School Challenge: The 20-20-20 Rule: your eyes' favorite screen break!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "Desafia os teus colegas a fazer pausas visuais conjuntas na sala de informática.",
+      "en": "Challenge your classmates to take synchronized visual breaks in the ICT lab."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Nas aulas de TIC, combina com o teu professor e colegas: a meio da aula prática, quando o relógio marcar 20 minutos, toda a turma para, pousa o rato, olha para a janela ou para o fundo da sala e pestaneja várias vezes durante 20 segundos.",
+      "en": "In ICT class, agree with your teacher and peers: halfway through practical lab work, when 20 minutes pass, everyone pauses, puts down their mice, looks across the room or out the window, and blinks gently for 20 seconds."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 2 de TIC aprendemos a cultivar hábitos de trabalho colaborativos e saudáveis em comunidade escolar.",
+      "en": "In ICT Topic 2 we practice collaborative healthy digital habits in our school community."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "Pestanejar várias vezes durante a pausa estimula a produção de lágrimas naturais que hidratam a córnea!",
+      "en": "Blinking rhythmically during your break stimulates natural tear production to hydrate the cornea!"
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Qual é o benefício de fazer a pausa visual da regra 20-20-20 em conjunto na sala de informática?",
+      "en": "What is the benefit of practicing the 20-20-20 visual break together in the computer lab?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Permite que toda a turma descanse os olhos e volte ao trabalho com mais foco e energia.",
+        "en": "Allows the whole class to refresh their eyes and return to work with higher focus and energy."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Serve para os alunos começarem a atirar aviões de papel para o quadro.",
+        "en": "Gives students an excuse to throw paper airplanes at the whiteboard."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Serve para desligar o disjuntor principal da escola às escondidas.",
+        "en": "Serves to secretly flip the main school power breaker."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Faz com que o teste de avaliação desapareça milagrosamente da pasta partilhada.",
+        "en": "Miraculously makes the upcoming test quiz disappear from the shared drive."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "A saúde ocular e a postura corporal são responsabilidades partilhadas por todos na sala de aula!",
+      "en": "Eye wellness and ergonomic posture are shared habits that keep the entire learning environment healthy!"
     }
   },
   {
@@ -22693,7 +22693,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "a",
         "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
       },
       {
         "id": "b",
@@ -22741,55 +22741,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🔌",
     "title": {
       "pt": "O Nascimento da Internet: a primeira mensagem \"LO\"!",
-      "en": "The Birth of the Internet: the very first message \"LO\"!"
+      "en": "The Birth of the Internet: the first message \"LO\"!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "A 29 de outubro de 1969, dois computadores comunicaram pela primeira vez através da ARPANET.",
+      "en": "On October 29, 1969, two computers spoke to each other across ARPANET for the first time."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Investigadores da UCLA tentavam enviar a palavra 'LOGIN' para um computador em Stanford a centenas de quilómetros. Conseguiram transmitir as letras 'L' e 'O', mas o sistema foi abaixo antes do 'G'! Essa mensagem parcial 'LO' marcou a certidão de nascimento da Internet.",
+      "en": "Researchers at UCLA attempted to send the word 'LOGIN' to a computer at Stanford hundreds of miles away. They typed 'L' and 'O', but the system crashed before the 'G'! That partial message 'LO' became the birth cry of the Internet."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 1 de TIC estudamos a transição dos computadores isolados para redes globais de partilha.",
+      "en": "In ICT Topic 1 we study the transition from standalone computers to global sharing networks."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "A palavra 'LO' em inglês soa como 'Lo and behold!' (uma expressão que significa 'Eis que surge algo espantoso!')",
+      "en": "In English 'LO' sounds like 'Lo and behold!' which serendipitously means 'look at this wonderful marvel!'"
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Qual foi a primeira mensagem alguma vez transmitida entre computadores na antecessora da Internet em 1969?",
+      "en": "What was the very first message transmitted between computers on the precursor of the Internet in 1969?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "As letras 'LO' (o sistema bloqueou antes de conseguirem escrever 'LOGIN').",
+        "en": "The letters 'LO' (the system crashed before they could finish typing 'LOGIN')."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Um meme animado de um gato a dançar com óculos de sol.",
+        "en": "An animated GIF meme of a cat dancing while wearing sunglasses."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "A enciclopédia inteira em ficheiro PDF de 500 Megabytes.",
+        "en": "An entire encyclopedia as a 500 Megabyte PDF document."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Uma receita de bolo de chocolate enviada por correio expresso.",
+        "en": "A chocolate cake recipe sent by overnight express courier."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "Uma hora depois o erro foi corrigido e a palavra 'LOGIN' completa chegou ao destino com sucesso!",
+      "en": "An hour later the bug was patched and the full word 'LOGIN' made its historical journey across the wire!"
     }
   },
   {
@@ -23866,55 +23866,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "📹",
     "title": {
       "pt": "Desafio Escolar: Tapa a webcam quando não estiveres em videochamada escolar!",
-      "en": "School Challenge: Tapa a webcam quando não estiveres em videochamada escolar!"
+      "en": "School Challenge: Cover your webcam when not in a school video call!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "Cria com a tua turma um código de boas práticas para as aulas à distância.",
+      "en": "Work with your class to establish best practice guidelines for remote video sessions."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Nas aulas online, lembra-te do protocolo de cidadania digital: liga a câmara quando solicitado para participação, mas usa um fundo desfocado ou neutro para proteger a privacidade da tua casa. No final da aula, desliga a sessão e tapa a lente!",
+      "en": "In online sessions, remember digital citizenship protocol: turn on video when required for participation, but use a blurred or neutral backdrop to shield family intimacy. When class ends, exit the call and cover the lens!"
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 3 de TIC aprendemos regras de etiqueta, segurança e salvaguarda do ambiente familiar.",
+      "en": "In ICT Topic 3 we learn etiquette, security, and safeguarding home environments during remote learning."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "Usar fundos virtuais desfocados no Teams ou Zoom esconde fotografias familiares ou portas abertas!",
+      "en": "Using blurred virtual backgrounds in Teams or Zoom prevents background home details from being broadcast!"
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Que recurso dos programas de videochamada podes ativar para proteger o que se passa atrás de ti em casa?",
+      "en": "What video call feature can you enable to protect personal background details in your home?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "O efeito de fundo desfocado (blur) ou uma imagem de fundo neutra escolar.",
+        "en": "The background blur effect or a neutral virtual school classroom backdrop."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "O filtro de voz de monstro das cavernas para falar com o professor.",
+        "en": "The cavern monster voice distortion filter when speaking to your teacher."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Transmitir música aos berros com o microfone encostado a uma buzina de ar comprimido.",
+        "en": "Broadcast loud music with your microphone pressed against an air horn."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Desligar o monitor do computador sem desligar a chamada e ir brincar para o quintal.",
+        "en": "Turn off your monitor without hanging up the call and head to the backyard."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "Desfocar o fundo preserva a privacidade da tua família enquanto participas ativamente na aula!",
+      "en": "Blurring your background preserves family privacy while allowing active school participation!"
     }
   },
   {
@@ -24283,7 +24283,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "d",
         "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
       }
     ],
     "correctOptionId": "c",
@@ -25141,55 +25141,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🛡️",
     "title": {
       "pt": "Dia Internacional da Segurança da Informação",
-      "en": "Computer Security Day"
+      "en": "International Computer Security Day"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "A 30 de novembro recordamos a importância vital de proteger sistemas e dados pessoais.",
+      "en": "On November 30 we recognize the vital importance of protecting systems and personal data."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Criado em 1988 pela Association for Computing Machinery após a proliferação do vírus pioneiro 'Morris Worm', este dia apela a que todos façam uma auditoria aos seus hábitos: atualizar o software, rever palavras-passe e não clicar em links suspeitos.",
+      "en": "Created in 1988 by the ACM after the pioneering Morris Worm virus struck the Internet, this day urges everyone to audit their habits: update software, refresh passwords, and avoid suspicious links."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 3 de TIC aprendemos que a segurança da informação é uma responsabilidade contínua de todos os cidadãos.",
+      "en": "In ICT Topic 3 we learn that information security is an ongoing responsibility for all citizens."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "O 'Morris Worm' de 1988 foi o primeiro vírus a infestar a Internet, afetando cerca de 10% dos computadores da época!",
+      "en": "The 1988 Morris Worm was the first internet-scale worm, affecting roughly 10% of connected machines back then!"
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "O que motivou a criação do Dia Internacional da Segurança da Informação em 1988?",
+      "en": "What prompted the creation of Computer Security Day in 1988?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "O impacto do vírus Morris Worm, alertando para a necessidade de proteger redes e computadores.",
+        "en": "The widespread impact of the Morris Worm, highlighting the need to secure connected systems."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "A invenção do primeiro jogo de cartas eletrónico no sistema operativo.",
+        "en": "The invention of the first built-in electronic solitaire card game in an OS."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "O desaparecimento de todas as impressoras de agulhas dos escritórios do mundo.",
+        "en": "The sudden disappearance of all dot-matrix printers from world offices."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Uma lei que proibia qualquer pessoa de ligar computadores ao sábado.",
+        "en": "A fictional law banning anyone from turning on computers on Saturdays."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "Manter o sistema operativo e as aplicações sempre atualizadas é a vacina digital mais eficaz!",
+      "en": "Keeping your operating system and apps updated is the most effective digital hygiene practice!"
     }
   },
   {
@@ -25819,52 +25819,52 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       "en": "The \"Mother of All Demos\": Windows, Mouse, and Hyperlinks!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "A 9 de dezembro de 1968, Douglas Engelbart apresentou o futuro da computação moderna.",
+      "en": "On December 9, 1968, Douglas Engelbart unveiled the future of personal computing."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Numa apresentação lendária de 90 minutos em São Francisco, Douglas Engelbart e a sua equipa demonstraram pela primeira vez ao vivo: o rato de computador, janelas gráficas no ecrã, processamento de texto colaborativo, hiperligações e até videochamada!",
+      "en": "In a legendary 90-minute live demonstration in San Francisco, Douglas Engelbart and his team premiered: the computer mouse, on-screen graphical windows, hyperlinked text, collaborative editing, and video calling!"
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 1 de TIC estudamos os pioneiros que transformaram o computador de calculadora militar em ferramenta humana.",
+      "en": "In ICT Topic 1 we study pioneers who transformed computers from military calculators to human tools."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "O primeiro rato usado na apresentação era uma caixa de madeira com dois discos de metal que mediam o movimento!",
+      "en": "The original mouse used during the demo was carved from wood with two rolling metal wheels inside!"
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Que conjunto revolucionário de invenções foi apresentado na 'Mãe de Todas as Demonstrações' em 1968?",
+      "en": "What revolutionary set of technologies was unveiled at 'The Mother of All Demos' in 1968?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "O rato de computador, as janelas no ecrã, as hiperligações e o texto digital colaborativo.",
+        "en": "The computer mouse, graphical screen windows, hyperlinks, and collaborative digital text."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "O primeiro telemóvel com câmara de selfies e filtros de animais.",
+        "en": "The first smartphone with a selfie camera and animated animal filters."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "A primeira impressora 3D de chocolate com ligação por satélite.",
+        "en": "The first 3D chocolate printer with high-speed satellite uplink."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "O primeiro robot aspirador que lavava loiça enquanto assobiava.",
+        "en": "The first robotic vacuum cleaner that washed dishes while whistling."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "Quase tudo o que usas hoje no ecrã do teu computador nasceu ou foi previsto nessa fantástica demonstração!",
+      "en": "Almost every interaction you use today on screens was pioneered during that historic 1968 presentation!"
     }
   },
   {
@@ -25891,55 +25891,55 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🤝",
     "title": {
       "pt": "Dia dos Direitos Humanos e Cidadania Digital",
-      "en": "Human Rights & Digital Citizenship"
+      "en": "Human Rights Day and Digital Citizenship"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "A 10 de dezembro recordamos que a dignidade, respeito e privacidade valem igualmente no mundo digital.",
+      "en": "On December 10 we remember that dignity, respect, and privacy apply equally in the digital world."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Proclamado pela Assembleia Geral da ONU em 1948, o Dia dos Direitos Humanos lembra que valores fundamentais como a liberdade de expressão sem ódio, o direito à privacidade e a proteção contra o assédio devem ser defendidos todos os dias nas redes sociais, jogos e escolas.",
+      "en": "Proclaimed by the UN General Assembly in 1948, Human Rights Day reminds us that fundamental rights—freedom from harassment, freedom of peaceful expression, and privacy—must be protected across online spaces and schools."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 3 de TIC aprendemos que a cidadania digital responsável combate o ciberbullying e promove a empatia.",
+      "en": "In ICT Topic 3 we learn that responsible digital citizenship counters cyberbullying and fosters empathy."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "A Carta dos Direitos Humanos é o documento mais traduzido do mundo, disponível em mais de 500 idiomas!",
+      "en": "The Universal Declaration of Human Rights is the most translated document on Earth, in over 500 languages!"
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "Como se relaciona o Dia dos Direitos Humanos com as aulas de TIC e o uso da Internet?",
+      "en": "How does Human Rights Day relate to ICT classes and our daily online interactions?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "Lembra que todos têm direito ao respeito, à privacidade e a navegar na Internet sem sofrer bullying.",
+        "en": "Reminds us that everyone has a right to respect, privacy, and an online environment free from bullying."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Obriga a que todas as contas de redes sociais sejam apagadas durante 48 horas.",
+        "en": "Mandates that all social media accounts be shut down for 48 consecutive hours."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Serve para proibir os alunos de fazerem perguntas ao professor na aula de TIC.",
+        "en": "Serves to forbid students from asking questions to the teacher in ICT class."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Obriga a escrever todos os emails em latim antigo para treinar caligrafia.",
+        "en": "Forces everyone to compose digital emails in ancient Latin for calligraphy practice."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "Tratar os outros na Internet com a mesma gentileza com que queremos ser tratados é a regra de ouro digital!",
+      "en": "Treating others online with the exact respect we expect for ourselves is the universal digital golden rule!"
     }
   },
   {
@@ -26893,7 +26893,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "a",
         "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
       },
       {
         "id": "b",
@@ -27466,57 +27466,58 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "icon": "🎆",
     "title": {
       "pt": "O Pânico do Bug do Milénio (Y2K) na noite de Ano Novo!",
-      "en": "The Y2K Bug Panic on New Year's Eve!"
+      "en": "The Millennium Bug (Y2K) Scare on New Year's Eve!"
     },
     "teaser": {
-      "pt": "Em 1976, a Rainha da Grã-Bretanha enviou uma mensagem pela rede militar ARPANET.",
-      "en": "In 1976, the Queen sent a message via the military ARPANET network."
+      "pt": "Na passagem de 1999 para 2000, temeu-se que os computadores confundissem o ano '00' com 1900.",
+      "en": "Entering the year 2000, the world feared computers would mistake two-digit '00' for 1900."
     },
     "description": {
-      "pt": "A 26 de março de 1976, a Rainha Isabel II visitou um centro de telecomunicações militares em Malvern e enviou um email oficial pela ARPANET com o nome de utilizador \"HME2\" (Her Majesty Elizabeth II).",
-      "en": "Queen Elizabeth II sent an email via ARPANET in 1976 under username \"HME2\"."
+      "pt": "Nos primeiros computadores, para poupar memória cara, os anos eram guardados com apenas dois dígitos (ex: '99' para 1999). Com a chegada do ano 2000, temia-se que os sistemas interpretassem '00' como 1900! Um trabalho gigantesco de engenheiros em todo o planeta corrigiu o código a tempo.",
+      "en": "In early computing, to save precious bytes, years were stored with only two digits ('99' for 1999). As 2000 approached, people feared systems would read '00' as 1900! Global engineering teamwork patched software in time."
     },
     "whyItMatters": {
-      "pt": "No Tema 1 de TIC estudamos como as redes de computadores nasceram nos laboratórios científicos e militares antes de chegarem às nossas casas.",
-      "en": "In ICT Topic 1 we learn how networks started in research labs before entering every home."
+      "pt": "No Tema 1 de TIC compreendemos como a representação de dados e datas no software exige rigor para evitar falhas.",
+      "en": "In ICT Topic 1 we understand how data representation in software requires rigorous precision."
     },
     "funFact": {
-      "pt": "Ela carregou apenas no botão \"Send\" num terminal militar após os engenheiros terem preparado a mensagem!",
-      "en": "She just pressed the \"Send\" button on a military terminal after engineers set it up!"
+      "pt": "Graças aos técnicos que trabalharam dia e noite para atualizar o software, a meia-noite de 2000 correu com grande tranquilidade!",
+      "en": "Thanks to engineers working around the clock to patch legacy code, midnight on Jan 1, 2000 passed smoothly!"
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Quem foi a primeira monarca da História a enviar uma mensagem por correio eletrónico (email) em 1976?",
-      "en": "Who was the first monarch in history to send an email message back in 1976?"
+      "pt": "O que causou o famoso susto do 'Bug do Milénio' (Y2K) na véspera do ano 2000?",
+      "en": "What caused the famous 'Millennium Bug' (Y2K) scare on the eve of the year 2000?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Rainha Isabel II da Grã-Bretanha, através da rede pioneira ARPANET!",
-        "en": "Queen Elizabeth II of Great Britain, using the pioneering ARPANET network!"
+        "pt": "O hábito antigo de guardar datas com apenas dois dígitos para o ano (ex: 99 em vez de 1999).",
+        "en": "The legacy practice of storing years with only two digits (e.g. 99 instead of 1999) to save memory."
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Um vírus alienígena que viajou nos satélites de telecomunicações militares.",
+        "en": "An extraterrestrial virus riding aboard military telecommunication satellites."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "pt": "Todos os teclados de computador do mundo ficarem sem teclas na noite de passagem de ano.",
+        "en": "All computer keyboards around the globe running out of plastic keys on New Year's Eve."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "A eletricidade mundial ter acabado durante três semanas em todos os continentes.",
+        "en": "Worldwide electrical grids failing across all continents simultaneously for three weeks."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Foi um acontecimento marcante que ajudou a divulgar as redes de computadores em todo o mundo!",
-      "en": "It was a landmark moment that boosted computer network awareness worldwide!"
+      "pt": "O Y2K ensinou o mundo da tecnologia a planear o futuro do software com muito mais rigor e visão de longo prazo!",
+      "en": "Y2K taught the global software industry to architect software with robust long-term data structures!"
     }
   }
+
 ];
 
 export const TOTAL_366_TIPS_COUNT = ALL_366_DAILY_TIPS.length;

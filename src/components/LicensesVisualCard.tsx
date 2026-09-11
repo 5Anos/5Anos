@@ -56,9 +56,11 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
       {/* 4 License Columns / Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
         {/* 1. Copyright (©) */}
-        <div
+        <button
+          type="button"
           onClick={() => setActiveCard(activeCard === 'copyright' ? null : 'copyright')}
-          className={`flex flex-col justify-between rounded-3xl border-2 transition-all duration-300 overflow-hidden shadow-sm cursor-pointer ${
+          aria-pressed={activeCard === 'copyright'}
+          className={`w-full text-left flex flex-col justify-between rounded-3xl border-2 transition-all duration-300 overflow-hidden shadow-sm cursor-pointer ${
             activeCard === 'copyright'
               ? 'ring-2 ring-amber-500 scale-[1.01] shadow-md border-amber-400 bg-amber-50'
               : 'border-amber-200 bg-[#fffaf2] hover:border-amber-300 hover:shadow-md'
@@ -123,12 +125,14 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
             <XCircle className="w-4 h-4 shrink-0" />
             <span>{language === 'pt' ? 'Não podes usar livremente' : 'Cannot use freely'}</span>
           </div>
-        </div>
+        </button>
 
         {/* 2. Copyleft (🄯) */}
-        <div
+        <button
+          type="button"
           onClick={() => setActiveCard(activeCard === 'copyleft' ? null : 'copyleft')}
-          className={`flex flex-col justify-between rounded-3xl border-2 transition-all duration-300 overflow-hidden shadow-sm cursor-pointer ${
+          aria-pressed={activeCard === 'copyleft'}
+          className={`w-full text-left flex flex-col justify-between rounded-3xl border-2 transition-all duration-300 overflow-hidden shadow-sm cursor-pointer ${
             activeCard === 'copyleft'
               ? 'ring-2 ring-blue-500 scale-[1.01] shadow-md border-blue-400 bg-blue-50'
               : 'border-blue-200 bg-[#f0f7ff] hover:border-blue-300 hover:shadow-md'
@@ -201,12 +205,14 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
             <Check className="w-4 h-4 shrink-0" />
             <span>{language === 'pt' ? 'Podes usar, com regras' : 'Can use, with rules'}</span>
           </div>
-        </div>
+        </button>
 
         {/* 3. Royalty Free */}
-        <div
+        <button
+          type="button"
           onClick={() => setActiveCard(activeCard === 'royalty_free' ? null : 'royalty_free')}
-          className={`flex flex-col justify-between rounded-3xl border-2 transition-all duration-300 overflow-hidden shadow-sm cursor-pointer ${
+          aria-pressed={activeCard === 'royalty_free'}
+          className={`w-full text-left flex flex-col justify-between rounded-3xl border-2 transition-all duration-300 overflow-hidden shadow-sm cursor-pointer ${
             activeCard === 'royalty_free'
               ? 'ring-2 ring-emerald-500 scale-[1.01] shadow-md border-emerald-400 bg-emerald-50'
               : 'border-emerald-200 bg-[#f4fbf7] hover:border-emerald-300 hover:shadow-md'
@@ -276,12 +282,14 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
             <AlertCircle className="w-4 h-4 shrink-0 text-slate-950" />
             <span>{language === 'pt' ? 'Verifica sempre as condições' : 'Always check conditions'}</span>
           </div>
-        </div>
+        </button>
 
         {/* 4. Utilização Totalmente Gratuita (CC0) */}
-        <div
+        <button
+          type="button"
           onClick={() => setActiveCard(activeCard === 'cc0' ? null : 'cc0')}
-          className={`flex flex-col justify-between rounded-3xl border-2 transition-all duration-300 overflow-hidden shadow-sm cursor-pointer ${
+          aria-pressed={activeCard === 'cc0'}
+          className={`w-full text-left flex flex-col justify-between rounded-3xl border-2 transition-all duration-300 overflow-hidden shadow-sm cursor-pointer ${
             activeCard === 'cc0'
               ? 'ring-2 ring-purple-500 scale-[1.01] shadow-md border-purple-400 bg-purple-50'
               : 'border-purple-200 bg-[#faf5ff] hover:border-purple-300 hover:shadow-md'
@@ -348,7 +356,7 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
             <Check className="w-4 h-4 shrink-0" />
             <span>{language === 'pt' ? 'Podes utilizar sem pedir autorização!' : 'Can use without asking for permission!'}</span>
           </div>
-        </div>
+        </button>
       </div>
 
       {/* Bottom Advice & Reminder Banners */}

@@ -1,5 +1,5 @@
 import * as XLSX from 'xlsx';
-import { User, ActivityProgress, ThemeDefinition } from '../types';
+import { User, ActivityProgress, ThemeDefinition, Language } from '../types';
 import { ALL_THEMES, THEMES_BY_ID } from '../data/allThemesData';
 
 export interface ChallengeScoreDetail {
@@ -131,22 +131,22 @@ export function getStudentThemeBreakdown(
  * (70% a 89%) Bom
  * (90% a 100%) Muito Bom
  */
-export function getQualitativeLevel(percentage: number): string {
+export function getQualitativeLevel(percentage: number, lang: Language = 'pt'): string {
   const p = Math.round(percentage);
-  if (p >= 90) return 'Muito Bom';
-  if (p >= 70) return 'Bom';
-  if (p >= 50) return 'Satisfaz';
-  if (p >= 20) return 'Não Satisfaz';
-  return 'Não Satisfaz (Muito Fraco)';
+  if (p >= 90) return lang === 'pt' ? 'Muito Bom' : 'Very Good';
+  if (p >= 70) return lang === 'pt' ? 'Bom' : 'Good';
+  if (p >= 50) return lang === 'pt' ? 'Satisfaz' : 'Satisfactory';
+  if (p >= 20) return lang === 'pt' ? 'Não Satisfaz' : 'Unsatisfactory';
+  return lang === 'pt' ? 'Não Satisfaz (Muito Fraco)' : 'Needs Improvement';
 }
 
-export function getQualitativeLevelWithRange(percentage: number): string {
+export function getQualitativeLevelWithRange(percentage: number, lang: Language = 'pt'): string {
   const p = Math.round(percentage);
-  if (p >= 90) return 'Muito Bom (90% a 100%)';
-  if (p >= 70) return 'Bom (70% a 89%)';
-  if (p >= 50) return 'Satisfaz (50% a 69%)';
-  if (p >= 20) return 'Não Satisfaz (20% a 49%)';
-  return 'Não Satisfaz (Muito Fraco) (0 a 19%)';
+  if (p >= 90) return lang === 'pt' ? 'Muito Bom (90% a 100%)' : 'Very Good (90% to 100%)';
+  if (p >= 70) return lang === 'pt' ? 'Bom (70% a 89%)' : 'Good (70% to 89%)';
+  if (p >= 50) return lang === 'pt' ? 'Satisfaz (50% a 69%)' : 'Satisfactory (50% to 69%)';
+  if (p >= 20) return lang === 'pt' ? 'Não Satisfaz (20% a 49%)' : 'Unsatisfactory (20% to 49%)';
+  return lang === 'pt' ? 'Não Satisfaz (Muito Fraco) (0 a 19%)' : 'Needs Improvement (0 to 19%)';
 }
 
 export const getQuizMention = getQualitativeLevel;

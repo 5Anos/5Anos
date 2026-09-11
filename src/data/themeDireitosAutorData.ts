@@ -394,18 +394,18 @@ export const themeDireitosAutorData: ThemeDefinition = {
         {
           id: 'q-ref-1',
           question: {
-            pt: 'De acordo com a Norma APA (7.ª edição), qual destes elementos NUNCA deve ser incluído numa referência bibliográfica de uma página web?',
-            en: 'According to APA 7th edition, which element should NEVER be included in a web reference?',
+            pt: 'Numa referência de uma página Web com data de publicação estável, de acordo com a norma APA (7.ª edição), qual destes elementos não se deve incluir?',
+            en: 'In an APA 7th edition reference for a stable web page, which element is omitted and should not be included?',
           },
           options: {
             pt: [
-              'A expressão "Consultado em..." (já não se utiliza na norma APA 7.ª ed.)',
+              'A expressão "Consultado em..." (dispensada na norma APA 7.ª ed. para conteúdos estáveis)',
               'O nome do autor ou organização',
               'O título do artigo',
               'O endereço web (URL)',
             ],
             en: [
-              'The phrase "Consultado em... / Accessed on" (removed in APA 7th ed)',
+              'The phrase "Consultado em... / Accessed on" (omitted in APA 7th ed. for stable content)',
               'The author or organization name',
               'The article title',
               'The web URL',
@@ -413,8 +413,8 @@ export const themeDireitosAutorData: ThemeDefinition = {
           },
           correctIndex: 0,
           explanation: {
-            pt: 'Na norma APA 7.ª edição as referências de páginas web terminam diretamente no URL, sem "Consultado em".',
-            en: 'Spot on! APA 7th edition web references conclude directly with the URL without access dates.',
+            pt: 'Na norma APA 7.ª edição, as referências de páginas web com data estável terminam diretamente no URL, sem a indicação "Consultado em" (a data de consulta fica reservada para páginas cujo conteúdo mude constantemente no tempo).',
+            en: 'Under APA 7th edition, references for stable web pages end directly with the URL without retrieval dates (which are reserved for dynamic, frequently changing pages).',
           },
         },
       ],
@@ -486,9 +486,9 @@ export const themeDireitosAutorData: ThemeDefinition = {
         data: {
           questions: [
             {
-              statement: 'Na norma APA (7.ª edição), as referências de páginas web já não utilizam a expressão "Consultado em".',
+              statement: 'Na norma APA (7.ª edição), as referências de páginas web com data de publicação fixa não utilizam a expressão "Consultado em".',
               isTrue: true,
-              explanation: 'Verdade! Terminam diretamente com o URL.'
+              explanation: 'Verdade! Terminam diretamente no URL (a data de consulta reserva-se para conteúdos que mudem com o tempo).'
             },
             {
               statement: 'Entregar o mesmo trabalho escolar em duas disciplinas diferentes é considerado uma forma de plágio (auto-plágio).',
@@ -745,13 +745,13 @@ export const themeDireitosAutorData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Escolher imagens com licença livre (ex.: Creative Commons) e indicar o autor e a fonte',
+          'Escolher imagens com licenças abertas (ex.: Creative Commons compatíveis) ou de domínio público e indicar o autor e a fonte',
           'Copiar a primeira imagem protegida que encontrares e dizer que foste tu que desenhaste',
           'Tirar uma captura de ecrã e apagar a marca de água do autor',
           'Nunca usar imagens em nenhum trabalho escolar',
         ],
         en: [
-          'Choose images with open licenses (e.g., Creative Commons) and credit the creator and source',
+          'Choose images with open licenses (e.g., compatible Creative Commons) or public domain and credit the creator and source',
           'Copy the first copyrighted image found and claim you drew it',
           'Take a screenshot and erase the author’s watermark',
           'Never use images in any school assignment',
@@ -759,8 +759,8 @@ export const themeDireitosAutorData: ThemeDefinition = {
       },
       correctIndex: 0,
       explanation: {
-        pt: 'Usar imagens com licença livre e dar o devido crédito ao autor é a forma correta e respeitosa de trabalhar.',
-        en: 'Using freely licensed images and attributing the author is ethical and correct.',
+        pt: 'Usar imagens com licenças abertas ou de domínio público, respeitando as condições da licença e dando o devido crédito ao autor, é a forma correta e respeitosa de trabalhar.',
+        en: 'Using images with open licenses or in the public domain, respecting license terms and attributing the author, is ethical and correct.',
       },
     },
     {
@@ -818,18 +818,18 @@ export const themeDireitosAutorData: ThemeDefinition = {
     {
       id: 'copy-q10',
       question: {
-        pt: 'Onde podes encontrar fotografias, sons e músicas livres e legais para os teus projetos?',
-        en: 'Where can you find free and legal photos, sounds, and music for your projects?',
+        pt: 'Onde podes encontrar fotografias, sons e músicas com autorização legal de utilização para os teus projetos?',
+        en: 'Where can you find photos, sounds, and music with legal reuse permissions for your projects?',
       },
       options: {
         pt: [
-          'Em bancos de recursos livres e de domínio público (como Wikimedia Commons, Pixabay, Unsplash ou Freesound)',
+          'Em bancos de imagens e sons com licenças abertas ou de domínio público (como Wikimedia Commons, Pixabay, Unsplash ou Freesound)',
           'Em sites ilegais de pirataria que pedem para descarregar ficheiros desconhecidos',
           'Copiando fotografias privadas das redes sociais de pessoas que não conheces',
           'Gravando o ecrã de jogos pagos sem autorização',
         ],
         en: [
-          'In open resource libraries and public domain repositories (such as Wikimedia Commons, Pixabay, Unsplash, or Freesound)',
+          'In repositories with open licenses or public domain assets (such as Wikimedia Commons, Pixabay, Unsplash, or Freesound)',
           'On illegal piracy websites asking you to download suspicious files',
           'By copying private photos from social profiles of strangers',
           'By screen-recording commercial games without authorization',
@@ -838,7 +838,7 @@ export const themeDireitosAutorData: ThemeDefinition = {
       correctIndex: 0,
       explanation: {
         pt: 'Sites como Wikimedia Commons, Pixabay e Freesound disponibilizam muitos recursos com diferentes licenças. Antes de utilizares um recurso, verifica sempre a licença e as condições de utilização desse recurso.',
-        en: 'Free repositories like Wikimedia Commons, Pixabay, and Freesound provide legal and safe media assets.',
+        en: 'Repositories like Wikimedia Commons, Pixabay, and Freesound provide media assets under specific license terms. Always verify license requirements before using an asset.',
       },
     },
   ],
