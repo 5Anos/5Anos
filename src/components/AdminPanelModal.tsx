@@ -47,6 +47,13 @@ import {
   exportDailyTipsScoresToExcel,
   getStudentThemeBreakdown,
   getQualitativeLevel,
+  getGlobalActivityStats,
+  getThemeMaxPoints,
+  getThemeActivityCount,
+  getTotalActivitiesCount,
+  getTotalChallengesCount,
+  getTotalQuizzesCount,
+  getGlobalCurricularMaxPoints,
 } from '../utils/exportUtils';
 import { ALL_THEMES, THEMES_BY_ID } from '../data/allThemesData';
 import { CartoonAvatar } from './avatar/CartoonAvatar';
@@ -1333,7 +1340,12 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                   </span>
                 </div>
                 <span className="font-bold text-[11px] bg-emerald-200/70 text-emerald-900 px-2.5 py-0.5 rounded-md">
-                  {selectedThemeForScores === 'all' ? '7 Temas × 500 = 3500 XP' : '4 Desafios + 1 Quiz = 500 XP'}
+                  {selectedThemeForScores === 'all'
+                    ? `${ALL_THEMES.length} Temas • ${getGlobalCurricularMaxPoints()} XP Curriculares`
+                    : (() => {
+                        const t = THEMES_BY_ID[selectedThemeForScores] || ALL_THEMES.find((item) => item.id === selectedThemeForScores) || ALL_THEMES[0];
+                        return `${getThemeActivityCount(t)} Atividades = ${getThemeMaxPoints(t)} XP`;
+                      })()}
                 </span>
               </div>
             </div>
@@ -1410,7 +1422,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                               </th>
                               <th className="py-3 px-3 text-right min-w-[120px]">
                                 <div className="font-bold">Total Tema</div>
-                                <div className="text-[10px] text-slate-500 font-normal">Máx: 500 XP</div>
+                                <div className="text-[10px] text-slate-500 font-normal">Máx: {getThemeMaxPoints(currentTheme)} XP</div>
                               </th>
                               <th className="py-3 px-3 text-center min-w-[110px]">Aproveitamento</th>
                               <th className="py-3 px-3 text-center w-24">Ações</th>
@@ -1497,7 +1509,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                     <span className="font-black text-indigo-700 text-sm">
                                       {breakdown.totalPoints} XP
                                     </span>
-                                    <span className="text-[10px] text-slate-400 block font-semibold">/ 500 XP</span>
+                                    <span className="text-[10px] text-slate-400 block font-semibold">/ {breakdown.maxPoints} XP</span>
                                   </td>
 
                                   {/* Percentage / Evaluation */}
@@ -1569,7 +1581,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                       </h4>
                     </div>
                     <div className="text-xs text-slate-500 font-semibold">
-                      {language === 'pt' ? 'Total Curricular: 3500 XP' : 'Curricular Max: 3500 XP'}
+                      {language === 'pt' ? `Total Curricular: ${getGlobalCurricularMaxPoints()} XP` : `Curricular Max: ${getGlobalCurricularMaxPoints()} XP`}
                     </div>
                   </div>
 
@@ -1584,12 +1596,12 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                           {ALL_THEMES.map((t) => (
                             <th key={t.id} className="py-3 px-2 text-center min-w-[95px]" title={t.title.pt}>
                               <div className="font-bold text-[11px]">Tema {t.number}</div>
-                              <div className="text-[9px] text-slate-400 font-normal">/ 500</div>
+                              <div className="text-[9px] text-slate-400 font-normal">/ {getThemeMaxPoints(t)}</div>
                             </th>
                           ))}
                           <th className="py-3 px-3 text-right min-w-[120px]">
                             <div className="font-bold">Total Temas</div>
-                            <div className="text-[10px] text-slate-500 font-normal">/ 3500 XP</div>
+                            <div className="text-[10px] text-slate-500 font-normal">/ {getGlobalCurricularMaxPoints()} XP</div>
                           </th>
                           <th className="py-3 px-3 text-center min-w-[120px]" title="Pontos obtidos em Dicas Diárias TIC e Bónus">
                             <div className="font-bold text-amber-700 flex items-center justify-center gap-1">
@@ -1609,14 +1621,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                       <tbody className="divide-y divide-slate-100">
                         {filteredStudents.map((student, idx) => {
                           const sProgress = progressMap[student.id] || progressMap[student.email] || [];
-                          let totalSum = 0;
-
-                          ALL_THEMES.forEach((theme) => {
-                            const b = getStudentThemeBreakdown(student, sProgress, theme);
-                            totalSum += b.totalPoints;
-                          });
-
-                          const tipsAndBonusXP = Math.max(0, (student.points ?? 0) - totalSum);
+                          const stats = getGlobalActivityStats(student, sProgress, ALL_THEMES);
 
                           return (
                             <tr key={student.id || student.email} className="hover:bg-slate-50/80 transition-colors">
@@ -1637,70 +1642,63 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                               </td>
 
                               {/* Themes 1 to 7 */}
-                              {ALL_THEMES.map((theme) => {
-                                const b = getStudentThemeBreakdown(student, sProgress, theme);
-                                return (
-                                  <td key={theme.id} className="py-2.5 px-2 text-center whitespace-nowrap">
-                                    <span
-                                      className={`inline-block px-2 py-0.5 rounded-lg text-xs font-bold ${
-                                        b.totalPoints >= 450
-                                          ? 'bg-emerald-100 text-emerald-800'
-                                          : b.totalPoints >= 250
-                                          ? 'bg-indigo-50 text-indigo-800'
-                                          : b.totalPoints > 0
-                                          ? 'bg-amber-50 text-amber-800'
-                                          : 'text-slate-300'
-                                      }`}
-                                    >
-                                      {b.totalPoints > 0 ? `${b.totalPoints}` : '—'}
-                                    </span>
-                                  </td>
-                                );
-                              })}
+                              {stats.themeBreakdowns.map((b) => (
+                                <td key={b.theme.id} className="py-2.5 px-2 text-center whitespace-nowrap">
+                                  <span
+                                    className={`inline-block px-2 py-0.5 rounded-lg text-xs font-bold ${
+                                      b.percentage >= 90
+                                        ? 'bg-emerald-100 text-emerald-800'
+                                        : b.percentage >= 50
+                                        ? 'bg-indigo-50 text-indigo-800'
+                                        : b.totalPoints > 0
+                                        ? 'bg-amber-50 text-amber-800'
+                                        : 'text-slate-300'
+                                    }`}
+                                    title={`${b.theme.title.pt}: ${b.totalPoints}/${b.maxPoints} XP (${b.percentage}%)`}
+                                  >
+                                    {b.totalPoints > 0 ? `${b.totalPoints}` : '—'}
+                                  </span>
+                                </td>
+                              ))}
 
                               {/* Total Temas Curriculares */}
                               <td className="py-2.5 px-3 text-right whitespace-nowrap">
                                 <span className="font-bold text-slate-800 text-sm">
-                                  {totalSum} XP
+                                  {stats.totalCurricularPoints} XP
                                 </span>
                               </td>
 
                               {/* Dicas Diárias & Bónus */}
                               <td className="py-2.5 px-3 text-center whitespace-nowrap">
                                 <span className={`inline-block px-2 py-0.5 rounded-lg text-xs font-bold ${
-                                  tipsAndBonusXP > 0 ? 'bg-amber-100 text-amber-900 border border-amber-200' : 'text-slate-300'
+                                  stats.bonusPoints > 0 ? 'bg-amber-100 text-amber-900 border border-amber-200' : 'text-slate-300'
                                 }`}>
-                                  {tipsAndBonusXP > 0 ? `+${tipsAndBonusXP} XP` : '0 XP'}
+                                  {stats.bonusPoints > 0 ? `+${stats.bonusPoints} XP` : '0 XP'}
                                 </span>
                               </td>
 
                               {/* Total Global */}
                               <td className="py-2.5 px-3 text-right whitespace-nowrap">
                                 <span className="font-black text-indigo-700 text-sm">
-                                  {student.points ?? 0} XP
+                                  {stats.totalPoints} XP
                                 </span>
                               </td>
 
                               {/* Average % */}
                               <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                {(() => {
-                                  const avgPct = Math.round((totalSum / 3500) * 100);
-                                  return (
-                                    <span
-                                      className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                                        avgPct >= 90
-                                          ? 'bg-emerald-100 text-emerald-800'
-                                          : avgPct >= 50
-                                          ? 'bg-indigo-100 text-indigo-800'
-                                          : avgPct > 0
-                                          ? 'bg-amber-100 text-amber-800'
-                                          : 'bg-slate-100 text-slate-500'
-                                      }`}
-                                    >
-                                      {avgPct}%
-                                    </span>
-                                  );
-                                })()}
+                                <span
+                                  className={`px-2 py-0.5 rounded-full text-xs font-bold ${
+                                    stats.globalPercentage >= 90
+                                      ? 'bg-emerald-100 text-emerald-800'
+                                      : stats.globalPercentage >= 50
+                                      ? 'bg-indigo-100 text-indigo-800'
+                                      : stats.globalPercentage > 0
+                                      ? 'bg-amber-100 text-amber-800'
+                                      : 'bg-slate-100 text-slate-500'
+                                  }`}
+                                >
+                                  {stats.globalPercentage}%
+                                </span>
                               </td>
 
                               {/* Actions */}
@@ -2556,19 +2554,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                 {/* Top Summary Stats for Student */}
                 {(() => {
                   const sProgress = progressMap[detailStudent.id] || progressMap[detailStudent.email] || [];
-                  let totalCurricularXP = 0;
-                  let completedChallengesCount = 0;
-                  let completedQuizzesCount = 0;
-
-                  ALL_THEMES.forEach((theme) => {
-                    const breakdown = getStudentThemeBreakdown(detailStudent, sProgress, theme);
-                    totalCurricularXP += breakdown.totalPoints;
-                    completedChallengesCount += breakdown.challenges.filter((c) => c.completed).length;
-                    if (breakdown.quiz.completed) completedQuizzesCount++;
-                  });
-
-                  const tipsAndBonusXP = Math.max(0, (detailStudent.points ?? 0) - totalCurricularXP);
-                  const globalPercent = Math.round((totalCurricularXP / 3500) * 100);
+                  const stats = getGlobalActivityStats(detailStudent, sProgress, ALL_THEMES);
 
                   return (
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -2580,7 +2566,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                           <Award className="w-4 h-4 text-amber-500" />
                         </div>
                         <div className="text-xl font-black text-indigo-700">
-                          {detailStudent.points ?? 0} <span className="text-xs font-semibold text-slate-400">XP</span>
+                          {stats.totalPoints} <span className="text-xs font-semibold text-slate-400">XP</span>
                         </div>
                         <div className="text-[10px] text-slate-500 mt-0.5">
                           {language === 'pt' ? 'Acumulado com bónus e dicas' : 'Includes daily bonuses'}
@@ -2595,10 +2581,10 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                           <TrendingUp className="w-4 h-4 text-emerald-600" />
                         </div>
                         <div className="text-xl font-black text-emerald-700">
-                          {totalCurricularXP} <span className="text-xs font-semibold text-slate-400">/ 3500 XP</span>
+                          {stats.totalCurricularPoints} <span className="text-xs font-semibold text-slate-400">/ {stats.globalMaxPoints} XP</span>
                         </div>
                         <div className="text-[10px] text-emerald-600 font-semibold mt-0.5">
-                          {globalPercent}% {language === 'pt' ? 'aproveitamento' : 'achievement'}
+                          {stats.globalPercentage}% {language === 'pt' ? 'aproveitamento' : 'achievement'}
                         </div>
                       </div>
 
@@ -2610,7 +2596,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                           <Sparkles className="w-4 h-4 text-sky-500" />
                         </div>
                         <div className="text-xl font-black text-sky-600">
-                          +{tipsAndBonusXP} <span className="text-xs font-semibold text-slate-400">XP</span>
+                          +{stats.bonusPoints} <span className="text-xs font-semibold text-slate-400">XP</span>
                         </div>
                         <div className="text-[10px] text-sky-700 font-semibold mt-0.5">
                           {language === 'pt' ? '50 pts acerto / 25 pts leitura' : '50 pts correct / 25 pts read'}
@@ -2625,10 +2611,10 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                           <CheckCircle2 className="w-4 h-4 text-indigo-600" />
                         </div>
                         <div className="text-xl font-black text-slate-900">
-                          {completedChallengesCount + completedQuizzesCount} <span className="text-xs font-semibold text-slate-400">/ 35</span>
+                          {stats.completedActivities} <span className="text-xs font-semibold text-slate-400">/ {stats.totalActivities}</span>
                         </div>
                         <div className="text-[10px] text-slate-500 mt-0.5">
-                          {completedChallengesCount}/28 {language === 'pt' ? 'desafios' : 'challenges'} • {completedQuizzesCount}/7 {language === 'pt' ? 'quizzes' : 'quizzes'}
+                          {stats.completedChallenges}/{stats.totalChallenges} {language === 'pt' ? 'desafios' : 'challenges'} • {stats.completedQuizzes}/{stats.totalQuizzes} {language === 'pt' ? 'quizzes' : 'quizzes'}
                         </div>
                       </div>
                     </div>
@@ -2661,7 +2647,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
 
                         <div className="flex items-center gap-2">
                           <span className="px-2.5 py-1 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 font-black text-xs">
-                            {breakdown.totalPoints} / 500 XP
+                            {breakdown.totalPoints} / {breakdown.maxPoints} XP
                           </span>
                           <span className="px-2.5 py-1 rounded-xl bg-emerald-100 text-emerald-800 font-bold text-xs">
                             {breakdown.percentage}%

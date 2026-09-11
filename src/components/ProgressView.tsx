@@ -7,6 +7,7 @@ import { ALL_THEMES } from '../data/allThemesData';
 import { quizGameTrophy, boyAvatarImg, girlAvatarImg } from '../data/themeImages';
 import { resolveActivityInfo, ResolvedActivityInfo } from '../utils/activityMetadata';
 import { getQuizMention, getQuizMentionBadgeStyle } from '../utils/exportUtils';
+import { getGlobalActivityStats, getStudentThemeBreakdown } from '../utils/progressCalculator';
 
 interface ProgressViewProps {
   user: User | null;
@@ -30,13 +31,13 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
   const [selectedThemeFilter, setSelectedThemeFilter] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grouped' | 'list'>('grouped');
 
-  const allCurricularChallenges = ALL_THEMES.flatMap((theme) => theme.challenges);
-  const totalActivities = allCurricularChallenges.length;
+  const stats = useMemo(() => {
+    return getGlobalActivityStats(user, progressList, ALL_THEMES);
+  }, [user, progressList]);
 
-  const completedCount = allCurricularChallenges.filter((challenge) =>
-    progressList.some((p) => p.activityId === challenge.id && p.status === 'completed')
-  ).length;
-  const overallPercentage = totalActivities > 0 ? Math.max(0, Math.min(100, Math.round((completedCount / totalActivities) * 100))) : 0;
+  const completedCount = stats.completedActivities;
+  const totalActivities = stats.totalActivities;
+  const overallPercentage = stats.globalPercentage;
 
   const quizRecords = progressList.filter((p) => p.bestPercentage !== undefined);
   const avgQuiz = quizRecords.length > 0
@@ -59,18 +60,16 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
     return ALL_THEMES.map((theme) => {
       const themeChallengeIds = new Set(theme.challenges.map((c) => c.id));
       const items = enrichedProgress.filter((p) => themeChallengeIds.has(p.activityId));
-      const completed = theme.challenges.filter((c) =>
-        progressList.some((p) => p.activityId === c.id && p.status === 'completed')
-      ).length;
-      const totalThemeActivities = theme.challenges.length;
+      const breakdown = getStudentThemeBreakdown(user, progressList, theme);
       return {
         theme,
         items,
-        completed,
-        totalThemeActivities,
+        completed: breakdown.completedActivitiesCount,
+        totalThemeActivities: breakdown.totalActivitiesCount,
+        breakdown,
       };
     });
-  }, [enrichedProgress, progressList]);
+  }, [enrichedProgress, progressList, user]);
 
   // Orphan/other activities (if any)
   const orphanItems = useMemo(() => {
@@ -354,7 +353,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
-            {language === 'pt' ? 'Todos os Temas (7)' : 'All Themes (7)'}
+            {language === 'pt' ? `Todos os Temas (${ALL_THEMES.length})` : `All Themes (${ALL_THEMES.length})`}
           </button>
           {ALL_THEMES.map((th) => {
             const isSelected = selectedThemeFilter === th.id;

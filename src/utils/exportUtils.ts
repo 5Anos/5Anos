@@ -1,126 +1,38 @@
 import * as XLSX from 'xlsx';
 import { User, ActivityProgress, ThemeDefinition, Language } from '../types';
 import { ALL_THEMES, THEMES_BY_ID } from '../data/allThemesData';
+import {
+  getStudentThemeBreakdown,
+  getGlobalActivityStats,
+  getThemeMaxPoints,
+  getThemeActivityCount,
+  getTotalActivitiesCount,
+  getTotalChallengesCount,
+  getTotalQuizzesCount,
+  getGlobalCurricularMaxPoints,
+  ChallengeScoreDetail,
+  QuizScoreDetail,
+  StudentThemeBreakdown,
+  GlobalActivityStats,
+} from './progressCalculator';
 
-export interface ChallengeScoreDetail {
-  id: string;
-  title: string;
-  score: number;
-  completed: boolean;
-  attempts: number;
-}
+export {
+  getStudentThemeBreakdown,
+  getGlobalActivityStats,
+  getThemeMaxPoints,
+  getThemeActivityCount,
+  getTotalActivitiesCount,
+  getTotalChallengesCount,
+  getTotalQuizzesCount,
+  getGlobalCurricularMaxPoints,
+};
 
-export interface QuizScoreDetail {
-  id: string;
-  title: string;
-  officialScore: number; // 1.ª tentativa oficial
-  bestScore: number;
-  attempts: number;
-  completed: boolean;
-}
-
-export interface StudentThemeBreakdown {
-  theme: ThemeDefinition;
-  challenges: ChallengeScoreDetail[];
-  quiz: QuizScoreDetail;
-  totalPoints: number;
-  maxPoints: number;
-  percentage: number;
-  completedActivitiesCount: number;
-  totalActivitiesCount: number;
-}
-
-/**
- * Resolves a student's detailed breakdown of challenges and quiz for a given theme
- */
-export function getStudentThemeBreakdown(
-  student: User,
-  studentProgress: ActivityProgress[],
-  theme: ThemeDefinition
-): StudentThemeBreakdown {
-  const regularChallenges = theme.challenges.filter((c) => c.type !== 'final_quiz');
-  const quizChallenge = theme.challenges.find((c) => c.type === 'final_quiz');
-
-  const challenges: ChallengeScoreDetail[] = regularChallenges.map((c) => {
-    // Look up by exact activityId or potential variant/aliases
-    const record = studentProgress.find(
-      (p) =>
-        p.activityId === c.id ||
-        p.activityId === c.id.replace('desafio-', 'jogo-') ||
-        p.activityId === c.id.replace('jogo-', 'desafio-')
-    );
-
-    const score = record ? Math.max(0, Math.min(100, record.score ?? record.bestScore ?? (record.percentage !== undefined ? record.percentage : 0))) : 0;
-    const completed = record?.status === 'completed' || score > 0;
-    const attempts = record?.attempts ?? (completed ? 1 : 0);
-
-    return {
-      id: c.id,
-      title: c.title.pt,
-      score,
-      completed,
-      attempts,
-    };
-  });
-
-  // Quiz lookup
-  const expectedQuizId = quizChallenge?.id || `quiz-final-tema${theme.number}`;
-  const quizRecord = studentProgress.find(
-    (p) =>
-      p.activityId === expectedQuizId ||
-      (p.activityType === 'quiz' && (p.themeId === theme.id || p.themeId === String(theme.number))) ||
-      p.activityId.startsWith(`quiz-final-tema${theme.number}`)
-  );
-
-  const officialScore = quizRecord
-    ? Math.max(
-        0,
-        Math.min(
-          100,
-          quizRecord.firstAttemptScore ??
-            quizRecord.score ??
-            quizRecord.bestScore ??
-            (quizRecord.firstAttemptPercentage !== undefined ? quizRecord.firstAttemptPercentage : quizRecord.bestPercentage ?? 0)
-        )
-      )
-    : 0;
-
-  const bestScore = quizRecord
-    ? Math.max(0, Math.min(100, quizRecord.bestScore ?? quizRecord.score ?? officialScore))
-    : 0;
-
-  const quizAttempts = quizRecord?.attempts ?? (officialScore > 0 ? 1 : 0);
-  const quizCompleted = (quizRecord?.status === 'completed') || quizAttempts > 0 || officialScore > 0;
-
-  const quiz: QuizScoreDetail = {
-    id: expectedQuizId,
-    title: quizChallenge?.title?.pt || `Quiz Final: ${theme.title.pt}`,
-    officialScore,
-    bestScore,
-    attempts: quizAttempts,
-    completed: quizCompleted,
-  };
-
-  const challengePointsSum = challenges.reduce((acc, curr) => acc + curr.score, 0);
-  const totalPoints = challengePointsSum + officialScore;
-  const maxPoints = (challenges.length + 1) * 100; // e.g. 5 * 100 = 500 XP
-  const percentage = maxPoints > 0 ? Math.round((totalPoints / maxPoints) * 100) : 0;
-
-  const completedActivitiesCount =
-    challenges.filter((c) => c.completed).length + (quiz.completed ? 1 : 0);
-  const totalActivitiesCount = challenges.length + 1;
-
-  return {
-    theme,
-    challenges,
-    quiz,
-    totalPoints,
-    maxPoints,
-    percentage,
-    completedActivitiesCount,
-    totalActivitiesCount,
-  };
-}
+export type {
+  ChallengeScoreDetail,
+  QuizScoreDetail,
+  StudentThemeBreakdown,
+  GlobalActivityStats,
+};
 
 /**
  * Retorna a menção qualitativa oficial para os Quizzes de Aprendizagem e Avaliações
@@ -238,6 +150,7 @@ export function exportThemeScoresToExcel(
     const theme = THEMES_BY_ID[selectedThemeId] || ALL_THEMES.find((t) => t.id === selectedThemeId) || ALL_THEMES[0];
     const regularChallenges = theme.challenges.filter((c) => c.type !== 'final_quiz');
     const quizChallenge = theme.challenges.find((c) => c.type === 'final_quiz');
+    const maxThemePoints = getThemeMaxPoints(theme);
 
     const rows = filteredStudents.map((student, idx) => {
       const studentProgress = progressMap[student.id] || progressMap[student.email] || [];
@@ -261,7 +174,7 @@ export function exportThemeScoresToExcel(
       rowObj[`Quiz Final (1.ª Tentativa - Oficial) (0-100)`] = breakdown.quiz.officialScore;
       rowObj['Quiz Menção (1.ª Tentativa)'] = getQualitativeLevel(breakdown.quiz.officialScore);
       rowObj['Tentativas do Quiz'] = breakdown.quiz.attempts;
-      rowObj['Pontuação Total Tema (0-500 XP)'] = breakdown.totalPoints;
+      rowObj[`Pontuação Total Tema (0-${breakdown.maxPoints} XP)`] = breakdown.totalPoints;
       rowObj['Aproveitamento (%)'] = `${breakdown.percentage}%`;
       rowObj['Classificação Qualitativa'] = getQualitativeLevel(breakdown.percentage);
 
@@ -294,14 +207,16 @@ export function exportThemeScoresToExcel(
     return;
   }
 
-  // If ALL themes requested: Build a comprehensive master workbook with a Summary Sheet + 7 Theme Sheets
+  // If ALL themes requested: Build a comprehensive master workbook with a Summary Sheet + Theme Sheets
+  const totalActivitiesGlobal = getTotalActivitiesCount(ALL_THEMES);
+  const totalChallengesGlobal = getTotalChallengesCount(ALL_THEMES);
+  const totalQuizzesGlobal = getTotalQuizzesCount(ALL_THEMES);
+  const globalMaxPoints = getGlobalCurricularMaxPoints(ALL_THEMES);
+
   // 1. Summary Sheet (Resumo Global)
   const summaryRows = filteredStudents.map((student, idx) => {
     const studentProgress = progressMap[student.id] || progressMap[student.email] || [];
-
-    let totalThemeSum = 0;
-    let totalCompletedChallenges = 0;
-    let totalCompletedQuizzes = 0;
+    const stats = getGlobalActivityStats(student, studentProgress, ALL_THEMES);
 
     const rowObj: Record<string, any> = {
       'N.º': idx + 1,
@@ -312,24 +227,17 @@ export function exportThemeScoresToExcel(
       'Pontuação Global (XP)': student.points ?? 0,
     };
 
-    ALL_THEMES.forEach((theme) => {
-      const breakdown = getStudentThemeBreakdown(student, studentProgress, theme);
-      rowObj[`T${theme.number}: ${theme.title.pt.substring(0, 20)} (0-500)`] = breakdown.totalPoints;
-      totalThemeSum += breakdown.totalPoints;
-      totalCompletedChallenges += breakdown.challenges.filter((c) => c.completed).length;
-      if (breakdown.quiz.completed) totalCompletedQuizzes++;
+    stats.themeBreakdowns.forEach((breakdown) => {
+      rowObj[`T${breakdown.theme.number}: ${breakdown.theme.title.pt.substring(0, 20)} (0-${breakdown.maxPoints})`] = breakdown.totalPoints;
     });
 
-    const maxAllThemes = ALL_THEMES.length * 500; // 3500
-    const globalPercent = maxAllThemes > 0 ? Math.round((totalThemeSum / maxAllThemes) * 100) : 0;
-    const tipsAndBonusXP = Math.max(0, (student.points ?? 0) - totalThemeSum);
-
-    rowObj['Pontos Temas Curriculares (0-3500 XP)'] = totalThemeSum;
-    rowObj['Pontos Dicas & Bónus (XP)'] = tipsAndBonusXP;
-    rowObj['Desafios Concluídos (/28)'] = totalCompletedChallenges;
-    rowObj['Quizzes Concluídos (/7)'] = totalCompletedQuizzes;
-    rowObj['Média de Aproveitamento (%)'] = `${globalPercent}%`;
-    rowObj['Classificação Global'] = getQualitativeLevel(globalPercent);
+    rowObj[`Pontos Temas Curriculares (0-${stats.globalMaxPoints} XP)`] = stats.totalCurricularPoints;
+    rowObj['Pontos Dicas & Bónus (XP)'] = stats.bonusPoints;
+    rowObj[`Desafios Concluídos (/${stats.totalChallenges})`] = stats.completedChallenges;
+    rowObj[`Quizzes Concluídos (/${stats.totalQuizzes})`] = stats.completedQuizzes;
+    rowObj[`Atividades Concluídas (/${stats.totalActivities})`] = stats.completedActivities;
+    rowObj['Média de Aproveitamento (%)'] = `${stats.globalPercentage}%`;
+    rowObj['Classificação Global'] = getQualitativeLevel(stats.globalPercentage);
 
     return rowObj;
   });
@@ -347,6 +255,7 @@ export function exportThemeScoresToExcel(
     { wch: 24 }, // Pontos Dicas & Bónus
     { wch: 22 }, // Desafios Concluídos
     { wch: 20 }, // Quizzes Concluídos
+    { wch: 22 }, // Atividades Concluídas
     { wch: 24 }, // Média Aproveitamento
     { wch: 26 }, // Classificação
   ];
@@ -355,6 +264,7 @@ export function exportThemeScoresToExcel(
   // 2. Individual Theme Sheets (Tema 1 to 7)
   ALL_THEMES.forEach((theme) => {
     const regularChallenges = theme.challenges.filter((c) => c.type !== 'final_quiz');
+    const maxThemePoints = getThemeMaxPoints(theme);
 
     const themeRows = filteredStudents.map((student, idx) => {
       const studentProgress = progressMap[student.id] || progressMap[student.email] || [];
@@ -374,7 +284,7 @@ export function exportThemeScoresToExcel(
       rowObj[`Quiz Final (1.ª Tentativa - Oficial) (0-100)`] = breakdown.quiz.officialScore;
       rowObj['Quiz Menção (1.ª Tentativa)'] = getQualitativeLevel(breakdown.quiz.officialScore);
       rowObj['Tentativas Quiz'] = breakdown.quiz.attempts;
-      rowObj['Total Tema (0-500 XP)'] = breakdown.totalPoints;
+      rowObj[`Total Tema (0-${breakdown.maxPoints} XP)`] = breakdown.totalPoints;
       rowObj['Aproveitamento (%)'] = `${breakdown.percentage}%`;
       rowObj['Avaliação'] = getQualitativeLevel(breakdown.percentage);
 
@@ -403,14 +313,9 @@ export function exportThemeScoresToExcel(
   // 3. Dicas Diárias & Bónus Sheet
   const tipsRows = filteredStudents.map((student, idx) => {
     const studentProgress = progressMap[student.id] || progressMap[student.email] || [];
-    let totalCurricularSum = 0;
-    ALL_THEMES.forEach((theme) => {
-      const breakdown = getStudentThemeBreakdown(student, studentProgress, theme);
-      totalCurricularSum += breakdown.totalPoints;
-    });
+    const stats = getGlobalActivityStats(student, studentProgress, ALL_THEMES);
 
-    const tipsAndBonusXP = Math.max(0, (student.points ?? 0) - totalCurricularSum);
-    // Estimativa de dicas lidas/respondidas (25 a 50 pts por dia)
+    const tipsAndBonusXP = stats.bonusPoints;
     const estimatedTipsCount = tipsAndBonusXP > 0 ? Math.round(tipsAndBonusXP / 40) : 0;
 
     return {
@@ -421,7 +326,7 @@ export function exportThemeScoresToExcel(
       'ID Público': student.publicId || '',
       'Pontos Ganhos em Dicas Diárias & Bónus (XP)': tipsAndBonusXP,
       'Estimativa de Dicas Respondidas': estimatedTipsCount > 0 ? `~${estimatedTipsCount} dicas` : '0 dicas',
-      'Pontos Temas Curriculares (0-3500 XP)': totalCurricularSum,
+      [`Pontos Temas Curriculares (0-${stats.globalMaxPoints} XP)`]: stats.totalCurricularPoints,
       'Pontuação Global Acumulada (XP)': student.points ?? 0,
       'Última Atividade Realizada': student.lastActivity?.title || '—',
       'Data da Última Atividade': student.lastActivity?.timestamp ? new Date(student.lastActivity.timestamp).toLocaleString('pt-PT') : '—',
@@ -463,13 +368,9 @@ export function exportDailyTipsScoresToExcel(
 
   const rows = filteredStudents.map((student, idx) => {
     const studentProgress = progressMap[student.id] || progressMap[student.email] || [];
-    let totalCurricularSum = 0;
-    ALL_THEMES.forEach((theme) => {
-      const breakdown = getStudentThemeBreakdown(student, studentProgress, theme);
-      totalCurricularSum += breakdown.totalPoints;
-    });
+    const stats = getGlobalActivityStats(student, studentProgress, ALL_THEMES);
 
-    const tipsAndBonusXP = Math.max(0, (student.points ?? 0) - totalCurricularSum);
+    const tipsAndBonusXP = stats.bonusPoints;
     const estimatedTipsCount = tipsAndBonusXP > 0 ? Math.round(tipsAndBonusXP / 40) : 0;
 
     return {
@@ -480,7 +381,7 @@ export function exportDailyTipsScoresToExcel(
       'ID Público (Nickname)': student.publicId || '',
       'Pontos Dicas Diárias & Bónus (XP)': tipsAndBonusXP,
       'Dicas Realizadas (Estimativa)': estimatedTipsCount > 0 ? `~${estimatedTipsCount} dicas` : '0',
-      'Pontos Temas Curriculares (0-3500 XP)': totalCurricularSum,
+      [`Pontos Temas Curriculares (0-${stats.globalMaxPoints} XP)`]: stats.totalCurricularPoints,
       'Pontuação Global Total (XP)': student.points ?? 0,
       'Nível de Envolvimento': tipsAndBonusXP >= 200 ? 'Excelente (Muito Ativo)' : tipsAndBonusXP >= 50 ? 'Regular' : tipsAndBonusXP > 0 ? 'Iniciante' : 'Sem Participação',
       'Última Atividade Registada': student.lastActivity?.title || 'Sem registo',
@@ -511,7 +412,6 @@ export function exportDailyTipsScoresToExcel(
   XLSX.writeFile(workbook, fileName);
 }
 
-
 /**
  * Exports basic students list to Excel (.xlsx) file, optionally filtered by class (turma)
  */
@@ -520,7 +420,6 @@ export function exportStudentsToExcel(students: User[], selectedTurma?: string):
     ? students.filter((s) => (s.turma || '').trim() === selectedTurma.trim())
     : students;
 
-  // Prepare clean rows with school context
   const rows = filtered.map((s, idx) => ({
     'N.º': idx + 1,
     'Turma': s.turma || '5.º A',
@@ -533,10 +432,8 @@ export function exportStudentsToExcel(students: User[], selectedTurma?: string):
     'Data da Atividade': s.lastActivity?.timestamp ? new Date(s.lastActivity.timestamp).toLocaleString('pt-PT') : '',
   }));
 
-  // Create worksheet
   const worksheet = XLSX.utils.json_to_sheet(rows);
 
-  // Auto column widths
   worksheet['!cols'] = [
     { wch: 6 },  // N.º
     { wch: 10 }, // Turma
@@ -637,6 +534,7 @@ export function exportThemeScoresToCSV(
     : students;
 
   const regularChallenges = theme.challenges.filter((c) => c.type !== 'final_quiz');
+  const maxThemePoints = getThemeMaxPoints(theme);
 
   const headers = [
     'N.º',
@@ -647,7 +545,7 @@ export function exportThemeScoresToCSV(
     ...regularChallenges.map((c, i) => `Desafio ${i + 1}: ${c.title.pt}`),
     'Quiz Final (1.ª Tentativa Oficial)',
     'Tentativas Quiz',
-    'Total Tema (XP)',
+    `Total Tema (0-${maxThemePoints} XP)`,
     'Aproveitamento (%)',
     'Classificação',
   ];
