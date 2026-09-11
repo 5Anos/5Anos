@@ -59,28 +59,29 @@ if (typeof globalThis.localStorage === 'undefined') {
 }
 
 export const DEFAULT_THEME_VISIBILITY: ThemeVisibilityMap = {
+  'correio-eletronico': true,
   'tic-sociedade': true,
   'ergonomia': true,
   'seguranca': true,
   'palavras-passe': true,
-  'correio-eletronico': true,
   'navegar-internet': true,
   'direitos-autor': true,
 };
 
 export const DEFAULT_QUIZ_VISIBILITY: QuizVisibilityMap = {
-  'seguranca-digital': false,
-  'pesquisa-informacao': false,
-  'ergonomia-saude': false,
-  'modelagem-3d': false,
-  'algoritmos-programacao': false,
   'correio-eletronico': false,
-  'direitos-autor': false,
   'tic-sociedade': false,
   'ergonomia': false,
   'seguranca': false,
   'palavras-passe': false,
   'navegar-internet': false,
+  'direitos-autor': false,
+  // Backward compatibility aliases
+  'seguranca-digital': false,
+  'pesquisa-informacao': false,
+  'ergonomia-saude': false,
+  'modelagem-3d': false,
+  'algoritmos-programacao': false,
 };
 
 // Designated Teacher / Administrator accounts (Carla Oliveira)

@@ -670,48 +670,6 @@ export default function App() {
       );
     }
 
-    if (activeChallengeId === 'desafio-detetives-digitais') {
-      return (
-        <DigitalDetectivesGame
-          language={language}
-          onBack={returnToGames}
-          onFinish={(score, maxScore, percentage) => {
-            handleSaveProgress({
-              activityId: 'desafio-detetives-digitais',
-              activityType: 'challenge',
-              themeId: currentTheme.id,
-              status: 'completed',
-              score,
-              maxScore,
-              percentage,
-              activityTitle: language === 'pt' ? '🔎 Detetives Digitais (Vantagens e Desafios)' : '🔎 Digital Detectives (Advantages & Challenges)',
-            });
-          }}
-        />
-      );
-    }
-
-    if (activeChallengeId === 'desafio-missao-planeta-digital') {
-      return (
-        <PlanetDigitalMissionGame
-          language={language}
-          onBack={returnToGames}
-          onFinish={(score, maxScore, percentage) => {
-            handleSaveProgress({
-              activityId: 'desafio-missao-planeta-digital',
-              activityType: 'challenge',
-              themeId: currentTheme.id,
-              status: 'completed',
-              score,
-              maxScore,
-              percentage,
-              activityTitle: language === 'pt' ? '🌍 Missão Planeta Digital (Tecnologia e Ambiente)' : '🌍 Planet Digital Mission (Tech & Environment)',
-            });
-          }}
-        />
-      );
-    }
-
     if (activeChallengeId === 'desafio-tic-seguranca-cyberbullying') {
       return (
         <TicCyberbullyingGame

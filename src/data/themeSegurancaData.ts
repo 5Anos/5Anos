@@ -73,7 +73,7 @@ export const themeSegurancaData: ThemeDefinition = {
       example: {
         title: { pt: 'Mensagem de prémio', en: 'Prize message' },
         scenario: { pt: 'Receber um email a dizer que ganhaste um telemóvel mas tens de clicar num link.', en: 'Receiving an email saying you won a phone but must click a link.' },
-        tip: { pt: 'Nunca cliques em links de origem duvidosa.', en: 'Never click links from questionable sources.' },
+        tip: { pt: 'Verifica sempre a origem de links e mensagens antes de abrir e nunca cliques se parecerem suspeitos.', en: 'Always check the source of links and messages before opening and never click if they look suspicious.' },
       },
       funFact: {
         pt: 'O termo phishing vem de "fishing" (pescar), porque os burlões "pescam" vítimas com iscos falsos.',
@@ -218,8 +218,8 @@ export const themeSegurancaData: ThemeDefinition = {
       eyebrow: { pt: 'Na vida real', en: 'In real life' },
       h: { pt: 'Como reagir a uma mensagem desconhecida?', en: 'How to react to an unknown message?' },
       body: {
-        pt: 'Imagina que recebes uma mensagem com prémios falsos ou um link suspeito no teu telemóvel.<br><br><strong>Aplica imediatamente o protocolo de segurança digital:</strong><ul><li><strong>1. PARA e não cliques:</strong> Nunca abras links nem descarregues ficheiros de remetentes desconhecidos.</li><li><strong>2. NÃO respondas:</strong> Nunca envies o teu nome, idade, morada, escola ou palavras-passe.</li><li><strong>3. AVISA logo um adulto:</strong> Mostra a mensagem aos teus pais ou ao professor para verificarem a segurança.</li><li><strong>4. BLOQUEIA e apaga:</strong> Remove a mensagem e bloqueia o número para tua proteção.</li></ul>',
-        en: 'Imagine you receive a message with fake prizes or a suspicious link on your phone.<br><br><strong>Immediately apply the digital safety protocol:</strong><ul><li><strong>1. STOP and do not click:</strong> Never open links or download files from unknown senders.</li><li><strong>2. DO NOT reply:</strong> Never send your name, age, address, school, or passwords.</li><li><strong>3. REPORT to a trusted adult:</strong> Show the message to your parents or teacher to verify safety.</li><li><strong>4. BLOCK and delete:</strong> Remove the message and block the sender for your protection.</li></ul>',
+        pt: 'Imagina que recebes uma mensagem com prémios falsos ou um link suspeito no teu telemóvel.<br><br><strong>Aplica imediatamente o protocolo de segurança digital:</strong><ul><li><strong>1. PARA e não cliques:</strong> Não abras links suspeitos nem descarregues ficheiros sem verificar primeiro quem os enviou.</li><li><strong>2. NÃO respondas:</strong> Nunca envies o teu nome, idade, morada, escola ou palavras-passe.</li><li><strong>3. AVISA logo um adulto:</strong> Mostra a mensagem aos teus pais ou ao professor para verificarem se é segura ou falsa.</li><li><strong>4. GUARDA E BLOQUEIA:</strong> Tira uma captura de ecrã para guardar como prova (se for ofensiva ou suspeita) e bloqueia o remetente com a ajuda de um adulto.</li></ul>',
+        en: 'Imagine you receive a message with fake prizes or a suspicious link on your phone.<br><br><strong>Immediately apply the digital safety protocol:</strong><ul><li><strong>1. STOP and do not click:</strong> Do not open suspicious links or download files without verifying the sender first.</li><li><strong>2. DO NOT reply:</strong> Never send your name, age, address, school, or passwords.</li><li><strong>3. REPORT to a trusted adult:</strong> Show the message to your parents or teacher to verify if it is safe or fake.</li><li><strong>4. SAVE AND BLOCK:</strong> Take a screenshot as evidence (if offensive or suspicious) and block the sender with an adult\'s help.</li></ul>',
       },
       icon: '✉️',
     },
@@ -252,7 +252,7 @@ export const themeSegurancaData: ThemeDefinition = {
         desc: 'Avalia se cada comportamento online é seguro.',
         data: {
           items: [
-            { s: 'Devo clicar em qualquer link que recebo, mesmo de desconhecidos.', a: false, e: 'Nunca deves clicar em links de origem desconhecida.' },
+            { s: 'Devo clicar em qualquer link que recebo, mesmo de desconhecidos.', a: false, e: 'Não deves clicar em links desconhecidos ou suspeitos sem antes verificar a sua segurança com um adulto.' },
             { s: 'Uma rede Wi-Fi pública ou desconhecida pode apresentar riscos.', a: true, e: 'Uma rede Wi-Fi pública ou desconhecida pode apresentar riscos. Evita introduzir dados sensíveis em redes em que não confias.' },
             { s: 'Publicar uma foto de um colega sem autorização é correto.', a: false, e: 'Devemos sempre pedir autorização antes de partilhar imagens de outras pessoas.' },
             { s: 'Devo falar com um adulto de confiança se receber uma mensagem estranha.', a: true, e: 'Pedir ajuda a um adulto é sempre uma boa atitude nestas situações.' },
@@ -476,7 +476,7 @@ export const themeSegurancaData: ThemeDefinition = {
         en: ['Click immediately', 'Forward to everyone', 'Do not click and warn an adult', 'Reply with your data']
       },
       correctIndex: 2,
-      explanation: { pt: 'Nunca deves clicar em links de origem desconhecida.', en: 'You should never click links from unknown origins.' }
+      explanation: { pt: 'Não deves clicar em links suspeitos ou de desconhecidos sem antes confirmar a sua segurança com um adulto.', en: 'You should not click suspicious links or links from unknown senders without first verifying with an adult.' }
     },
     {
       id: 'seg-q3',
@@ -486,16 +486,16 @@ export const themeSegurancaData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'É ciberbullying; o Bernardo deve apoiar o colega, incentivar a guardar provas e pedir ajuda a um professor ou encarregado de educação.',
-          'É uma brincadeira habitual e o Bernardo deve continuar a partilhar as imagens no grupo.',
-          'É um problema técnico de ligação à Internet e o Bernardo deve reiniciar o router de casa.',
-          'É um jogo de equipa e o Bernardo deve responder com insultos ainda mais graves.',
+          'É ciberbullying; o Bernardo deve apoiar o colega, incentivar a guardar provas e pedir ajuda a um adulto.',
+          'É uma divergência passageira que os alunos devem resolver sozinhos sem envolver professores.',
+          'É um comportamento normal nas redes que não causa qualquer impacto negativo aos envolvidos.',
+          'É uma situação comum em que a melhor resposta é responder com mensagens ofensivas.',
         ],
         en: [
-          'It is cyberbullying; Bernardo should support his classmate, encourage saving evidence, and ask a teacher or guardian for help.',
-          'It is a normal joke and Bernardo should keep sharing the images in the group.',
-          'It is an internet connection technical issue and Bernardo should restart the home router.',
-          'It is a team game and Bernardo should reply with even worse insults.',
+          'It is cyberbullying; Bernardo should support his classmate, encourage saving evidence, and ask an adult for help.',
+          'It is a temporary disagreement that students should resolve on their own without teachers.',
+          'It is standard behavior online that causes no negative impact on those involved.',
+          'It is a common situation where the best reaction is replying with offensive messages.',
         ],
       },
       correctIndex: 0,
@@ -508,8 +508,8 @@ export const themeSegurancaData: ThemeDefinition = {
       id: 'seg-q4',
       question: { pt: 'Antes de publicares uma foto de outra pessoa deves:', en: 'Before publishing someone else\'s photo you should:' },
       options: {
-        pt: ['Publicar sem perguntar', 'Alterar a foto sem avisar', 'Enviar apenas a amigos, sem autorização', 'Pedir autorização'],
-        en: ['Publish without asking', 'Change the photo without warning', 'Send only to friends without permission', 'Ask permission']
+        pt: ['Publicar sem perguntar', 'Alterar a foto sem avisar', 'Enviar apenas a amigos, sem autorização', 'Pedir autorização à pessoa'],
+        en: ['Publish without asking', 'Change the photo without warning', 'Send only to friends without permission', 'Ask permission from the person']
       },
       correctIndex: 3,
       explanation: { pt: 'É preciso respeitar a privacidade e imagem dos outros.', en: 'It is necessary to respect the privacy and image of others.' }
@@ -522,16 +522,16 @@ export const themeSegurancaData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Apenas alteram a capacidade do disco rígido do computador da escola.',
-          'Fazem parte da sua pegada digital, pois são registos e conteúdos partilhados que podem permanecer acessíveis.',
-          'Apagam automaticamente todo o histórico de navegação anterior.',
-          'Aumentam a velocidade da ligação de fibra ótica de sua casa.',
+          'Ficam visíveis apenas no momento do envio e desaparecem de seguida',
+          'Fazem parte da sua pegada digital e podem permanecer acessíveis ao longo do tempo',
+          'São guardadas apenas na memória temporária do navegador do telemóvel',
+          'Afetam apenas as pessoas que comentaram o mesmo artigo na página',
         ],
         en: [
-          'They only change the hard drive capacity of the school computer.',
-          'They become part of her digital footprint, as shared posts and comments can remain accessible over time.',
-          'They automatically erase all previous web browsing history.',
-          'They increase the home fiber optic connection speed.',
+          'They remain visible only at the moment of sending and disappear afterwards',
+          'They form part of her digital footprint and can remain accessible over time',
+          'They are saved only in the temporary browser memory of the phone',
+          'They only affect people who commented on the exact same post',
         ],
       },
       correctIndex: 1,
@@ -554,8 +554,18 @@ export const themeSegurancaData: ThemeDefinition = {
       id: 'seg-q7',
       question: { pt: 'Sobre redes Wi-Fi públicas ou desconhecidas, qual é a atitude correta?', en: 'Regarding public or unknown Wi-Fi networks, what is the correct attitude?' },
       options: {
-        pt: ['Uma rede Wi-Fi pública ou desconhecida pode apresentar riscos; evita introduzir dados sensíveis em redes em que não confias', 'São sempre totalmente seguras sem qualquer tipo de risco', 'Permitem enviar dados de cartão de crédito sem qualquer preocupação', 'Não apresentam qualquer risco de segurança'],
-        en: ['A public or unknown Wi-Fi network can present risks; avoid entering sensitive data on networks you do not trust', 'They are always fully safe without any risk', 'They allow credit card data to be sent without concern', 'They present no security risks']
+        pt: [
+          'Podem apresentar riscos, pelo que se deve evitar aceder a dados sensíveis',
+          'São sempre completamente seguras porque utilizam ligações sem fios',
+          'Têm as mesmas garantias de privacidade do que a rede de casa da família',
+          'Eliminam automaticamente qualquer tentativa de interceção de dados',
+        ],
+        en: [
+          'They can present risks, so you should avoid accessing sensitive data',
+          'They are always completely secure because they use wireless connections',
+          'They have the same privacy guarantees as your home family network',
+          'They automatically eliminate any attempt at data interception',
+        ],
       },
       correctIndex: 0,
       explanation: { pt: 'Uma rede Wi-Fi pública ou desconhecida pode apresentar riscos. Evita introduzir dados sensíveis em redes em que não confias.', en: 'A public or unknown Wi-Fi network can present risks. Avoid entering sensitive data on networks you do not trust.' }

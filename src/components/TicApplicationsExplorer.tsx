@@ -140,13 +140,13 @@ const AREAS: ApplicationArea[] = [
       pt: [
         'Contactless (NFC): aproximação do cartão ou telemóvel ao terminal (TPA) por ondas de rádio curtas sem inserir o cartão.',
         'Catálogos Online 24h: pesquisa de produtos com fotos, preços e avaliações de outros clientes.',
-        'Circuito de 6 Fases da Compra Online: 1. Escolher ➔ 2. Encomendar ➔ 3. Pagar ➔ 4. Armazém ➔ 5. GPS ➔ 6. Entrega.',
+        'Circuito de 6 Fases da Compra Online: 1. Escolher ➔ 2. Encomendar ➔ 3. Pagar ➔ 4. Preparação em Armazém ➔ 5. Transporte (com rastreio) ➔ 6. Entrega.',
         'Cacifos Digitais & Rastreio: acompanhar onde vai a encomenda minuto a minuto através de um código.',
       ],
       en: [
         'Contactless NFC: short-range radio waves enable instant payment by hovering near the terminal.',
         'Online 24/7 Catalogs: product search with reviews, pricing, and high-resolution photos.',
-        '6 E-Commerce Stages: 1. Choose ➔ 2. Order ➔ 3. Pay ➔ 4. Pack ➔ 5. GPS Transit ➔ 6. Delivery.',
+        '6 E-Commerce Stages: 1. Choose ➔ 2. Order ➔ 3. Pay ➔ 4. Warehouse Preparation ➔ 5. Transport (with tracking) ➔ 6. Delivery.',
         'Smart Lockers & Tracking: follow parcels step-by-step with real-time tracking codes.',
       ],
     },
@@ -307,7 +307,7 @@ export const TicApplicationsExplorer: React.FC<TicApplicationsExplorerProps> = (
             </div>
           </div>
           <span className="text-xs font-bold text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200 shadow-2xs self-start sm:self-auto">
-            {language === 'pt' ? 'Tema 1: Aplicação das TIC' : 'Theme 1: ICT Applications'}
+            {language === 'pt' ? 'Tema 2: Aplicação das TIC' : 'Theme 2: ICT Applications'}
           </span>
         </div>
 

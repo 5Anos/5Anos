@@ -385,7 +385,7 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
           <div className="flex items-center justify-between gap-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/15 text-xs font-black uppercase tracking-wider text-emerald-300 backdrop-blur-sm border border-white/10">
               <ShieldCheck className="w-4 h-4 text-emerald-300" />
-              <span>{language === 'pt' ? 'Laboratório de Cibersegurança • Tema 2' : 'Cybersecurity Lab • Topic 2'}</span>
+              <span>{language === 'pt' ? 'Laboratório de Cibersegurança • Tema 4' : 'Cybersecurity Lab • Topic 4'}</span>
             </div>
             <AudioSpeakButton
               id="safe-or-dangerous-intro"

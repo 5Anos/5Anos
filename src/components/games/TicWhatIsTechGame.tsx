@@ -443,7 +443,7 @@ export const TicWhatIsTechGame: React.FC<TicWhatIsTechGameProps> = ({
         <div className="relative z-10 space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-xs font-black uppercase tracking-wider text-sky-300">
             <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-            <span>{language === 'pt' ? 'Desafio Interativo • Tema 1' : 'Interactive Challenge • Topic 1'}</span>
+            <span>{language === 'pt' ? 'Desafio Interativo • Tema 2' : 'Interactive Challenge • Topic 2'}</span>
           </div>
           <h1 className="text-xl sm:text-3xl font-black text-white">
             💡 {language === 'pt' ? 'É uma TIC? & Que Tecnologia Ajuda?' : 'Is it ICT? & Which Tech Helps?'}

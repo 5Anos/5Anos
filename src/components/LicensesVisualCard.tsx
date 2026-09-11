@@ -92,14 +92,14 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
               {/* Simple Description for 10-year-olds */}
               <p className="text-xs text-slate-700 leading-relaxed text-center bg-white/90 p-2.5 rounded-xl border border-amber-100 font-medium">
                 {language === 'pt'
-                  ? 'Tem dono! Não podes copiar nem usar sem pedir autorização a quem criou.'
-                  : 'It has an owner! You cannot copy or use it without asking permission.'}
+                  ? 'A obra está protegida por direitos de autor. Em regra, não podes copiar nem usar sem autorização de quem detém os direitos.'
+                  : 'The work is protected by copyright. As a rule, you cannot copy or use it without permission from the rights holder.'}
               </p>
 
               {/* Example Symbol */}
               <div className="text-center">
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-white border border-slate-200 text-slate-700 text-[11px] font-bold">
-                  <span>Ex.: © 2024</span>
+                  <span>Ex.: © 2026</span>
                 </span>
               </div>
 
@@ -113,8 +113,8 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
                 </div>
                 <p className="text-[11px] text-amber-950 leading-snug font-medium pl-5">
                   {language === 'pt'
-                    ? 'Não uses no teu trabalho sem ter a certeza de que é permitido.'
-                    : 'Do not use without making sure it is permitted.'}
+                    ? 'Não uses no teu trabalho escolar sem verificar se é permitido.'
+                    : 'Do not use in school assignments without checking if it is permitted.'}
                 </p>
               </div>
             </div>
@@ -123,7 +123,7 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
           {/* Verdict Banner */}
           <div className="p-2.5 bg-red-600 text-white text-center font-black text-xs flex items-center justify-center gap-1.5">
             <XCircle className="w-4 h-4 shrink-0" />
-            <span>{language === 'pt' ? 'Não podes usar livremente' : 'Cannot use freely'}</span>
+            <span>{language === 'pt' ? 'Requer autorização' : 'Requires permission'}</span>
           </div>
         </button>
 
@@ -165,15 +165,15 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
               {/* Subtitle Pill */}
               <div className="text-center">
                 <span className="inline-block px-3 py-1 rounded-full bg-[#dbeafe] border border-blue-200 text-blue-950 text-xs font-bold">
-                  {language === 'pt' ? 'Partilha com a mesma regra' : 'Share with same rule'}
+                  {language === 'pt' ? 'Partilha com a mesma licença' : 'Share with same license'}
                 </span>
               </div>
 
               {/* Simple Description */}
               <p className="text-xs text-slate-700 leading-relaxed text-center bg-white/90 p-2.5 rounded-xl border border-blue-100 font-medium">
                 {language === 'pt'
-                  ? 'Podes usar e até alterar este conteúdo, mas tens de partilhar o teu trabalho com a mesma licença.'
-                  : 'You can use and edit this content, but you must share your work with the same license.'}
+                  ? 'Modelo baseado nos direitos de autor que permite usar e alterar a obra, desde que partilhes as versões criadas com a mesma licença.'
+                  : 'A copyright-based model allowing use and modification, provided derived creations share the exact same license.'}
               </p>
 
               {/* Example Symbol */}
@@ -193,8 +193,8 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
                 </div>
                 <p className="text-[11px] text-blue-950 leading-snug font-medium pl-5">
                   {language === 'pt'
-                    ? 'Podes usar no trabalho, cumprindo as condições da licença.'
-                    : 'You can use it by respecting the license rules.'}
+                    ? 'Podes usar no trabalho escolar, cumprindo sempre as condições da licença.'
+                    : 'You can use it in school projects, always respecting the license terms.'}
                 </p>
               </div>
             </div>
@@ -242,15 +242,15 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
               {/* Subtitle Pill */}
               <div className="text-center">
                 <span className="inline-block px-3 py-1 rounded-full bg-[#dcfce7] border border-emerald-200 text-emerald-950 text-xs font-bold">
-                  {language === 'pt' ? 'Sem pagar por cada uso' : 'No per-use fee'}
+                  {language === 'pt' ? 'Sem taxa por cada uso' : 'No per-use fee'}
                 </span>
               </div>
 
               {/* Simple Description */}
               <p className="text-xs text-slate-700 leading-relaxed text-center bg-white/90 p-2.5 rounded-xl border border-emerald-100 font-medium">
                 {language === 'pt'
-                  ? 'Não pagas de cada vez que usas, mas atenção: nem sempre é grátis e pode ter regras!'
-                  : 'You do not pay per use, but beware: it is not always free and may have conditions!'}
+                  ? 'Não pagas uma taxa por cada utilização, mas a obra continua protegida e deves cumprir os termos da licença (nem sempre é grátis).'
+                  : 'You do not pay a fee each time you use it, but the work remains protected and you must follow license terms (it is not always free).'}
               </p>
 
               {/* Example Symbol */}
@@ -270,8 +270,8 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
                 </div>
                 <p className="text-[11px] text-emerald-950 leading-snug font-medium pl-5">
                   {language === 'pt'
-                    ? 'Lê sempre as regras do site para saber se podes usar no teu trabalho.'
-                    : 'Always read website terms to check if you can use it.'}
+                    ? 'Lê sempre as condições de utilização da licença para saber se e como podes usar no teu trabalho.'
+                    : 'Always read the license terms of use to know if and how you can use it in your project.'}
                 </p>
               </div>
             </div>
@@ -280,11 +280,11 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
           {/* Verdict Banner */}
           <div className="p-2.5 bg-amber-500 text-slate-950 text-center font-black text-xs flex items-center justify-center gap-1.5">
             <AlertCircle className="w-4 h-4 shrink-0 text-slate-950" />
-            <span>{language === 'pt' ? 'Verifica sempre as condições' : 'Always check conditions'}</span>
+            <span>{language === 'pt' ? 'Verifica os termos da licença' : 'Check license terms'}</span>
           </div>
         </button>
 
-        {/* 4. Utilização Totalmente Gratuita (CC0) */}
+        {/* 4. Domínio Público / CC0 */}
         <button
           type="button"
           onClick={() => setActiveCard(activeCard === 'cc0' ? null : 'cc0')}
@@ -299,7 +299,7 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
             {/* Header */}
             <div className="bg-[#e9d5ff] px-4 py-2.5 border-b border-purple-200 text-center">
               <h3 className="text-base font-black text-slate-900">
-                {language === 'pt' ? 'Totalmente Grátis (CC0)' : 'Totally Free (CC0)'}
+                {language === 'pt' ? 'Domínio Público / CC0' : 'Public Domain / CC0'}
               </h3>
             </div>
 
@@ -316,15 +316,15 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
               {/* Subtitle Pill */}
               <div className="text-center">
                 <span className="inline-block px-3 py-1 rounded-full bg-[#f3e8ff] border border-purple-200 text-purple-950 text-xs font-bold">
-                  {language === 'pt' ? 'Livre para todos' : 'Free for everyone'}
+                  {language === 'pt' ? 'Utilização livre' : 'Free to use'}
                 </span>
               </div>
 
               {/* Simple Description */}
               <p className="text-xs text-slate-700 leading-relaxed text-center bg-white/90 p-2.5 rounded-xl border border-purple-100 font-medium">
                 {language === 'pt'
-                  ? 'É 100% livre! Podes copiar, alterar e usar à vontade. É a opção mais segura para a escola.'
-                  : 'It is 100% free! You can copy, change, and use it freely. Safest choice for school.'}
+                  ? 'Obras cujos direitos expiraram (Domínio Público) ou foram dispensados pelo autor (CC0). Podes usar sem pedir autorização por direitos de autor.'
+                  : 'Works whose copyright expired (Public Domain) or was waived by the author (CC0). You can use without asking for copyright permission.'}
               </p>
 
               {/* Example Symbol */}
@@ -344,8 +344,8 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
                 </div>
                 <p className="text-[11px] text-purple-950 leading-snug font-medium pl-5">
                   {language === 'pt'
-                    ? 'Podes utilizar e partilhar sem pedir autorização por direitos de autor! É uma boa ideia indicar de onde retiraste a fonte.'
-                    : 'Use and share without asking for copyright permission! It is still nice to mention where you found it.'}
+                    ? 'Podes utilizar e partilhar no teu trabalho escolar. É sempre boa prática indicar o autor e a fonte original.'
+                    : 'You can use and share in school assignments. It is good practice to credit the original author and source.'}
                 </p>
               </div>
             </div>
@@ -354,7 +354,7 @@ export const LicensesVisualCard: React.FC<Props> = ({ language }) => {
           {/* Verdict Banner */}
           <div className="p-2.5 bg-emerald-600 text-white text-center font-black text-xs flex items-center justify-center gap-1.5">
             <Check className="w-4 h-4 shrink-0" />
-            <span>{language === 'pt' ? 'Podes utilizar sem pedir autorização!' : 'Can use without asking for permission!'}</span>
+            <span>{language === 'pt' ? 'Podes utilizar sem pedir autorização' : 'Can use without asking for permission'}</span>
           </div>
         </button>
       </div>

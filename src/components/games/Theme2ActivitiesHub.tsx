@@ -127,30 +127,30 @@ export const Theme2ActivitiesHub: React.FC<Theme2ActivitiesHubProps> = ({
             </h2>
             <p className="text-indigo-100 text-sm md:text-base font-medium mb-6 leading-relaxed">
               {language === 'pt'
-                ? 'Descobre como usar a tecnologia de forma inteligente, resolver 6 casos misteriosos e evitar armadilhas digitais.'
-                : 'Discover how to use technology wisely, solve 6 mysterious cases, and avoid digital traps.'}
+                ? 'Descobre como usar a tecnologia de forma inteligente, resolver 3 casos misteriosos e evitar armadilhas digitais.'
+                : 'Discover how to use technology wisely, solve 3 mysterious cases, and avoid digital traps.'}
             </p>
 
             {/* Bullets */}
             <div className="space-y-2 mb-6 text-xs md:text-sm text-indigo-50 font-medium">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-amber-300 shrink-0" />
-                <span>{language === 'pt' ? 'Vantagens e aprendizagem' : 'Advantages & learning'}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-amber-300 shrink-0" />
                 <span>{language === 'pt' ? 'Equilíbrio de ecrã e pausas' : 'Screen balance & breaks'}</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-amber-300 shrink-0" />
-                <span>{language === 'pt' ? 'Verificação de notícias e respeito' : 'Fact-checking & respect'}</span>
+                <span>{language === 'pt' ? 'Verificação de notícias falsas' : 'Fact-checking fake news'}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-amber-300 shrink-0" />
+                <span>{language === 'pt' ? 'Respeito e privacidade online' : 'Respect & online privacy'}</span>
               </div>
             </div>
           </div>
 
           <div className="pt-4 border-t border-indigo-400/40 flex items-center justify-between">
             <span className="text-xs font-bold text-indigo-200 flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5" /> ~6 min • 60 pts
+              <Clock className="w-3.5 h-3.5" /> ~4 min • 30 pts
             </span>
             <span className="px-4 py-2 rounded-xl bg-amber-400 text-slate-900 font-black text-sm flex items-center gap-2 group-hover:bg-amber-300 transition-colors shadow">
               <span>{language === 'pt' ? 'Jogar Agora' : 'Play Now'}</span>

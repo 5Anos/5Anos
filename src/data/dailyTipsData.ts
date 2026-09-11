@@ -3197,8 +3197,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Em bibliotecas de áudio com licenças Creative Commons ou sons sem direitos reservados (Royalty-Free)!",
-        "en": "In audio libraries offering Creative Commons or Royalty-Free licensed tracks!"
+        "pt": "Em bibliotecas de áudio com licenças abertas (como Creative Commons) ou de domínio público!",
+        "en": "In audio libraries offering open licenses (such as Creative Commons) or public domain!"
       },
       {
         "id": "c",
@@ -7397,8 +7397,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Em bibliotecas de áudio com licenças Creative Commons ou sons sem direitos reservados (Royalty-Free)!",
-        "en": "In audio libraries offering Creative Commons or Royalty-Free licensed tracks!"
+        "pt": "Em bibliotecas de áudio com licenças abertas (como Creative Commons) ou de domínio público!",
+        "en": "In audio libraries offering open licenses (such as Creative Commons) or public domain!"
       },
       {
         "id": "c",
@@ -11597,8 +11597,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Em bibliotecas de áudio com licenças Creative Commons ou sons sem direitos reservados (Royalty-Free)!",
-        "en": "In audio libraries offering Creative Commons or Royalty-Free licensed tracks!"
+        "pt": "Em bibliotecas de áudio com licenças abertas (como Creative Commons) ou de domínio público!",
+        "en": "In audio libraries offering open licenses (such as Creative Commons) or public domain!"
       },
       {
         "id": "c",
@@ -15797,8 +15797,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Em bibliotecas de áudio com licenças Creative Commons ou sons sem direitos reservados (Royalty-Free)!",
-        "en": "In audio libraries offering Creative Commons or Royalty-Free licensed tracks!"
+        "pt": "Em bibliotecas de áudio com licenças abertas (como Creative Commons) ou de domínio público!",
+        "en": "In audio libraries offering open licenses (such as Creative Commons) or public domain!"
       },
       {
         "id": "c",
@@ -19997,8 +19997,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Em bibliotecas de áudio com licenças Creative Commons ou sons sem direitos reservados (Royalty-Free)!",
-        "en": "In audio libraries offering Creative Commons or Royalty-Free licensed tracks!"
+        "pt": "Em bibliotecas de áudio com licenças abertas (como Creative Commons) ou de domínio público!",
+        "en": "In audio libraries offering open licenses (such as Creative Commons) or public domain!"
       },
       {
         "id": "c",
@@ -24197,8 +24197,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Em bibliotecas de áudio com licenças Creative Commons ou sons sem direitos reservados (Royalty-Free)!",
-        "en": "In audio libraries offering Creative Commons or Royalty-Free licensed tracks!"
+        "pt": "Em bibliotecas de áudio com licenças abertas (como Creative Commons) ou de domínio público!",
+        "en": "In audio libraries offering open licenses (such as Creative Commons) or public domain!"
       },
       {
         "id": "c",

@@ -47,40 +47,7 @@ interface DetectiveCase {
 const CASES_DATA: DetectiveCase[] = [
   {
     id: 1,
-    badge: { pt: 'Caso 1: Aprendizagem', en: 'Case 1: Learning' },
-    title: { pt: 'Rita e os Planetas do Espaço', en: 'Rita and the Space Planets' },
-    avatar: '👧',
-    character: { pt: 'Rita (10 anos)', en: 'Rita (10 years old)' },
-    sceneText: {
-      pt: 'A Rita está a fazer um trabalho escolar sobre os planetas. Encontra um site educativo com fotografias espaciais, simulações e textos claros sobre o Sistema Solar.',
-      en: 'Rita is doing a school project about planets. She finds an educational website with space photos, simulations, and clear texts about the Solar System.',
-    },
-    question: {
-      pt: 'Como pode a tecnologia ajudar a Rita neste caso?',
-      en: 'How can technology help Rita in this case?',
-    },
-    options: {
-      pt: [
-        'Ajuda-a a pesquisar informação de qualidade e a aprender de forma mais rica.',
-        'Faz o trabalho todo sozinha sem a Rita precisar de ler ou pensar.',
-        'Obriga-a a comprar telescópios caros na Internet.',
-      ],
-      en: [
-        'It helps her research quality information and learn more richly.',
-        'It does the whole assignment on its own without Rita reading or thinking.',
-        'It forces her to purchase expensive telescopes online.',
-      ],
-    },
-    correctIndex: 0,
-    feedback: {
-      pt: 'Excelente dedução! As TIC podem ajudar muito na aprendizagem porque permitem aceder a informação fiável, vídeos e recursos educativos em qualquer momento.',
-      en: 'Great deduction! ICT helps learning significantly by providing access to reliable information, videos, and educational resources anytime.',
-    },
-    categoryIcon: <BookOpen className="w-5 h-5 text-indigo-500" />,
-  },
-  {
-    id: 2,
-    badge: { pt: 'Caso 2: Excesso de Ecrã', en: 'Case 2: Screen Time Excess' },
+    badge: { pt: 'Caso 1: Excesso de Ecrã', en: 'Case 1: Screen Time Excess' },
     title: { pt: 'A Maratona de Jogos do Miguel', en: 'Miguel’s Gaming Marathon' },
     avatar: '👦',
     character: { pt: 'Miguel (10 anos)', en: 'Miguel (10 years old)' },
@@ -112,8 +79,8 @@ const CASES_DATA: DetectiveCase[] = [
     categoryIcon: <Clock className="w-5 h-5 text-amber-500" />,
   },
   {
-    id: 3,
-    badge: { pt: 'Caso 3: Informação Falsa', en: 'Case 3: False Information' },
+    id: 2,
+    badge: { pt: 'Caso 2: Informação Falsa', en: 'Case 2: False Information' },
     title: { pt: 'A Mensagem Misteriosa da Leonor', en: 'Leonor’s Mysterious Message' },
     avatar: '👧',
     character: { pt: 'Leonor (10 anos)', en: 'Leonor (10 years old)' },
@@ -145,74 +112,8 @@ const CASES_DATA: DetectiveCase[] = [
     categoryIcon: <Brain className="w-5 h-5 text-rose-500" />,
   },
   {
-    id: 4,
-    badge: { pt: 'Caso 4: Comunicação', en: 'Case 4: Communication' },
-    title: { pt: 'O Tomás e os Amigos Distantes', en: 'Tomás and Distant Friends' },
-    avatar: '👦',
-    character: { pt: 'Tomás (10 anos)', en: 'Tomás (10 years old)' },
-    sceneText: {
-      pt: 'O Tomás mudou recentemente de cidade e quer matar saudades e conversar com os antigos colegas da escola.',
-      en: 'Tomás recently moved to another city and wants to catch up and talk with his former schoolmates.',
-    },
-    question: {
-      pt: 'Qual é a grande vantagem das TIC nesta situação do Tomás?',
-      en: 'What is a major advantage of ICT in Tomás’s situation?',
-    },
-    options: {
-      pt: [
-        'Permitir comunicar por videochamada e mensagens em direto com pessoas que estão longe.',
-        'Fazer com que o Tomás nunca mais precise de ir às aulas presenciais.',
-        'Impedir que os antigos colegas façam novos amigos na escola.',
-      ],
-      en: [
-        'Allowing instant video calls and direct messages with people far away.',
-        'Making sure Tomás never needs to attend in-person classes again.',
-        'Preventing former classmates from making new friends at school.',
-      ],
-    },
-    correctIndex: 0,
-    feedback: {
-      pt: 'Brilhante! As TIC aproximam as pessoas e permitem comunicar facilmente através de vídeo e mensagens, mesmo quando vivemos em cidades ou países diferentes.',
-      en: 'Brilliant! ICT brings people closer and enables effortless communication through video and chats, even across long distances.',
-    },
-    categoryIcon: <Smartphone className="w-5 h-5 text-emerald-500" />,
-  },
-  {
-    id: 5,
-    badge: { pt: 'Caso 5: Equilíbrio e Rotina', en: 'Case 5: Balance and Routine' },
-    title: { pt: 'A Tarde de Vídeos da Sofia', en: 'Sofia’s Video Afternoon' },
-    avatar: '👧',
-    character: { pt: 'Sofia (10 anos)', en: 'Sofia (10 years old)' },
-    sceneText: {
-      pt: 'A Sofia tem um trabalho escolar importante para fazer, mas passa toda a tarde a ver vídeos e só começa o trabalho tarde à noite, já cheia de sono.',
-      en: 'Sofia has an important school assignment, but spends the entire afternoon watching short videos and only starts working late at night, feeling exhausted.',
-    },
-    question: {
-      pt: 'Qual seria uma escolha mais responsável e equilibrada para a Sofia?',
-      en: 'What would be a more responsible and balanced choice for Sofia?',
-    },
-    options: {
-      pt: [
-        'Continuar a ver vídeos até à hora de dormir e esquecer o trabalho.',
-        'Organizar o tempo: fazer primeiro o estudo e reservar momentos para descanso e lazer digital.',
-        'Deixar de fazer trabalhos escolares para sempre.',
-      ],
-      en: [
-        'Keep watching videos until bedtime and forget the homework.',
-        'Organize time: finish schoolwork first and allocate dedicated moments for rest and digital fun.',
-        'Stop doing school assignments permanently.',
-      ],
-    },
-    correctIndex: 1,
-    feedback: {
-      pt: 'Excelente! O segredo é a organização: quando dividimos bem o tempo entre deveres, lazer, família e descanso, aproveitamos a tecnologia sem prejudicar a escola e a saúde.',
-      en: 'Excellent! The secret is organization: when we balance duties, recreation, family, and sleep, we enjoy technology without hurting health or school.',
-    },
-    categoryIcon: <ShieldCheck className="w-5 h-5 text-sky-500" />,
-  },
-  {
-    id: 6,
-    badge: { pt: 'Caso 6: Respeito e Cidadania', en: 'Case 6: Respect & Citizenship' },
+    id: 3,
+    badge: { pt: 'Caso 3: Respeito e Cidadania', en: 'Case 3: Respect & Citizenship' },
     title: { pt: 'A Fotografia Enviada ao João', en: 'The Photo Sent to João' },
     avatar: '👦',
     character: { pt: 'João (10 anos)', en: 'João (10 years old)' },
@@ -298,7 +199,7 @@ export const DigitalDetectivesGame: React.FC<DigitalDetectivesGameProps> = ({
   };
 
   const getRankBadge = (pts: number) => {
-    if (pts >= 50) {
+    if (pts >= 30) {
       return {
         title: language === 'pt' ? 'Super Detetive Digital 🕵️' : 'Super Digital Detective 🕵️',
         desc:
@@ -308,7 +209,7 @@ export const DigitalDetectivesGame: React.FC<DigitalDetectivesGameProps> = ({
         color: 'from-amber-400 to-amber-600 text-amber-950',
       };
     }
-    if (pts >= 30) {
+    if (pts >= 20) {
       return {
         title: language === 'pt' ? 'Bom Detetive Digital ⭐' : 'Good Digital Detective ⭐',
         desc:
@@ -357,7 +258,7 @@ export const DigitalDetectivesGame: React.FC<DigitalDetectivesGameProps> = ({
               <span className="block text-xs font-bold text-amber-700 uppercase tracking-wider mb-1">
                 {language === 'pt' ? 'Pontos de Detetive' : 'Detective Points'}
               </span>
-              <span className="text-3xl font-black text-amber-800">{score} / 60</span>
+              <span className="text-3xl font-black text-amber-800">{score} / {totalCases * 10}</span>
             </div>
             <div className="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-4">
               <span className="block text-xs font-bold text-emerald-700 uppercase tracking-wider mb-1">
@@ -377,14 +278,6 @@ export const DigitalDetectivesGame: React.FC<DigitalDetectivesGameProps> = ({
             </h3>
             <ul className="space-y-2.5 text-sm md:text-base text-slate-700">
               <li className="flex items-start gap-2.5">
-                <span className="text-lg">💡</span>
-                <span>
-                  {language === 'pt'
-                    ? 'As TIC são ferramentas fantásticas para aprender, pesquisar e comunicar com quem está longe.'
-                    : 'ICT tools are fantastic for learning, researching, and communicating with distant people.'}
-                </span>
-              </li>
-              <li className="flex items-start gap-2.5">
                 <span className="text-lg">⏳</span>
                 <span>
                   {language === 'pt'
@@ -393,11 +286,19 @@ export const DigitalDetectivesGame: React.FC<DigitalDetectivesGameProps> = ({
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
+                <span className="text-lg">🔍</span>
+                <span>
+                  {language === 'pt'
+                    ? 'Devemos sempre verificar se uma informação ou notícia é verdadeira antes de a partilhar com os outros.'
+                    : 'We must always verify if information or news is true before sharing it with others.'}
+                </span>
+              </li>
+              <li className="flex items-start gap-2.5">
                 <span className="text-lg">🛡️</span>
                 <span>
                   {language === 'pt'
-                    ? 'Devemos sempre verificar se a informação é verdadeira antes de partilhar e respeitar a privacidade dos colegas.'
-                    : 'We must always verify if information is true before sharing and strictly respect others’ privacy.'}
+                    ? 'Respeitar a privacidade e os sentimentos dos colegas na Internet é fundamental para a boa cidadania digital.'
+                    : 'Respecting peers’ privacy and feelings online is essential for good digital citizenship.'}
                 </span>
               </li>
             </ul>

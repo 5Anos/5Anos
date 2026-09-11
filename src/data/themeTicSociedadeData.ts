@@ -33,8 +33,8 @@ export const themeTicSociedadeData: ThemeDefinition = {
       eyebrow: { pt: 'Aplicação das TIC', en: 'ICT Applications' },
       h: { pt: 'As TIC na Escola, Saúde, Transportes, Comércio e Ambiente', en: 'ICT in School, Health, Transport, Commerce & Environment' },
       body: {
-        pt: 'As Tecnologias da Informação e Comunicação estão presentes nos momentos mais importantes da sociedade moderna. Em cada setor, cumprem uma missão essencial:<br><br><ul><li><strong>🏫 Escola e Estudo:</strong> Plataformas digitais (trabalhos e avisos), catálogos da biblioteca em segundos, quadros interativos e caderneta digital escolar.</li><li><strong>🩺 Saúde e Medicina:</strong> Processos clínicos eletrónicos (fichas de saúde digitais como o Registo de Saúde Eletrónico, que reúnem com segurança o historial médico, consultas e vacinas para profissionais de saúde autorizados), consultas por telemedicina e robôs cirúrgicos de precisão (que auxiliam os cirurgiões humanos, sem os substituir).</li><li><strong>🚗 Transportes e Mobilidade:</strong> O sistema <em>GPS</em> recebe sinais de satélites no espaço para calcular a localização exata, encontrar o trajeto mais rápido e permitir o seguimento de transportes em tempo real.</li><li><strong>💳 Comércio e Pagamentos:</strong> Pagamentos <em>Contactless (NFC)</em> por aproximação a muito curta distância e o circuito das compras online (escolha, encomenda, pagamento seguro, separação em armazém, transporte com seguimento e entrega ao destinatário).</li><li><strong>🌾 Agricultura, Indústria e Ambiente:</strong> Sensores de humidade de solo (IoT) que poupam milhares de litros de água, robôs industriais e satélites de previsão meteorológica.</li></ul>',
-        en: 'ICT powers the most vital sectors of our society:<br><br><ul><li><strong>🏫 School & Study:</strong> Digital platforms, instant library catalogs, interactive smartboards, and online student records.</li><li><strong>🩺 Healthcare & Medicine:</strong> Electronic health records (such as centralized digital records consolidating medical history, appointments, and vaccines securely for authorized healthcare professionals), remote telemedicine, and precision surgical robotic tools (assisting, never replacing doctors).</li><li><strong>🚗 Transport & Mobility:</strong> Satellite GPS receiver systems for turn-by-turn routing, optimal navigation, and real-time public transit tracking.</li><li><strong>💳 Commerce & Payments:</strong> Tap-to-pay Contactless (NFC) via very short-range wireless communication and the e-commerce fulfillment cycle (item selection, ordering, secure checkout, warehouse dispatch, tracked transport, and delivery).</li><li><strong>🌾 Agriculture, Industry & Environment:</strong> IoT soil moisture sensors saving water, industrial robotics, and climate monitoring satellites.</li></ul>',
+        pt: 'As Tecnologias da Informação e Comunicação estão presentes nos momentos mais importantes da sociedade moderna. Em cada setor, cumprem uma missão essencial:<br><br><ul><li><strong>🏫 Escola e Estudo:</strong> Plataformas digitais (trabalhos e avisos), catálogos da biblioteca em segundos, quadros interativos e caderneta digital escolar.</li><li><strong>🩺 Saúde e Medicina:</strong> Processos clínicos eletrónicos (fichas de saúde digitais como o Registo de Saúde Eletrónico, que reúnem com segurança o historial médico, consultas e vacinas para profissionais de saúde autorizados), consultas por telemedicina e robôs cirúrgicos de precisão (que auxiliam os cirurgiões humanos, sem os substituir).</li><li><strong>🚗 Transportes e Mobilidade:</strong> O sistema <em>GPS</em> calcula a localização através de sinais de satélite e, em conjunto com redes de comunicação e aplicações, ajuda a encontrar os melhores trajetos e a acompanhar os transportes em tempo real.</li><li><strong>💳 Comércio e Pagamentos:</strong> Pagamentos <em>Contactless (NFC)</em> por aproximação a muito curta distância e o circuito das compras online (escolha, encomenda, pagamento seguro, separação em armazém, transporte com seguimento e entrega ao destinatário).</li><li><strong>🌾 Agricultura, Indústria e Ambiente:</strong> Sensores de humidade de solo (IoT) que poupam milhares de litros de água, robôs industriais e satélites de previsão meteorológica.</li></ul>',
+        en: 'ICT powers the most vital sectors of our society:<br><br><ul><li><strong>🏫 School & Study:</strong> Digital platforms, instant library catalogs, interactive smartboards, and online student records.</li><li><strong>🩺 Healthcare & Medicine:</strong> Electronic health records (such as centralized digital records consolidating medical history, appointments, and vaccines securely for authorized healthcare professionals), remote telemedicine, and precision surgical robotic tools (assisting, never replacing doctors).</li><li><strong>🚗 Transport & Mobility:</strong> The <em>GPS</em> system determines exact location via satellite signals and, combined with communication networks and apps, helps find optimal routes and track public transit in real time.</li><li><strong>💳 Commerce & Payments:</strong> Tap-to-pay Contactless (NFC) via very short-range wireless communication and the e-commerce fulfillment cycle (item selection, ordering, secure checkout, warehouse dispatch, tracked transport, and delivery).</li><li><strong>🌾 Agriculture, Industry & Environment:</strong> IoT soil moisture sensors saving water, industrial robotics, and climate monitoring satellites.</li></ul>',
       },
       icon: '🌐',
     },
@@ -160,20 +160,20 @@ export const themeTicSociedadeData: ThemeDefinition = {
         en: 'ICT Applications in Society',
       },
       shortDesc: {
-        pt: 'Compreende como a escola, a saúde, os transportes (GPS), os pagamentos contactless (NFC) e os sensores IoT transformam o nosso quotidiano.',
-        en: 'Explore how school, health, GPS transport, contactless NFC payments, and IoT sensors transform our daily lives.',
+        pt: 'Compreende como a escola, a saúde, os transportes (GPS e redes), os pagamentos contactless (NFC) e os sensores IoT transformam o nosso quotidiano.',
+        en: 'Explore how school, health, GPS and connected transport, contactless NFC payments, and IoT sensors transform our daily lives.',
       },
       icon: '🌐',
       explanation: {
         pt: [
           'Na saúde, as TIC permitem teleconsultas à distância e auxiliam cirurgiões com robôs de alta precisão.',
-          'Nos transportes, o GPS recebe sinais de satélite para orientar veículos e calcular trajetos.',
+          'Nos transportes, o GPS obtém a localização por satélite e, combinado com aplicações e redes móveis, permite orientar condutores e acompanhar autocarros ou comboios.',
           'No comércio, a tecnologia contactless utiliza ondas NFC para pagamentos rápidos sem inserir o cartão.',
           'Na agricultura e ambiente, sensores de humidade e IoT permitem regar apenas o necessário e poupar água.',
         ],
         en: [
           'In healthcare, ICT enables remote telemedicine and precision surgical robots.',
-          'In transport, GPS satellite signals provide turn-by-turn navigation.',
+          'In transport, GPS provides satellite location and, paired with apps and mobile networks, guides drivers and tracks public transit.',
           'In commerce, contactless NFC powers fast and secure card tapping.',
           'In agriculture and environment, IoT sensors monitor moisture and save water.',
         ],
@@ -303,16 +303,16 @@ export const themeTicSociedadeData: ThemeDefinition = {
           },
           options: {
             pt: [
-              'Servir apenas para ver vídeos infantis na Internet',
-              'Processar biliões de cálculos complexos para ciência e previsões climáticas',
-              'Imprimir folhas em papel mais depressa',
-              'Substituir os cadernos escolares na mochila',
+              'Guardar apenas fotografias e documentos de texto simples',
+              'Processar grandes volumes de cálculos científicos e meteorológicos',
+              'Imprimir folhas em papel com maior velocidade',
+              'Substituir a rede de Internet em todas as escolas',
             ],
             en: [
-              'Only play video games',
-              'Process billions of complex calculations for climate models and science',
-              'Print paper faster',
-              'Replace school backpack notebooks',
+              'Store only photographs and simple text documents',
+              'Process massive volumes of scientific and weather calculations',
+              'Print paper sheets at higher speeds',
+              'Replace the Internet network in all schools',
             ],
           },
           correctIndex: 1,
@@ -413,16 +413,16 @@ export const themeTicSociedadeData: ThemeDefinition = {
           },
           options: {
             pt: [
-              'Porque a Internet fecha aos fins de semana',
-              'Porque nem toda a informação encontrada online é correta e existem fake news',
-              'Porque os computadores só têm fotografias a preto e branco',
-              'Porque a Internet só funciona se falarmos em voz alta',
+              'Porque as páginas na Internet nunca são atualizadas',
+              'Porque nem toda a informação online é correta ou fiável',
+              'Porque os motores de busca mostram apenas artigos de ficção',
+              'Porque só quem sabe programar consegue aceder a sites',
             ],
             en: [
-              'Because the Internet closes on weekends',
-              'Because not all information online is correct and fake news exists',
-              'Because computers only have black and white photos',
-              'Because the Internet only works if we speak out loud',
+              'Because online pages are never updated',
+              'Because not all information online is accurate or reliable',
+              'Because search engines only show fiction articles',
+              'Because only programmers can access websites',
             ],
           },
           correctIndex: 1,
@@ -499,19 +499,19 @@ export const themeTicSociedadeData: ThemeDefinition = {
           },
           options: {
             pt: [
-              'Porque os aparelhos começam a falar sozinhos no caixote',
-              'Porque contêm substâncias tóxicas e baterias que poluem o solo e a água, e materiais valiosos que devem ser reciclados',
-              'Porque os camiões do lixo só levam objetos redondos',
-              'Porque o lixo comum é apenas para folhas de papel limpas',
+              'Porque contêm substâncias perigosas e materiais que devem ser reciclados',
+              'Porque consomem a eletricidade dos contentores de recolha de lixo',
+              'Porque o lixo comum é reservado exclusivamente para embalagens de vidro',
+              'Porque esses equipamentos devem ficar guardados para sempre em casa',
             ],
             en: [
-              'Because devices start talking in the garbage bin',
-              'Because they contain toxic substances and batteries that contaminate soil and water, and valuable materials to recycle',
-              'Because garbage trucks only pick up round items',
-              'Because regular trash is only for clean paper sheets',
+              'Because they contain hazardous substances and materials to recycle',
+              'Because they consume electricity from municipal garbage bins',
+              'Because regular trash is reserved exclusively for glass packaging',
+              'Because those devices must remain stored at home forever',
             ],
           },
-          correctIndex: 1,
+          correctIndex: 0,
           explanation: {
             pt: 'Os eletrónicos contêm metais pesados e baterias perigosas que contaminam a natureza se forem para aterros normais.',
             en: 'Electronics contain heavy metals and hazardous batteries that poison nature if thrown into ordinary landfills.',
@@ -525,16 +525,16 @@ export const themeTicSociedadeData: ThemeDefinition = {
           },
           options: {
             pt: [
-              'No caixote do lixo de casa ou na sarjeta da rua',
-              'No Ponto Eletrão, num Ecocentro municipal ou numa loja de eletrodomésticos',
-              'Enterrar na terra do jardim para virar adubo',
-              'Deitar num rio ou no mar',
+              'No contentor de lixo indiferenciado de casa',
+              'No Ponto Eletrão, num Ecocentro municipal ou numa loja de eletrónica',
+              'No ecoponto azul juntamente com o papel e o cartão',
+              'No ecoponto verde juntamente com as garrafas de vidro',
             ],
             en: [
-              'In the domestic kitchen trash or street gutter',
+              'In the domestic household garbage bin',
               'At a Ponto Eletrão bin, municipal Eco-center, or electronics store',
-              'Burying in garden soil to make fertilizer',
-              'Throwing it into a river or ocean',
+              'In the blue recycling bin along with paper and cardboard',
+              'In the green recycling bin along with glass bottles',
             ],
           },
           correctIndex: 1,
@@ -572,12 +572,54 @@ export const themeTicSociedadeData: ThemeDefinition = {
         en: '🔎 Digital Detectives (Advantages & Challenges)',
       },
       shortDesc: {
-        pt: 'Resolve 6 casos práticos sobre aprendizagem, pausas no tempo de ecrã, notícias falsas e respeito na utilização da tecnologia.',
-        en: 'Solve 6 practical cases on learning, screen time breaks, fake news, and respectful technology usage.',
+        pt: 'Resolve 3 casos práticos sobre pausas no tempo de ecrã, notícias falsas e respeito na utilização da tecnologia.',
+        en: 'Solve 3 practical cases on screen time breaks, fake news, and respectful technology usage.',
       },
-      durationMinutes: 6,
-      type: 'detectives',
+      durationMinutes: 4,
+      points: 100,
+      type: 'what_would_you_do',
       icon: '🔎',
+      gameData: {
+        type: 'mc',
+        title: 'Detetives Digitais: Vantagens e Desafios',
+        icon: '🔎',
+        xp: 100,
+        desc: 'Analisa 3 casos reais do dia a dia e escolhe a melhor decisão sobre tempo de ecrã, notícias falsas e respeito online.',
+        data: {
+          questions: [
+            {
+              q: 'O Miguel esteve a jogar no tablet durante quatro horas seguidas sem fazer qualquer pausa para descansar a vista, lanchar ou esticar as pernas. Como avalias esta situação?',
+              opts: [
+                'Excelente ideia — jogar muitas horas seguidas sem parar melhora a saúde e a visão',
+                'Atenção e cuidado — jogar é divertido, mas o excesso sem pausas prejudica o sono, a visão e a saúde',
+                'Perigo extremo — o tablet vai avariar e queimar os circuitos de imediato'
+              ],
+              c: 1,
+              e: 'Muito bem! É essencial fazer pausas regulares e equilibrar o tempo de ecrã com desporto, brincadeiras ao ar livre, convívio com amigos e descanso.'
+            },
+            {
+              q: 'A Leonor recebeu uma mensagem anónima a dizer: "Amanhã não há aulas na escola! Partilha esta mensagem com toda a gente!". O que deve fazer antes de partilhar?',
+              opts: [
+                'Reencaminhar logo a mensagem para todos os grupos de amigos e turmas da escola',
+                'Verificar primeiro com os pais ou professores se a informação é verdadeira antes de espalhar boatos',
+                'Alterar a mensagem para ficar mais assustadora e publicá-la nas redes sociais'
+              ],
+              c: 1,
+              e: 'Certíssimo! Na Internet encontramos informação não confirmada ou falsa. Devemos sempre verificar a veracidade das notícias com adultos e fontes oficiais.'
+            },
+            {
+              q: 'Um colega enviou ao João uma fotografia embaraçosa de outro aluno a tropeçar e pediu: "Partilha no grupo da turma para nos rirmos!". O que deve o João fazer?',
+              opts: [
+                'Não partilhar, proteger a privacidade do colega e explicar com respeito que não devemos gozar com os outros',
+                'Partilhar imediatamente em todos os grupos da escola para ganhar mais gostos e seguidores',
+                'Reenviar a foto em segredo para outros colegas durante o intervalo'
+              ],
+              c: 0,
+              e: 'Super detetive! Respeitar a privacidade e os sentimentos dos outros é essencial. Nunca devemos divulgar fotografias ou conteúdos que possam magoar ou humilhar alguém.'
+            }
+          ]
+        }
+      }
     },
     {
       id: 'desafio-missao-planeta-digital',
@@ -592,8 +634,60 @@ export const themeTicSociedadeData: ThemeDefinition = {
         en: 'Help the school protect the environment: learn to repair, reuse, and recycle e-waste at collection points and earn 100 Planet Points!',
       },
       durationMinutes: 8,
+      points: 100,
       type: 'planet_mission',
       icon: '🌍',
+      gameData: {
+        type: 'mc',
+        title: 'Missão Planeta Digital: Tecnologia e Ambiente',
+        icon: '🌍',
+        xp: 100,
+        desc: 'Descobre como prolongar a vida dos equipamentos, poupar energia, combater o lixo eletrónico e proteger o planeta.',
+        data: {
+          questions: [
+            {
+              q: 'A família do Martim comprou um computador novo. O computador antigo ainda funciona muito bem para escrever textos e navegar na Internet. Qual é a melhor atitude ecológica?',
+              opts: [
+                'Reutilizá-lo: doar a um familiar, colega, escola ou associação que precise dele',
+                'Deitar no contentor do lixo indiferenciado da cozinha misturado com restos',
+                'Guardar numa caixa fechada durante anos até ficar esquecido e estragar-se'
+              ],
+              c: 0,
+              e: 'Fantástico! A reutilização e doação prolongam a vida útil da tecnologia e evitam o desperdício de materiais e a criação de novo lixo.'
+            },
+            {
+              q: 'O portátil da Matilde tem uma tecla solta e o cabo do carregador com mau contacto, mas o ecrã e o processador estão ótimos. O que é mais ecológico e económico fazer?',
+              opts: [
+                'Levar a um técnico para reparar a tecla e o cabo, prolongando a vida útil do computador',
+                'Deitar o portátil para o lixo e pedir logo a compra de um computador novo topo de gama',
+                'Guardar o portátil numa gaveta e comprar logo outro sem tentar reparar'
+              ],
+              c: 0,
+              e: 'Brilhante! Reparar pequenos problemas mecânicos ou elétricos poupa matérias-primas preciosas e evita gastos desnecessários.'
+            },
+            {
+              q: 'Um telemóvel antigo com a placa eletrónica queimada avariou definitivamente e não tem qualquer reparação possível. Qual é o destino correto?',
+              opts: [
+                'Entregar num Ponto Eletrão, loja de eletrodomésticos ou ecocentro para reciclagem de REEE',
+                'Atirar para um terreno baldio ou para a berma da estrada',
+                'Deitar no lixo indiferenciado com os restantes resíduos domésticos'
+              ],
+              c: 0,
+              e: 'Muito bem! Os equipamentos eletrónicos estragados (REEE) contêm ouro, cobre, lítio e plástico que são recuperados quando entregues no Ponto Eletrão.'
+            },
+            {
+              q: 'Como podemos poupar energia elétrica e proteger o ambiente quando utilizamos o computador e o tablet no dia a dia?',
+              opts: [
+                'Desligar os aparelhos e não deixar carregadores ligados à tomada quando as baterias já estão a 100%',
+                'Deixar o computador ligado a noite inteira com jogos abertos sem ninguém a utilizar',
+                'Manter o ecrã ligado sem temporizador de suspensão mesmo quando não estamos no quarto'
+              ],
+              c: 0,
+              e: 'Excelente! Desligar equipamentos quando não estão a ser usados e retirar os carregadores das tomadas evita o consumo de energia "fantasma" e poupa o planeta.'
+            }
+          ]
+        }
+      }
     },
     {
       id: 'quiz-final-tema1',
@@ -604,8 +698,8 @@ export const themeTicSociedadeData: ThemeDefinition = {
         en: '🏆 Final Quiz: ICT in Society (10 Questions)',
       },
       shortDesc: {
-        pt: 'Testa todos os teus conhecimentos com 10 perguntas rigorosas e educativas sobre as TIC na Sociedade. Vale 100 XP!',
-        en: 'Test your mastery with 10 pedagogical questions covering all Theme 1 concepts. Worth 100 XP!',
+        pt: 'Testa todos os teus conhecimentos com 10 perguntas rigorosas e educativas sobre as TIC na Sociedade (Tema 2). Vale 100 XP!',
+        en: 'Test your mastery with 10 pedagogical questions covering all Theme 2 concepts. Worth 100 XP!',
       },
       durationMinutes: 10,
       type: 'final_quiz',
@@ -803,16 +897,16 @@ export const themeTicSociedadeData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Parti-lo antes de o deitar fora',
-          'Atirá-lo para qualquer contentor',
-          'Deitá-lo para a rua',
-          'Entregá-lo num local adequado para recolha e reciclagem',
+          'Guardar em casa até que se estrague por completo',
+          'Deitar no lixo indiferenciado com os restantes resíduos',
+          'Desmontar as peças para deitar no ecoponto amarelo',
+          'Entregá-lo num ponto de recolha próprio para reciclagem',
         ],
         en: [
-          'Break it before throwing it away',
-          'Throw it into any regular dumpster',
-          'Toss it onto the street',
-          'Take it to a dedicated collection and recycling point',
+          'Store it at home until it breaks down completely',
+          'Throw it into regular household trash with other waste',
+          'Dismantle parts to throw into yellow recycling bin',
+          'Take it to a dedicated collection point for recycling',
         ],
       },
       correctIndex: 3,
@@ -843,8 +937,8 @@ export const themeTicSociedadeData: ThemeDefinition = {
       },
       correctIndex: 1,
       explanation: {
-        pt: 'O GPS é utilizado nos transportes (carros, autocarros, comboios, aviões) para navegação, mapas e localização de percursos.',
-        en: 'GPS is used in transportation (cars, buses, trains, airplanes) for navigation, route mapping, and location tracking.',
+        pt: 'O sistema GPS determina a localização por satélite e, em conjunto com mapas e aplicações, é utilizado nos transportes para navegação e apoio aos percursos.',
+        en: 'The GPS system determines satellite location and, together with maps and apps, is used in transport for navigation and route planning.',
       },
     },
     {
@@ -855,15 +949,15 @@ export const themeTicSociedadeData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Usar vários ecrãs ao mesmo tempo durante muitas horas',
-          'Deixar de fazer todas as atividades ao ar livre',
-          'Usar ecrãs durante todo o dia sem parar',
+          'Desligar os aparelhos apenas quando a bateria acaba',
+          'Utilizar ecrãs apenas à noite antes de ir dormir',
+          'Substituir as conversas presenciais por mensagens',
           'Fazer pausas e equilibrar o tempo de ecrã com outras atividades',
         ],
         en: [
-          'Using multiple screens simultaneously for many hours',
-          'Stopping all outdoor activities',
-          'Using screens all day long without stopping',
+          'Turn off devices only when battery completely drains',
+          'Use screens only late at night before sleeping',
+          'Replace face-to-face talks exclusively with chat messages',
           'Taking breaks and balancing screen time with other activities',
         ],
       },

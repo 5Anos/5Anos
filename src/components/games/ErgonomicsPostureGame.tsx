@@ -103,8 +103,8 @@ const HABIT_SCENARIOS: HabitScenario[] = [
         },
         isBest: false,
         feedback: {
-          pt: '❌ Não é recomendado! Estudar horas seguidas sem pausas diminui a concentração e provoca contraturas nos ombros e cansaço visual.',
-          en: '❌ Not recommended! Long continuous screen sessions reduce concentration and cause muscular tension and eye strain.',
+          pt: '❌ Não é recomendado! Estudar horas seguidas sem pausas diminui a concentração e pode causar cansaço no corpo e na visão.',
+          en: '❌ Not recommended! Long continuous study sessions reduce concentration and can cause body and eye fatigue.',
         },
       },
       {
@@ -177,8 +177,8 @@ const HABIT_SCENARIOS: HabitScenario[] = [
         },
         isBest: true,
         feedback: {
-          pt: '✅ Exato! Pulsos direitos numa linha neutra reduzem a tensão nos tendões e previnem dores articulares.',
-          en: '✅ Exactly! Straight, neutral wrists minimize tendon strain and prevent repetitive joint soreness.',
+          pt: '✅ Exato! Pulsos direitos e alinhados ajudam a manter uma posição confortável e reduzem o esforço nas mãos.',
+          en: '✅ Exactly! Straight, aligned wrists help maintain a comfortable posture and reduce strain on hands.',
         },
       },
       {
@@ -188,8 +188,8 @@ const HABIT_SCENARIOS: HabitScenario[] = [
         },
         isBest: false,
         feedback: {
-          pt: '❌ Perigoso! Dobrar os pulsos para cima ou para baixo aumenta o atrito nos tendões das mãos.',
-          en: '❌ Dangerous! Bending wrists up or down compresses wrist nerves and tendons.',
+          pt: '❌ Incorreto! Dobrar os pulsos para cima ou para baixo cria tensão desnecessária nas mãos e nos pulsos.',
+          en: '❌ Incorrect! Bending wrists up or down creates unnecessary strain in hands and wrists.',
         },
       },
     ],
