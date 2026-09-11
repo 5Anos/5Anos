@@ -48,7 +48,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
       icon: '⚡',
     },
     {
-      eyebrow: { pt: 'Cidadania e Segurança', en: 'Citizenship & Safety' },
+      eyebrow: { pt: 'Cidadania', en: 'Citizenship' },
       h: { pt: 'Cyberbullying, Linha 800 21 90 90 e Ponto Eletrão', en: 'Cyberbullying, Helpline 800 21 90 90 & E-Waste' },
       body: {
         pt: '🛡️ <strong>Regra dos 5 Passos contra o Cyberbullying:</strong><br>1. 🛑 <strong>PARAR</strong> (não responder com insultos)<br>2. 📸 <strong>GUARDAR</strong> (fazer capturas de ecrã como prova)<br>3. 🚫 <strong>BLOQUEAR</strong> o contacto<br>4. 🚩 <strong>DENUNCIAR</strong> na plataforma<br>5. 🧑‍🏫 <strong>PEDIR AJUDA</strong> a pais, professores ou ligar para a <em>Linha Internet Segura (800 21 90 90 - Gratuita e Confidencial)</em>.<br><br>♻️ <strong>Lixo Eletrónico:</strong> Entrega equipamentos elétricos e eletrónicos e pilhas nos pontos de recolha adequados. Em Portugal, existem redes de recolha como o Ponto Eletrão.!',
