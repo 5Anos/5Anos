@@ -1172,7 +1172,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
         {activeTab === 'scores' && (
           <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-slate-50">
             {/* Top Toolbar */}
-            <div className="p-4 sm:p-5 bg-white border-b border-slate-200 shadow-2xs shrink-0 space-y-3.5">
+            <div className="p-3 sm:p-3.5 bg-white border-b border-slate-200 shadow-2xs shrink-0 space-y-2.5">
               {/* Row 1: Turmas Pills & Export Buttons */}
               <div className="flex items-center justify-between gap-3 flex-wrap">
                 <div className="flex items-center gap-1.5 flex-wrap">
@@ -1328,30 +1328,10 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                   />
                 </div>
               </div>
-
-              {/* Informative Evaluation Criteria Banner */}
-              <div className="p-2.5 bg-emerald-50/80 rounded-xl border border-emerald-200 text-xs text-emerald-900 flex items-center justify-between flex-wrap gap-2">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>
-                    {language === 'pt'
-                      ? 'Critério de Avaliação: Cada desafio e quiz vale até 100 pontos (0 a 100). No Quiz de Aprendizagem, a nota oficial é a 1.ª tentativa, ficando registadas as tentativas seguintes para histórico.'
-                      : 'Evaluation Criteria: Each challenge and quiz has up to 100 points. Learning Quiz grade is from 1st attempt.'}
-                  </span>
-                </div>
-                <span className="font-bold text-[11px] bg-emerald-200/70 text-emerald-900 px-2.5 py-0.5 rounded-md">
-                  {selectedThemeForScores === 'all'
-                    ? `${ALL_THEMES.length} Temas • ${getGlobalCurricularMaxPoints()} XP Curriculares`
-                    : (() => {
-                        const t = THEMES_BY_ID[selectedThemeForScores] || ALL_THEMES.find((item) => item.id === selectedThemeForScores) || ALL_THEMES[0];
-                        return `${getThemeActivityCount(t)} Atividades = ${getThemeMaxPoints(t)} XP`;
-                      })()}
-                </span>
-              </div>
             </div>
 
             {/* Table Area */}
-            <div className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-5 custom-scrollbar flex flex-col">
+            <div className="flex-1 min-h-0 p-3 sm:p-4 flex flex-col">
               {loadingProgress && Object.keys(progressMap).length === 0 ? (
                 <div className="p-12 text-center text-slate-500 flex flex-col items-center justify-center gap-3">
                   <RefreshCw className="w-8 h-8 animate-spin text-emerald-600" />
@@ -1383,8 +1363,8 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                   const regularChallenges = currentTheme.challenges.filter((c) => c.type !== 'final_quiz');
 
                   return (
-                    <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden flex flex-col">
-                      <div className="p-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2 flex-wrap shrink-0">
+                    <div className="flex-1 min-h-0 bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden flex flex-col">
+                      <div className="p-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2 flex-wrap shrink-0">
                         <div className="flex items-center gap-2">
                           <span className="w-6 h-6 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center">
                             {currentTheme.number}
@@ -1400,7 +1380,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                         </div>
                       </div>
 
-                      <div className="overflow-x-auto overflow-y-auto max-h-[50vh] sm:max-h-[56vh] custom-scrollbar">
+                      <div className="flex-1 min-h-0 overflow-x-auto overflow-y-auto custom-scrollbar">
                         <table className="w-full text-left text-sm border-collapse">
                           <thead className="bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider border-b border-slate-200 sticky top-0 z-20 shadow-xs">
                             <tr>
@@ -1568,8 +1548,8 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                 })()
               ) : (
                 // ALL THEMES OVERVIEW TABLE
-                <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden flex flex-col">
-                  <div className="p-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2 flex-wrap shrink-0">
+                <div className="flex-1 min-h-0 bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden flex flex-col">
+                  <div className="p-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2 flex-wrap shrink-0">
                     <div className="flex items-center gap-2">
                       <span className="w-6 h-6 rounded-lg bg-indigo-600 text-white font-black text-xs flex items-center justify-center">
                         🌐
@@ -1585,7 +1565,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                     </div>
                   </div>
 
-                  <div className="overflow-x-auto overflow-y-auto max-h-[50vh] sm:max-h-[56vh] custom-scrollbar">
+                  <div className="flex-1 min-h-0 overflow-x-auto overflow-y-auto custom-scrollbar">
                     <table className="w-full text-left text-sm border-collapse">
                       <thead className="bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider border-b border-slate-200 sticky top-0 z-20 shadow-xs">
                         <tr>
