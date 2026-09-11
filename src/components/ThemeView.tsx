@@ -299,7 +299,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                   <div className="flex items-center gap-2.5 flex-wrap">
                     <AudioSpeakButton
                       id={`theme-${theme.id}-step-${currentStepIndex}`}
-                      text={`${currentLesson.h[language]}. ${currentLesson.body[language]}`}
+                      text={`${currentLesson.h[language]}. ${currentLesson.body[language].replace(/<[^>]*>?/gm, ' ')}`}
                       language={language}
                       label={language === 'pt' ? 'Ouvir Conteúdo' : 'Listen Content'}
                       variant="pill"

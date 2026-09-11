@@ -57,7 +57,7 @@ const KNOWN_ACTIVITY_MAPPINGS: Record<
   },
   'tic-soc-tecnologia-ambiente': {
     themeId: 'tic-sociedade',
-    title: { pt: '5. Tecnologia e ambiente', en: '5. Technology and Environment' },
+    title: { pt: 'Tecnologia e ambiente', en: 'Technology and Environment' },
     shortDesc: { pt: 'Módulo 5: Lixo eletrónico, reciclagem e consumo responsável', en: 'Module 5: E-waste, recycling, and responsible use' },
     icon: '🌱',
     type: 'module',
@@ -202,6 +202,32 @@ const KNOWN_ACTIVITY_MAPPINGS: Record<
     title: { pt: 'Cenários da Vida Real: O Que Farias?', en: 'Real Life Scenarios: What Would You Do?' },
     shortDesc: { pt: 'Toma as melhores decisões em situações do quotidiano', en: 'Make the safest choices in everyday situations' },
     icon: '🤔',
+    type: 'challenge',
+  },
+  'desafio-tic-seguranca-cyberbullying': {
+    themeId: 'seguranca',
+    title: {
+      pt: 'Guardião Digital: Cyberbullying (5 Passos) & Linha 800 21 90 90',
+      en: 'Digital Guardian: Cyberbullying (5 Steps) & Helpline',
+    },
+    shortDesc: {
+      pt: 'Aprende a agir perante situações desconfortáveis na Internet, explora o caso da Ana e memoriza os 5 passos essenciais de segurança.',
+      en: 'Learn how to act against online harassment, explore Ana’s case, and master the 5 key safety steps.',
+    },
+    icon: '🛡️',
+    type: 'challenge',
+  },
+  'desafio-tic-pegada-ecra-lixo': {
+    themeId: 'seguranca',
+    title: {
+      pt: 'Publicarias Isto?',
+      en: 'Would You Post This?',
+    },
+    shortDesc: {
+      pt: 'Avalia o que é seguro publicar ou partilhar online: fotos, trabalhos escolares, dados pessoais e palavras-passe.',
+      en: 'Evaluate what is safe to post or share online: photos, schoolwork, personal details, and passwords.',
+    },
+    icon: '🌍',
     type: 'challenge',
   },
   'quiz-final-tema3': {

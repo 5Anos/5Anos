@@ -134,7 +134,9 @@ export function evaluateEligibleBadges(
       p.themeId === 'seguranca-digital' ||
       p.themeId === 'palavras-passe' ||
       p.activityId.startsWith('seg-') ||
-      p.activityId.startsWith('pass-')
+      p.activityId.startsWith('pass-') ||
+      p.activityId.startsWith('desafio-tic-seguranca') ||
+      p.activityId.startsWith('desafio-tic-pegada')
   );
   if (!existingAchievementIds.has('guardiao-digital') && safetyActivitiesDone.length >= 4) {
     toUnlock.push({ badgeId: 'guardiao-digital', bonus: 100, name: 'Guardião Digital' });

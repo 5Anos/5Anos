@@ -396,9 +396,43 @@ export const themeSegurancaData: ThemeDefinition = {
       }
     },
     {
-      id: 'quiz-final-seguranca',
+      id: 'desafio-tic-seguranca-cyberbullying',
       themeId: 'seguranca',
       number: 4,
+      title: {
+        pt: '🛡️ Guardião Digital: Cyberbullying (5 Passos) & Linha 800 21 90 90',
+        en: '🛡️ Digital Guardian: Cyberbullying (5 Steps) & Helpline',
+      },
+      shortDesc: {
+        pt: 'Aprende a agir perante situações desconfortáveis na Internet, explora o caso da Ana e memoriza os 5 passos essenciais de segurança.',
+        en: 'Learn how to act against online harassment, explore Ana’s case, and master the 5 key safety steps.',
+      },
+      durationMinutes: 6,
+      points: 100,
+      type: 'what_would_you_do',
+      icon: '🛡️',
+    },
+    {
+      id: 'desafio-tic-pegada-ecra-lixo',
+      themeId: 'seguranca',
+      number: 5,
+      title: {
+        pt: '🌍 Publicarias Isto?',
+        en: '🌍 Would You Post This?',
+      },
+      shortDesc: {
+        pt: 'Avalia o que é seguro publicar ou partilhar online: fotos, trabalhos escolares, dados pessoais e palavras-passe.',
+        en: 'Evaluate what is safe to post or share online: photos, schoolwork, personal details, and passwords.',
+      },
+      durationMinutes: 4,
+      points: 100,
+      type: 'safe_dangerous',
+      icon: '🌍',
+    },
+    {
+      id: 'quiz-final-seguranca',
+      themeId: 'seguranca',
+      number: 6,
       title: { pt: '🏆 Quiz de Aprendizagem: Segurança e Respeito (10 Questões)', en: '🏆 Learning Quiz: Security and Respect (10 Questions)' },
       shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas sobre o Tema de Segurança.', en: 'Comprehensive final assessment with 10 questions on Security.' },
       icon: '🏆',

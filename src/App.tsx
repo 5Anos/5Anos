@@ -677,7 +677,7 @@ export default function App() {
             handleSaveProgress({
               activityId: 'desafio-tic-seguranca-cyberbullying',
               activityType: 'challenge',
-              themeId: currentTheme.id,
+              themeId: currentTheme?.id || 'seguranca',
               status: 'completed',
               score,
               maxScore,
@@ -698,7 +698,7 @@ export default function App() {
             handleSaveProgress({
               activityId: 'desafio-tic-pegada-ecra-lixo',
               activityType: 'challenge',
-              themeId: currentTheme.id,
+              themeId: currentTheme?.id || 'seguranca',
               status: 'completed',
               score,
               maxScore,
