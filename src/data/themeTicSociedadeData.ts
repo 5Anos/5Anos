@@ -564,9 +564,41 @@ export const themeTicSociedadeData: ThemeDefinition = {
       icon: '💡',
     },
     {
-      id: 'quiz-final-tema1',
+      id: 'desafio-detetives-digitais',
       themeId: 'tic-sociedade',
       number: 2,
+      title: {
+        pt: '🔎 Detetives Digitais (Vantagens e Desafios)',
+        en: '🔎 Digital Detectives (Advantages & Challenges)',
+      },
+      shortDesc: {
+        pt: 'Resolve 6 casos práticos sobre aprendizagem, pausas no tempo de ecrã, notícias falsas e respeito na utilização da tecnologia.',
+        en: 'Solve 6 practical cases on learning, screen time breaks, fake news, and respectful technology usage.',
+      },
+      durationMinutes: 6,
+      type: 'detectives',
+      icon: '🔎',
+    },
+    {
+      id: 'desafio-missao-planeta-digital',
+      themeId: 'tic-sociedade',
+      number: 3,
+      title: {
+        pt: '🌍 Missão Planeta Digital (Tecnologia e Ambiente)',
+        en: '🌍 Planet Digital Mission (Tech & Environment)',
+      },
+      shortDesc: {
+        pt: 'Ajuda a escola a proteger o ambiente: aprende a reparar, reutilizar e reciclar lixo eletrónico no Ponto Eletrão e acumula 100 Pontos Planeta!',
+        en: 'Help the school protect the environment: learn to repair, reuse, and recycle e-waste at collection points and earn 100 Planet Points!',
+      },
+      durationMinutes: 8,
+      type: 'planet_mission',
+      icon: '🌍',
+    },
+    {
+      id: 'quiz-final-tema1',
+      themeId: 'tic-sociedade',
+      number: 4,
       title: {
         pt: '🏆 Avaliação Final: TIC na Sociedade (10 Questões)',
         en: '🏆 Final Quiz: ICT in Society (10 Questions)',

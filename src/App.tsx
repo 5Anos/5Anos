@@ -24,6 +24,8 @@ import { ErgonomicsTrueFalseGame } from './components/games/ErgonomicsTrueFalseG
 import { TicWhatIsTechGame } from './components/games/TicWhatIsTechGame';
 import { TicCyberbullyingGame } from './components/games/TicCyberbullyingGame';
 import { TicDigitalFootprintGame } from './components/games/TicDigitalFootprintGame';
+import { DigitalDetectivesGame } from './components/games/DigitalDetectivesGame';
+import { PlanetDigitalMissionGame } from './components/games/PlanetDigitalMissionGame';
 import { GenericChallengeGame } from './components/games/GenericChallengeGame';
 import { GenericHtmlGameRunner } from './components/games/GenericHtmlGameRunner';
 
@@ -662,6 +664,48 @@ export default function App() {
               maxScore,
               percentage,
               activityTitle: language === 'pt' ? 'É uma TIC? & Que Tecnologia Ajuda?' : 'Is it ICT? & Which Tech Helps?',
+            });
+          }}
+        />
+      );
+    }
+
+    if (activeChallengeId === 'desafio-detetives-digitais') {
+      return (
+        <DigitalDetectivesGame
+          language={language}
+          onBack={returnToGames}
+          onFinish={(score, maxScore, percentage) => {
+            handleSaveProgress({
+              activityId: 'desafio-detetives-digitais',
+              activityType: 'challenge',
+              themeId: currentTheme.id,
+              status: 'completed',
+              score,
+              maxScore,
+              percentage,
+              activityTitle: language === 'pt' ? '🔎 Detetives Digitais (Vantagens e Desafios)' : '🔎 Digital Detectives (Advantages & Challenges)',
+            });
+          }}
+        />
+      );
+    }
+
+    if (activeChallengeId === 'desafio-missao-planeta-digital') {
+      return (
+        <PlanetDigitalMissionGame
+          language={language}
+          onBack={returnToGames}
+          onFinish={(score, maxScore, percentage) => {
+            handleSaveProgress({
+              activityId: 'desafio-missao-planeta-digital',
+              activityType: 'challenge',
+              themeId: currentTheme.id,
+              status: 'completed',
+              score,
+              maxScore,
+              percentage,
+              activityTitle: language === 'pt' ? '🌍 Missão Planeta Digital (Tecnologia e Ambiente)' : '🌍 Planet Digital Mission (Tech & Environment)',
             });
           }}
         />

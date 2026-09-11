@@ -149,7 +149,10 @@ export interface ChallengeItem {
     | 'true_false'
     | 'find_error'
     | 'escape_room'
-    | 'order_sequence';
+    | 'order_sequence'
+    | 'interactive'
+    | 'detectives'
+    | 'planet_mission';
 }
 
 export interface LessonCard {
