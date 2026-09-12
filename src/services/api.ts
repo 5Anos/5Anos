@@ -906,6 +906,7 @@ export const api = {
 
     // 4. Calculate verified points dynamically from progress strictly matching curriculum catalog
     // Rule 1: Every challenge and quiz is worth 100 points maximum.
+    // Regra Fundamental: Só ganha 100 XP quando acertar em 100% de todas as questões/desafios. Menos de 100% dá 0 XP.
     // Rule 3: For Quiz de Aprendizagem, official score is permanently the 1st attempt score.
     // Rule 4: Discard any fabricated activities not in the official 5th grade curriculum
     let calculatedPoints = 0;
@@ -922,10 +923,10 @@ export const api = {
         const isQuiz = isLearningQuiz(p.activityId, p.activityType);
         if (isQuiz) {
           const official = p.firstAttemptScore ?? p.score ?? Math.round(((p.firstAttemptPercentage ?? p.percentage ?? 100) / 100) * 100);
-          calculatedPoints += Math.min(100, Math.max(0, official));
+          calculatedPoints += official === 100 ? 100 : 0;
         } else {
           const best = p.bestScore ?? p.score ?? Math.round(((p.bestPercentage ?? p.percentage ?? 100) / 100) * 100);
-          calculatedPoints += Math.min(100, Math.max(0, best));
+          calculatedPoints += best === 100 ? 100 : 0;
         }
       }
     }
@@ -1133,9 +1134,11 @@ export const api = {
     const isCompleted = (payload.status || 'completed') === 'completed';
 
     // Rule 1: Every challenge and quiz has a maximum score of 100 points/XP.
-    // Normalized score is between 0 and 100 based on finalPercentage.
+    // Regra Fundamental: Só ganha 100 XP / pontos quando acertar em 100% de todas as perguntas (finalPercentage === 100).
+    // Se tiver respostas incorretas (finalPercentage < 100), ganha 0 XP até repetir e acertar em todas.
     const normalizedMaxScore = 100;
     const normalizedScore = Math.max(0, Math.min(100, Math.round(finalPercentage ?? 100)));
+    const awardedPoints = normalizedScore === 100 ? 100 : 0;
 
     if (!existing) {
       // 1.ª tentativa (First Attempt)
@@ -1160,9 +1163,9 @@ export const api = {
       };
       progressList.push(existing);
 
-      // Points awarded for first completion (up to 100 XP)
+      // Points awarded only if 100% accuracy was achieved (100 XP)
       if (isCompleted) {
-        earnedPoints = normalizedScore;
+        earnedPoints = awardedPoints;
       }
     } else {
       // Tentativas seguintes (Subsequent Attempts - 2.ª, 3.ª, ...)
@@ -1195,18 +1198,17 @@ export const api = {
         // Tentativas de treino não atribuem novos pontos oficiais
         earnedPoints = 0;
       } else {
-        // Desafios regulares: os alunos podem melhorar o seu melhor resultado até 100 pontos
+        // Desafios regulares: os alunos podem repetir até atingir 100% (100 XP)
         const prevBest = existing.bestScore ?? 0;
+        const prevAwarded = prevBest === 100 ? 100 : 0;
         if (normalizedScore > prevBest) {
           existing.bestScore = normalizedScore;
           existing.bestPercentage = finalPercentage;
           existing.score = normalizedScore;
           existing.percentage = finalPercentage;
           existing.maxScore = normalizedMaxScore;
-          earnedPoints = Math.max(0, normalizedScore - prevBest);
-        } else {
-          earnedPoints = 0;
         }
+        earnedPoints = Math.max(0, awardedPoints - prevAwarded);
       }
     }
 

@@ -617,13 +617,17 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                         <span className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border ${
                           isFinalQuiz
                             ? getQuizMentionBadgeStyle(record.firstAttemptScore ?? record.score ?? 0).pillClass
-                            : 'text-emerald-700 bg-emerald-100 border-emerald-200'
+                            : (record.bestPercentage ?? record.percentage ?? 0) === 100
+                            ? 'text-emerald-700 bg-emerald-100 border-emerald-200'
+                            : 'text-amber-800 bg-amber-100 border-amber-300'
                         }`}>
                           <CheckCircle2 className="w-3.5 h-3.5" />
                           <span>
                             {isFinalQuiz
                               ? getQuizMention(record.firstAttemptScore ?? record.score ?? 0, language)
-                              : record.bestPercentage ? `${record.bestPercentage}%` : t.completedStatus}
+                              : record.bestPercentage !== undefined
+                              ? `${record.bestPercentage}%`
+                              : t.completedStatus}
                           </span>
                         </span>
                       ) : (
@@ -665,16 +669,25 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                             </span>
                           )
                         ) : isDone ? (
-                          <span className="text-[11px] font-bold text-emerald-700 flex items-center gap-1 mt-0.5">
-                            <Zap className="w-3 h-3 fill-current text-emerald-500" />
+                          <span className={`text-[11px] font-bold flex items-center gap-1 mt-0.5 ${
+                            (record?.bestPercentage ?? record?.percentage ?? 0) === 100
+                              ? 'text-emerald-700'
+                              : 'text-amber-800'
+                          }`}>
+                            <Zap className={`w-3 h-3 fill-current ${
+                              (record?.bestPercentage ?? record?.percentage ?? 0) === 100
+                                ? 'text-emerald-500'
+                                : 'text-amber-500'
+                            }`} />
                             <span>
-                              {record?.bestScore ?? record?.score ?? 100} / 100 XP {record?.attempts && record.attempts > 1 ? (language === 'pt' ? `(${record.attempts} tent.)` : `(${record.attempts} att.)`) : ''}
+                              {(record?.bestPercentage ?? record?.percentage ?? 0) === 100 ? '100 / 100 XP' : (language === 'pt' ? '0 / 100 XP (Repete para acertar todas!)' : '0 / 100 XP (Retry for 100%!)')}
+                              {record?.attempts && record.attempts > 1 ? (language === 'pt' ? ` • ${record.attempts} tent.` : ` • ${record.attempts} att.`) : ''}
                             </span>
                           </span>
                         ) : (
                           <span className="text-[11px] font-bold text-indigo-600 flex items-center gap-1 mt-0.5">
                             <Zap className="w-3 h-3 fill-current text-indigo-500" />
-                            <span>{language === 'pt' ? 'Vale 100 XP • Tentativas ilimitadas' : 'Worth 100 XP • Unlimited attempts'}</span>
+                            <span>{language === 'pt' ? 'Vale 100 XP (100% acertos) • Tentativas ilimitadas' : 'Worth 100 XP (100% score) • Unlimited attempts'}</span>
                           </span>
                         )}
                       </div>
