@@ -78,8 +78,11 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
     onClose?.();
   };
 
-  // Load status of today's tip from localStorage
+  // Load status of today's tip from localStorage and Cloud Firestore (multi-device sync)
   useEffect(() => {
+    let isCancelled = false;
+
+    // First check local cache for instantaneous UI responsiveness
     try {
       const raw = localStorage.getItem(todayStorageKey);
       if (raw) {
@@ -94,7 +97,34 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
       setSavedAnswer(null);
       setSelectedOptionId(null);
     }
-  }, [todayStorageKey]);
+
+    // Then check Cloud Firestore to ensure multi-device synchronization
+    if (user?.id) {
+      api.getDailyTipStatus(user.id, todayDateStr).then((cloudStatus) => {
+        if (isCancelled || !cloudStatus?.answered) return;
+        const answerRecord: StoredDailyAnswer = {
+          answered: true,
+          selectedOptionId: cloudStatus.selectedOptionId,
+          isCorrect: cloudStatus.isCorrect,
+          pointsEarned: cloudStatus.pointsEarned,
+          timestamp: cloudStatus.timestamp || new Date().toISOString(),
+        };
+        setSavedAnswer(answerRecord);
+        setSelectedOptionId(cloudStatus.selectedOptionId);
+        try {
+          localStorage.setItem(todayStorageKey, JSON.stringify(answerRecord));
+        } catch {
+          // ignore
+        }
+      }).catch((err) => {
+        console.warn('Notice loading daily tip status from cloud:', err);
+      });
+    }
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [todayStorageKey, user?.id, todayDateStr]);
 
   const hasAnsweredToday = !!savedAnswer?.answered;
 
@@ -122,7 +152,9 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
       if (user) {
         const res = await api.recordDailyTipBonus(
           `${todayTip.title[language]} (${isCorrect ? 'Acertou' : 'Participou'})`,
-          awardedPoints
+          awardedPoints,
+          todayDateStr,
+          { selectedOptionId, isCorrect }
         );
         if (res.success && onPointsAwarded) {
           onPointsAwarded(res.user, res.userPoints, res.achievements);

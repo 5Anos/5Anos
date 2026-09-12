@@ -1,11 +1,11 @@
 import React, { useState, useMemo } from 'react';
-import { Award, Sparkles, CheckCircle2, Circle, Clock, Printer, Shield, Mail, TrendingUp, Calendar, Trophy, Star, Zap, Layers, Filter, LayoutGrid, List } from 'lucide-react';
+import { Award, Sparkles, CheckCircle2, Clock, Printer, TrendingUp, Trophy, Layers, Filter, LayoutGrid, List } from 'lucide-react';
 import { User, ActivityProgress, UserAchievement, PointTransaction, Language } from '../types';
 import { translations } from '../i18n/translations';
 import { BADGES } from '../data/badgesData';
 import { ALL_THEMES } from '../data/allThemesData';
-import { quizGameTrophy, boyAvatarImg, girlAvatarImg } from '../data/themeImages';
-import { resolveActivityInfo, ResolvedActivityInfo } from '../utils/activityMetadata';
+import { quizGameTrophy } from '../data/themeImages';
+import { resolveActivityInfo } from '../utils/activityMetadata';
 import { getQuizMention, getQuizMentionBadgeStyle } from '../utils/exportUtils';
 import { getGlobalActivityStats, getStudentThemeBreakdown } from '../utils/progressCalculator';
 

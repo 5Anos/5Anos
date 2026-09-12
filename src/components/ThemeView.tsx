@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { BookOpen, Gamepad2, ArrowLeft, CheckCircle2, Circle, Clock, Play, ChevronRight, ChevronLeft, Sparkles, Trophy, Award, Zap, Lock, Eye, AlertCircle } from 'lucide-react';
+import { BookOpen, Gamepad2, ArrowLeft, CheckCircle2, Circle, Clock, Play, ChevronRight, ChevronLeft, Sparkles, Zap, Lock, Eye } from 'lucide-react';
 import { ThemeDefinition, ActivityProgress, Language } from '../types';
 import { translations } from '../i18n/translations';
-import { ThemeIllustration } from './illustrations/ThemeIllustrations';
 import { getThemeImage, getThemeStepImage, getChallengeImage } from '../data/themeImages';
 import { DosDontsPostureInfographicPT } from './DosDontsPostureInfographicPT';
 import { PostureCorrectionSimulator } from './PostureCorrectionSimulator';

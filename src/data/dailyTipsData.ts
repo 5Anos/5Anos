@@ -49,21 +49,21 @@ export interface DailyTicTip {
     pt: string;
     en: string;
   };
-  funFact?: {
+  funFact: {
     pt: string;
     en: string;
   };
-  isSpecialMilestone: boolean;
-  question?: {
+  question: {
     pt: string;
     en: string;
   };
-  options?: DailyTipOption[];
-  correctOptionId?: string;
-  explanation?: {
+  options: DailyTipOption[];
+  correctOptionId: string; // 'a' | 'b' | 'c' | 'd'
+  explanation: {
     pt: string;
     en: string;
   };
+  isSpecialMilestone?: boolean;
 }
 
 export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
@@ -122,18 +122,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Alimentar o rato do computador com fatias de queijo da serra para ele correr mais rápido.",
+        "en": "Feed the computer mouse slices of cheese so it runs faster across the desk."
       },
       {
         "id": "c",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       },
       {
         "id": "d",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       }
     ],
     "correctOptionId": "a",
@@ -192,23 +192,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "b",
-        "pt": "Costas direitas apoiadas no encosto, joelhos e cotovelos aproximadamente a 90° e pés bem assentes no chão!",
+        "pt": "Costas direitas apoiadas no encosto, joelhos e cotovelos a 90° e pés bem assentes no chão!",
         "en": "Straight back against the chair, knees and elbows at 90°, and feet flat on the floor!"
       },
       {
         "id": "c",
-        "pt": "Escrever com o teclado no colo enquanto a cabeça fica inclinada para baixo.",
-        "en": "Type with the keyboard on your lap while bending your neck downwards."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       },
       {
         "id": "d",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       }
     ],
     "correctOptionId": "b",
@@ -267,8 +267,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar numa mensagem não solicitada que pede a tua palavra-passe para atualizar a conta.",
-        "en": "Believe an unsolicited message asking for your password to update the account."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "b",
@@ -282,8 +282,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       }
     ],
     "correctOptionId": "c",
@@ -336,18 +336,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Porque deves evitar palavras-passe fáceis como '123456', 'benfica' ou a tua data de nascimento?",
-      "en": "Why should you avoid simple passwords like '123456', your soccer club, or your birthdate?"
+      "pt": "Na dica de hoje sobre \"123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar.\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"123456 is an extremely predictable password and is among the first combinations automated systems may try.\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
+        "pt": "Usar a palavra 'senha' como senha para ser super original.",
         "en": "Use the word 'password' as your password to be super original."
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
         "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
@@ -357,14 +357,14 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Porque programas automáticos de piratas informáticos (piratas informáticos (hackers)) conseguem adivinhá-las numa fração de segundo!",
-        "en": "Because automated hacker scripts can guess them in a tiny fraction of a second!"
+        "pt": "Programas automáticos usam listas de palavras comuns e sequências de teclado simples!",
+        "en": "Automated programs use lists of common words and simple keyboard sequences!"
       }
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Quanto mais longa e variada for a palavra-passe, mais segura e inviolável ela fica!",
-      "en": "The longer and more varied your password, the harder it is for anyone to break!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -422,8 +422,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "c",
@@ -502,13 +502,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
         "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
         "id": "d",
-        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus! '.",
-        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses! '."
+        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus!'.",
+        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses!'."
       }
     ],
     "correctOptionId": "b",
@@ -642,13 +642,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Usar um carregador com voltagem errada ou cabo danificado que pode sobreaquecer.",
-        "en": "Use a wrong voltage charger or damaged cable that can overheat."
+        "pt": "Meter o computador portátil no micro-ondas para carregar a bateria em 5 segundos.",
+        "en": "Put the laptop in the microwave to charge the battery in 5 seconds."
       },
       {
         "id": "b",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "c",
@@ -658,7 +658,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "d",
         "pt": "A RAM é rápida e temporária (apaga-se ao desligar); o SSD guarda ficheiros em definitivo!",
-        "en": "RAM is fast and temporary (it is cleared when the computer is switched off); the SSD stores files for the long term!"
+        "en": "RAM is fast and temporary (clears on shutdown); the SSD stores files permanently!"
       }
     ],
     "correctOptionId": "d",
@@ -732,8 +732,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       }
     ],
     "correctOptionId": "a",
@@ -861,13 +861,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada em segurança digital?",
+      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada nas aulas de TIC?",
       "en": "How does the ninja 'Pass-Phrase' technique taught in ICT work?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
         "en": "Yell the password out the window to make sure you memorized it."
       },
       {
@@ -888,8 +888,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Frases como 'O_Meu_Cao_Adora_99_Gelados! ' são gigantes para piratas informáticos mas fáceis para ti!",
-      "en": "Phrases like 'My_Dog_Loves_99_IceCreams! ' are tough for hackers yet effortless to recall!"
+      "pt": "Frases como 'O_Meu_Cao_Adora_99_Gelados!' são gigantes para hackers mas fáceis para ti!",
+      "en": "Phrases like 'My_Dog_Loves_99_IceCreams!' are tough for hackers yet effortless to recall!"
     }
   },
   {
@@ -963,7 +963,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico.",
+      "pt": "Foi introduzido por Ray Tomlinson em 1971 e hoje é conhecido em todo o mundo!",
       "en": "It was introduced by Ray Tomlinson in 1971 and is recognized worldwide today!"
     }
   },
@@ -1242,13 +1242,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       },
       {
         "id": "b",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "c",
@@ -1322,8 +1322,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "c",
@@ -1386,35 +1386,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Com quem deves partilhar as tuas palavras-passe secretas de jogos e contas?",
-      "en": "Who should you share your secret passwords for accounts and games with?"
+      "pt": "Na dica de hoje sobre \"Palavras-passe são como escovas de dentes: não se emprestam a ninguém!\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"Passwords are like toothbrushes: you do not lend them to anyone!\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Escrever a palavra-passe na lousa da sala de aula com giz vermelho gigante.",
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
         "en": "Write the password on the classroom chalkboard in giant red chalk."
       },
       {
         "id": "b",
-        "pt": "Apenas com os teus pais ou encarregados de educação; nunca com amigos nem colegas!",
-        "en": "Only with your parents or guardians; never with friends or schoolmates!"
+        "pt": "A tua palavra-passe é pessoal e intransmissível!",
+        "en": "Your password is personal and should not be shared!"
       },
       {
         "id": "c",
-        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas palavras-passe anotadas.",
+        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas senhas anotadas.",
         "en": "Stick 20 yellow post-its around your screen with all your passwords."
       },
       {
         "id": "d",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
         "en": "Yell the password out the window to make sure you memorized it."
       }
     ],
     "correctOptionId": "b",
     "explanation": {
-      "pt": "Mesmo o teu melhor amigo não deve ter a tua palavra-passe; uma amizade verdadeira respeita o segredo!",
-      "en": "Even best friends shouldn't know your password; genuine friendship respects privacy!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -1472,8 +1472,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "c",
@@ -1611,8 +1611,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Para que servem as licenças Creative Commons (CC)?",
-      "en": "What are Creative Commons (CC) licenses used for?"
+      "pt": "Para que servem as licenças Creative Commons (CC) que aprendeste nas aulas de TIC?",
+      "en": "What are Creative Commons (CC) licenses used for in ICT class?"
     },
     "options": [
       {
@@ -1692,8 +1692,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       },
       {
         "id": "b",
@@ -1707,8 +1707,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       }
     ],
     "correctOptionId": "b",
@@ -1767,8 +1767,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever com o teclado no colo enquanto a cabeça fica inclinada para baixo.",
-        "en": "Type with the keyboard on your lap while bending your neck downwards."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       },
       {
         "id": "b",
@@ -1917,28 +1917,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "É uma dupla proteção que pede a tua palavra-passe mais um código especial enviado por SMS ou aplicação!",
-        "en": "It is a double lock requiring your password plus a temporary code from SMS or an application!"
+        "pt": "É uma dupla proteção que pede a tua senha mais um código especial enviado por SMS ou app!",
+        "en": "It is a double lock requiring your password plus a temporary code from SMS or an app!"
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
         "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "c",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
+        "pt": "Usar a palavra 'senha' como senha para ser super original.",
         "en": "Use the word 'password' as your password to be super original."
       },
       {
         "id": "d",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
+        "pt": "Esconder a senha debaixo do tapete da entrada do quarto.",
         "en": "Hide the password under the welcome mat in your room."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Mesmo que um pirata informático descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro",
+      "pt": "Mesmo que um hacker descubra a tua senha, não consegue entrar sem o segundo código!",
       "en": "Even if someone discovers your password, they can't log in without the second code!"
     }
   },
@@ -1997,8 +1997,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "exe (ficheiro executável que pode instalar vírus no computador)!",
-        "en": "exe (executable file that can install malware on your machine)!"
+        "pt": ".exe (ficheiro executável que pode instalar vírus no computador)!",
+        "en": ".exe (executable file that can install malware on your machine)!"
       },
       {
         "id": "c",
@@ -2072,7 +2072,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
         "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
@@ -2227,13 +2227,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "d",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Alimentar o rato do computador com fatias de queijo da serra para ele correr mais rápido.",
+        "en": "Feed the computer mouse slices of cheese so it runs faster across the desk."
       }
     ],
     "correctOptionId": "a",
@@ -2292,8 +2292,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "b",
@@ -2362,13 +2362,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "isSpecialMilestone": false,
     "question": {
       "pt": "Porque deves desligar a partilha de localização (GPS) nas aplicações que não precisam dela?",
-      "en": "Why should you turn off GPS location sharing in applications that don't need it?"
+      "en": "Why should you turn off GPS location sharing in apps that don't need it?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar numa mensagem não solicitada que pede a tua palavra-passe para atualizar a conta.",
-        "en": "Believe an unsolicited message asking for your password to update the account."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "b",
@@ -2388,8 +2388,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Algumas aplicações precisam da localização para funcionar corretamente. Outras podem pedi-la sem ser essencial. Verifica se uma aplicação precisa realmente da tua localização antes de a autorizares.",
-      "en": "Only navigation applications actually need GPS; simple games and photo filters do not!"
+      "pt": "Apenas apps de mapas e transportes precisam de localização; jogos e filtros não necessitam!",
+      "en": "Only navigation apps actually need GPS; simple games and photo filters do not!"
     }
   },
   {
@@ -2436,35 +2436,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "O que é um 'Gestor de Palavras-passe' (Password Manager) e qual a sua grande vantagem?",
-      "en": "What is a 'password Manager' and what is its main superpower?"
+      "pt": "Na dica de hoje sobre \"Nunca repitas a mesma palavra-passe em todos os sites e aplicações!\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"Never reuse the same password on every website and app!\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
+        "pt": "Usar a palavra 'senha' como senha para ser super original.",
         "en": "Use the word 'password' as your password to be super original."
       },
       {
         "id": "b",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
+        "pt": "Esconder a senha debaixo do tapete da entrada do quarto.",
         "en": "Hide the password under the welcome mat in your room."
       },
       {
         "id": "c",
-        "pt": "Achar que os computadores são mágicos e adivinham quem tu és sem palavra-passe.",
+        "pt": "Achar que os computadores são mágicos e adivinham quem tu és sem senha.",
         "en": "Think computers are magic and guess who you are without passwords."
       },
       {
         "id": "d",
-        "pt": "É um cofre digital seguro que guarda e cria palavras-passe fortes para ti; Um gestor de palavras-passe pode guardar várias palavras-passe de forma protegida, para não teres de memorizar todas. A palavra-passe principal deve ser muito bem protegida.",
-        "en": "It is an encrypted digital vault storing strong passwords so you only memorize one master key!"
+        "pt": "Quando usas a mesma palavra-passe em todo o lado, basta um site ter falhas de segurança para os criminosos ten!",
+        "en": "When you use the same password everywhere, one security failure can give criminals a chance to try your passwo!"
       }
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Evita que uses a mesma palavra-passe em todo o lado ou que as anotes em papéis perdidos!",
-      "en": "It keeps you from reusing fragile passwords or writing them down on scrap paper!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -2517,7 +2517,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Porque lançam 'iscos' falsos (como prémios ou alertas falsos) para pescar palavras-passe e dados!",
+        "pt": "Porque lançam 'iscos' falsos (como prémios ou alertas falsos) para pescar senhas e dados!",
         "en": "Because they cast fake bait (like fake prizes or urgent alarms) to hook passwords!"
       },
       {
@@ -2592,7 +2592,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
         "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
@@ -2677,8 +2677,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Significa que os direitos de autor já expiraram e a obra pode, em geral, ser utilizada e partilhada sem pedir autorização por direitos de autor.",
-        "en": "It means copyright protection has expired and the work can, in general, be used and shared without asking for copyright permission."
+        "pt": "Significa que os direitos de autor já expiraram e qualquer pessoa pode usar livremente!",
+        "en": "It means copyright protection has expired and anyone can freely use, remix, and share it!"
       },
       {
         "id": "d",
@@ -2742,8 +2742,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "b",
@@ -2752,8 +2752,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "d",
@@ -2818,7 +2818,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "a",
         "pt": "Não mais do que 10% do teu peso corporal (ex: se pesas 35 kg, a mochila deve ter no máximo 3,5 kg)!",
-        "en": "No more than 10% of your body weight (e. g. if you weigh 35 kg, bag max is 3. 5 kg)!"
+        "en": "No more than 10% of your body weight (e.g. if you weigh 35 kg, bag max is 3.5 kg)!"
       },
       {
         "id": "b",
@@ -2832,7 +2832,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Sentar num banco rígido sem apoio lombar nem regulação de altura.",
+        "pt": "Sentar em cima de 5 almofadas até bater com a cabeça no teto do quarto.",
         "en": "Stack 5 pillows on the chair until your head hits the ceiling."
       }
     ],
@@ -2967,28 +2967,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
         "en": "Yell the password out the window to make sure you memorized it."
       },
       {
         "id": "b",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
+        "pt": "Esconder a senha debaixo do tapete da entrada do quarto.",
         "en": "Hide the password under the welcome mat in your room."
       },
       {
         "id": "c",
-        "pt": "Porque qualquer pessoa que passe perto do teu ecrã consegue ler a palavra-passe num segundo!",
+        "pt": "Porque qualquer pessoa que passe perto do teu ecrã consegue ler a senha num segundo!",
         "en": "Because anyone walking past your desk can read your secret password instantly!"
       },
       {
         "id": "d",
-        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas palavras-passe anotadas.",
+        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas senhas anotadas.",
         "en": "Stick 20 yellow post-its around your screen with all your passwords."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Mantém as palavras-passe na tua memória ou num gestor de palavras-passe encriptado!",
+      "pt": "Mantém as palavras-passe na tua memória ou num gestor de senhas encriptado!",
       "en": "Keep your passwords in your memory or safely locked inside an encrypted manager!"
     }
   },
@@ -3042,18 +3042,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe! '.",
-        "en": "Sign off an email to the school principal with: 'Peace out cool bro! '."
+        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe!'.",
+        "en": "Sign off an email to the school principal with: 'Peace out cool bro!'."
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "c",
-        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu! '.",
-        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am! '."
+        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu!'.",
+        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am!'."
       },
       {
         "id": "d",
@@ -3197,8 +3197,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Em bibliotecas de áudio com licenças abertas (como Creative Commons) ou de domínio público!",
-        "en": "In audio libraries offering open licenses (such as Creative Commons) or public domain!"
+        "pt": "Em bibliotecas de áudio com licenças Creative Commons ou sons sem direitos reservados (Royalty-Free)!",
+        "en": "In audio libraries offering Creative Commons or Royalty-Free licensed tracks!"
       },
       {
         "id": "c",
@@ -3267,8 +3267,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "b",
@@ -3282,8 +3282,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       }
     ],
     "correctOptionId": "c",
@@ -3342,8 +3342,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       },
       {
         "id": "b",
@@ -3352,8 +3352,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "d",
@@ -3417,13 +3417,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "É tentar enganar as pessoas com simpatia ou mentiras para elas entregarem palavras-passe ou dados!",
+        "pt": "É tentar enganar as pessoas com simpatia ou mentiras para elas entregarem senhas ou dados!",
         "en": "It is manipulating people through lies, false urgency, or pretend kindness to steal secrets!"
       },
       {
         "id": "b",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "c",
@@ -3438,7 +3438,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Os piratas informáticos atacam mais a ingenuidade das pessoas do que os computadores; desconfia sempre!",
+      "pt": "Os hackers atacam mais a ingenuidade das pessoas do que os computadores; desconfia sempre!",
       "en": "Scammers target human trust rather than machine firewalls; always stay alert!"
     }
   },
@@ -3492,7 +3492,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever a palavra-passe na lousa da sala de aula com giz vermelho gigante.",
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
         "en": "Write the password on the classroom chalkboard in giant red chalk."
       },
       {
@@ -3502,7 +3502,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
         "en": "Yell the password out the window to make sure you memorized it."
       },
       {
@@ -3567,7 +3567,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que um email urgente do banco a pedir palavras-passe por SMS é verdadeiro.",
+        "pt": "Achar que um email urgente do banco a pedir senhas por SMS é verdadeiro.",
         "en": "Think an urgent bank email asking for your password via SMS is legitimate."
       },
       {
@@ -3582,8 +3582,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe! '.",
-        "en": "Sign off an email to the school principal with: 'Peace out cool bro! '."
+        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe!'.",
+        "en": "Sign off an email to the school principal with: 'Peace out cool bro!'."
       }
     ],
     "correctOptionId": "c",
@@ -3642,12 +3642,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever no motor de busca: 'Ó computador inteligente, dá-me nota 5 no teste! '.",
-        "en": "Type in the search engine: 'Oh wise computer, give me top marks on my test! '."
+        "pt": "Escrever no motor de busca: 'Ó computador inteligente, dá-me nota 5 no teste!'.",
+        "en": "Type in the search engine: 'Oh wise computer, give me top marks on my test!'."
       },
       {
         "id": "b",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
         "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
@@ -3802,8 +3802,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "d",
@@ -3867,8 +3867,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever com o teclado no colo enquanto a cabeça fica inclinada para baixo.",
-        "en": "Type with the keyboard on your lap while bending your neck downwards."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       },
       {
         "id": "b",
@@ -3882,7 +3882,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Sentar num banco rígido sem apoio lombar nem regulação de altura.",
+        "pt": "Sentar em cima de 5 almofadas até bater com a cabeça no teto do quarto.",
         "en": "Stack 5 pillows on the chair until your head hits the ceiling."
       }
     ],
@@ -4022,12 +4022,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
         "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "c",
-        "pt": "Usar a mesma palavra-passe 'chocolate' em todos os sites do planeta Terra.",
+        "pt": "Usar a mesma senha 'chocolate' em todos os sites do planeta Terra.",
         "en": "Use the same password 'chocolate' across every website on Earth."
       },
       {
@@ -4102,7 +4102,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que um email urgente do banco a pedir palavras-passe por SMS é verdadeiro.",
+        "pt": "Achar que um email urgente do banco a pedir senhas por SMS é verdadeiro.",
         "en": "Think an urgent bank email asking for your password via SMS is legitimate."
       },
       {
@@ -4161,8 +4161,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "O que indica a terminação '. pt' no endereço de um website como www. seguranet. pt?",
-      "en": "What does the '. pt' extension tell you in a web address like www. seguranet. pt?"
+      "pt": "O que indica a terminação '.pt' no endereço de um website como www.seguranet.pt?",
+      "en": "What does the '.pt' extension tell you in a web address like www.seguranet.pt?"
     },
     "options": [
       {
@@ -4172,8 +4172,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus! '.",
-        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses! '."
+        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus!'.",
+        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses!'."
       },
       {
         "id": "c",
@@ -4188,8 +4188,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Extensões como . pt, . gov (governo) ou . edu (educação) ajudam a identificar a origem do site!",
-      "en": "TLDs like . pt, . gov, or . edu help identify the origin and category of web resources!"
+      "pt": "Extensões como .pt, .gov (governo) ou .edu (educação) ajudam a identificar a origem do site!",
+      "en": "TLDs like .pt, .gov, or .edu help identify the origin and category of web resources!"
     }
   },
   {
@@ -4257,8 +4257,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Entre aspas \"... \", indicando logo a seguir o nome do autor e a fonte de onde foi retirada!",
-        "en": "Enclosed in quotation marks \"... \", immediately naming the author and the original source!"
+        "pt": "Entre aspas \"...\", indicando logo a seguir o nome do autor e a fonte de onde foi retirada!",
+        "en": "Enclosed in quotation marks \"...\", immediately naming the author and the original source!"
       }
     ],
     "correctOptionId": "d",
@@ -4386,35 +4386,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Qual é a melhor forma de colocar em prática no dia a dia a dica sobre \"Postura Confortável ao Computador\"?",
-      "en": "What is the best way to practice the tip about \"Em detalhe: Postura Confortável ao Computador\" in your daily life?"
+      "pt": "Qual é a postura correta na cadeira de trabalho segundo as regras de ergonomia de TIC?",
+      "en": "What is the correct seated posture according to ICT ergonomics rules?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Fazer uma verificação ativa dos meus dispositivos e aplicar o conselho sobre \"Postura Confortável ao Computador\".",
-        "en": "Actively check my devices and apply the advice about \"Em detalhe: Postura Confortável ao Computador\"."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "b",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
-        "en": "Use the word 'password' as your password to be super original."
+        "pt": "Costas direitas apoiadas no encosto, joelhos e cotovelos a 90° e pés bem assentes no chão!",
+        "en": "Straight back against the chair, knees and elbows at 90°, and feet flat on the floor!"
       },
       {
         "id": "c",
-        "pt": "Achar que a webcam consegue ler a tua mente se olhares fixamente para ela.",
-        "en": "Think the webcam can read your mind if you stare at it long enough."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       },
       {
         "id": "d",
-        "pt": "Ligar dois cabos de rede um ao outro para criar um circuito infinito de internet.",
-        "en": "Connect two network cables to each other to create an infinite internet loop."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "b",
     "explanation": {
-      "pt": "Muito bem! Pequenas ações preventivas diárias sobre \"Postura Confortável ao Computador\" criam comportamentos digitais saudáveis e de grande valor.",
-      "en": "Well done! Small daily preventive actions about \"Em detalhe: Postura Confortável ao Computador\" build healthy and highly valuable digital habits."
+      "pt": "A postura correta evita lesões na coluna, dores de costas e mantém-te com boa energia!",
+      "en": "Good posture prevents back and neck strain while keeping your energy up for studying!"
     }
   },
   {
@@ -4461,35 +4461,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Qual é a melhor forma de colocar em prática no dia a dia a dica sobre \"A tua Pegada Digital é como uma pegada no cimento fresco! \" \"?",
-      "en": "What is the best way to put the tip about \"Your Digital Footprint is like a footprint in wet cement!\" into practice every day?"
+      "pt": "Porque se diz que a tua 'Pegada Digital' é como uma marca deixada no cimento fresco?",
+      "en": "Why is your 'Digital Footprint' compared to a footprint in wet cement?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Fazer uma verificação ativa dos meus dispositivos e aplicar o conselho sobre \"A tua Pegada Digital é como uma pegada no cimento fresco! \".",
-        "en": "Actively check my devices and apply the advice about \"Your Digital Footprint is like a footprint in wet cement!\"."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "b",
-        "pt": "Fazer festas no rato do computador para ele se mover mais depressa.",
-        "en": "Pet the computer mouse so it moves faster."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "c",
-        "pt": "Dizer que a pintura da Mona Lisa foi desenhada pelo teu primo de 5 anos no Paint.",
-        "en": "Claim the Mona Lisa painting was drawn by your 5-year-old cousin in Paint."
+        "pt": "Porque tudo o que publicas e pesquisas fica gravado e é quase impossível de apagar totalmente!",
+        "en": "Because whatever you post or search leaves a trace that is very difficult to fully erase!"
       },
       {
         "id": "d",
-        "pt": "Escrever a palavra-passe na lousa da sala de aula com giz vermelho gigante.",
-        "en": "Write your password on the classroom blackboard with giant red chalk."
+        "pt": "Partilhar a tua localização GPS exata em tempo real com toda a gente nas redes.",
+        "en": "Share your exact live GPS location publicly with everyone on social media."
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "c",
     "explanation": {
-      "pt": "Muito bem! Pequenas ações preventivas diárias sobre \"A tua Pegada Digital é como uma pegada no cimento fresco! \" criam comportamentos digitais saudáveis e de grande valor.",
-      "en": "Very good! Small daily preventive actions about \"Your Digital Footprint is like a footprint in wet cement!\" create healthy and valuable digital habits."
+      "pt": "Constrói sempre uma pegada digital positiva, com respeito, gentileza e boas ações!",
+      "en": "Always build a positive digital footprint with respect, kindness, and smart choices!"
     }
   },
   {
@@ -4552,8 +4552,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "d",
@@ -4611,35 +4611,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Qual é a melhor forma de colocar em prática no dia a dia a dica sobre \"Em detalhe: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade\"?",
-      "en": "What is the best way to put the practical tip into practice in everyday life?"
+      "pt": "Para que serve o campo secreto 'Cco' (Bcc) ao enviar um email para vários colegas da turma?",
+      "en": "What is the secret 'Bcc' (Cco) field used for when emailing multiple classmates?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Fazer uma verificação ativa dos meus dispositivos e aplicar o conselho sobre Em detalhe: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade.",
-        "en": "Fazer uma verificação ativa dos meus dispositivos e aplicar o conselho sobre Dica Prática: Em detalhe: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade."
+        "pt": "Para ocultar os emails dos destinatários e proteger a privacidade de toda a gente!",
+        "en": "To hide recipients' email addresses and protect everyone's privacy!"
       },
       {
         "id": "b",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Escrever o email todo em LETRAS MAIÚSCULAS aos berros para o carteiro correr mais.",
+        "en": "Write the whole email in ALL CAPS screaming so the digital mailman runs faster."
       },
       {
         "id": "c",
-        "pt": "Tentar enviar um email urgente por sinais de fumo usando o teclado do computador.",
-        "en": "Try sending an urgent email with smoke signals using the computer keyboard."
+        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
+        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
       },
       {
         "id": "d",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
-        "en": "Hide your password under the rug at your bedroom door."
+        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu!'.",
+        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am!'."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Muito bem! Pequenas ações preventivas diárias sobre Em detalhe: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade criam comportamentos digitais saudáveis e de grande valor.",
-      "en": "Muito bem! Pequenas ações preventivas diárias sobre Dica Prática: Em detalhe: O campo Cco (Bcc) serve para enviar emails a várias pessoas protegendo a sua privacidade criam comportamentos digitais saudáveis e de grande valor."
+      "pt": "Usar o campo Cco impede que estranhos tenham acesso aos contactos privados dos teus amigos!",
+      "en": "Using Bcc stops outside parties or spammers from harvesting classmates' emails!"
     }
   },
   {
@@ -4692,8 +4692,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
-        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
+        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus!'.",
+        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses!'."
       },
       {
         "id": "b",
@@ -4702,13 +4702,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
-        "en": "Believe everything written on the Internet is 100% proven scientific truth."
+        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
+        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
       },
       {
         "id": "d",
-        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus! '.",
-        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses! '."
+        "pt": "Confundir o navegador (Google Chrome) com a própria rede mundial da Internet.",
+        "en": "Confuse the web browser with the entire global Internet infrastructure."
       }
     ],
     "correctOptionId": "b",
@@ -4767,13 +4767,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que tudo o que encontras no Google Imagens é teu por magia.",
-        "en": "Believe anything found on Google Images automatically belongs to you by magic."
+        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
+        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
       },
       {
         "id": "b",
-        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
-        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
       },
       {
         "id": "c",
@@ -4842,23 +4842,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Usar um carregador com voltagem errada ou cabo danificado que pode sobreaquecer.",
-        "en": "Use a wrong voltage charger or damaged cable that can overheat."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "b",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
-      },
-      {
-        "id": "c",
         "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
         "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       },
       {
+        "id": "c",
+        "pt": "Meter o computador portátil no micro-ondas para carregar a bateria em 5 segundos.",
+        "en": "Put the laptop in the microwave to charge the battery in 5 seconds."
+      },
+      {
         "id": "d",
         "pt": "A RAM é rápida e temporária (apaga-se ao desligar); o SSD guarda ficheiros em definitivo!",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "RAM is fast and temporary (clears on shutdown); the SSD stores files permanently!"
       }
     ],
     "correctOptionId": "d",
@@ -4911,35 +4911,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "O que recomenda a regra 20-20-20 de ergonomia visual para quem usa computadores?",
-      "en": "What does the 20-20-20 visual ergonomics rule recommend for computer users?"
+      "pt": "Qual é o truque de pestanejar com frequência enquanto estás a ler no ecrã do computador?",
+      "en": "Why should you make a conscious effort to blink frequently while reading on a screen?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A cada 20 minutos, olhar 20 segundos para um ponto a cerca de 6 metros (20 pés).",
-        "en": "Every 20 minutes, look for 20 seconds at a point about 20 feet (6 meters) away."
+        "pt": "Para manter os olhos hidratados e evitar que fiquem secos, vermelhos e irritados!",
+        "en": "To keep the eye surface naturally moisturized and prevent burning, dry-eye irritation!"
       },
       {
         "id": "b",
-        "pt": "Usar o computador durante 20 horas seguidas sem nunca pestanejar.",
-        "en": "Use the computer for 20 continuous hours without ever blinking."
+        "pt": "Trabalhar de cabeça para baixo pendurado no candeeiro do teto como um morcego.",
+        "en": "Work upside down hanging from the ceiling lamp like a bat."
       },
       {
         "id": "c",
-        "pt": "Ligar 20 monitores ao mesmo tempo no quarto totalmente às escuras.",
-        "en": "Turn on 20 monitors at the same time in a completely dark room."
+        "pt": "Trabalhar às escuras com óculos de sol para parecer um agente secreto.",
+        "en": "Work in total darkness wearing sunglasses to look like a secret agent."
       },
       {
         "id": "d",
-        "pt": "Lavar o ecrã com água e sabão a cada 20 minutos de jogo.",
-        "en": "Wash the screen with soap and water every 20 minutes of gaming."
+        "pt": "Dormir com o telemóvel colado na testa para sonhar com jogos online.",
+        "en": "Sleep with the phone glued to your forehead to dream about online games."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "A regra 20-20-20 dá descanso aos músculos ciliares dos olhos, prevenindo a fadiga visual digital!",
-      "en": "The 20-20-20 rule gives your eyes' ciliary muscles a break, preventing digital eye strain!"
+      "pt": "Quando olhamos para ecrãs pestanejamos metade das vezes; lembra-te de piscar!",
+      "en": "We blink 50% less often when gazing at screens; blinking restores natural tears!"
     }
   },
   {
@@ -5002,13 +5002,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
-        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
+        "pt": "Dizer a toda a gente em que escola andas e em que sala tens aula agora.",
+        "en": "Tell everyone online which school and classroom you are in right now."
       },
       {
         "id": "d",
-        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
-        "en": "Give your home address and phone number to a stranger in an online game."
+        "pt": "Partilhar a tua localização GPS exata em tempo real com toda a gente nas redes.",
+        "en": "Share your exact live GPS location publicly with everyone on social media."
       }
     ],
     "correctOptionId": "b",
@@ -5061,19 +5061,19 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada em segurança digital?",
+      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada nas aulas de TIC?",
       "en": "How does the ninja 'Pass-Phrase' technique taught in ICT work?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
         "en": "Yell the password out the window to make sure you memorized it."
       },
       {
         "id": "b",
-        "pt": "Deixar a sessão aberta no computador da biblioteca e ir embora para casa.",
-        "en": "Leave your account logged in at the school library and go home."
+        "pt": "Escolher o nome do teu cão porque os hackers têm medo de animais de estimação.",
+        "en": "Pick your dog's name because hackers are afraid of pets."
       },
       {
         "id": "c",
@@ -5082,14 +5082,14 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Dar a tua palavra-passe a um estranho na Internet em troca de 5 moedas virtuais.",
-        "en": "Give your password to an online stranger in exchange for 5 virtual coins."
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
+        "en": "Write the password on the classroom chalkboard in giant red chalk."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Frases como 'O_Meu_Cao_Adora_99_Gelados! ' são gigantes para piratas informáticos mas fáceis para ti!",
-      "en": "Phrases like 'My_Dog_Loves_99_IceCreams! ' are tough for hackers yet effortless to recall!"
+      "pt": "Frases como 'O_Meu_Cao_Adora_99_Gelados!' são gigantes para hackers mas fáceis para ti!",
+      "en": "Phrases like 'My_Dog_Loves_99_IceCreams!' are tough for hackers yet effortless to recall!"
     }
   },
   {
@@ -5142,18 +5142,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
-        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
+        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu!'.",
+        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am!'."
       },
       {
         "id": "b",
-        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
-        "en": "Type invisible emails with white text on a white background to be super secret."
+        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
+        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
       },
       {
         "id": "c",
-        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
-        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
+        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe!'.",
+        "en": "Sign off an email to the school principal with: 'Peace out cool bro!'."
       },
       {
         "id": "d",
@@ -5163,7 +5163,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico.",
+      "pt": "Foi introduzido por Ray Tomlinson em 1971 e hoje é conhecido em todo o mundo!",
       "en": "It was introduced by Ray Tomlinson in 1971 and is recognized worldwide today!"
     }
   },
@@ -5222,13 +5222,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
-        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
+        "pt": "Confundir o navegador (Google Chrome) com a própria rede mundial da Internet.",
+        "en": "Confuse the web browser with the entire global Internet infrastructure."
       },
       {
         "id": "c",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
+        "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
         "id": "d",
@@ -5292,8 +5292,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
-        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
+        "pt": "Apagar o nome do autor original e colar uma foto tua por cima.",
+        "en": "Erase the original author's signature and paste your own photo over it."
       },
       {
         "id": "b",
@@ -5302,13 +5302,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
-        "en": "Use copyrighted pop music in a public video without giving any credit."
+        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
+        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
       },
       {
         "id": "d",
-        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
-        "en": "Post an embarrassing photo of your classmate online without their permission."
+        "pt": "Achar que o símbolo © de Copyright significa 'Copia O Que Quiseres'.",
+        "en": "Think the © Copyright symbol stands for 'Copy Whatever You Want'."
       }
     ],
     "correctOptionId": "b",
@@ -5367,13 +5367,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Alimentar o rato do computador com fatias de queijo da serra para ele correr mais rápido.",
+        "en": "Feed the computer mouse slices of cheese so it runs faster across the desk."
       },
       {
         "id": "b",
-        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
-        "en": "Think the very first computer in history was small enough to fit in your pocket."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "c",
@@ -5382,8 +5382,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Achar que a memória RAM serve para guardar coisas mesmo quando o computador está desligado.",
-        "en": "Think RAM memory keeps your files saved even after turning off the computer."
+        "pt": "Falar com o router Wi-Fi aos gritos a pedir para ele ter mais simpatia.",
+        "en": "Yell at the Wi-Fi router politely begging it to be friendlier today."
       }
     ],
     "correctOptionId": "c",
@@ -5442,18 +5442,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       },
       {
         "id": "b",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       },
       {
         "id": "c",
-        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
-        "en": "Fill the school bag with bricks to get stronger during classes."
+        "pt": "Trabalhar às escuras com óculos de sol para parecer um agente secreto.",
+        "en": "Work in total darkness wearing sunglasses to look like a secret agent."
       },
       {
         "id": "d",
@@ -5522,18 +5522,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "c",
-        "pt": "Deixar a câmara do computador ligada 24 horas a apontar para a tua cama.",
-        "en": "Leave your computer webcam on 24 hours pointing at your bed."
+        "pt": "Partilhar a tua localização GPS exata em tempo real com toda a gente nas redes.",
+        "en": "Share your exact live GPS location publicly with everyone on social media."
       },
       {
         "id": "d",
-        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
-        "en": "Download a pirated game from a shady website promising infinite gems."
+        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
+        "en": "Give your home address and phone number to a stranger in an online game."
       }
     ],
     "correctOptionId": "a",
@@ -5586,35 +5586,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Com quem deves partilhar as tuas palavras-passe secretas de jogos e contas?",
-      "en": "Who should you share your secret passwords for accounts and games with?"
+      "pt": "Na dica de hoje sobre \"Dica Prática: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"Practical Tip: Passwords are like toothbrushes: you do not lend them to anyone!\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Escrever a palavra-passe na lousa da sala de aula com giz vermelho gigante.",
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
         "en": "Write the password on the classroom chalkboard in giant red chalk."
       },
       {
         "id": "b",
-        "pt": "Apenas com os teus pais ou encarregados de educação; nunca com amigos nem colegas!",
-        "en": "Only with your parents or guardians; never with friends or schoolmates!"
+        "pt": "A tua palavra-passe é pessoal e intransmissível!",
+        "en": "Your password is personal and should not be shared!"
       },
       {
         "id": "c",
-        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas palavras-passe anotadas.",
-        "en": "Stick 20 yellow post-its around your screen with all your passwords."
+        "pt": "Partilhar a palavra-passe no grupo de WhatsApp da turma toda.",
+        "en": "Share the password in the whole class WhatsApp group."
       },
       {
         "id": "d",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
-        "en": "Yell the password out the window to make sure you memorized it."
+        "pt": "Usar a mesma senha 'chocolate' em todos os sites do planeta Terra.",
+        "en": "Use the same password 'chocolate' across every website on Earth."
       }
     ],
     "correctOptionId": "b",
     "explanation": {
-      "pt": "Mesmo o teu melhor amigo não deve ter a tua palavra-passe; uma amizade verdadeira respeita o segredo!",
-      "en": "Even best friends shouldn't know your password; genuine friendship respects privacy!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -5667,13 +5667,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
-        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
+        "en": "Type invisible emails with white text on a white background to be super secret."
       },
       {
         "id": "c",
@@ -5742,18 +5742,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Pesquisar no Google 'como teletransportar comida' e esperar que apareça uma piza no teclado.",
-        "en": "Search 'how to teleport food' and wait for a pizza to appear on the keyboard."
-      },
-      {
-        "id": "b",
         "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
         "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
       },
       {
+        "id": "b",
+        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
+        "en": "Shout at the screen hoping the web page loads three times faster."
+      },
+      {
         "id": "c",
-        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
-        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
+        "pt": "Pesquisar no Google 'como teletransportar comida' e esperar que apareça uma piza no teclado.",
+        "en": "Search 'how to teleport food' and wait for a pizza to appear on the keyboard."
       },
       {
         "id": "d",
@@ -5811,8 +5811,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Para que servem as licenças Creative Commons (CC)?",
-      "en": "What are Creative Commons (CC) licenses used for?"
+      "pt": "Para que servem as licenças Creative Commons (CC) que aprendeste nas aulas de TIC?",
+      "en": "What are Creative Commons (CC) licenses used for in ICT class?"
     },
     "options": [
       {
@@ -5822,18 +5822,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Copiar o trabalho inteiro da Wikipédia e dizer que foste tu que o inventaste ontem.",
-        "en": "Copy the whole Wikipedia article and claim you invented it yesterday."
+        "pt": "Achar que tudo o que encontras no Google Imagens é teu por magia.",
+        "en": "Believe anything found on Google Images automatically belongs to you by magic."
       },
       {
         "id": "c",
-        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
-        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
+        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
+        "en": "Use copyrighted pop music in a public video without giving any credit."
       },
       {
         "id": "d",
-        "pt": "Dizer que a pintura da Mona Lisa foi desenhada pelo teu primo no Paint.",
-        "en": "Claim that the Mona Lisa was drawn by your little cousin in MS Paint."
+        "pt": "Copiar o trabalho inteiro da Wikipédia e dizer que foste tu que o inventaste ontem.",
+        "en": "Copy the whole Wikipedia article and claim you invented it yesterday."
       }
     ],
     "correctOptionId": "a",
@@ -5892,8 +5892,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
+        "pt": "Meter o computador portátil no micro-ondas para carregar a bateria em 5 segundos.",
+        "en": "Put the laptop in the microwave to charge the battery in 5 seconds."
       },
       {
         "id": "b",
@@ -5902,13 +5902,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "d",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Deitar computadores e telemóveis velhos no caixote do lixo comum ou no mar.",
+        "en": "Throw old computers and smartphones into the regular trash or into the sea."
       }
     ],
     "correctOptionId": "b",
@@ -5967,13 +5967,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever com o teclado no colo enquanto a cabeça fica inclinada para baixo.",
-        "en": "Type with the keyboard on your lap while bending your neck downwards."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       },
       {
         "id": "b",
-        "pt": "Ficar 8 horas seguidas sem pestanejar feito uma estátua do museu de cera.",
-        "en": "Stare for 8 straight hours without blinking like a wax museum statue."
+        "pt": "Mover o rato com o pé esquerdo para dar descanso à mão direita.",
+        "en": "Move the mouse with your left foot to rest your right hand."
       },
       {
         "id": "c",
@@ -5982,8 +5982,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Trabalhar de cabeça para baixo pendurado no candeeiro do teto como um morcego.",
-        "en": "Work upside down hanging from the ceiling lamp like a bat."
+        "pt": "Usar o auscultador no volume máximo de concerto de rock até os tímpanos dançarem.",
+        "en": "Crank headphones to max rock concert volume until eardrums rattle."
       }
     ],
     "correctOptionId": "c",
@@ -6047,13 +6047,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
-        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
+        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
+        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
       },
       {
         "id": "c",
-        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
-        "en": "Download a pirated game from a shady website promising infinite gems."
+        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
+        "en": "Give your home address and phone number to a stranger in an online game."
       },
       {
         "id": "d",
@@ -6117,28 +6117,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "É uma dupla proteção que pede a tua palavra-passe mais um código especial enviado por SMS ou aplicação!",
-        "en": "It is a double lock requiring your password plus a temporary code from SMS or an application!"
+        "pt": "É uma dupla proteção que pede a tua senha mais um código especial enviado por SMS ou app!",
+        "en": "It is a double lock requiring your password plus a temporary code from SMS or an app!"
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
         "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "c",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
-        "en": "Use the word 'password' as your password to be super original."
+        "pt": "Partilhar a palavra-passe no grupo de WhatsApp da turma toda.",
+        "en": "Share the password in the whole class WhatsApp group."
       },
       {
         "id": "d",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
-        "en": "Hide the password under the welcome mat in your room."
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
+        "en": "Yell the password out the window to make sure you memorized it."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Mesmo que um pirata informático descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro",
+      "pt": "Mesmo que um hacker descubra a tua senha, não consegue entrar sem o segundo código!",
       "en": "Even if someone discovers your password, they can't log in without the second code!"
     }
   },
@@ -6192,18 +6192,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
-        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
+        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
+        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
       },
       {
         "id": "b",
-        "pt": "exe (ficheiro executável que pode instalar vírus no computador)!",
-        "en": "exe (executable file that can install malware on your machine)!"
+        "pt": ".exe (ficheiro executável que pode instalar vírus no computador)!",
+        "en": ".exe (executable file that can install malware on your machine)!"
       },
       {
         "id": "c",
-        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
-        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "d",
@@ -6267,13 +6267,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Dar o teu nome e morada em todos os questionários pop-up que aparecem na web.",
-        "en": "Enter your real name and address in every pop-up quiz you see."
+        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
+        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
       },
       {
         "id": "b",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
-        "en": "Believe everything written on the Internet is 100% proven scientific truth."
+        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
+        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
       },
       {
         "id": "c",
@@ -6342,18 +6342,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Dizer que a pintura da Mona Lisa foi desenhada pelo teu primo no Paint.",
-        "en": "Claim that the Mona Lisa was drawn by your little cousin in MS Paint."
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
       },
       {
         "id": "b",
-        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
-        "en": "Post an embarrassing photo of your classmate online without their permission."
+        "pt": "Achar que tudo o que encontras no Google Imagens é teu por magia.",
+        "en": "Believe anything found on Google Images automatically belongs to you by magic."
       },
       {
         "id": "c",
-        "pt": "Apagar o nome do autor original e colar uma foto tua por cima.",
-        "en": "Erase the original author's signature and paste your own photo over it."
+        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
+        "en": "Use copyrighted pop music in a public video without giving any credit."
       },
       {
         "id": "d",
@@ -6422,18 +6422,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Deitar computadores e telemóveis velhos no caixote do lixo comum ou no mar.",
-        "en": "Throw old computers and smartphones into the regular trash or into the sea."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       },
       {
         "id": "c",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       },
       {
         "id": "d",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Alimentar o rato do computador com fatias de queijo da serra para ele correr mais rápido.",
+        "en": "Feed the computer mouse slices of cheese so it runs faster across the desk."
       }
     ],
     "correctOptionId": "a",
@@ -6492,8 +6492,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "b",
@@ -6502,13 +6502,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
-        "en": "Put the screen on the floor and lie down like a lizard."
+        "pt": "Mover o rato com o pé esquerdo para dar descanso à mão direita.",
+        "en": "Move the mouse with your left foot to rest your right hand."
       },
       {
         "id": "d",
-        "pt": "Ficar 8 horas seguidas sem pestanejar feito uma estátua do museu de cera.",
-        "en": "Stare for 8 straight hours without blinking like a wax museum statue."
+        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
+        "en": "Fill the school bag with bricks to get stronger during classes."
       }
     ],
     "correctOptionId": "b",
@@ -6562,18 +6562,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "isSpecialMilestone": false,
     "question": {
       "pt": "Porque deves desligar a partilha de localização (GPS) nas aplicações que não precisam dela?",
-      "en": "Why should you turn off GPS location sharing in applications that don't need it?"
+      "en": "Why should you turn off GPS location sharing in apps that don't need it?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar numa mensagem não solicitada que pede a tua palavra-passe para atualizar a conta.",
-        "en": "Believe an unsolicited message asking for your password to update the account."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "b",
-        "pt": "Publicar no TikTok a fotografia das chaves da tua casa e a matrícula do carro dos pais.",
-        "en": "Post a TikTok video of your house keys and your parents' car license plate."
+        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
+        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
       },
       {
         "id": "c",
@@ -6582,14 +6582,14 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
-        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
+        "pt": "Desativar o antivírus porque o ícone dele é demasiado aborrecido.",
+        "en": "Disable the antivirus because its icon looks too boring."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Algumas aplicações precisam da localização para funcionar corretamente. Outras podem pedi-la sem ser essencial. Verifica se uma aplicação precisa realmente da tua localização antes de a autorizares.",
-      "en": "Only navigation applications actually need GPS; simple games and photo filters do not!"
+      "pt": "Apenas apps de mapas e transportes precisam de localização; jogos e filtros não necessitam!",
+      "en": "Only navigation apps actually need GPS; simple games and photo filters do not!"
     }
   },
   {
@@ -6636,35 +6636,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "O que é um 'Gestor de Palavras-passe' (Password Manager) e qual a sua grande vantagem?",
-      "en": "What is a 'password Manager' and what is its main superpower?"
+      "pt": "Na dica de hoje sobre \"Dica Prática: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"Practical Tip: Never reuse the same password on every website and app!\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
+        "pt": "Usar a palavra 'senha' como senha para ser super original.",
         "en": "Use the word 'password' as your password to be super original."
       },
       {
         "id": "b",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
-        "en": "Hide the password under the welcome mat in your room."
+        "pt": "Deixar a sessão aberta no computador da biblioteca e ir embora para casa.",
+        "en": "Leave your account logged in at the school library and go home."
       },
       {
         "id": "c",
-        "pt": "Achar que os computadores são mágicos e adivinham quem tu és sem palavra-passe.",
-        "en": "Think computers are magic and guess who you are without passwords."
+        "pt": "Usar a mesma senha 'chocolate' em todos os sites do planeta Terra.",
+        "en": "Use the same password 'chocolate' across every website on Earth."
       },
       {
         "id": "d",
-        "pt": "É um cofre digital seguro que guarda e cria palavras-passe fortes para ti; Um gestor de palavras-passe pode guardar várias palavras-passe de forma protegida, para não teres de memorizar todas. A palavra-passe principal deve ser muito bem protegida.",
-        "en": "It is an encrypted digital vault storing strong passwords so you only memorize one master key!"
+        "pt": "Quando usas a mesma palavra-passe em todo o lado, basta um site ter falhas de segurança para os criminosos ten!",
+        "en": "When you use the same password everywhere, one security failure can give criminals a chance to try your passwo!"
       }
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Evita que uses a mesma palavra-passe em todo o lado ou que as anotes em papéis perdidos!",
-      "en": "It keeps you from reusing fragile passwords or writing them down on scrap paper!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -6717,23 +6717,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Porque lançam 'iscos' falsos (como prémios ou alertas falsos) para pescar palavras-passe e dados!",
+        "pt": "Porque lançam 'iscos' falsos (como prémios ou alertas falsos) para pescar senhas e dados!",
         "en": "Because they cast fake bait (like fake prizes or urgent alarms) to hook passwords!"
       },
       {
         "id": "b",
+        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
+        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
+      },
+      {
+        "id": "c",
         "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
         "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
       },
       {
-        "id": "c",
-        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
-        "en": "Type invisible emails with white text on a white background to be super secret."
-      },
-      {
         "id": "d",
-        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
-        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
+        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
+        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
       }
     ],
     "correctOptionId": "a",
@@ -6792,8 +6792,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
-        "en": "Believe everything written on the Internet is 100% proven scientific truth."
+        "pt": "Pesquisar no Google 'como teletransportar comida' e esperar que apareça uma piza no teclado.",
+        "en": "Search 'how to teleport food' and wait for a pizza to appear on the keyboard."
       },
       {
         "id": "b",
@@ -6802,8 +6802,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
+        "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
         "id": "d",
@@ -6861,35 +6861,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Porque se celebra o Dia Mundial do Backup precisamente a 31 de março?",
-      "en": "Why is World Backup Day celebrated specifically on March 31?"
+      "pt": "O que é fazer uma 'Cópia de Segurança' (Backup) dos teus ficheiros escolares importantes?",
+      "en": "What is doing a 'Backup' of your important school documents and photos?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Para lembrar a todos de fazer cópias de segurança antes do Dia das Mentiras (1 de abril).",
-        "en": "To remind everyone to make backups before April Fools' Day (April 1st)."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "b",
-        "pt": "Porque nesse dia todos os discos rígidos do planeta são formatados obrigatoriamente.",
-        "en": "Because on that day every hard drive on Earth is forcibly formatted."
+        "pt": "Ignorar todos os avisos de segurança porque achas que és invencível.",
+        "en": "Ignore all security alerts because you feel completely invincible."
       },
       {
         "id": "c",
-        "pt": "Para apagar todos os ficheiros antigos dos computadores escolares sem guardar nada.",
-        "en": "To delete all old files from school computers without keeping anything."
+        "pt": "Guardar uma segunda cópia noutro sítio seguro (como numa pen drive ou na nuvem)! ",
+        "en": "Saving a duplicate copy in another secure location (like a flash drive or cloud storage)!"
       },
       {
         "id": "d",
-        "pt": "Para colar post-its com palavras-passe na porta do frigorífico de casa.",
-        "en": "To stick post-it notes with passwords on the family refrigerator door."
+        "pt": "Publicar no TikTok a fotografia das chaves da tua casa e a matrícula do carro dos pais.",
+        "en": "Post a TikTok video of your house keys and your parents' car license plate."
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "c",
     "explanation": {
-      "pt": "O lema oficial é: 'Faz backup dos teus dados hoje para não seres apanhado de surpresa amanhã!'",
-      "en": "The official motto is: 'Back up your data today so you won't be caught by surprise tomorrow!'"
+      "pt": "Se o computador avariar ou cair água no teclado, o teu trabalho continua são e salvo no backup!",
+      "en": "If your device breaks or gets soaked, your files remain safe and sound in the backup!"
     }
   },
   {
@@ -6942,18 +6942,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       },
       {
         "id": "b",
-        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
-        "en": "Think the very first computer in history was small enough to fit in your pocket."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "c",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Achar que a memória RAM serve para guardar coisas mesmo quando o computador está desligado.",
+        "en": "Think RAM memory keeps your files saved even after turning off the computer."
       },
       {
         "id": "d",
@@ -7018,7 +7018,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "a",
         "pt": "Não mais do que 10% do teu peso corporal (ex: se pesas 35 kg, a mochila deve ter no máximo 3,5 kg)!",
-        "en": "No more than 10% of your body weight (e. g. if you weigh 35 kg, bag max is 3. 5 kg)!"
+        "en": "No more than 10% of your body weight (e.g. if you weigh 35 kg, bag max is 3.5 kg)!"
       },
       {
         "id": "b",
@@ -7027,13 +7027,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
-        "en": "Put the screen on the floor and lie down like a lizard."
+        "pt": "Sentar em cima de 5 almofadas até bater com a cabeça no teto do quarto.",
+        "en": "Stack 5 pillows on the chair until your head hits the ceiling."
       },
       {
         "id": "d",
-        "pt": "Sentar num banco rígido sem apoio lombar nem regulação de altura.",
-        "en": "Stack 5 pillows on the chair until your head hits the ceiling."
+        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
+        "en": "Put the screen on the floor and lie down like a lizard."
       }
     ],
     "correctOptionId": "a",
@@ -7086,35 +7086,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Qual é a principal razão recomendada para tapar a webcam do computador fora das aulas virtuais?",
-      "en": "What is the recommended reason to cover your computer webcam when outside virtual classes?"
+      "pt": "Porque deves verificar as permissões das aplicações que pedem acesso à tua câmara e microfone?",
+      "en": "Why should you check app permissions when they ask for camera and microphone access?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Impedir que aplicações maliciosas consigam transmitir a tua imagem sem autorização.",
-        "en": "Prevent malicious applications from streaming your image without authorization."
+        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
+        "en": "Download a pirated game from a shady website promising infinite gems."
       },
       {
         "id": "b",
-        "pt": "Evitar que a luz da câmara atraia mosquitos para o ecrã do computador.",
-        "en": "Prevent the camera light from attracting mosquitoes to the screen."
+        "pt": "Para garantir que apenas programas em que confias têm autorização para te ouvir ou ver!",
+        "en": "To ensure that only trusted programs have permission to access your audio and video!"
       },
       {
         "id": "c",
-        "pt": "Aumentar a velocidade da Internet em 300% durante os jogos online.",
-        "en": "Increase internet connection speed by 300% during online games."
+        "pt": "Deixar a câmara do computador ligada 24 horas a apontar para a tua cama.",
+        "en": "Leave your computer webcam on 24 hours pointing at your bed."
       },
       {
         "id": "d",
-        "pt": "Fazer com que a bateria do computador dure para sempre sem precisar de carregador.",
-        "en": "Make the laptop battery last forever without needing a charger."
+        "pt": "Publicar no TikTok a fotografia das chaves da tua casa e a matrícula do carro dos pais.",
+        "en": "Post a TikTok video of your house keys and your parents' car license plate."
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "b",
     "explanation": {
-      "pt": "Uma barreira física como uma tampa deslizante é 100% à prova de invasões de software!",
-      "en": "A physical barrier like a webcam slider is 100% proof against software intrusion!"
+      "pt": "Um simples jogo de tabuleiro não precisa de ligar o teu microfone; rejeita permissões desnecessárias!",
+      "en": "A puzzle game has no need for your microphone; decline unnecessary permission prompts!"
     }
   },
   {
@@ -7167,28 +7167,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
         "en": "Yell the password out the window to make sure you memorized it."
       },
       {
         "id": "b",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
-        "en": "Hide the password under the welcome mat in your room."
+        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas senhas anotadas.",
+        "en": "Stick 20 yellow post-its around your screen with all your passwords."
       },
       {
         "id": "c",
-        "pt": "Porque qualquer pessoa que passe perto do teu ecrã consegue ler a palavra-passe num segundo!",
+        "pt": "Porque qualquer pessoa que passe perto do teu ecrã consegue ler a senha num segundo!",
         "en": "Because anyone walking past your desk can read your secret password instantly!"
       },
       {
         "id": "d",
-        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas palavras-passe anotadas.",
-        "en": "Stick 20 yellow post-its around your screen with all your passwords."
+        "pt": "Esconder a senha debaixo do tapete da entrada do quarto.",
+        "en": "Hide the password under the welcome mat in your room."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Mantém as palavras-passe na tua memória ou num gestor de palavras-passe encriptado!",
+      "pt": "Mantém as palavras-passe na tua memória ou num gestor de senhas encriptado!",
       "en": "Keep your passwords in your memory or safely locked inside an encrypted manager!"
     }
   },
@@ -7242,18 +7242,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe! '.",
-        "en": "Sign off an email to the school principal with: 'Peace out cool bro! '."
+        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
+        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
+        "en": "Type invisible emails with white text on a white background to be super secret."
       },
       {
         "id": "c",
-        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu! '.",
-        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am! '."
+        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu!'.",
+        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am!'."
       },
       {
         "id": "d",
@@ -7322,13 +7322,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Acreditar logo no primeiro resultado da pesquisa sem verificar se o site é de confiança.",
-        "en": "Believe the very first search result without checking if the source is reliable."
+        "pt": "Dar o teu nome e morada em todos os questionários pop-up que aparecem na web.",
+        "en": "Enter your real name and address in every pop-up quiz you see."
       },
       {
         "id": "c",
-        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
-        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
+        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
+        "en": "Shout at the screen hoping the web page loads three times faster."
       },
       {
         "id": "d",
@@ -7392,23 +7392,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
-        "en": "Post an embarrassing photo of your classmate online without their permission."
+        "pt": "Dizer que a pintura da Mona Lisa foi desenhada pelo teu primo no Paint.",
+        "en": "Claim that the Mona Lisa was drawn by your little cousin in MS Paint."
       },
       {
         "id": "b",
-        "pt": "Em bibliotecas de áudio com licenças abertas (como Creative Commons) ou de domínio público!",
-        "en": "In audio libraries offering open licenses (such as Creative Commons) or public domain!"
+        "pt": "Em bibliotecas de áudio com licenças Creative Commons ou sons sem direitos reservados (Royalty-Free)!",
+        "en": "In audio libraries offering Creative Commons or Royalty-Free licensed tracks!"
       },
       {
         "id": "c",
-        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
-        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
+        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
+        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
       },
       {
         "id": "d",
-        "pt": "Achar que tudo o que encontras no Google Imagens é teu por magia.",
-        "en": "Believe anything found on Google Images automatically belongs to you by magic."
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
       }
     ],
     "correctOptionId": "b",
@@ -7467,13 +7467,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Deitar computadores e telemóveis velhos no caixote do lixo comum ou no mar.",
+        "en": "Throw old computers and smartphones into the regular trash or into the sea."
       },
       {
         "id": "b",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "c",
@@ -7482,8 +7482,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       }
     ],
     "correctOptionId": "c",
@@ -7542,18 +7542,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       },
       {
         "id": "b",
-        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
-        "en": "Fill the school bag with bricks to get stronger during classes."
+        "pt": "Ficar 8 horas seguidas sem pestanejar feito uma estátua do museu de cera.",
+        "en": "Stare for 8 straight hours without blinking like a wax museum statue."
       },
       {
         "id": "c",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
+        "en": "Put the screen on the floor and lie down like a lizard."
       },
       {
         "id": "d",
@@ -7617,28 +7617,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "É tentar enganar as pessoas com simpatia ou mentiras para elas entregarem palavras-passe ou dados!",
+        "pt": "É tentar enganar as pessoas com simpatia ou mentiras para elas entregarem senhas ou dados!",
         "en": "It is manipulating people through lies, false urgency, or pretend kindness to steal secrets!"
       },
       {
         "id": "b",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "c",
-        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
-        "en": "Download a pirated game from a shady website promising infinite gems."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "d",
-        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
-        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
+        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
+        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Os piratas informáticos atacam mais a ingenuidade das pessoas do que os computadores; desconfia sempre!",
+      "pt": "Os hackers atacam mais a ingenuidade das pessoas do que os computadores; desconfia sempre!",
       "en": "Scammers target human trust rather than machine firewalls; always stay alert!"
     }
   },
@@ -7692,7 +7692,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever a palavra-passe na lousa da sala de aula com giz vermelho gigante.",
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
         "en": "Write the password on the classroom chalkboard in giant red chalk."
       },
       {
@@ -7702,13 +7702,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
-        "en": "Yell the password out the window to make sure you memorized it."
+        "pt": "Usar a palavra 'senha' como senha para ser super original.",
+        "en": "Use the word 'password' as your password to be super original."
       },
       {
         "id": "d",
-        "pt": "Deixar a sessão aberta no computador da biblioteca e ir embora para casa.",
-        "en": "Leave your account logged in at the school library and go home."
+        "pt": "Achar que os computadores são mágicos e adivinham quem tu és sem senha.",
+        "en": "Think computers are magic and guess who you are without passwords."
       }
     ],
     "correctOptionId": "b",
@@ -7767,13 +7767,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que um email urgente do banco a pedir palavras-passe por SMS é verdadeiro.",
-        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
+        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
+        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
       },
       {
         "id": "b",
-        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
-        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "c",
@@ -7782,8 +7782,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe! '.",
-        "en": "Sign off an email to the school principal with: 'Peace out cool bro! '."
+        "pt": "Achar que um email urgente do banco a pedir senhas por SMS é verdadeiro.",
+        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
       }
     ],
     "correctOptionId": "c",
@@ -7842,18 +7842,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever no motor de busca: 'Ó computador inteligente, dá-me nota 5 no teste! '.",
-        "en": "Type in the search engine: 'Oh wise computer, give me top marks on my test! '."
-      },
-      {
-        "id": "b",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
         "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
+        "id": "b",
+        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
+        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
+      },
+      {
         "id": "c",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Escrever no motor de busca: 'Ó computador inteligente, dá-me nota 5 no teste!'.",
+        "en": "Type in the search engine: 'Oh wise computer, give me top marks on my test!'."
       },
       {
         "id": "d",
@@ -7922,18 +7922,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Achar que o símbolo © de Copyright significa 'Copia O Que Quiseres'.",
-        "en": "Think the © Copyright symbol stands for 'Copy Whatever You Want'."
-      },
-      {
-        "id": "c",
         "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
         "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
       },
       {
+        "id": "c",
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
+      },
+      {
         "id": "d",
-        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
-        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
+        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
+        "en": "Use copyrighted pop music in a public video without giving any credit."
       }
     ],
     "correctOptionId": "a",
@@ -7992,8 +7992,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que a memória RAM serve para guardar coisas mesmo quando o computador está desligado.",
-        "en": "Think RAM memory keeps your files saved even after turning off the computer."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "b",
@@ -8002,8 +8002,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       },
       {
         "id": "d",
@@ -8067,13 +8067,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever com o teclado no colo enquanto a cabeça fica inclinada para baixo.",
-        "en": "Type with the keyboard on your lap while bending your neck downwards."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       },
       {
         "id": "b",
-        "pt": "Usar o auscultador no volume máximo de concerto de rock até os tímpanos dançarem.",
-        "en": "Crank headphones to max rock concert volume until eardrums rattle."
+        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
+        "en": "Put the screen on the floor and lie down like a lizard."
       },
       {
         "id": "c",
@@ -8082,8 +8082,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Sentar num banco rígido sem apoio lombar nem regulação de altura.",
-        "en": "Stack 5 pillows on the chair until your head hits the ceiling."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       }
     ],
     "correctOptionId": "c",
@@ -8147,13 +8147,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
-        "en": "Give your home address and phone number to a stranger in an online game."
+        "pt": "Publicar no TikTok a fotografia das chaves da tua casa e a matrícula do carro dos pais.",
+        "en": "Post a TikTok video of your house keys and your parents' car license plate."
       },
       {
         "id": "c",
-        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
-        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "d",
@@ -8222,18 +8222,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
         "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "c",
-        "pt": "Usar a mesma palavra-passe 'chocolate' em todos os sites do planeta Terra.",
-        "en": "Use the same password 'chocolate' across every website on Earth."
+        "pt": "Achar que os computadores são mágicos e adivinham quem tu és sem senha.",
+        "en": "Think computers are magic and guess who you are without passwords."
       },
       {
         "id": "d",
-        "pt": "Partilhar a palavra-passe no grupo de WhatsApp da turma toda.",
-        "en": "Share the password in the whole class WhatsApp group."
+        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas senhas anotadas.",
+        "en": "Stick 20 yellow post-its around your screen with all your passwords."
       }
     ],
     "correctOptionId": "a",
@@ -8292,8 +8292,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
-        "en": "Type invisible emails with white text on a white background to be super secret."
+        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe!'.",
+        "en": "Sign off an email to the school principal with: 'Peace out cool bro!'."
       },
       {
         "id": "b",
@@ -8302,8 +8302,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que um email urgente do banco a pedir palavras-passe por SMS é verdadeiro.",
-        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
+        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
+        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
       },
       {
         "id": "d",
@@ -8361,19 +8361,19 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "O que indica a terminação '. pt' no endereço de um website como www. seguranet. pt?",
-      "en": "What does the '. pt' extension tell you in a web address like www. seguranet. pt?"
+      "pt": "O que indica a terminação '.pt' no endereço de um website como www.seguranet.pt?",
+      "en": "What does the '.pt' extension tell you in a web address like www.seguranet.pt?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Acreditar logo no primeiro resultado da pesquisa sem verificar se o site é de confiança.",
+        "en": "Believe the very first search result without checking if the source is reliable."
       },
       {
         "id": "b",
-        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus! '.",
-        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses! '."
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
+        "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
         "id": "c",
@@ -8382,14 +8382,14 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Dar o teu nome e morada em todos os questionários pop-up que aparecem na web.",
-        "en": "Enter your real name and address in every pop-up quiz you see."
+        "pt": "Pesquisar no Google 'como teletransportar comida' e esperar que apareça uma piza no teclado.",
+        "en": "Search 'how to teleport food' and wait for a pizza to appear on the keyboard."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Extensões como . pt, . gov (governo) ou . edu (educação) ajudam a identificar a origem do site!",
-      "en": "TLDs like . pt, . gov, or . edu help identify the origin and category of web resources!"
+      "pt": "Extensões como .pt, .gov (governo) ou .edu (educação) ajudam a identificar a origem do site!",
+      "en": "TLDs like .pt, .gov, or .edu help identify the origin and category of web resources!"
     }
   },
   {
@@ -8442,13 +8442,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
-        "en": "Use copyrighted pop music in a public video without giving any credit."
+        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
+        "en": "Post an embarrassing photo of your classmate online without their permission."
       },
       {
         "id": "b",
-        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
-        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
+        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
+        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
       },
       {
         "id": "c",
@@ -8457,8 +8457,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Entre aspas \"... \", indicando logo a seguir o nome do autor e a fonte de onde foi retirada!",
-        "en": "Enclosed in quotation marks \"... \", immediately naming the author and the original source!"
+        "pt": "Entre aspas \"...\", indicando logo a seguir o nome do autor e a fonte de onde foi retirada!",
+        "en": "Enclosed in quotation marks \"...\", immediately naming the author and the original source!"
       }
     ],
     "correctOptionId": "d",
@@ -8522,13 +8522,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Falar com o router Wi-Fi aos gritos a pedir para ele ter mais simpatia.",
-        "en": "Yell at the Wi-Fi router politely begging it to be friendlier today."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "c",
-        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
-        "en": "Think the very first computer in history was small enough to fit in your pocket."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "d",
@@ -8586,35 +8586,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "O que nos ensina o Dia Mundial do Livro e dos Direitos de Autor para os nossos trabalhos de TIC?",
-      "en": "What does World Book and Copyright Day teach us for our ICT school projects?"
+      "pt": "O que celebramos no Dia Mundial do Livro e dos Direitos de Autor a 23 de Abril?",
+      "en": "What is celebrated on World Book and Copyright Day on April 23?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Devemos identificar sempre o autor e a fonte das informações e imagens que utilizamos.",
-        "en": "We must always identify the author and source of the information and images we use."
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
       },
       {
         "id": "b",
-        "pt": "Podemos copiar livros inteiros e pôr o nosso nome na capa sem pedir autorização.",
-        "en": "We can copy entire books and put our name on the cover without asking."
+        "pt": "A criatividade dos autores, a paixão pela leitura e a proteção legal das obras artísticas!",
+        "en": "The creativity of authors, the passion for reading, and legal protection of artistic works!"
       },
       {
         "id": "c",
-        "pt": "Que os livros antigos devem ser todos deitados fora porque agora só existe a Internet.",
-        "en": "That old books should all be thrown away because only the internet exists now."
+        "pt": "Achar que tudo o que encontras no Google Imagens é teu por magia.",
+        "en": "Believe anything found on Google Images automatically belongs to you by magic."
       },
       {
         "id": "d",
-        "pt": "Que nunca se deve partilhar nenhum conhecimento científico com colegas de turma.",
-        "en": "That scientific knowledge should never be shared with classmates."
+        "pt": "Apagar o nome do autor original e colar uma foto tua por cima.",
+        "en": "Erase the original author's signature and paste your own photo over it."
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "b",
     "explanation": {
-      "pt": "Dar crédito aos autores e criadores originais é respeitar o esforço de quem produziu a obra!",
-      "en": "Crediting original authors and creators honors the effort and talent behind their work!"
+      "pt": "Os criadores merecem reconhecimento pelo esforço e imaginação que colocam nos livros e obras!",
+      "en": "Creators deserve appreciation and protection for the imagination and effort they invest!"
     }
   },
   {
@@ -8667,13 +8667,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar numa mensagem não solicitada que pede a tua palavra-passe para atualizar a conta.",
-        "en": "Believe an unsolicited message asking for your password to update the account."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "b",
-        "pt": "Ignorar todos os avisos de segurança porque achas que és invencível.",
-        "en": "Ignore all security alerts because you feel completely invincible."
+        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
+        "en": "Download a pirated game from a shady website promising infinite gems."
       },
       {
         "id": "c",
@@ -8682,8 +8682,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
+        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
       }
     ],
     "correctOptionId": "c",
@@ -8736,35 +8736,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Porque deves evitar palavras-passe fáceis como '123456', 'benfica' ou a tua data de nascimento?",
-      "en": "Why should you avoid simple passwords like '123456', your soccer club, or your birthdate?"
+      "pt": "Na dica de hoje sobre \"Dica Prática: 123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar.\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"Practical Tip: 123456 is an extremely predictable password and is among the first combinations automated systems may try.\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
+        "pt": "Usar a palavra 'senha' como senha para ser super original.",
         "en": "Use the word 'password' as your password to be super original."
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
-        "en": "Use '123456' and tape it to your forehead so you never forget it."
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
+        "en": "Yell the password out the window to make sure you memorized it."
       },
       {
         "id": "c",
-        "pt": "Dar a tua palavra-passe a um estranho na Internet em troca de 5 moedas virtuais.",
-        "en": "Give your password to an online stranger in exchange for 5 virtual coins."
+        "pt": "Deixar a sessão aberta no computador da biblioteca e ir embora para casa.",
+        "en": "Leave your account logged in at the school library and go home."
       },
       {
         "id": "d",
-        "pt": "Porque programas automáticos de piratas informáticos (piratas informáticos (hackers)) conseguem adivinhá-las numa fração de segundo!",
-        "en": "Because automated hacker scripts can guess them in a tiny fraction of a second!"
+        "pt": "Programas automáticos usam listas de palavras comuns e sequências de teclado simples!",
+        "en": "Automated programs use lists of common words and simple keyboard sequences!"
       }
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Quanto mais longa e variada for a palavra-passe, mais segura e inviolável ela fica!",
-      "en": "The longer and more varied your password, the harder it is for anyone to break!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -8822,13 +8822,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Achar que um email urgente do banco a pedir senhas por SMS é verdadeiro.",
+        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
       },
       {
         "id": "c",
-        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
-        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
+        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
+        "en": "Type invisible emails with white text on a white background to be super secret."
       },
       {
         "id": "d",
@@ -8892,8 +8892,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
-        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
+        "pt": "Escrever no motor de busca: 'Ó computador inteligente, dá-me nota 5 no teste!'.",
+        "en": "Type in the search engine: 'Oh wise computer, give me top marks on my test!'."
       },
       {
         "id": "b",
@@ -8902,13 +8902,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
-        "en": "Believe everything written on the Internet is 100% proven scientific truth."
+        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus!'.",
+        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses!'."
       },
       {
         "id": "d",
-        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus! '.",
-        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses! '."
+        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
+        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
       }
     ],
     "correctOptionId": "b",
@@ -8967,13 +8967,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que tudo o que encontras no Google Imagens é teu por magia.",
-        "en": "Believe anything found on Google Images automatically belongs to you by magic."
+        "pt": "Achar que o símbolo © de Copyright significa 'Copia O Que Quiseres'.",
+        "en": "Think the © Copyright symbol stands for 'Copy Whatever You Want'."
       },
       {
         "id": "b",
-        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
-        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
+        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
+        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
       },
       {
         "id": "c",
@@ -8982,8 +8982,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Apagar o nome do autor original e colar uma foto tua por cima.",
-        "en": "Erase the original author's signature and paste your own photo over it."
+        "pt": "Achar que tudo o que encontras no Google Imagens é teu por magia.",
+        "en": "Believe anything found on Google Images automatically belongs to you by magic."
       }
     ],
     "correctOptionId": "c",
@@ -9042,23 +9042,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Usar um carregador com voltagem errada ou cabo danificado que pode sobreaquecer.",
-        "en": "Use a wrong voltage charger or damaged cable that can overheat."
+        "pt": "Achar que a memória RAM serve para guardar coisas mesmo quando o computador está desligado.",
+        "en": "Think RAM memory keeps your files saved even after turning off the computer."
       },
       {
         "id": "b",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "c",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Meter o computador portátil no micro-ondas para carregar a bateria em 5 segundos.",
+        "en": "Put the laptop in the microwave to charge the battery in 5 seconds."
       },
       {
         "id": "d",
         "pt": "A RAM é rápida e temporária (apaga-se ao desligar); o SSD guarda ficheiros em definitivo!",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "RAM is fast and temporary (clears on shutdown); the SSD stores files permanently!"
       }
     ],
     "correctOptionId": "d",
@@ -9111,35 +9111,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Para onde deves olhar durante os 20 segundos da pausa visual recomendada pela ergonomia?",
-      "en": "Where should you look during the 20-second visual break recommended by ergonomics?"
+      "pt": "Qual é o truque de pestanejar com frequência enquanto estás a ler no ecrã do computador?",
+      "en": "Why should you make a conscious effort to blink frequently while reading on a screen?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Para um ponto distante, como pela janela ou para o fundo da sala, a pelo menos 6 metros.",
-        "en": "At a distant point, such as out the window or across the room, at least 6 meters away."
+        "pt": "Para manter os olhos hidratados e evitar que fiquem secos, vermelhos e irritados!",
+        "en": "To keep the eye surface naturally moisturized and prevent burning, dry-eye irritation!"
       },
       {
         "id": "b",
-        "pt": "Para o ecrã do telemóvel a 5 centímetros do nariz com brilho no máximo.",
-        "en": "At your smartphone screen 5 centimeters from your nose at maximum brightness."
+        "pt": "Trabalhar de cabeça para baixo pendurado no candeeiro do teto como um morcego.",
+        "en": "Work upside down hanging from the ceiling lamp like a bat."
       },
       {
         "id": "c",
-        "pt": "Diretamente para uma lâmpada acesa sem pestanejar durante meia hora.",
-        "en": "Directly into a bright light bulb without blinking for half an hour."
+        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
+        "en": "Fill the school bag with bricks to get stronger during classes."
       },
       {
         "id": "d",
-        "pt": "Para um relógio de parede a contar cada milissegundo de forma stressante.",
-        "en": "At a ticking wall clock counting every millisecond in a stressful way."
+        "pt": "Mover o rato com o pé esquerdo para dar descanso à mão direita.",
+        "en": "Move the mouse with your left foot to rest your right hand."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Focar objetos distantes relaxa o músculo ciliar, permitindo que a lente ocular volte à sua forma natural.",
-      "en": "Focusing on distant objects relaxes the ciliary muscle, letting the eye lens return to its relaxed shape."
+      "pt": "Quando olhamos para ecrãs pestanejamos metade das vezes; lembra-te de piscar!",
+      "en": "We blink 50% less often when gazing at screens; blinking restores natural tears!"
     }
   },
   {
@@ -9202,13 +9202,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
-        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
+        "pt": "Desativar o antivírus porque o ícone dele é demasiado aborrecido.",
+        "en": "Disable the antivirus because its icon looks too boring."
       },
       {
         "id": "d",
-        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
-        "en": "Give your home address and phone number to a stranger in an online game."
+        "pt": "Ignorar todos os avisos de segurança porque achas que és invencível.",
+        "en": "Ignore all security alerts because you feel completely invincible."
       }
     ],
     "correctOptionId": "b",
@@ -9261,19 +9261,19 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada em segurança digital?",
+      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada nas aulas de TIC?",
       "en": "How does the ninja 'Pass-Phrase' technique taught in ICT work?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
         "en": "Yell the password out the window to make sure you memorized it."
       },
       {
         "id": "b",
-        "pt": "Deixar a sessão aberta no computador da biblioteca e ir embora para casa.",
-        "en": "Leave your account logged in at the school library and go home."
+        "pt": "Usar a mesma senha 'chocolate' em todos os sites do planeta Terra.",
+        "en": "Use the same password 'chocolate' across every website on Earth."
       },
       {
         "id": "c",
@@ -9282,14 +9282,14 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Dar a tua palavra-passe a um estranho na Internet em troca de 5 moedas virtuais.",
-        "en": "Give your password to an online stranger in exchange for 5 virtual coins."
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "en": "Use '123456' and tape it to your forehead so you never forget it."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Frases como 'O_Meu_Cao_Adora_99_Gelados! ' são gigantes para piratas informáticos mas fáceis para ti!",
-      "en": "Phrases like 'My_Dog_Loves_99_IceCreams! ' are tough for hackers yet effortless to recall!"
+      "pt": "Frases como 'O_Meu_Cao_Adora_99_Gelados!' são gigantes para hackers mas fáceis para ti!",
+      "en": "Phrases like 'My_Dog_Loves_99_IceCreams!' are tough for hackers yet effortless to recall!"
     }
   },
   {
@@ -9342,13 +9342,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
-        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
+        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
+        "en": "Type invisible emails with white text on a white background to be super secret."
       },
       {
         "id": "b",
-        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
-        "en": "Type invisible emails with white text on a white background to be super secret."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "c",
@@ -9363,7 +9363,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico.",
+      "pt": "Foi introduzido por Ray Tomlinson em 1971 e hoje é conhecido em todo o mundo!",
       "en": "It was introduced by Ray Tomlinson in 1971 and is recognized worldwide today!"
     }
   },
@@ -9411,35 +9411,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Qual é a melhor ação a tomar no Dia Mundial da Palavra-passe para proteger as tuas contas?",
-      "en": "What is the best action to take on World Password Day to protect your online accounts?"
+      "pt": "Na dica de hoje sobre \"Dia Mundial da Palavra-passe: Muda a tua palavra-passe fraca!\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"World Password Day: Change your weak password!\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Criar frases-passe longas e únicas para cada serviço importante e ativar 2FA se disponível.",
-        "en": "Create long, unique passphrases for each important service and enable 2FA if available."
+        "pt": "O Dia Mundial da Palavra-passe incentiva todos a abandonar combinações simples como '123456' ou o nome do anim!",
+        "en": "World Password Day encourages everyone to ditch weak combinations like '123456' or pet names, adopting long pa!"
       },
       {
         "id": "b",
-        "pt": "Mudar todas as palavras-passe para 'password2026' para ser fácil de memorizar.",
-        "en": "Change all passwords to 'password2026' so it's super easy to remember."
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "c",
-        "pt": "Partilhar a palavra-passe da conta escolar no grupo de chat da turma.",
-        "en": "Share your school account password in the public class group chat."
+        "pt": "Partilhar a palavra-passe no grupo de WhatsApp da turma toda.",
+        "en": "Share the password in the whole class WhatsApp group."
       },
       {
         "id": "d",
-        "pt": "Escrever a palavra-passe a caneta indelével na capa exterior do portátil.",
-        "en": "Write your password in permanent marker on your laptop's outer shell."
+        "pt": "Achar que os computadores são mágicos e adivinham quem tu és sem senha.",
+        "en": "Think computers are magic and guess who you are without passwords."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Palavras-passe longas e variadas protegem as tuas mensagens e trabalhos contra invasões!",
-      "en": "Long, distinct passphrases protect your messages and school projects from unauthorized access!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -9492,8 +9492,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
-        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
+        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
+        "en": "Use copyrighted pop music in a public video without giving any credit."
       },
       {
         "id": "b",
@@ -9502,8 +9502,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
-        "en": "Use copyrighted pop music in a public video without giving any credit."
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
       },
       {
         "id": "d",
@@ -9567,13 +9567,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Falar com o router Wi-Fi aos gritos a pedir para ele ter mais simpatia.",
+        "en": "Yell at the Wi-Fi router politely begging it to be friendlier today."
       },
       {
         "id": "b",
-        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
-        "en": "Think the very first computer in history was small enough to fit in your pocket."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       },
       {
         "id": "c",
@@ -9642,18 +9642,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       },
       {
         "id": "b",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Usar o auscultador no volume máximo de concerto de rock até os tímpanos dançarem.",
+        "en": "Crank headphones to max rock concert volume until eardrums rattle."
       },
       {
         "id": "c",
-        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
-        "en": "Fill the school bag with bricks to get stronger during classes."
+        "pt": "Mover o rato com o pé esquerdo para dar descanso à mão direita.",
+        "en": "Move the mouse with your left foot to rest your right hand."
       },
       {
         "id": "d",
@@ -9722,18 +9722,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "c",
-        "pt": "Deixar a câmara do computador ligada 24 horas a apontar para a tua cama.",
-        "en": "Leave your computer webcam on 24 hours pointing at your bed."
+        "pt": "Desativar o antivírus porque o ícone dele é demasiado aborrecido.",
+        "en": "Disable the antivirus because its icon looks too boring."
       },
       {
         "id": "d",
-        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
-        "en": "Download a pirated game from a shady website promising infinite gems."
+        "pt": "Partilhar a tua localização GPS exata em tempo real com toda a gente nas redes.",
+        "en": "Share your exact live GPS location publicly with everyone on social media."
       }
     ],
     "correctOptionId": "a",
@@ -9786,35 +9786,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Com quem deves partilhar as tuas palavras-passe secretas de jogos e contas?",
-      "en": "Who should you share your secret passwords for accounts and games with?"
+      "pt": "Na dica de hoje sobre \"Segurança Avançada: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"Advanced Safety: Passwords are like toothbrushes: you do not lend them to anyone!\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Escrever a palavra-passe na lousa da sala de aula com giz vermelho gigante.",
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
         "en": "Write the password on the classroom chalkboard in giant red chalk."
       },
       {
         "id": "b",
-        "pt": "Apenas com os teus pais ou encarregados de educação; nunca com amigos nem colegas!",
-        "en": "Only with your parents or guardians; never with friends or schoolmates!"
+        "pt": "A tua palavra-passe é pessoal e intransmissível!",
+        "en": "Your password is personal and should not be shared!"
       },
       {
         "id": "c",
-        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas palavras-passe anotadas.",
-        "en": "Stick 20 yellow post-its around your screen with all your passwords."
+        "pt": "Usar a mesma senha 'chocolate' em todos os sites do planeta Terra.",
+        "en": "Use the same password 'chocolate' across every website on Earth."
       },
       {
         "id": "d",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
-        "en": "Yell the password out the window to make sure you memorized it."
+        "pt": "Partilhar a palavra-passe no grupo de WhatsApp da turma toda.",
+        "en": "Share the password in the whole class WhatsApp group."
       }
     ],
     "correctOptionId": "b",
     "explanation": {
-      "pt": "Mesmo o teu melhor amigo não deve ter a tua palavra-passe; uma amizade verdadeira respeita o segredo!",
-      "en": "Even best friends shouldn't know your password; genuine friendship respects privacy!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -9867,13 +9867,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
-        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
+        "pt": "Escrever o email todo em LETRAS MAIÚSCULAS aos berros para o carteiro correr mais.",
+        "en": "Write the whole email in ALL CAPS screaming so the digital mailman runs faster."
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
+        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
       },
       {
         "id": "c",
@@ -9942,13 +9942,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Pesquisar no Google 'como teletransportar comida' e esperar que apareça uma piza no teclado.",
-        "en": "Search 'how to teleport food' and wait for a pizza to appear on the keyboard."
+        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus!'.",
+        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses!'."
       },
       {
         "id": "b",
-        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
-        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
+        "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
         "id": "c",
@@ -10011,8 +10011,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Para que servem as licenças Creative Commons (CC)?",
-      "en": "What are Creative Commons (CC) licenses used for?"
+      "pt": "Para que servem as licenças Creative Commons (CC) que aprendeste nas aulas de TIC?",
+      "en": "What are Creative Commons (CC) licenses used for in ICT class?"
     },
     "options": [
       {
@@ -10022,18 +10022,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Copiar o trabalho inteiro da Wikipédia e dizer que foste tu que o inventaste ontem.",
-        "en": "Copy the whole Wikipedia article and claim you invented it yesterday."
+        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
+        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
       },
       {
         "id": "c",
-        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
-        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
+        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
+        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
       },
       {
         "id": "d",
-        "pt": "Dizer que a pintura da Mona Lisa foi desenhada pelo teu primo no Paint.",
-        "en": "Claim that the Mona Lisa was drawn by your little cousin in MS Paint."
+        "pt": "Copiar o trabalho inteiro da Wikipédia e dizer que foste tu que o inventaste ontem.",
+        "en": "Copy the whole Wikipedia article and claim you invented it yesterday."
       }
     ],
     "correctOptionId": "a",
@@ -10092,8 +10092,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "b",
@@ -10102,13 +10102,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "d",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       }
     ],
     "correctOptionId": "b",
@@ -10167,13 +10167,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever com o teclado no colo enquanto a cabeça fica inclinada para baixo.",
-        "en": "Type with the keyboard on your lap while bending your neck downwards."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       },
       {
         "id": "b",
-        "pt": "Ficar 8 horas seguidas sem pestanejar feito uma estátua do museu de cera.",
-        "en": "Stare for 8 straight hours without blinking like a wax museum statue."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       },
       {
         "id": "c",
@@ -10182,8 +10182,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Trabalhar de cabeça para baixo pendurado no candeeiro do teto como um morcego.",
-        "en": "Work upside down hanging from the ceiling lamp like a bat."
+        "pt": "Dormir com o telemóvel colado na testa para sonhar com jogos online.",
+        "en": "Sleep with the phone glued to your forehead to dream about online games."
       }
     ],
     "correctOptionId": "c",
@@ -10247,13 +10247,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
-        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "c",
-        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
-        "en": "Download a pirated game from a shady website promising infinite gems."
+        "pt": "Dizer a toda a gente em que escola andas e em que sala tens aula agora.",
+        "en": "Tell everyone online which school and classroom you are in right now."
       },
       {
         "id": "d",
@@ -10317,28 +10317,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "É uma dupla proteção que pede a tua palavra-passe mais um código especial enviado por SMS ou aplicação!",
-        "en": "It is a double lock requiring your password plus a temporary code from SMS or an application!"
+        "pt": "É uma dupla proteção que pede a tua senha mais um código especial enviado por SMS ou app!",
+        "en": "It is a double lock requiring your password plus a temporary code from SMS or an app!"
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
         "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "c",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
-        "en": "Use the word 'password' as your password to be super original."
+        "pt": "Dar a tua palavra-passe a um estranho na Internet em troca de 5 moedas virtuais.",
+        "en": "Give your password to an online stranger in exchange for 5 virtual coins."
       },
       {
         "id": "d",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
-        "en": "Hide the password under the welcome mat in your room."
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
+        "en": "Write the password on the classroom chalkboard in giant red chalk."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Mesmo que um pirata informático descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro",
+      "pt": "Mesmo que um hacker descubra a tua senha, não consegue entrar sem o segundo código!",
       "en": "Even if someone discovers your password, they can't log in without the second code!"
     }
   },
@@ -10386,35 +10386,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "O que comemora o Dia Mundial das Telecomunicações e da Sociedade da Informação?",
-      "en": "What does World Telecommunication and Information Society Day celebrate?"
+      "pt": "O que caracteriza a 'Sociedade da Informação' em que vivemos hoje?",
+      "en": "What defines the 'Information Society' we live in today?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A evolução dos meios de comunicação que ligam os povos e o acesso de todos às TIC.",
-        "en": "The evolution of communication linking peoples together and universal access to ICT."
+        "pt": "Meter o computador portátil no micro-ondas para carregar a bateria em 5 segundos.",
+        "en": "Put the laptop in the microwave to charge the battery in 5 seconds."
       },
       {
         "id": "b",
-        "pt": "A obrigatoriedade de todas as pessoas falarem apenas por walkie-talkie durante 24 horas.",
-        "en": "The requirement that all people must communicate only via walkie-talkie for 24 hours."
+        "pt": "A facilidade de comunicar, aprender e aceder a conhecimento global instantaneamente através das TIC!",
+        "en": "The ability to communicate, discover, and access global knowledge instantaneously via ICT!"
       },
       {
         "id": "c",
-        "pt": "O fim das cartas postais e o encerramento definitivo de todas as escolas físicas.",
-        "en": "The complete ban on postal letters and permanent closure of physical schools."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "d",
-        "pt": "O lançamento de um foguetão espacial feito inteiramente de teclados velhos.",
-        "en": "The launch of an orbital rocket made entirely out of discarded computer keyboards."
+        "pt": "Falar com o router Wi-Fi aos gritos a pedir para ele ter mais simpatia.",
+        "en": "Yell at the Wi-Fi router politely begging it to be friendlier today."
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "b",
     "explanation": {
-      "pt": "As telecomunicações permitem partilhar ciência, socorrer pessoas em emergências e ligar amigos pelo mundo fora!",
-      "en": "Telecommunications enable scientific sharing, disaster relief, and connecting people globally!"
+      "pt": "As TIC transformaram a medicina, a escola, os transportes e a forma como nos ligamos aos outros!",
+      "en": "ICT has revolutionized medicine, schools, sciences, and how humans connect across borders!"
     }
   },
   {
@@ -10467,13 +10467,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Dar o teu nome e morada em todos os questionários pop-up que aparecem na web.",
-        "en": "Enter your real name and address in every pop-up quiz you see."
+        "pt": "Confundir o navegador (Google Chrome) com a própria rede mundial da Internet.",
+        "en": "Confuse the web browser with the entire global Internet infrastructure."
       },
       {
         "id": "b",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
-        "en": "Believe everything written on the Internet is 100% proven scientific truth."
+        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
+        "en": "Shout at the screen hoping the web page loads three times faster."
       },
       {
         "id": "c",
@@ -10482,8 +10482,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus!'.",
+        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses!'."
       }
     ],
     "correctOptionId": "c",
@@ -10542,18 +10542,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Dizer que a pintura da Mona Lisa foi desenhada pelo teu primo no Paint.",
-        "en": "Claim that the Mona Lisa was drawn by your little cousin in MS Paint."
+        "pt": "Apagar o nome do autor original e colar uma foto tua por cima.",
+        "en": "Erase the original author's signature and paste your own photo over it."
       },
       {
         "id": "b",
-        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
-        "en": "Post an embarrassing photo of your classmate online without their permission."
+        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
+        "en": "Use copyrighted pop music in a public video without giving any credit."
       },
       {
         "id": "c",
-        "pt": "Apagar o nome do autor original e colar uma foto tua por cima.",
-        "en": "Erase the original author's signature and paste your own photo over it."
+        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
+        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
       },
       {
         "id": "d",
@@ -10622,18 +10622,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Deitar computadores e telemóveis velhos no caixote do lixo comum ou no mar.",
-        "en": "Throw old computers and smartphones into the regular trash or into the sea."
+        "pt": "Alimentar o rato do computador com fatias de queijo da serra para ele correr mais rápido.",
+        "en": "Feed the computer mouse slices of cheese so it runs faster across the desk."
       },
       {
         "id": "c",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "d",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Meter o computador portátil no micro-ondas para carregar a bateria em 5 segundos.",
+        "en": "Put the laptop in the microwave to charge the battery in 5 seconds."
       }
     ],
     "correctOptionId": "a",
@@ -10692,8 +10692,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "b",
@@ -10702,13 +10702,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
-        "en": "Put the screen on the floor and lie down like a lizard."
+        "pt": "Trabalhar às escuras com óculos de sol para parecer um agente secreto.",
+        "en": "Work in total darkness wearing sunglasses to look like a secret agent."
       },
       {
         "id": "d",
-        "pt": "Ficar 8 horas seguidas sem pestanejar feito uma estátua do museu de cera.",
-        "en": "Stare for 8 straight hours without blinking like a wax museum statue."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       }
     ],
     "correctOptionId": "b",
@@ -10762,18 +10762,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "isSpecialMilestone": false,
     "question": {
       "pt": "Porque deves desligar a partilha de localização (GPS) nas aplicações que não precisam dela?",
-      "en": "Why should you turn off GPS location sharing in applications that don't need it?"
+      "en": "Why should you turn off GPS location sharing in apps that don't need it?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar numa mensagem não solicitada que pede a tua palavra-passe para atualizar a conta.",
-        "en": "Believe an unsolicited message asking for your password to update the account."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "b",
-        "pt": "Publicar no TikTok a fotografia das chaves da tua casa e a matrícula do carro dos pais.",
-        "en": "Post a TikTok video of your house keys and your parents' car license plate."
+        "pt": "Dizer a toda a gente em que escola andas e em que sala tens aula agora.",
+        "en": "Tell everyone online which school and classroom you are in right now."
       },
       {
         "id": "c",
@@ -10782,14 +10782,14 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
-        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Algumas aplicações precisam da localização para funcionar corretamente. Outras podem pedi-la sem ser essencial. Verifica se uma aplicação precisa realmente da tua localização antes de a autorizares.",
-      "en": "Only navigation applications actually need GPS; simple games and photo filters do not!"
+      "pt": "Apenas apps de mapas e transportes precisam de localização; jogos e filtros não necessitam!",
+      "en": "Only navigation apps actually need GPS; simple games and photo filters do not!"
     }
   },
   {
@@ -10836,35 +10836,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "O que é um 'Gestor de Palavras-passe' (Password Manager) e qual a sua grande vantagem?",
-      "en": "What is a 'password Manager' and what is its main superpower?"
+      "pt": "Na dica de hoje sobre \"Segurança Avançada: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"Advanced Safety: Never reuse the same password on every website and app!\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
+        "pt": "Usar a palavra 'senha' como senha para ser super original.",
         "en": "Use the word 'password' as your password to be super original."
       },
       {
         "id": "b",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
-        "en": "Hide the password under the welcome mat in your room."
+        "pt": "Escolher o nome do teu cão porque os hackers têm medo de animais de estimação.",
+        "en": "Pick your dog's name because hackers are afraid of pets."
       },
       {
         "id": "c",
-        "pt": "Achar que os computadores são mágicos e adivinham quem tu és sem palavra-passe.",
-        "en": "Think computers are magic and guess who you are without passwords."
+        "pt": "Dar a tua palavra-passe a um estranho na Internet em troca de 5 moedas virtuais.",
+        "en": "Give your password to an online stranger in exchange for 5 virtual coins."
       },
       {
         "id": "d",
-        "pt": "É um cofre digital seguro que guarda e cria palavras-passe fortes para ti; Um gestor de palavras-passe pode guardar várias palavras-passe de forma protegida, para não teres de memorizar todas. A palavra-passe principal deve ser muito bem protegida.",
-        "en": "It is an encrypted digital vault storing strong passwords so you only memorize one master key!"
+        "pt": "Quando usas a mesma palavra-passe em todo o lado, basta um site ter falhas de segurança para os criminosos ten!",
+        "en": "When you use the same password everywhere, one security failure can give criminals a chance to try your passwo!"
       }
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Evita que uses a mesma palavra-passe em todo o lado ou que as anotes em papéis perdidos!",
-      "en": "It keeps you from reusing fragile passwords or writing them down on scrap paper!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -10917,23 +10917,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Porque lançam 'iscos' falsos (como prémios ou alertas falsos) para pescar palavras-passe e dados!",
+        "pt": "Porque lançam 'iscos' falsos (como prémios ou alertas falsos) para pescar senhas e dados!",
         "en": "Because they cast fake bait (like fake prizes or urgent alarms) to hook passwords!"
       },
       {
         "id": "b",
-        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
-        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "c",
-        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
-        "en": "Type invisible emails with white text on a white background to be super secret."
+        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
+        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
       },
       {
         "id": "d",
-        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
-        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
+        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
+        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
       }
     ],
     "correctOptionId": "a",
@@ -10992,8 +10992,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
-        "en": "Believe everything written on the Internet is 100% proven scientific truth."
+        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
+        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
       },
       {
         "id": "b",
@@ -11002,13 +11002,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
+        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
       },
       {
         "id": "d",
-        "pt": "Dar o teu nome e morada em todos os questionários pop-up que aparecem na web.",
-        "en": "Enter your real name and address in every pop-up quiz you see."
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
+        "en": "Believe everything written on the Internet is 100% proven scientific truth."
       }
     ],
     "correctOptionId": "b",
@@ -11067,23 +11067,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
-        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
+        "pt": "Achar que tudo o que encontras no Google Imagens é teu por magia.",
+        "en": "Believe anything found on Google Images automatically belongs to you by magic."
       },
       {
         "id": "b",
-        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
-        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
       },
       {
         "id": "c",
-        "pt": "Significa que os direitos de autor já expiraram e a obra pode, em geral, ser utilizada e partilhada sem pedir autorização por direitos de autor.",
-        "en": "It means copyright protection has expired and the work can, in general, be used and shared without asking for copyright permission."
+        "pt": "Significa que os direitos de autor já expiraram e qualquer pessoa pode usar livremente!",
+        "en": "It means copyright protection has expired and anyone can freely use, remix, and share it!"
       },
       {
         "id": "d",
-        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
-        "en": "Post an embarrassing photo of your classmate online without their permission."
+        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
+        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
       }
     ],
     "correctOptionId": "c",
@@ -11142,18 +11142,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Meter o computador portátil no micro-ondas para carregar a bateria em 5 segundos.",
+        "en": "Put the laptop in the microwave to charge the battery in 5 seconds."
       },
       {
         "id": "b",
-        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
-        "en": "Think the very first computer in history was small enough to fit in your pocket."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       },
       {
         "id": "c",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Achar que a memória RAM serve para guardar coisas mesmo quando o computador está desligado.",
+        "en": "Think RAM memory keeps your files saved even after turning off the computer."
       },
       {
         "id": "d",
@@ -11218,7 +11218,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "a",
         "pt": "Não mais do que 10% do teu peso corporal (ex: se pesas 35 kg, a mochila deve ter no máximo 3,5 kg)!",
-        "en": "No more than 10% of your body weight (e. g. if you weigh 35 kg, bag max is 3. 5 kg)!"
+        "en": "No more than 10% of your body weight (e.g. if you weigh 35 kg, bag max is 3.5 kg)!"
       },
       {
         "id": "b",
@@ -11227,13 +11227,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
-        "en": "Put the screen on the floor and lie down like a lizard."
+        "pt": "Dormir com o telemóvel colado na testa para sonhar com jogos online.",
+        "en": "Sleep with the phone glued to your forehead to dream about online games."
       },
       {
         "id": "d",
-        "pt": "Sentar num banco rígido sem apoio lombar nem regulação de altura.",
-        "en": "Stack 5 pillows on the chair until your head hits the ceiling."
+        "pt": "Usar o auscultador no volume máximo de concerto de rock até os tímpanos dançarem.",
+        "en": "Crank headphones to max rock concert volume until eardrums rattle."
       }
     ],
     "correctOptionId": "a",
@@ -11286,35 +11286,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Se não tiveres uma tampa própria para a webcam, que material caseiro podes usar sem danificar o ecrã?",
-      "en": "If you do not have a dedicated webcam cover, what household material can you use safely?"
+      "pt": "Porque deves verificar as permissões das aplicações que pedem acesso à tua câmara e microfone?",
+      "en": "Why should you check app permissions when they ask for camera and microphone access?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Um pequeno pedaço de papel ou fita suave removível que não deixe cola na lente.",
-        "en": "A small piece of paper or gentle removable tape that leaves no residue on the lens."
+        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
+        "en": "Download a pirated game from a shady website promising infinite gems."
       },
       {
         "id": "b",
-        "pt": "Cola quente e cimento de construção para tapar a câmara para sempre.",
-        "en": "Hot glue and building cement to block the lens permanently."
+        "pt": "Para garantir que apenas programas em que confias têm autorização para te ouvir ou ver!",
+        "en": "To ensure that only trusted programs have permission to access your audio and video!"
       },
       {
         "id": "c",
-        "pt": "Pintar a lente com corretor branco líquido difícil de raspar.",
-        "en": "Paint the glass lens with white correction fluid that is hard to scrape off."
+        "pt": "Partilhar a tua localização GPS exata em tempo real com toda a gente nas redes.",
+        "en": "Share your exact live GPS location publicly with everyone on social media."
       },
       {
         "id": "d",
-        "pt": "Bater com um martelo no topo do monitor para partir a câmara.",
-        "en": "Smash the top bezel with a hammer to break the camera module."
+        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
+        "en": "Give your home address and phone number to a stranger in an online game."
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "b",
     "explanation": {
-      "pt": "Materiais suaves e fáceis de remover garantem proteção sem estragar o vidro da lente!",
-      "en": "Gentle removable materials provide security without harming delicate lens glass!"
+      "pt": "Um simples jogo de tabuleiro não precisa de ligar o teu microfone; rejeita permissões desnecessárias!",
+      "en": "A puzzle game has no need for your microphone; decline unnecessary permission prompts!"
     }
   },
   {
@@ -11367,28 +11367,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
         "en": "Yell the password out the window to make sure you memorized it."
       },
       {
         "id": "b",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
-        "en": "Hide the password under the welcome mat in your room."
+        "pt": "Partilhar a palavra-passe no grupo de WhatsApp da turma toda.",
+        "en": "Share the password in the whole class WhatsApp group."
       },
       {
         "id": "c",
-        "pt": "Porque qualquer pessoa que passe perto do teu ecrã consegue ler a palavra-passe num segundo!",
+        "pt": "Porque qualquer pessoa que passe perto do teu ecrã consegue ler a senha num segundo!",
         "en": "Because anyone walking past your desk can read your secret password instantly!"
       },
       {
         "id": "d",
-        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas palavras-passe anotadas.",
-        "en": "Stick 20 yellow post-its around your screen with all your passwords."
+        "pt": "Usar a mesma senha 'chocolate' em todos os sites do planeta Terra.",
+        "en": "Use the same password 'chocolate' across every website on Earth."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Mantém as palavras-passe na tua memória ou num gestor de palavras-passe encriptado!",
+      "pt": "Mantém as palavras-passe na tua memória ou num gestor de senhas encriptado!",
       "en": "Keep your passwords in your memory or safely locked inside an encrypted manager!"
     }
   },
@@ -11442,18 +11442,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe! '.",
-        "en": "Sign off an email to the school principal with: 'Peace out cool bro! '."
+        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
+        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
+        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
       },
       {
         "id": "c",
-        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu! '.",
-        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am! '."
+        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu!'.",
+        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am!'."
       },
       {
         "id": "d",
@@ -11522,18 +11522,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Acreditar logo no primeiro resultado da pesquisa sem verificar se o site é de confiança.",
-        "en": "Believe the very first search result without checking if the source is reliable."
-      },
-      {
-        "id": "c",
         "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
         "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
       },
       {
+        "id": "c",
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
+        "en": "Believe everything written on the Internet is 100% proven scientific truth."
+      },
+      {
         "id": "d",
-        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
-        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
+        "pt": "Confundir o navegador (Google Chrome) com a própria rede mundial da Internet.",
+        "en": "Confuse the web browser with the entire global Internet infrastructure."
       }
     ],
     "correctOptionId": "a",
@@ -11592,18 +11592,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
-        "en": "Post an embarrassing photo of your classmate online without their permission."
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
       },
       {
         "id": "b",
-        "pt": "Em bibliotecas de áudio com licenças abertas (como Creative Commons) ou de domínio público!",
-        "en": "In audio libraries offering open licenses (such as Creative Commons) or public domain!"
+        "pt": "Em bibliotecas de áudio com licenças Creative Commons ou sons sem direitos reservados (Royalty-Free)!",
+        "en": "In audio libraries offering Creative Commons or Royalty-Free licensed tracks!"
       },
       {
         "id": "c",
-        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
-        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
+        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
+        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
       },
       {
         "id": "d",
@@ -11667,13 +11667,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       },
       {
         "id": "b",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "c",
@@ -11682,8 +11682,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       }
     ],
     "correctOptionId": "c",
@@ -11742,18 +11742,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       },
       {
         "id": "b",
-        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
-        "en": "Fill the school bag with bricks to get stronger during classes."
+        "pt": "Mover o rato com o pé esquerdo para dar descanso à mão direita.",
+        "en": "Move the mouse with your left foot to rest your right hand."
       },
       {
         "id": "c",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
+        "en": "Fill the school bag with bricks to get stronger during classes."
       },
       {
         "id": "d",
@@ -11817,28 +11817,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "É tentar enganar as pessoas com simpatia ou mentiras para elas entregarem palavras-passe ou dados!",
+        "pt": "É tentar enganar as pessoas com simpatia ou mentiras para elas entregarem senhas ou dados!",
         "en": "It is manipulating people through lies, false urgency, or pretend kindness to steal secrets!"
       },
       {
         "id": "b",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "c",
-        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
-        "en": "Download a pirated game from a shady website promising infinite gems."
+        "pt": "Ignorar todos os avisos de segurança porque achas que és invencível.",
+        "en": "Ignore all security alerts because you feel completely invincible."
       },
       {
         "id": "d",
-        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
-        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
+        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
+        "en": "Download a pirated game from a shady website promising infinite gems."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Os piratas informáticos atacam mais a ingenuidade das pessoas do que os computadores; desconfia sempre!",
+      "pt": "Os hackers atacam mais a ingenuidade das pessoas do que os computadores; desconfia sempre!",
       "en": "Scammers target human trust rather than machine firewalls; always stay alert!"
     }
   },
@@ -11892,7 +11892,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever a palavra-passe na lousa da sala de aula com giz vermelho gigante.",
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
         "en": "Write the password on the classroom chalkboard in giant red chalk."
       },
       {
@@ -11902,13 +11902,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
-        "en": "Yell the password out the window to make sure you memorized it."
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "d",
-        "pt": "Deixar a sessão aberta no computador da biblioteca e ir embora para casa.",
-        "en": "Leave your account logged in at the school library and go home."
+        "pt": "Esconder a senha debaixo do tapete da entrada do quarto.",
+        "en": "Hide the password under the welcome mat in your room."
       }
     ],
     "correctOptionId": "b",
@@ -11967,13 +11967,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que um email urgente do banco a pedir palavras-passe por SMS é verdadeiro.",
-        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
+        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
+        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
       },
       {
         "id": "b",
-        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
-        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
+        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
+        "en": "Type invisible emails with white text on a white background to be super secret."
       },
       {
         "id": "c",
@@ -11982,8 +11982,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe! '.",
-        "en": "Sign off an email to the school principal with: 'Peace out cool bro! '."
+        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe!'.",
+        "en": "Sign off an email to the school principal with: 'Peace out cool bro!'."
       }
     ],
     "correctOptionId": "c",
@@ -12042,18 +12042,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever no motor de busca: 'Ó computador inteligente, dá-me nota 5 no teste! '.",
-        "en": "Type in the search engine: 'Oh wise computer, give me top marks on my test! '."
+        "pt": "Pesquisar no Google 'como teletransportar comida' e esperar que apareça uma piza no teclado.",
+        "en": "Search 'how to teleport food' and wait for a pizza to appear on the keyboard."
       },
       {
         "id": "b",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
-        "en": "Believe everything written on the Internet is 100% proven scientific truth."
+        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
+        "en": "Shout at the screen hoping the web page loads three times faster."
       },
       {
         "id": "c",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Escrever no motor de busca: 'Ó computador inteligente, dá-me nota 5 no teste!'.",
+        "en": "Type in the search engine: 'Oh wise computer, give me top marks on my test!'."
       },
       {
         "id": "d",
@@ -12122,18 +12122,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Achar que o símbolo © de Copyright significa 'Copia O Que Quiseres'.",
-        "en": "Think the © Copyright symbol stands for 'Copy Whatever You Want'."
+        "pt": "Copiar o trabalho inteiro da Wikipédia e dizer que foste tu que o inventaste ontem.",
+        "en": "Copy the whole Wikipedia article and claim you invented it yesterday."
       },
       {
         "id": "c",
-        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
-        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
+        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
+        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
       },
       {
         "id": "d",
-        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
-        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
+        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
+        "en": "Use copyrighted pop music in a public video without giving any credit."
       }
     ],
     "correctOptionId": "a",
@@ -12192,8 +12192,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que a memória RAM serve para guardar coisas mesmo quando o computador está desligado.",
-        "en": "Think RAM memory keeps your files saved even after turning off the computer."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       },
       {
         "id": "b",
@@ -12202,13 +12202,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "d",
-        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
-        "en": "Think the very first computer in history was small enough to fit in your pocket."
+        "pt": "Falar com o router Wi-Fi aos gritos a pedir para ele ter mais simpatia.",
+        "en": "Yell at the Wi-Fi router politely begging it to be friendlier today."
       }
     ],
     "correctOptionId": "b",
@@ -12267,13 +12267,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever com o teclado no colo enquanto a cabeça fica inclinada para baixo.",
-        "en": "Type with the keyboard on your lap while bending your neck downwards."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       },
       {
         "id": "b",
-        "pt": "Usar o auscultador no volume máximo de concerto de rock até os tímpanos dançarem.",
-        "en": "Crank headphones to max rock concert volume until eardrums rattle."
+        "pt": "Sentar em cima de 5 almofadas até bater com a cabeça no teto do quarto.",
+        "en": "Stack 5 pillows on the chair until your head hits the ceiling."
       },
       {
         "id": "c",
@@ -12282,8 +12282,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Sentar num banco rígido sem apoio lombar nem regulação de altura.",
-        "en": "Stack 5 pillows on the chair until your head hits the ceiling."
+        "pt": "Trabalhar de cabeça para baixo pendurado no candeeiro do teto como um morcego.",
+        "en": "Work upside down hanging from the ceiling lamp like a bat."
       }
     ],
     "correctOptionId": "c",
@@ -12347,13 +12347,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
-        "en": "Give your home address and phone number to a stranger in an online game."
+        "pt": "Deixar a câmara do computador ligada 24 horas a apontar para a tua cama.",
+        "en": "Leave your computer webcam on 24 hours pointing at your bed."
       },
       {
         "id": "c",
-        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
-        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
+        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
+        "en": "Download a pirated game from a shady website promising infinite gems."
       },
       {
         "id": "d",
@@ -12422,18 +12422,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
         "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "c",
-        "pt": "Usar a mesma palavra-passe 'chocolate' em todos os sites do planeta Terra.",
-        "en": "Use the same password 'chocolate' across every website on Earth."
+        "pt": "Deixar a sessão aberta no computador da biblioteca e ir embora para casa.",
+        "en": "Leave your account logged in at the school library and go home."
       },
       {
         "id": "d",
-        "pt": "Partilhar a palavra-passe no grupo de WhatsApp da turma toda.",
-        "en": "Share the password in the whole class WhatsApp group."
+        "pt": "Esconder a senha debaixo do tapete da entrada do quarto.",
+        "en": "Hide the password under the welcome mat in your room."
       }
     ],
     "correctOptionId": "a",
@@ -12492,8 +12492,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
-        "en": "Type invisible emails with white text on a white background to be super secret."
+        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
+        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
       },
       {
         "id": "b",
@@ -12502,13 +12502,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que um email urgente do banco a pedir palavras-passe por SMS é verdadeiro.",
-        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "d",
-        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
-        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
+        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
+        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
       }
     ],
     "correctOptionId": "b",
@@ -12561,19 +12561,19 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "O que indica a terminação '. pt' no endereço de um website como www. seguranet. pt?",
-      "en": "What does the '. pt' extension tell you in a web address like www. seguranet. pt?"
+      "pt": "O que indica a terminação '.pt' no endereço de um website como www.seguranet.pt?",
+      "en": "What does the '.pt' extension tell you in a web address like www.seguranet.pt?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Dar o teu nome e morada em todos os questionários pop-up que aparecem na web.",
+        "en": "Enter your real name and address in every pop-up quiz you see."
       },
       {
         "id": "b",
-        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus! '.",
-        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses! '."
+        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
+        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
       },
       {
         "id": "c",
@@ -12582,14 +12582,14 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Dar o teu nome e morada em todos os questionários pop-up que aparecem na web.",
-        "en": "Enter your real name and address in every pop-up quiz you see."
+        "pt": "Pesquisar no Google 'como teletransportar comida' e esperar que apareça uma piza no teclado.",
+        "en": "Search 'how to teleport food' and wait for a pizza to appear on the keyboard."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Extensões como . pt, . gov (governo) ou . edu (educação) ajudam a identificar a origem do site!",
-      "en": "TLDs like . pt, . gov, or . edu help identify the origin and category of web resources!"
+      "pt": "Extensões como .pt, .gov (governo) ou .edu (educação) ajudam a identificar a origem do site!",
+      "en": "TLDs like .pt, .gov, or .edu help identify the origin and category of web resources!"
     }
   },
   {
@@ -12642,23 +12642,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
-        "en": "Use copyrighted pop music in a public video without giving any credit."
-      },
-      {
-        "id": "b",
-        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
-        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
-      },
-      {
-        "id": "c",
         "pt": "Dizer que a pintura da Mona Lisa foi desenhada pelo teu primo no Paint.",
         "en": "Claim that the Mona Lisa was drawn by your little cousin in MS Paint."
       },
       {
+        "id": "b",
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
+      },
+      {
+        "id": "c",
+        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
+        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
+      },
+      {
         "id": "d",
-        "pt": "Entre aspas \"... \", indicando logo a seguir o nome do autor e a fonte de onde foi retirada!",
-        "en": "Enclosed in quotation marks \"... \", immediately naming the author and the original source!"
+        "pt": "Entre aspas \"...\", indicando logo a seguir o nome do autor e a fonte de onde foi retirada!",
+        "en": "Enclosed in quotation marks \"...\", immediately naming the author and the original source!"
       }
     ],
     "correctOptionId": "d",
@@ -12722,18 +12722,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Falar com o router Wi-Fi aos gritos a pedir para ele ter mais simpatia.",
-        "en": "Yell at the Wi-Fi router politely begging it to be friendlier today."
+        "pt": "Deitar computadores e telemóveis velhos no caixote do lixo comum ou no mar.",
+        "en": "Throw old computers and smartphones into the regular trash or into the sea."
       },
       {
         "id": "c",
-        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
-        "en": "Think the very first computer in history was small enough to fit in your pocket."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       },
       {
         "id": "d",
-        "pt": "Deitar computadores e telemóveis velhos no caixote do lixo comum ou no mar.",
-        "en": "Throw old computers and smartphones into the regular trash or into the sea."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       }
     ],
     "correctOptionId": "a",
@@ -12792,23 +12792,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "b",
-        "pt": "Costas direitas apoiadas no encosto, joelhos e cotovelos aproximadamente a 90° e pés bem assentes no chão!",
+        "pt": "Costas direitas apoiadas no encosto, joelhos e cotovelos a 90° e pés bem assentes no chão!",
         "en": "Straight back against the chair, knees and elbows at 90°, and feet flat on the floor!"
       },
       {
         "id": "c",
-        "pt": "Escrever com o teclado no colo enquanto a cabeça fica inclinada para baixo.",
-        "en": "Type with the keyboard on your lap while bending your neck downwards."
+        "pt": "Sentar em cima de 5 almofadas até bater com a cabeça no teto do quarto.",
+        "en": "Stack 5 pillows on the chair until your head hits the ceiling."
       },
       {
         "id": "d",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
+        "en": "Put the screen on the floor and lie down like a lizard."
       }
     ],
     "correctOptionId": "b",
@@ -12867,13 +12867,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar numa mensagem não solicitada que pede a tua palavra-passe para atualizar a conta.",
-        "en": "Believe an unsolicited message asking for your password to update the account."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "b",
-        "pt": "Ignorar todos os avisos de segurança porque achas que és invencível.",
-        "en": "Ignore all security alerts because you feel completely invincible."
+        "pt": "Deixar a câmara do computador ligada 24 horas a apontar para a tua cama.",
+        "en": "Leave your computer webcam on 24 hours pointing at your bed."
       },
       {
         "id": "c",
@@ -12882,8 +12882,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Publicar no TikTok a fotografia das chaves da tua casa e a matrícula do carro dos pais.",
+        "en": "Post a TikTok video of your house keys and your parents' car license plate."
       }
     ],
     "correctOptionId": "c",
@@ -12936,35 +12936,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Porque deves evitar palavras-passe fáceis como '123456', 'benfica' ou a tua data de nascimento?",
-      "en": "Why should you avoid simple passwords like '123456', your soccer club, or your birthdate?"
+      "pt": "Na dica de hoje sobre \"Segurança Avançada: 123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar.\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"Advanced Safety: 123456 is an extremely predictable password and is among the first combinations automated systems may try.\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
+        "pt": "Usar a palavra 'senha' como senha para ser super original.",
         "en": "Use the word 'password' as your password to be super original."
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
-        "en": "Use '123456' and tape it to your forehead so you never forget it."
+        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas senhas anotadas.",
+        "en": "Stick 20 yellow post-its around your screen with all your passwords."
       },
       {
         "id": "c",
-        "pt": "Dar a tua palavra-passe a um estranho na Internet em troca de 5 moedas virtuais.",
-        "en": "Give your password to an online stranger in exchange for 5 virtual coins."
+        "pt": "Esconder a senha debaixo do tapete da entrada do quarto.",
+        "en": "Hide the password under the welcome mat in your room."
       },
       {
         "id": "d",
-        "pt": "Porque programas automáticos de piratas informáticos (piratas informáticos (hackers)) conseguem adivinhá-las numa fração de segundo!",
-        "en": "Because automated hacker scripts can guess them in a tiny fraction of a second!"
+        "pt": "Programas automáticos usam listas de palavras comuns e sequências de teclado simples!",
+        "en": "Automated programs use lists of common words and simple keyboard sequences!"
       }
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Quanto mais longa e variada for a palavra-passe, mais segura e inviolável ela fica!",
-      "en": "The longer and more varied your password, the harder it is for anyone to break!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -13022,13 +13022,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
+        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
       },
       {
         "id": "c",
-        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
-        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
+        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
+        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
       },
       {
         "id": "d",
@@ -13092,8 +13092,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
-        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
+        "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
         "id": "b",
@@ -13102,13 +13102,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
-        "en": "Believe everything written on the Internet is 100% proven scientific truth."
+        "pt": "Dar o teu nome e morada em todos os questionários pop-up que aparecem na web.",
+        "en": "Enter your real name and address in every pop-up quiz you see."
       },
       {
         "id": "d",
-        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus! '.",
-        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses! '."
+        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus!'.",
+        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses!'."
       }
     ],
     "correctOptionId": "b",
@@ -13161,35 +13161,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Pelo que é Alan Turing mundialmente reconhecido na história das TIC?",
-      "en": "What is Alan Turing world-renowned for in the history of ICT?"
+      "pt": "Quem foi Ada Lovelace, considerada a primeiríssima programadora de computadores da História?",
+      "en": "Who was Ada Lovelace, celebrated as the world's very first computer programmer?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Por criar os fundamentos teóricos da computação moderna e da Inteligência Artificial.",
-        "en": "For creating the theoretical foundations of modern computing and Artificial Intelligence."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       },
       {
         "id": "b",
-        "pt": "Por ter inventado o comando da televisão sem fios nos anos 90.",
-        "en": "For inventing the wireless television remote control in the 1990s."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       },
       {
         "id": "c",
-        "pt": "Por desenhar o logótipo da primeira consola de videojogos a cores.",
-        "en": "For sketching the logo of the first color home videogame console."
+        "pt": "Uma matemática genial que escreveu o primeiro algoritmo para a Máquina Analítica no século XIX!",
+        "en": "A brilliant mathematician who authored the first algorithm for the Analytical Engine in the 1800s!"
       },
       {
         "id": "d",
-        "pt": "Por descobrir as ondas de rádio enquanto passeava de bicicleta no parque.",
-        "en": "For discovering radio waves while riding a bicycle through the park."
+        "pt": "Falar com o router Wi-Fi aos gritos a pedir para ele ter mais simpatia.",
+        "en": "Yell at the Wi-Fi router politely begging it to be friendlier today."
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "c",
     "explanation": {
-      "pt": "A sua 'Máquina de Turing' provou matematicamente o que os computadores são capazes de calcular!",
-      "en": "His 'Turing Machine' mathematically demonstrated what computers are fundamentally able to compute!"
+      "pt": "Ada Lovelace previu que os computadores poderiam criar música e gráficos mais de 100 anos antes!",
+      "en": "Ada envisioned that computers could create music and graphics over a century before it happened!"
     }
   },
   {
@@ -13242,23 +13242,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Usar um carregador com voltagem errada ou cabo danificado que pode sobreaquecer.",
-        "en": "Use a wrong voltage charger or damaged cable that can overheat."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "b",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "c",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Meter o computador portátil no micro-ondas para carregar a bateria em 5 segundos.",
+        "en": "Put the laptop in the microwave to charge the battery in 5 seconds."
       },
       {
         "id": "d",
         "pt": "A RAM é rápida e temporária (apaga-se ao desligar); o SSD guarda ficheiros em definitivo!",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "RAM is fast and temporary (clears on shutdown); the SSD stores files permanently!"
       }
     ],
     "correctOptionId": "d",
@@ -13311,35 +13311,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Como deves posicionar a luz da tua sala em relação ao ecrã para evitar cansaço ocular?",
-      "en": "How should you position room lighting relative to your computer screen to avoid eye fatigue?"
+      "pt": "Qual é o truque de pestanejar com frequência enquanto estás a ler no ecrã do computador?",
+      "en": "Why should you make a conscious effort to blink frequently while reading on a screen?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Usar iluminação suave e difusa, sem fontes de luz direta a brilhar diretamente no ecrã.",
-        "en": "Use gentle, diffused lighting, avoiding direct light sources glaring onto the screen."
+        "pt": "Para manter os olhos hidratados e evitar que fiquem secos, vermelhos e irritados!",
+        "en": "To keep the eye surface naturally moisturized and prevent burning, dry-eye irritation!"
       },
       {
         "id": "b",
-        "pt": "Apontar um projetor de luz de estádio de futebol diretamente para os teus olhos.",
-        "en": "Point a stadium floodlight directly into your face and eyes."
+        "pt": "Trabalhar de cabeça para baixo pendurado no candeeiro do teto como um morcego.",
+        "en": "Work upside down hanging from the ceiling lamp like a bat."
       },
       {
         "id": "c",
-        "pt": "Estudar num quarto completamente escuro com o monitor em brilho máximo.",
-        "en": "Study in a pitch-black room with your monitor turned up to maximum brightness."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "d",
-        "pt": "Colocar o ecrã virado de costas para uma parede preta sem nenhuma lâmpada por perto.",
-        "en": "Position the monitor against a black wall without any lamps nearby."
+        "pt": "Sentar em cima de 5 almofadas até bater com a cabeça no teto do quarto.",
+        "en": "Stack 5 pillows on the chair until your head hits the ceiling."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Evitar reflexos e encandeamentos no ecrã protege a visão e evita que tenhas de franzir a testa!",
-      "en": "Eliminating screen reflections and harsh glare shields eyesight and stops you squinting!"
+      "pt": "Quando olhamos para ecrãs pestanejamos metade das vezes; lembra-te de piscar!",
+      "en": "We blink 50% less often when gazing at screens; blinking restores natural tears!"
     }
   },
   {
@@ -13402,13 +13402,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
-        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "d",
-        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
-        "en": "Give your home address and phone number to a stranger in an online game."
+        "pt": "Deixar a câmara do computador ligada 24 horas a apontar para a tua cama.",
+        "en": "Leave your computer webcam on 24 hours pointing at your bed."
       }
     ],
     "correctOptionId": "b",
@@ -13461,19 +13461,19 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada em segurança digital?",
+      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada nas aulas de TIC?",
       "en": "How does the ninja 'Pass-Phrase' technique taught in ICT work?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
         "en": "Yell the password out the window to make sure you memorized it."
       },
       {
         "id": "b",
-        "pt": "Deixar a sessão aberta no computador da biblioteca e ir embora para casa.",
-        "en": "Leave your account logged in at the school library and go home."
+        "pt": "Usar a palavra 'senha' como senha para ser super original.",
+        "en": "Use the word 'password' as your password to be super original."
       },
       {
         "id": "c",
@@ -13482,14 +13482,14 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Dar a tua palavra-passe a um estranho na Internet em troca de 5 moedas virtuais.",
-        "en": "Give your password to an online stranger in exchange for 5 virtual coins."
+        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas senhas anotadas.",
+        "en": "Stick 20 yellow post-its around your screen with all your passwords."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Frases como 'O_Meu_Cao_Adora_99_Gelados! ' são gigantes para piratas informáticos mas fáceis para ti!",
-      "en": "Phrases like 'My_Dog_Loves_99_IceCreams! ' are tough for hackers yet effortless to recall!"
+      "pt": "Frases como 'O_Meu_Cao_Adora_99_Gelados!' são gigantes para hackers mas fáceis para ti!",
+      "en": "Phrases like 'My_Dog_Loves_99_IceCreams!' are tough for hackers yet effortless to recall!"
     }
   },
   {
@@ -13542,8 +13542,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
-        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
+        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe!'.",
+        "en": "Sign off an email to the school principal with: 'Peace out cool bro!'."
       },
       {
         "id": "b",
@@ -13552,8 +13552,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
-        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
+        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
+        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
       },
       {
         "id": "d",
@@ -13563,7 +13563,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico.",
+      "pt": "Foi introduzido por Ray Tomlinson em 1971 e hoje é conhecido em todo o mundo!",
       "en": "It was introduced by Ray Tomlinson in 1971 and is recognized worldwide today!"
     }
   },
@@ -13622,18 +13622,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
-        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
+        "pt": "Acreditar logo no primeiro resultado da pesquisa sem verificar se o site é de confiança.",
+        "en": "Believe the very first search result without checking if the source is reliable."
       },
       {
         "id": "c",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus!'.",
+        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses!'."
       },
       {
         "id": "d",
-        "pt": "Acreditar logo no primeiro resultado da pesquisa sem verificar se o site é de confiança.",
-        "en": "Believe the very first search result without checking if the source is reliable."
+        "pt": "Escrever no motor de busca: 'Ó computador inteligente, dá-me nota 5 no teste!'.",
+        "en": "Type in the search engine: 'Oh wise computer, give me top marks on my test!'."
       }
     ],
     "correctOptionId": "a",
@@ -13692,8 +13692,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
-        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
+        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
+        "en": "Post an embarrassing photo of your classmate online without their permission."
       },
       {
         "id": "b",
@@ -13702,13 +13702,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
-        "en": "Use copyrighted pop music in a public video without giving any credit."
+        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
+        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
       },
       {
         "id": "d",
-        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
-        "en": "Post an embarrassing photo of your classmate online without their permission."
+        "pt": "Achar que o símbolo © de Copyright significa 'Copia O Que Quiseres'.",
+        "en": "Think the © Copyright symbol stands for 'Copy Whatever You Want'."
       }
     ],
     "correctOptionId": "b",
@@ -13767,8 +13767,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "b",
@@ -13842,18 +13842,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       },
       {
         "id": "b",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
+        "en": "Put the screen on the floor and lie down like a lizard."
       },
       {
         "id": "c",
-        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
-        "en": "Fill the school bag with bricks to get stronger during classes."
+        "pt": "Sentar em cima de 5 almofadas até bater com a cabeça no teto do quarto.",
+        "en": "Stack 5 pillows on the chair until your head hits the ceiling."
       },
       {
         "id": "d",
@@ -13922,18 +13922,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "c",
-        "pt": "Deixar a câmara do computador ligada 24 horas a apontar para a tua cama.",
-        "en": "Leave your computer webcam on 24 hours pointing at your bed."
+        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
+        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
       },
       {
         "id": "d",
-        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
-        "en": "Download a pirated game from a shady website promising infinite gems."
+        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
+        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
       }
     ],
     "correctOptionId": "a",
@@ -13986,35 +13986,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Com quem deves partilhar as tuas palavras-passe secretas de jogos e contas?",
-      "en": "Who should you share your secret passwords for accounts and games with?"
+      "pt": "Na dica de hoje sobre \"Evolução Histórica: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"Historical Evolution: Passwords are like toothbrushes: you do not lend them to anyone!\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Escrever a palavra-passe na lousa da sala de aula com giz vermelho gigante.",
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
         "en": "Write the password on the classroom chalkboard in giant red chalk."
       },
       {
         "id": "b",
-        "pt": "Apenas com os teus pais ou encarregados de educação; nunca com amigos nem colegas!",
-        "en": "Only with your parents or guardians; never with friends or schoolmates!"
+        "pt": "A tua palavra-passe é pessoal e intransmissível!",
+        "en": "Your password is personal and should not be shared!"
       },
       {
         "id": "c",
-        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas palavras-passe anotadas.",
-        "en": "Stick 20 yellow post-its around your screen with all your passwords."
+        "pt": "Achar que os computadores são mágicos e adivinham quem tu és sem senha.",
+        "en": "Think computers are magic and guess who you are without passwords."
       },
       {
         "id": "d",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
-        "en": "Yell the password out the window to make sure you memorized it."
+        "pt": "Deixar a sessão aberta no computador da biblioteca e ir embora para casa.",
+        "en": "Leave your account logged in at the school library and go home."
       }
     ],
     "correctOptionId": "b",
     "explanation": {
-      "pt": "Mesmo o teu melhor amigo não deve ter a tua palavra-passe; uma amizade verdadeira respeita o segredo!",
-      "en": "Even best friends shouldn't know your password; genuine friendship respects privacy!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -14067,13 +14067,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
-        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
+        "pt": "Achar que um email urgente do banco a pedir senhas por SMS é verdadeiro.",
+        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "c",
@@ -14142,18 +14142,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Pesquisar no Google 'como teletransportar comida' e esperar que apareça uma piza no teclado.",
-        "en": "Search 'how to teleport food' and wait for a pizza to appear on the keyboard."
+        "pt": "Escrever no motor de busca: 'Ó computador inteligente, dá-me nota 5 no teste!'.",
+        "en": "Type in the search engine: 'Oh wise computer, give me top marks on my test!'."
       },
       {
         "id": "b",
-        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
-        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
+        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
+        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
       },
       {
         "id": "c",
-        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
-        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
+        "pt": "Pesquisar no Google 'como teletransportar comida' e esperar que apareça uma piza no teclado.",
+        "en": "Search 'how to teleport food' and wait for a pizza to appear on the keyboard."
       },
       {
         "id": "d",
@@ -14211,8 +14211,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Para que servem as licenças Creative Commons (CC)?",
-      "en": "What are Creative Commons (CC) licenses used for?"
+      "pt": "Para que servem as licenças Creative Commons (CC) que aprendeste nas aulas de TIC?",
+      "en": "What are Creative Commons (CC) licenses used for in ICT class?"
     },
     "options": [
       {
@@ -14222,8 +14222,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Copiar o trabalho inteiro da Wikipédia e dizer que foste tu que o inventaste ontem.",
-        "en": "Copy the whole Wikipedia article and claim you invented it yesterday."
+        "pt": "Achar que o símbolo © de Copyright significa 'Copia O Que Quiseres'.",
+        "en": "Think the © Copyright symbol stands for 'Copy Whatever You Want'."
       },
       {
         "id": "c",
@@ -14232,8 +14232,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Dizer que a pintura da Mona Lisa foi desenhada pelo teu primo no Paint.",
-        "en": "Claim that the Mona Lisa was drawn by your little cousin in MS Paint."
+        "pt": "Copiar o trabalho inteiro da Wikipédia e dizer que foste tu que o inventaste ontem.",
+        "en": "Copy the whole Wikipedia article and claim you invented it yesterday."
       }
     ],
     "correctOptionId": "a",
@@ -14292,8 +14292,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
+        "pt": "Achar que a memória RAM serve para guardar coisas mesmo quando o computador está desligado.",
+        "en": "Think RAM memory keeps your files saved even after turning off the computer."
       },
       {
         "id": "b",
@@ -14307,8 +14307,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Deitar computadores e telemóveis velhos no caixote do lixo comum ou no mar.",
+        "en": "Throw old computers and smartphones into the regular trash or into the sea."
       }
     ],
     "correctOptionId": "b",
@@ -14367,13 +14367,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever com o teclado no colo enquanto a cabeça fica inclinada para baixo.",
-        "en": "Type with the keyboard on your lap while bending your neck downwards."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       },
       {
         "id": "b",
-        "pt": "Ficar 8 horas seguidas sem pestanejar feito uma estátua do museu de cera.",
-        "en": "Stare for 8 straight hours without blinking like a wax museum statue."
+        "pt": "Trabalhar de cabeça para baixo pendurado no candeeiro do teto como um morcego.",
+        "en": "Work upside down hanging from the ceiling lamp like a bat."
       },
       {
         "id": "c",
@@ -14382,8 +14382,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Trabalhar de cabeça para baixo pendurado no candeeiro do teto como um morcego.",
-        "en": "Work upside down hanging from the ceiling lamp like a bat."
+        "pt": "Mover o rato com o pé esquerdo para dar descanso à mão direita.",
+        "en": "Move the mouse with your left foot to rest your right hand."
       }
     ],
     "correctOptionId": "c",
@@ -14447,13 +14447,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
-        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
+        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
+        "en": "Download a pirated game from a shady website promising infinite gems."
       },
       {
         "id": "c",
-        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
-        "en": "Download a pirated game from a shady website promising infinite gems."
+        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
+        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
       },
       {
         "id": "d",
@@ -14517,28 +14517,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "É uma dupla proteção que pede a tua palavra-passe mais um código especial enviado por SMS ou aplicação!",
-        "en": "It is a double lock requiring your password plus a temporary code from SMS or an application!"
+        "pt": "É uma dupla proteção que pede a tua senha mais um código especial enviado por SMS ou app!",
+        "en": "It is a double lock requiring your password plus a temporary code from SMS or an app!"
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
         "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "c",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
-        "en": "Use the word 'password' as your password to be super original."
+        "pt": "Esconder a senha debaixo do tapete da entrada do quarto.",
+        "en": "Hide the password under the welcome mat in your room."
       },
       {
         "id": "d",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
-        "en": "Hide the password under the welcome mat in your room."
+        "pt": "Partilhar a palavra-passe no grupo de WhatsApp da turma toda.",
+        "en": "Share the password in the whole class WhatsApp group."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Mesmo que um pirata informático descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro",
+      "pt": "Mesmo que um hacker descubra a tua senha, não consegue entrar sem o segundo código!",
       "en": "Even if someone discovers your password, they can't log in without the second code!"
     }
   },
@@ -14592,23 +14592,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
+        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
+        "en": "Type invisible emails with white text on a white background to be super secret."
+      },
+      {
+        "id": "b",
+        "pt": ".exe (ficheiro executável que pode instalar vírus no computador)!",
+        "en": ".exe (executable file that can install malware on your machine)!"
+      },
+      {
+        "id": "c",
         "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
         "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
       },
       {
-        "id": "b",
-        "pt": "exe (ficheiro executável que pode instalar vírus no computador)!",
-        "en": "exe (executable file that can install malware on your machine)!"
-      },
-      {
-        "id": "c",
-        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
-        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
-      },
-      {
         "id": "d",
-        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
-        "en": "Type invisible emails with white text on a white background to be super secret."
+        "pt": "Achar que um email urgente do banco a pedir senhas por SMS é verdadeiro.",
+        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
       }
     ],
     "correctOptionId": "b",
@@ -14667,12 +14667,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Dar o teu nome e morada em todos os questionários pop-up que aparecem na web.",
-        "en": "Enter your real name and address in every pop-up quiz you see."
+        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
+        "en": "Shout at the screen hoping the web page loads three times faster."
       },
       {
         "id": "b",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
         "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
@@ -14682,8 +14682,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus!'.",
+        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses!'."
       }
     ],
     "correctOptionId": "c",
@@ -14742,13 +14742,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Dizer que a pintura da Mona Lisa foi desenhada pelo teu primo no Paint.",
-        "en": "Claim that the Mona Lisa was drawn by your little cousin in MS Paint."
+        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
+        "en": "Use copyrighted pop music in a public video without giving any credit."
       },
       {
         "id": "b",
-        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
-        "en": "Post an embarrassing photo of your classmate online without their permission."
+        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
+        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
       },
       {
         "id": "c",
@@ -14822,18 +14822,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Deitar computadores e telemóveis velhos no caixote do lixo comum ou no mar.",
-        "en": "Throw old computers and smartphones into the regular trash or into the sea."
+        "pt": "Falar com o router Wi-Fi aos gritos a pedir para ele ter mais simpatia.",
+        "en": "Yell at the Wi-Fi router politely begging it to be friendlier today."
       },
       {
         "id": "c",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "d",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Alimentar o rato do computador com fatias de queijo da serra para ele correr mais rápido.",
+        "en": "Feed the computer mouse slices of cheese so it runs faster across the desk."
       }
     ],
     "correctOptionId": "a",
@@ -14892,8 +14892,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "b",
@@ -14902,13 +14902,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
-        "en": "Put the screen on the floor and lie down like a lizard."
+        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
+        "en": "Fill the school bag with bricks to get stronger during classes."
       },
       {
         "id": "d",
-        "pt": "Ficar 8 horas seguidas sem pestanejar feito uma estátua do museu de cera.",
-        "en": "Stare for 8 straight hours without blinking like a wax museum statue."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       }
     ],
     "correctOptionId": "b",
@@ -14962,18 +14962,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "isSpecialMilestone": false,
     "question": {
       "pt": "Porque deves desligar a partilha de localização (GPS) nas aplicações que não precisam dela?",
-      "en": "Why should you turn off GPS location sharing in applications that don't need it?"
+      "en": "Why should you turn off GPS location sharing in apps that don't need it?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar numa mensagem não solicitada que pede a tua palavra-passe para atualizar a conta.",
-        "en": "Believe an unsolicited message asking for your password to update the account."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "b",
-        "pt": "Publicar no TikTok a fotografia das chaves da tua casa e a matrícula do carro dos pais.",
-        "en": "Post a TikTok video of your house keys and your parents' car license plate."
+        "pt": "Desativar o antivírus porque o ícone dele é demasiado aborrecido.",
+        "en": "Disable the antivirus because its icon looks too boring."
       },
       {
         "id": "c",
@@ -14982,14 +14982,14 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
-        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
+        "pt": "Partilhar a tua localização GPS exata em tempo real com toda a gente nas redes.",
+        "en": "Share your exact live GPS location publicly with everyone on social media."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Algumas aplicações precisam da localização para funcionar corretamente. Outras podem pedi-la sem ser essencial. Verifica se uma aplicação precisa realmente da tua localização antes de a autorizares.",
-      "en": "Only navigation applications actually need GPS; simple games and photo filters do not!"
+      "pt": "Apenas apps de mapas e transportes precisam de localização; jogos e filtros não necessitam!",
+      "en": "Only navigation apps actually need GPS; simple games and photo filters do not!"
     }
   },
   {
@@ -15036,35 +15036,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "O que é um 'Gestor de Palavras-passe' (Password Manager) e qual a sua grande vantagem?",
-      "en": "What is a 'password Manager' and what is its main superpower?"
+      "pt": "Na dica de hoje sobre \"Evolução Histórica: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"Historical Evolution: Never reuse the same password on every website and app!\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
+        "pt": "Usar a palavra 'senha' como senha para ser super original.",
         "en": "Use the word 'password' as your password to be super original."
       },
       {
         "id": "b",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
-        "en": "Hide the password under the welcome mat in your room."
+        "pt": "Usar a mesma senha 'chocolate' em todos os sites do planeta Terra.",
+        "en": "Use the same password 'chocolate' across every website on Earth."
       },
       {
         "id": "c",
-        "pt": "Achar que os computadores são mágicos e adivinham quem tu és sem palavra-passe.",
-        "en": "Think computers are magic and guess who you are without passwords."
+        "pt": "Partilhar a palavra-passe no grupo de WhatsApp da turma toda.",
+        "en": "Share the password in the whole class WhatsApp group."
       },
       {
         "id": "d",
-        "pt": "É um cofre digital seguro que guarda e cria palavras-passe fortes para ti; Um gestor de palavras-passe pode guardar várias palavras-passe de forma protegida, para não teres de memorizar todas. A palavra-passe principal deve ser muito bem protegida.",
-        "en": "It is an encrypted digital vault storing strong passwords so you only memorize one master key!"
+        "pt": "Quando usas a mesma palavra-passe em todo o lado, basta um site ter falhas de segurança para os criminosos ten!",
+        "en": "When you use the same password everywhere, one security failure can give criminals a chance to try your passwo!"
       }
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Evita que uses a mesma palavra-passe em todo o lado ou que as anotes em papéis perdidos!",
-      "en": "It keeps you from reusing fragile passwords or writing them down on scrap paper!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -15117,13 +15117,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Porque lançam 'iscos' falsos (como prémios ou alertas falsos) para pescar palavras-passe e dados!",
+        "pt": "Porque lançam 'iscos' falsos (como prémios ou alertas falsos) para pescar senhas e dados!",
         "en": "Because they cast fake bait (like fake prizes or urgent alarms) to hook passwords!"
       },
       {
         "id": "b",
-        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
-        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
+        "pt": "Escrever o email todo em LETRAS MAIÚSCULAS aos berros para o carteiro correr mais.",
+        "en": "Write the whole email in ALL CAPS screaming so the digital mailman runs faster."
       },
       {
         "id": "c",
@@ -15132,8 +15132,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
-        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
+        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
+        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
       }
     ],
     "correctOptionId": "a",
@@ -15186,35 +15186,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Quanta memória RAM tinha aproximadamente o computador que guiou o pouso do ser humano na Lua?",
-      "en": "About how much RAM did the guidance computer have that landed astronauts on the Moon in 1969?"
+      "pt": "Como ajudam as Tecnologias de Informação e Comunicação na exploração do Espaço e de Marte?",
+      "en": "How does Information Technology assist space missions and Mars exploration?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Cerca de 4 Kilobytes (milhões de vezes menos do que um telemóvel comum hoje).",
-        "en": "Around 4 Kilobytes (millions of times less than an average smartphone today)."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       },
       {
         "id": "b",
-        "pt": "500 Terabytes de discos SSD ultrarrápidos com luzes coloridas.",
-        "en": "500 Terabytes of blazing fast SSD drives with colorful RGB lights."
+        "pt": "Controlam os robôs sondas (como o Perseverance), calculam órbitas e transmitem fotos espaciais!",
+        "en": "They steer rover robots (like Perseverance), calculate trajectories, and beam back cosmic photos!"
       },
       {
         "id": "c",
-        "pt": "Zero memória, porque os computadores na época funcionavam com motores a vapor.",
-        "en": "Zero memory, because computers back then operated on steam engines."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       },
       {
         "id": "d",
-        "pt": "16 Gigabytes de memória RAM DDR5 com refrigeração líquida espacial.",
-        "en": "16 Gigabytes of high-end DDR5 RAM with liquid space cooling."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "b",
     "explanation": {
-      "pt": "Foi o código brilhante liderado por Margaret Hamilton que garantiu o pouso seguro da missão!",
-      "en": "It was the brilliant software led by Margaret Hamilton that prioritized vital tasks for a safe lunar landing!"
+      "pt": "Sem computadores e telecomunicações avançadas, nenhuma missão espacial conseguiria navegar!",
+      "en": "Without advanced computing and telecom telemetry, no spacecraft could navigate space!"
     }
   },
   {
@@ -15267,23 +15267,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
-        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
-      },
-      {
-        "id": "b",
         "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
         "en": "Claim that you personally created Minecraft in your bedroom before lunch."
       },
       {
+        "id": "b",
+        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
+        "en": "Use copyrighted pop music in a public video without giving any credit."
+      },
+      {
         "id": "c",
-        "pt": "Significa que os direitos de autor já expiraram e a obra pode, em geral, ser utilizada e partilhada sem pedir autorização por direitos de autor.",
-        "en": "It means copyright protection has expired and the work can, in general, be used and shared without asking for copyright permission."
+        "pt": "Significa que os direitos de autor já expiraram e qualquer pessoa pode usar livremente!",
+        "en": "It means copyright protection has expired and anyone can freely use, remix, and share it!"
       },
       {
         "id": "d",
-        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
-        "en": "Post an embarrassing photo of your classmate online without their permission."
+        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
+        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
       }
     ],
     "correctOptionId": "c",
@@ -15342,18 +15342,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
-      },
-      {
-        "id": "b",
         "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
         "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
+        "id": "b",
+        "pt": "Falar com o router Wi-Fi aos gritos a pedir para ele ter mais simpatia.",
+        "en": "Yell at the Wi-Fi router politely begging it to be friendlier today."
+      },
+      {
         "id": "c",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "d",
@@ -15418,7 +15418,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "a",
         "pt": "Não mais do que 10% do teu peso corporal (ex: se pesas 35 kg, a mochila deve ter no máximo 3,5 kg)!",
-        "en": "No more than 10% of your body weight (e. g. if you weigh 35 kg, bag max is 3. 5 kg)!"
+        "en": "No more than 10% of your body weight (e.g. if you weigh 35 kg, bag max is 3.5 kg)!"
       },
       {
         "id": "b",
@@ -15427,13 +15427,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
-        "en": "Put the screen on the floor and lie down like a lizard."
+        "pt": "Usar o auscultador no volume máximo de concerto de rock até os tímpanos dançarem.",
+        "en": "Crank headphones to max rock concert volume until eardrums rattle."
       },
       {
         "id": "d",
-        "pt": "Sentar num banco rígido sem apoio lombar nem regulação de altura.",
-        "en": "Stack 5 pillows on the chair until your head hits the ceiling."
+        "pt": "Dormir com o telemóvel colado na testa para sonhar com jogos online.",
+        "en": "Sleep with the phone glued to your forehead to dream about online games."
       }
     ],
     "correctOptionId": "a",
@@ -15486,35 +15486,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Onde podes verificar quais os sites que têm autorização para usar a câmara do teu computador?",
-      "en": "Where can you inspect which websites currently have permission to use your camera?"
+      "pt": "Porque deves verificar as permissões das aplicações que pedem acesso à tua câmara e microfone?",
+      "en": "Why should you check app permissions when they ask for camera and microphone access?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Nas definições de Privacidade e Segurança do navegador de Internet.",
-        "en": "In the browser's Privacy and Security settings under Site Permissions."
+        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
+        "en": "Download a pirated game from a shady website promising infinite gems."
       },
       {
         "id": "b",
-        "pt": "Escrevendo uma carta em papel para o fabricante do monitor do computador.",
-        "en": "By writing a paper letter to the monitor manufacturer."
+        "pt": "Para garantir que apenas programas em que confias têm autorização para te ouvir ou ver!",
+        "en": "To ensure that only trusted programs have permission to access your audio and video!"
       },
       {
         "id": "c",
-        "pt": "Procurando numa caixa de sapatos debaixo da cama onde guardas cadernos.",
-        "en": "By checking inside a shoebox under your bed where you store notebooks."
+        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
+        "en": "Give your home address and phone number to a stranger in an online game."
       },
       {
         "id": "d",
-        "pt": "Desligando a ficha da eletricidade de toda a casa durante três dias.",
-        "en": "By shutting off the electrical breaker for your whole home for three days."
+        "pt": "Dizer a toda a gente em que escola andas e em que sala tens aula agora.",
+        "en": "Tell everyone online which school and classroom you are in right now."
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "b",
     "explanation": {
-      "pt": "Controlar permissões no navegador impede que sites usem recursos multimédia sem tu saberes!",
-      "en": "Managing browser permissions keeps unauthorized websites from tapping media hardware silently!"
+      "pt": "Um simples jogo de tabuleiro não precisa de ligar o teu microfone; rejeita permissões desnecessárias!",
+      "en": "A puzzle game has no need for your microphone; decline unnecessary permission prompts!"
     }
   },
   {
@@ -15567,28 +15567,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
         "en": "Yell the password out the window to make sure you memorized it."
       },
       {
         "id": "b",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
-        "en": "Hide the password under the welcome mat in your room."
+        "pt": "Dar a tua palavra-passe a um estranho na Internet em troca de 5 moedas virtuais.",
+        "en": "Give your password to an online stranger in exchange for 5 virtual coins."
       },
       {
         "id": "c",
-        "pt": "Porque qualquer pessoa que passe perto do teu ecrã consegue ler a palavra-passe num segundo!",
+        "pt": "Porque qualquer pessoa que passe perto do teu ecrã consegue ler a senha num segundo!",
         "en": "Because anyone walking past your desk can read your secret password instantly!"
       },
       {
         "id": "d",
-        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas palavras-passe anotadas.",
-        "en": "Stick 20 yellow post-its around your screen with all your passwords."
+        "pt": "Escolher o nome do teu cão porque os hackers têm medo de animais de estimação.",
+        "en": "Pick your dog's name because hackers are afraid of pets."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Mantém as palavras-passe na tua memória ou num gestor de palavras-passe encriptado!",
+      "pt": "Mantém as palavras-passe na tua memória ou num gestor de senhas encriptado!",
       "en": "Keep your passwords in your memory or safely locked inside an encrypted manager!"
     }
   },
@@ -15642,18 +15642,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe! '.",
-        "en": "Sign off an email to the school principal with: 'Peace out cool bro! '."
+        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu!'.",
+        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am!'."
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
+        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
       },
       {
         "id": "c",
-        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu! '.",
-        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am! '."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "d",
@@ -15722,8 +15722,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Acreditar logo no primeiro resultado da pesquisa sem verificar se o site é de confiança.",
-        "en": "Believe the very first search result without checking if the source is reliable."
+        "pt": "Confundir o navegador (Google Chrome) com a própria rede mundial da Internet.",
+        "en": "Confuse the web browser with the entire global Internet infrastructure."
       },
       {
         "id": "c",
@@ -15792,13 +15792,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
-        "en": "Post an embarrassing photo of your classmate online without their permission."
+        "pt": "Apagar o nome do autor original e colar uma foto tua por cima.",
+        "en": "Erase the original author's signature and paste your own photo over it."
       },
       {
         "id": "b",
-        "pt": "Em bibliotecas de áudio com licenças abertas (como Creative Commons) ou de domínio público!",
-        "en": "In audio libraries offering open licenses (such as Creative Commons) or public domain!"
+        "pt": "Em bibliotecas de áudio com licenças Creative Commons ou sons sem direitos reservados (Royalty-Free)!",
+        "en": "In audio libraries offering Creative Commons or Royalty-Free licensed tracks!"
       },
       {
         "id": "c",
@@ -15867,13 +15867,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Alimentar o rato do computador com fatias de queijo da serra para ele correr mais rápido.",
+        "en": "Feed the computer mouse slices of cheese so it runs faster across the desk."
       },
       {
         "id": "b",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       },
       {
         "id": "c",
@@ -15882,8 +15882,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
+        "pt": "Deitar computadores e telemóveis velhos no caixote do lixo comum ou no mar.",
+        "en": "Throw old computers and smartphones into the regular trash or into the sea."
       }
     ],
     "correctOptionId": "c",
@@ -15942,18 +15942,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       },
       {
         "id": "b",
-        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
-        "en": "Fill the school bag with bricks to get stronger during classes."
+        "pt": "Trabalhar às escuras com óculos de sol para parecer um agente secreto.",
+        "en": "Work in total darkness wearing sunglasses to look like a secret agent."
       },
       {
         "id": "c",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Dormir com o telemóvel colado na testa para sonhar com jogos online.",
+        "en": "Sleep with the phone glued to your forehead to dream about online games."
       },
       {
         "id": "d",
@@ -16017,28 +16017,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "É tentar enganar as pessoas com simpatia ou mentiras para elas entregarem palavras-passe ou dados!",
+        "pt": "É tentar enganar as pessoas com simpatia ou mentiras para elas entregarem senhas ou dados!",
         "en": "It is manipulating people through lies, false urgency, or pretend kindness to steal secrets!"
       },
       {
         "id": "b",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "c",
-        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
-        "en": "Download a pirated game from a shady website promising infinite gems."
+        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
+        "en": "Give your home address and phone number to a stranger in an online game."
       },
       {
         "id": "d",
-        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
-        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
+        "pt": "Desativar o antivírus porque o ícone dele é demasiado aborrecido.",
+        "en": "Disable the antivirus because its icon looks too boring."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Os piratas informáticos atacam mais a ingenuidade das pessoas do que os computadores; desconfia sempre!",
+      "pt": "Os hackers atacam mais a ingenuidade das pessoas do que os computadores; desconfia sempre!",
       "en": "Scammers target human trust rather than machine firewalls; always stay alert!"
     }
   },
@@ -16092,7 +16092,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever a palavra-passe na lousa da sala de aula com giz vermelho gigante.",
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
         "en": "Write the password on the classroom chalkboard in giant red chalk."
       },
       {
@@ -16102,13 +16102,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
-        "en": "Yell the password out the window to make sure you memorized it."
+        "pt": "Dar a tua palavra-passe a um estranho na Internet em troca de 5 moedas virtuais.",
+        "en": "Give your password to an online stranger in exchange for 5 virtual coins."
       },
       {
         "id": "d",
-        "pt": "Deixar a sessão aberta no computador da biblioteca e ir embora para casa.",
-        "en": "Leave your account logged in at the school library and go home."
+        "pt": "Usar a mesma senha 'chocolate' em todos os sites do planeta Terra.",
+        "en": "Use the same password 'chocolate' across every website on Earth."
       }
     ],
     "correctOptionId": "b",
@@ -16167,13 +16167,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que um email urgente do banco a pedir palavras-passe por SMS é verdadeiro.",
-        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "b",
-        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
-        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
+        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
+        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
       },
       {
         "id": "c",
@@ -16182,8 +16182,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe! '.",
-        "en": "Sign off an email to the school principal with: 'Peace out cool bro! '."
+        "pt": "Achar que um email urgente do banco a pedir senhas por SMS é verdadeiro.",
+        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
       }
     ],
     "correctOptionId": "c",
@@ -16242,18 +16242,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever no motor de busca: 'Ó computador inteligente, dá-me nota 5 no teste! '.",
-        "en": "Type in the search engine: 'Oh wise computer, give me top marks on my test! '."
+        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
+        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
       },
       {
         "id": "b",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
         "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
         "id": "c",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Escrever no motor de busca: 'Ó computador inteligente, dá-me nota 5 no teste!'.",
+        "en": "Type in the search engine: 'Oh wise computer, give me top marks on my test!'."
       },
       {
         "id": "d",
@@ -16322,8 +16322,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Achar que o símbolo © de Copyright significa 'Copia O Que Quiseres'.",
-        "en": "Think the © Copyright symbol stands for 'Copy Whatever You Want'."
+        "pt": "Achar que tudo o que encontras no Google Imagens é teu por magia.",
+        "en": "Believe anything found on Google Images automatically belongs to you by magic."
       },
       {
         "id": "c",
@@ -16332,8 +16332,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
-        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
+        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
+        "en": "Use copyrighted pop music in a public video without giving any credit."
       }
     ],
     "correctOptionId": "a",
@@ -16392,8 +16392,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que a memória RAM serve para guardar coisas mesmo quando o computador está desligado.",
-        "en": "Think RAM memory keeps your files saved even after turning off the computer."
+        "pt": "Meter o computador portátil no micro-ondas para carregar a bateria em 5 segundos.",
+        "en": "Put the laptop in the microwave to charge the battery in 5 seconds."
       },
       {
         "id": "b",
@@ -16402,8 +16402,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "d",
@@ -16461,35 +16461,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Qual é a diferença fundamental entre a 'Internet' e a 'World Wide Web'?",
-      "en": "What is the fundamental difference between the 'Internet' and the 'World Wide Web'?"
+      "pt": "Quem foi Tim Berners-Lee e o que inventou ele no laboratório CERN em 1989?",
+      "en": "Who was Tim Berners-Lee and what did he invent at CERN in 1989?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "A Internet é a infraestrutura física de redes; a Web é o serviço de páginas com hiperligações.",
-        "en": "The Internet is the network infrastructure; the Web is the system of linked web pages."
+        "pt": "Confundir o navegador (Google Chrome) com a própria rede mundial da Internet.",
+        "en": "Confuse the web browser with the entire global Internet infrastructure."
       },
       {
         "id": "b",
-        "pt": "A Internet só funciona em telemóveis e a Web só existe em televisões velhas.",
-        "en": "The Internet only runs on phones while the Web only exists on antique televisions."
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
+        "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
         "id": "c",
-        "pt": "São duas palavras para exatamente a mesma coisa sem nenhuma diferença técnica.",
-        "en": "They are two names for identical things with no technical distinction whatsoever."
+        "pt": "O criador da World Wide Web (WWW) que permitiu navegar em páginas com hiperligações!",
+        "en": "The creator of the World Wide Web (WWW) enabling browsing web pages via hyperlinks!"
       },
       {
         "id": "d",
-        "pt": "A Web foi inventada no século XIX por cientistas que usavam telégrafos de corda.",
-        "en": "The Web was invented in the 19th century by scientists using mechanical pull-string telegraphs."
+        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
+        "en": "Shout at the screen hoping the web page loads three times faster."
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "c",
     "explanation": {
-      "pt": "A Internet é a autoestrada mundial; a Web é um dos veículos mais populares que circula nela!",
-      "en": "The Internet is the global highway system; the Web is one of the most popular vehicles traveling on it!"
+      "pt": "E o mais generoso: ofereceu a invenção da Web ao mundo de forma gratuita para que todos a pudessem usar!",
+      "en": "And most generously: he gifted the World Wide Web free to humanity so everyone could participate!"
     }
   },
   {
@@ -16547,13 +16547,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
-        "en": "Give your home address and phone number to a stranger in an online game."
+        "pt": "Dizer a toda a gente em que escola andas e em que sala tens aula agora.",
+        "en": "Tell everyone online which school and classroom you are in right now."
       },
       {
         "id": "c",
-        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
-        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
+        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
+        "en": "Give your home address and phone number to a stranger in an online game."
       },
       {
         "id": "d",
@@ -16622,18 +16622,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
         "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "c",
-        "pt": "Usar a mesma palavra-passe 'chocolate' em todos os sites do planeta Terra.",
-        "en": "Use the same password 'chocolate' across every website on Earth."
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
+        "en": "Write the password on the classroom chalkboard in giant red chalk."
       },
       {
         "id": "d",
-        "pt": "Partilhar a palavra-passe no grupo de WhatsApp da turma toda.",
-        "en": "Share the password in the whole class WhatsApp group."
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
+        "en": "Yell the password out the window to make sure you memorized it."
       }
     ],
     "correctOptionId": "a",
@@ -16692,8 +16692,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
-        "en": "Type invisible emails with white text on a white background to be super secret."
+        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
+        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
       },
       {
         "id": "b",
@@ -16702,13 +16702,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que um email urgente do banco a pedir palavras-passe por SMS é verdadeiro.",
-        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
+        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
+        "en": "Type invisible emails with white text on a white background to be super secret."
       },
       {
         "id": "d",
-        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
-        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
+        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
+        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
       }
     ],
     "correctOptionId": "b",
@@ -16761,19 +16761,19 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "O que indica a terminação '. pt' no endereço de um website como www. seguranet. pt?",
-      "en": "What does the '. pt' extension tell you in a web address like www. seguranet. pt?"
+      "pt": "O que indica a terminação '.pt' no endereço de um website como www.seguranet.pt?",
+      "en": "What does the '.pt' extension tell you in a web address like www.seguranet.pt?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
+        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
       },
       {
         "id": "b",
-        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus! '.",
-        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses! '."
+        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
+        "en": "Shout at the screen hoping the web page loads three times faster."
       },
       {
         "id": "c",
@@ -16788,8 +16788,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Extensões como . pt, . gov (governo) ou . edu (educação) ajudam a identificar a origem do site!",
-      "en": "TLDs like . pt, . gov, or . edu help identify the origin and category of web resources!"
+      "pt": "Extensões como .pt, .gov (governo) ou .edu (educação) ajudam a identificar a origem do site!",
+      "en": "TLDs like .pt, .gov, or .edu help identify the origin and category of web resources!"
     }
   },
   {
@@ -16842,13 +16842,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
-        "en": "Use copyrighted pop music in a public video without giving any credit."
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
       },
       {
         "id": "b",
-        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
-        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
+        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
+        "en": "Use copyrighted pop music in a public video without giving any credit."
       },
       {
         "id": "c",
@@ -16857,8 +16857,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Entre aspas \"... \", indicando logo a seguir o nome do autor e a fonte de onde foi retirada!",
-        "en": "Enclosed in quotation marks \"... \", immediately naming the author and the original source!"
+        "pt": "Entre aspas \"...\", indicando logo a seguir o nome do autor e a fonte de onde foi retirada!",
+        "en": "Enclosed in quotation marks \"...\", immediately naming the author and the original source!"
       }
     ],
     "correctOptionId": "d",
@@ -16922,8 +16922,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Falar com o router Wi-Fi aos gritos a pedir para ele ter mais simpatia.",
-        "en": "Yell at the Wi-Fi router politely begging it to be friendlier today."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       },
       {
         "id": "c",
@@ -16932,8 +16932,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Deitar computadores e telemóveis velhos no caixote do lixo comum ou no mar.",
-        "en": "Throw old computers and smartphones into the regular trash or into the sea."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       }
     ],
     "correctOptionId": "a",
@@ -16992,23 +16992,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "b",
-        "pt": "Costas direitas apoiadas no encosto, joelhos e cotovelos aproximadamente a 90° e pés bem assentes no chão!",
+        "pt": "Costas direitas apoiadas no encosto, joelhos e cotovelos a 90° e pés bem assentes no chão!",
         "en": "Straight back against the chair, knees and elbows at 90°, and feet flat on the floor!"
       },
       {
         "id": "c",
-        "pt": "Escrever com o teclado no colo enquanto a cabeça fica inclinada para baixo.",
-        "en": "Type with the keyboard on your lap while bending your neck downwards."
+        "pt": "Dormir com o telemóvel colado na testa para sonhar com jogos online.",
+        "en": "Sleep with the phone glued to your forehead to dream about online games."
       },
       {
         "id": "d",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
+        "en": "Fill the school bag with bricks to get stronger during classes."
       }
     ],
     "correctOptionId": "b",
@@ -17067,13 +17067,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar numa mensagem não solicitada que pede a tua palavra-passe para atualizar a conta.",
-        "en": "Believe an unsolicited message asking for your password to update the account."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "b",
-        "pt": "Ignorar todos os avisos de segurança porque achas que és invencível.",
-        "en": "Ignore all security alerts because you feel completely invincible."
+        "pt": "Partilhar a tua localização GPS exata em tempo real com toda a gente nas redes.",
+        "en": "Share your exact live GPS location publicly with everyone on social media."
       },
       {
         "id": "c",
@@ -17082,8 +17082,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Desativar o antivírus porque o ícone dele é demasiado aborrecido.",
+        "en": "Disable the antivirus because its icon looks too boring."
       }
     ],
     "correctOptionId": "c",
@@ -17136,35 +17136,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Porque deves evitar palavras-passe fáceis como '123456', 'benfica' ou a tua data de nascimento?",
-      "en": "Why should you avoid simple passwords like '123456', your soccer club, or your birthdate?"
+      "pt": "Na dica de hoje sobre \"Evolução Histórica: 123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar.\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"Historical Evolution: 123456 is an extremely predictable password and is among the first combinations automated systems may try.\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
+        "pt": "Usar a palavra 'senha' como senha para ser super original.",
         "en": "Use the word 'password' as your password to be super original."
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
-        "en": "Use '123456' and tape it to your forehead so you never forget it."
+        "pt": "Partilhar a palavra-passe no grupo de WhatsApp da turma toda.",
+        "en": "Share the password in the whole class WhatsApp group."
       },
       {
         "id": "c",
-        "pt": "Dar a tua palavra-passe a um estranho na Internet em troca de 5 moedas virtuais.",
-        "en": "Give your password to an online stranger in exchange for 5 virtual coins."
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
+        "en": "Yell the password out the window to make sure you memorized it."
       },
       {
         "id": "d",
-        "pt": "Porque programas automáticos de piratas informáticos (piratas informáticos (hackers)) conseguem adivinhá-las numa fração de segundo!",
-        "en": "Because automated hacker scripts can guess them in a tiny fraction of a second!"
+        "pt": "Programas automáticos usam listas de palavras comuns e sequências de teclado simples!",
+        "en": "Automated programs use lists of common words and simple keyboard sequences!"
       }
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Quanto mais longa e variada for a palavra-passe, mais segura e inviolável ela fica!",
-      "en": "The longer and more varied your password, the harder it is for anyone to break!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -17222,13 +17222,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
+        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
       },
       {
         "id": "c",
-        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
-        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "d",
@@ -17292,8 +17292,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
-        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
+        "pt": "Pesquisar no Google 'como teletransportar comida' e esperar que apareça uma piza no teclado.",
+        "en": "Search 'how to teleport food' and wait for a pizza to appear on the keyboard."
       },
       {
         "id": "b",
@@ -17302,13 +17302,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
-        "en": "Believe everything written on the Internet is 100% proven scientific truth."
+        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
+        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
       },
       {
         "id": "d",
-        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus! '.",
-        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses! '."
+        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus!'.",
+        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses!'."
       }
     ],
     "correctOptionId": "b",
@@ -17367,13 +17367,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que tudo o que encontras no Google Imagens é teu por magia.",
-        "en": "Believe anything found on Google Images automatically belongs to you by magic."
+        "pt": "Copiar o trabalho inteiro da Wikipédia e dizer que foste tu que o inventaste ontem.",
+        "en": "Copy the whole Wikipedia article and claim you invented it yesterday."
       },
       {
         "id": "b",
-        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
-        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
       },
       {
         "id": "c",
@@ -17442,23 +17442,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Usar um carregador com voltagem errada ou cabo danificado que pode sobreaquecer.",
-        "en": "Use a wrong voltage charger or damaged cable that can overheat."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       },
       {
         "id": "b",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
-      },
-      {
-        "id": "c",
         "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
         "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       },
       {
+        "id": "c",
+        "pt": "Meter o computador portátil no micro-ondas para carregar a bateria em 5 segundos.",
+        "en": "Put the laptop in the microwave to charge the battery in 5 seconds."
+      },
+      {
         "id": "d",
         "pt": "A RAM é rápida e temporária (apaga-se ao desligar); o SSD guarda ficheiros em definitivo!",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "RAM is fast and temporary (clears on shutdown); the SSD stores files permanently!"
       }
     ],
     "correctOptionId": "d",
@@ -17511,35 +17511,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Porque se tornou tão urgente criar regras de ergonomia visual com a chegada dos computadores?",
-      "en": "Why did creating visual ergonomics rules become so urgent when desktop computers spread?"
+      "pt": "Qual é o truque de pestanejar com frequência enquanto estás a ler no ecrã do computador?",
+      "en": "Why should you make a conscious effort to blink frequently while reading on a screen?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Porque olhar fixamente para ecrãs brilhantes a curta distância reduz o pestanejar e cansa os olhos.",
-        "en": "Because staring at bright screens close up reduces blinking and exhausts eye muscles."
+        "pt": "Para manter os olhos hidratados e evitar que fiquem secos, vermelhos e irritados!",
+        "en": "To keep the eye surface naturally moisturized and prevent burning, dry-eye irritation!"
       },
       {
         "id": "b",
-        "pt": "Porque os ecrãs antigos explodiam se alguém olhasse para eles durante mais de 10 minutos.",
-        "en": "Because old monitors exploded if anyone looked at them for longer than 10 minutes."
+        "pt": "Trabalhar de cabeça para baixo pendurado no candeeiro do teto como um morcego.",
+        "en": "Work upside down hanging from the ceiling lamp like a bat."
       },
       {
         "id": "c",
-        "pt": "Porque os computadores nos anos 90 não tinham eletricidade e precisavam de velas.",
-        "en": "Because 1990s computers had no electricity and were illuminated by candles."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       },
       {
         "id": "d",
-        "pt": "Para obrigar todos os estudantes a usar óculos de sol dentro da sala de aula.",
-        "en": "To force all students to wear dark sunglasses inside classroom lessons."
+        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
+        "en": "Put the screen on the floor and lie down like a lizard."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "A investigação científica provou que pausas frequentes protegem a saúde dos olhos e melhoram o rendimento!",
-      "en": "Scientific research proved that frequent micro-breaks protect eye health and boost focus!"
+      "pt": "Quando olhamos para ecrãs pestanejamos metade das vezes; lembra-te de piscar!",
+      "en": "We blink 50% less often when gazing at screens; blinking restores natural tears!"
     }
   },
   {
@@ -17602,13 +17602,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
-        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
+        "pt": "Ignorar todos os avisos de segurança porque achas que és invencível.",
+        "en": "Ignore all security alerts because you feel completely invincible."
       },
       {
         "id": "d",
-        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
-        "en": "Give your home address and phone number to a stranger in an online game."
+        "pt": "Publicar no TikTok a fotografia das chaves da tua casa e a matrícula do carro dos pais.",
+        "en": "Post a TikTok video of your house keys and your parents' car license plate."
       }
     ],
     "correctOptionId": "b",
@@ -17661,19 +17661,19 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada em segurança digital?",
+      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada nas aulas de TIC?",
       "en": "How does the ninja 'Pass-Phrase' technique taught in ICT work?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
         "en": "Yell the password out the window to make sure you memorized it."
       },
       {
         "id": "b",
-        "pt": "Deixar a sessão aberta no computador da biblioteca e ir embora para casa.",
-        "en": "Leave your account logged in at the school library and go home."
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "c",
@@ -17682,14 +17682,14 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Dar a tua palavra-passe a um estranho na Internet em troca de 5 moedas virtuais.",
-        "en": "Give your password to an online stranger in exchange for 5 virtual coins."
+        "pt": "Achar que os computadores são mágicos e adivinham quem tu és sem senha.",
+        "en": "Think computers are magic and guess who you are without passwords."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Frases como 'O_Meu_Cao_Adora_99_Gelados! ' são gigantes para piratas informáticos mas fáceis para ti!",
-      "en": "Phrases like 'My_Dog_Loves_99_IceCreams! ' are tough for hackers yet effortless to recall!"
+      "pt": "Frases como 'O_Meu_Cao_Adora_99_Gelados!' são gigantes para hackers mas fáceis para ti!",
+      "en": "Phrases like 'My_Dog_Loves_99_IceCreams!' are tough for hackers yet effortless to recall!"
     }
   },
   {
@@ -17742,18 +17742,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
-        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
+        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
+        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
       },
       {
         "id": "b",
-        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
-        "en": "Type invisible emails with white text on a white background to be super secret."
+        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
+        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
       },
       {
         "id": "c",
-        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
-        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
+        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe!'.",
+        "en": "Sign off an email to the school principal with: 'Peace out cool bro!'."
       },
       {
         "id": "d",
@@ -17763,7 +17763,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico.",
+      "pt": "Foi introduzido por Ray Tomlinson em 1971 e hoje é conhecido em todo o mundo!",
       "en": "It was introduced by Ray Tomlinson in 1971 and is recognized worldwide today!"
     }
   },
@@ -17822,13 +17822,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
-        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
+        "pt": "Dar o teu nome e morada em todos os questionários pop-up que aparecem na web.",
+        "en": "Enter your real name and address in every pop-up quiz you see."
       },
       {
         "id": "c",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
+        "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
         "id": "d",
@@ -17892,8 +17892,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
-        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
+        "pt": "Dizer que a pintura da Mona Lisa foi desenhada pelo teu primo no Paint.",
+        "en": "Claim that the Mona Lisa was drawn by your little cousin in MS Paint."
       },
       {
         "id": "b",
@@ -17902,13 +17902,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
-        "en": "Use copyrighted pop music in a public video without giving any credit."
+        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
+        "en": "Post an embarrassing photo of your classmate online without their permission."
       },
       {
         "id": "d",
-        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
-        "en": "Post an embarrassing photo of your classmate online without their permission."
+        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
+        "en": "Use copyrighted pop music in a public video without giving any credit."
       }
     ],
     "correctOptionId": "b",
@@ -17967,13 +17967,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Deitar computadores e telemóveis velhos no caixote do lixo comum ou no mar.",
+        "en": "Throw old computers and smartphones into the regular trash or into the sea."
       },
       {
         "id": "b",
-        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
-        "en": "Think the very first computer in history was small enough to fit in your pocket."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "c",
@@ -17982,8 +17982,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Achar que a memória RAM serve para guardar coisas mesmo quando o computador está desligado.",
-        "en": "Think RAM memory keeps your files saved even after turning off the computer."
+        "pt": "Falar com o router Wi-Fi aos gritos a pedir para ele ter mais simpatia.",
+        "en": "Yell at the Wi-Fi router politely begging it to be friendlier today."
       }
     ],
     "correctOptionId": "c",
@@ -18042,18 +18042,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       },
       {
         "id": "b",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Sentar em cima de 5 almofadas até bater com a cabeça no teto do quarto.",
+        "en": "Stack 5 pillows on the chair until your head hits the ceiling."
       },
       {
         "id": "c",
-        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
-        "en": "Fill the school bag with bricks to get stronger during classes."
+        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
+        "en": "Put the screen on the floor and lie down like a lizard."
       },
       {
         "id": "d",
@@ -18122,18 +18122,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "c",
-        "pt": "Deixar a câmara do computador ligada 24 horas a apontar para a tua cama.",
-        "en": "Leave your computer webcam on 24 hours pointing at your bed."
+        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
+        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
       },
       {
         "id": "d",
-        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
-        "en": "Download a pirated game from a shady website promising infinite gems."
+        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
+        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
       }
     ],
     "correctOptionId": "a",
@@ -18186,35 +18186,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Com quem deves partilhar as tuas palavras-passe secretas de jogos e contas?",
-      "en": "Who should you share your secret passwords for accounts and games with?"
+      "pt": "Na dica de hoje sobre \"Desafio Escolar: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"School Challenge: Passwords are like toothbrushes: you do not lend them to anyone!\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Escrever a palavra-passe na lousa da sala de aula com giz vermelho gigante.",
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
         "en": "Write the password on the classroom chalkboard in giant red chalk."
       },
       {
         "id": "b",
-        "pt": "Apenas com os teus pais ou encarregados de educação; nunca com amigos nem colegas!",
-        "en": "Only with your parents or guardians; never with friends or schoolmates!"
+        "pt": "A tua palavra-passe é pessoal e intransmissível!",
+        "en": "Your password is personal and should not be shared!"
       },
       {
         "id": "c",
-        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas palavras-passe anotadas.",
-        "en": "Stick 20 yellow post-its around your screen with all your passwords."
+        "pt": "Deixar a sessão aberta no computador da biblioteca e ir embora para casa.",
+        "en": "Leave your account logged in at the school library and go home."
       },
       {
         "id": "d",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
-        "en": "Yell the password out the window to make sure you memorized it."
+        "pt": "Achar que os computadores são mágicos e adivinham quem tu és sem senha.",
+        "en": "Think computers are magic and guess who you are without passwords."
       }
     ],
     "correctOptionId": "b",
     "explanation": {
-      "pt": "Mesmo o teu melhor amigo não deve ter a tua palavra-passe; uma amizade verdadeira respeita o segredo!",
-      "en": "Even best friends shouldn't know your password; genuine friendship respects privacy!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -18267,13 +18267,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
-        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
+        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
+        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
+        "en": "Type invisible emails with white text on a white background to be super secret."
       },
       {
         "id": "c",
@@ -18282,8 +18282,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
-        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       }
     ],
     "correctOptionId": "c",
@@ -18342,13 +18342,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Pesquisar no Google 'como teletransportar comida' e esperar que apareça uma piza no teclado.",
-        "en": "Search 'how to teleport food' and wait for a pizza to appear on the keyboard."
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
+        "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
         "id": "b",
-        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
-        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
+        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
+        "en": "Shout at the screen hoping the web page loads three times faster."
       },
       {
         "id": "c",
@@ -18411,8 +18411,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Para que servem as licenças Creative Commons (CC)?",
-      "en": "What are Creative Commons (CC) licenses used for?"
+      "pt": "Para que servem as licenças Creative Commons (CC) que aprendeste nas aulas de TIC?",
+      "en": "What are Creative Commons (CC) licenses used for in ICT class?"
     },
     "options": [
       {
@@ -18422,18 +18422,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Copiar o trabalho inteiro da Wikipédia e dizer que foste tu que o inventaste ontem.",
-        "en": "Copy the whole Wikipedia article and claim you invented it yesterday."
+        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
+        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
       },
       {
         "id": "c",
-        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
-        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
+        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
+        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
       },
       {
         "id": "d",
-        "pt": "Dizer que a pintura da Mona Lisa foi desenhada pelo teu primo no Paint.",
-        "en": "Claim that the Mona Lisa was drawn by your little cousin in MS Paint."
+        "pt": "Copiar o trabalho inteiro da Wikipédia e dizer que foste tu que o inventaste ontem.",
+        "en": "Copy the whole Wikipedia article and claim you invented it yesterday."
       }
     ],
     "correctOptionId": "a",
@@ -18492,8 +18492,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "b",
@@ -18502,13 +18502,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "d",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       }
     ],
     "correctOptionId": "b",
@@ -18567,13 +18567,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever com o teclado no colo enquanto a cabeça fica inclinada para baixo.",
-        "en": "Type with the keyboard on your lap while bending your neck downwards."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       },
       {
         "id": "b",
-        "pt": "Ficar 8 horas seguidas sem pestanejar feito uma estátua do museu de cera.",
-        "en": "Stare for 8 straight hours without blinking like a wax museum statue."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "c",
@@ -18582,8 +18582,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Trabalhar de cabeça para baixo pendurado no candeeiro do teto como um morcego.",
-        "en": "Work upside down hanging from the ceiling lamp like a bat."
+        "pt": "Ficar 8 horas seguidas sem pestanejar feito uma estátua do museu de cera.",
+        "en": "Stare for 8 straight hours without blinking like a wax museum statue."
       }
     ],
     "correctOptionId": "c",
@@ -18647,13 +18647,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
-        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "c",
-        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
-        "en": "Download a pirated game from a shady website promising infinite gems."
+        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
+        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
       },
       {
         "id": "d",
@@ -18717,28 +18717,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "É uma dupla proteção que pede a tua palavra-passe mais um código especial enviado por SMS ou aplicação!",
-        "en": "It is a double lock requiring your password plus a temporary code from SMS or an application!"
+        "pt": "É uma dupla proteção que pede a tua senha mais um código especial enviado por SMS ou app!",
+        "en": "It is a double lock requiring your password plus a temporary code from SMS or an app!"
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
         "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "c",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
-        "en": "Use the word 'password' as your password to be super original."
+        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas senhas anotadas.",
+        "en": "Stick 20 yellow post-its around your screen with all your passwords."
       },
       {
         "id": "d",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
-        "en": "Hide the password under the welcome mat in your room."
+        "pt": "Usar a palavra 'senha' como senha para ser super original.",
+        "en": "Use the word 'password' as your password to be super original."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Mesmo que um pirata informático descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro",
+      "pt": "Mesmo que um hacker descubra a tua senha, não consegue entrar sem o segundo código!",
       "en": "Even if someone discovers your password, they can't log in without the second code!"
     }
   },
@@ -18792,18 +18792,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
-        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
+        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe!'.",
+        "en": "Sign off an email to the school principal with: 'Peace out cool bro!'."
       },
       {
         "id": "b",
-        "pt": "exe (ficheiro executável que pode instalar vírus no computador)!",
-        "en": "exe (executable file that can install malware on your machine)!"
+        "pt": ".exe (ficheiro executável que pode instalar vírus no computador)!",
+        "en": ".exe (executable file that can install malware on your machine)!"
       },
       {
         "id": "c",
-        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
-        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "d",
@@ -18867,13 +18867,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Dar o teu nome e morada em todos os questionários pop-up que aparecem na web.",
-        "en": "Enter your real name and address in every pop-up quiz you see."
+        "pt": "Acreditar logo no primeiro resultado da pesquisa sem verificar se o site é de confiança.",
+        "en": "Believe the very first search result without checking if the source is reliable."
       },
       {
         "id": "b",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
-        "en": "Believe everything written on the Internet is 100% proven scientific truth."
+        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
+        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
       },
       {
         "id": "c",
@@ -18882,8 +18882,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus!'.",
+        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses!'."
       }
     ],
     "correctOptionId": "c",
@@ -18942,18 +18942,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Dizer que a pintura da Mona Lisa foi desenhada pelo teu primo no Paint.",
-        "en": "Claim that the Mona Lisa was drawn by your little cousin in MS Paint."
-      },
-      {
-        "id": "b",
         "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
         "en": "Post an embarrassing photo of your classmate online without their permission."
       },
       {
+        "id": "b",
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
+      },
+      {
         "id": "c",
-        "pt": "Apagar o nome do autor original e colar uma foto tua por cima.",
-        "en": "Erase the original author's signature and paste your own photo over it."
+        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
+        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
       },
       {
         "id": "d",
@@ -19011,35 +19011,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "O que deu origem à expressão famosa 'Bug' e 'Debugging' na programação e informática?",
-      "en": "What gave rise to the famous terms 'Bug' and 'Debugging' in programming and computer science?"
+      "pt": "De onde vem a palavra informática 'Bug' (erro no programa de computador)?",
+      "en": "Where does the computing term 'Bug' (software glitch) famously originate from?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Uma traça real que ficou presa num relé eletromecânico do computador Mark II em 1947.",
-        "en": "An actual moth that got trapped in an electromechanical relay of the Mark II computer in 1947."
+        "pt": "De uma traça real (inseto) que ficou presa nos circuitos do computador Mark II em 1947!",
+        "en": "From an actual moth (insect) trapped inside the relays of the Mark II computer in 1947!"
       },
       {
         "id": "b",
-        "pt": "Um vírus digital que desenhava formigas a andar pelo ecrã do monitor.",
-        "en": "A digital virus that animated ants crawling all over the monitor screen."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "c",
-        "pt": "Um jogo de computador onde o herói era um escaravelho que comia cabos de rede.",
-        "en": "A video game where the main hero was a beetle that chewed through network cables."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       },
       {
         "id": "d",
-        "pt": "Uma marca famosa de ratos de computador em formato de joaninha colorida.",
-        "en": "A popular brand of computer mice shaped like a colorful ladybug."
+        "pt": "Alimentar o rato do computador com fatias de queijo da serra para ele correr mais rápido.",
+        "en": "Feed the computer mouse slices of cheese so it runs faster across the desk."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Hoje usamos a palavra 'bug' para qualquer erro num programa e 'debug' para o corrigir!",
-      "en": "Today we use 'bug' for any code defect and 'debugging' for the problem-solving art of fixing it!"
+      "pt": "A cientista Grace Hopper retirou o inseto e colou-o no caderno de notas como o primeiro 'bug'!",
+      "en": "Scientist Grace Hopper taped the bug into the logbook as the first actual debugging case!"
     }
   },
   {
@@ -19092,8 +19092,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "b",
@@ -19102,13 +19102,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
-        "en": "Put the screen on the floor and lie down like a lizard."
+        "pt": "Ficar 8 horas seguidas sem pestanejar feito uma estátua do museu de cera.",
+        "en": "Stare for 8 straight hours without blinking like a wax museum statue."
       },
       {
         "id": "d",
-        "pt": "Ficar 8 horas seguidas sem pestanejar feito uma estátua do museu de cera.",
-        "en": "Stare for 8 straight hours without blinking like a wax museum statue."
+        "pt": "Mover o rato com o pé esquerdo para dar descanso à mão direita.",
+        "en": "Move the mouse with your left foot to rest your right hand."
       }
     ],
     "correctOptionId": "b",
@@ -19162,18 +19162,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "isSpecialMilestone": false,
     "question": {
       "pt": "Porque deves desligar a partilha de localização (GPS) nas aplicações que não precisam dela?",
-      "en": "Why should you turn off GPS location sharing in applications that don't need it?"
+      "en": "Why should you turn off GPS location sharing in apps that don't need it?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar numa mensagem não solicitada que pede a tua palavra-passe para atualizar a conta.",
-        "en": "Believe an unsolicited message asking for your password to update the account."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "b",
-        "pt": "Publicar no TikTok a fotografia das chaves da tua casa e a matrícula do carro dos pais.",
-        "en": "Post a TikTok video of your house keys and your parents' car license plate."
+        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
+        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
       },
       {
         "id": "c",
@@ -19182,14 +19182,14 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
-        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
+        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
+        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Algumas aplicações precisam da localização para funcionar corretamente. Outras podem pedi-la sem ser essencial. Verifica se uma aplicação precisa realmente da tua localização antes de a autorizares.",
-      "en": "Only navigation applications actually need GPS; simple games and photo filters do not!"
+      "pt": "Apenas apps de mapas e transportes precisam de localização; jogos e filtros não necessitam!",
+      "en": "Only navigation apps actually need GPS; simple games and photo filters do not!"
     }
   },
   {
@@ -19236,35 +19236,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Porque é que o Dia Internacional do Programador se celebra precisamente no 256.º dia do ano?",
-      "en": "Why is International Programmers' Day celebrated specifically on the 256th day of the year?"
+      "pt": "Porque é que o Dia dos Programadores é comemorado no 256.º dia de cada ano?",
+      "en": "Why is Programmer's Day celebrated precisely on the 256th day of each year?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Porque 256 é o número de valores distintos que podem ser guardados num byte (2^8).",
-        "en": "Because 256 is the number of distinct values that can be stored in a single byte (2^8)."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "b",
-        "pt": "Porque o primeiro programa de computador demorou 256 anos a ser escrito.",
-        "en": "Because the first computer software program took 256 years to be written."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       },
       {
         "id": "c",
-        "pt": "Porque um teclado de computador profissional tem exatamente 256 teclas de plástico.",
-        "en": "Because a professional computer keyboard has exactly 256 physical plastic keys."
+        "pt": "Meter o computador portátil no micro-ondas para carregar a bateria em 5 segundos.",
+        "en": "Put the laptop in the microwave to charge the battery in 5 seconds."
       },
       {
         "id": "d",
-        "pt": "Porque existem 256 linguagens de programação no mundo e nenhuma mais.",
-        "en": "Because there are 256 programming languages in the world and none more."
+        "pt": "Porque 256 é o número total de valores distintos que podem ser representados num Byte de 8 bits (2⁸)!",
+        "en": "Because 256 is the distinct number of values represented by an 8-bit Byte (2 to the power of 8)!"
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "d",
     "explanation": {
-      "pt": "O número 256 é a assinatura matemática dos computadores binários modernos!",
-      "en": "The number 256 is the quintessential mathematical fingerprint of modern binary computers!"
+      "pt": "É o número mais adorado pelos informáticos e cabe perfeitamente na base binária!",
+      "en": "It is the most beloved number among computer scientists and fits binary powers perfectly!"
     }
   },
   {
@@ -19317,18 +19317,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Porque lançam 'iscos' falsos (como prémios ou alertas falsos) para pescar palavras-passe e dados!",
+        "pt": "Porque lançam 'iscos' falsos (como prémios ou alertas falsos) para pescar senhas e dados!",
         "en": "Because they cast fake bait (like fake prizes or urgent alarms) to hook passwords!"
       },
       {
         "id": "b",
-        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
-        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
+        "pt": "Achar que um email urgente do banco a pedir senhas por SMS é verdadeiro.",
+        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
       },
       {
         "id": "c",
-        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
-        "en": "Type invisible emails with white text on a white background to be super secret."
+        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
+        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
       },
       {
         "id": "d",
@@ -19392,8 +19392,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
-        "en": "Believe everything written on the Internet is 100% proven scientific truth."
+        "pt": "Escrever no motor de busca: 'Ó computador inteligente, dá-me nota 5 no teste!'.",
+        "en": "Type in the search engine: 'Oh wise computer, give me top marks on my test!'."
       },
       {
         "id": "b",
@@ -19402,8 +19402,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
+        "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
         "id": "d",
@@ -19467,18 +19467,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
+        "pt": "Achar que o símbolo © de Copyright significa 'Copia O Que Quiseres'.",
+        "en": "Think the © Copyright symbol stands for 'Copy Whatever You Want'."
+      },
+      {
+        "id": "b",
         "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
         "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
       },
       {
-        "id": "b",
-        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
-        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
-      },
-      {
         "id": "c",
-        "pt": "Significa que os direitos de autor já expiraram e a obra pode, em geral, ser utilizada e partilhada sem pedir autorização por direitos de autor.",
-        "en": "It means copyright protection has expired and the work can, in general, be used and shared without asking for copyright permission."
+        "pt": "Significa que os direitos de autor já expiraram e qualquer pessoa pode usar livremente!",
+        "en": "It means copyright protection has expired and anyone can freely use, remix, and share it!"
       },
       {
         "id": "d",
@@ -19542,18 +19542,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Achar que a memória RAM serve para guardar coisas mesmo quando o computador está desligado.",
+        "en": "Think RAM memory keeps your files saved even after turning off the computer."
       },
       {
         "id": "b",
-        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
-        "en": "Think the very first computer in history was small enough to fit in your pocket."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "c",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "d",
@@ -19618,7 +19618,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "a",
         "pt": "Não mais do que 10% do teu peso corporal (ex: se pesas 35 kg, a mochila deve ter no máximo 3,5 kg)!",
-        "en": "No more than 10% of your body weight (e. g. if you weigh 35 kg, bag max is 3. 5 kg)!"
+        "en": "No more than 10% of your body weight (e.g. if you weigh 35 kg, bag max is 3.5 kg)!"
       },
       {
         "id": "b",
@@ -19627,13 +19627,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
-        "en": "Put the screen on the floor and lie down like a lizard."
+        "pt": "Ficar 8 horas seguidas sem pestanejar feito uma estátua do museu de cera.",
+        "en": "Stare for 8 straight hours without blinking like a wax museum statue."
       },
       {
         "id": "d",
-        "pt": "Sentar num banco rígido sem apoio lombar nem regulação de altura.",
-        "en": "Stack 5 pillows on the chair until your head hits the ceiling."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       }
     ],
     "correctOptionId": "a",
@@ -19686,35 +19686,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Para que servia curiosamente a primeira webcam ligada a uma rede de computadores em 1991?",
-      "en": "What was the curious purpose of the first computer webcam connected to a local network in 1991?"
+      "pt": "Porque deves verificar as permissões das aplicações que pedem acesso à tua câmara e microfone?",
+      "en": "Why should you check app permissions when they ask for camera and microphone access?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Vigiar se uma cafeteira tinha café acabado de fazer para os cientistas não perderem a viagem.",
-        "en": "Watching whether a break-room coffee pot was full so researchers wouldn't waste a trip."
+        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
+        "en": "Download a pirated game from a shady website promising infinite gems."
       },
       {
         "id": "b",
-        "pt": "Transmitir jogos de futebol da Liga dos Campeões para o mundo inteiro.",
-        "en": "Broadcasting Champions League soccer matches live to the whole world."
+        "pt": "Para garantir que apenas programas em que confias têm autorização para te ouvir ou ver!",
+        "en": "To ensure that only trusted programs have permission to access your audio and video!"
       },
       {
         "id": "c",
-        "pt": "Escanear os trabalhos de casa dos alunos da primária automaticamente.",
-        "en": "Scanning elementary students' homework sheets automatically."
+        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
+        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
       },
       {
         "id": "d",
-        "pt": "Fazer videochamadas com astronautas que estavam na Estação Espacial.",
-        "en": "Holding video conference calls with astronauts orbiting on the Space Station."
+        "pt": "Ignorar todos os avisos de segurança porque achas que és invencível.",
+        "en": "Ignore all security alerts because you feel completely invincible."
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "b",
     "explanation": {
-      "pt": "Começou como uma brincadeira útil para poupar passos a cientistas sedentos de café!",
-      "en": "It started as a clever hack to save steps for coffee-loving computer lab researchers!"
+      "pt": "Um simples jogo de tabuleiro não precisa de ligar o teu microfone; rejeita permissões desnecessárias!",
+      "en": "A puzzle game has no need for your microphone; decline unnecessary permission prompts!"
     }
   },
   {
@@ -19767,28 +19767,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
         "en": "Yell the password out the window to make sure you memorized it."
       },
       {
         "id": "b",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
-        "en": "Hide the password under the welcome mat in your room."
+        "pt": "Achar que os computadores são mágicos e adivinham quem tu és sem senha.",
+        "en": "Think computers are magic and guess who you are without passwords."
       },
       {
         "id": "c",
-        "pt": "Porque qualquer pessoa que passe perto do teu ecrã consegue ler a palavra-passe num segundo!",
+        "pt": "Porque qualquer pessoa que passe perto do teu ecrã consegue ler a senha num segundo!",
         "en": "Because anyone walking past your desk can read your secret password instantly!"
       },
       {
         "id": "d",
-        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas palavras-passe anotadas.",
-        "en": "Stick 20 yellow post-its around your screen with all your passwords."
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "en": "Use '123456' and tape it to your forehead so you never forget it."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Mantém as palavras-passe na tua memória ou num gestor de palavras-passe encriptado!",
+      "pt": "Mantém as palavras-passe na tua memória ou num gestor de senhas encriptado!",
       "en": "Keep your passwords in your memory or safely locked inside an encrypted manager!"
     }
   },
@@ -19842,18 +19842,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe! '.",
-        "en": "Sign off an email to the school principal with: 'Peace out cool bro! '."
+        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
+        "en": "Type invisible emails with white text on a white background to be super secret."
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Achar que um email urgente do banco a pedir senhas por SMS é verdadeiro.",
+        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
       },
       {
         "id": "c",
-        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu! '.",
-        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am! '."
+        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu!'.",
+        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am!'."
       },
       {
         "id": "d",
@@ -19922,18 +19922,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Acreditar logo no primeiro resultado da pesquisa sem verificar se o site é de confiança.",
-        "en": "Believe the very first search result without checking if the source is reliable."
+        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
+        "en": "Shout at the screen hoping the web page loads three times faster."
       },
       {
         "id": "c",
-        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
-        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
+        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus!'.",
+        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses!'."
       },
       {
         "id": "d",
-        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
-        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
+        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
+        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
       }
     ],
     "correctOptionId": "a",
@@ -19992,23 +19992,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
-        "en": "Post an embarrassing photo of your classmate online without their permission."
+        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
+        "en": "Use copyrighted pop music in a public video without giving any credit."
       },
       {
         "id": "b",
-        "pt": "Em bibliotecas de áudio com licenças abertas (como Creative Commons) ou de domínio público!",
-        "en": "In audio libraries offering open licenses (such as Creative Commons) or public domain!"
+        "pt": "Em bibliotecas de áudio com licenças Creative Commons ou sons sem direitos reservados (Royalty-Free)!",
+        "en": "In audio libraries offering Creative Commons or Royalty-Free licensed tracks!"
       },
       {
         "id": "c",
-        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
-        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
+        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
+        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
       },
       {
         "id": "d",
-        "pt": "Achar que tudo o que encontras no Google Imagens é teu por magia.",
-        "en": "Believe anything found on Google Images automatically belongs to you by magic."
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
       }
     ],
     "correctOptionId": "b",
@@ -20067,13 +20067,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Falar com o router Wi-Fi aos gritos a pedir para ele ter mais simpatia.",
+        "en": "Yell at the Wi-Fi router politely begging it to be friendlier today."
       },
       {
         "id": "b",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "c",
@@ -20082,8 +20082,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       }
     ],
     "correctOptionId": "c",
@@ -20142,18 +20142,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       },
       {
         "id": "b",
-        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
-        "en": "Fill the school bag with bricks to get stronger during classes."
+        "pt": "Trabalhar de cabeça para baixo pendurado no candeeiro do teto como um morcego.",
+        "en": "Work upside down hanging from the ceiling lamp like a bat."
       },
       {
         "id": "c",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       },
       {
         "id": "d",
@@ -20217,28 +20217,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "É tentar enganar as pessoas com simpatia ou mentiras para elas entregarem palavras-passe ou dados!",
+        "pt": "É tentar enganar as pessoas com simpatia ou mentiras para elas entregarem senhas ou dados!",
         "en": "It is manipulating people through lies, false urgency, or pretend kindness to steal secrets!"
       },
       {
         "id": "b",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "c",
-        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
-        "en": "Download a pirated game from a shady website promising infinite gems."
+        "pt": "Publicar no TikTok a fotografia das chaves da tua casa e a matrícula do carro dos pais.",
+        "en": "Post a TikTok video of your house keys and your parents' car license plate."
       },
       {
         "id": "d",
-        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
-        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
+        "pt": "Partilhar a tua localização GPS exata em tempo real com toda a gente nas redes.",
+        "en": "Share your exact live GPS location publicly with everyone on social media."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Os piratas informáticos atacam mais a ingenuidade das pessoas do que os computadores; desconfia sempre!",
+      "pt": "Os hackers atacam mais a ingenuidade das pessoas do que os computadores; desconfia sempre!",
       "en": "Scammers target human trust rather than machine firewalls; always stay alert!"
     }
   },
@@ -20292,7 +20292,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever a palavra-passe na lousa da sala de aula com giz vermelho gigante.",
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
         "en": "Write the password on the classroom chalkboard in giant red chalk."
       },
       {
@@ -20302,13 +20302,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
-        "en": "Yell the password out the window to make sure you memorized it."
+        "pt": "Esconder a senha debaixo do tapete da entrada do quarto.",
+        "en": "Hide the password under the welcome mat in your room."
       },
       {
         "id": "d",
-        "pt": "Deixar a sessão aberta no computador da biblioteca e ir embora para casa.",
-        "en": "Leave your account logged in at the school library and go home."
+        "pt": "Partilhar a palavra-passe no grupo de WhatsApp da turma toda.",
+        "en": "Share the password in the whole class WhatsApp group."
       }
     ],
     "correctOptionId": "b",
@@ -20367,13 +20367,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que um email urgente do banco a pedir palavras-passe por SMS é verdadeiro.",
-        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
+        "pt": "Escrever o email todo em LETRAS MAIÚSCULAS aos berros para o carteiro correr mais.",
+        "en": "Write the whole email in ALL CAPS screaming so the digital mailman runs faster."
       },
       {
         "id": "b",
-        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
-        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
+        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
+        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
       },
       {
         "id": "c",
@@ -20382,8 +20382,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe! '.",
-        "en": "Sign off an email to the school principal with: 'Peace out cool bro! '."
+        "pt": "Achar que um email urgente do banco a pedir senhas por SMS é verdadeiro.",
+        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
       }
     ],
     "correctOptionId": "c",
@@ -20442,18 +20442,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever no motor de busca: 'Ó computador inteligente, dá-me nota 5 no teste! '.",
-        "en": "Type in the search engine: 'Oh wise computer, give me top marks on my test! '."
+        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus!'.",
+        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses!'."
       },
       {
         "id": "b",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
-        "en": "Believe everything written on the Internet is 100% proven scientific truth."
+        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
+        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
       },
       {
         "id": "c",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Escrever no motor de busca: 'Ó computador inteligente, dá-me nota 5 no teste!'.",
+        "en": "Type in the search engine: 'Oh wise computer, give me top marks on my test!'."
       },
       {
         "id": "d",
@@ -20522,18 +20522,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Achar que o símbolo © de Copyright significa 'Copia O Que Quiseres'.",
-        "en": "Think the © Copyright symbol stands for 'Copy Whatever You Want'."
+        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
+        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
       },
       {
         "id": "c",
-        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
-        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
       },
       {
         "id": "d",
-        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
-        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
+        "pt": "Achar que o símbolo © de Copyright significa 'Copia O Que Quiseres'.",
+        "en": "Think the © Copyright symbol stands for 'Copy Whatever You Want'."
       }
     ],
     "correctOptionId": "a",
@@ -20592,8 +20592,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que a memória RAM serve para guardar coisas mesmo quando o computador está desligado.",
-        "en": "Think RAM memory keeps your files saved even after turning off the computer."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "b",
@@ -20602,13 +20602,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       },
       {
         "id": "d",
-        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
-        "en": "Think the very first computer in history was small enough to fit in your pocket."
+        "pt": "Falar com o router Wi-Fi aos gritos a pedir para ele ter mais simpatia.",
+        "en": "Yell at the Wi-Fi router politely begging it to be friendlier today."
       }
     ],
     "correctOptionId": "b",
@@ -20667,13 +20667,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever com o teclado no colo enquanto a cabeça fica inclinada para baixo.",
-        "en": "Type with the keyboard on your lap while bending your neck downwards."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       },
       {
         "id": "b",
-        "pt": "Usar o auscultador no volume máximo de concerto de rock até os tímpanos dançarem.",
-        "en": "Crank headphones to max rock concert volume until eardrums rattle."
+        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
+        "en": "Fill the school bag with bricks to get stronger during classes."
       },
       {
         "id": "c",
@@ -20682,8 +20682,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Sentar num banco rígido sem apoio lombar nem regulação de altura.",
-        "en": "Stack 5 pillows on the chair until your head hits the ceiling."
+        "pt": "Dormir com o telemóvel colado na testa para sonhar com jogos online.",
+        "en": "Sleep with the phone glued to your forehead to dream about online games."
       }
     ],
     "correctOptionId": "c",
@@ -20747,13 +20747,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
-        "en": "Give your home address and phone number to a stranger in an online game."
+        "pt": "Desativar o antivírus porque o ícone dele é demasiado aborrecido.",
+        "en": "Disable the antivirus because its icon looks too boring."
       },
       {
         "id": "c",
-        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
-        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
+        "pt": "Dizer a toda a gente em que escola andas e em que sala tens aula agora.",
+        "en": "Tell everyone online which school and classroom you are in right now."
       },
       {
         "id": "d",
@@ -20822,18 +20822,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
         "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "c",
-        "pt": "Usar a mesma palavra-passe 'chocolate' em todos os sites do planeta Terra.",
-        "en": "Use the same password 'chocolate' across every website on Earth."
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
+        "en": "Yell the password out the window to make sure you memorized it."
       },
       {
         "id": "d",
-        "pt": "Partilhar a palavra-passe no grupo de WhatsApp da turma toda.",
-        "en": "Share the password in the whole class WhatsApp group."
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
+        "en": "Write the password on the classroom chalkboard in giant red chalk."
       }
     ],
     "correctOptionId": "a",
@@ -20892,8 +20892,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
-        "en": "Type invisible emails with white text on a white background to be super secret."
+        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu!'.",
+        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am!'."
       },
       {
         "id": "b",
@@ -20902,13 +20902,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que um email urgente do banco a pedir palavras-passe por SMS é verdadeiro.",
-        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
+        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
+        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
       },
       {
         "id": "d",
-        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
-        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
+        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
+        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
       }
     ],
     "correctOptionId": "b",
@@ -20961,19 +20961,19 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "O que indica a terminação '. pt' no endereço de um website como www. seguranet. pt?",
-      "en": "What does the '. pt' extension tell you in a web address like www. seguranet. pt?"
+      "pt": "O que indica a terminação '.pt' no endereço de um website como www.seguranet.pt?",
+      "en": "What does the '.pt' extension tell you in a web address like www.seguranet.pt?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Confundir o navegador (Google Chrome) com a própria rede mundial da Internet.",
+        "en": "Confuse the web browser with the entire global Internet infrastructure."
       },
       {
         "id": "b",
-        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus! '.",
-        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses! '."
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
+        "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
         "id": "c",
@@ -20982,14 +20982,14 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Dar o teu nome e morada em todos os questionários pop-up que aparecem na web.",
-        "en": "Enter your real name and address in every pop-up quiz you see."
+        "pt": "Pesquisar no Google 'como teletransportar comida' e esperar que apareça uma piza no teclado.",
+        "en": "Search 'how to teleport food' and wait for a pizza to appear on the keyboard."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Extensões como . pt, . gov (governo) ou . edu (educação) ajudam a identificar a origem do site!",
-      "en": "TLDs like . pt, . gov, or . edu help identify the origin and category of web resources!"
+      "pt": "Extensões como .pt, .gov (governo) ou .edu (educação) ajudam a identificar a origem do site!",
+      "en": "TLDs like .pt, .gov, or .edu help identify the origin and category of web resources!"
     }
   },
   {
@@ -21042,13 +21042,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
-        "en": "Use copyrighted pop music in a public video without giving any credit."
+        "pt": "Apagar o nome do autor original e colar uma foto tua por cima.",
+        "en": "Erase the original author's signature and paste your own photo over it."
       },
       {
         "id": "b",
-        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
-        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
+        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
+        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
       },
       {
         "id": "c",
@@ -21057,8 +21057,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Entre aspas \"... \", indicando logo a seguir o nome do autor e a fonte de onde foi retirada!",
-        "en": "Enclosed in quotation marks \"... \", immediately naming the author and the original source!"
+        "pt": "Entre aspas \"...\", indicando logo a seguir o nome do autor e a fonte de onde foi retirada!",
+        "en": "Enclosed in quotation marks \"...\", immediately naming the author and the original source!"
       }
     ],
     "correctOptionId": "d",
@@ -21122,18 +21122,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Falar com o router Wi-Fi aos gritos a pedir para ele ter mais simpatia.",
-        "en": "Yell at the Wi-Fi router politely begging it to be friendlier today."
+        "pt": "Alimentar o rato do computador com fatias de queijo da serra para ele correr mais rápido.",
+        "en": "Feed the computer mouse slices of cheese so it runs faster across the desk."
       },
       {
         "id": "c",
-        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
-        "en": "Think the very first computer in history was small enough to fit in your pocket."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "d",
-        "pt": "Deitar computadores e telemóveis velhos no caixote do lixo comum ou no mar.",
-        "en": "Throw old computers and smartphones into the regular trash or into the sea."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       }
     ],
     "correctOptionId": "a",
@@ -21192,23 +21192,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "b",
-        "pt": "Costas direitas apoiadas no encosto, joelhos e cotovelos aproximadamente a 90° e pés bem assentes no chão!",
+        "pt": "Costas direitas apoiadas no encosto, joelhos e cotovelos a 90° e pés bem assentes no chão!",
         "en": "Straight back against the chair, knees and elbows at 90°, and feet flat on the floor!"
       },
       {
         "id": "c",
-        "pt": "Escrever com o teclado no colo enquanto a cabeça fica inclinada para baixo.",
-        "en": "Type with the keyboard on your lap while bending your neck downwards."
+        "pt": "Usar o auscultador no volume máximo de concerto de rock até os tímpanos dançarem.",
+        "en": "Crank headphones to max rock concert volume until eardrums rattle."
       },
       {
         "id": "d",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Trabalhar às escuras com óculos de sol para parecer um agente secreto.",
+        "en": "Work in total darkness wearing sunglasses to look like a secret agent."
       }
     ],
     "correctOptionId": "b",
@@ -21267,13 +21267,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar numa mensagem não solicitada que pede a tua palavra-passe para atualizar a conta.",
-        "en": "Believe an unsolicited message asking for your password to update the account."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "b",
-        "pt": "Ignorar todos os avisos de segurança porque achas que és invencível.",
-        "en": "Ignore all security alerts because you feel completely invincible."
+        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
+        "en": "Give your home address and phone number to a stranger in an online game."
       },
       {
         "id": "c",
@@ -21282,8 +21282,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       }
     ],
     "correctOptionId": "c",
@@ -21336,35 +21336,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "O que realizou Ada Lovelace em 1843 que lhe valeu o título de primeira programadora do mundo?",
-      "en": "What did Ada Lovelace accomplish in 1843 that earned her the title of first computer programmer?"
+      "pt": "Qual foi a contribuição fundamental de cientistas pioneiras como Margaret Hamilton na informática?",
+      "en": "What was the fundamental contribution of computing pioneers like Margaret Hamilton?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Escreveu o primeiro algoritmo concebido para ser executado por uma máquina computacional.",
-        "en": "Wrote the first algorithm specifically designed to be carried out by a computing machine."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "b",
-        "pt": "Construiu a primeira consola portátil de videojogos a pilhas.",
-        "en": "Built the first handheld battery-powered video game console."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "c",
-        "pt": "Inventou o rato de computador ótico com sensor de laser vermelho.",
-        "en": "Invented the optical computer mouse with a red laser sensor."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "d",
-        "pt": "Criou o primeiro motor de busca da Internet usando cabos submarinos.",
-        "en": "Created the first internet search engine using undersea cables."
+        "pt": "Programaram o software de navegação da missão Apollo 11 que permitiu a chegada do Homem à Lua!",
+        "en": "They programmed the Apollo 11 guidance software that guided humans safely onto the Moon!"
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "d",
     "explanation": {
-      "pt": "Ada Lovelace compreendeu que os computadores seriam ferramentas de criatividade humana além do cálculo!",
-      "en": "Ada Lovelace foresaw that computers would become instruments of human creativity beyond pure math!"
+      "pt": "As mulheres estiveram na vanguarda da criação da programação moderna desde os primeiros passos!",
+      "en": "Women were at the very cutting edge of modern software engineering from its inception!"
     }
   },
   {
@@ -21422,13 +21422,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "c",
-        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
-        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
+        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
+        "en": "Type invisible emails with white text on a white background to be super secret."
       },
       {
         "id": "d",
@@ -21502,13 +21502,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
-        "en": "Believe everything written on the Internet is 100% proven scientific truth."
+        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
+        "en": "Shout at the screen hoping the web page loads three times faster."
       },
       {
         "id": "d",
-        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus! '.",
-        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses! '."
+        "pt": "Confundir o navegador (Google Chrome) com a própria rede mundial da Internet.",
+        "en": "Confuse the web browser with the entire global Internet infrastructure."
       }
     ],
     "correctOptionId": "b",
@@ -21572,8 +21572,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
-        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
+        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
+        "en": "Use copyrighted pop music in a public video without giving any credit."
       },
       {
         "id": "c",
@@ -21642,13 +21642,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Usar um carregador com voltagem errada ou cabo danificado que pode sobreaquecer.",
-        "en": "Use a wrong voltage charger or damaged cable that can overheat."
+        "pt": "Meter o computador portátil no micro-ondas para carregar a bateria em 5 segundos.",
+        "en": "Put the laptop in the microwave to charge the battery in 5 seconds."
       },
       {
         "id": "b",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "c",
@@ -21658,7 +21658,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "d",
         "pt": "A RAM é rápida e temporária (apaga-se ao desligar); o SSD guarda ficheiros em definitivo!",
-        "en": "The SSD is like a storage cabinet: it keeps your files long-term, but remember that hard drives can fail, so you should always create backups of your most important schoolwork!"
+        "en": "RAM is fast and temporary (clears on shutdown); the SSD stores files permanently!"
       }
     ],
     "correctOptionId": "d",
@@ -21711,35 +21711,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Qual é o benefício de fazer a pausa visual da regra 20-20-20 em conjunto na sala de informática?",
-      "en": "What is the benefit of practicing the 20-20-20 visual break together in the computer lab?"
+      "pt": "Qual é o truque de pestanejar com frequência enquanto estás a ler no ecrã do computador?",
+      "en": "Why should you make a conscious effort to blink frequently while reading on a screen?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Permite que toda a turma descanse os olhos e volte ao trabalho com mais foco e energia.",
-        "en": "Allows the whole class to refresh their eyes and return to work with higher focus and energy."
+        "pt": "Para manter os olhos hidratados e evitar que fiquem secos, vermelhos e irritados!",
+        "en": "To keep the eye surface naturally moisturized and prevent burning, dry-eye irritation!"
       },
       {
         "id": "b",
-        "pt": "Serve para os alunos começarem a atirar aviões de papel para o quadro.",
-        "en": "Gives students an excuse to throw paper airplanes at the whiteboard."
+        "pt": "Trabalhar de cabeça para baixo pendurado no candeeiro do teto como um morcego.",
+        "en": "Work upside down hanging from the ceiling lamp like a bat."
       },
       {
         "id": "c",
-        "pt": "Serve para desligar o disjuntor principal da escola às escondidas.",
-        "en": "Serves to secretly flip the main school power breaker."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       },
       {
         "id": "d",
-        "pt": "Faz com que o teste de avaliação desapareça milagrosamente da pasta partilhada.",
-        "en": "Miraculously makes the upcoming test quiz disappear from the shared drive."
+        "pt": "Usar o auscultador no volume máximo de concerto de rock até os tímpanos dançarem.",
+        "en": "Crank headphones to max rock concert volume until eardrums rattle."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "A saúde ocular e a postura corporal são responsabilidades partilhadas por todos na sala de aula!",
-      "en": "Eye wellness and ergonomic posture are shared habits that keep the entire learning environment healthy!"
+      "pt": "Quando olhamos para ecrãs pestanejamos metade das vezes; lembra-te de piscar!",
+      "en": "We blink 50% less often when gazing at screens; blinking restores natural tears!"
     }
   },
   {
@@ -21802,13 +21802,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
-        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "d",
-        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
-        "en": "Give your home address and phone number to a stranger in an online game."
+        "pt": "Desativar o antivírus porque o ícone dele é demasiado aborrecido.",
+        "en": "Disable the antivirus because its icon looks too boring."
       }
     ],
     "correctOptionId": "b",
@@ -21861,19 +21861,19 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada em segurança digital?",
+      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada nas aulas de TIC?",
       "en": "How does the ninja 'Pass-Phrase' technique taught in ICT work?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
         "en": "Yell the password out the window to make sure you memorized it."
       },
       {
         "id": "b",
-        "pt": "Deixar a sessão aberta no computador da biblioteca e ir embora para casa.",
-        "en": "Leave your account logged in at the school library and go home."
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
+        "en": "Write the password on the classroom chalkboard in giant red chalk."
       },
       {
         "id": "c",
@@ -21882,14 +21882,14 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Dar a tua palavra-passe a um estranho na Internet em troca de 5 moedas virtuais.",
-        "en": "Give your password to an online stranger in exchange for 5 virtual coins."
+        "pt": "Usar a mesma senha 'chocolate' em todos os sites do planeta Terra.",
+        "en": "Use the same password 'chocolate' across every website on Earth."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Frases como 'O_Meu_Cao_Adora_99_Gelados! ' são gigantes para piratas informáticos mas fáceis para ti!",
-      "en": "Phrases like 'My_Dog_Loves_99_IceCreams! ' are tough for hackers yet effortless to recall!"
+      "pt": "Frases como 'O_Meu_Cao_Adora_99_Gelados!' são gigantes para hackers mas fáceis para ti!",
+      "en": "Phrases like 'My_Dog_Loves_99_IceCreams!' are tough for hackers yet effortless to recall!"
     }
   },
   {
@@ -21947,13 +21947,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
-        "en": "Type invisible emails with white text on a white background to be super secret."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "c",
-        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
-        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
+        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe!'.",
+        "en": "Sign off an email to the school principal with: 'Peace out cool bro!'."
       },
       {
         "id": "d",
@@ -21963,7 +21963,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico.",
+      "pt": "Foi introduzido por Ray Tomlinson em 1971 e hoje é conhecido em todo o mundo!",
       "en": "It was introduced by Ray Tomlinson in 1971 and is recognized worldwide today!"
     }
   },
@@ -22027,8 +22027,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
+        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
       },
       {
         "id": "d",
@@ -22102,8 +22102,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
-        "en": "Use copyrighted pop music in a public video without giving any credit."
+        "pt": "Achar que tudo o que encontras no Google Imagens é teu por magia.",
+        "en": "Believe anything found on Google Images automatically belongs to you by magic."
       },
       {
         "id": "d",
@@ -22172,8 +22172,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
-        "en": "Think the very first computer in history was small enough to fit in your pocket."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       },
       {
         "id": "c",
@@ -22182,8 +22182,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Achar que a memória RAM serve para guardar coisas mesmo quando o computador está desligado.",
-        "en": "Think RAM memory keeps your files saved even after turning off the computer."
+        "pt": "Falar com o router Wi-Fi aos gritos a pedir para ele ter mais simpatia.",
+        "en": "Yell at the Wi-Fi router politely begging it to be friendlier today."
       }
     ],
     "correctOptionId": "c",
@@ -22242,13 +22242,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       },
       {
         "id": "b",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Dormir com o telemóvel colado na testa para sonhar com jogos online.",
+        "en": "Sleep with the phone glued to your forehead to dream about online games."
       },
       {
         "id": "c",
@@ -22322,13 +22322,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "c",
-        "pt": "Deixar a câmara do computador ligada 24 horas a apontar para a tua cama.",
-        "en": "Leave your computer webcam on 24 hours pointing at your bed."
+        "pt": "Dizer a toda a gente em que escola andas e em que sala tens aula agora.",
+        "en": "Tell everyone online which school and classroom you are in right now."
       },
       {
         "id": "d",
@@ -22386,35 +22386,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Com quem deves partilhar as tuas palavras-passe secretas de jogos e contas?",
-      "en": "Who should you share your secret passwords for accounts and games with?"
+      "pt": "Na dica de hoje sobre \"Como Funciona por Dentro: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"How It Works Inside: Passwords are like toothbrushes: you do not lend them to anyone!\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Escrever a palavra-passe na lousa da sala de aula com giz vermelho gigante.",
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
         "en": "Write the password on the classroom chalkboard in giant red chalk."
       },
       {
         "id": "b",
-        "pt": "Apenas com os teus pais ou encarregados de educação; nunca com amigos nem colegas!",
-        "en": "Only with your parents or guardians; never with friends or schoolmates!"
+        "pt": "A tua palavra-passe é pessoal e intransmissível!",
+        "en": "Your password is personal and should not be shared!"
       },
       {
         "id": "c",
-        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas palavras-passe anotadas.",
-        "en": "Stick 20 yellow post-its around your screen with all your passwords."
+        "pt": "Escolher o nome do teu cão porque os hackers têm medo de animais de estimação.",
+        "en": "Pick your dog's name because hackers are afraid of pets."
       },
       {
         "id": "d",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
-        "en": "Yell the password out the window to make sure you memorized it."
+        "pt": "Esconder a senha debaixo do tapete da entrada do quarto.",
+        "en": "Hide the password under the welcome mat in your room."
       }
     ],
     "correctOptionId": "b",
     "explanation": {
-      "pt": "Mesmo o teu melhor amigo não deve ter a tua palavra-passe; uma amizade verdadeira respeita o segredo!",
-      "en": "Even best friends shouldn't know your password; genuine friendship respects privacy!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -22472,8 +22472,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
+        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
       },
       {
         "id": "c",
@@ -22482,8 +22482,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
-        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       }
     ],
     "correctOptionId": "c",
@@ -22547,13 +22547,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
-        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
+        "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
         "id": "c",
-        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
-        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
+        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
+        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
       },
       {
         "id": "d",
@@ -22611,8 +22611,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Para que servem as licenças Creative Commons (CC)?",
-      "en": "What are Creative Commons (CC) licenses used for?"
+      "pt": "Para que servem as licenças Creative Commons (CC) que aprendeste nas aulas de TIC?",
+      "en": "What are Creative Commons (CC) licenses used for in ICT class?"
     },
     "options": [
       {
@@ -22627,8 +22627,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
-        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
+        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
+        "en": "Post an embarrassing photo of your classmate online without their permission."
       },
       {
         "id": "d",
@@ -22692,8 +22692,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       },
       {
         "id": "b",
@@ -22702,13 +22702,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "d",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Deitar computadores e telemóveis velhos no caixote do lixo comum ou no mar.",
+        "en": "Throw old computers and smartphones into the regular trash or into the sea."
       }
     ],
     "correctOptionId": "b",
@@ -22761,35 +22761,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Qual foi a primeira mensagem alguma vez transmitida entre computadores na antecessora da Internet em 1969?",
-      "en": "What was the very first message transmitted between computers on the precursor of the Internet in 1969?"
+      "pt": "Como se chamava a rede pioneira criada em 1969 que deu origem à Internet que usamos hoje?",
+      "en": "What was the pioneer network established in 1969 that gave birth to today's Internet?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "As letras 'LO' (o sistema bloqueou antes de conseguirem escrever 'LOGIN').",
-        "en": "The letters 'LO' (the system crashed before they could finish typing 'LOGIN')."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "b",
-        "pt": "Um meme animado de um gato a dançar com óculos de sol.",
-        "en": "An animated GIF meme of a cat dancing while wearing sunglasses."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "c",
-        "pt": "A enciclopédia inteira em ficheiro PDF de 500 Megabytes.",
-        "en": "An entire encyclopedia as a 500 Megabyte PDF document."
+        "pt": "ARPANET (rede experimental que ligou as primeiras quatro universidades nos EUA)!",
+        "en": "ARPANET (experimental network connecting the first four universities in the USA)!"
       },
       {
         "id": "d",
-        "pt": "Uma receita de bolo de chocolate enviada por correio expresso.",
-        "en": "A chocolate cake recipe sent by overnight express courier."
+        "pt": "Achar que a memória RAM serve para guardar coisas mesmo quando o computador está desligado.",
+        "en": "Think RAM memory keeps your files saved even after turning off the computer."
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "c",
     "explanation": {
-      "pt": "Uma hora depois o erro foi corrigido e a palavra 'LOGIN' completa chegou ao destino com sucesso!",
-      "en": "An hour later the bug was patched and the full word 'LOGIN' made its historical journey across the wire!"
+      "pt": "A primeira mensagem enviada foi a palavra 'LO' antes do sistema ir temporariamente abaixo!",
+      "en": "The first message ever transmitted was 'LO' before the terminal temporarily froze!"
     }
   },
   {
@@ -22847,8 +22847,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
-        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
+        "pt": "Partilhar a tua localização GPS exata em tempo real com toda a gente nas redes.",
+        "en": "Share your exact live GPS location publicly with everyone on social media."
       },
       {
         "id": "c",
@@ -22917,28 +22917,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "É uma dupla proteção que pede a tua palavra-passe mais um código especial enviado por SMS ou aplicação!",
-        "en": "It is a double lock requiring your password plus a temporary code from SMS or an application!"
+        "pt": "É uma dupla proteção que pede a tua senha mais um código especial enviado por SMS ou app!",
+        "en": "It is a double lock requiring your password plus a temporary code from SMS or an app!"
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
         "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "c",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
-        "en": "Use the word 'password' as your password to be super original."
+        "pt": "Escolher o nome do teu cão porque os hackers têm medo de animais de estimação.",
+        "en": "Pick your dog's name because hackers are afraid of pets."
       },
       {
         "id": "d",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
-        "en": "Hide the password under the welcome mat in your room."
+        "pt": "Achar que os computadores são mágicos e adivinham quem tu és sem senha.",
+        "en": "Think computers are magic and guess who you are without passwords."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Mesmo que um pirata informático descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro",
+      "pt": "Mesmo que um hacker descubra a tua senha, não consegue entrar sem o segundo código!",
       "en": "Even if someone discovers your password, they can't log in without the second code!"
     }
   },
@@ -22997,18 +22997,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "exe (ficheiro executável que pode instalar vírus no computador)!",
-        "en": "exe (executable file that can install malware on your machine)!"
+        "pt": ".exe (ficheiro executável que pode instalar vírus no computador)!",
+        "en": ".exe (executable file that can install malware on your machine)!"
       },
       {
         "id": "c",
-        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
-        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
+        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
+        "en": "Type invisible emails with white text on a white background to be super secret."
       },
       {
         "id": "d",
-        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
-        "en": "Type invisible emails with white text on a white background to be super secret."
+        "pt": "Achar que um email urgente do banco a pedir senhas por SMS é verdadeiro.",
+        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
       }
     ],
     "correctOptionId": "b",
@@ -23072,8 +23072,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
-        "en": "Believe everything written on the Internet is 100% proven scientific truth."
+        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
+        "en": "Shout at the screen hoping the web page loads three times faster."
       },
       {
         "id": "c",
@@ -23082,8 +23082,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus!'.",
+        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses!'."
       }
     ],
     "correctOptionId": "c",
@@ -23147,8 +23147,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
-        "en": "Post an embarrassing photo of your classmate online without their permission."
+        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
+        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
       },
       {
         "id": "c",
@@ -23227,13 +23227,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "d",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Alimentar o rato do computador com fatias de queijo da serra para ele correr mais rápido.",
+        "en": "Feed the computer mouse slices of cheese so it runs faster across the desk."
       }
     ],
     "correctOptionId": "a",
@@ -23292,8 +23292,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "b",
@@ -23302,13 +23302,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
-        "en": "Put the screen on the floor and lie down like a lizard."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       },
       {
         "id": "d",
-        "pt": "Ficar 8 horas seguidas sem pestanejar feito uma estátua do museu de cera.",
-        "en": "Stare for 8 straight hours without blinking like a wax museum statue."
+        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
+        "en": "Put the screen on the floor and lie down like a lizard."
       }
     ],
     "correctOptionId": "b",
@@ -23362,18 +23362,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "isSpecialMilestone": false,
     "question": {
       "pt": "Porque deves desligar a partilha de localização (GPS) nas aplicações que não precisam dela?",
-      "en": "Why should you turn off GPS location sharing in applications that don't need it?"
+      "en": "Why should you turn off GPS location sharing in apps that don't need it?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar numa mensagem não solicitada que pede a tua palavra-passe para atualizar a conta.",
-        "en": "Believe an unsolicited message asking for your password to update the account."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "b",
-        "pt": "Publicar no TikTok a fotografia das chaves da tua casa e a matrícula do carro dos pais.",
-        "en": "Post a TikTok video of your house keys and your parents' car license plate."
+        "pt": "Ignorar todos os avisos de segurança porque achas que és invencível.",
+        "en": "Ignore all security alerts because you feel completely invincible."
       },
       {
         "id": "c",
@@ -23382,14 +23382,14 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
-        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
+        "pt": "Publicar no TikTok a fotografia das chaves da tua casa e a matrícula do carro dos pais.",
+        "en": "Post a TikTok video of your house keys and your parents' car license plate."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Algumas aplicações precisam da localização para funcionar corretamente. Outras podem pedi-la sem ser essencial. Verifica se uma aplicação precisa realmente da tua localização antes de a autorizares.",
-      "en": "Only navigation applications actually need GPS; simple games and photo filters do not!"
+      "pt": "Apenas apps de mapas e transportes precisam de localização; jogos e filtros não necessitam!",
+      "en": "Only navigation apps actually need GPS; simple games and photo filters do not!"
     }
   },
   {
@@ -23436,35 +23436,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "O que é um 'Gestor de Palavras-passe' (Password Manager) e qual a sua grande vantagem?",
-      "en": "What is a 'password Manager' and what is its main superpower?"
+      "pt": "Na dica de hoje sobre \"Desafio Escolar: Nunca repitas a mesma palavra-passe em todos os sites e aplicações!\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"School Challenge: Never reuse the same password on every website and app!\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
+        "pt": "Usar a palavra 'senha' como senha para ser super original.",
         "en": "Use the word 'password' as your password to be super original."
       },
       {
         "id": "b",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
-        "en": "Hide the password under the welcome mat in your room."
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "c",
-        "pt": "Achar que os computadores são mágicos e adivinham quem tu és sem palavra-passe.",
+        "pt": "Achar que os computadores são mágicos e adivinham quem tu és sem senha.",
         "en": "Think computers are magic and guess who you are without passwords."
       },
       {
         "id": "d",
-        "pt": "É um cofre digital seguro que guarda e cria palavras-passe fortes para ti; Um gestor de palavras-passe pode guardar várias palavras-passe de forma protegida, para não teres de memorizar todas. A palavra-passe principal deve ser muito bem protegida.",
-        "en": "It is an encrypted digital vault storing strong passwords so you only memorize one master key!"
+        "pt": "Quando usas a mesma palavra-passe em todo o lado, basta um site ter falhas de segurança para os criminosos ten!",
+        "en": "When you use the same password everywhere, one security failure can give criminals a chance to try your passwo!"
       }
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Evita que uses a mesma palavra-passe em todo o lado ou que as anotes em papéis perdidos!",
-      "en": "It keeps you from reusing fragile passwords or writing them down on scrap paper!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -23517,7 +23517,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Porque lançam 'iscos' falsos (como prémios ou alertas falsos) para pescar palavras-passe e dados!",
+        "pt": "Porque lançam 'iscos' falsos (como prémios ou alertas falsos) para pescar senhas e dados!",
         "en": "Because they cast fake bait (like fake prizes or urgent alarms) to hook passwords!"
       },
       {
@@ -23527,13 +23527,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
-        "en": "Type invisible emails with white text on a white background to be super secret."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "d",
-        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
-        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
+        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
+        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
       }
     ],
     "correctOptionId": "a",
@@ -23592,7 +23592,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
         "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
@@ -23602,8 +23602,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Gritar com o ecrã para a página da Internet carregar mais depressa.",
-        "en": "Shout at the screen hoping the web page loads three times faster."
+        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
+        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
       },
       {
         "id": "d",
@@ -23672,13 +23672,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
-        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
       },
       {
         "id": "c",
-        "pt": "Significa que os direitos de autor já expiraram e a obra pode, em geral, ser utilizada e partilhada sem pedir autorização por direitos de autor.",
-        "en": "It means copyright protection has expired and the work can, in general, be used and shared without asking for copyright permission."
+        "pt": "Significa que os direitos de autor já expiraram e qualquer pessoa pode usar livremente!",
+        "en": "It means copyright protection has expired and anyone can freely use, remix, and share it!"
       },
       {
         "id": "d",
@@ -23742,18 +23742,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "b",
-        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
-        "en": "Think the very first computer in history was small enough to fit in your pocket."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       },
       {
         "id": "c",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Achar que a memória RAM serve para guardar coisas mesmo quando o computador está desligado.",
+        "en": "Think RAM memory keeps your files saved even after turning off the computer."
       },
       {
         "id": "d",
@@ -23818,7 +23818,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       {
         "id": "a",
         "pt": "Não mais do que 10% do teu peso corporal (ex: se pesas 35 kg, a mochila deve ter no máximo 3,5 kg)!",
-        "en": "No more than 10% of your body weight (e. g. if you weigh 35 kg, bag max is 3. 5 kg)!"
+        "en": "No more than 10% of your body weight (e.g. if you weigh 35 kg, bag max is 3.5 kg)!"
       },
       {
         "id": "b",
@@ -23827,13 +23827,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
-        "en": "Put the screen on the floor and lie down like a lizard."
+        "pt": "Mover o rato com o pé esquerdo para dar descanso à mão direita.",
+        "en": "Move the mouse with your left foot to rest your right hand."
       },
       {
         "id": "d",
-        "pt": "Sentar num banco rígido sem apoio lombar nem regulação de altura.",
-        "en": "Stack 5 pillows on the chair until your head hits the ceiling."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       }
     ],
     "correctOptionId": "a",
@@ -23886,35 +23886,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Que recurso dos programas de videochamada podes ativar para proteger o que se passa atrás de ti em casa?",
-      "en": "What video call feature can you enable to protect personal background details in your home?"
+      "pt": "Porque deves verificar as permissões das aplicações que pedem acesso à tua câmara e microfone?",
+      "en": "Why should you check app permissions when they ask for camera and microphone access?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "O efeito de fundo desfocado (blur) ou uma imagem de fundo neutra escolar.",
-        "en": "The background blur effect or a neutral virtual school classroom backdrop."
+        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
+        "en": "Download a pirated game from a shady website promising infinite gems."
       },
       {
         "id": "b",
-        "pt": "O filtro de voz de monstro das cavernas para falar com o professor.",
-        "en": "The cavern monster voice distortion filter when speaking to your teacher."
+        "pt": "Para garantir que apenas programas em que confias têm autorização para te ouvir ou ver!",
+        "en": "To ensure that only trusted programs have permission to access your audio and video!"
       },
       {
         "id": "c",
-        "pt": "Transmitir música aos berros com o microfone encostado a uma buzina de ar comprimido.",
-        "en": "Broadcast loud music with your microphone pressed against an air horn."
+        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
+        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
       },
       {
         "id": "d",
-        "pt": "Desligar o monitor do computador sem desligar a chamada e ir brincar para o quintal.",
-        "en": "Turn off your monitor without hanging up the call and head to the backyard."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "b",
     "explanation": {
-      "pt": "Desfocar o fundo preserva a privacidade da tua família enquanto participas ativamente na aula!",
-      "en": "Blurring your background preserves family privacy while allowing active school participation!"
+      "pt": "Um simples jogo de tabuleiro não precisa de ligar o teu microfone; rejeita permissões desnecessárias!",
+      "en": "A puzzle game has no need for your microphone; decline unnecessary permission prompts!"
     }
   },
   {
@@ -23967,28 +23967,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
         "en": "Yell the password out the window to make sure you memorized it."
       },
       {
         "id": "b",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
-        "en": "Hide the password under the welcome mat in your room."
+        "pt": "Deixar a sessão aberta no computador da biblioteca e ir embora para casa.",
+        "en": "Leave your account logged in at the school library and go home."
       },
       {
         "id": "c",
-        "pt": "Porque qualquer pessoa que passe perto do teu ecrã consegue ler a palavra-passe num segundo!",
+        "pt": "Porque qualquer pessoa que passe perto do teu ecrã consegue ler a senha num segundo!",
         "en": "Because anyone walking past your desk can read your secret password instantly!"
       },
       {
         "id": "d",
-        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas palavras-passe anotadas.",
-        "en": "Stick 20 yellow post-its around your screen with all your passwords."
+        "pt": "Usar a palavra 'senha' como senha para ser super original.",
+        "en": "Use the word 'password' as your password to be super original."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Mantém as palavras-passe na tua memória ou num gestor de palavras-passe encriptado!",
+      "pt": "Mantém as palavras-passe na tua memória ou num gestor de senhas encriptado!",
       "en": "Keep your passwords in your memory or safely locked inside an encrypted manager!"
     }
   },
@@ -24042,18 +24042,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe! '.",
-        "en": "Sign off an email to the school principal with: 'Peace out cool bro! '."
+        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe!'.",
+        "en": "Sign off an email to the school principal with: 'Peace out cool bro!'."
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
+        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
       },
       {
         "id": "c",
-        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu! '.",
-        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am! '."
+        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu!'.",
+        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am!'."
       },
       {
         "id": "d",
@@ -24127,8 +24127,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
-        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
+        "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
         "id": "d",
@@ -24197,18 +24197,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Em bibliotecas de áudio com licenças abertas (como Creative Commons) ou de domínio público!",
-        "en": "In audio libraries offering open licenses (such as Creative Commons) or public domain!"
+        "pt": "Em bibliotecas de áudio com licenças Creative Commons ou sons sem direitos reservados (Royalty-Free)!",
+        "en": "In audio libraries offering Creative Commons or Royalty-Free licensed tracks!"
       },
       {
         "id": "c",
-        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
-        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
+        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
+        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
       },
       {
         "id": "d",
-        "pt": "Achar que tudo o que encontras no Google Imagens é teu por magia.",
-        "en": "Believe anything found on Google Images automatically belongs to you by magic."
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
       }
     ],
     "correctOptionId": "b",
@@ -24267,13 +24267,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "b",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "c",
@@ -24282,8 +24282,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       }
     ],
     "correctOptionId": "c",
@@ -24342,18 +24342,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       },
       {
         "id": "b",
-        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
-        "en": "Fill the school bag with bricks to get stronger during classes."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "c",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Sentar em cima de 5 almofadas até bater com a cabeça no teto do quarto.",
+        "en": "Stack 5 pillows on the chair until your head hits the ceiling."
       },
       {
         "id": "d",
@@ -24417,18 +24417,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "É tentar enganar as pessoas com simpatia ou mentiras para elas entregarem palavras-passe ou dados!",
+        "pt": "É tentar enganar as pessoas com simpatia ou mentiras para elas entregarem senhas ou dados!",
         "en": "It is manipulating people through lies, false urgency, or pretend kindness to steal secrets!"
       },
       {
         "id": "b",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "c",
-        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
-        "en": "Download a pirated game from a shady website promising infinite gems."
+        "pt": "Deixar a câmara do computador ligada 24 horas a apontar para a tua cama.",
+        "en": "Leave your computer webcam on 24 hours pointing at your bed."
       },
       {
         "id": "d",
@@ -24438,7 +24438,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Os piratas informáticos atacam mais a ingenuidade das pessoas do que os computadores; desconfia sempre!",
+      "pt": "Os hackers atacam mais a ingenuidade das pessoas do que os computadores; desconfia sempre!",
       "en": "Scammers target human trust rather than machine firewalls; always stay alert!"
     }
   },
@@ -24492,7 +24492,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever a palavra-passe na lousa da sala de aula com giz vermelho gigante.",
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
         "en": "Write the password on the classroom chalkboard in giant red chalk."
       },
       {
@@ -24502,8 +24502,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
-        "en": "Yell the password out the window to make sure you memorized it."
+        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas senhas anotadas.",
+        "en": "Stick 20 yellow post-its around your screen with all your passwords."
       },
       {
         "id": "d",
@@ -24567,13 +24567,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que um email urgente do banco a pedir palavras-passe por SMS é verdadeiro.",
+        "pt": "Achar que um email urgente do banco a pedir senhas por SMS é verdadeiro.",
         "en": "Think an urgent bank email asking for your password via SMS is legitimate."
       },
       {
         "id": "b",
-        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
-        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
+        "pt": "Escrever emails invisíveis com texto branco sobre fundo branco para ser secreto.",
+        "en": "Type invisible emails with white text on a white background to be super secret."
       },
       {
         "id": "c",
@@ -24582,8 +24582,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Terminar o email à diretora da escola com: 'Fui, até logo mano fixe! '.",
-        "en": "Sign off an email to the school principal with: 'Peace out cool bro! '."
+        "pt": "Colocar o email dos teus colegas no campo 'Para' público para spammers verem.",
+        "en": "Put your classmates' private emails in the public 'To' field for spammers to see."
       }
     ],
     "correctOptionId": "c",
@@ -24642,13 +24642,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever no motor de busca: 'Ó computador inteligente, dá-me nota 5 no teste! '.",
-        "en": "Type in the search engine: 'Oh wise computer, give me top marks on my test! '."
+        "pt": "Escrever no motor de busca: 'Ó computador inteligente, dá-me nota 5 no teste!'.",
+        "en": "Type in the search engine: 'Oh wise computer, give me top marks on my test!'."
       },
       {
         "id": "b",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
-        "en": "Believe everything written on the Internet is 100% proven scientific truth."
+        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus!'.",
+        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses!'."
       },
       {
         "id": "c",
@@ -24727,13 +24727,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
-        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
+        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
+        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
       },
       {
         "id": "d",
-        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
-        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
+        "pt": "Colocar música com direitos de autor num vídeo público sem dar crédito ao cantor.",
+        "en": "Use copyrighted pop music in a public video without giving any credit."
       }
     ],
     "correctOptionId": "a",
@@ -24802,13 +24802,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "d",
-        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
-        "en": "Think the very first computer in history was small enough to fit in your pocket."
+        "pt": "Falar com o router Wi-Fi aos gritos a pedir para ele ter mais simpatia.",
+        "en": "Yell at the Wi-Fi router politely begging it to be friendlier today."
       }
     ],
     "correctOptionId": "b",
@@ -24867,13 +24867,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever com o teclado no colo enquanto a cabeça fica inclinada para baixo.",
-        "en": "Type with the keyboard on your lap while bending your neck downwards."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       },
       {
         "id": "b",
-        "pt": "Usar o auscultador no volume máximo de concerto de rock até os tímpanos dançarem.",
-        "en": "Crank headphones to max rock concert volume until eardrums rattle."
+        "pt": "Ficar 8 horas seguidas sem pestanejar feito uma estátua do museu de cera.",
+        "en": "Stare for 8 straight hours without blinking like a wax museum statue."
       },
       {
         "id": "c",
@@ -24882,8 +24882,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Sentar num banco rígido sem apoio lombar nem regulação de altura.",
-        "en": "Stack 5 pillows on the chair until your head hits the ceiling."
+        "pt": "Mover o rato com o pé esquerdo para dar descanso à mão direita.",
+        "en": "Move the mouse with your left foot to rest your right hand."
       }
     ],
     "correctOptionId": "c",
@@ -24947,8 +24947,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
-        "en": "Give your home address and phone number to a stranger in an online game."
+        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
+        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
       },
       {
         "id": "c",
@@ -25022,13 +25022,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
         "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "c",
-        "pt": "Usar a mesma palavra-passe 'chocolate' em todos os sites do planeta Terra.",
-        "en": "Use the same password 'chocolate' across every website on Earth."
+        "pt": "Usar a palavra 'senha' como senha para ser super original.",
+        "en": "Use the word 'password' as your password to be super original."
       },
       {
         "id": "d",
@@ -25102,13 +25102,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que um email urgente do banco a pedir palavras-passe por SMS é verdadeiro.",
-        "en": "Think an urgent bank email asking for your password via SMS is legitimate."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "d",
-        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
-        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
+        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
+        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
       }
     ],
     "correctOptionId": "b",
@@ -25161,35 +25161,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "O que motivou a criação do Dia Internacional da Segurança da Informação em 1988?",
-      "en": "What prompted the creation of Computer Security Day in 1988?"
+      "pt": "Quais são os três pilares fundamentais da Segurança da Informação (a chamada tríade CID)?",
+      "en": "What are the three pillars of Information Security (the CIA triad)?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "O impacto do vírus Morris Worm, alertando para a necessidade de proteger redes e computadores.",
-        "en": "The widespread impact of the Morris Worm, highlighting the need to secure connected systems."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "b",
-        "pt": "A invenção do primeiro jogo de cartas eletrónico no sistema operativo.",
-        "en": "The invention of the first built-in electronic solitaire card game in an OS."
+        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
+        "en": "Download a pirated game from a shady website promising infinite gems."
       },
       {
         "id": "c",
-        "pt": "O desaparecimento de todas as impressoras de agulhas dos escritórios do mundo.",
-        "en": "The sudden disappearance of all dot-matrix printers from world offices."
+        "pt": "Confidencialidade, Integridade e Disponibilidade dos dados!",
+        "en": "Confidentiality, Integrity, and Availability of data!"
       },
       {
         "id": "d",
-        "pt": "Uma lei que proibia qualquer pessoa de ligar computadores ao sábado.",
-        "en": "A fictional law banning anyone from turning on computers on Saturdays."
+        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
+        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "c",
     "explanation": {
-      "pt": "Manter o sistema operativo e as aplicações sempre atualizadas é a vacina digital mais eficaz!",
-      "en": "Keeping your operating system and apps updated is the most effective digital hygiene practice!"
+      "pt": "Significa que a tua informação só é vista por quem deve, está correta e pronta a usar!",
+      "en": "It ensures your data is only seen by authorized eyes, is unaltered, and readily accessible!"
     }
   },
   {
@@ -25247,8 +25247,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
-        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
       },
       {
         "id": "c",
@@ -25257,8 +25257,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Entre aspas \"... \", indicando logo a seguir o nome do autor e a fonte de onde foi retirada!",
-        "en": "Enclosed in quotation marks \"... \", immediately naming the author and the original source!"
+        "pt": "Entre aspas \"...\", indicando logo a seguir o nome do autor e a fonte de onde foi retirada!",
+        "en": "Enclosed in quotation marks \"...\", immediately naming the author and the original source!"
       }
     ],
     "correctOptionId": "d",
@@ -25327,13 +25327,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
-        "en": "Think the very first computer in history was small enough to fit in your pocket."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       },
       {
         "id": "d",
-        "pt": "Deitar computadores e telemóveis velhos no caixote do lixo comum ou no mar.",
-        "en": "Throw old computers and smartphones into the regular trash or into the sea."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       }
     ],
     "correctOptionId": "a",
@@ -25392,23 +25392,23 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Mergulhar os olhos em chá quente para ver vídeos no YouTube mais depressa.",
+        "en": "Soak your eyes in hot tea to watch YouTube videos faster."
       },
       {
         "id": "b",
-        "pt": "Costas direitas apoiadas no encosto, joelhos e cotovelos aproximadamente a 90° e pés bem assentes no chão!",
+        "pt": "Costas direitas apoiadas no encosto, joelhos e cotovelos a 90° e pés bem assentes no chão!",
         "en": "Straight back against the chair, knees and elbows at 90°, and feet flat on the floor!"
       },
       {
         "id": "c",
-        "pt": "Escrever com o teclado no colo enquanto a cabeça fica inclinada para baixo.",
-        "en": "Type with the keyboard on your lap while bending your neck downwards."
+        "pt": "Colocar o monitor no chão e usar o computador deitado de barriga para baixo feito lagarto.",
+        "en": "Put the screen on the floor and lie down like a lizard."
       },
       {
         "id": "d",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Dormir com o telemóvel colado na testa para sonhar com jogos online.",
+        "en": "Sleep with the phone glued to your forehead to dream about online games."
       }
     ],
     "correctOptionId": "b",
@@ -25467,13 +25467,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar numa mensagem não solicitada que pede a tua palavra-passe para atualizar a conta.",
-        "en": "Believe an unsolicited message asking for your password to update the account."
+        "pt": "Acreditar num email que diz que o Príncipe de Marte quer dar-te uma fortuna.",
+        "en": "Believe an email saying the Prince of Mars wants to give you a fortune."
       },
       {
         "id": "b",
-        "pt": "Ignorar todos os avisos de segurança porque achas que és invencível.",
-        "en": "Ignore all security alerts because you feel completely invincible."
+        "pt": "Publicar no TikTok a fotografia das chaves da tua casa e a matrícula do carro dos pais.",
+        "en": "Post a TikTok video of your house keys and your parents' car license plate."
       },
       {
         "id": "c",
@@ -25482,8 +25482,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Partilhar a tua localização GPS exata em tempo real com toda a gente nas redes.",
+        "en": "Share your exact live GPS location publicly with everyone on social media."
       }
     ],
     "correctOptionId": "c",
@@ -25536,35 +25536,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Porque deves evitar palavras-passe fáceis como '123456', 'benfica' ou a tua data de nascimento?",
-      "en": "Why should you avoid simple passwords like '123456', your soccer club, or your birthdate?"
+      "pt": "Na dica de hoje sobre \"Desafio Escolar: 123456 é uma palavra-passe extremamente previsível e está entre as primeiras combinações que os sistemas automáticos podem testar.\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"School Challenge: 123456 is an extremely predictable password and is among the first combinations automated systems may try.\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
+        "pt": "Usar a palavra 'senha' como senha para ser super original.",
         "en": "Use the word 'password' as your password to be super original."
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
-        "en": "Use '123456' and tape it to your forehead so you never forget it."
+        "pt": "Esconder a senha debaixo do tapete da entrada do quarto.",
+        "en": "Hide the password under the welcome mat in your room."
       },
       {
         "id": "c",
-        "pt": "Dar a tua palavra-passe a um estranho na Internet em troca de 5 moedas virtuais.",
-        "en": "Give your password to an online stranger in exchange for 5 virtual coins."
+        "pt": "Partilhar a palavra-passe no grupo de WhatsApp da turma toda.",
+        "en": "Share the password in the whole class WhatsApp group."
       },
       {
         "id": "d",
-        "pt": "Porque programas automáticos de piratas informáticos (piratas informáticos (hackers)) conseguem adivinhá-las numa fração de segundo!",
-        "en": "Because automated hacker scripts can guess them in a tiny fraction of a second!"
+        "pt": "Programas automáticos usam listas de palavras comuns e sequências de teclado simples!",
+        "en": "Automated programs use lists of common words and simple keyboard sequences!"
       }
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Quanto mais longa e variada for a palavra-passe, mais segura e inviolável ela fica!",
-      "en": "The longer and more varied your password, the harder it is for anyone to break!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -25622,8 +25622,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Escrever o email todo em LETRAS MAIÚSCULAS aos berros para o carteiro correr mais.",
+        "en": "Write the whole email in ALL CAPS screaming so the digital mailman runs faster."
       },
       {
         "id": "c",
@@ -25632,8 +25632,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Escrever o email todo em LETRAS MAIÚSCULAS aos berros para o carteiro correr mais.",
-        "en": "Write the whole email in ALL CAPS screaming so the digital mailman runs faster."
+        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu!'.",
+        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am!'."
       }
     ],
     "correctOptionId": "a",
@@ -25692,8 +25692,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
-        "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
+        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus!'.",
+        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses!'."
       },
       {
         "id": "b",
@@ -25702,13 +25702,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
         "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
         "id": "d",
-        "pt": "Clicar num botão gigante que pisca a dizer: 'O seu computador tem 999 vírus! '.",
-        "en": "Click a giant blinking button that claims: 'Your PC has 999 viruses! '."
+        "pt": "Confundir o navegador (Google Chrome) com a própria rede mundial da Internet.",
+        "en": "Confuse the web browser with the entire global Internet infrastructure."
       }
     ],
     "correctOptionId": "b",
@@ -25767,8 +25767,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Achar que tudo o que encontras no Google Imagens é teu por magia.",
-        "en": "Believe anything found on Google Images automatically belongs to you by magic."
+        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
+        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
       },
       {
         "id": "b",
@@ -25782,8 +25782,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Apagar o nome do autor original e colar uma foto tua por cima.",
-        "en": "Erase the original author's signature and paste your own photo over it."
+        "pt": "Achar que tudo o que encontras no Google Imagens é teu por magia.",
+        "en": "Believe anything found on Google Images automatically belongs to you by magic."
       }
     ],
     "correctOptionId": "c",
@@ -25836,35 +25836,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Que conjunto revolucionário de invenções foi apresentado na 'Mãe de Todas as Demonstrações' em 1968?",
-      "en": "What revolutionary set of technologies was unveiled at 'The Mother of All Demos' in 1968?"
+      "pt": "Quem foi o cientista britânico Alan Turing e porque é considerado o pai da Ciência da Computação?",
+      "en": "Who was British scientist Alan Turing and why is he called the father of Computer Science?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "O rato de computador, as janelas no ecrã, as hiperligações e o texto digital colaborativo.",
-        "en": "The computer mouse, graphical screen windows, hyperlinks, and collaborative digital text."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "b",
-        "pt": "O primeiro telemóvel com câmara de selfies e filtros de animais.",
-        "en": "The first smartphone with a selfie camera and animated animal filters."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "c",
-        "pt": "A primeira impressora 3D de chocolate com ligação por satélite.",
-        "en": "The first 3D chocolate printer with high-speed satellite uplink."
+        "pt": "Meter o computador portátil no micro-ondas para carregar a bateria em 5 segundos.",
+        "en": "Put the laptop in the microwave to charge the battery in 5 seconds."
       },
       {
         "id": "d",
-        "pt": "O primeiro robot aspirador que lavava loiça enquanto assobiava.",
-        "en": "The first robotic vacuum cleaner that washed dishes while whistling."
+        "pt": "Criou o modelo teórico dos computadores modernos e decifrou códigos secretos na Segunda Guerra Mundial!",
+        "en": "He created the theoretical computer model and broke secret codes during World War II!"
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "d",
     "explanation": {
-      "pt": "Quase tudo o que usas hoje no ecrã do teu computador nasceu ou foi previsto nessa fantástica demonstração!",
-      "en": "Almost every interaction you use today on screens was pioneered during that historic 1968 presentation!"
+      "pt": "O teste de Turing avalia se uma inteligência artificial consegue conversar como um ser humano!",
+      "en": "The famous Turing Test evaluates whether an AI can converse indistinguishably from a human!"
     }
   },
   {
@@ -25911,35 +25911,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "Como se relaciona o Dia dos Direitos Humanos com as aulas de TIC e o uso da Internet?",
-      "en": "How does Human Rights Day relate to ICT classes and our daily online interactions?"
+      "pt": "O que significa ser um verdadeiro e exemplar 'Cidadão Digital' no 5.º ano?",
+      "en": "What does being a stellar 'Digital Citizen' in 5th grade mean?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Lembra que todos têm direito ao respeito, à privacidade e a navegar na Internet sem sofrer bullying.",
-        "en": "Reminds us that everyone has a right to respect, privacy, and an online environment free from bullying."
+        "pt": "Usar a tecnologia de forma crítica, segura, responsável, respeitando os direitos e sentimentos de todos!",
+        "en": "Using tech critically, securely, responsibly, and with profound respect for everyone online!"
       },
       {
         "id": "b",
-        "pt": "Obriga a que todas as contas de redes sociais sejam apagadas durante 48 horas.",
-        "en": "Mandates that all social media accounts be shut down for 48 consecutive hours."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "c",
-        "pt": "Serve para proibir os alunos de fazerem perguntas ao professor na aula de TIC.",
-        "en": "Serves to forbid students from asking questions to the teacher in ICT class."
+        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
+        "en": "Give your home address and phone number to a stranger in an online game."
       },
       {
         "id": "d",
-        "pt": "Obriga a escrever todos os emails em latim antigo para treinar caligrafia.",
-        "en": "Forces everyone to compose digital emails in ancient Latin for calligraphy practice."
+        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
+        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Tratar os outros na Internet com a mesma gentileza com que queremos ser tratados é a regra de ouro digital!",
-      "en": "Treating others online with the exact respect we expect for ourselves is the universal digital golden rule!"
+      "pt": "O mundo digital torna-se melhor quando tratas os outros com a mesma simpatia da vida real!",
+      "en": "The digital world flourishes when we treat others online with real-world kindness and care!"
     }
   },
   {
@@ -26002,13 +26002,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Lavar o teclado com detergente da louça para tirar os vírus informáticos.",
-        "en": "Wash the keyboard with dish soap to scrub away computer viruses."
+        "pt": "Publicar no TikTok a fotografia das chaves da tua casa e a matrícula do carro dos pais.",
+        "en": "Post a TikTok video of your house keys and your parents' car license plate."
       },
       {
         "id": "d",
-        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
-        "en": "Give your home address and phone number to a stranger in an online game."
+        "pt": "Dizer a toda a gente em que escola andas e em que sala tens aula agora.",
+        "en": "Tell everyone online which school and classroom you are in right now."
       }
     ],
     "correctOptionId": "b",
@@ -26061,19 +26061,19 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada em segurança digital?",
+      "pt": "Como funciona a técnica ninja da 'Frase-Passe' recomendada nas aulas de TIC?",
       "en": "How does the ninja 'Pass-Phrase' technique taught in ICT work?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
         "en": "Yell the password out the window to make sure you memorized it."
       },
       {
         "id": "b",
-        "pt": "Deixar a sessão aberta no computador da biblioteca e ir embora para casa.",
-        "en": "Leave your account logged in at the school library and go home."
+        "pt": "Esconder a senha debaixo do tapete da entrada do quarto.",
+        "en": "Hide the password under the welcome mat in your room."
       },
       {
         "id": "c",
@@ -26082,14 +26082,14 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Dar a tua palavra-passe a um estranho na Internet em troca de 5 moedas virtuais.",
-        "en": "Give your password to an online stranger in exchange for 5 virtual coins."
+        "pt": "Escolher o nome do teu cão porque os hackers têm medo de animais de estimação.",
+        "en": "Pick your dog's name because hackers are afraid of pets."
       }
     ],
     "correctOptionId": "c",
     "explanation": {
-      "pt": "Frases como 'O_Meu_Cao_Adora_99_Gelados! ' são gigantes para piratas informáticos mas fáceis para ti!",
-      "en": "Phrases like 'My_Dog_Loves_99_IceCreams! ' are tough for hackers yet effortless to recall!"
+      "pt": "Frases como 'O_Meu_Cao_Adora_99_Gelados!' são gigantes para hackers mas fáceis para ti!",
+      "en": "Phrases like 'My_Dog_Loves_99_IceCreams!' are tough for hackers yet effortless to recall!"
     }
   },
   {
@@ -26142,8 +26142,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
-        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
+        "pt": "Enviar uma mensagem sem assunto e com o texto: 'Olá prof, adivinhe quem sou eu!'.",
+        "en": "Send an email with no subject line saying: 'Hi teacher, guess who I am!'."
       },
       {
         "id": "b",
@@ -26163,7 +26163,7 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     ],
     "correctOptionId": "d",
     "explanation": {
-      "pt": "Em 1971, Ray Tomlinson realizou uma das primeiras experiências de envio de mensagens entre computadores ligados em rede e popularizou o uso do símbolo @ nos endereços de correio eletrónico.",
+      "pt": "Foi introduzido por Ray Tomlinson em 1971 e hoje é conhecido em todo o mundo!",
       "en": "It was introduced by Ray Tomlinson in 1971 and is recognized worldwide today!"
     }
   },
@@ -26222,8 +26222,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
-        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
+        "pt": "Confundir o navegador (Google Chrome) com a própria rede mundial da Internet.",
+        "en": "Confuse the web browser with the entire global Internet infrastructure."
       },
       {
         "id": "c",
@@ -26292,8 +26292,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
-        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
+        "pt": "Apagar o nome do autor original e colar uma foto tua por cima.",
+        "en": "Erase the original author's signature and paste your own photo over it."
       },
       {
         "id": "b",
@@ -26367,8 +26367,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Alimentar o rato do computador com fatias de queijo da serra para ele correr mais rápido.",
+        "en": "Feed the computer mouse slices of cheese so it runs faster across the desk."
       },
       {
         "id": "b",
@@ -26442,18 +26442,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Continuar a trabalhar sem pausas durante 4 horas seguidas para acabar o trabalho.",
-        "en": "Keep working without breaks for 4 hours straight to finish faster."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       },
       {
         "id": "b",
-        "pt": "Fixar o olhar no ecrã sem pestanejar e com a luz do quarto totalmente apagada.",
-        "en": "Stare at the screen without blinking in a pitch black room."
+        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
+        "en": "Fill the school bag with bricks to get stronger during classes."
       },
       {
         "id": "c",
-        "pt": "Encher a mochila da escola com tijolos para ficar mais forte nas aulas.",
-        "en": "Fill the school bag with bricks to get stronger during classes."
+        "pt": "Dormir com o telemóvel colado na testa para sonhar com jogos online.",
+        "en": "Sleep with the phone glued to your forehead to dream about online games."
       },
       {
         "id": "d",
@@ -26522,18 +26522,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Descarregar um ficheiro de programa de um site não oficial que promete ferramentas pagas grátis.",
-        "en": "Download an executable file from an unofficial site promising paid tools for free."
+        "pt": "Clicar num anúncio a piscar a dizer: 'Parabéns, ganhaste 1 elefante voador grátis!'.",
+        "en": "Click a flashing ad that says: 'Congratulations, you won a free flying elephant!'."
       },
       {
         "id": "c",
-        "pt": "Deixar a câmara do computador ligada 24 horas a apontar para a tua cama.",
-        "en": "Leave your computer webcam on 24 hours pointing at your bed."
+        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
+        "en": "Download a pirated game from a shady website promising infinite gems."
       },
       {
         "id": "d",
-        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
-        "en": "Download a pirated game from a shady website promising infinite gems."
+        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
+        "en": "Give your home address and phone number to a stranger in an online game."
       }
     ],
     "correctOptionId": "a",
@@ -26586,35 +26586,35 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Com quem deves partilhar as tuas palavras-passe secretas de jogos e contas?",
-      "en": "Who should you share your secret passwords for accounts and games with?"
+      "pt": "Na dica de hoje sobre \"Visão de Futuro: Palavras-passe são como escovas de dentes: não se emprestam a ninguém!\", qual é a melhor atitude ou regra de TIC?",
+      "en": "In today's tip about \"Future Vision: Passwords are like toothbrushes: you do not lend them to anyone!\", what is the recommended ICT practice?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "Escrever a palavra-passe na lousa da sala de aula com giz vermelho gigante.",
+        "pt": "Escrever a senha na lousa da sala de aula com giz vermelho gigante.",
         "en": "Write the password on the classroom chalkboard in giant red chalk."
       },
       {
         "id": "b",
-        "pt": "Apenas com os teus pais ou encarregados de educação; nunca com amigos nem colegas!",
-        "en": "Only with your parents or guardians; never with friends or schoolmates!"
+        "pt": "A tua palavra-passe é pessoal e intransmissível!",
+        "en": "Your password is personal and should not be shared!"
       },
       {
         "id": "c",
-        "pt": "Colar 20 post-its amarelos à volta do monitor com todas as tuas palavras-passe anotadas.",
-        "en": "Stick 20 yellow post-its around your screen with all your passwords."
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
+        "en": "Yell the password out the window to make sure you memorized it."
       },
       {
         "id": "d",
-        "pt": "Gritar a palavra-passe bem alto pela janela para verificar se a memorizaste bem.",
-        "en": "Yell the password out the window to make sure you memorized it."
+        "pt": "Dar a tua palavra-passe a um estranho na Internet em troca de 5 moedas virtuais.",
+        "en": "Give your password to an online stranger in exchange for 5 virtual coins."
       }
     ],
     "correctOptionId": "b",
     "explanation": {
-      "pt": "Mesmo o teu melhor amigo não deve ter a tua palavra-passe; uma amizade verdadeira respeita o segredo!",
-      "en": "Even best friends shouldn't know your password; genuine friendship respects privacy!"
+      "pt": "Excelente! Esta regra faz parte das boas práticas e competências digitais do 5.º ano!",
+      "en": "Well done! This rule is part of essential 5th-grade digital skills!"
     }
   },
   {
@@ -26667,13 +26667,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
-        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
+        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus.exe' enviado por um estranho.",
+        "en": "Open a mystery attachment named 'free_prize_virus.exe' from a stranger."
       },
       {
         "id": "b",
-        "pt": "Abrir um ficheiro misterioso chamado 'premio_gratis_virus. exe' enviado por um estranho.",
-        "en": "Open a mystery attachment named 'free_prize_virus. exe' from a stranger."
+        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
+        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
       },
       {
         "id": "c",
@@ -26682,8 +26682,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
-        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
+        "pt": "Mandar correntes a dizer que se não reencaminhares o email um fantasma come o teu lanche.",
+        "en": "Forward chain emails saying a ghost will eat your lunch if you don't resend."
       }
     ],
     "correctOptionId": "c",
@@ -26742,18 +26742,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Pesquisar no Google 'como teletransportar comida' e esperar que apareça uma piza no teclado.",
-        "en": "Search 'how to teleport food' and wait for a pizza to appear on the keyboard."
-      },
-      {
-        "id": "b",
         "pt": "Achar que o cadeado do HTTPS serve para trancar o computador com uma chave de metal.",
         "en": "Think the HTTPS lock icon is for locking your computer with a physical key."
       },
       {
-        "id": "c",
+        "id": "b",
         "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
         "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
+      },
+      {
+        "id": "c",
+        "pt": "Pesquisar no Google 'como teletransportar comida' e esperar que apareça uma piza no teclado.",
+        "en": "Search 'how to teleport food' and wait for a pizza to appear on the keyboard."
       },
       {
         "id": "d",
@@ -26811,8 +26811,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": false,
     "question": {
-      "pt": "Para que servem as licenças Creative Commons (CC)?",
-      "en": "What are Creative Commons (CC) licenses used for?"
+      "pt": "Para que servem as licenças Creative Commons (CC) que aprendeste nas aulas de TIC?",
+      "en": "What are Creative Commons (CC) licenses used for in ICT class?"
     },
     "options": [
       {
@@ -26822,8 +26822,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Copiar o trabalho inteiro da Wikipédia e dizer que foste tu que o inventaste ontem.",
-        "en": "Copy the whole Wikipedia article and claim you invented it yesterday."
+        "pt": "Achar que tudo o que encontras no Google Imagens é teu por magia.",
+        "en": "Believe anything found on Google Images automatically belongs to you by magic."
       },
       {
         "id": "c",
@@ -26832,8 +26832,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Dizer que a pintura da Mona Lisa foi desenhada pelo teu primo no Paint.",
-        "en": "Claim that the Mona Lisa was drawn by your little cousin in MS Paint."
+        "pt": "Copiar o trabalho inteiro da Wikipédia e dizer que foste tu que o inventaste ontem.",
+        "en": "Copy the whole Wikipedia article and claim you invented it yesterday."
       }
     ],
     "correctOptionId": "a",
@@ -26892,8 +26892,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Acreditar que a CPU guarda todos os ficheiros pessoais mesmo quando desliga da ficha.",
-        "en": "Believing that the CPU stores all personal files even when the computer is turned off."
+        "pt": "Meter o computador portátil no micro-ondas para carregar a bateria em 5 segundos.",
+        "en": "Put the laptop in the microwave to charge the battery in 5 seconds."
       },
       {
         "id": "b",
@@ -26902,13 +26902,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "c",
-        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
-        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       },
       {
         "id": "d",
-        "pt": "Achar que o computador não precisa de sistema operativo para executar aplicações.",
-        "en": "Think the computer does not need an operating system to run applications."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       }
     ],
     "correctOptionId": "b",
@@ -26967,13 +26967,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Escrever com o teclado no colo enquanto a cabeça fica inclinada para baixo.",
-        "en": "Type with the keyboard on your lap while bending your neck downwards."
+        "pt": "Colocar o teclado a 2 metros de distância e tentar escrever com duas vassouras.",
+        "en": "Put the keyboard 2 meters away and type with two brooms."
       },
       {
         "id": "b",
-        "pt": "Ficar 8 horas seguidas sem pestanejar feito uma estátua do museu de cera.",
-        "en": "Stare for 8 straight hours without blinking like a wax museum statue."
+        "pt": "Usar o auscultador no volume máximo de concerto de rock até os tímpanos dançarem.",
+        "en": "Crank headphones to max rock concert volume until eardrums rattle."
       },
       {
         "id": "c",
@@ -26982,8 +26982,8 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "d",
-        "pt": "Trabalhar de cabeça para baixo pendurado no candeeiro do teto como um morcego.",
-        "en": "Work upside down hanging from the ceiling lamp like a bat."
+        "pt": "Pedir ao gato da família para fazer as pausas ativas no teu lugar.",
+        "en": "Ask your pet cat to do the active break stretches for you."
       }
     ],
     "correctOptionId": "c",
@@ -27047,13 +27047,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Convidar um jogador estranho da Internet para vir lanchar a tua casa amanhã.",
-        "en": "Invite a random gamer from the web to come over for a snack tomorrow."
+        "pt": "Dar a morada de tua casa e número de telefone a um desconhecido num jogo online.",
+        "en": "Give your home address and phone number to a stranger in an online game."
       },
       {
         "id": "c",
-        "pt": "Instalar um jogo pirata de um site suspeito que promete moedas infinitas.",
-        "en": "Download a pirated game from a shady website promising infinite gems."
+        "pt": "Desativar o antivírus porque o ícone dele é demasiado aborrecido.",
+        "en": "Disable the antivirus because its icon looks too boring."
       },
       {
         "id": "d",
@@ -27117,28 +27117,28 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "É uma dupla proteção que pede a tua palavra-passe mais um código especial enviado por SMS ou aplicação!",
-        "en": "It is a double lock requiring your password plus a temporary code from SMS or an application!"
+        "pt": "É uma dupla proteção que pede a tua senha mais um código especial enviado por SMS ou app!",
+        "en": "It is a double lock requiring your password plus a temporary code from SMS or an app!"
       },
       {
         "id": "b",
-        "pt": "Usar a palavra-passe '123456' e colá-la com fita-cola na testa para não a esquecer.",
+        "pt": "Usar a senha '123456' e colá-la com fita-cola na testa para não a esquecer.",
         "en": "Use '123456' and tape it to your forehead so you never forget it."
       },
       {
         "id": "c",
-        "pt": "Usar a palavra 'palavra-passe' como palavra-passe para ser super original.",
-        "en": "Use the word 'password' as your password to be super original."
+        "pt": "Usar a mesma senha 'chocolate' em todos os sites do planeta Terra.",
+        "en": "Use the same password 'chocolate' across every website on Earth."
       },
       {
         "id": "d",
-        "pt": "Esconder a palavra-passe debaixo do tapete da entrada do quarto.",
-        "en": "Hide the password under the welcome mat in your room."
+        "pt": "Gritar a senha bem alto pela janela para verificar se a memorizaste bem.",
+        "en": "Yell the password out the window to make sure you memorized it."
       }
     ],
     "correctOptionId": "a",
     "explanation": {
-      "pt": "Mesmo que um pirata informático descubra a tua palavra-passe, o segundo fator de autenticação acrescenta uma camada extra de proteção e torna o acesso muito mais seguro",
+      "pt": "Mesmo que um hacker descubra a tua senha, não consegue entrar sem o segundo código!",
       "en": "Even if someone discovers your password, they can't log in without the second code!"
     }
   },
@@ -27192,13 +27192,13 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Pedir a um pombo-correio para levar o computador portátil até à casa da professora.",
-        "en": "Ask a carrier pigeon to fly your laptop over to the teacher's house."
+        "pt": "Carregar em 'Responder a Todos' para dizer apenas 'OK' a 500 pessoas da escola.",
+        "en": "Click 'Reply to All' just to say 'OK' to 500 people in the school."
       },
       {
         "id": "b",
-        "pt": "exe (ficheiro executável que pode instalar vírus no computador)!",
-        "en": "exe (executable file that can install malware on your machine)!"
+        "pt": ".exe (ficheiro executável que pode instalar vírus no computador)!",
+        "en": ".exe (executable file that can install malware on your machine)!"
       },
       {
         "id": "c",
@@ -27267,12 +27267,12 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Dar o teu nome e morada em todos os questionários pop-up que aparecem na web.",
-        "en": "Enter your real name and address in every pop-up quiz you see."
+        "pt": "Abrir 200 separadores ao mesmo tempo até o computador começar a deitar fumo imaginário.",
+        "en": "Open 200 browser tabs at once until the computer pretends to catch fire."
       },
       {
         "id": "b",
-        "pt": "Achar que tudo o que está escrito na Internet é totalmente verdade comprovada pela ciência.",
+        "pt": "Achar que tudo o que está escrito na Internet é 100% verdade comprovada pela ciência.",
         "en": "Believe everything written on the Internet is 100% proven scientific truth."
       },
       {
@@ -27342,18 +27342,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     "options": [
       {
         "id": "a",
-        "pt": "Dizer que a pintura da Mona Lisa foi desenhada pelo teu primo no Paint.",
-        "en": "Claim that the Mona Lisa was drawn by your little cousin in MS Paint."
+        "pt": "Assinar um livro famoso como se fosses o escritor secreto dele.",
+        "en": "Sign a famous fantasy book pretending you are its secret ghostwriter."
       },
       {
         "id": "b",
-        "pt": "Publicar uma fotografia embaraçosa do teu colega na Internet sem a autorização dele.",
-        "en": "Post an embarrassing photo of your classmate online without their permission."
+        "pt": "Vender fotografias tiradas por outros fotógrafos no pátio da escola por 50 cêntimos.",
+        "en": "Sell photographs taken by professional photographers in the schoolyard for 50 cents."
       },
       {
         "id": "c",
-        "pt": "Apagar o nome do autor original e colar uma foto tua por cima.",
-        "en": "Erase the original author's signature and paste your own photo over it."
+        "pt": "Dizer que criaste o videojogo Minecraft no teu quarto antes do almoço.",
+        "en": "Claim that you personally created Minecraft in your bedroom before lunch."
       },
       {
         "id": "d",
@@ -27422,18 +27422,18 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
       },
       {
         "id": "b",
-        "pt": "Deitar computadores e telemóveis velhos no caixote do lixo comum ou no mar.",
-        "en": "Throw old computers and smartphones into the regular trash or into the sea."
+        "pt": "Lavar a placa-mãe na máquina da roupa com detergente de morango e amaciador.",
+        "en": "Wash the motherboard in the laundry machine with strawberry-scented detergent."
       },
       {
         "id": "c",
-        "pt": "Ligar o cabo USB da impressora à porta HDMI do ecrã pensando que vai imprimir.",
-        "en": "Plug the printer USB cable into the screen HDMI port expecting it to print."
+        "pt": "Tentar ligar a impressora ao frigorífico para imprimir gelados de chocolate.",
+        "en": "Try plugging the printer into the fridge to print chocolate ice creams."
       },
       {
         "id": "d",
-        "pt": "Usar o rato sem tapete em superfícies de vidro reflexivo onde o sensor ótico falha.",
-        "en": "Use the mouse without a pad on reflective glass where the optical sensor fails."
+        "pt": "Alimentar o rato do computador com fatias de queijo da serra para ele correr mais rápido.",
+        "en": "Feed the computer mouse slices of cheese so it runs faster across the desk."
       }
     ],
     "correctOptionId": "a",
@@ -27486,67 +27486,73 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
     },
     "isSpecialMilestone": true,
     "question": {
-      "pt": "O que causou o famoso susto do 'Bug do Milénio' (Y2K) na véspera do ano 2000?",
-      "en": "What caused the famous 'Millennium Bug' (Y2K) scare on the eve of the year 2000?"
+      "pt": "O que foi o famoso 'Bug do Milénio' (Y2K) que assustou o mundo no final de 1999?",
+      "en": "What was the famous 'Millennium Bug' (Y2K) that worried computer scientists in late 1999?"
     },
     "options": [
       {
         "id": "a",
-        "pt": "O hábito antigo de guardar datas com apenas dois dígitos para o ano (ex: 99 em vez de 1999).",
-        "en": "The legacy practice of storing years with only two digits (e.g. 99 instead of 1999) to save memory."
+        "pt": "Acreditar que os computadores funcionam através de pós mágicos de fadas.",
+        "en": "Believe computers run entirely on magical fairy dust."
       },
       {
         "id": "b",
-        "pt": "Um vírus alienígena que viajou nos satélites de telecomunicações militares.",
-        "en": "An extraterrestrial virus riding aboard military telecommunication satellites."
+        "pt": "O medo de que computadores antigos confundissem o ano 2000 com o ano 1900 por usarem só 2 dígitos!",
+        "en": "The concern that older software storing years with 2 digits would confuse 2000 with 1900!"
       },
       {
         "id": "c",
-        "pt": "Todos os teclados de computador do mundo ficarem sem teclas na noite de passagem de ano.",
-        "en": "All computer keyboards around the globe running out of plastic keys on New Year's Eve."
+        "pt": "Pensar que o primeiro computador da história cabia no bolso das calças.",
+        "en": "Think the very first computer in history was small enough to fit in your pocket."
       },
       {
         "id": "d",
-        "pt": "A eletricidade mundial ter acabado durante três semanas em todos os continentes.",
-        "en": "Worldwide electrical grids failing across all continents simultaneously for three weeks."
+        "pt": "Achar que dentro da CPU mora um anãozinho minúsculo a fazer contas de somar.",
+        "en": "Believe a tiny little gnome lives inside the CPU doing math on a miniature blackboard."
       }
     ],
-    "correctOptionId": "a",
+    "correctOptionId": "b",
     "explanation": {
-      "pt": "O Y2K ensinou o mundo da tecnologia a planear o futuro do software com muito mais rigor e visão de longo prazo!",
-      "en": "Y2K taught the global software industry to architect software with robust long-term data structures!"
+      "pt": "Graças ao trabalho árduo de milhares de programadores no mundo todo, a transição correu sem falhas!",
+      "en": "Thanks to diligent engineering teams worldwide, clocks rolled into the new century smoothly!"
     }
   }
 ];
 
 export const TOTAL_366_TIPS_COUNT = ALL_366_DAILY_TIPS.length;
 
-export function getTodayDateString(language: 'pt' | 'en' = 'pt'): string {
-  const d = new Date();
-  const day = d.getDate();
-  const monthsPt = [
-    'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-  ];
-  const monthsEn = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
-  if (language === 'pt') {
-    return `${day} de ${monthsPt[d.getMonth()]}`;
-  }
-  return `${monthsEn[d.getMonth()]} ${day}`;
+/**
+ * Returns the exact Daily Tip for today's calendar date (Month & Day).
+ */
+export function getTodayDailyTip(date: Date = new Date()): DailyTicTip {
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  const match = ALL_366_DAILY_TIPS.find((t) => t.month === month && t.day === day);
+  if (match) return match;
+
+  const start = new Date(date.getFullYear(), 0, 0);
+  const diff = date.getTime() - start.getTime();
+  const oneDay = 1000 * 60 * 60 * 24;
+  const dayOfYear = Math.max(1, Math.min(366, Math.floor(diff / oneDay)));
+
+  return ALL_366_DAILY_TIPS[dayOfYear - 1] || ALL_366_DAILY_TIPS[0];
 }
 
-export function getTodayDailyTip(): DailyTicTip {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const diff = now.getTime() - start.getTime();
-  const oneDay = 1000 * 60 * 60 * 24;
-  let dayOfYear = Math.floor(diff / oneDay);
-  if (dayOfYear < 1) dayOfYear = 1;
-  if (dayOfYear > 366) dayOfYear = 366;
+/**
+ * Get tip by day of year (1 to 366)
+ */
+export function getDailyTipByDayOfYear(dayOfYear: number): DailyTicTip {
+  const normalized = Math.max(1, Math.min(366, dayOfYear));
+  return ALL_366_DAILY_TIPS[normalized - 1] || ALL_366_DAILY_TIPS[0];
+}
 
-  const tip = ALL_366_DAILY_TIPS.find((t) => t.dayOfYear === dayOfYear);
-  return tip || ALL_366_DAILY_TIPS[0];
+/**
+ * Get today's formatted string YYYY-MM-DD
+ */
+export function getTodayDateString(date: Date = new Date()): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 }

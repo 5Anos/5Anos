@@ -93,6 +93,21 @@
         "points": { "type": "number" }
       },
       "required": ["publicId", "points"]
+    },
+    "DailyTipAnswerDoc": {
+      "title": "DailyTipAnswerDoc",
+      "description": "Daily TIC Tip answer log for multi-device sync",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "date": { "type": "string" },
+        "answered": { "type": "boolean" },
+        "selectedOptionId": { "type": "string" },
+        "isCorrect": { "type": "boolean" },
+        "pointsEarned": { "type": "number" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["userId", "date", "answered", "pointsEarned", "timestamp"]
     }
   },
   "firestore": {
@@ -123,6 +138,10 @@
     "/users/{userId}/pointsHistory/{txId}": {
       "schema": "PointTransactionDoc",
       "description": "Points transaction history log"
+    },
+    "/users/{userId}/dailyTips/{dateId}": {
+      "schema": "DailyTipAnswerDoc",
+      "description": "Student daily tip answer history"
     }
   }
 }

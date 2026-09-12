@@ -62,8 +62,8 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
     setLoading(true);
     try {
       const [turmas, students] = await Promise.all([
-        api.getTurmaRankings(),
-        api.getStudentRankings(currentUser?.id),
+        api.getTurmaRankings(currentUser?.turma, isAdmin),
+        api.getStudentRankings(currentUser?.id, currentUser?.turma, isAdmin),
       ]);
       setTurmaRankings(turmas);
       setStudentRankings(students);

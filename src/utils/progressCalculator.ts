@@ -1,5 +1,5 @@
 import { User, ActivityProgress, ThemeDefinition, ChallengeItem } from '../types';
-import { ALL_THEMES, THEMES_BY_ID } from '../data/allThemesData';
+import { ALL_THEMES } from '../data/allThemesData';
 
 export interface ChallengeScoreDetail {
   id: string;

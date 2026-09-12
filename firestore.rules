@@ -7,13 +7,40 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isTeacherEmail(email) {
+      return email in [
+        'imaginebycarla2023@gmail.com',
+        'imaginebacarla2023@gmail.com',
+        'prof.carla@escola.pt',
+        'carla.oliveira@escola.pt'
+      ];
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        isTeacherEmail(request.auth.token.email) ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'teacher'])
+      );
+    }
+
     // 1. User Profiles and Subcollections
     match /users/{userId} {
-      // Allow read for student authentication and teacher gradebook
-      allow read: if true;
+      // Students can only read their own profile; teachers/admins can read all students for gradebook
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isAdmin();
 
       // Student registration: role must be student with 0 initial points and NO credentials stored
-      allow create: if (
+      allow create: if (isOwner(userId) || isAdmin()) && (
         request.resource.data.role == 'student' &&
         request.resource.data.points == 0 &&
         request.resource.data.id == userId &&
@@ -22,8 +49,8 @@ service cloud.firestore {
         !('passwordSalt' in request.resource.data)
       );
 
-      // Profile updates: cannot escalate role to admin/teacher; points must be bounded (0-6000); NO passwords
-      allow update: if (
+      // Profile updates: cannot escalate role to admin/teacher; points bounded (0-6000); NO passwords
+      allow update: if (isOwner(userId) || isAdmin()) && (
         request.resource.data.role != 'admin' &&
         request.resource.data.role != 'teacher' &&
         request.resource.data.points >= resource.data.points &&
@@ -34,21 +61,18 @@ service cloud.firestore {
         !('passwordSalt' in request.resource.data)
       );
 
-      // Protect teacher accounts from deletion
-      allow delete: if (
-        resource.data.email != 'imaginebycarla2023@gmail.com' &&
-        resource.data.email != 'imaginebacarla2023@gmail.com' &&
-        resource.data.email != 'prof.carla@escola.pt' &&
-        resource.data.email != 'carla.oliveira@escola.pt' &&
+      // Protect teacher accounts from deletion; only admin can delete students
+      allow delete: if isAdmin() && (
+        !isTeacherEmail(resource.data.email) &&
         resource.data.role != 'admin' &&
         resource.data.role != 'teacher'
       );
 
       // Progress subcollection: activity progress tracking under field validation
       match /progress/{activityId} {
-        allow read: if true;
+        allow read: if isOwner(userId) || isAdmin();
 
-        allow create: if (
+        allow create: if (isOwner(userId) || isAdmin()) && (
           request.resource.data.userId == userId &&
           request.resource.data.activityId == activityId &&
           request.resource.data.activityType in ['module', 'quiz', 'challenge'] &&
@@ -59,7 +83,7 @@ service cloud.firestore {
           (!('bestPercentage' in request.resource.data) || (request.resource.data.bestPercentage >= 0 && request.resource.data.bestPercentage <= 100))
         );
 
-        allow update: if (
+        allow update: if (isOwner(userId) || isAdmin()) && (
           request.resource.data.userId == resource.data.userId &&
           request.resource.data.activityId == resource.data.activityId &&
           request.resource.data.activityType == resource.data.activityType &&
@@ -73,54 +97,62 @@ service cloud.firestore {
           ))
         );
 
-        allow delete: if true;
+        allow delete: if isOwner(userId) || isAdmin();
       }
 
       // Achievements subcollection: Student unlocks
       match /achievements/{badgeId} {
-        allow read: if true;
-        allow write, delete: if true;
+        allow read: if isOwner(userId) || isAdmin();
+        allow write, delete: if isOwner(userId) || isAdmin();
       }
 
       // Points History subcollection: Point transactions
       match /pointsHistory/{txId} {
-        allow read: if true;
-        allow write, delete: if true;
+        allow read: if isOwner(userId) || isAdmin();
+        allow write, delete: if isOwner(userId) || isAdmin();
+      }
+
+      // Daily Tips subcollection: Student daily tip answer sync across devices
+      match /dailyTips/{dateId} {
+        allow read: if isOwner(userId) || isAdmin();
+        allow write, delete: if isOwner(userId) || isAdmin();
       }
     }
 
     // 2. Public Leaderboard Profiles (Privacy-First: id, publicId, turma, role, points, counters)
-    // Strictly forbid email, password, and sensitive fields
+    // Strictly forbid email, password, and real name
     match /publicProfiles/{userId} {
       allow read: if true;
 
-      allow create: if (
+      allow create: if (isOwner(userId) || isAdmin()) && (
         request.resource.data.role == 'student' &&
         request.resource.data.points == 0 &&
         !('email' in request.resource.data) &&
+        !('name' in request.resource.data) &&
         !('password' in request.resource.data) &&
         !('passwordHash' in request.resource.data) &&
         !('passwordSalt' in request.resource.data)
       );
 
       // Student points progression sync: bounded to valid platform score range (0-6000 XP)
-      allow update: if (
+      allow update: if (isOwner(userId) || isAdmin()) && (
         request.resource.data.role == 'student' &&
         request.resource.data.points >= resource.data.points &&
         request.resource.data.points <= 6000 &&
         !('email' in request.resource.data) &&
+        !('name' in request.resource.data) &&
         !('password' in request.resource.data) &&
         !('passwordHash' in request.resource.data) &&
         !('passwordSalt' in request.resource.data)
       );
 
-      allow delete: if resource.data.role == 'student' || resource.data.role != 'admin';
+      allow delete: if isAdmin() || (isOwner(userId) && resource.data.role == 'student');
     }
 
     // 3. System Configurations (Class list / Turmas, Pedagogical Theme Visibility, Health Checks)
     match /config/{docId} {
       allow read: if true;
-      allow write: if true;
+      allow write: if isAdmin();
     }
   }
 }

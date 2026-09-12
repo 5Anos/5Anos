@@ -18,7 +18,6 @@ import {
   limit,
   onSnapshot,
   where,
-  updateDoc,
   deleteField,
 } from 'firebase/firestore';
 import { auth, db, OperationType, handleFirestoreError } from '../firebase';
@@ -444,25 +443,7 @@ export const api = {
       );
     }
 
-    // 1. Check if email is already registered in Cloud Firestore
-    try {
-      const emailQuery = query(collection(db, 'users'), where('email', '==', normalizedEmail));
-      const emailSnap = await getDocs(emailQuery);
-      if (!emailSnap.empty) {
-        throw new Error(
-          language === 'pt'
-            ? '❌ Já existe uma conta associada a este email. Por favor, faz login.'
-            : '❌ An account is already registered with this email. Please log in.'
-        );
-      }
-    } catch (err: any) {
-      if (err?.message?.includes('Já existe uma conta') || err?.message?.includes('already registered')) {
-        throw err;
-      }
-      console.warn('Email uniqueness check notice:', err);
-    }
-
-    // 2. Fetch taken Nicknames from Firestore
+    // 1. Fetch taken Nicknames from Firestore (public profiles have no PII)
     const takenPublicIds = await this.fetchTakenPublicIds();
     let finalPublicId = trimmedPublicId;
 
@@ -470,7 +451,7 @@ export const api = {
       finalPublicId = generateSecurePublicId(takenPublicIds);
     }
 
-    // 3. Create account in Firebase Authentication (or Firestore fallback if provider inactive)
+    // 2. Create account in Firebase Authentication (or Firestore fallback if provider inactive)
     let fbUser: FirebaseUser | null = null;
     let userId: string;
     try {
@@ -1262,8 +1243,14 @@ export const api = {
 
   /**
    * Record Daily TIC Tip Bonus (50 points for correct answer, 25 points for participation)
+   * Persists multi-device daily tip status under /users/{userId}/dailyTips/{dateStr}
    */
-  async recordDailyTipBonus(tipTitle: string, bonusPoints = 50): Promise<{
+  async recordDailyTipBonus(
+    tipTitle: string,
+    bonusPoints = 50,
+    dateStr?: string,
+    answerDetails?: { selectedOptionId: string; isCorrect: boolean }
+  ): Promise<{
     success: boolean;
     user: User | null;
     userPoints: number;
@@ -1293,6 +1280,22 @@ export const api = {
       timestamp: new Date().toISOString(),
     };
     setDoc(doc(db, 'users', userId, 'pointsHistory', tipTx.id), tipTx).catch(() => {});
+
+    // Save daily tip record for multi-device sync
+    if (dateStr) {
+      const dailyRecord = {
+        userId,
+        date: dateStr,
+        answered: true,
+        selectedOptionId: answerDetails?.selectedOptionId || '',
+        isCorrect: answerDetails?.isCorrect ?? (bonusPoints >= 50),
+        pointsEarned: bonusPoints,
+        timestamp: new Date().toISOString(),
+      };
+      setDoc(doc(db, 'users', userId, 'dailyTips', dateStr), dailyRecord).catch((e) => {
+        console.warn('Daily tip answer Firestore sync notice:', e);
+      });
+    }
 
     // Sync to Firestore
     try {
@@ -1328,11 +1331,44 @@ export const api = {
   },
 
   /**
+   * Get daily tip answer record from Cloud Firestore for multi-device synchronization
+   */
+  async getDailyTipStatus(
+    userId: string,
+    dateStr: string
+  ): Promise<{
+    answered: boolean;
+    selectedOptionId: string;
+    isCorrect: boolean;
+    pointsEarned: number;
+    timestamp: string;
+  } | null> {
+    if (!userId || !dateStr) return null;
+    try {
+      const snap = await getDoc(doc(db, 'users', userId, 'dailyTips', dateStr));
+      if (snap.exists()) {
+        const d = snap.data();
+        return {
+          answered: !!d.answered,
+          selectedOptionId: d.selectedOptionId || '',
+          isCorrect: !!d.isCorrect,
+          pointsEarned: typeof d.pointsEarned === 'number' ? d.pointsEarned : 0,
+          timestamp: d.timestamp || '',
+        };
+      }
+    } catch (err) {
+      console.warn('Daily tip status fetch notice:', err);
+    }
+    return null;
+  },
+
+  /**
    * Get Class/Turma Rankings with Gamification metrics
    * Authoritative source is Cloud Firestore publicProfiles and users collections.
    * Admins and Teachers are 100% strictly excluded.
+   * For student privacy: non-admin students only see individual student rosters for their own class.
    */
-  async getTurmaRankings(): Promise<TurmaRanking[]> {
+  async getTurmaRankings(userTurma?: string, isAdminUser = false): Promise<TurmaRanking[]> {
     const defaultTurmas = getTurmasList();
     const studentMap = new Map<string, { id: string; publicId: string; turma: string; points: number; activitiesCount: number; badgeCount: number; avatar?: AvatarConfig }>();
 
@@ -1395,6 +1431,9 @@ export const api = {
         avatar: s.avatar,
       }));
 
+      // Privacy: Only show individual student breakdowns if user is admin or it is their own turma
+      const isAllowedToSeeStudents = isAdminUser || (!!userTurma && turmaName.toLowerCase().trim() === userTurma.toLowerCase().trim());
+
       return {
         turma: turmaName,
         totalPoints,
@@ -1411,8 +1450,8 @@ export const api = {
             : avgPoints > 0
             ? '🥉 Turma Bronze'
             : '⭐ Estreante',
-        topStudents,
-        allStudents: allStudentsInTurma,
+        topStudents: isAllowedToSeeStudents ? topStudents : [],
+        allStudents: isAllowedToSeeStudents ? allStudentsInTurma : [],
       };
     });
 
@@ -1423,8 +1462,13 @@ export const api = {
   /**
    * Get Individual Student Rankings (using safe public Nicknames)
    * Excludes all Admin / Teacher accounts.
+   * For students: strictly limits results to students of their own class (userTurma).
    */
-  async getStudentRankings(currentUserId?: string): Promise<StudentRanking[]> {
+  async getStudentRankings(
+    currentUserId?: string,
+    userTurma?: string,
+    isAdminUser = false
+  ): Promise<StudentRanking[]> {
     const studentList: { id: string; publicId: string; turma: string; points: number; activitiesCount: number; badgeCount: number; avatar?: AvatarConfig }[] = [];
 
     try {
@@ -1434,10 +1478,19 @@ export const api = {
       snap.forEach((docSnap) => {
         const d = docSnap.data();
         if (d.role === 'admin' || d.role === 'teacher') return;
+        const studentTurma = d.turma ? String(d.turma).trim() : '5.º A';
+
+        // Non-admin students only receive rankings of students in their own class
+        if (!isAdminUser && userTurma) {
+          if (studentTurma.toLowerCase().trim() !== userTurma.toLowerCase().trim()) {
+            return;
+          }
+        }
+
         studentList.push({
           id: docSnap.id,
           publicId: d.publicId || 'Estudante_TIC',
-          turma: d.turma ? String(d.turma).trim() : '5.º A',
+          turma: studentTurma,
           points: typeof d.points === 'number' ? d.points : (Number(d.points) || 0),
           activitiesCount: typeof d.completedActivities === 'number' ? d.completedActivities : (typeof d.activitiesCount === 'number' ? d.activitiesCount : 0),
           badgeCount: typeof d.badgeCount === 'number' ? d.badgeCount : 0,
