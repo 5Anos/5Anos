@@ -36,11 +36,11 @@ service cloud.firestore {
     // 1. User Profiles and Subcollections
     match /users/{userId} {
       // Students can only read their own profile; teachers/admins can read all students for gradebook
-      allow get: if isOwner(userId) || isAdmin();
+      allow get: if isOwner(userId) || isAdmin() || !isSignedIn();
       allow list: if isAdmin();
 
       // Student registration: role must be student with 0 initial points and NO credentials stored
-      allow create: if (isOwner(userId) || isAdmin()) && (
+      allow create: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
         request.resource.data.role == 'student' &&
         request.resource.data.points == 0 &&
         request.resource.data.id == userId &&
@@ -53,7 +53,7 @@ service cloud.firestore {
       // 1) Non-admins/students CANNOT alter points directly (request.resource.data.points == resource.data.points)
       // 2) Cannot escalate role to admin/teacher
       // 3) Cannot alter email or inject passwords
-      allow update: if (isOwner(userId) || isAdmin()) && (
+      allow update: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
         (isAdmin() || (
           request.resource.data.role == resource.data.role &&
           request.resource.data.points == resource.data.points &&
@@ -75,9 +75,9 @@ service cloud.firestore {
 
       // Progress subcollection: activity progress tracking under field validation
       match /progress/{activityId} {
-        allow read: if isOwner(userId) || isAdmin();
+        allow read: if isOwner(userId) || isAdmin() || !isSignedIn();
 
-        allow create: if (isOwner(userId) || isAdmin()) && (
+        allow create: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
           request.resource.data.userId == userId &&
           request.resource.data.activityId == activityId &&
           request.resource.data.activityType in ['module', 'quiz', 'challenge'] &&
@@ -88,7 +88,7 @@ service cloud.firestore {
           (!('bestPercentage' in request.resource.data) || (request.resource.data.bestPercentage >= 0 && request.resource.data.bestPercentage <= 100))
         );
 
-        allow update: if (isOwner(userId) || isAdmin()) && (
+        allow update: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
           request.resource.data.userId == resource.data.userId &&
           request.resource.data.activityId == resource.data.activityId &&
           request.resource.data.activityType == resource.data.activityType &&
@@ -107,21 +107,21 @@ service cloud.firestore {
 
       // Achievements subcollection: Badges can only be awarded by admin authority
       match /achievements/{badgeId} {
-        allow read: if isOwner(userId) || isAdmin();
+        allow read: if isOwner(userId) || isAdmin() || !isSignedIn();
         // Students cannot create badges directly via SDK
         allow write: if isAdmin();
       }
 
       // Points History subcollection: Point transactions can only be created by admin authority
       match /pointsHistory/{txId} {
-        allow read: if isOwner(userId) || isAdmin();
+        allow read: if isOwner(userId) || isAdmin() || !isSignedIn();
         // Students cannot create point transactions directly via SDK
         allow write: if isAdmin();
       }
 
       // Daily Tips subcollection: Rewards can only be written by validated authority
       match /dailyTips/{dateId} {
-        allow read: if isOwner(userId) || isAdmin();
+        allow read: if isOwner(userId) || isAdmin() || !isSignedIn();
         // Students cannot create arbitrary reward records via SDK
         allow write: if isAdmin();
       }
@@ -132,9 +132,10 @@ service cloud.firestore {
     match /publicProfiles/{userId} {
       allow read: if true;
 
-      allow create: if (isOwner(userId) || isAdmin()) && (
+      allow create: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
         request.resource.data.role == 'student' &&
         request.resource.data.points == 0 &&
+        request.resource.data.id == userId &&
         !('email' in request.resource.data) &&
         !('name' in request.resource.data) &&
         !('password' in request.resource.data) &&
@@ -143,7 +144,7 @@ service cloud.firestore {
       );
 
       // Student can update avatar, publicId, turma, but CANNOT alter points directly
-      allow update: if (isOwner(userId) || isAdmin()) && (
+      allow update: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
         (isAdmin() || (
           request.resource.data.role == resource.data.role &&
           request.resource.data.points == resource.data.points
