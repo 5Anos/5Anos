@@ -540,34 +540,63 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
           )}
         </div>
       ) : (
-        <div className="bg-white rounded-[2rem] border border-slate-200 p-8 text-center space-y-4 shadow-xs animate-in zoom-in-95">
-          <Trophy className="w-16 h-16 text-amber-500 mx-auto" />
-          <h2 className="text-2xl font-black text-slate-900">
-            {language === 'pt' ? 'Desafio Concluído!' : 'Challenge Completed!'}
+        <div className={`rounded-[2rem] border p-8 text-center space-y-4 shadow-xs animate-in zoom-in-95 ${
+          finalScore === 100
+            ? 'bg-emerald-50 border-emerald-200'
+            : 'bg-amber-50 border-amber-300'
+        }`}>
+          <Trophy className={`w-16 h-16 mx-auto ${finalScore === 100 ? 'text-amber-500' : 'text-amber-600'}`} />
+          <h2 className={`text-2xl font-black ${finalScore === 100 ? 'text-slate-900' : 'text-amber-950'}`}>
+            {finalScore === 100
+              ? (language === 'pt' ? 'Desafio Concluído com 100% de Sucesso!' : 'Challenge Completed with 100% Success!')
+              : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
           </h2>
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 font-extrabold text-sm">
-            <span>{finalScore} / 100 {language === 'pt' ? 'Pontos' : 'Points'}</span>
+
+          <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
+            finalScore === 100
+              ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
+              : 'bg-amber-100 border-amber-300 text-amber-900'
+          }`}>
+            <span>{finalScore}% {language === 'pt' ? 'de Precisão' : 'Accuracy'}</span>
             <span>•</span>
             <span>
               {correctCount} {language === 'pt' ? 'de' : 'of'} {challenge.questions.length} {language === 'pt' ? 'Corretas' : 'Correct'}
             </span>
+            <span>•</span>
+            <span className="font-black">
+              {finalScore === 100 ? '+100 XP' : '0 XP'}
+            </span>
           </div>
-          <p className="text-sm text-slate-600 max-w-md mx-auto">
-            {language === 'pt'
-              ? 'Excelente empenho! Os teus pontos foram registados no teu portfólio de aprendizagem.'
-              : 'Great job! Your points have been recorded in your learning profile.'}
+
+          <p className={`text-xs sm:text-sm max-w-md mx-auto ${
+            finalScore === 100 ? 'text-emerald-800' : 'text-amber-900 font-medium'
+          }`}>
+            {finalScore === 100 ? (
+              language === 'pt'
+                ? 'Excelente empenho! Acertaste em todas as questões e ganhaste +100 XP.'
+                : 'Great job! You answered all questions correctly and earned +100 XP.'
+            ) : (
+              language === 'pt'
+                ? `Obtiveste ${finalScore}%. Lembra-te: para ganhares os 100 XP precisas de acertar em 100% das questões. Clica em "Repetir Desafio" para tentar novamente!`
+                : `You got ${finalScore}%. Note: to earn the 100 XP you need 100% accuracy. Click "Retry" to try again!`
+            )}
           </p>
+
           <div className="flex justify-center gap-3 pt-4">
             <button
               onClick={handleRetry}
-              className="px-4 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer"
+              className="px-4 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-2xs transition-colors"
             >
               <RotateCcw className="w-4 h-4" />
-              <span>{language === 'pt' ? 'Repetir' : 'Retry'}</span>
+              <span>{language === 'pt' ? 'Repetir Desafio' : 'Retry Challenge'}</span>
             </button>
             <button
               onClick={onBack}
-              className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm cursor-pointer shadow-xs"
+              className={`px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm cursor-pointer shadow-md text-white ${
+                finalScore === 100
+                  ? 'bg-indigo-600 hover:bg-indigo-700'
+                  : 'bg-indigo-600 hover:bg-indigo-700'
+              }`}
             >
               <span>{language === 'pt' ? 'Voltar ao Tema' : 'Back to Theme'}</span>
             </button>

@@ -616,43 +616,35 @@ export const ErgonomicsTrueFalseGame: React.FC<ErgonomicsTrueFalseGameProps> = (
               {/* Score summary banner */}
               <div
                 className={`p-5 rounded-2xl border mb-5 flex flex-col sm:flex-row items-center justify-between gap-4 ${
-                  percentage >= 80
+                  percentage === 100
                     ? 'bg-emerald-50 border-emerald-200 text-emerald-950'
-                    : percentage >= 50
-                    ? 'bg-amber-50 border-amber-200 text-amber-950'
-                    : 'bg-rose-50 border-rose-200 text-rose-950'
+                    : 'bg-amber-50 border-amber-200 text-amber-950'
                 }`}
               >
                 <div className="flex items-center gap-3.5 text-center sm:text-left">
                   <div
                     className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0 shadow-xs ${
-                      percentage >= 80
+                      percentage === 100
                         ? 'bg-emerald-600 text-white'
-                        : percentage >= 50
-                        ? 'bg-amber-500 text-white'
-                        : 'bg-rose-600 text-white'
+                        : 'bg-amber-500 text-white'
                     }`}
                   >
-                    {percentage >= 80 ? '🏆' : percentage >= 50 ? '⭐' : '💡'}
+                    {percentage === 100 ? '🏆' : '💡'}
                   </div>
                   <div>
                     <h3 className="font-black text-base sm:text-lg">
-                      {percentage >= 80
-                        ? language === 'pt'
-                          ? 'Excelente! Dominas a Ergonomia!'
-                          : 'Excellent! You mastered Ergonomics!'
-                        : percentage >= 50
-                        ? language === 'pt'
-                          ? 'Bom trabalho! Quase lá!'
-                          : 'Good job! Almost there!'
-                        : language === 'pt'
-                        ? 'Vale a pena rever as boas práticas!'
-                        : 'Keep practicing ergonomics!'}
+                      {percentage === 100
+                        ? (language === 'pt' ? 'Excelente! Dominas a Ergonomia com 100%!' : 'Excellent! You mastered Ergonomics 100%!')
+                        : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
                     </h3>
                     <p className="text-xs sm:text-sm font-medium opacity-90">
-                      {language === 'pt'
-                        ? `Acertaste em ${correctCount} de 5 situações (${percentage}% de precisão). Ganhaste +${score} XP!`
-                        : `You got ${correctCount} out of 5 correct (${percentage}%). Earned +${score} XP!`}
+                      {percentage === 100
+                        ? (language === 'pt'
+                          ? 'Acertaste em 5 de 5 situações (100% de precisão). Ganhaste +100 XP!'
+                          : 'You got 5 out of 5 correct (100%). Earned +100 XP!')
+                        : (language === 'pt'
+                          ? `Acertaste em ${correctCount} de 5 situações (${percentage}%). Para ganhares os 100 XP precisas de 100% de acertos.`
+                          : `You got ${correctCount} of 5 correct (${percentage}%). To earn 100 XP you need 100% accuracy.`)}
                     </p>
                   </div>
                 </div>

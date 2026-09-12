@@ -315,7 +315,10 @@ export const TicCyberbullyingGame: React.FC<TicCyberbullyingGameProps> = ({
       setScenarioIdx((prev) => prev + 1);
     } else {
       setCurrentStage('completed');
-      onFinish(100, 100, 100);
+      const percentage = Math.round((correctCount / STORY_SCENARIOS.length) * 100);
+      const score = correctCount * 25;
+      const maxScore = STORY_SCENARIOS.length * 25;
+      onFinish(score, maxScore, percentage);
     }
   };
 
@@ -585,47 +588,87 @@ export const TicCyberbullyingGame: React.FC<TicCyberbullyingGameProps> = ({
       )}
 
       {/* STAGE 3: COMPLETED */}
-      {currentStage === 'completed' && (
-        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-xl text-center space-y-6 animate-in zoom-in-95">
-          <div className="w-20 h-20 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-4xl mx-auto shadow-inner border border-rose-200 animate-bounce">
-            🛡️
-          </div>
+      {currentStage === 'completed' && (() => {
+        const percentage = Math.round((correctCount / STORY_SCENARIOS.length) * 100);
+        return (
+          <div className={`bg-white rounded-3xl p-8 sm:p-10 border-2 shadow-xl text-center space-y-6 animate-in zoom-in-95 ${
+            percentage === 100 ? 'border-emerald-200' : 'border-amber-300'
+          }`}>
+            <div className={`w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto shadow-inner border animate-bounce ${
+              percentage === 100
+                ? 'bg-emerald-100 text-emerald-600 border-emerald-200'
+                : 'bg-amber-100 text-amber-600 border-amber-200'
+            }`}>
+              {percentage === 100 ? '🛡️' : '💡'}
+            </div>
 
-          <div className="space-y-2 max-w-lg mx-auto">
-            <span className="text-xs font-black uppercase tracking-widest text-rose-700 bg-rose-50 px-3 py-1 rounded-full border border-rose-200">
-              {language === 'pt' ? 'Guardião Digital Certificado!' : 'Certified Digital Guardian!'}
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-              {language === 'pt' ? 'Sabes como agir em Segurança!' : 'You Know How to Stay Safe!'}
-            </h2>
-            <p className="text-sm text-slate-600 leading-relaxed font-medium">
-              {language === 'pt'
-                ? 'Lembra-te sempre: nunca estás sozinho! Guardar provas, bloquear agressores e recorrer à Linha Internet Segura (800 21 90 90) ou aos professores e pais são os passos certos para uma navegação protegida.'
-                : 'Remember: you are never alone! Preserving evidence, blocking bullies, and reaching out to the Safe Internet Helpline (800 21 90 90) protect everyone.'}
-            </p>
-          </div>
+            <div className="space-y-2 max-w-lg mx-auto">
+              <span className={`text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full border ${
+                percentage === 100
+                  ? 'text-emerald-700 bg-emerald-50 border-emerald-200'
+                  : 'text-amber-800 bg-amber-50 border-amber-200'
+              }`}>
+                {percentage === 100
+                  ? (language === 'pt' ? 'Guardião Digital Certificado!' : 'Certified Digital Guardian!')
+                  : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+                {percentage === 100
+                  ? (language === 'pt' ? 'Sabes agir com 100% de Segurança!' : 'You Know How to Stay Safe!')
+                  : (language === 'pt' ? 'Bom Trabalho no Caso Prático!' : 'Good Effort on Case Study!')}
+              </h2>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
-            <button
-              type="button"
-              onClick={handleRestart}
-              className="px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors flex items-center gap-2 cursor-pointer"
-            >
-              <RotateCcw className="w-4 h-4" />
-              <span>{language === 'pt' ? 'Rever os 5 Passos' : 'Review 5 Steps'}</span>
-            </button>
+              <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
+                percentage === 100
+                  ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
+                  : 'bg-amber-100 border-amber-300 text-amber-900'
+              }`}>
+                <span>{percentage}% {language === 'pt' ? 'de Precisão' : 'Accuracy'}</span>
+                <span>•</span>
+                <span>
+                  {correctCount} {language === 'pt' ? 'de' : 'of'} {STORY_SCENARIOS.length} {language === 'pt' ? 'Respostas Corretas' : 'Correct'}
+                </span>
+                <span>•</span>
+                <span className="font-black">
+                  {percentage === 100 ? '+100 XP' : '0 XP'}
+                </span>
+              </div>
 
-            <button
-              type="button"
-              onClick={onBack}
-              className="px-6 py-2.5 rounded-xl font-black text-xs sm:text-sm bg-indigo-600 hover:bg-indigo-700 text-white transition-all shadow-md flex items-center gap-2 cursor-pointer hover:scale-102"
-            >
-              <Award className="w-4 h-4 text-amber-300" />
-              <span>{language === 'pt' ? 'Concluir (+100 XP)' : 'Finish (+100 XP)'}</span>
-            </button>
+              <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                {percentage === 100 ? (
+                  language === 'pt'
+                    ? 'Excelente! Acertaste em todas as decisões do caso prático e ganhaste +100 XP. Lembra-te: nunca estás sozinho! A Linha Internet Segura (800 21 90 90) está sempre disponível.'
+                    : 'Great job! You made 100% accurate decisions and earned +100 XP. Safe Internet Helpline (800 21 90 90) is always available.'
+                ) : (
+                  language === 'pt'
+                    ? `Obtiveste ${percentage}% (${correctCount} de ${STORY_SCENARIOS.length} corretas). Para ganhares os 100 XP precisas de acertar em todas as questões. Tenta novamente!`
+                    : `You scored ${percentage}%. To earn 100 XP you need 100% accuracy. Try again!`
+                )}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
+              <button
+                type="button"
+                onClick={handleRestart}
+                className="px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors flex items-center gap-2 cursor-pointer shadow-2xs"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span>{language === 'pt' ? 'Repetir Desafio' : 'Retry Challenge'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={onBack}
+                className="px-6 py-2.5 rounded-xl font-black text-xs sm:text-sm bg-indigo-600 hover:bg-indigo-700 text-white transition-all shadow-md flex items-center gap-2 cursor-pointer hover:scale-102"
+              >
+                <Award className="w-4 h-4 text-amber-300" />
+                <span>{language === 'pt' ? 'Voltar ao Tema' : 'Back to Theme'}</span>
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 };

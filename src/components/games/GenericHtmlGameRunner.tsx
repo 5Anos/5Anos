@@ -69,6 +69,25 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
   });
   const [orderChecked, setOrderChecked] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const [resultPercentage, setResultPercentage] = useState<number>(100);
+  const [resultDetails, setResultDetails] = useState<{ correct: number; total: number } | null>(null);
+
+  const handleRetryGame = () => {
+    setCompleted(false);
+    setAnswers({});
+    setMcIndex(0);
+    setMcAnswers([]);
+    setPicked([]);
+    setMatched([]);
+    setOrderChosen([]);
+    setOrderChecked(false);
+    setClassifiedMap({});
+    setSelectedClassifyItem(null);
+    setBuilderPassword('');
+    setBuilderSubmitted(false);
+    setResultPercentage(100);
+    setResultDetails(null);
+  };
 
   // Classify Game State
   const [classifiedMap, setClassifiedMap] = useState<Record<number, string>>({});
@@ -131,6 +150,8 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
   const handleBuilderSubmit = () => {
     setBuilderSubmitted(true);
     if (builderRules.allValid) {
+      setResultPercentage(100);
+      setResultDetails({ correct: 5, total: 5 });
       setCompleted(true);
       onFinish(100, 100, 100);
     }
@@ -149,6 +170,8 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
       if (answers[i] === expected) correct++;
     });
     const pct = Math.round((correct / items.length) * 100);
+    setResultPercentage(pct);
+    setResultDetails({ correct, total: items.length });
     setCompleted(true);
     onFinish(pct, 100, pct);
   };
@@ -169,6 +192,8 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
         if (mcAnswers[i] === q.c) correct++;
       });
       const pct = Math.round((correct / qs.length) * 100);
+      setResultPercentage(pct);
+      setResultDetails({ correct, total: qs.length });
       setCompleted(true);
       onFinish(pct, 100, pct);
     }
@@ -194,6 +219,8 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
       setMatched(nextMatched);
       setPicked([]);
       if (nextMatched.length === data.pairs.length) {
+        setResultPercentage(100);
+        setResultDetails({ correct: data.pairs.length, total: data.pairs.length });
         setCompleted(true);
         onFinish(100, 100, 100);
       }
@@ -219,6 +246,8 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
     const items = data.items;
     const isCorrect = orderChosen.every((v, idx) => v === idx);
     if (isCorrect) {
+      setResultPercentage(100);
+      setResultDetails({ correct: items.length, total: items.length });
       setCompleted(true);
       onFinish(100, 100, 100);
     }
@@ -815,6 +844,8 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                 if (nextMap[idx] === it.categoryId) correct++;
               });
               const pct = Math.round((correct / items.length) * 100);
+              setResultPercentage(pct);
+              setResultDetails({ correct, total: items.length });
               setCompleted(true);
               onFinish(pct, 100, pct);
             }
@@ -1093,26 +1124,86 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
 
         {/* Completed state message */}
         {completed && (
-          <div className="p-8 text-center bg-emerald-50 rounded-3xl border-2 border-emerald-200 space-y-4 animate-in zoom-in-95">
-            <div className="w-16 h-16 rounded-full bg-emerald-500 text-white flex items-center justify-center text-3xl mx-auto shadow-md">
-              🎉
+          <div className={`p-8 text-center rounded-3xl border-2 space-y-4 animate-in zoom-in-95 ${
+            resultPercentage === 100
+              ? 'bg-emerald-50 border-emerald-200'
+              : 'bg-amber-50 border-amber-300'
+          }`}>
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto shadow-md ${
+              resultPercentage === 100
+                ? 'bg-emerald-500 text-white'
+                : 'bg-amber-500 text-white'
+            }`}>
+              {resultPercentage === 100 ? '🎉' : '🎯'}
             </div>
-            <h3 className="text-xl sm:text-2xl font-black text-emerald-950">
-              {language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Successfully Completed!'}
+
+            <h3 className={`text-xl sm:text-2xl font-black ${
+              resultPercentage === 100 ? 'text-emerald-950' : 'text-amber-950'
+            }`}>
+              {resultPercentage === 100
+                ? (language === 'pt' ? 'Desafio Concluído com 100% de Sucesso!' : 'Challenge Completed with 100% Success!')
+                : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
             </h3>
-            <p className="text-xs sm:text-sm text-emerald-800">
-              {language === 'pt' ? (
-                <>Parabéns! Ganhaste <strong>+{gameData.xp} XP</strong> e avançaste no teu progresso.</>
+
+            {/* Percentage & Results Summary Pill */}
+            <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
+              resultPercentage === 100
+                ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
+                : 'bg-amber-100 border-amber-300 text-amber-900'
+            }`}>
+              <span>{resultPercentage}% {language === 'pt' ? 'de Precisão' : 'Accuracy'}</span>
+              {resultDetails && (
+                <>
+                  <span>•</span>
+                  <span>
+                    {resultDetails.correct} {language === 'pt' ? 'de' : 'of'} {resultDetails.total} {language === 'pt' ? 'Corretas' : 'Correct'}
+                  </span>
+                </>
+              )}
+              <span>•</span>
+              <span className="font-black">
+                {resultPercentage === 100 ? `+${gameData.xp} XP` : '0 XP'}
+              </span>
+            </div>
+
+            <p className={`text-xs sm:text-sm max-w-md mx-auto ${
+              resultPercentage === 100 ? 'text-emerald-800' : 'text-amber-900 font-medium'
+            }`}>
+              {resultPercentage === 100 ? (
+                language === 'pt' ? (
+                  <>Parabéns! Acertaste em tudo na perfeição e ganhaste <strong>+{gameData.xp} XP</strong>!</>
+                ) : (
+                  <>Congratulations! You answered everything perfectly and earned <strong>+{gameData.xp} XP</strong>!</>
+                )
               ) : (
-                <>Congratulations! You earned <strong>+{gameData.xp} XP</strong> and advanced your progress.</>
+                language === 'pt' ? (
+                  <>Obtiveste <strong>{resultPercentage}%</strong>. Lembra-te: para ganhares os <strong>+{gameData.xp} XP</strong> precisas de acertar em <strong>100%</strong> das respostas. Clica em "Repetir Desafio" para tentar novamente!</>
+                ) : (
+                  <>You got <strong>{resultPercentage}%</strong>. Note: to earn the <strong>+{gameData.xp} XP</strong> you need to achieve <strong>100%</strong> accuracy. Click "Retry Challenge" to try again!</>
+                )
               )}
             </p>
-            <button
-              onClick={onReturnToGames || onBack}
-              className="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition-all cursor-pointer inline-flex items-center gap-2"
-            >
-              <span>{language === 'pt' ? 'Continuar a Jogar →' : 'Continue Playing →'}</span>
-            </button>
+
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              <button
+                onClick={handleRetryGame}
+                className="px-5 py-2.5 rounded-2xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-2xs transition-colors"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span>{language === 'pt' ? 'Repetir Desafio' : 'Retry Challenge'}</span>
+              </button>
+
+              <button
+                onClick={onReturnToGames || onBack}
+                className={`px-6 py-2.5 rounded-2xl font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer inline-flex items-center gap-2 text-white ${
+                  resultPercentage === 100
+                    ? 'bg-emerald-600 hover:bg-emerald-700'
+                    : 'bg-indigo-600 hover:bg-indigo-700'
+                }`}
+              >
+                <span>{language === 'pt' ? 'Voltar ao Tema' : 'Back to Theme'}</span>
+              </button>
+            </div>
           </div>
         )}
       </div>

@@ -566,16 +566,43 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
           )}
         </div>
       ) : (
-        <div className="rounded-[2.5rem] bg-white border-2 border-emerald-200 p-8 shadow-xl text-center space-y-5 animate-in zoom-in-95">
-          <div className="text-6xl animate-bounce">🛡️</div>
+        <div className={`rounded-[2.5rem] bg-white border-2 p-8 shadow-xl text-center space-y-5 animate-in zoom-in-95 ${
+          correctCount === SCENARIOS.length
+            ? 'border-emerald-200'
+            : 'border-amber-300'
+        }`}>
+          <div className="text-6xl animate-bounce">
+            {correctCount === SCENARIOS.length ? '🛡️' : '💡'}
+          </div>
           <div className="space-y-2">
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-              {language === 'pt' ? 'Laboratório de Segurança Concluído!' : 'Security Lab Completed!'}
+              {correctCount === SCENARIOS.length
+                ? (language === 'pt' ? 'Laboratório Concluído com 100% de Sucesso!' : 'Security Lab Completed with 100%!')
+                : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
             </h2>
+            <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
+              correctCount === SCENARIOS.length
+                ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
+                : 'bg-amber-100 border-amber-300 text-amber-900'
+            }`}>
+              <span>{Math.round((correctCount / SCENARIOS.length) * 100)}% {language === 'pt' ? 'de Precisão' : 'Accuracy'}</span>
+              <span>•</span>
+              <span>
+                {correctCount} {language === 'pt' ? 'de' : 'of'} {SCENARIOS.length} {language === 'pt' ? 'Decisões Corretas' : 'Correct'}
+              </span>
+              <span>•</span>
+              <span className="font-black">
+                {correctCount === SCENARIOS.length ? '+100 XP' : '0 XP'}
+              </span>
+            </div>
             <p className="text-sm sm:text-base text-slate-600 max-w-md mx-auto">
-              {language === 'pt'
-                ? `Analisaste todos os 6 casos e tomaste ${correctCount} decisões de segurança perfeitas (${Math.round((correctCount / SCENARIOS.length) * 100)}%).`
-                : `You evaluated all 6 cases and made ${correctCount} perfect safety decisions (${Math.round((correctCount / SCENARIOS.length) * 100)}%).`}
+              {correctCount === SCENARIOS.length
+                ? (language === 'pt'
+                  ? 'Excelente empenho! Analisaste todos os 6 casos e tomaste 100% de decisões seguras (+100 XP).'
+                  : 'Great job! You analyzed all 6 cases and made 100% safe decisions (+100 XP).')
+                : (language === 'pt'
+                  ? `Obtiveste ${Math.round((correctCount / SCENARIOS.length) * 100)}% (${correctCount} de ${SCENARIOS.length} corretas). Para ganhares os 100 XP precisas de acertar em todos os casos. Repete o desafio!`
+                  : `You scored ${Math.round((correctCount / SCENARIOS.length) * 100)}%. To earn the 100 XP you need 100% accuracy. Retry the challenge!`)}
             </p>
           </div>
 
@@ -591,10 +618,10 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <button
               onClick={handleRestart}
-              className="w-full sm:w-auto px-5 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
+              className="w-full sm:w-auto px-5 py-3 rounded-xl border border-slate-300 hover:bg-slate-50 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-2xs transition-colors"
             >
               <RefreshCw className="w-4 h-4" />
-              <span>{t.tryAgain}</span>
+              <span>{language === 'pt' ? 'Repetir Desafio' : t.tryAgain}</span>
             </button>
             <button
               onClick={onBack}

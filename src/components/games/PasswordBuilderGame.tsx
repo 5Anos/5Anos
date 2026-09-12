@@ -221,8 +221,10 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
     } else {
       setActiveStage('completed');
       const correctDilemmas = nextScores.filter(Boolean).length;
-      const totalPoints = 50 + Math.round((correctDilemmas / DILEMMAS.length) * 50);
-      onFinish(totalPoints, 100, Math.round((totalPoints / 100) * 100));
+      const isStrongPass = strengthScore >= 90;
+      const allDilemmasCorrect = correctDilemmas === DILEMMAS.length;
+      const pct = Math.round((( (isStrongPass ? 1 : 0) + correctDilemmas ) / (1 + DILEMMAS.length)) * 100);
+      onFinish(pct, 100, pct);
     }
   };
 
@@ -582,53 +584,89 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
       )}
 
       {/* Completed Final Screen */}
-      {activeStage === 'completed' && (
-        <div className="p-8 sm:p-12 rounded-[2.5rem] bg-gradient-to-br from-emerald-950 via-slate-900 to-teal-950 text-white text-center space-y-6 shadow-2xl border-2 border-emerald-400/30 animate-in zoom-in-95">
-          <div className="w-20 h-20 rounded-3xl bg-amber-400 text-slate-950 text-4xl flex items-center justify-center mx-auto shadow-xl">
-            🛡️
-          </div>
+      {activeStage === 'completed' && (() => {
+        const correctDilemmas = dilemmaScores.filter(Boolean).length;
+        const isStrongPass = strengthScore >= 90;
+        const pct = Math.round((( (isStrongPass ? 1 : 0) + correctDilemmas ) / (1 + DILEMMAS.length)) * 100);
 
-          <div className="max-w-xl mx-auto space-y-2">
-            <span className="text-xs font-black uppercase tracking-wider text-emerald-300 px-3 py-1 rounded-full bg-emerald-400/20 border border-emerald-400/30">
-              {language === 'pt' ? 'Desafio Concluído!' : 'Challenge Completed!'}
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-black">
-              {language === 'pt' ? 'Guardião Digital das Palavras-passe!' : 'Digital Password Guardian!'}
-            </h2>
-            <p className="text-xs sm:text-sm text-emerald-100 leading-relaxed font-medium">
-              {language === 'pt'
-                ? 'Aprendeste a criar frases-passe longas e imprevisíveis, a nunca partilhar códigos SMS / 2FA com terceiros e a proteger a tua conta como um verdadeiro especialista em cibersegurança!'
-                : 'You mastered passphrase generation, multi-factor codes defense, and password privacy!'}
-            </p>
-          </div>
+        return (
+          <div className={`p-8 sm:p-12 rounded-[2.5rem] bg-gradient-to-br from-emerald-950 via-slate-900 to-teal-950 text-white text-center space-y-6 shadow-2xl border-2 animate-in zoom-in-95 ${
+            pct === 100 ? 'border-emerald-400/40' : 'border-amber-400/40'
+          }`}>
+            <div className={`w-20 h-20 rounded-3xl text-4xl flex items-center justify-center mx-auto shadow-xl ${
+              pct === 100 ? 'bg-amber-400 text-slate-950' : 'bg-amber-500 text-slate-950'
+            }`}>
+              {pct === 100 ? '🛡️' : '💡'}
+            </div>
 
-          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-amber-300 font-black text-lg">
-            <Sparkles className="w-5 h-5 text-amber-400" />
-            <span>+100 XP Ganho!</span>
-          </div>
+            <div className="max-w-xl mx-auto space-y-2">
+              <span className={`text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full border ${
+                pct === 100
+                  ? 'text-emerald-300 bg-emerald-400/20 border-emerald-400/30'
+                  : 'text-amber-300 bg-amber-400/20 border-amber-400/30'
+              }`}>
+                {pct === 100
+                  ? (language === 'pt' ? 'Desafio Concluído com 100%!' : 'Challenge Completed with 100%!')
+                  : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black">
+                {pct === 100
+                  ? (language === 'pt' ? 'Guardião Digital das Palavras-passe!' : 'Digital Password Guardian!')
+                  : (language === 'pt' ? 'Bom Trabalho na Proteção!' : 'Good Effort on Protection!')}
+              </h2>
 
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button
-              onClick={() => {
-                setActiveStage('builder');
-                setCurrentDilemmaIdx(0);
-                setSelectedDilemmaOpt(null);
-                setDilemmaScores([]);
-              }}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <RefreshCw className="w-4 h-4" />
-              <span>{language === 'pt' ? 'Jogar Novamente' : 'Play Again'}</span>
-            </button>
-            <button
-              onClick={onBack}
-              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-sm shadow-md transition-all cursor-pointer"
-            >
-              <span>{language === 'pt' ? 'Concluir e Voltar aos Desafios' : 'Finish & Return'}</span>
-            </button>
+              <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
+                pct === 100
+                  ? 'bg-emerald-500/20 border-emerald-400 text-emerald-200'
+                  : 'bg-amber-500/20 border-amber-400 text-amber-200'
+              }`}>
+                <span>{pct}% {language === 'pt' ? 'de Precisão' : 'Accuracy'}</span>
+                <span>•</span>
+                <span>
+                  {correctDilemmas} {language === 'pt' ? 'de' : 'of'} {DILEMMAS.length} {language === 'pt' ? 'Dilemas Corretos' : 'Correct Dilemmas'}
+                </span>
+                <span>•</span>
+                <span className="font-black">
+                  {pct === 100 ? '+100 XP' : '0 XP'}
+                </span>
+              </div>
+
+              <p className="text-xs sm:text-sm text-emerald-100 leading-relaxed font-medium">
+                {pct === 100 ? (
+                  language === 'pt'
+                    ? 'Aprendeste a criar frases-passe longas e imprevisíveis, a nunca partilhar códigos SMS / 2FA com terceiros e ganhaste +100 XP!'
+                    : 'You mastered passphrase generation, multi-factor codes defense, and earned +100 XP!'
+                ) : (
+                  language === 'pt'
+                    ? `Obtiveste ${pct}%. Lembra-te: para ganhares os 100 XP precisas de criar uma palavra-passe Forte e acertar em todos os dilemas de segurança. Tenta novamente!`
+                    : `You scored ${pct}%. To earn 100 XP you need 100% accuracy on all security dilemmas. Try again!`
+                )}
+              </p>
+            </div>
+
+            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button
+                onClick={() => {
+                  setActiveStage('builder');
+                  setCurrentDilemmaIdx(0);
+                  setSelectedDilemmaOpt(null);
+                  setDilemmaScores([]);
+                }}
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <RefreshCw className="w-4 h-4" />
+                <span>{language === 'pt' ? 'Repetir Desafio' : 'Retry Challenge'}</span>
+              </button>
+              <button
+                onClick={onBack}
+                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-sm shadow-md transition-all cursor-pointer"
+              >
+                <span>{language === 'pt' ? 'Voltar ao Tema' : 'Back to Theme'}</span>
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 };
