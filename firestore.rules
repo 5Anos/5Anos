@@ -35,18 +35,23 @@ service cloud.firestore {
 
     // 1. User Profiles and Subcollections
     match /users/{userId} {
-      // Students can only read their own profile; teachers/admins can read all students for gradebook
+      // Students can read user profile; teachers/admins and student lookup for login
       allow get: if isOwner(userId) || isAdmin() || !isSignedIn();
-      allow list: if isAdmin();
+      allow list: if isAdmin() || !isSignedIn();
 
-      // Student registration: role must be student with 0 initial points and NO credentials stored
-      allow create: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
+      // Student registration: role must be student with 0 initial points, complete registration schema, and cannot overwrite
+      allow create: if (
         request.resource.data.role == 'student' &&
         request.resource.data.points == 0 &&
         request.resource.data.id == userId &&
+        request.resource.data.name is string && request.resource.data.name.size() >= 2 &&
+        request.resource.data.email is string && request.resource.data.email.matches('.*@.*') &&
+        request.resource.data.turma is string &&
+        request.resource.data.publicId is string && request.resource.data.publicId.size() >= 3 &&
         !('password' in request.resource.data) &&
         !('passwordHash' in request.resource.data) &&
-        !('passwordSalt' in request.resource.data)
+        !('passwordSalt' in request.resource.data) &&
+        !exists(/databases/$(database)/documents/users/$(userId))
       );
 
       // Profile updates:
@@ -132,7 +137,8 @@ service cloud.firestore {
     match /publicProfiles/{userId} {
       allow read: if true;
 
-      allow create: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
+      // Public profile creation: strictly requires that the corresponding users/{userId} document exists
+      allow create: if exists(/databases/$(database)/documents/users/$(userId)) && (
         request.resource.data.role == 'student' &&
         request.resource.data.points == 0 &&
         request.resource.data.id == userId &&

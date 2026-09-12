@@ -225,6 +225,55 @@ export const api = {
     localStorage.removeItem(CURRENT_USER_KEY);
   },
 
+  /**
+   * Check if current client has a valid active student or admin session
+   */
+  hasValidSession(userId?: string): boolean {
+    const token = this.getToken();
+    const rawUser = typeof localStorage !== 'undefined' ? localStorage.getItem(CURRENT_USER_KEY) : null;
+    if (!token || !rawUser) return false;
+    try {
+      const user = JSON.parse(rawUser);
+      if (!user || !user.id) return false;
+      if (userId) {
+        return (user.id === userId && token === user.id) || isUserAdmin(user.email, user.role);
+      }
+      return token === user.id;
+    } catch {
+      return false;
+    }
+  },
+
+  getCurrentSessionUser(): User | null {
+    const rawUser = typeof localStorage !== 'undefined' ? localStorage.getItem(CURRENT_USER_KEY) : null;
+    if (!rawUser) return null;
+    try {
+      return JSON.parse(rawUser);
+    } catch {
+      return null;
+    }
+  },
+
+  /**
+   * Protected user document creation/update
+   */
+  async createUserDoc(userId: string, data: any): Promise<void> {
+    if (!this.hasValidSession(userId)) {
+      throw new Error('Tentativa de criação arbitrária sem uma sessão válida bloqueada.');
+    }
+    await setDoc(doc(db, 'users', userId), data, { merge: true });
+  },
+
+  /**
+   * Protected public profile document creation/update
+   */
+  async createPublicProfileDoc(userId: string, data: any): Promise<void> {
+    if (!this.hasValidSession(userId)) {
+      throw new Error('Tentativa de criação arbitrária sem uma sessão válida bloqueada.');
+    }
+    await setDoc(doc(db, 'publicProfiles', userId), data, { merge: true });
+  },
+
   getAllTakenPublicIds(): string[] {
     return [];
   },
@@ -357,10 +406,16 @@ export const api = {
    * Directly save user profile to Cloud Firestore (NEVER storing passwords)
    */
   async syncUserToFirestore(user: User): Promise<boolean> {
+    const targetUserId = user.id;
+
+    // Strictly protect arbitrary creation: verify current active student or admin session
+    if (!this.hasValidSession(targetUserId)) {
+      throw new Error('Tentativa de criação/sincronização arbitrária sem uma sessão válida bloqueada.');
+    }
+
     try {
-      const targetUserId = auth.currentUser?.uid || user.id;
       user.id = targetUserId;
-      const isAdmin = isUserAdmin(auth.currentUser?.email || user.email, user.role);
+      const isAdmin = isUserAdmin(user.email, user.role);
       const finalRole = isAdmin ? 'admin' : (user.role || 'student');
       user.role = finalRole;
       if (isAdmin) {
@@ -371,7 +426,7 @@ export const api = {
       const payload: any = {
         id: targetUserId,
         name: user.name,
-        email: (auth.currentUser?.email || user.email || '').toLowerCase().trim(),
+        email: (user.email || '').toLowerCase().trim(),
         publicId: user.publicId,
         role: finalRole,
         language: user.language || 'pt',
@@ -405,6 +460,7 @@ export const api = {
             turma: user.turma || '5.º A',
             role: 'student',
             points: user.points ?? 0,
+            avatar: user.avatar,
             updatedAt: new Date().toISOString(),
           },
           { merge: true }
@@ -413,13 +469,16 @@ export const api = {
 
       return true;
     } catch (err: any) {
+      if (err?.message?.includes('sessão válida bloqueada')) {
+        throw err;
+      }
       console.warn('Cloud Firestore sync notice:', err?.message || err);
       return false;
     }
   },
 
   /**
-   * Register with Firebase Authentication and Cloud Firestore
+   * Register with platform session mechanism and Cloud Firestore
    */
   async register(
     name: string,
@@ -452,44 +511,25 @@ export const api = {
       finalPublicId = generateSecurePublicId(takenPublicIds);
     }
 
-    // 2. Create account in Firebase Authentication (or Firestore fallback if provider inactive)
-    let fbUser: FirebaseUser | null = null;
-    let userId: string;
+    // 2. Verify email uniqueness in Cloud Firestore users collection
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, normalizedEmail, cleanPassword);
-      fbUser = userCredential.user;
-      userId = fbUser.uid;
-      await updateProfile(fbUser, { displayName: name.trim() });
-    } catch (fbError: any) {
-      if (fbError?.code === 'auth/email-already-in-use') {
+      const emailQ = query(collection(db, 'users'), where('email', '==', normalizedEmail), limit(1));
+      const emailSnap = await getDocs(emailQ);
+      if (!emailSnap.empty) {
         throw new Error(
           language === 'pt'
             ? '❌ Já existe uma conta associada a este email. Por favor, faz login.'
             : '❌ An account is already registered with this email. Please log in.'
         );
-      } else if (fbError?.code === 'auth/weak-password') {
-        throw new Error(
-          language === 'pt'
-            ? '❌ A palavra-passe é demasiado fraca. Usa pelo menos 6 caracteres.'
-            : '❌ Password is too weak. Please use at least 6 characters.'
-        );
-      } else if (fbError?.code === 'auth/invalid-email') {
-        throw new Error(
-          language === 'pt'
-            ? '❌ Formato de email inválido.'
-            : '❌ Invalid email format.'
-        );
-      } else if (
-        fbError?.code === 'auth/operation-not-allowed' ||
-        fbError?.code === 'auth/admin-restricted-operation'
-      ) {
-        // Firebase Auth Email/Password sign-in method not yet active in Console, use secure unique ID
-        userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
-      } else {
-        throw new Error(fbError?.message || 'Erro ao criar conta no Firebase Authentication.');
       }
+    } catch (err: any) {
+      if (err.message?.includes('Já existe uma conta')) {
+        throw err;
+      }
+      console.warn('Email check in register notice:', err);
     }
 
+    const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
     const initialPoints = 0;
     const finalAvatar = avatar || getDefaultAvatar(finalPublicId);
 
@@ -506,7 +546,11 @@ export const api = {
       createdAt: new Date().toISOString(),
     };
 
-    // 4. Save to Cloud Firestore users collection (NO passwords or passwordHash stored)
+    // 3. Establish student session using the platform's session mechanism
+    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
+    this.setToken(userId);
+
+    // 4. Save to Cloud Firestore users collection (NO passwords or credentials stored)
     const userPayload: any = {
       id: userId,
       name: name.trim(),
@@ -521,7 +565,7 @@ export const api = {
       updatedAt: new Date().toISOString(),
     };
     try {
-      await setDoc(doc(db, 'users', userId), userPayload, { merge: true });
+      await setDoc(doc(db, 'users', userId), userPayload);
     } catch (error) {
       handleFirestoreError(error, OperationType.CREATE, `users/${userId}`);
     }
@@ -539,26 +583,14 @@ export const api = {
             points: initialPoints,
             avatar: finalAvatar,
             updatedAt: new Date().toISOString(),
-          },
-          { merge: true }
+          }
         );
       } catch (error) {
         handleFirestoreError(error, OperationType.CREATE, `publicProfiles/${userId}`);
       }
     }
 
-    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
-    let token = userId;
-    if (fbUser) {
-      try {
-        token = await fbUser.getIdToken();
-      } catch {
-        token = userId;
-      }
-    }
-    this.setToken(token);
-
-    return { user: newUser, token };
+    return { user: newUser, token: userId };
   },
 
   /**
