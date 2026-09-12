@@ -275,6 +275,7 @@ export default function App() {
     maxScore?: number;
     percentage?: number;
     activityTitle?: string;
+    quizAnswers?: Record<string, string | number> | (string | number)[];
   }) => {
     if (!user) {
       setAuthModalOpen(true);
@@ -354,7 +355,7 @@ export default function App() {
           language={language}
           existingProgress={existingQuizProgress}
           onBack={returnToGames}
-          onFinish={(score, maxScore, percentage) => {
+          onFinish={(score, maxScore, percentage, quizAnswers) => {
             handleSaveProgress({
               activityId: activeChallengeId,
               activityType: 'quiz',
@@ -363,6 +364,7 @@ export default function App() {
               score,
               maxScore: 100,
               percentage,
+              quizAnswers,
               activityTitle: `${language === 'pt' ? 'Quiz de Aprendizagem:' : 'Learning Quiz:'} ${currentTheme.title[language]}`,
             });
           }}

@@ -12,7 +12,12 @@ interface FinalQuizViewProps {
   language: Language;
   existingProgress?: ActivityProgress;
   onBack: () => void;
-  onFinish: (score: number, maxScore: number, percentage: number) => void;
+  onFinish: (
+    score: number,
+    maxScore: number,
+    percentage: number,
+    answersPayload?: Record<string, string | number>
+  ) => void;
 }
 
 export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
@@ -78,8 +83,20 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
   const handleSubmit = () => {
     setSubmitted(true);
     const { score, maxScore, percentage } = calculateScore();
+
+    // Collect student selected answers with explicit option text for server grading
+    const answersPayload: Record<string, string | number> = {};
+    shuffledQuestions.forEach((q) => {
+      const selectedIdx = selectedAnswers[q.id];
+      if (selectedIdx !== undefined && q.options?.pt && q.options.pt[selectedIdx]) {
+        answersPayload[q.id] = q.options.pt[selectedIdx];
+      } else if (selectedIdx !== undefined) {
+        answersPayload[q.id] = selectedIdx;
+      }
+    });
+
     // Rule 1: Every challenge and quiz is worth exactly 100 points maximum.
-    onFinish(percentage, 100, percentage);
+    onFinish(percentage, 100, percentage, answersPayload);
   };
 
   const handleRetry = () => {

@@ -37,6 +37,7 @@ import { BADGES } from '../data/badgesData';
 import { generateSecurePublicId } from '../utils/publicIdGenerator';
 import { getTurmasList, addTurma, removeTurmas } from '../data/turmasData';
 import { getDefaultAvatar } from '../utils/avatarUtils';
+import { isValidActivityId, evaluateQuizSubmission, evaluateDailyTipSubmission } from '../data/activityCatalog';
 
 const TOKEN_KEY = 'tic_5ano_auth_token';
 const CURRENT_USER_KEY = 'tic_5ano_current_user';
@@ -871,11 +872,20 @@ export const api = {
       // points history can be empty
     }
 
-    // 4. Calculate verified points dynamically from progress
+    // 4. Calculate verified points dynamically from progress strictly matching curriculum catalog
     // Rule 1: Every challenge and quiz is worth 100 points maximum.
     // Rule 3: For Quiz de Aprendizagem, official score is permanently the 1st attempt score.
+    // Rule 4: Discard any fabricated activities not in the official 5th grade curriculum
     let calculatedPoints = 0;
+    const validatedProgress: ActivityProgress[] = [];
+
     for (const p of progress) {
+      if (!isValidActivityId(p.activityId)) {
+        console.warn(`[Integrity] Atividade inválida/desconhecida ignorada no cálculo de pontos: ${p.activityId}`);
+        continue;
+      }
+      validatedProgress.push(p);
+
       if (p.status === 'completed') {
         const isQuiz = isLearningQuiz(p.activityId, p.activityType);
         if (isQuiz) {
@@ -888,15 +898,24 @@ export const api = {
       }
     }
 
-    // Derive badges dynamically
-    const eligibleBadges = evaluateEligibleBadges(progress, calculatedPoints, new Set());
+    // Derive badges dynamically based exclusively on validated curriculum activities
+    const eligibleBadges = evaluateEligibleBadges(validatedProgress, calculatedPoints, new Set());
     const badgeBonus = eligibleBadges.reduce((acc, b) => acc + b.bonus, 0);
     const totalVerifiedPoints = calculatedPoints + badgeBonus;
 
-    // Legitimate daily tip points from verified history (capped at 50 pts each)
-    const dailyTipPoints = pointsHistory
-      .filter((tx) => tx.id?.startsWith('pt-daily-') || tx.reason?.includes('Curiosidade'))
-      .reduce((sum, tx) => sum + Math.min(50, Math.max(0, tx.amount || 0)), 0);
+    // Legitimate daily tip points from verified history (capped at 50 pts each, unique per day)
+    const seenTipDates = new Set<string>();
+    let dailyTipPoints = 0;
+    for (const tx of pointsHistory) {
+      if (tx.id?.startsWith('pt-daily-') || tx.reason?.includes('Curiosidade')) {
+        // Date isolation to prevent multiple awards for same day
+        const dateKey = tx.timestamp ? tx.timestamp.split('T')[0] : tx.id;
+        if (!seenTipDates.has(dateKey)) {
+          seenTipDates.add(dateKey);
+          dailyTipPoints += Math.min(50, Math.max(0, tx.amount || 0));
+        }
+      }
+    }
 
     const maxLegitimatePoints = totalVerifiedPoints + dailyTipPoints;
 
@@ -1012,6 +1031,7 @@ export const api = {
     maxScore?: number;
     percentage?: number;
     activityTitle?: string;
+    quizAnswers?: Record<string, string | number> | (string | number)[];
   }): Promise<{
     success: boolean;
     record: ActivityProgress;
@@ -1033,12 +1053,33 @@ export const api = {
       throw new Error('Identificador da atividade em falta.');
     }
 
+    // 0. INTEGRITY CHECK: Reject unknown activity IDs that are not in the official curriculum
+    if (!isValidActivityId(payload.activityId)) {
+      throw new Error(`Atividade inválida ou não reconhecida no currículo: ${payload.activityId}`);
+    }
+
+    // Check if activity is a "Quiz de Aprendizagem"
+    const isQuiz = isLearningQuiz(payload.activityId, payload.activityType);
+
     // Clamp and sanitize percentage (0 to 100)
     let finalPercentage: number | undefined = payload.percentage;
-    if (payload.score !== undefined && payload.maxScore && payload.maxScore > 0) {
-      const safeScore = Math.max(0, Math.min(payload.score, payload.maxScore));
-      finalPercentage = Math.round((safeScore / payload.maxScore) * 100);
-    } else if (finalPercentage !== undefined) {
+
+    // If it's a quiz and answers were supplied, evaluate against official answer key
+    if (isQuiz && payload.quizAnswers) {
+      const serverQuizResult = evaluateQuizSubmission(payload.activityId, payload.quizAnswers);
+      if (serverQuizResult) {
+        finalPercentage = serverQuizResult.percentage;
+      }
+    }
+
+    if (finalPercentage === undefined) {
+      if (payload.score !== undefined && payload.maxScore && payload.maxScore > 0) {
+        const safeScore = Math.max(0, Math.min(payload.score, payload.maxScore));
+        finalPercentage = Math.round((safeScore / payload.maxScore) * 100);
+      } else {
+        finalPercentage = 100;
+      }
+    } else {
       finalPercentage = Math.max(0, Math.min(100, Math.round(Number(finalPercentage) || 0)));
     }
 
@@ -1067,9 +1108,6 @@ export const api = {
     let existing = progressList.find((p) => p.activityId === payload.activityId);
     let earnedPoints = 0;
     const isCompleted = (payload.status || 'completed') === 'completed';
-
-    // Check if activity is a "Quiz de Aprendizagem"
-    const isQuiz = isLearningQuiz(payload.activityId, payload.activityType);
 
     // Rule 1: Every challenge and quiz has a maximum score of 100 points/XP.
     // Normalized score is between 0 and 100 based on finalPercentage.
@@ -1264,7 +1302,34 @@ export const api = {
     const user: User = JSON.parse(rawUser);
     const userId = user.id;
 
-    user.points = (user.points || 0) + bonusPoints;
+    // Check if user already claimed today's tip to prevent multiple bonus injections
+    const effectiveDate = dateStr || new Date().toISOString().split('T')[0];
+    try {
+      const existingDoc = await getDoc(doc(db, 'users', userId, 'dailyTips', effectiveDate));
+      if (existingDoc.exists() && existingDoc.data()?.answered) {
+        console.warn(`[Integrity] Dica do dia já respondida para a data ${effectiveDate}.`);
+        return {
+          success: true,
+          user,
+          userPoints: user.points || 0,
+          achievements: JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + userId) || '[]'),
+        };
+      }
+    } catch (e) {
+      console.warn('Daily tip prior existence check notice:', e);
+    }
+
+    // Authoritatively evaluate answer and points
+    let pointsToAward = Math.min(50, Math.max(0, bonusPoints));
+    let isCorrectAnswer = answerDetails?.isCorrect ?? (pointsToAward >= 50);
+
+    if (answerDetails?.selectedOptionId && effectiveDate) {
+      const serverTipEvaluation = evaluateDailyTipSubmission(effectiveDate, answerDetails.selectedOptionId);
+      pointsToAward = serverTipEvaluation.pointsToAward;
+      isCorrectAnswer = serverTipEvaluation.isCorrect;
+    }
+
+    user.points = (user.points || 0) + pointsToAward;
     user.lastActivity = {
       themeId: 'daily_tip',
       title: `💡 Curiosidade: ${tipTitle}`,
@@ -1275,24 +1340,24 @@ export const api = {
     const tipTx: PointTransaction = {
       id: `pt-daily-${Date.now()}`,
       userId,
-      amount: bonusPoints,
+      amount: pointsToAward,
       reason: `💡 Curiosidade TIC: ${tipTitle}`,
       timestamp: new Date().toISOString(),
     };
     setDoc(doc(db, 'users', userId, 'pointsHistory', tipTx.id), tipTx).catch(() => {});
 
     // Save daily tip record for multi-device sync
-    if (dateStr) {
+    if (effectiveDate) {
       const dailyRecord = {
         userId,
-        date: dateStr,
+        date: effectiveDate,
         answered: true,
         selectedOptionId: answerDetails?.selectedOptionId || '',
-        isCorrect: answerDetails?.isCorrect ?? (bonusPoints >= 50),
-        pointsEarned: bonusPoints,
+        isCorrect: isCorrectAnswer,
+        pointsEarned: pointsToAward,
         timestamp: new Date().toISOString(),
       };
-      setDoc(doc(db, 'users', userId, 'dailyTips', dateStr), dailyRecord).catch((e) => {
+      setDoc(doc(db, 'users', userId, 'dailyTips', effectiveDate), dailyRecord).catch((e) => {
         console.warn('Daily tip answer Firestore sync notice:', e);
       });
     }

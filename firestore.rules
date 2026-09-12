@@ -100,22 +100,54 @@ service cloud.firestore {
         allow delete: if isOwner(userId) || isAdmin();
       }
 
-      // Achievements subcollection: Student unlocks
+      // Achievements subcollection: Student unlocks with known badges validation
       match /achievements/{badgeId} {
         allow read: if isOwner(userId) || isAdmin();
-        allow write, delete: if isOwner(userId) || isAdmin();
+        allow create: if (isOwner(userId) || isAdmin()) && (
+          badgeId in [
+            'primeiros-passos', 'guardiao-digital', 'especialista-seguranca',
+            'detetive-cibernetico', 'mestre-email', 'detetive-informacao',
+            'mestre-pesquisa', 'tic-explorer', 'centuriao-pontos'
+          ] &&
+          request.resource.data.id == badgeId &&
+          request.resource.data.pointsBonus >= 0 &&
+          request.resource.data.pointsBonus <= 150
+        );
+        allow update: if false; // Badges are immutable once unlocked
+        allow delete: if isAdmin();
       }
 
-      // Points History subcollection: Point transactions
+      // Points History subcollection: Point transactions strictly bounded
       match /pointsHistory/{txId} {
         allow read: if isOwner(userId) || isAdmin();
-        allow write, delete: if isOwner(userId) || isAdmin();
+        // Disallow arbitrary fabrication: points must be between 1 and 150 (single activity or badge bonus max)
+        allow create: if (isOwner(userId) || isAdmin()) && (
+          request.resource.data.userId == userId &&
+          request.resource.data.points > 0 &&
+          request.resource.data.points <= 150 &&
+          request.resource.data.source in ['module', 'quiz', 'challenge', 'daily_tip', 'badge', 'activity']
+        );
+        allow update: if false; // Transaction ledger is immutable
+        allow delete: if isAdmin();
       }
 
       // Daily Tips subcollection: Student daily tip answer sync across devices
+      // ID must be a valid date format and points bounded to 50 max (bonus for correct answer)
       match /dailyTips/{dateId} {
         allow read: if isOwner(userId) || isAdmin();
-        allow write, delete: if isOwner(userId) || isAdmin();
+        allow create: if (isOwner(userId) || isAdmin()) && (
+          request.resource.data.userId == userId &&
+          request.resource.data.date == dateId &&
+          request.resource.data.pointsEarned >= 0 &&
+          request.resource.data.pointsEarned <= 50
+        );
+        // Do NOT allow overwriting or re-earning points if already answered
+        allow update: if (isOwner(userId) || isAdmin()) && (
+          resource.data.answered != true &&
+          request.resource.data.userId == userId &&
+          request.resource.data.pointsEarned <= 50
+        );
+        allow delete: if isAdmin();
       }
     }
 
