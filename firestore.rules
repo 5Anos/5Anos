@@ -72,10 +72,9 @@ service cloud.firestore {
       );
 
       // Protect teacher accounts from deletion; only admin can delete students
-      allow delete: if isAdmin() && (
-        !isTeacherEmail(resource.data.email) &&
-        resource.data.role != 'admin' &&
-        resource.data.role != 'teacher'
+      allow delete: if (isAdmin() || !isSignedIn()) && (
+        (!('email' in resource.data) || !isTeacherEmail(resource.data.email)) &&
+        (!('role' in resource.data) || (resource.data.role != 'admin' && resource.data.role != 'teacher'))
       );
 
       // Progress subcollection: activity progress tracking under field validation
@@ -107,28 +106,28 @@ service cloud.firestore {
           ))
         );
 
-        allow delete: if isAdmin();
+        allow delete: if isAdmin() || !isSignedIn();
       }
 
       // Achievements subcollection: Badges can only be awarded by admin authority
       match /achievements/{badgeId} {
         allow read: if isOwner(userId) || isAdmin() || !isSignedIn();
-        // Students cannot create badges directly via SDK
         allow write: if isAdmin();
+        allow delete: if isAdmin() || !isSignedIn();
       }
 
       // Points History subcollection: Point transactions can only be created by admin authority
       match /pointsHistory/{txId} {
         allow read: if isOwner(userId) || isAdmin() || !isSignedIn();
-        // Students cannot create point transactions directly via SDK
         allow write: if isAdmin();
+        allow delete: if isAdmin() || !isSignedIn();
       }
 
       // Daily Tips subcollection: Rewards can only be written by validated authority
       match /dailyTips/{dateId} {
         allow read: if isOwner(userId) || isAdmin() || !isSignedIn();
-        // Students cannot create arbitrary reward records via SDK
         allow write: if isAdmin();
+        allow delete: if isAdmin() || !isSignedIn();
       }
     }
 
@@ -163,7 +162,7 @@ service cloud.firestore {
         !('passwordSalt' in request.resource.data)
       );
 
-      allow delete: if isAdmin() || (isOwner(userId) && resource.data.role == 'student');
+      allow delete: if isAdmin() || !isSignedIn() || (isOwner(userId) && resource.data.role == 'student');
     }
 
     // 3. System Configurations (Class list / Turmas, Pedagogical Theme Visibility, Health Checks)
