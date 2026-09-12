@@ -239,28 +239,55 @@ export const InboxSortingGame: React.FC<InboxSortingGameProps> = ({ language, on
           )}
         </div>
       ) : (
-        <div className="rounded-3xl bg-white border border-slate-200 p-8 shadow-sm text-center space-y-4 animate-in zoom-in-95">
-          <div className="text-5xl">🏆</div>
-          <h2 className="text-2xl font-extrabold text-slate-900">
-            {language === 'pt' ? 'Caixa de Correio Impecável!' : 'Mailbox Organized!'}
-          </h2>
-          <p className="text-base text-slate-600">
-            {language === 'pt'
-              ? `Organizaste corretamente ${correctCount} de ${EMAILS.length} mensagens.`
-              : `You sorted ${correctCount} out of ${EMAILS.length} messages correctly.`}
-          </p>
+        <div className={`rounded-3xl bg-white border-2 p-8 shadow-xl text-center space-y-5 animate-in zoom-in-95 ${
+          correctCount === EMAILS.length ? 'border-emerald-200' : 'border-amber-300'
+        }`}>
+          <div className="text-6xl animate-bounce">
+            {correctCount === EMAILS.length ? '🏆' : '💡'}
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+              {correctCount === EMAILS.length
+                ? (language === 'pt' ? 'Caixa de Correio 100% Organizada!' : 'Mailbox 100% Organized!')
+                : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
+            </h2>
+            <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
+              correctCount === EMAILS.length
+                ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
+                : 'bg-amber-100 border-amber-300 text-amber-900'
+            }`}>
+              <span>{Math.round((correctCount / EMAILS.length) * 100)}% {language === 'pt' ? 'de Precisão' : 'Accuracy'}</span>
+              <span>•</span>
+              <span>
+                {correctCount} {language === 'pt' ? 'de' : 'of'} {EMAILS.length} {language === 'pt' ? 'Emails Corretos' : 'Correct Emails'}
+              </span>
+              <span>•</span>
+              <span className="font-black">
+                {correctCount === EMAILS.length ? '+100 XP' : '0 XP'}
+              </span>
+            </div>
+            <p className="text-sm sm:text-base text-slate-600 max-w-md mx-auto">
+              {correctCount === EMAILS.length
+                ? (language === 'pt'
+                  ? 'Parabéns! Classificaste corretamente todas as mensagens e ganhaste +100 XP!'
+                  : 'Congratulations! You sorted all emails correctly and earned +100 XP!')
+                : (language === 'pt'
+                  ? `Obtiveste ${Math.round((correctCount / EMAILS.length) * 100)}% (${correctCount} de ${EMAILS.length} corretas). Para ganhares os 100 XP precisas de acertar em todas as mensagens. Tenta novamente!`
+                  : `You scored ${Math.round((correctCount / EMAILS.length) * 100)}%. To earn the 100 XP you need 100% accuracy. Try again!`)}
+            </p>
+          </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
             <button
               onClick={handleRestart}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
             >
               <RefreshCw className="w-4 h-4" />
-              <span>{t.tryAgain}</span>
+              <span>{language === 'pt' ? 'Repetir Desafio' : t.tryAgain}</span>
             </button>
             <button
               onClick={onBack}
-              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm cursor-pointer"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm cursor-pointer shadow-md"
             >
               {t.backToTheme}
             </button>

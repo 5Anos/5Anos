@@ -315,7 +315,7 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
       setCurrentIndex((prev) => prev + 1);
     } else {
       setFinished(true);
-      const totalScore = score + (dilemma.options[selectedOption || 0]?.isBest ? 1 : 0);
+      const totalScore = score;
       const pct = Math.round((totalScore / DILEMMAS.length) * 100);
       onFinish(totalScore * 2, DILEMMAS.length * 2, pct);
     }
@@ -512,28 +512,55 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
           )}
         </div>
       ) : (
-        <div className="rounded-3xl bg-white border border-slate-200 p-8 shadow-sm text-center space-y-4 animate-in zoom-in-95">
-          <div className="text-5xl">🎖️</div>
-          <h2 className="text-2xl font-extrabold text-slate-900">
-            {language === 'pt' ? 'Dilemas de Cidadania Concluídos!' : 'Citizenship Dilemmas Completed!'}
-          </h2>
-          <p className="text-base text-slate-600 max-w-md mx-auto">
-            {language === 'pt'
-              ? `Tomaste ${score} de ${DILEMMAS.length} decisões exemplares e éticas. Estás preparado para ser um cidadão digital consciente!`
-              : `You made ${score} out of ${DILEMMAS.length} exemplary choices. You are ready to be a conscious digital citizen!`}
-          </p>
+        <div className={`rounded-3xl bg-white border-2 p-8 shadow-xl text-center space-y-5 animate-in zoom-in-95 ${
+          score === DILEMMAS.length ? 'border-emerald-200' : 'border-amber-300'
+        }`}>
+          <div className="text-6xl animate-bounce">
+            {score === DILEMMAS.length ? '🎖️' : '💡'}
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+              {score === DILEMMAS.length
+                ? (language === 'pt' ? 'Dilemas Superados com 100% de Sucesso!' : 'Dilemmas Completed with 100%!')
+                : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
+            </h2>
+            <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
+              score === DILEMMAS.length
+                ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
+                : 'bg-amber-100 border-amber-300 text-amber-900'
+            }`}>
+              <span>{Math.round((score / DILEMMAS.length) * 100)}% {language === 'pt' ? 'de Precisão' : 'Accuracy'}</span>
+              <span>•</span>
+              <span>
+                {score} {language === 'pt' ? 'de' : 'of'} {DILEMMAS.length} {language === 'pt' ? 'Decisões Exemplares' : 'Exemplary Choices'}
+              </span>
+              <span>•</span>
+              <span className="font-black">
+                {score === DILEMMAS.length ? '+100 XP' : '0 XP'}
+              </span>
+            </div>
+            <p className="text-sm sm:text-base text-slate-600 max-w-md mx-auto">
+              {score === DILEMMAS.length
+                ? (language === 'pt'
+                  ? 'Excelente empenho! Tomaste 100% de decisões exemplares e éticas. Ganhaste +100 XP!'
+                  : 'Great job! You made 100% exemplary choices and earned +100 XP!')
+                : (language === 'pt'
+                  ? `Obtiveste ${Math.round((score / DILEMMAS.length) * 100)}% (${score} de ${DILEMMAS.length} corretas). Para ganhares os 100 XP precisas de acertar em todas as questões. Tenta novamente!`
+                  : `You scored ${Math.round((score / DILEMMAS.length) * 100)}%. To earn the 100 XP you need 100% accuracy. Try again!`)}
+            </p>
+          </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
             <button
               onClick={handleRestart}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
             >
               <RefreshCw className="w-4 h-4" />
-              <span>{t.tryAgain}</span>
+              <span>{language === 'pt' ? 'Repetir Desafio' : t.tryAgain}</span>
             </button>
             <button
               onClick={onBack}
-              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm cursor-pointer"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm cursor-pointer shadow-md"
             >
               {t.backToTheme}
             </button>
