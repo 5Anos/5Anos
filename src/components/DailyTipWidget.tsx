@@ -138,7 +138,7 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
 
     setSubmitting(true);
     const isCorrect = selectedOptionId === todayTip.correctOptionId;
-    const awardedPoints = isCorrect ? 50 : 25;
+    const awardedPoints = 15;
 
     const answerRecord: StoredDailyAnswer = {
       answered: true,
@@ -328,7 +328,7 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-[11px] font-black text-indigo-700 bg-indigo-100/70 px-2 py-0.5 rounded-full">
-                      {language === 'pt' ? '50 pts se acertares • 25 pts se errares' : '50 pts correct • 25 pts wrong'}
+                      {language === 'pt' ? 'Recompensa: 15 XP' : 'Reward: 15 XP'}
                     </span>
                   </div>
                 </div>
@@ -473,11 +473,11 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                         <p className="text-xs sm:text-sm">
                           {savedAnswer?.isCorrect
                             ? language === 'pt'
-                              ? 'Leste com atenção e acertaste em cheio na resposta! Ganhaste 50 pontos!'
-                              : 'You read carefully and got it right! You earned 50 points!'
+                              ? 'Leste com atenção e acertaste em cheio na resposta! Ganhaste 15 pontos!'
+                              : 'You read carefully and got it right! You earned 15 points!'
                             : language === 'pt'
-                            ? 'A tua opção selecionada não estava correta, mas pelo teu esforço e por leres a dica ganhaste 25 pontos de participação!'
-                            : 'Your selected option was incorrect, but you earned 25 participation points for reading the tip!'}
+                            ? 'A tua opção selecionada não estava correta, mas pela tua participação e esforço ganhaste 15 pontos!'
+                            : 'Your selected option was incorrect, but for reading and participating you earned 15 points!'}
                         </p>
 
                         {/* Detailed Explanation */}

@@ -49,13 +49,18 @@ service cloud.firestore {
         !('passwordSalt' in request.resource.data)
       );
 
-      // Profile updates: cannot escalate role to admin/teacher; points bounded (0-6000); NO passwords
+      // Profile updates:
+      // 1) Non-admins/students CANNOT alter points directly (request.resource.data.points == resource.data.points)
+      // 2) Cannot escalate role to admin/teacher
+      // 3) Cannot alter email or inject passwords
       allow update: if (isOwner(userId) || isAdmin()) && (
+        (isAdmin() || (
+          request.resource.data.role == resource.data.role &&
+          request.resource.data.points == resource.data.points &&
+          (!('email' in request.resource.data) || request.resource.data.email == resource.data.email)
+        )) &&
         request.resource.data.role != 'admin' &&
         request.resource.data.role != 'teacher' &&
-        request.resource.data.points >= resource.data.points &&
-        request.resource.data.points <= 6000 &&
-        (!('email' in request.resource.data) || request.resource.data.email == resource.data.email) &&
         !('password' in request.resource.data) &&
         !('passwordHash' in request.resource.data) &&
         !('passwordSalt' in request.resource.data)
@@ -97,57 +102,28 @@ service cloud.firestore {
           ))
         );
 
-        allow delete: if isOwner(userId) || isAdmin();
+        allow delete: if isAdmin();
       }
 
-      // Achievements subcollection: Student unlocks with known badges validation
+      // Achievements subcollection: Badges can only be awarded by admin authority
       match /achievements/{badgeId} {
         allow read: if isOwner(userId) || isAdmin();
-        allow create: if (isOwner(userId) || isAdmin()) && (
-          badgeId in [
-            'primeiros-passos', 'guardiao-digital', 'especialista-seguranca',
-            'detetive-cibernetico', 'mestre-email', 'detetive-informacao',
-            'mestre-pesquisa', 'tic-explorer', 'centuriao-pontos'
-          ] &&
-          request.resource.data.id == badgeId &&
-          request.resource.data.pointsBonus >= 0 &&
-          request.resource.data.pointsBonus <= 150
-        );
-        allow update: if false; // Badges are immutable once unlocked
-        allow delete: if isAdmin();
+        // Students cannot create badges directly via SDK
+        allow write: if isAdmin();
       }
 
-      // Points History subcollection: Point transactions strictly bounded
+      // Points History subcollection: Point transactions can only be created by admin authority
       match /pointsHistory/{txId} {
         allow read: if isOwner(userId) || isAdmin();
-        // Disallow arbitrary fabrication: points must be between 1 and 150 (single activity or badge bonus max)
-        allow create: if (isOwner(userId) || isAdmin()) && (
-          request.resource.data.userId == userId &&
-          request.resource.data.points > 0 &&
-          request.resource.data.points <= 150 &&
-          request.resource.data.source in ['module', 'quiz', 'challenge', 'daily_tip', 'badge', 'activity']
-        );
-        allow update: if false; // Transaction ledger is immutable
-        allow delete: if isAdmin();
+        // Students cannot create point transactions directly via SDK
+        allow write: if isAdmin();
       }
 
-      // Daily Tips subcollection: Student daily tip answer sync across devices
-      // ID must be a valid date format and points bounded to 50 max (bonus for correct answer)
+      // Daily Tips subcollection: Rewards can only be written by validated authority
       match /dailyTips/{dateId} {
         allow read: if isOwner(userId) || isAdmin();
-        allow create: if (isOwner(userId) || isAdmin()) && (
-          request.resource.data.userId == userId &&
-          request.resource.data.date == dateId &&
-          request.resource.data.pointsEarned >= 0 &&
-          request.resource.data.pointsEarned <= 50
-        );
-        // Do NOT allow overwriting or re-earning points if already answered
-        allow update: if (isOwner(userId) || isAdmin()) && (
-          resource.data.answered != true &&
-          request.resource.data.userId == userId &&
-          request.resource.data.pointsEarned <= 50
-        );
-        allow delete: if isAdmin();
+        // Students cannot create arbitrary reward records via SDK
+        allow write: if isAdmin();
       }
     }
 
@@ -166,11 +142,13 @@ service cloud.firestore {
         !('passwordSalt' in request.resource.data)
       );
 
-      // Student points progression sync: bounded to valid platform score range (0-6000 XP)
+      // Student can update avatar, publicId, turma, but CANNOT alter points directly
       allow update: if (isOwner(userId) || isAdmin()) && (
+        (isAdmin() || (
+          request.resource.data.role == resource.data.role &&
+          request.resource.data.points == resource.data.points
+        )) &&
         request.resource.data.role == 'student' &&
-        request.resource.data.points >= resource.data.points &&
-        request.resource.data.points <= 6000 &&
         !('email' in request.resource.data) &&
         !('name' in request.resource.data) &&
         !('password' in request.resource.data) &&

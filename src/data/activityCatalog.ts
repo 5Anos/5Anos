@@ -163,8 +163,8 @@ export function evaluateDailyTipSubmission(
   const tip = isValidDate ? getTodayDailyTip(dateObj) : ALL_366_DAILY_TIPS[0];
 
   const isCorrect = String(selectedOptionId).trim().toLowerCase() === String(tip.correctOptionId).trim().toLowerCase();
-  // 50 points for correct answer, 25 points for participation
-  const pointsToAward = isCorrect ? 50 : 25;
+  // 15 XP specification from Phase 2 (strictly unified)
+  const pointsToAward = 15;
 
   return {
     isValidDate,

@@ -903,7 +903,7 @@ export const api = {
     const badgeBonus = eligibleBadges.reduce((acc, b) => acc + b.bonus, 0);
     const totalVerifiedPoints = calculatedPoints + badgeBonus;
 
-    // Legitimate daily tip points from verified history (capped at 50 pts each, unique per day)
+    // Legitimate daily tip points from verified history (capped at 15 pts each, unique per day)
     const seenTipDates = new Set<string>();
     let dailyTipPoints = 0;
     for (const tx of pointsHistory) {
@@ -912,34 +912,25 @@ export const api = {
         const dateKey = tx.timestamp ? tx.timestamp.split('T')[0] : tx.id;
         if (!seenTipDates.has(dateKey)) {
           seenTipDates.add(dateKey);
-          dailyTipPoints += Math.min(50, Math.max(0, tx.amount || 0));
+          dailyTipPoints += Math.min(15, Math.max(0, tx.amount || 0));
         }
       }
     }
 
-    const maxLegitimatePoints = totalVerifiedPoints + dailyTipPoints;
+    const officialVerifiedPoints = totalVerifiedPoints + dailyTipPoints;
 
-    // 5. Fetch stored points if any from Firestore
-    try {
-      const userDoc = await getDoc(doc(db, 'users', user.id));
-      if (userDoc.exists()) {
-        const d = userDoc.data();
-        const storedPoints = typeof d.points === 'number' ? d.points : 0;
-        if (!isUserAdmin(user.email, user.role)) {
-          // Reconcile points: never allow arbitrary inflation beyond legitimate activities + bonuses
-          user.points = Math.min(maxLegitimatePoints, Math.max(totalVerifiedPoints, storedPoints));
-          if (storedPoints !== user.points) {
-            setDoc(doc(db, 'users', user.id), { points: user.points, updatedAt: new Date().toISOString() }, { merge: true }).catch(() => {});
-            setDoc(doc(db, 'publicProfiles', user.id), { points: user.points, updatedAt: new Date().toISOString() }, { merge: true }).catch(() => {});
-          }
-        } else {
-          user.points = storedPoints;
+    // 5. User points are authoritatively derived from verified activities + bonuses
+    if (!isUserAdmin(user.email, user.role)) {
+      user.points = officialVerifiedPoints;
+    } else {
+      try {
+        const userDoc = await getDoc(doc(db, 'users', user.id));
+        if (userDoc.exists()) {
+          user.points = typeof userDoc.data()?.points === 'number' ? userDoc.data().points : 0;
         }
-      } else {
-        user.points = totalVerifiedPoints;
+      } catch {
+        user.points = 0;
       }
-    } catch {
-      user.points = totalVerifiedPoints;
     }
 
     // Combine any stored achievements with derived ones
@@ -1240,10 +1231,13 @@ export const api = {
       await setDoc(doc(db, 'users', userId, 'progress', payload.activityId), existing, { merge: true });
 
       const userUpdatePayload: any = {
-        points: user.points,
         lastActivity: user.lastActivity,
         updatedAt: new Date().toISOString(),
       };
+      // Only admins can alter points directly on the user doc
+      if (isUserAdmin(user.email, user.role)) {
+        userUpdatePayload.points = user.points;
+      }
       await setDoc(doc(db, 'users', userId), userUpdatePayload, { merge: true });
 
       // Keep public profiles in sync for the student leaderboard (excluding admin accounts)
@@ -1253,7 +1247,6 @@ export const api = {
         await setDoc(
           doc(db, 'publicProfiles', userId),
           {
-            points: user.points,
             completedActivities,
             badgeCount,
             updatedAt: new Date().toISOString(),
@@ -1285,7 +1278,7 @@ export const api = {
    */
   async recordDailyTipBonus(
     tipTitle: string,
-    bonusPoints = 50,
+    bonusPoints = 15,
     dateStr?: string,
     answerDetails?: { selectedOptionId: string; isCorrect: boolean }
   ): Promise<{
@@ -1319,13 +1312,13 @@ export const api = {
       console.warn('Daily tip prior existence check notice:', e);
     }
 
-    // Authoritatively evaluate answer and points
-    let pointsToAward = Math.min(50, Math.max(0, bonusPoints));
-    let isCorrectAnswer = answerDetails?.isCorrect ?? (pointsToAward >= 50);
+    // Authoritatively evaluate answer and points strictly adhering to 15 XP specification
+    let pointsToAward = 15;
+    let isCorrectAnswer = answerDetails?.isCorrect ?? true;
 
     if (answerDetails?.selectedOptionId && effectiveDate) {
       const serverTipEvaluation = evaluateDailyTipSubmission(effectiveDate, answerDetails.selectedOptionId);
-      pointsToAward = serverTipEvaluation.pointsToAward;
+      pointsToAward = serverTipEvaluation.pointsToAward; // 15 XP
       isCorrectAnswer = serverTipEvaluation.isCorrect;
     }
 
@@ -1336,7 +1329,7 @@ export const api = {
       timestamp: new Date().toISOString(),
     };
 
-    // Log transaction
+    // Log transaction locally / attempt ledger
     const tipTx: PointTransaction = {
       id: `pt-daily-${Date.now()}`,
       userId,
@@ -1362,20 +1355,21 @@ export const api = {
       });
     }
 
-    // Sync to Firestore
+    // Sync to Firestore without direct points manipulation by student
     try {
       const userUpdatePayload: any = {
-        points: user.points,
         lastActivity: user.lastActivity,
         updatedAt: new Date().toISOString(),
       };
+      if (isUserAdmin(user.email, user.role)) {
+        userUpdatePayload.points = user.points;
+      }
       await setDoc(doc(db, 'users', userId), userUpdatePayload, { merge: true });
 
       if (!isUserAdmin(user.email, user.role)) {
         await setDoc(
           doc(db, 'publicProfiles', userId),
           {
-            points: user.points,
             updatedAt: new Date().toISOString(),
           },
           { merge: true }
@@ -1441,16 +1435,36 @@ export const api = {
       const q = query(collection(db, 'publicProfiles'), limit(500));
       const snap = await getDocs(q);
 
+      const rawUser = typeof localStorage !== 'undefined' ? localStorage.getItem(CURRENT_USER_KEY) : null;
+      let currentUserId: string | null = null;
+      let currentUserPoints: number | null = null;
+      if (rawUser) {
+        try {
+          const parsed = JSON.parse(rawUser);
+          currentUserId = parsed.id;
+          currentUserPoints = typeof parsed.points === 'number' ? parsed.points : null;
+        } catch {}
+      }
+
       snap.forEach((docSnap) => {
         const d = docSnap.data();
         if (d.role === 'admin' || d.role === 'teacher') return;
         const studentTurma = d.turma ? String(d.turma).trim() : '';
         if (studentTurma) {
+          // Strictly enforce official points: clamp points to pedagogical curriculum ceiling (3200 XP)
+          // and use authoritatively verified points for current active student session
+          let finalPoints = typeof d.points === 'number' ? d.points : (Number(d.points) || 0);
+          finalPoints = Math.min(3200, Math.max(0, finalPoints));
+
+          if (docSnap.id === currentUserId && currentUserPoints !== null) {
+            finalPoints = currentUserPoints;
+          }
+
           studentMap.set(docSnap.id, {
             id: docSnap.id,
             publicId: d.publicId || 'Estudante_TIC',
             turma: studentTurma,
-            points: typeof d.points === 'number' ? d.points : (Number(d.points) || 0),
+            points: finalPoints,
             activitiesCount: typeof d.completedActivities === 'number' ? d.completedActivities : (typeof d.activitiesCount === 'number' ? d.activitiesCount : 0),
             badgeCount: typeof d.badgeCount === 'number' ? d.badgeCount : 0,
             avatar: d.avatar,
