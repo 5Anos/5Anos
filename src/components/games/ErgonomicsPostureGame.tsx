@@ -515,7 +515,7 @@ export const ErgonomicsPostureGame: React.FC<Props> = ({ language, onBack, onFin
               {50 + Math.round((scenarioScores.filter(Boolean).length / HABIT_SCENARIOS.length) * 50)}% {language === 'pt' ? 'de Pontuação' : 'Score'}
             </span>
             <span>•</span>
-            <span className="text-emerald-300">✓ {language === 'pt' ? 'Concluído (>50%)' : 'Completed (>50%)'}</span>
+            <span className="text-emerald-300">✓ {language === 'pt' ? 'Concluído (≥50%)' : 'Completed (≥50%)'}</span>
           </div>
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">

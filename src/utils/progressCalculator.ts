@@ -230,8 +230,8 @@ export function getStudentThemeBreakdown(
       ? (record.bestScore ?? record.bestPercentage ?? record.score ?? record.percentage ?? 0)
       : 0;
     const score = Math.max(0, Math.min(100, Math.round(Number(rawScore) || 0)));
-    // Uma atividade é considerada concluída para efeitos do progresso quando o aluno obtém uma pontuação superior a 50%
-    const completed = score > 50;
+    // Uma atividade é considerada concluída para efeitos do progresso quando o aluno obtém uma pontuação superior ou igual a 50%
+    const completed = score >= 50;
     const attempts = record?.attempts ?? (record ? 1 : 0);
 
     return {
@@ -273,8 +273,8 @@ export function getStudentThemeBreakdown(
     bestScore = Math.max(0, Math.min(100, Math.round(Number(rawBest) || 0)));
 
     quizAttempts = quizRecord.attempts ?? (quizRecord ? 1 : 0);
-    // Concluída para efeitos de progresso quando obtém pontuação superior a 50%
-    quizCompleted = bestScore > 50;
+    // Concluída para efeitos de progresso quando obtém pontuação superior ou igual a 50%
+    quizCompleted = bestScore >= 50;
   }
 
   const quiz: QuizScoreDetail = {
@@ -294,7 +294,7 @@ export function getStudentThemeBreakdown(
   const completedActivitiesCount = completedChallengesCount + (quiz.completed ? 1 : 0);
   const totalActivitiesCount = challenges.length + (quizChallenge ? 1 : 0);
 
-  // Barra de progresso: (atividades com mais de 50% / total de atividades) * 100
+  // Barra de progresso: (atividades com 50% ou mais / total de atividades) * 100
   const percentage = totalActivitiesCount > 0
     ? Math.max(0, Math.min(100, Math.round((completedActivitiesCount / totalActivitiesCount) * 100)))
     : 0;

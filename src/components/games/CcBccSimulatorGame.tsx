@@ -412,11 +412,11 @@ export const CcBccSimulatorGame: React.FC<CcBccSimulatorGameProps> = ({ language
 
           <div className="max-w-xl mx-auto space-y-2">
             <span className={`text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full ${
-              Math.round((correctCount / SCENARIOS.length) * 100) > 50
+              Math.round((correctCount / SCENARIOS.length) * 100) >= 50
                 ? 'text-emerald-300 bg-emerald-400/20 border border-emerald-400/30'
                 : 'text-amber-300 bg-amber-400/20 border border-amber-400/30'
             }`}>
-              {Math.round((correctCount / SCENARIOS.length) * 100) > 50
+              {Math.round((correctCount / SCENARIOS.length) * 100) >= 50
                 ? (language === 'pt' ? 'Desafio Superado com Sucesso!' : 'Challenge Completed!')
                 : (language === 'pt' ? 'Tentativa Concluída' : 'Attempt Completed')}
             </span>
@@ -434,10 +434,10 @@ export const CcBccSimulatorGame: React.FC<CcBccSimulatorGameProps> = ({ language
             <Sparkles className="w-5 h-5 text-amber-400" />
             <span>{Math.round((correctCount / SCENARIOS.length) * 100)}% {language === 'pt' ? 'de Pontuação' : 'Score'}</span>
             <span>•</span>
-            <span className={Math.round((correctCount / SCENARIOS.length) * 100) > 50 ? 'text-emerald-300' : 'text-amber-300'}>
-              {Math.round((correctCount / SCENARIOS.length) * 100) > 50
-                ? (language === 'pt' ? '✓ Concluído (>50%)' : '✓ Completed (>50%)')
-                : (language === 'pt' ? '≤50% (A Treinar)' : '≤50% (In Progress)')}
+            <span className={Math.round((correctCount / SCENARIOS.length) * 100) >= 50 ? 'text-emerald-300' : 'text-amber-300'}>
+              {Math.round((correctCount / SCENARIOS.length) * 100) >= 50
+                ? (language === 'pt' ? '✓ Concluído (≥50%)' : '✓ Completed (≥50%)')
+                : (language === 'pt' ? '<50% (A Treinar)' : '<50% (In Progress)')}
             </span>
           </div>
 

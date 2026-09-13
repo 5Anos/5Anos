@@ -254,7 +254,7 @@ export const InboxSortingGame: React.FC<InboxSortingGameProps> = ({ language, on
                 : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
             </h2>
             <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
-              Math.round((correctCount / EMAILS.length) * 100) > 50
+              Math.round((correctCount / EMAILS.length) * 100) >= 50
                 ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
                 : 'bg-amber-100 border-amber-300 text-amber-900'
             }`}>
@@ -265,9 +265,9 @@ export const InboxSortingGame: React.FC<InboxSortingGameProps> = ({ language, on
               </span>
               <span>•</span>
               <span className="font-black">
-                {Math.round((correctCount / EMAILS.length) * 100) > 50
-                  ? (language === 'pt' ? '✓ Concluído (>50%)' : '✓ Completed (>50%)')
-                  : (language === 'pt' ? '≤50% (A Treinar)' : '≤50% (In Progress)')}
+                {Math.round((correctCount / EMAILS.length) * 100) >= 50
+                  ? (language === 'pt' ? '✓ Concluído (≥50%)' : '✓ Completed (≥50%)')
+                  : (language === 'pt' ? '<50% (A Treinar)' : '<50% (In Progress)')}
               </span>
             </div>
             <p className="text-sm sm:text-base text-slate-600 max-w-md mx-auto">
@@ -275,14 +275,14 @@ export const InboxSortingGame: React.FC<InboxSortingGameProps> = ({ language, on
                 language === 'pt'
                   ? 'Parabéns! Classificaste corretamente todas as mensagens com 100% de pontuação máxima!'
                   : 'Congratulations! You sorted all emails correctly with 100% maximum score!'
-              ) : Math.round((correctCount / EMAILS.length) * 100) > 50 ? (
+              ) : Math.round((correctCount / EMAILS.length) * 100) >= 50 ? (
                 language === 'pt'
-                  ? `Muito bem! Obtiveste ${Math.round((correctCount / EMAILS.length) * 100)}%, superando os 50% para concluir a atividade. Podes tentar novamente para melhorar e ganhar o XP da diferença!`
-                  : `Well done! You scored ${Math.round((correctCount / EMAILS.length) * 100)}%, reaching >50% to complete the activity. You can retry anytime to improve and earn extra XP!`
+                  ? `Muito bem! Obtiveste ${Math.round((correctCount / EMAILS.length) * 100)}%, alcançando 50% ou mais para concluir a atividade. Podes tentar novamente para melhorar e ganhar o XP da diferença!`
+                  : `Well done! You scored ${Math.round((correctCount / EMAILS.length) * 100)}%, reaching 50% or above to complete the activity. You can retry anytime to improve and earn extra XP!`
               ) : (
                 language === 'pt'
-                  ? `Obtiveste ${Math.round((correctCount / EMAILS.length) * 100)}% (${correctCount} de ${EMAILS.length} corretas). Para concluíres a atividade precisas de mais de 50%. Tenta novamente!`
-                  : `You scored ${Math.round((correctCount / EMAILS.length) * 100)}%. To complete this activity you need over 50%. Try again!`
+                  ? `Obtiveste ${Math.round((correctCount / EMAILS.length) * 100)}% (${correctCount} de ${EMAILS.length} corretas). Para concluíres a atividade precisas de pelo menos 50% (superior ou igual a 50%). Tenta novamente!`
+                  : `You scored ${Math.round((correctCount / EMAILS.length) * 100)}%. To complete this activity you need at least 50%. Try again!`
               )}
             </p>
           </div>

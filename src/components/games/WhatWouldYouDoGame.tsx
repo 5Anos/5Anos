@@ -513,21 +513,21 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
         </div>
       ) : (
         <div className={`rounded-3xl bg-white border-2 p-8 shadow-xl text-center space-y-5 animate-in zoom-in-95 ${
-          Math.round((score / DILEMMAS.length) * 100) > 50 ? 'border-emerald-200' : 'border-amber-300'
+          Math.round((score / DILEMMAS.length) * 100) >= 50 ? 'border-emerald-200' : 'border-amber-300'
         }`}>
           <div className="text-6xl animate-bounce">
-            {Math.round((score / DILEMMAS.length) * 100) > 50 ? '🎖️' : '💡'}
+            {Math.round((score / DILEMMAS.length) * 100) >= 50 ? '🎖️' : '💡'}
           </div>
           <div className="space-y-2">
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
               {score === DILEMMAS.length
                 ? (language === 'pt' ? 'Dilemas Superados com 100% de Sucesso!' : 'Dilemmas Completed with 100%!')
-                : Math.round((score / DILEMMAS.length) * 100) > 50
+                : Math.round((score / DILEMMAS.length) * 100) >= 50
                 ? (language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed Successfully!')
                 : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
             </h2>
             <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
-              Math.round((score / DILEMMAS.length) * 100) > 50
+              Math.round((score / DILEMMAS.length) * 100) >= 50
                 ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
                 : 'bg-amber-100 border-amber-300 text-amber-900'
             }`}>
@@ -538,9 +538,9 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
               </span>
               <span>•</span>
               <span className="font-black">
-                {Math.round((score / DILEMMAS.length) * 100) > 50
-                  ? (language === 'pt' ? '✓ Concluído (>50%)' : '✓ Completed (>50%)')
-                  : (language === 'pt' ? '≤50% (A Treinar)' : '≤50% (In Progress)')}
+                {Math.round((score / DILEMMAS.length) * 100) >= 50
+                  ? (language === 'pt' ? '✓ Concluído (≥50%)' : '✓ Completed (≥50%)')
+                  : (language === 'pt' ? '<50% (A Treinar)' : '<50% (In Progress)')}
               </span>
             </div>
             <p className="text-sm sm:text-base text-slate-600 max-w-md mx-auto">
@@ -548,14 +548,14 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
                 language === 'pt'
                   ? 'Excelente empenho! Tomaste 100% de decisões exemplares e éticas. Parabéns!'
                   : 'Great job! You made 100% exemplary choices. Congratulations!'
-              ) : Math.round((score / DILEMMAS.length) * 100) > 50 ? (
+              ) : Math.round((score / DILEMMAS.length) * 100) >= 50 ? (
                 language === 'pt'
-                  ? `Muito bem! Obtiveste ${Math.round((score / DILEMMAS.length) * 100)}%, superando os 50% para concluir a atividade. Podes tentar novamente para melhorar a pontuação e ganhar mais XP!`
-                  : `Well done! You scored ${Math.round((score / DILEMMAS.length) * 100)}%, reaching >50% to complete the activity. You can retry anytime to improve and earn extra XP!`
+                  ? `Muito bem! Obtiveste ${Math.round((score / DILEMMAS.length) * 100)}%, alcançando os 50% ou mais para concluir a atividade. Podes tentar novamente para melhorar a pontuação e ganhar mais XP!`
+                  : `Well done! You scored ${Math.round((score / DILEMMAS.length) * 100)}%, reaching 50% or above to complete the activity. You can retry anytime to improve and earn extra XP!`
               ) : (
                 language === 'pt'
-                  ? `Obtiveste ${Math.round((score / DILEMMAS.length) * 100)}% (${score} de ${DILEMMAS.length} corretas). Para concluíres a atividade no teu progresso precisas de mais de 50%. Tenta novamente!`
-                  : `You scored ${Math.round((score / DILEMMAS.length) * 100)}%. To complete this activity you need over 50%. Try again!`
+                  ? `Obtiveste ${Math.round((score / DILEMMAS.length) * 100)}% (${score} de ${DILEMMAS.length} corretas). Para concluíres a atividade no teu progresso precisas de pelo menos 50% (superior ou igual a 50%). Tenta novamente!`
+                  : `You scored ${Math.round((score / DILEMMAS.length) * 100)}%. To complete this activity you need at least 50%. Try again!`
               )}
             </p>
           </div>

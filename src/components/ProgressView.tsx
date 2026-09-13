@@ -465,7 +465,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                             const recordedBest = item.bestScore ?? item.bestPercentage ?? item.score ?? item.percentage ?? 0;
                             const isActivityCompleted = isFinalQuiz
                               ? item.status === 'completed' || (item.attempts ?? 0) > 0
-                              : recordedBest > 50;
+                              : recordedBest >= 50;
 
                             return (
                             <tr
@@ -514,7 +514,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                                 ) : (
                                   <span className="inline-flex items-center gap-1 text-amber-700 bg-amber-50 border border-amber-200/60 px-2 py-0.5 rounded-full font-semibold text-xs">
                                     <Clock className="w-3.5 h-3.5 text-amber-600" />
-                                    <span>{language === 'pt' ? '≤50% (A Treinar)' : '≤50% (In Progress)'}</span>
+                                    <span>{language === 'pt' ? '<50% (A Treinar)' : '<50% (In Progress)'}</span>
                                   </span>
                                 )}
                               </td>
@@ -539,7 +539,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                                   <div>
                                     <span
                                       className={
-                                        recordedBest > 50
+                                        recordedBest >= 50
                                           ? 'text-emerald-600 text-sm'
                                           : recordedBest > 0
                                           ? 'text-amber-600 text-sm'
@@ -549,9 +549,9 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                                       {recordedBest}% ({recordedBest} XP)
                                     </span>
                                     <span className="block text-[10px] text-slate-400 font-normal">
-                                      {recordedBest > 50
-                                        ? (language === 'pt' ? '✓ Superou 50%' : '✓ Above 50%')
-                                        : (language === 'pt' ? 'Necessário >50% para concluir' : 'Need >50% to complete')}
+                                      {recordedBest >= 50
+                                        ? (language === 'pt' ? '✓ Atingiu ≥50%' : '✓ Reached ≥50%')
+                                        : (language === 'pt' ? 'Necessário ≥50% para concluir' : 'Need ≥50% to complete')}
                                     </span>
                                   </div>
                                 ) : (
@@ -656,7 +656,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                     const recordedBest = item.bestScore ?? item.bestPercentage ?? item.score ?? item.percentage ?? 0;
                     const isActivityCompleted = isFinalQuiz
                       ? item.status === 'completed' || (item.attempts ?? 0) > 0
-                      : recordedBest > 50;
+                      : recordedBest >= 50;
 
                     return (
                     <tr
@@ -705,7 +705,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                         ) : (
                           <span className="inline-flex items-center gap-1 text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full font-semibold text-xs border border-amber-200/60">
                             <Clock className="w-3.5 h-3.5" />
-                            <span>{language === 'pt' ? '≤50% (A Treinar)' : '≤50% (In Progress)'}</span>
+                            <span>{language === 'pt' ? '<50% (A Treinar)' : '<50% (In Progress)'}</span>
                           </span>
                         )}
                       </td>
@@ -730,7 +730,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                           <div>
                             <span
                               className={
-                                recordedBest > 50
+                                recordedBest >= 50
                                   ? 'text-emerald-600'
                                   : recordedBest > 0
                                   ? 'text-amber-600'

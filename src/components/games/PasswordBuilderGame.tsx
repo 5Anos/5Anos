@@ -591,36 +591,36 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
 
         return (
           <div className={`p-8 sm:p-12 rounded-[2.5rem] bg-gradient-to-br from-emerald-950 via-slate-900 to-teal-950 text-white text-center space-y-6 shadow-2xl border-2 animate-in zoom-in-95 ${
-            pct > 50 ? 'border-emerald-400/40' : 'border-amber-400/40'
+            pct >= 50 ? 'border-emerald-400/40' : 'border-amber-400/40'
           }`}>
             <div className={`w-20 h-20 rounded-3xl text-4xl flex items-center justify-center mx-auto shadow-xl ${
-              pct > 50 ? 'bg-amber-400 text-slate-950' : 'bg-amber-500 text-slate-950'
+              pct >= 50 ? 'bg-amber-400 text-slate-950' : 'bg-amber-500 text-slate-950'
             }`}>
-              {pct > 50 ? '🛡️' : '💡'}
+              {pct >= 50 ? '🛡️' : '💡'}
             </div>
 
             <div className="max-w-xl mx-auto space-y-2">
               <span className={`text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full border ${
-                pct > 50
+                pct >= 50
                   ? 'text-emerald-300 bg-emerald-400/20 border-emerald-400/30'
                   : 'text-amber-300 bg-amber-400/20 border-amber-400/30'
               }`}>
                 {pct === 100
                   ? (language === 'pt' ? 'Desafio Concluído com 100%!' : 'Challenge Completed with 100%!')
-                  : pct > 50
+                  : pct >= 50
                   ? (language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed Successfully!')
                   : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
               </span>
               <h2 className="text-2xl sm:text-4xl font-black">
                 {pct === 100
                   ? (language === 'pt' ? 'Guardião Digital das Palavras-passe!' : 'Digital Password Guardian!')
-                  : pct > 50
+                  : pct >= 50
                   ? (language === 'pt' ? 'Excelente Proteção Digital!' : 'Great Digital Protection!')
                   : (language === 'pt' ? 'Bom Trabalho na Proteção!' : 'Good Effort on Protection!')}
               </h2>
 
               <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
-                pct > 50
+                pct >= 50
                   ? 'bg-emerald-500/20 border-emerald-400 text-emerald-200'
                   : 'bg-amber-500/20 border-amber-400 text-amber-200'
               }`}>
@@ -631,9 +631,9 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
                 </span>
                 <span>•</span>
                 <span className="font-black">
-                  {pct > 50
-                    ? (language === 'pt' ? '✓ Concluído (>50%)' : '✓ Completed (>50%)')
-                    : (language === 'pt' ? '≤50% (A Treinar)' : '≤50% (In Progress)')}
+                  {pct >= 50
+                    ? (language === 'pt' ? '✓ Concluído (≥50%)' : '✓ Completed (≥50%)')
+                    : (language === 'pt' ? '<50% (A Treinar)' : '<50% (In Progress)')}
                 </span>
               </div>
 
@@ -642,14 +642,14 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
                   language === 'pt'
                     ? 'Aprendeste a criar frases-passe longas e imprevisíveis, a nunca partilhar códigos SMS / 2FA com terceiros e alcançaste os 100% de pontuação máxima!'
                     : 'You mastered passphrase generation, multi-factor codes defense, and reached the maximum 100% score!'
-                ) : pct > 50 ? (
+                ) : pct >= 50 ? (
                   language === 'pt'
-                    ? `Muito bem! Obtiveste ${pct}%, superando os 50% necessários para concluir a atividade. Podes repetir para tentar alcançar os 100% e ganhar o XP da melhoria!`
-                    : `Well done! You scored ${pct}%, reaching >50% to complete the activity. You can retry to improve and earn extra XP!`
+                    ? `Muito bem! Obtiveste ${pct}%, alcançando 50% ou mais para concluir a atividade. Podes repetir para tentar alcançar os 100% e ganhar o XP da melhoria!`
+                    : `Well done! You scored ${pct}%, reaching 50% or above to complete the activity. You can retry to improve and earn extra XP!`
                 ) : (
                   language === 'pt'
-                    ? `Obtiveste ${pct}%. Lembra-te: para concluíres a atividade no teu progresso precisas de mais de 50%. Tenta novamente!`
-                    : `You scored ${pct}%. You need over 50% to complete the activity. Try again!`
+                    ? `Obtiveste ${pct}%. Lembra-te: para concluíres a atividade no teu progresso precisas de pelo menos 50% (superior ou igual a 50%). Tenta novamente!`
+                    : `You scored ${pct}%. You need at least 50% to complete the activity. Try again!`
                 )}
               </p>
             </div>

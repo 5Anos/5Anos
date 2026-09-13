@@ -624,18 +624,18 @@ export const ErgonomicsTrueFalseGame: React.FC<ErgonomicsTrueFalseGameProps> = (
                 <div className="flex items-center gap-3.5 text-center sm:text-left">
                   <div
                     className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0 shadow-xs ${
-                      percentage > 50
+                      percentage >= 50
                         ? 'bg-emerald-600 text-white'
                         : 'bg-amber-500 text-white'
                     }`}
                   >
-                    {percentage > 50 ? '🏆' : '💡'}
+                    {percentage >= 50 ? '🏆' : '💡'}
                   </div>
                   <div>
                     <h3 className="font-black text-base sm:text-lg">
                       {percentage === 100
                         ? (language === 'pt' ? 'Excelente! Dominas a Ergonomia com 100%!' : 'Excellent! You mastered Ergonomics 100%!')
-                        : percentage > 50
+                        : percentage >= 50
                         ? (language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed Successfully!')
                         : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
                     </h3>
@@ -644,13 +644,13 @@ export const ErgonomicsTrueFalseGame: React.FC<ErgonomicsTrueFalseGameProps> = (
                         ? (language === 'pt'
                           ? 'Acertaste em 5 de 5 situações (100% de pontuação máxima)!'
                           : 'You got 5 out of 5 correct (100% max score)!')
-                        : percentage > 50
+                        : percentage >= 50
                         ? (language === 'pt'
-                          ? `Acertaste em ${correctCount} de 5 situações (${percentage}%). Concluíste a atividade (>50%). Podes repetir para melhorar a tua pontuação e ganhar mais XP!`
-                          : `You got ${correctCount} of 5 correct (${percentage}%). Challenge completed (>50%). You can retry to improve your score and earn extra XP!`)
+                          ? `Acertaste em ${correctCount} de 5 situações (${percentage}%). Concluíste a atividade (≥50%). Podes repetir para melhorar a tua pontuação e ganhar mais XP!`
+                          : `You got ${correctCount} of 5 correct (${percentage}%). Challenge completed (≥50%). You can retry to improve your score and earn extra XP!`)
                         : (language === 'pt'
-                          ? `Acertaste em ${correctCount} de 5 situações (${percentage}%). Para concluíres a atividade precisas de mais de 50%. Tenta novamente!`
-                          : `You got ${correctCount} of 5 correct (${percentage}%). To complete this activity you need over 50%. Try again!`)}
+                          ? `Acertaste em ${correctCount} de 5 situações (${percentage}%). Para concluíres a atividade precisas de pelo menos 50% (superior ou igual a 50%). Tenta novamente!`
+                          : `You got ${correctCount} of 5 correct (${percentage}%). To complete this activity you need at least 50%. Try again!`)}
                     </p>
                   </div>
                 </div>

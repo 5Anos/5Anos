@@ -1161,8 +1161,8 @@ export const api = {
       // Na primeira tentativa, o aluno recebe exatamente a percentagem obtida em XP (ex.: 67% -> 67 XP)
       earnedPoints = normalizedScore;
 
-      // Uma atividade é considerada concluída para efeitos do progresso quando obtém pontuação superior a 50%
-      const isCompletedForProgress = normalizedScore > 50;
+      // Uma atividade é considerada concluída para efeitos do progresso quando obtém pontuação superior ou igual a 50%
+      const isCompletedForProgress = normalizedScore >= 50;
 
       existing = {
         userId,
@@ -1216,8 +1216,8 @@ export const api = {
           existing.bestPercentage = normalizedScore;
         }
 
-        // Concluído para efeitos de progresso quando a melhor pontuação for superior a 50%
-        const isCompletedForProgress = (existing.bestScore ?? existing.firstAttemptScore ?? 0) > 50;
+        // Concluído para efeitos de progresso quando a melhor pontuação for superior ou igual a 50%
+        const isCompletedForProgress = (existing.bestScore ?? existing.firstAttemptScore ?? 0) >= 50;
         existing.status = isCompletedForProgress ? 'completed' : 'in_progress';
         earnedPoints = 0;
       } else {
@@ -1240,8 +1240,8 @@ export const api = {
           earnedPoints = 0;
         }
 
-        // Uma atividade é considerada concluída para efeitos do progresso quando obtém uma pontuação superior a 50%
-        const isCompletedForProgress = (existing.bestScore ?? 0) > 50;
+        // Uma atividade é considerada concluída para efeitos do progresso quando obtém uma pontuação superior ou igual a 50%
+        const isCompletedForProgress = (existing.bestScore ?? 0) >= 50;
         existing.status = isCompletedForProgress ? 'completed' : 'in_progress';
       }
     }

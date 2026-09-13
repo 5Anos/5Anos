@@ -509,7 +509,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
               const isFinalQuiz = chal.type === 'final_quiz' || chal.id.startsWith('quiz-final');
               const bestScore = record ? (record.bestScore ?? record.bestPercentage ?? record.score ?? record.percentage ?? 0) : 0;
               const hasAttempted = !!record && (record.attempts ?? 0) > 0;
-              const isDone = isFinalQuiz ? (record?.status === 'completed' || hasAttempted) : (bestScore > 50);
+              const isDone = isFinalQuiz ? (record?.status === 'completed' || hasAttempted) : (bestScore >= 50);
               const isQuizVisible = quizVisibility[theme.id] === true;
               const chalImg = getChallengeImage(chal.type);
 
@@ -635,7 +635,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                       ) : hasAttempted ? (
                         <span className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border text-amber-800 bg-amber-100 border-amber-300">
                           <Clock className="w-3.5 h-3.5 text-amber-600" />
-                          <span>{bestScore}% (≤50%)</span>
+                          <span>{bestScore}% (&lt;50%)</span>
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full">
@@ -688,14 +688,14 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                                 ? (language === 'pt' ? ' • Máxima!' : ' • Max!')
                                 : isDone
                                 ? (language === 'pt' ? ' • Melhora para mais XP' : ' • Improve for more XP')
-                                : (language === 'pt' ? ' • >50% para concluir' : ' • >50% to complete')}
+                                : (language === 'pt' ? ' • ≥50% para concluir' : ' • ≥50% to complete')}
                               {record?.attempts && record.attempts > 1 ? (language === 'pt' ? ` • ${record.attempts} tent.` : ` • ${record.attempts} att.`) : ''}
                             </span>
                           </span>
                         ) : (
                           <span className="text-[11px] font-bold text-indigo-600 flex items-center gap-1 mt-0.5">
                             <Zap className="w-3 h-3 fill-current text-indigo-500" />
-                            <span>{language === 'pt' ? 'Até 100 XP • Conclui com >50%' : 'Up to 100 XP • Complete with >50%'}</span>
+                            <span>{language === 'pt' ? 'Até 100 XP • Conclui com ≥50%' : 'Up to 100 XP • Complete with ≥50%'}</span>
                           </span>
                         )}
                       </div>

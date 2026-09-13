@@ -1151,7 +1151,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
                     ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
                     : evaluationResult.percentage >= 70
                     ? 'bg-blue-50 text-blue-800 border-blue-200'
-                    : evaluationResult.percentage > 50
+                    : evaluationResult.percentage >= 50
                     ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
                     : evaluationResult.percentage >= 30
                     ? 'bg-amber-50 text-amber-800 border-amber-200'
@@ -1161,13 +1161,13 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
                 {language === 'pt' ? 'Pontuação:' : 'Score:'} {evaluationResult.totalScore} / {evaluationResult.maxScore} pts ({evaluationResult.percentage}%)
               </span>
               <span className={`px-3 py-1 rounded-full text-xs font-black border ${
-                evaluationResult.percentage > 50
+                evaluationResult.percentage >= 50
                   ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
                   : 'bg-amber-100 text-amber-900 border-amber-300'
               }`}>
-                {evaluationResult.percentage > 50
-                  ? (language === 'pt' ? '✓ Concluído (>50%)' : '✓ Completed (>50%)')
-                  : (language === 'pt' ? '≤50% (A Treinar)' : '≤50% (In Progress)')}
+                {evaluationResult.percentage >= 50
+                  ? (language === 'pt' ? '✓ Concluído (≥50%)' : '✓ Completed (≥50%)')
+                  : (language === 'pt' ? '<50% (A Treinar)' : '<50% (In Progress)')}
               </span>
             </div>
 
