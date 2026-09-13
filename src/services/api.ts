@@ -541,7 +541,31 @@ export const api = {
       console.warn('Email check in register notice:', err);
     }
 
-    const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+    // 2. Tenta registar no Firebase Authentication para permitir login em qualquer dispositivo
+    let fbUser: FirebaseUser | null = null;
+    let userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, normalizedEmail, cleanPassword);
+      fbUser = userCredential.user;
+      userId = fbUser.uid;
+      try {
+        await updateProfile(fbUser, { displayName: name.trim() });
+      } catch {
+        // ignora falha na atribuição de display name
+      }
+    } catch (fbErr: any) {
+      console.warn('Firebase Auth user creation notice:', fbErr?.code || fbErr?.message);
+      if (fbErr?.code === 'auth/email-already-in-use') {
+        throw new Error(
+          language === 'pt'
+            ? '❌ Já existe uma conta associada a este email. Por favor, faz login.'
+            : '❌ An account is already registered with this email. Please log in.'
+        );
+      }
+      // Se Firebase Auth não permitir password/email ou der erro de rede, utiliza o ID local gerado
+    }
+
     // Bónus de primeiro acesso: 100 XP para alunos na primeira vez que entram na plataforma
     const initialPoints = isAdmin ? 0 : 100;
     const finalAvatar = avatar || getDefaultAvatar(finalPublicId);
@@ -559,23 +583,11 @@ export const api = {
       createdAt: new Date().toISOString(),
     };
 
-    // Registar transação de boas-vindas para o histórico de pontos
-    if (!isAdmin) {
-      const welcomeTx: PointTransaction = {
-        id: `pt-welcome-${Date.now()}`,
-        userId,
-        amount: 100,
-        reason: '🎉 Boas-vindas à Plataforma Educativa TIC (Primeiro acesso: +100 XP)',
-        timestamp: new Date().toISOString(),
-      };
-      setDoc(doc(db, 'users', userId, 'pointsHistory', welcomeTx.id), welcomeTx).catch(() => {});
-    }
-
-    // 3. Establish student session using the platform's session mechanism
+    // 3. Estabelecer sessão do aluno na plataforma
     localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
     this.setToken(userId);
 
-    // 4. Save to Cloud Firestore users collection (NO passwords or credentials stored)
+    // 4. Guardar na coleção 'users' do Cloud Firestore (sem guardar palavras-passe)
     const userPayload: any = {
       id: userId,
       name: name.trim(),
@@ -595,7 +607,21 @@ export const api = {
       handleFirestoreError(error, OperationType.CREATE, `users/${userId}`);
     }
 
-    // 5. If student, register in publicProfiles for the leaderboard (0 initial points)
+    // 5. Registar transação de boas-vindas para o histórico de pontos
+    if (!isAdmin) {
+      const welcomeTx: PointTransaction = {
+        id: `pt-welcome-${Date.now()}`,
+        userId,
+        amount: 100,
+        reason: '🎉 Boas-vindas à Plataforma Educativa TIC (Primeiro acesso: +100 XP)',
+        timestamp: new Date().toISOString(),
+      };
+      setDoc(doc(db, 'users', userId, 'pointsHistory', welcomeTx.id), welcomeTx).catch((e) => {
+        console.warn('Welcome pointsHistory notice:', e);
+      });
+    }
+
+    // 6. Registar em publicProfiles para o ranking de alunos
     if (!isAdmin) {
       try {
         await setDoc(
@@ -611,7 +637,7 @@ export const api = {
           }
         );
       } catch (error) {
-        handleFirestoreError(error, OperationType.CREATE, `publicProfiles/${userId}`);
+        console.warn('publicProfiles notice in register:', error);
       }
     }
 
