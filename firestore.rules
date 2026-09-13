@@ -55,13 +55,13 @@ service cloud.firestore {
       );
 
       // Profile updates:
-      // 1) Non-admins/students CANNOT alter points directly (request.resource.data.points == resource.data.points)
+      // 1) Allow student/owner or admin to update their own profile and points
       // 2) Cannot escalate role to admin/teacher
       // 3) Cannot alter email or inject passwords
       allow update: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
         (isAdmin() || (
           request.resource.data.role == resource.data.role &&
-          request.resource.data.points == resource.data.points &&
+          (!('points' in request.resource.data) || (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 3500)) &&
           (!('email' in request.resource.data) || request.resource.data.email == resource.data.email)
         )) &&
         request.resource.data.role != 'admin' &&
@@ -148,11 +148,11 @@ service cloud.firestore {
         !('passwordSalt' in request.resource.data)
       );
 
-      // Student can update avatar, publicId, turma, but CANNOT alter points directly
+      // Student can update avatar, publicId, turma, points, counters
       allow update: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
         (isAdmin() || (
           request.resource.data.role == resource.data.role &&
-          request.resource.data.points == resource.data.points
+          (!('points' in request.resource.data) || (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 3500))
         )) &&
         request.resource.data.role == 'student' &&
         !('email' in request.resource.data) &&

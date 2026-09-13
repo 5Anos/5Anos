@@ -600,7 +600,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
             <div className="flex items-center gap-2 mb-1">
               <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-black bg-amber-100 text-amber-900 border border-amber-200">
                 <Sparkles className="w-3 h-3 text-amber-600 fill-amber-500" />
-                <span>+ 100 XP</span>
+                <span>{language === 'pt' ? 'Até 100 XP' : 'Up to 100 XP'}</span>
               </span>
             </div>
             <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
@@ -1151,15 +1151,23 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
                     ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
                     : evaluationResult.percentage >= 70
                     ? 'bg-blue-50 text-blue-800 border-blue-200'
+                    : evaluationResult.percentage > 50
+                    ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
                     : evaluationResult.percentage >= 30
                     ? 'bg-amber-50 text-amber-800 border-amber-200'
                     : 'bg-rose-50 text-rose-800 border-rose-200'
                 }`}
               >
-                {language === 'pt' ? 'Cotação:' : 'Score:'} {evaluationResult.totalScore} / {evaluationResult.maxScore} pts ({evaluationResult.percentage}%)
+                {language === 'pt' ? 'Pontuação:' : 'Score:'} {evaluationResult.totalScore} / {evaluationResult.maxScore} pts ({evaluationResult.percentage}%)
               </span>
-              <span className="px-3 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-900 border border-amber-200">
-                ⭐ +{evaluationResult.totalScore} XP
+              <span className={`px-3 py-1 rounded-full text-xs font-black border ${
+                evaluationResult.percentage > 50
+                  ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                  : 'bg-amber-100 text-amber-900 border-amber-300'
+              }`}>
+                {evaluationResult.percentage > 50
+                  ? (language === 'pt' ? '✓ Concluído (>50%)' : '✓ Completed (>50%)')
+                  : (language === 'pt' ? '≤50% (A Treinar)' : '≤50% (In Progress)')}
               </span>
             </div>
 
@@ -1254,7 +1262,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
                     onClick={handleFinish}
                     className="w-full sm:w-1/2 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-emerald-600/20 transition-all cursor-pointer flex items-center justify-center gap-1.5"
                   >
-                    <span>{language === 'pt' ? `Concluir (+${evaluationResult.totalScore} XP) →` : `Complete (+${evaluationResult.totalScore} XP) →`}</span>
+                    <span>{language === 'pt' ? 'Concluir Desafio →' : 'Complete Challenge →'}</span>
                   </button>
                 </>
               ) : (
@@ -1269,7 +1277,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
                     onClick={handleFinish}
                     className="w-full sm:w-2/3 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-emerald-600/20 transition-all cursor-pointer hover:scale-[1.01] active:scale-98 flex items-center justify-center gap-1.5"
                   >
-                    <span>{language === 'pt' ? 'Concluir Desafio (+100 XP) →' : 'Complete Challenge (+100 XP) →'}</span>
+                    <span>{language === 'pt' ? 'Concluir Desafio (100%) →' : 'Complete Challenge (100%) →'}</span>
                   </button>
                 </>
               )}

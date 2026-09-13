@@ -177,7 +177,7 @@ export const CcBccSimulatorGame: React.FC<CcBccSimulatorGameProps> = ({ language
 
         <div className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 px-3.5 py-1.5 rounded-2xl text-amber-900 font-extrabold text-xs sm:text-sm">
           <Trophy className="w-4 h-4 text-amber-500" />
-          <span>100 XP</span>
+          <span>{language === 'pt' ? 'Até 100 XP' : 'Up to 100 XP'}</span>
         </div>
       </div>
 
@@ -411,8 +411,14 @@ export const CcBccSimulatorGame: React.FC<CcBccSimulatorGameProps> = ({ language
           </div>
 
           <div className="max-w-xl mx-auto space-y-2">
-            <span className="text-xs font-black uppercase tracking-wider text-blue-300 px-3 py-1 rounded-full bg-blue-400/20 border border-blue-400/30">
-              {language === 'pt' ? 'Desafio Superado com Sucesso!' : 'Challenge Completed!'}
+            <span className={`text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full ${
+              Math.round((correctCount / SCENARIOS.length) * 100) > 50
+                ? 'text-emerald-300 bg-emerald-400/20 border border-emerald-400/30'
+                : 'text-amber-300 bg-amber-400/20 border border-amber-400/30'
+            }`}>
+              {Math.round((correctCount / SCENARIOS.length) * 100) > 50
+                ? (language === 'pt' ? 'Desafio Superado com Sucesso!' : 'Challenge Completed!')
+                : (language === 'pt' ? 'Tentativa Concluída' : 'Attempt Completed')}
             </span>
             <h2 className="text-2xl sm:text-4xl font-black">
               {language === 'pt' ? 'Mestre do Correio Eletrónico e Privacidade!' : 'Master of Email Privacy & Etiquette!'}
@@ -424,9 +430,15 @@ export const CcBccSimulatorGame: React.FC<CcBccSimulatorGameProps> = ({ language
             </p>
           </div>
 
-          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-amber-300 font-black text-lg">
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white font-extrabold text-sm sm:text-base">
             <Sparkles className="w-5 h-5 text-amber-400" />
-            <span>+100 XP Ganho!</span>
+            <span>{Math.round((correctCount / SCENARIOS.length) * 100)}% {language === 'pt' ? 'de Pontuação' : 'Score'}</span>
+            <span>•</span>
+            <span className={Math.round((correctCount / SCENARIOS.length) * 100) > 50 ? 'text-emerald-300' : 'text-amber-300'}>
+              {Math.round((correctCount / SCENARIOS.length) * 100) > 50
+                ? (language === 'pt' ? '✓ Concluído (>50%)' : '✓ Completed (>50%)')
+                : (language === 'pt' ? '≤50% (A Treinar)' : '≤50% (In Progress)')}
+            </span>
           </div>
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">

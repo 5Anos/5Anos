@@ -225,12 +225,14 @@ export function getStudentThemeBreakdown(
         p.activityId === c.id.replace('jogo-', 'desafio-')
     );
 
+    // A pontuação utilizada deve ser a melhor pontuação atualmente registada na BD para essa atividade
     const rawScore = record
-      ? (record.bestScore ?? record.score ?? (record.percentage !== undefined ? record.percentage : (record.bestPercentage ?? 0)))
+      ? (record.bestScore ?? record.bestPercentage ?? record.score ?? record.percentage ?? 0)
       : 0;
     const score = Math.max(0, Math.min(100, Math.round(Number(rawScore) || 0)));
-    const completed = record?.status === 'completed' || score > 0;
-    const attempts = record?.attempts ?? (completed ? 1 : 0);
+    // Uma atividade é considerada concluída para efeitos do progresso quando o aluno obtém uma pontuação superior a 50%
+    const completed = score > 50;
+    const attempts = record?.attempts ?? (record ? 1 : 0);
 
     return {
       id: c.id,
@@ -246,7 +248,7 @@ export function getStudentThemeBreakdown(
   const expectedQuizId = quizChallenge?.id || `quiz-final-tema${theme.number}`;
   const quizTitle = quizChallenge?.title?.pt || `Quiz Final: ${theme.title.pt}`;
 
-  // REGRA DA NOTA OFICIAL: 1.ª TENTATIVA
+  // REGRA DA NOTA OFICIAL: 1.ª TENTATIVA (Mantida para avaliação formal)
   let officialScore = 0;
   let bestScore = 0;
   let quizAttempts = 0;
@@ -262,15 +264,17 @@ export function getStudentThemeBreakdown(
       0;
     officialScore = Math.max(0, Math.min(100, Math.round(Number(rawOfficial) || 0)));
 
+    // A pontuação utilizada para determinar se está concluída é a melhor pontuação registada na BD
     const rawBest =
       quizRecord.bestScore ??
-      quizRecord.score ??
       quizRecord.bestPercentage ??
+      quizRecord.score ??
       officialScore;
     bestScore = Math.max(0, Math.min(100, Math.round(Number(rawBest) || 0)));
 
-    quizAttempts = quizRecord.attempts ?? (officialScore > 0 ? 1 : 0);
-    quizCompleted = quizRecord.status === 'completed' || quizAttempts > 0 || officialScore > 0;
+    quizAttempts = quizRecord.attempts ?? (quizRecord ? 1 : 0);
+    // Concluída para efeitos de progresso quando obtém pontuação superior a 50%
+    quizCompleted = bestScore > 50;
   }
 
   const quiz: QuizScoreDetail = {
@@ -282,18 +286,23 @@ export function getStudentThemeBreakdown(
     completed: quizCompleted,
   };
 
-  // 3. Cálculos Dinâmicos
-  const challengePointsSum = challenges.reduce((acc, curr) => acc + curr.score, 0);
-  const totalPoints = challengePointsSum + officialScore;
-
+  // 3. Cálculos Dinâmicos da Barra de Progresso
+  // Cada atividade conta como uma parte proporcional do tema (ex.: 4 atividades -> cada uma vale 25%)
   const completedChallengesCount = challenges.filter((c) => c.completed).length;
   const totalChallengesCount = challenges.length;
 
   const completedActivitiesCount = completedChallengesCount + (quiz.completed ? 1 : 0);
   const totalActivitiesCount = challenges.length + (quizChallenge ? 1 : 0);
 
+  // Barra de progresso: (atividades com mais de 50% / total de atividades) * 100
+  const percentage = totalActivitiesCount > 0
+    ? Math.max(0, Math.min(100, Math.round((completedActivitiesCount / totalActivitiesCount) * 100)))
+    : 0;
+
+  // Pontuação curricular somada (melhor pontuação dos desafios + nota oficial da 1.ª tentativa do quiz)
+  const challengePointsSum = challenges.reduce((acc, curr) => acc + curr.score, 0);
+  const totalPoints = challengePointsSum + officialScore;
   const maxPoints = totalActivitiesCount * 100;
-  const percentage = maxPoints > 0 ? Math.max(0, Math.min(100, Math.round((totalPoints / maxPoints) * 100))) : 0;
   const isFullyCompleted = totalActivitiesCount > 0 && completedActivitiesCount >= totalActivitiesCount;
 
   return {

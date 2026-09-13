@@ -9,6 +9,7 @@ import { getThemeImage } from '../data/themeImages';
 import { isUserAdmin, DEFAULT_THEME_VISIBILITY } from '../services/api';
 import { HeroTICBanner } from './HeroTICBanner';
 import { DailyTipWidget } from './DailyTipWidget';
+import { getStudentThemeBreakdown } from '../utils/progressCalculator';
 
 interface DashboardProps {
   user: User | null;
@@ -225,11 +226,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {displayedThemes.map((theme) => {
               const isVisibleForStudents = themeVisibility[theme.id] !== false;
-              const themeActivitiesCount = theme.challenges.length;
-              const themeCompletedCount = theme.challenges.filter((c) =>
-                progressList.some((p) => p.activityId === c.id && p.status === 'completed')
-              ).length;
-              const themePct = themeActivitiesCount > 0 ? Math.max(0, Math.min(100, Math.round((themeCompletedCount / themeActivitiesCount) * 100))) : 0;
+              const breakdown = getStudentThemeBreakdown(user || {}, progressList, theme);
+              const themePct = breakdown.percentage;
               const colorInfo = getThemeColor(theme.number);
 
               return (
@@ -343,7 +341,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   <div className="pt-3 border-t border-slate-100 mt-4">
                     <div className="flex items-center justify-between text-xs mb-1.5 font-medium text-slate-500">
                       <span>{language === 'pt' ? 'Progresso' : 'Progress'}</span>
-                      <span className="font-bold text-slate-700">{themePct}%</span>
+                      <span className="font-bold text-slate-700">
+                        {themePct}%{' '}
+                        <span className="text-[11px] font-normal text-slate-400">
+                          ({breakdown.completedActivitiesCount}/{breakdown.totalActivitiesCount})
+                        </span>
+                      </span>
                     </div>
                     <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                       <div

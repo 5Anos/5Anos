@@ -311,7 +311,9 @@ export default function App() {
         } else {
           showToast(
             language === 'pt' ? '✅ Progresso Guardado!' : '✅ Progress Saved!',
-            language === 'pt' ? 'Excelente trabalho!' : 'Great effort!'
+            res.earnedPoints && res.earnedPoints > 0
+              ? (language === 'pt' ? `+${res.earnedPoints} XP ganhos!` : `+${res.earnedPoints} XP earned!`)
+              : (language === 'pt' ? 'Excelente trabalho!' : 'Great effort!')
           );
         }
       }

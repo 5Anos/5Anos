@@ -156,6 +156,9 @@ export function evaluateDailyTipSubmission(
   isValidDate: boolean;
   isCorrect: boolean;
   pointsToAward: number;
+  readingPoints: number;
+  answerPoints: number;
+  totalPoints: number;
   tipTitle: string;
 } {
   const dateObj = new Date(dateStr);
@@ -163,13 +166,18 @@ export function evaluateDailyTipSubmission(
   const tip = isValidDate ? getTodayDailyTip(dateObj) : ALL_366_DAILY_TIPS[0];
 
   const isCorrect = String(selectedOptionId).trim().toLowerCase() === String(tip.correctOptionId).trim().toLowerCase();
-  // 15 XP specification from Phase 2 (strictly unified)
-  const pointsToAward = 15;
+  // Sistema de pontos: 20 XP pela leitura da dica + 30 XP se acertar na resposta
+  const readingPoints = 20;
+  const answerPoints = isCorrect ? 30 : 0;
+  const totalPoints = readingPoints + answerPoints;
 
   return {
     isValidDate,
     isCorrect,
-    pointsToAward,
+    pointsToAward: totalPoints,
+    readingPoints,
+    answerPoints,
+    totalPoints,
     tipTitle: tip.title.pt,
   };
 }

@@ -245,10 +245,10 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
 
               <div>
                 <div className={`inline-block px-4 py-1.5 rounded-2xl text-xl sm:text-2xl font-black border shadow-2xs mb-1.5 ${badgeStyle.pillClass}`}>
-                  {currentMention}
+                  {currentMention} ({result.percentage}%)
                 </div>
                 <p className="text-xs sm:text-sm font-semibold text-slate-500">
-                  {result.score} de {result.maxScore} Respostas Corretas
+                  {result.score} de {result.maxScore} Respostas Corretas • {result.percentage}%
                 </p>
               </div>
 
@@ -277,10 +277,10 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
 
               <div>
                 <div className={`inline-block px-5 py-2 rounded-2xl text-2xl sm:text-3xl font-black border shadow-xs mb-1.5 ${badgeStyle.pillClass}`}>
-                  {currentMention}
+                  {currentMention} ({result.percentage}%)
                 </div>
                 <p className="text-xs sm:text-sm font-semibold text-slate-500">
-                  {result.score} de {result.maxScore} Respostas Corretas
+                  {result.score} de {result.maxScore} Respostas Corretas • {result.percentage}% de Acertos
                 </p>
               </div>
 

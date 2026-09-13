@@ -295,45 +295,101 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
         </div>
       ) : (
         /* Final Celebration */
-        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-xl text-center space-y-6 animate-in zoom-in-95">
-          <div className="w-20 h-20 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center text-4xl mx-auto shadow-inner border border-teal-200 animate-bounce">
-            🌱
-          </div>
+        (() => {
+          let correctCount = 0;
+          ITEMS_LIST.forEach((item) => {
+            if (answers[item.id] === item.correctCategory) correctCount++;
+          });
+          const pct = Math.round((correctCount / ITEMS_LIST.length) * 100);
+          const isPassed = pct > 50;
 
-          <div className="space-y-2 max-w-lg mx-auto">
-            <span className="text-xs font-black uppercase tracking-widest text-teal-700 bg-teal-50 px-3 py-1 rounded-full border border-teal-200">
-              {language === 'pt' ? 'Cidadão Digital Consciente!' : 'Conscious Digital Citizen!'}
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-              {language === 'pt' ? 'Sabes proteger a tua Pegada Digital!' : 'You Know How to Guard Your Footprint!'}
-            </h2>
-            <p className="text-sm text-slate-600 leading-relaxed font-medium">
-              {language === 'pt'
-                ? 'Pensar sempre antes de publicar e proteger os teus dados e fotos privadas são as marcas de um verdadeiro cidadão digital!'
-                : 'Thinking before posting and protecting your private data and photos are the hallmarks of a great digital citizen!'}
-            </p>
-          </div>
+          return (
+            <div className={`bg-white rounded-3xl p-8 sm:p-10 border-2 shadow-xl text-center space-y-6 animate-in zoom-in-95 ${
+              isPassed ? 'border-emerald-200' : 'border-amber-300'
+            }`}>
+              <div className={`w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto shadow-inner border animate-bounce ${
+                isPassed ? 'bg-teal-100 text-teal-600 border-teal-200' : 'bg-amber-100 text-amber-600 border-amber-200'
+              }`}>
+                {isPassed ? '🌱' : '💡'}
+              </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
-            <button
-              type="button"
-              onClick={handleRestart}
-              className="px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors flex items-center gap-2 cursor-pointer"
-            >
-              <RotateCcw className="w-4 h-4" />
-              <span>{language === 'pt' ? 'Repetir Desafio' : 'Play Again'}</span>
-            </button>
+              <div className="space-y-2 max-w-lg mx-auto">
+                <span className={`text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full border ${
+                  isPassed
+                    ? 'text-teal-700 bg-teal-50 border-teal-200'
+                    : 'text-amber-800 bg-amber-50 border-amber-200'
+                }`}>
+                  {pct === 100
+                    ? (language === 'pt' ? 'Cidadão Digital Consciente (100%)!' : 'Conscious Digital Citizen (100%)!')
+                    : isPassed
+                    ? (language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed Successfully!')
+                    : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+                  {pct === 100
+                    ? (language === 'pt' ? 'Sabes proteger a tua Pegada Digital!' : 'You Know How to Guard Your Footprint!')
+                    : isPassed
+                    ? (language === 'pt' ? 'Bom Trabalho na Proteção dos Dados!' : 'Good Job Protecting Data!')
+                    : (language === 'pt' ? 'Continua a Praticar a tua Pegada Digital!' : 'Keep Practicing Your Digital Footprint!')}
+                </h2>
 
-            <button
-              type="button"
-              onClick={onBack}
-              className="px-6 py-2.5 rounded-xl font-black text-xs sm:text-sm bg-indigo-600 hover:bg-indigo-700 text-white transition-all shadow-md flex items-center gap-2 cursor-pointer hover:scale-102"
-            >
-              <Award className="w-4 h-4 text-amber-300" />
-              <span>{language === 'pt' ? 'Concluir (+100 XP)' : 'Finish (+100 XP)'}</span>
-            </button>
-          </div>
-        </div>
+                <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
+                  isPassed
+                    ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
+                    : 'bg-amber-100 border-amber-300 text-amber-900'
+                }`}>
+                  <span>{pct}% {language === 'pt' ? 'de Pontuação' : 'Score'}</span>
+                  <span>•</span>
+                  <span>
+                    {correctCount} {language === 'pt' ? 'de' : 'of'} {ITEMS_LIST.length} {language === 'pt' ? 'Decisões Corretas' : 'Correct'}
+                  </span>
+                  <span>•</span>
+                  <span className="font-black">
+                    {isPassed
+                      ? (language === 'pt' ? '✓ Concluído (>50%)' : '✓ Completed (>50%)')
+                      : (language === 'pt' ? '≤50% (A Treinar)' : '≤50% (In Progress)')}
+                  </span>
+                </div>
+
+                <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                  {pct === 100 ? (
+                    language === 'pt'
+                      ? 'Excelente! Pensar sempre antes de publicar e proteger os teus dados privados são as marcas de um verdadeiro cidadão digital!'
+                      : 'Excellent! Thinking before posting and protecting your private data are marks of a true digital citizen!'
+                  ) : isPassed ? (
+                    language === 'pt'
+                      ? `Muito bem! Obtiveste ${pct}%, superando os 50% para concluir a atividade. Podes repetir para tentar alcançar os 100% e ganhar o XP da melhoria!`
+                      : `Well done! You scored ${pct}%, reaching >50% to complete the activity. You can retry to improve and earn extra XP!`
+                  ) : (
+                    language === 'pt'
+                      ? `Obtiveste ${pct}%. Lembra-te: precisas de mais de 50% para concluíres a atividade no teu progresso. Tenta novamente!`
+                      : `You scored ${pct}%. You need over 50% to complete the activity. Try again!`
+                  )}
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={handleRestart}
+                  className="px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors flex items-center gap-2 cursor-pointer shadow-2xs"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                  <span>{language === 'pt' ? 'Repetir Desafio' : 'Play Again'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={onBack}
+                  className="px-6 py-2.5 rounded-xl font-black text-xs sm:text-sm bg-indigo-600 hover:bg-indigo-700 text-white transition-all shadow-md flex items-center gap-2 cursor-pointer hover:scale-102"
+                >
+                  <Award className="w-4 h-4 text-amber-300" />
+                  <span>{language === 'pt' ? 'Voltar ao Tema' : 'Back to Theme'}</span>
+                </button>
+              </div>
+            </div>
+          );
+        })()
       )}
     </div>
   );

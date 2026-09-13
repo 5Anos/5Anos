@@ -793,6 +793,11 @@ export const TicWhatIsTechGame: React.FC<TicWhatIsTechGameProps> = ({
             </p>
           </div>
 
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 px-5 py-2 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 font-extrabold text-sm sm:text-base">
+            <Award className="w-5 h-5 text-amber-500" />
+            <span>✓ {language === 'pt' ? 'Concluído (>50%)' : 'Completed (>50%)'}</span>
+          </div>
+
           <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
             <button
               type="button"
@@ -809,7 +814,7 @@ export const TicWhatIsTechGame: React.FC<TicWhatIsTechGameProps> = ({
               className="px-6 py-2.5 rounded-xl font-black text-xs sm:text-sm bg-indigo-600 hover:bg-indigo-700 text-white transition-all shadow-md flex items-center gap-2 cursor-pointer hover:scale-102"
             >
               <Award className="w-4 h-4 text-amber-300" />
-              <span>{language === 'pt' ? 'Voltar aos Temas (+100 XP)' : 'Back to Topics (+100 XP)'}</span>
+              <span>{language === 'pt' ? 'Voltar aos Temas' : 'Back to Topics'}</span>
             </button>
           </div>
         </div>

@@ -32,10 +32,13 @@ interface DailyTipWidgetProps {
 }
 
 interface StoredDailyAnswer {
+  read: boolean;
   answered: boolean;
   selectedOptionId: string;
   isCorrect: boolean;
   pointsEarned: number;
+  readPoints: number;
+  answerPoints: number;
   timestamp: string;
 }
 
@@ -61,8 +64,10 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
 
   const [savedAnswer, setSavedAnswer] = useState<StoredDailyAnswer | null>(null);
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
+  const [readingSubmitting, setReadingSubmitting] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [justSubmitted, setJustSubmitted] = useState(false);
+  const [justClaimedReading, setJustClaimedReading] = useState(false);
 
   // Sync modal state with forceOpen prop if provided
   useEffect(() => {
@@ -101,16 +106,21 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
     // Then check Cloud Firestore to ensure multi-device synchronization
     if (user?.id) {
       api.getDailyTipStatus(user.id, todayDateStr).then((cloudStatus) => {
-        if (isCancelled || !cloudStatus?.answered) return;
+        if (isCancelled || !cloudStatus) return;
         const answerRecord: StoredDailyAnswer = {
-          answered: true,
-          selectedOptionId: cloudStatus.selectedOptionId,
-          isCorrect: cloudStatus.isCorrect,
-          pointsEarned: cloudStatus.pointsEarned,
+          read: !!cloudStatus.read,
+          answered: !!cloudStatus.answered,
+          selectedOptionId: cloudStatus.selectedOptionId || '',
+          isCorrect: !!cloudStatus.isCorrect,
+          readPoints: cloudStatus.readPoints || (cloudStatus.read ? 20 : 0),
+          answerPoints: cloudStatus.answerPoints || (cloudStatus.isCorrect ? 30 : 0),
+          pointsEarned: cloudStatus.pointsEarned || 0,
           timestamp: cloudStatus.timestamp || new Date().toISOString(),
         };
         setSavedAnswer(answerRecord);
-        setSelectedOptionId(cloudStatus.selectedOptionId);
+        if (cloudStatus.selectedOptionId) {
+          setSelectedOptionId(cloudStatus.selectedOptionId);
+        }
         try {
           localStorage.setItem(todayStorageKey, JSON.stringify(answerRecord));
         } catch {
@@ -127,24 +137,79 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
   }, [todayStorageKey, user?.id, todayDateStr]);
 
   const hasAnsweredToday = !!savedAnswer?.answered;
+  const hasReadToday = !!savedAnswer?.read;
 
   const handleSelectOption = (optionId: string) => {
     if (hasAnsweredToday || submitting) return;
     setSelectedOptionId(optionId);
   };
 
+  // Recompensa pela leitura da dica (20 XP)
+  const handleClaimReadingBonus = async () => {
+    if (hasReadToday || readingSubmitting) return;
+
+    setReadingSubmitting(true);
+    const awardedPoints = 20;
+
+    const answerRecord: StoredDailyAnswer = {
+      read: true,
+      answered: savedAnswer?.answered || false,
+      selectedOptionId: savedAnswer?.selectedOptionId || '',
+      isCorrect: savedAnswer?.isCorrect || false,
+      readPoints: 20,
+      answerPoints: savedAnswer?.answerPoints || 0,
+      pointsEarned: (savedAnswer?.pointsEarned || 0) + awardedPoints,
+      timestamp: new Date().toISOString(),
+    };
+
+    try {
+      if (user) {
+        const res = await api.recordDailyTipRead(
+          todayTip.title[language],
+          todayDateStr
+        );
+        if (res.success && onPointsAwarded && res.earnedPoints > 0) {
+          onPointsAwarded(res.user, res.userPoints, res.achievements);
+        }
+      } else if (onPointsAwarded) {
+        // Guest mode
+        onPointsAwarded(null, awardedPoints, []);
+      }
+
+      try {
+        localStorage.setItem(todayStorageKey, JSON.stringify(answerRecord));
+      } catch (storageErr) {
+        console.warn('Could not persist daily tip read to localStorage:', storageErr);
+      }
+      setSavedAnswer(answerRecord);
+      setJustClaimedReading(true);
+      setTimeout(() => setJustClaimedReading(false), 4000);
+    } catch (err) {
+      console.error('Error claiming reading bonus:', err);
+      setSavedAnswer(answerRecord);
+    } finally {
+      setReadingSubmitting(false);
+    }
+  };
+
+  // Recompensa pela resposta à pergunta: +30 XP se acertar (e +20 XP se ainda não tiver lido)
   const handleSubmitAnswer = async () => {
     if (!selectedOptionId || hasAnsweredToday || submitting) return;
 
     setSubmitting(true);
     const isCorrect = selectedOptionId === todayTip.correctOptionId;
-    const awardedPoints = 15;
+    const readingPoints = hasReadToday ? 0 : 20;
+    const answerPoints = isCorrect ? 30 : 0;
+    const totalAwarded = readingPoints + answerPoints;
 
     const answerRecord: StoredDailyAnswer = {
+      read: true,
       answered: true,
       selectedOptionId,
       isCorrect,
-      pointsEarned: awardedPoints,
+      readPoints: 20,
+      answerPoints,
+      pointsEarned: 20 + answerPoints,
       timestamp: new Date().toISOString(),
     };
 
@@ -152,7 +217,7 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
       if (user) {
         const res = await api.recordDailyTipBonus(
           `${todayTip.title[language]} (${isCorrect ? 'Acertou' : 'Participou'})`,
-          awardedPoints,
+          30,
           todayDateStr,
           { selectedOptionId, isCorrect }
         );
@@ -162,7 +227,7 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
       } else {
         // Guest mode
         if (onPointsAwarded) {
-          onPointsAwarded(null, awardedPoints, []);
+          onPointsAwarded(null, totalAwarded, []);
         }
       }
 
@@ -183,7 +248,7 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
       setSavedAnswer(answerRecord);
       setJustSubmitted(true);
       if (onPointsAwarded) {
-        onPointsAwarded(user, awardedPoints, []);
+        onPointsAwarded(user, totalAwarded, []);
       }
     } finally {
       setSubmitting(false);
@@ -274,8 +339,8 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
               </div>
 
               {/* Reading Section: Description */}
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-wider">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-wider flex-wrap gap-2">
                   <div className="flex items-center gap-2">
                     <BookOpen className="w-4 h-4 text-indigo-600" />
                     <span>{language === 'pt' ? 'A Curiosidade Explicada' : 'The Curiosity Explained'}</span>
@@ -293,6 +358,35 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                 <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-normal bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
                   {todayTip.description[language]}
                 </p>
+
+                {/* Reading bonus claim / indicator */}
+                <div className="flex items-center justify-between gap-2 pt-1">
+                  {hasReadToday ? (
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      <span>{language === 'pt' ? '✓ Dica lida (+20 XP recebidos)' : '✓ Tip read (+20 XP earned)'}</span>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled={readingSubmitting}
+                      onClick={handleClaimReadingBonus}
+                      className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs transition-all cursor-pointer active:scale-95"
+                    >
+                      <BookOpen className="w-3.5 h-3.5" />
+                      <span>
+                        {readingSubmitting
+                          ? language === 'pt' ? 'A registar...' : 'Recording...'
+                          : language === 'pt' ? '📖 Li a Dica (+20 XP)' : '📖 I Read the Tip (+20 XP)'}
+                      </span>
+                    </button>
+                  )}
+                  {justClaimedReading && (
+                    <span className="text-xs font-bold text-emerald-600 animate-fade-in">
+                      {language === 'pt' ? '🎉 +20 XP ganhos!' : '🎉 +20 XP earned!'}
+                    </span>
+                  )}
+                </div>
               </div>
 
               {/* Fun Fact Extra */}
@@ -327,8 +421,8 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                     />
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-black text-indigo-700 bg-indigo-100/70 px-2 py-0.5 rounded-full">
-                      {language === 'pt' ? 'Recompensa: 15 XP' : 'Reward: 15 XP'}
+                    <span className="text-[11px] font-black text-indigo-700 bg-indigo-100/70 px-2.5 py-1 rounded-full">
+                      {language === 'pt' ? 'Acerta e Ganha +30 XP' : 'Answer Correctly: +30 XP'}
                     </span>
                   </div>
                 </div>
@@ -422,8 +516,8 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                             : 'Validating answer...'
                           : selectedOptionId
                           ? language === 'pt'
-                            ? 'Confirmar Resposta e Ganhar Pontos!'
-                            : 'Submit Answer & Earn Points!'
+                            ? 'Confirmar Resposta (+30 XP se acertares)!'
+                            : 'Submit Answer (+30 XP if correct)!'
                           : language === 'pt'
                           ? 'Escolhe uma opção para responder'
                           : 'Select an option to answer'}
@@ -466,18 +560,20 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                                 : 'bg-amber-200 text-amber-900'
                             }`}
                           >
-                            +{savedAnswer?.pointsEarned} {language === 'pt' ? 'Pontos' : 'Points'}
+                            {savedAnswer?.isCorrect
+                              ? language === 'pt' ? '+30 XP pela Resposta Certa' : '+30 XP for Correct Answer'
+                              : language === 'pt' ? '0 XP na Pergunta' : '0 XP on Question'}
                           </span>
                         </div>
 
                         <p className="text-xs sm:text-sm">
                           {savedAnswer?.isCorrect
                             ? language === 'pt'
-                              ? 'Leste com atenção e acertaste em cheio na resposta! Ganhaste 15 pontos!'
-                              : 'You read carefully and got it right! You earned 15 points!'
+                              ? 'Acertaste em cheio na resposta e ganhaste 30 XP adicionais! Com os 20 XP da leitura da dica, ganhaste um total de 50 XP hoje!'
+                              : 'You answered correctly and earned an additional 30 XP! With 20 XP from reading, you earned a total of 50 XP today!'
                             : language === 'pt'
-                            ? 'A tua opção selecionada não estava correta, mas pela tua participação e esforço ganhaste 15 pontos!'
-                            : 'Your selected option was incorrect, but for reading and participating you earned 15 points!'}
+                            ? 'A tua opção não estava correta, pelo que não ganhaste os 30 XP da resposta. Manténs os 20 XP ganhos pela leitura da dica!'
+                            : 'Your option was incorrect, so you did not earn the 30 XP bonus. You keep the 20 XP from reading the tip!'}
                         </p>
 
                         {/* Detailed Explanation */}

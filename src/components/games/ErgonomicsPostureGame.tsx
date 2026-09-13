@@ -276,7 +276,7 @@ export const ErgonomicsPostureGame: React.FC<Props> = ({ language, onBack, onFin
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 px-3.5 py-1.5 rounded-2xl text-amber-900 font-extrabold text-xs sm:text-sm">
             <Trophy className="w-4 h-4 text-amber-500" />
-            <span>100 XP</span>
+            <span>{language === 'pt' ? 'Até 100 XP' : 'Up to 100 XP'}</span>
           </div>
         </div>
       </div>
@@ -509,9 +509,13 @@ export const ErgonomicsPostureGame: React.FC<Props> = ({ language, onBack, onFin
             </p>
           </div>
 
-          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-amber-300 font-black text-lg">
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white font-extrabold text-sm sm:text-base">
             <Sparkles className="w-5 h-5 text-amber-400" />
-            <span>+100 XP Ganho!</span>
+            <span>
+              {50 + Math.round((scenarioScores.filter(Boolean).length / HABIT_SCENARIOS.length) * 50)}% {language === 'pt' ? 'de Pontuação' : 'Score'}
+            </span>
+            <span>•</span>
+            <span className="text-emerald-300">✓ {language === 'pt' ? 'Concluído (>50%)' : 'Completed (>50%)'}</span>
           </div>
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">

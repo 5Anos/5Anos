@@ -434,7 +434,7 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
               {language === 'pt' ? 'PERGUNTA' : 'QUESTION'} {currentIndex + 1} {language === 'pt' ? 'DE' : 'OF'} {challenge.questions.length}
             </span>
             <span className="px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-bold border border-indigo-200">
-              {language === 'pt' ? '100 XP MÁXIMO' : '100 MAX XP'}
+              {language === 'pt' ? 'ATÉ 100 XP' : 'UP TO 100 XP'}
             </span>
           </div>
 
@@ -541,44 +541,52 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
         </div>
       ) : (
         <div className={`rounded-[2rem] border p-8 text-center space-y-4 shadow-xs animate-in zoom-in-95 ${
-          finalScore === 100
+          finalScore > 50
             ? 'bg-emerald-50 border-emerald-200'
             : 'bg-amber-50 border-amber-300'
         }`}>
-          <Trophy className={`w-16 h-16 mx-auto ${finalScore === 100 ? 'text-amber-500' : 'text-amber-600'}`} />
-          <h2 className={`text-2xl font-black ${finalScore === 100 ? 'text-slate-900' : 'text-amber-950'}`}>
+          <Trophy className={`w-16 h-16 mx-auto ${finalScore > 50 ? 'text-amber-500' : 'text-amber-600'}`} />
+          <h2 className={`text-2xl font-black ${finalScore > 50 ? 'text-slate-900' : 'text-amber-950'}`}>
             {finalScore === 100
               ? (language === 'pt' ? 'Desafio Concluído com 100% de Sucesso!' : 'Challenge Completed with 100% Success!')
-              : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
+              : finalScore > 50
+              ? (language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed Successfully!')
+              : (language === 'pt' ? 'Tentativa Realizada!' : 'Attempt Completed!')}
           </h2>
 
           <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
-            finalScore === 100
+            finalScore > 50
               ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
               : 'bg-amber-100 border-amber-300 text-amber-900'
           }`}>
-            <span>{finalScore}% {language === 'pt' ? 'de Precisão' : 'Accuracy'}</span>
+            <span>{finalScore}% {language === 'pt' ? 'de Pontuação' : 'Score'}</span>
             <span>•</span>
             <span>
               {correctCount} {language === 'pt' ? 'de' : 'of'} {challenge.questions.length} {language === 'pt' ? 'Corretas' : 'Correct'}
             </span>
             <span>•</span>
             <span className="font-black">
-              {finalScore === 100 ? '+100 XP' : '0 XP'}
+              {finalScore > 50
+                ? (language === 'pt' ? '✓ Concluído (>50%)' : '✓ Completed (>50%)')
+                : (language === 'pt' ? '≤50% (A Treinar)' : '≤50% (In Progress)')}
             </span>
           </div>
 
           <p className={`text-xs sm:text-sm max-w-md mx-auto ${
-            finalScore === 100 ? 'text-emerald-800' : 'text-amber-900 font-medium'
+            finalScore > 50 ? 'text-emerald-800' : 'text-amber-900 font-medium'
           }`}>
             {finalScore === 100 ? (
               language === 'pt'
-                ? 'Excelente empenho! Acertaste em todas as questões e ganhaste +100 XP.'
-                : 'Great job! You answered all questions correctly and earned +100 XP.'
+                ? 'Excelente empenho! Acertaste em todas as questões e obtiveste a pontuação máxima de 100%!'
+                : 'Great job! You answered all questions correctly and reached the max score of 100%!'
+            ) : finalScore > 50 ? (
+              language === 'pt'
+                ? `Muito bem! Obtiveste ${finalScore}%, superando os 50% para concluir a atividade. Lembra-te: podes repetir para melhorar e ganhar o XP da diferença!`
+                : `Well done! You scored ${finalScore}%, reaching >50% to complete the activity. You can retry anytime to improve your score and gain extra XP!`
             ) : (
               language === 'pt'
-                ? `Obtiveste ${finalScore}%. Lembra-te: para ganhares os 100 XP precisas de acertar em 100% das questões. Clica em "Repetir Desafio" para tentar novamente!`
-                : `You got ${finalScore}%. Note: to earn the 100 XP you need 100% accuracy. Click "Retry" to try again!`
+                ? `Obtiveste ${finalScore}%. Para concluíres o desafio precisas de mais de 50%. Tenta novamente para melhorares o teu resultado!`
+                : `You scored ${finalScore}%. You need over 50% to complete the challenge. Try again to improve your score!`
             )}
           </p>
 

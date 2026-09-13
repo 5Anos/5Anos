@@ -353,8 +353,8 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
       setGameOver(true);
       const correctCount = Object.values(answersRecord).filter(Boolean).length;
       const percentage = Math.round((correctCount / SCENARIOS.length) * 100);
-      const score = correctCount * 15;
-      const maxScore = SCENARIOS.length * 15;
+      const score = percentage;
+      const maxScore = 100;
       onFinish(score, maxScore, percentage);
     }
   };
@@ -567,42 +567,52 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
         </div>
       ) : (
         <div className={`rounded-[2.5rem] bg-white border-2 p-8 shadow-xl text-center space-y-5 animate-in zoom-in-95 ${
-          correctCount === SCENARIOS.length
+          Math.round((correctCount / SCENARIOS.length) * 100) > 50
             ? 'border-emerald-200'
             : 'border-amber-300'
         }`}>
           <div className="text-6xl animate-bounce">
-            {correctCount === SCENARIOS.length ? '🛡️' : '💡'}
+            {Math.round((correctCount / SCENARIOS.length) * 100) > 50 ? '🛡️' : '💡'}
           </div>
           <div className="space-y-2">
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
               {correctCount === SCENARIOS.length
                 ? (language === 'pt' ? 'Laboratório Concluído com 100% de Sucesso!' : 'Security Lab Completed with 100%!')
+                : Math.round((correctCount / SCENARIOS.length) * 100) > 50
+                ? (language === 'pt' ? 'Laboratório Concluído com Sucesso!' : 'Security Lab Completed Successfully!')
                 : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
             </h2>
             <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
-              correctCount === SCENARIOS.length
+              Math.round((correctCount / SCENARIOS.length) * 100) > 50
                 ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
                 : 'bg-amber-100 border-amber-300 text-amber-900'
             }`}>
-              <span>{Math.round((correctCount / SCENARIOS.length) * 100)}% {language === 'pt' ? 'de Precisão' : 'Accuracy'}</span>
+              <span>{Math.round((correctCount / SCENARIOS.length) * 100)}% {language === 'pt' ? 'de Pontuação' : 'Score'}</span>
               <span>•</span>
               <span>
                 {correctCount} {language === 'pt' ? 'de' : 'of'} {SCENARIOS.length} {language === 'pt' ? 'Decisões Corretas' : 'Correct'}
               </span>
               <span>•</span>
               <span className="font-black">
-                {correctCount === SCENARIOS.length ? '+100 XP' : '0 XP'}
+                {Math.round((correctCount / SCENARIOS.length) * 100) > 50
+                  ? (language === 'pt' ? '✓ Concluído (>50%)' : '✓ Completed (>50%)')
+                  : (language === 'pt' ? '≤50% (A Treinar)' : '≤50% (In Progress)')}
               </span>
             </div>
             <p className="text-sm sm:text-base text-slate-600 max-w-md mx-auto">
-              {correctCount === SCENARIOS.length
-                ? (language === 'pt'
-                  ? 'Excelente empenho! Analisaste todos os 6 casos e tomaste 100% de decisões seguras (+100 XP).'
-                  : 'Great job! You analyzed all 6 cases and made 100% safe decisions (+100 XP).')
-                : (language === 'pt'
-                  ? `Obtiveste ${Math.round((correctCount / SCENARIOS.length) * 100)}% (${correctCount} de ${SCENARIOS.length} corretas). Para ganhares os 100 XP precisas de acertar em todos os casos. Repete o desafio!`
-                  : `You scored ${Math.round((correctCount / SCENARIOS.length) * 100)}%. To earn the 100 XP you need 100% accuracy. Retry the challenge!`)}
+              {correctCount === SCENARIOS.length ? (
+                language === 'pt'
+                  ? 'Excelente empenho! Analisaste todos os 6 casos e tomaste 100% de decisões seguras!'
+                  : 'Great job! You analyzed all 6 cases and made 100% safe decisions!'
+              ) : Math.round((correctCount / SCENARIOS.length) * 100) > 50 ? (
+                language === 'pt'
+                  ? `Muito bem! Obtiveste ${Math.round((correctCount / SCENARIOS.length) * 100)}%, superando os 50% para concluir a atividade. Podes repetir para tentar obter 100% e ganhar o XP da melhoria!`
+                  : `Well done! You scored ${Math.round((correctCount / SCENARIOS.length) * 100)}%, reaching >50% to complete the activity. You can retry to improve and earn extra XP!`
+              ) : (
+                language === 'pt'
+                  ? `Obtiveste ${Math.round((correctCount / SCENARIOS.length) * 100)}% (${correctCount} de ${SCENARIOS.length} corretas). Para concluíres a atividade no teu progresso precisas de mais de 50%. Tenta novamente!`
+                  : `You scored ${Math.round((correctCount / SCENARIOS.length) * 100)}%. You need over 50% to complete the activity. Try again!`
+              )}
             </p>
           </div>
 

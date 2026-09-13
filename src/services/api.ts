@@ -357,6 +357,7 @@ export const api = {
             const isAdmin = isUserAdmin(emailNorm);
             const takenIds = await this.fetchTakenPublicIds();
             const publicId = isAdmin ? 'Docente_TIC' : generateSecurePublicId(takenIds);
+            const initialPoints = isAdmin ? 0 : 100;
 
             const user: User = {
               id: fbUser.uid,
@@ -365,10 +366,21 @@ export const api = {
               publicId,
               turma: isAdmin ? undefined : '5.º A',
               role: isAdmin ? 'admin' : 'student',
-              points: 0,
+              points: initialPoints,
               language: 'pt',
               createdAt: new Date().toISOString(),
             };
+
+            if (!isAdmin) {
+              const welcomeTx: PointTransaction = {
+                id: `pt-welcome-${Date.now()}`,
+                userId: fbUser.uid,
+                amount: 100,
+                reason: '🎉 Boas-vindas à Plataforma Educativa TIC (Primeiro acesso: +100 XP)',
+                timestamp: new Date().toISOString(),
+              };
+              setDoc(doc(db, 'users', fbUser.uid, 'pointsHistory', welcomeTx.id), welcomeTx).catch(() => {});
+            }
 
             await this.syncUserToFirestore(user);
             localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
@@ -530,7 +542,8 @@ export const api = {
     }
 
     const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
-    const initialPoints = 0;
+    // Bónus de primeiro acesso: 100 XP para alunos na primeira vez que entram na plataforma
+    const initialPoints = isAdmin ? 0 : 100;
     const finalAvatar = avatar || getDefaultAvatar(finalPublicId);
 
     const newUser: User = {
@@ -545,6 +558,18 @@ export const api = {
       avatar: finalAvatar,
       createdAt: new Date().toISOString(),
     };
+
+    // Registar transação de boas-vindas para o histórico de pontos
+    if (!isAdmin) {
+      const welcomeTx: PointTransaction = {
+        id: `pt-welcome-${Date.now()}`,
+        userId,
+        amount: 100,
+        reason: '🎉 Boas-vindas à Plataforma Educativa TIC (Primeiro acesso: +100 XP)',
+        timestamp: new Date().toISOString(),
+      };
+      setDoc(doc(db, 'users', userId, 'pointsHistory', welcomeTx.id), welcomeTx).catch(() => {});
+    }
 
     // 3. Establish student session using the platform's session mechanism
     localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
@@ -905,10 +930,12 @@ export const api = {
     }
 
     // 4. Calculate verified points dynamically from progress strictly matching curriculum catalog
-    // Rule 1: Every challenge and quiz is worth 100 points maximum.
-    // Regra Fundamental: Só ganha 100 XP quando acertar em 100% de todas as questões/desafios. Menos de 100% dá 0 XP.
-    // Rule 3: For Quiz de Aprendizagem, official score is permanently the 1st attempt score.
-    // Rule 4: Discard any fabricated activities not in the official 5th grade curriculum
+    // Bónus de primeiro acesso: 100 XP para alunos na primeira vez que entram na plataforma
+    const isAdmin = isUserAdmin(user.email, user.role);
+    const welcomeBonus = isAdmin ? 0 : 100;
+
+    // Atividades — Jogo Desafio: o aluno acumula XP correspondente à sua melhor pontuação nessa atividade (máx. 100 XP)
+    // Quiz de Aprendizagem: o aluno recebe XP correspondente à percentagem da 1.ª tentativa oficial
     let calculatedPoints = 0;
     const validatedProgress: ActivityProgress[] = [];
 
@@ -919,51 +946,42 @@ export const api = {
       }
       validatedProgress.push(p);
 
-      if (p.status === 'completed') {
-        const isQuiz = isLearningQuiz(p.activityId, p.activityType);
-        if (isQuiz) {
-          const official = p.firstAttemptScore ?? p.score ?? Math.round(((p.firstAttemptPercentage ?? p.percentage ?? 100) / 100) * 100);
-          calculatedPoints += official === 100 ? 100 : 0;
-        } else {
-          const best = p.bestScore ?? p.score ?? Math.round(((p.bestPercentage ?? p.percentage ?? 100) / 100) * 100);
-          calculatedPoints += best === 100 ? 100 : 0;
-        }
+      const isQuiz = isLearningQuiz(p.activityId, p.activityType);
+      if (isQuiz) {
+        const official = Math.max(0, Math.min(100, Math.round(Number(p.firstAttemptScore ?? p.score ?? p.firstAttemptPercentage ?? p.percentage ?? 0))));
+        calculatedPoints += official;
+      } else {
+        const best = Math.max(0, Math.min(100, Math.round(Number(p.bestScore ?? p.bestPercentage ?? p.score ?? p.percentage ?? 0))));
+        calculatedPoints += best;
       }
     }
 
     // Derive badges dynamically based exclusively on validated curriculum activities
     const eligibleBadges = evaluateEligibleBadges(validatedProgress, calculatedPoints, new Set());
     const badgeBonus = eligibleBadges.reduce((acc, b) => acc + b.bonus, 0);
-    const totalVerifiedPoints = calculatedPoints + badgeBonus;
+    const totalCurricularPoints = calculatedPoints + badgeBonus;
 
-    // Legitimate daily tip points from verified history (capped at 15 pts each, unique per day)
-    const seenTipDates = new Set<string>();
-    let dailyTipPoints = 0;
+    // Legitimate daily tip points from verified history (20 XP leitura + 30 XP acerto = máx 50 XP por dia)
+    const dailyTipPointsByDate = new Map<string, number>();
     for (const tx of pointsHistory) {
-      if (tx.id?.startsWith('pt-daily-') || tx.reason?.includes('Curiosidade')) {
-        // Date isolation to prevent multiple awards for same day
+      if (tx.id?.startsWith('pt-daily-') || tx.reason?.includes('Curiosidade') || tx.reason?.includes('Dica')) {
         const dateKey = tx.timestamp ? tx.timestamp.split('T')[0] : tx.id;
-        if (!seenTipDates.has(dateKey)) {
-          seenTipDates.add(dateKey);
-          dailyTipPoints += Math.min(15, Math.max(0, tx.amount || 0));
-        }
+        const currentSum = dailyTipPointsByDate.get(dateKey) || 0;
+        dailyTipPointsByDate.set(dateKey, Math.min(50, currentSum + Math.max(0, tx.amount || 0)));
       }
     }
+    let dailyTipPoints = 0;
+    dailyTipPointsByDate.forEach((pts) => {
+      dailyTipPoints += pts;
+    });
 
-    const officialVerifiedPoints = totalVerifiedPoints + dailyTipPoints;
+    const officialVerifiedPoints = welcomeBonus + totalCurricularPoints + dailyTipPoints;
 
     // 5. User points are authoritatively derived from verified activities + bonuses
-    if (!isUserAdmin(user.email, user.role)) {
-      user.points = officialVerifiedPoints;
+    if (!isAdmin) {
+      user.points = Math.max(officialVerifiedPoints, user.points ?? 0);
     } else {
-      try {
-        const userDoc = await getDoc(doc(db, 'users', user.id));
-        if (userDoc.exists()) {
-          user.points = typeof userDoc.data()?.points === 'number' ? userDoc.data().points : 0;
-        }
-      } catch {
-        user.points = 0;
-      }
+      user.points = 0;
     }
 
     // Combine any stored achievements with derived ones
@@ -1062,6 +1080,7 @@ export const api = {
     userPoints: number;
     lastActivity: User['lastActivity'];
     achievements: UserAchievement[];
+    earnedPoints?: number;
   }> {
     const rawUser = localStorage.getItem(CURRENT_USER_KEY);
     if (!rawUser) throw new Error('Inicia sessão para guardar o progresso.');
@@ -1131,84 +1150,99 @@ export const api = {
 
     let existing = progressList.find((p) => p.activityId === payload.activityId);
     let earnedPoints = 0;
-    const isCompleted = (payload.status || 'completed') === 'completed';
 
-    // Rule 1: Every challenge and quiz has a maximum score of 100 points/XP.
-    // Regra Fundamental: Só ganha 100 XP / pontos quando acertar em 100% de todas as perguntas (finalPercentage === 100).
-    // Se tiver respostas incorretas (finalPercentage < 100), ganha 0 XP até repetir e acertar em todas.
+    // SISTEMA DE PONTOS:
+    // Cada desafio e quiz tem uma pontuação máxima de 100 pontos/XP (0% a 100%).
     const normalizedMaxScore = 100;
-    const normalizedScore = Math.max(0, Math.min(100, Math.round(finalPercentage ?? 100)));
-    const awardedPoints = normalizedScore === 100 ? 100 : 0;
+    const normalizedScore = Math.max(0, Math.min(100, Math.round(finalPercentage ?? 0)));
 
     if (!existing) {
-      // 1.ª tentativa (First Attempt)
+      // 1.ª TENTATIVA (FIRST ATTEMPT)
+      // Na primeira tentativa, o aluno recebe exatamente a percentagem obtida em XP (ex.: 67% -> 67 XP)
+      earnedPoints = normalizedScore;
+
+      // Uma atividade é considerada concluída para efeitos do progresso quando obtém pontuação superior a 50%
+      const isCompletedForProgress = normalizedScore > 50;
+
       existing = {
         userId,
         activityId: payload.activityId,
         activityType: payload.activityType,
         themeId: payload.themeId,
-        status: payload.status || 'completed',
+        status: isCompletedForProgress ? 'completed' : 'in_progress',
         score: normalizedScore,
         maxScore: normalizedMaxScore,
-        percentage: finalPercentage,
+        percentage: normalizedScore,
         attempts: 1,
         bestScore: normalizedScore,
-        bestPercentage: finalPercentage,
+        bestPercentage: normalizedScore,
         firstAttemptScore: normalizedScore,
-        firstAttemptPercentage: finalPercentage,
+        firstAttemptPercentage: normalizedScore,
         firstAttemptDate: new Date().toISOString(),
         latestScore: normalizedScore,
-        latestPercentage: finalPercentage,
+        latestPercentage: normalizedScore,
         lastUpdated: new Date().toISOString(),
       };
       progressList.push(existing);
-
-      // Points awarded only if 100% accuracy was achieved (100 XP)
-      if (isCompleted) {
-        earnedPoints = awardedPoints;
-      }
     } else {
-      // Tentativas seguintes (Subsequent Attempts - 2.ª, 3.ª, ...)
-      // Regra 2: Alunos podem repetir qualquer desafio ou quiz quantas vezes quiserem sem limite.
+      // TENTATIVAS SEGUINTES (2.ª, 3.ª, ...)
       existing.attempts = (existing.attempts || 1) + 1;
-      existing.status = payload.status || existing.status;
       existing.lastUpdated = new Date().toISOString();
       existing.latestScore = normalizedScore;
-      existing.latestPercentage = finalPercentage;
+      existing.latestPercentage = normalizedScore;
 
       // Garantir integridade dos dados da 1.ª tentativa
       if (existing.firstAttemptScore === undefined) {
         existing.firstAttemptScore = existing.score ?? normalizedScore;
       }
       if (existing.firstAttemptPercentage === undefined) {
-        existing.firstAttemptPercentage = existing.percentage ?? finalPercentage;
+        existing.firstAttemptPercentage = existing.percentage ?? normalizedScore;
       }
       if (!existing.firstAttemptDate) {
         existing.firstAttemptDate = existing.lastUpdated;
       }
 
       if (isQuiz) {
-        // REGRA 3 (ESPECIAL PARA QUIZ DE APRENDIZAGEM):
-        // A pontuação oficial/registada deve ser SEMPRE a pontuação obtida na PRIMEIRA tentativa.
-        // A 1.ª tentativa fica guardada permanentemente como "Pontuação da 1.ª tentativa".
-        // Tentativas seguintes servem apenas para treino/aprendizagem e NÃO substituem a pontuação oficial.
+        // REGRA ESPECIAL — QUIZ DE APRENDIZAGEM:
+        // A pontuação oficial registada na BD é sempre a obtida na 1.ª tentativa.
+        // Os pontos/XP atribuídos ao aluno correspondem à percentagem obtida na 1.ª tentativa.
+        // O aluno pode repetir para praticar, mas a pontuação oficial e os XP atribuídos mantêm-se (0 XP adicionais).
         existing.score = existing.firstAttemptScore;
         existing.percentage = existing.firstAttemptPercentage;
         existing.maxScore = normalizedMaxScore;
-        // Tentativas de treino não atribuem novos pontos oficiais
+
+        if (normalizedScore > (existing.bestScore ?? 0)) {
+          existing.bestScore = normalizedScore;
+          existing.bestPercentage = normalizedScore;
+        }
+
+        // Concluído para efeitos de progresso quando a melhor pontuação for superior a 50%
+        const isCompletedForProgress = (existing.bestScore ?? existing.firstAttemptScore ?? 0) > 50;
+        existing.status = isCompletedForProgress ? 'completed' : 'in_progress';
         earnedPoints = 0;
       } else {
-        // Desafios regulares: os alunos podem repetir até atingir 100% (100 XP)
-        const prevBest = existing.bestScore ?? 0;
-        const prevAwarded = prevBest === 100 ? 100 : 0;
+        // REGRA ATIVIDADES — JOGO DESAFIO:
+        // 1. A pontuação obtida é registada na BD e guarda SEMPRE a melhor pontuação.
+        // 2. O aluno recebe XP apenas correspondente à melhoria da sua melhor pontuação anterior:
+        //    XP Adicionais = Novo Best - Antigo Best (máx. 100 XP por atividade).
+        // 3. Se obtiver pontuação inferior ou igual, mantém o melhor registo e recebe 0 XP adicionais.
+        const prevBest = Math.max(0, Math.min(100, Math.round(Number(existing.bestScore ?? existing.bestPercentage ?? existing.score ?? 0))));
+
         if (normalizedScore > prevBest) {
           existing.bestScore = normalizedScore;
-          existing.bestPercentage = finalPercentage;
+          existing.bestPercentage = normalizedScore;
           existing.score = normalizedScore;
-          existing.percentage = finalPercentage;
+          existing.percentage = normalizedScore;
           existing.maxScore = normalizedMaxScore;
+          earnedPoints = Math.max(0, normalizedScore - prevBest);
+        } else {
+          // Pontuação igual ou inferior: mantém a melhor pontuação e não ganha XP adicionais
+          earnedPoints = 0;
         }
-        earnedPoints = Math.max(0, awardedPoints - prevAwarded);
+
+        // Uma atividade é considerada concluída para efeitos do progresso quando obtém uma pontuação superior a 50%
+        const isCompletedForProgress = (existing.bestScore ?? 0) > 50;
+        existing.status = isCompletedForProgress ? 'completed' : 'in_progress';
       }
     }
 
@@ -1225,7 +1259,9 @@ export const api = {
         id: `pt-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
         userId,
         amount: earnedPoints,
-        reason: `Conclusão: ${payload.activityTitle || payload.activityId}`,
+        reason: payload.activityTitle
+          ? `${payload.activityTitle} (+${earnedPoints} XP)`
+          : `Atividade (+${earnedPoints} XP)`,
         timestamp: new Date().toISOString(),
       };
       setDoc(doc(db, 'users', userId, 'pointsHistory', ptTx.id), ptTx).catch(() => {});
@@ -1265,13 +1301,10 @@ export const api = {
       await setDoc(doc(db, 'users', userId, 'progress', payload.activityId), existing, { merge: true });
 
       const userUpdatePayload: any = {
+        points: user.points,
         lastActivity: user.lastActivity,
         updatedAt: new Date().toISOString(),
       };
-      // Only admins can alter points directly on the user doc
-      if (isUserAdmin(user.email, user.role)) {
-        userUpdatePayload.points = user.points;
-      }
       await setDoc(doc(db, 'users', userId), userUpdatePayload, { merge: true });
 
       // Keep public profiles in sync for the student leaderboard (excluding admin accounts)
@@ -1281,6 +1314,7 @@ export const api = {
         await setDoc(
           doc(db, 'publicProfiles', userId),
           {
+            points: user.points,
             completedActivities,
             badgeCount,
             updatedAt: new Date().toISOString(),
@@ -1303,6 +1337,7 @@ export const api = {
       userPoints: user.points,
       lastActivity: user.lastActivity,
       achievements,
+      earnedPoints,
     };
   },
 
@@ -1310,100 +1345,228 @@ export const api = {
    * Record Daily TIC Tip Bonus (50 points for correct answer, 25 points for participation)
    * Persists multi-device daily tip status under /users/{userId}/dailyTips/{dateStr}
    */
+  /**
+   * Registar leitura da dica diária: atribui 20 XP ao aluno pela leitura
+   */
+  async recordDailyTipRead(
+    tipTitle: string,
+    dateStr?: string
+  ): Promise<{
+    success: boolean;
+    user: User | null;
+    userPoints: number;
+    earnedPoints: number;
+    achievements: UserAchievement[];
+  }> {
+    const rawUser = localStorage.getItem(CURRENT_USER_KEY);
+    if (!rawUser) {
+      return { success: true, user: null, userPoints: 0, earnedPoints: 0, achievements: [] };
+    }
+
+    const user: User = JSON.parse(rawUser);
+    const userId = user.id;
+    const effectiveDate = dateStr || new Date().toISOString().split('T')[0];
+
+    // Verificar se o aluno já leu ou respondeu à dica nesta data
+    try {
+      const existingDoc = await getDoc(doc(db, 'users', userId, 'dailyTips', effectiveDate));
+      if (existingDoc.exists() && (existingDoc.data()?.read || existingDoc.data()?.answered)) {
+        return {
+          success: true,
+          user,
+          userPoints: user.points || 0,
+          earnedPoints: 0,
+          achievements: JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + userId) || '[]'),
+        };
+      }
+    } catch (e) {
+      console.warn('Daily tip read check notice:', e);
+    }
+
+    const earnedPoints = 20; // 20 XP pela leitura da dica
+    user.points = (user.points || 0) + earnedPoints;
+    user.lastActivity = {
+      themeId: 'daily_tip',
+      title: `📖 Leitura da Dica: ${tipTitle}`,
+      timestamp: new Date().toISOString(),
+    };
+
+    const tipTx: PointTransaction = {
+      id: `pt-daily-read-${effectiveDate}-${Date.now()}`,
+      userId,
+      amount: earnedPoints,
+      reason: `📖 Leitura da Dica TIC (+20 XP): ${tipTitle}`,
+      timestamp: new Date().toISOString(),
+    };
+    setDoc(doc(db, 'users', userId, 'pointsHistory', tipTx.id), tipTx).catch(() => {});
+
+    // Guardar registo em users/{userId}/dailyTips/{effectiveDate}
+    const dailyRecord = {
+      userId,
+      date: effectiveDate,
+      read: true,
+      readPoints: 20,
+      pointsEarned: 20,
+      timestamp: new Date().toISOString(),
+    };
+    setDoc(doc(db, 'users', userId, 'dailyTips', effectiveDate), dailyRecord, { merge: true }).catch(() => {});
+
+    try {
+      await setDoc(
+        doc(db, 'users', userId),
+        {
+          points: user.points,
+          lastActivity: user.lastActivity,
+          updatedAt: new Date().toISOString(),
+        },
+        { merge: true }
+      );
+
+      if (!isUserAdmin(user.email, user.role)) {
+        await setDoc(
+          doc(db, 'publicProfiles', userId),
+          {
+            points: user.points,
+            updatedAt: new Date().toISOString(),
+          },
+          { merge: true }
+        );
+      }
+    } catch (err) {
+      console.warn('Firestore sync notice for daily tip read:', err);
+    }
+
+    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+
+    return {
+      success: true,
+      user,
+      userPoints: user.points,
+      earnedPoints,
+      achievements: JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + userId) || '[]'),
+    };
+  },
+
+  /**
+   * Resposta à pergunta da dica diária:
+   * 20 XP se ainda não tiver lido + 30 XP se acertar na resposta.
+   */
   async recordDailyTipBonus(
     tipTitle: string,
-    bonusPoints = 15,
+    bonusPoints = 30,
     dateStr?: string,
     answerDetails?: { selectedOptionId: string; isCorrect: boolean }
   ): Promise<{
     success: boolean;
     user: User | null;
     userPoints: number;
+    earnedPoints: number;
+    readingPoints: number;
+    answerPoints: number;
     achievements: UserAchievement[];
   }> {
     const rawUser = localStorage.getItem(CURRENT_USER_KEY);
     if (!rawUser) {
-      return { success: true, user: null, userPoints: 0, achievements: [] };
+      return { success: true, user: null, userPoints: 0, earnedPoints: 0, readingPoints: 0, answerPoints: 0, achievements: [] };
     }
 
     const user: User = JSON.parse(rawUser);
     const userId = user.id;
 
-    // Check if user already claimed today's tip to prevent multiple bonus injections
     const effectiveDate = dateStr || new Date().toISOString().split('T')[0];
+    let alreadyRead = false;
+    let alreadyAnswered = false;
+    let existingData: any = null;
+
     try {
       const existingDoc = await getDoc(doc(db, 'users', userId, 'dailyTips', effectiveDate));
-      if (existingDoc.exists() && existingDoc.data()?.answered) {
-        console.warn(`[Integrity] Dica do dia já respondida para a data ${effectiveDate}.`);
-        return {
-          success: true,
-          user,
-          userPoints: user.points || 0,
-          achievements: JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + userId) || '[]'),
-        };
+      if (existingDoc.exists()) {
+        existingData = existingDoc.data();
+        alreadyRead = !!existingData?.read;
+        alreadyAnswered = !!existingData?.answered;
       }
     } catch (e) {
       console.warn('Daily tip prior existence check notice:', e);
     }
 
-    // Authoritatively evaluate answer and points strictly adhering to 15 XP specification
-    let pointsToAward = 15;
-    let isCorrectAnswer = answerDetails?.isCorrect ?? true;
+    if (alreadyAnswered) {
+      return {
+        success: true,
+        user,
+        userPoints: user.points || 0,
+        earnedPoints: 0,
+        readingPoints: existingData?.readPoints || 20,
+        answerPoints: existingData?.answerPoints || 0,
+        achievements: JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + userId) || '[]'),
+      };
+    }
 
+    let isCorrectAnswer = answerDetails?.isCorrect ?? false;
     if (answerDetails?.selectedOptionId && effectiveDate) {
       const serverTipEvaluation = evaluateDailyTipSubmission(effectiveDate, answerDetails.selectedOptionId);
-      pointsToAward = serverTipEvaluation.pointsToAward; // 15 XP
       isCorrectAnswer = serverTipEvaluation.isCorrect;
     }
+
+    // Regras:
+    // 20 XP pela leitura (se ainda não tiver sido atribuído hoje)
+    // 30 XP pelo acerto na resposta
+    const readingPointsToAward = alreadyRead ? 0 : 20;
+    const answerPointsToAward = isCorrectAnswer ? 30 : 0;
+    const pointsToAward = readingPointsToAward + answerPointsToAward;
 
     user.points = (user.points || 0) + pointsToAward;
     user.lastActivity = {
       themeId: 'daily_tip',
-      title: `💡 Curiosidade: ${tipTitle}`,
+      title: isCorrectAnswer ? `🎉 Resposta Certa na Dica: ${tipTitle}` : `💡 Dica: ${tipTitle}`,
       timestamp: new Date().toISOString(),
     };
 
-    // Log transaction locally / attempt ledger
-    const tipTx: PointTransaction = {
-      id: `pt-daily-${Date.now()}`,
-      userId,
-      amount: pointsToAward,
-      reason: `💡 Curiosidade TIC: ${tipTitle}`,
-      timestamp: new Date().toISOString(),
-    };
-    setDoc(doc(db, 'users', userId, 'pointsHistory', tipTx.id), tipTx).catch(() => {});
-
-    // Save daily tip record for multi-device sync
-    if (effectiveDate) {
-      const dailyRecord = {
+    // Log transaction
+    if (pointsToAward > 0) {
+      const tipTx: PointTransaction = {
+        id: `pt-daily-ans-${effectiveDate}-${Date.now()}`,
         userId,
-        date: effectiveDate,
-        answered: true,
-        selectedOptionId: answerDetails?.selectedOptionId || '',
-        isCorrect: isCorrectAnswer,
-        pointsEarned: pointsToAward,
+        amount: pointsToAward,
+        reason: isCorrectAnswer
+          ? `🎉 Resposta Certa na Dica TIC (+${pointsToAward} XP): ${tipTitle}`
+          : `📖 Leitura da Dica TIC (+${pointsToAward} XP): ${tipTitle}`,
         timestamp: new Date().toISOString(),
       };
-      setDoc(doc(db, 'users', userId, 'dailyTips', effectiveDate), dailyRecord).catch((e) => {
-        console.warn('Daily tip answer Firestore sync notice:', e);
-      });
+      setDoc(doc(db, 'users', userId, 'pointsHistory', tipTx.id), tipTx).catch(() => {});
     }
 
-    // Sync to Firestore without direct points manipulation by student
+    const totalPointsToday = (existingData?.readPoints || (alreadyRead ? 20 : 0)) + readingPointsToAward + answerPointsToAward;
+
+    // Save daily tip record for multi-device sync
+    const dailyRecord = {
+      userId,
+      date: effectiveDate,
+      read: true,
+      readPoints: 20,
+      answered: true,
+      selectedOptionId: answerDetails?.selectedOptionId || '',
+      isCorrect: isCorrectAnswer,
+      answerPoints: answerPointsToAward,
+      pointsEarned: totalPointsToday,
+      timestamp: new Date().toISOString(),
+    };
+    setDoc(doc(db, 'users', userId, 'dailyTips', effectiveDate), dailyRecord, { merge: true }).catch((e) => {
+      console.warn('Daily tip answer Firestore sync notice:', e);
+    });
+
     try {
       const userUpdatePayload: any = {
+        points: user.points,
         lastActivity: user.lastActivity,
         updatedAt: new Date().toISOString(),
       };
-      if (isUserAdmin(user.email, user.role)) {
-        userUpdatePayload.points = user.points;
-      }
       await setDoc(doc(db, 'users', userId), userUpdatePayload, { merge: true });
 
       if (!isUserAdmin(user.email, user.role)) {
         await setDoc(
           doc(db, 'publicProfiles', userId),
           {
+            points: user.points,
             updatedAt: new Date().toISOString(),
           },
           { merge: true }
@@ -1419,6 +1582,9 @@ export const api = {
       success: true,
       user,
       userPoints: user.points,
+      earnedPoints: pointsToAward,
+      readingPoints: 20,
+      answerPoints: answerPointsToAward,
       achievements: JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + userId) || '[]'),
     };
   },
@@ -1430,10 +1596,13 @@ export const api = {
     userId: string,
     dateStr: string
   ): Promise<{
+    read: boolean;
     answered: boolean;
     selectedOptionId: string;
     isCorrect: boolean;
     pointsEarned: number;
+    readPoints: number;
+    answerPoints: number;
     timestamp: string;
   } | null> {
     if (!userId || !dateStr) return null;
@@ -1442,10 +1611,13 @@ export const api = {
       if (snap.exists()) {
         const d = snap.data();
         return {
+          read: !!d.read || !!d.answered,
           answered: !!d.answered,
           selectedOptionId: d.selectedOptionId || '',
           isCorrect: !!d.isCorrect,
           pointsEarned: typeof d.pointsEarned === 'number' ? d.pointsEarned : 0,
+          readPoints: typeof d.readPoints === 'number' ? d.readPoints : (d.read ? 20 : 0),
+          answerPoints: typeof d.answerPoints === 'number' ? d.answerPoints : (d.isCorrect ? 30 : 0),
           timestamp: d.timestamp || '',
         };
       }
