@@ -1456,7 +1456,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                     </td>
                                   ))}
 
-                                  {/* Quiz Final */}
+                                   {/* Quiz Final */}
                                   <td className="py-2.5 px-3 text-center whitespace-nowrap">
                                     {breakdown.quiz.completed || breakdown.quiz.attempts > 0 ? (
                                       <div className="inline-flex flex-col items-center">
@@ -1468,9 +1468,9 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                               ? 'bg-indigo-600 text-white'
                                               : 'bg-amber-500 text-white'
                                           }`}
-                                          title={`1.ª Tentativa (Oficial): ${breakdown.quiz.officialScore} XP | Melhor: ${breakdown.quiz.bestScore} XP`}
+                                          title={`Avaliação (1.ª Tentativa): ${breakdown.quiz.officialScore}% | Treino (Melhor Tentativa): ${breakdown.quiz.bestScore}%`}
                                         >
-                                          {breakdown.quiz.officialScore} / 100
+                                          {breakdown.quiz.officialScore}%
                                         </span>
                                         <span className="text-[10px] text-emerald-800 font-bold mt-0.5">
                                           {getQualitativeLevel(breakdown.quiz.officialScore)}
@@ -2673,10 +2673,10 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                               {breakdown.quiz.title}
                             </div>
                             <div className="text-[11px] text-slate-500">
-                              Nota Oficial (1.ª Tentativa): <strong className="text-emerald-700 font-bold">{breakdown.quiz.officialScore} XP</strong>
+                              Avaliação Oficial (1.ª Tentativa): <strong className="text-emerald-700 font-bold">{breakdown.quiz.officialScore}%</strong>
                               {breakdown.quiz.attempts > 1 && (
                                 <span className="ml-2 text-indigo-700">
-                                  (Melhor nota em {breakdown.quiz.attempts} tentativas: {breakdown.quiz.bestScore} XP)
+                                  ({breakdown.quiz.attempts} tentativas de treino • Melhor resultado: {breakdown.quiz.bestScore}%)
                                 </span>
                               )}
                             </div>
@@ -2685,7 +2685,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
 
                         <div className="flex items-center gap-1.5 font-bold">
                           <span className="px-2.5 py-1 rounded-lg bg-emerald-600 text-white shadow-xs">
-                            {breakdown.quiz.officialScore} / 100
+                            {breakdown.quiz.officialScore}%
                           </span>
                           <span className="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-900 border border-emerald-300 text-xs font-bold">
                             {getQualitativeLevel(breakdown.quiz.officialScore)}

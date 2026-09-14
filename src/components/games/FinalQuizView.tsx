@@ -30,31 +30,25 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
   onFinish,
 }) => {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
-  const [isRetrying, setIsRetrying] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [earnedDeltaXP, setEarnedDeltaXP] = useState<number | null>(null);
 
-  // Tracking dynamic best score and total awarded XP across attempts in this session
-  const initialBest = Math.max(
-    0,
-    Math.min(
-      100,
-      Math.round(
-        Number(existingProgress?.bestScore ?? existingProgress?.score ?? existingProgress?.percentage ?? 0)
-      )
-    )
-  );
-  const initialAwarded = typeof existingProgress?.awardedXp === 'number'
-    ? Math.max(0, Math.min(100, Math.round(existingProgress.awardedXp)))
-    : initialBest;
+  // Determinar se já existe uma 1.ª tentativa registada como avaliação oficial
+  const officialEvaluationScore = existingProgress?.firstAttemptScore ??
+    existingProgress?.firstAttemptPercentage ??
+    (existingProgress?.attempts && existingProgress.attempts > 0
+      ? (existingProgress.score ?? existingProgress.percentage ?? existingProgress.bestScore)
+      : undefined);
 
-  const [bestScoreInDb, setBestScoreInDb] = useState(initialBest);
-  const [totalXpAwarded, setTotalXpAwarded] = useState(initialAwarded);
+  const isInitialFirstAttempt = officialEvaluationScore === undefined &&
+    (!existingProgress?.attempts || existingProgress.attempts === 0);
+
+  const [wasFirstAttemptOnStart] = useState(isInitialFirstAttempt);
+  const [recordedOfficialScore, setRecordedOfficialScore] = useState<number | undefined>(officialEvaluationScore);
   const [attemptCount, setAttemptCount] = useState(existingProgress?.attempts || 0);
 
   const t = translations[language];
+  const hasPreviousAttempt = !wasFirstAttemptOnStart || attemptCount > 0;
 
-  const hasPreviousAttempt = attemptCount > 0;
   const [shuffledQuestions, setShuffledQuestions] = useState(() => {
     return questions.map((q) => {
       const optsPt = q.options.pt;
@@ -110,38 +104,18 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
       }
     });
 
-    const prevBest = bestScoreInDb;
-    const prevAwarded = totalXpAwarded;
-
-    // FÓRMULA OBRIGATÓRIA:
-    // XP_ADICIONAL = MAX(0, NOVA_PONTUACAO - MELHOR_PONTUACAO_ANTERIOR)
-    let delta = Math.max(0, percentage - prevBest);
-
-    // E o total de XP que uma atividade pode gerar deve estar limitado a 100:
-    // XP_ADICIONAL = MIN(XP_ADICIONAL, 100 - XP_JA_ATRIBUIDO_PELA_ATIVIDADE)
-    delta = Math.min(delta, Math.max(0, 100 - prevAwarded));
-
-    // Se nova pontuação <= melhor pontuação OU melhor pontuação = 100% OU XP já atribuídos = 100 -> 0 XP
-    if (percentage <= prevBest || prevBest === 100 || prevAwarded >= 100) {
-      delta = 0;
+    if (wasFirstAttemptOnStart && recordedOfficialScore === undefined) {
+      setRecordedOfficialScore(percentage);
     }
-
-    const newBest = percentage > prevBest ? percentage : prevBest;
-    const newAwarded = Math.min(100, prevAwarded + delta);
-
-    setEarnedDeltaXP(delta);
-    setBestScoreInDb(newBest);
-    setTotalXpAwarded(newAwarded);
     setAttemptCount((prev) => prev + 1);
 
-    // Rule 1: Every challenge and quiz is worth exactly 100 points maximum.
+    // Guardar progresso: 1.ª tentativa = avaliação; tentativas seguintes = treino. Sem XP atribuídos.
     onFinish(percentage, 100, percentage, answersPayload);
   };
 
   const handleRetry = () => {
     setSelectedAnswers({});
     setSubmitted(false);
-    setIsRetrying(true);
     setShuffledQuestions(
       questions.map((q) => {
         const optsPt = q.options.pt;
@@ -189,19 +163,19 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
             </span>
 
             {/* Score and Attempt indicator pill */}
-            {hasPreviousAttempt ? (
-              <span className="inline-flex items-center gap-1 bg-amber-500/20 border border-amber-400/40 text-amber-200 px-2.5 py-1 rounded-full">
-                <BookOpen className="w-3.5 h-3.5 text-amber-400" />
+            {hasPreviousAttempt && recordedOfficialScore !== undefined ? (
+              <span className="inline-flex items-center gap-1 bg-emerald-500/20 border border-emerald-400/40 text-emerald-200 px-2.5 py-1 rounded-full">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                 <span>
                   {language === 'pt'
-                    ? `Melhor na BD: ${bestScoreInDb}% • Tentativa ${attemptCount + 1}`
-                    : `Best in DB: ${bestScoreInDb}% • Attempt ${attemptCount + 1}`}
+                    ? `Avaliação Oficial: ${recordedOfficialScore}% (${getQuizMention(recordedOfficialScore, language)}) • Tentativa ${attemptCount + 1} (Treino)`
+                    : `Official Assessment: ${recordedOfficialScore}% (${getQuizMention(recordedOfficialScore, language)}) • Attempt ${attemptCount + 1} (Practice)`}
                 </span>
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 bg-emerald-500/20 border border-emerald-400/40 text-emerald-200 px-2.5 py-1 rounded-full">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                <span>{language === 'pt' ? '1.ª Tentativa • Até 100 XP' : '1st Attempt • Up to 100 XP'}</span>
+              <span className="inline-flex items-center gap-1 bg-amber-500/20 border border-amber-400/40 text-amber-200 px-2.5 py-1 rounded-full">
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+                <span>{language === 'pt' ? '1.ª Tentativa • Atividade de Avaliação' : '1st Attempt • Assessment Activity'}</span>
               </span>
             )}
           </div>
@@ -214,8 +188,8 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
               id={`quiz-${themeNumber}-intro`}
               text={`${language === 'pt' ? `Quiz de Aprendizagem do Tema ${themeNumber}: ${themeTitle}` : `Learning Quiz: ${themeTitle}`}. ${
                 language === 'pt'
-                  ? 'Avalia todos os conhecimentos deste tema. Podes repetir quantas vezes quiseres para melhorar e ganhar mais XP até ao limite de 100 XP!'
-                  : 'Assess all knowledge from this theme. You can retry as many times as you like to improve and earn more XP up to 100 XP!'
+                  ? 'Avalia os teus conhecimentos neste tema. A primeira tentativa corresponde à tua avaliação oficial. As tentativas seguintes servem para treinar e rever.'
+                  : 'Assess your knowledge in this theme. The first attempt corresponds to your official assessment. Subsequent attempts serve for practice and review.'
               }`}
               language={language}
               label={language === 'pt' ? 'Ouvir Quiz' : 'Listen Quiz'}
@@ -226,8 +200,8 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
 
           <p className="text-sm sm:text-base text-indigo-200 max-w-2xl leading-relaxed">
             {language === 'pt'
-              ? 'Avalia os teus conhecimentos neste tema. Podes realizar o quiz e repetir as vezes que quiseres para praticar!'
-              : 'Assess your knowledge in this theme. You can take the quiz and retry as many times as you like to practice!'}
+              ? 'Avalia os teus conhecimentos neste tema. A primeira tentativa é a que conta para a avaliação; as tentativas seguintes servem para treinar e rever.'
+              : 'Assess your knowledge in this theme. The first attempt is the one that counts for assessment; subsequent attempts serve for practice and review.'}
           </p>
         </div>
 
@@ -237,8 +211,10 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
 
       {/* Results banner if submitted */}
       {submitted && (() => {
-        const currentMention = getQuizMention(result.percentage);
+        const currentMention = getQuizMention(result.percentage, language);
         const badgeStyle = getQuizMentionBadgeStyle(result.percentage);
+        const officialScoreToDisplay = wasFirstAttemptOnStart ? result.percentage : (recordedOfficialScore ?? result.percentage);
+        const officialMention = getQuizMention(officialScoreToDisplay, language);
 
         return (
           <div className="rounded-[2rem] bg-white border-2 border-indigo-100 p-6 sm:p-8 shadow-md mb-8 text-center space-y-4 animate-in zoom-in-95">
@@ -250,42 +226,74 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                   {currentMention} ({result.percentage}%)
                 </div>
                 <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full text-xs sm:text-sm font-bold bg-indigo-50 border border-indigo-200 text-indigo-900 mx-auto">
-                  <span>{result.score} de {result.maxScore} Respostas Corretas</span>
+                  <span>{result.score} de {result.maxScore} Respostas Corretas nesta tentativa</span>
                   <span>•</span>
                   <span>{result.percentage}%</span>
                 </div>
               </div>
 
-              <p className="text-sm sm:text-base max-w-md mx-auto text-slate-700 font-medium leading-relaxed">
-                {result.percentage === 100 || totalXpAwarded === 100 ? (
+              <div className="text-sm sm:text-base max-w-xl mx-auto text-slate-700 font-medium leading-relaxed space-y-2">
+                {wasFirstAttemptOnStart ? (
                   language === 'pt' ? (
-                    <>🏆 <strong>Parabéns!</strong> Já atingiste o limite máximo de <strong>100 XP</strong> nesta atividade.</>
+                    <>
+                      <p>
+                        📝 A tua 1.ª tentativa foi registada como o teu resultado de avaliação:{' '}
+                        <strong className="text-indigo-900 font-bold">{result.percentage}% ({currentMention})</strong>.
+                      </p>
+                      <p className="text-xs sm:text-sm text-slate-500 font-normal">
+                        Podes voltar a fazer o quiz para rever o que aprendeste e tentar melhorar o teu resultado. As novas tentativas servem apenas para treinar.
+                      </p>
+                    </>
                   ) : (
-                    <>🏆 <strong>Congratulations!</strong> You have already reached the maximum of <strong>100 XP</strong> on this activity.</>
-                  )
-                ) : earnedDeltaXP !== null && earnedDeltaXP > 0 ? (
-                  language === 'pt' ? (
-                    <>🎉 <strong>Parabéns pela tua melhoria!</strong> Recebeste <strong>+{earnedDeltaXP} XP</strong> (Total: {totalXpAwarded} / 100 XP).</>
-                  ) : (
-                    <>🎉 <strong>Congratulations on your improvement!</strong> You earned <strong>+{earnedDeltaXP} XP</strong> (Total: {totalXpAwarded} / 100 XP).</>
+                    <>
+                      <p>
+                        📝 Your 1st attempt has been recorded as your evaluation result:{' '}
+                        <strong className="text-indigo-900 font-bold">{result.percentage}% ({currentMention})</strong>.
+                      </p>
+                      <p className="text-xs sm:text-sm text-slate-500 font-normal">
+                        You can retake the quiz to review what you learned and try to improve your score. New attempts serve purely for practice.
+                      </p>
+                    </>
                   )
                 ) : (
                   language === 'pt' ? (
-                    <>Obtiveste <strong>{result.percentage} XP</strong> nesta tentativa. Podes repetir o desafio para tentar alcançar os <strong>100 XP</strong>!</>
+                    <>
+                      <p>
+                        Obtiveste <strong className="text-indigo-900 font-bold">{result.percentage}% ({currentMention})</strong> nesta tentativa de treino.
+                      </p>
+                      <p className="text-xs sm:text-sm text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">
+                        A tua avaliação registada para a professora mantém-se em:{' '}
+                        <strong>{officialScoreToDisplay}% ({officialMention})</strong>.
+                      </p>
+                      <p className="text-xs sm:text-sm text-slate-500 font-normal">
+                        Podes voltar a fazer o quiz para rever o que aprendeste e tentar melhorar o teu resultado. As novas tentativas servem apenas para treinar.
+                      </p>
+                    </>
                   ) : (
-                    <>You scored <strong>{result.percentage} XP</strong> on this attempt. You can retry the challenge to aim for <strong>100 XP</strong>!</>
+                    <>
+                      <p>
+                        You scored <strong className="text-indigo-900 font-bold">{result.percentage}% ({currentMention})</strong> on this practice attempt.
+                      </p>
+                      <p className="text-xs sm:text-sm text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">
+                        Your recorded evaluation score for the teacher remains:{' '}
+                        <strong>{officialScoreToDisplay}% ({officialMention})</strong>.
+                      </p>
+                      <p className="text-xs sm:text-sm text-slate-500 font-normal">
+                        You can retake the quiz to review what you learned and try to improve your score. New attempts serve purely for practice.
+                      </p>
+                    </>
                   )
                 )}
-              </p>
+              </div>
             </div>
 
             <div className="flex items-center justify-center gap-3 pt-2">
               <button
                 onClick={handleRetry}
-                className="px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-2xs"
+                className="px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-2xs transition-colors"
               >
-                <RefreshCw className="w-4 h-4" />
-                <span>{language === 'pt' ? 'Repetir o Desafio' : 'Play Again'}</span>
+                <RefreshCw className="w-4 h-4 text-indigo-600" />
+                <span>{language === 'pt' ? 'Repetir o Quiz (Treino)' : 'Retake Quiz (Practice)'}</span>
               </button>
               <button
                 onClick={onBack}

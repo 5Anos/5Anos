@@ -532,33 +532,32 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                               {/* Score */}
                               <td className="py-3 px-3 whitespace-nowrap font-black">
                                 {(() => {
-                                  const itemAwardedXp = typeof item.awardedXp === 'number'
-                                    ? Math.max(0, Math.min(100, Math.round(item.awardedXp)))
-                                    : recordedBest;
-
                                   if (isFinalQuiz) {
+                                    const officialScore = item.firstAttemptScore ?? item.firstAttemptPercentage ?? recordedBest;
                                     return (
                                       <div>
                                         <div className="flex items-center gap-1.5">
-                                          <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${getQuizMentionBadgeStyle(recordedBest).pillClass}`}>
-                                            {recordedBest}% • {getQuizMention(recordedBest)}
-                                          </span>
-                                          <span className="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 font-bold">
-                                            {itemAwardedXp} XP
+                                          <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${getQuizMentionBadgeStyle(officialScore).pillClass}`}>
+                                            {officialScore}% • {getQuizMention(officialScore, language)}
                                           </span>
                                         </div>
-                                        <span className="block text-[10px] text-slate-400 font-semibold mt-0.5">
-                                          {language === 'pt' ? 'Melhor Pontuação (máx. 100 XP)' : 'Best Score (max 100 XP)'}
+                                        <span className="block text-[10px] text-emerald-800 font-bold mt-0.5">
+                                          {language === 'pt' ? 'Avaliação Oficial (1.ª Tentativa)' : 'Official Assessment (1st Attempt)'}
                                         </span>
                                         {item.attempts > 1 && (
                                           <span className="block text-[10px] text-slate-500 font-medium">
-                                            {language === 'pt' ? `${item.attempts} tentativas` : `${item.attempts} attempts`}
-                                            {item.firstAttemptScore !== undefined && item.firstAttemptScore !== recordedBest ? ` (1.ª: ${item.firstAttemptScore}%)` : ''}
+                                            {language === 'pt'
+                                              ? `${item.attempts} tentativas (Treino: ${recordedBest}%)`
+                                              : `${item.attempts} attempts (Practice: ${recordedBest}%)`}
                                           </span>
                                         )}
                                       </div>
                                     );
                                   }
+
+                                  const itemAwardedXp = typeof item.awardedXp === 'number'
+                                    ? Math.max(0, Math.min(100, Math.round(item.awardedXp)))
+                                    : recordedBest;
 
                                   if (item.bestPercentage !== undefined || item.bestScore !== undefined || item.score !== undefined) {
                                     return (
@@ -746,32 +745,30 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                       {/* Score */}
                       <td className="py-3 whitespace-nowrap font-black">
                         {(() => {
-                          const itemAwardedXp = typeof item.awardedXp === 'number'
-                            ? Math.max(0, Math.min(100, Math.round(item.awardedXp)))
-                            : recordedBest;
-
                           if (isFinalQuiz) {
+                            const officialScore = item.firstAttemptScore ?? item.firstAttemptPercentage ?? recordedBest;
                             return (
                               <div>
                                 <div className="flex items-center gap-1.5">
-                                  <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${getQuizMentionBadgeStyle(recordedBest).pillClass}`}>
-                                    {recordedBest}% • {getQuizMention(recordedBest)}
-                                  </span>
-                                  <span className="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 font-bold">
-                                    {itemAwardedXp} XP
+                                  <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${getQuizMentionBadgeStyle(officialScore).pillClass}`}>
+                                    {officialScore}% • {getQuizMention(officialScore, language)}
                                   </span>
                                 </div>
-                                <span className="block text-[10px] text-slate-400 font-semibold mt-0.5">
-                                  {language === 'pt' ? 'Melhor Pontuação (máx. 100 XP)' : 'Best Score (max 100 XP)'}
+                                <span className="block text-[10px] text-emerald-800 font-bold mt-0.5">
+                                  {language === 'pt' ? 'Avaliação Oficial (1.ª Tentativa)' : 'Official Assessment (1st Attempt)'}
                                 </span>
                                 {item.attempts > 1 && (
                                   <span className="block text-[10px] text-slate-500 font-medium">
-                                    {language === 'pt' ? `${item.attempts} tent.` : `${item.attempts} att.`}
+                                    {language === 'pt' ? `${item.attempts} tent. (Treino)` : `${item.attempts} att. (Practice)`}
                                   </span>
                                 )}
                               </div>
                             );
                           }
+
+                          const itemAwardedXp = typeof item.awardedXp === 'number'
+                            ? Math.max(0, Math.min(100, Math.round(item.awardedXp)))
+                            : recordedBest;
 
                           if (item.bestPercentage !== undefined || item.bestScore !== undefined || item.score !== undefined) {
                             return (

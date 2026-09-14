@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Gamepad2, ArrowLeft, CheckCircle2, Circle, Clock, Play, ChevronRight, ChevronLeft, Sparkles, Zap, Lock, Eye } from 'lucide-react';
+import { BookOpen, Gamepad2, ArrowLeft, CheckCircle2, Circle, Clock, Play, ChevronRight, ChevronLeft, Sparkles, Zap, Lock, Eye, ShieldCheck } from 'lucide-react';
 import { ThemeDefinition, ActivityProgress, Language } from '../types';
 import { translations } from '../i18n/translations';
 import { getThemeImage, getThemeStepImage, getChallengeImage } from '../data/themeImages';
@@ -616,12 +616,15 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                       </div>
 
                       {isFinalQuiz ? (
-                        hasAttempted ? (
-                          <span className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border ${getQuizMentionBadgeStyle(record?.bestScore ?? record?.score ?? 0).pillClass}`}>
-                            <CheckCircle2 className="w-3.5 h-3.5" />
-                            <span>{record?.bestScore ?? record?.score ?? 0}% • {getQuizMention(record?.bestScore ?? record?.score ?? 0, language)}</span>
-                          </span>
-                        ) : (
+                        hasAttempted ? (() => {
+                          const officialScore = record?.firstAttemptScore ?? record?.firstAttemptPercentage ?? record?.score ?? record?.bestScore ?? 0;
+                          return (
+                            <span className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border ${getQuizMentionBadgeStyle(officialScore).pillClass}`}>
+                              <CheckCircle2 className="w-3.5 h-3.5" />
+                              <span>{officialScore}% • {getQuizMention(officialScore, language)}</span>
+                            </span>
+                          );
+                        })() : (
                           <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full">
                             <Circle className="w-3.5 h-3.5" />
                             <span>{t.notStartedStatus}</span>
@@ -655,24 +658,27 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                           {chal.title[language]}
                         </h3>
                         {isFinalQuiz ? (
-                          hasAttempted ? (
-                            <div className="mt-0.5">
-                              <span className="text-[11px] font-bold text-amber-900 flex items-center gap-1">
-                                <Zap className="w-3 h-3 fill-current text-amber-500" />
-                                <span>
-                                  {language === 'pt' ? 'Pontuação Registada na BD:' : 'Score Recorded in DB:'} {record?.bestScore ?? record?.score ?? 0}% ({getQuizMention(record?.bestScore ?? record?.score ?? 0, language)})
+                          hasAttempted ? (() => {
+                            const officialScore = record?.firstAttemptScore ?? record?.firstAttemptPercentage ?? record?.score ?? record?.bestScore ?? 0;
+                            return (
+                              <div className="mt-0.5">
+                                <span className="text-[11px] font-bold text-emerald-900 flex items-center gap-1">
+                                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                                  <span>
+                                    {language === 'pt' ? 'Avaliação Oficial (1.ª Tentativa):' : 'Official Assessment (1st Attempt):'} {officialScore}% ({getQuizMention(officialScore, language)})
+                                  </span>
                                 </span>
-                              </span>
-                              {record?.attempts && record.attempts > 1 && (
-                                <span className="text-[10px] text-slate-500 font-semibold block">
-                                  {record.attempts} {language === 'pt' ? 'tentativas realizadas' : 'attempts completed'}
-                                </span>
-                              )}
-                            </div>
-                          ) : (
+                                {record?.attempts && record.attempts > 1 && (
+                                  <span className="text-[10px] text-slate-500 font-semibold block mt-0.5">
+                                    {record.attempts} {language === 'pt' ? `tentativas realizadas (Treino: melhor ${record.bestScore}%)` : `attempts completed (Practice: best ${record.bestScore}%)`}
+                                  </span>
+                                )}
+                              </div>
+                            );
+                          })() : (
                             <span className="text-[11px] font-bold text-amber-700 flex items-center gap-1 mt-0.5">
-                              <Zap className="w-3 h-3 fill-current text-amber-500" />
-                              <span>{language === 'pt' ? 'Cada atividade vale até 100 XP' : 'Each activity is worth up to 100 XP'}</span>
+                              <ShieldCheck className="w-3.5 h-3.5 text-amber-500" />
+                              <span>{language === 'pt' ? 'Atividade de Avaliação • A 1.ª tentativa conta' : 'Assessment Activity • 1st attempt counts'}</span>
                             </span>
                           )
                         ) : hasAttempted ? (

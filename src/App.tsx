@@ -312,6 +312,25 @@ export default function App() {
               ? `Ganhaste ${newBadgesCount} nova(s) medalha(s). Consulta no teu progresso!`
               : `You earned ${newBadgesCount} new badge(s). View in your progress tab!`
           );
+        } else if (payload.activityType === 'quiz') {
+          const isFirstAttempt = res.record?.attempts === 1;
+          const attempt = res.attemptScore ?? 0;
+          const official = res.record?.firstAttemptScore ?? attempt;
+          if (isFirstAttempt) {
+            showToast(
+              language === 'pt' ? `📝 Avaliação Registada: ${attempt}%` : `📝 Assessment Recorded: ${attempt}%`,
+              language === 'pt'
+                ? 'A tua 1.ª tentativa foi guardada como o teu resultado de avaliação.'
+                : 'Your 1st attempt has been saved as your official evaluation score.'
+            );
+          } else {
+            showToast(
+              language === 'pt' ? `🔄 Treino Concluído: ${attempt}%` : `🔄 Practice Completed: ${attempt}%`,
+              language === 'pt'
+                ? `Tentativa de treino terminada. Avaliação oficial mantida em ${official}%.`
+                : `Practice attempt finished. Official evaluation remains ${official}%.`
+            );
+          }
         } else {
           const earned = res.earnedPoints || 0;
           const best = res.newBestScore ?? res.attemptScore ?? 0;
