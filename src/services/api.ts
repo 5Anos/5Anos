@@ -125,7 +125,7 @@ export function evaluateEligibleBadges(
 
   // 1. Primeiros Passos: completed at least 1 activity
   if (!existingAchievementIds.has('primeiros-passos') && completedList.length >= 1) {
-    toUnlock.push({ badgeId: 'primeiros-passos', bonus: 50, name: 'Primeiros Passos' });
+    toUnlock.push({ badgeId: 'primeiros-passos', bonus: 0, name: 'Primeiros Passos' });
   }
 
   // 2. Guardião Digital: completed digital safety/security activities (Theme 3 or Theme 1/4)
@@ -140,7 +140,7 @@ export function evaluateEligibleBadges(
       p.activityId.startsWith('desafio-tic-pegada')
   );
   if (!existingAchievementIds.has('guardiao-digital') && safetyActivitiesDone.length >= 4) {
-    toUnlock.push({ badgeId: 'guardiao-digital', bonus: 100, name: 'Guardião Digital' });
+    toUnlock.push({ badgeId: 'guardiao-digital', bonus: 0, name: 'Guardião Digital' });
   }
 
   // 3. Especialista em Segurança: scored >= 90% in any security/safety quiz or challenge
@@ -151,7 +151,7 @@ export function evaluateEligibleBadges(
       (p.bestPercentage ?? p.percentage ?? p.score ?? 0) >= 90
   );
   if (!existingAchievementIds.has('especialista-seguranca') && safetyQuiz90) {
-    toUnlock.push({ badgeId: 'especialista-seguranca', bonus: 80, name: 'Especialista em Segurança' });
+    toUnlock.push({ badgeId: 'especialista-seguranca', bonus: 0, name: 'Especialista em Segurança' });
   }
 
   // 4. Detetive Cibernético: completed phishing or cyber danger challenge
@@ -163,7 +163,7 @@ export function evaluateEligibleBadges(
       p.activityId === 'jogo-seguranca-mc'
   );
   if (!existingAchievementIds.has('detetive-cibernetico') && phishingDone) {
-    toUnlock.push({ badgeId: 'detetive-cibernetico', bonus: 70, name: 'Detetive Cibernético' });
+    toUnlock.push({ badgeId: 'detetive-cibernetico', bonus: 0, name: 'Detetive Cibernético' });
   }
 
   // 5. Mestre do Email: completed Theme 5 (Correio Eletrónico) challenges/modules
@@ -171,7 +171,7 @@ export function evaluateEligibleBadges(
     (p) => p.themeId === 'correio-eletronico' || p.activityId.startsWith('email-') || p.activityId.startsWith('jogo-email')
   );
   if (!existingAchievementIds.has('mestre-email') && emailActivitiesDone.length >= 3) {
-    toUnlock.push({ badgeId: 'mestre-email', bonus: 100, name: 'Mestre do Email' });
+    toUnlock.push({ badgeId: 'mestre-email', bonus: 0, name: 'Mestre do Email' });
   }
 
   // 6. Detetive da Informação: completed Theme 6 (Navegar na Internet) or Theme 7 (Direitos de Autor) activities
@@ -183,7 +183,7 @@ export function evaluateEligibleBadges(
       p.activityId.startsWith('copy-')
   );
   if (!existingAchievementIds.has('detetive-informacao') && searchActivitiesDone.length >= 4) {
-    toUnlock.push({ badgeId: 'detetive-informacao', bonus: 100, name: 'Detetive da Informação' });
+    toUnlock.push({ badgeId: 'detetive-informacao', bonus: 0, name: 'Detetive da Informação' });
   }
 
   // 7. Mestre da Pesquisa: scored >= 90% in Internet Navigation or Research quiz
@@ -194,18 +194,18 @@ export function evaluateEligibleBadges(
       (p.bestPercentage ?? p.percentage ?? p.score ?? 0) >= 90
   );
   if (!existingAchievementIds.has('mestre-pesquisa') && searchQuiz90) {
-    toUnlock.push({ badgeId: 'mestre-pesquisa', bonus: 80, name: 'Mestre da Pesquisa' });
+    toUnlock.push({ badgeId: 'mestre-pesquisa', bonus: 0, name: 'Mestre da Pesquisa' });
   }
 
   // 8. TIC Explorer: completed activities across at least 4 different themes
   const distinctThemesDone = new Set(completedList.map((p) => p.themeId).filter(Boolean));
   if (!existingAchievementIds.has('tic-explorer') && distinctThemesDone.size >= 4) {
-    toUnlock.push({ badgeId: 'tic-explorer', bonus: 150, name: 'TIC Explorer' });
+    toUnlock.push({ badgeId: 'tic-explorer', bonus: 0, name: 'TIC Explorer' });
   }
 
   // 9. Centurião de Pontos: reached 500+ total points
   if (!existingAchievementIds.has('centuriao-pontos') && userPoints >= 500) {
-    toUnlock.push({ badgeId: 'centuriao-pontos', bonus: 60, name: 'Centurião Digital' });
+    toUnlock.push({ badgeId: 'centuriao-pontos', bonus: 0, name: 'Centurião Digital' });
   }
 
   return toUnlock;
@@ -377,7 +377,7 @@ export const api = {
             const isAdmin = isUserAdmin(emailNorm);
             const takenIds = await this.fetchTakenPublicIds();
             const publicId = cachedUser?.publicId || (isAdmin ? 'Docente_TIC' : generateSecurePublicId(takenIds));
-            const initialPoints = cachedUser?.points ?? (isAdmin ? 0 : 100);
+            const initialPoints = cachedUser?.points ?? 0;
 
             const user: User = {
               id: fbUser.uid,
@@ -391,17 +391,6 @@ export const api = {
               language: cachedUser?.language || 'pt',
               createdAt: cachedUser?.createdAt || new Date().toISOString(),
             };
-
-            if (!isAdmin) {
-              const welcomeTx: PointTransaction = {
-                id: `pt-welcome-${Date.now()}`,
-                userId: fbUser.uid,
-                amount: 100,
-                reason: '🎉 Boas-vindas à Plataforma Educativa TIC (Primeiro acesso: +100 XP)',
-                timestamp: new Date().toISOString(),
-              };
-              setDoc(doc(db, 'users', fbUser.uid, 'pointsHistory', welcomeTx.id), welcomeTx).catch(() => {});
-            }
 
             try {
               await this.syncUserToFirestore(user);
@@ -593,8 +582,8 @@ export const api = {
         // Se Firebase Auth não permitir password/email ou der erro de rede, utiliza o ID local gerado
       }
 
-      // Bónus de primeiro acesso: 100 XP para alunos na primeira vez que entram na plataforma
-      const initialPoints = isAdmin ? 0 : 100;
+      // Pontuação inicial do aluno: 0 XP
+      const initialPoints = 0;
       const finalAvatar = avatar || getDefaultAvatar(finalPublicId);
 
       const newUser: User = {
@@ -650,21 +639,7 @@ export const api = {
         }
       }
 
-      // 6. Registar transação de boas-vindas para o histórico de pontos
-      if (!isAdmin) {
-        const welcomeTx: PointTransaction = {
-          id: `pt-welcome-${Date.now()}`,
-          userId,
-          amount: 100,
-          reason: '🎉 Boas-vindas à Plataforma Educativa TIC (Primeiro acesso: +100 XP)',
-          timestamp: new Date().toISOString(),
-        };
-        setDoc(doc(db, 'users', userId, 'pointsHistory', welcomeTx.id), welcomeTx).catch((e) => {
-          console.warn('Welcome pointsHistory notice:', e);
-        });
-      }
-
-      // 7. Registar em publicProfiles para o ranking de alunos
+      // 6. Registar em publicProfiles para o ranking de alunos
       if (!isAdmin) {
         try {
           await setDoc(
@@ -1005,11 +980,9 @@ export const api = {
     }
 
     // 4. Calculate verified points dynamically from progress strictly matching curriculum catalog
-    // Bónus de primeiro acesso: 100 XP para alunos na primeira vez que entram na plataforma
     const isAdmin = isUserAdmin(user.email, user.role);
-    const welcomeBonus = isAdmin ? 0 : 100;
 
-    // Atividades (Desafios e Quizzes): Cada atividade corresponde a um MÁXIMO DE 100 XP (sua melhor pontuação registada na BD).
+    // Atividades (Desafios e Quizzes): Cada atividade corresponde a um MÁXIMO DE 100 XP (awardedXp).
     // Não são somados XP pelo aluno fazer várias vezes a mesma atividade.
     let calculatedPoints = 0;
     const validatedProgress: ActivityProgress[] = [];
@@ -1021,7 +994,7 @@ export const api = {
       }
       validatedProgress.push(p);
 
-      // Cada atividade corresponde a um máximo de 100 XP (XP já atribuídos / melhor pontuação registada na BD)
+      // Cada atividade corresponde a um máximo de 100 XP (XP já atribuídos / awardedXp)
       const actXp = typeof p.awardedXp === 'number'
         ? Math.max(0, Math.min(100, Math.round(p.awardedXp)))
         : Math.max(0, Math.min(100, Math.round(Number(p.bestScore ?? p.score ?? p.bestPercentage ?? p.percentage ?? 0))));
@@ -1030,8 +1003,6 @@ export const api = {
 
     // Derive badges dynamically based exclusively on validated curriculum activities
     const eligibleBadges = evaluateEligibleBadges(validatedProgress, calculatedPoints, new Set());
-    const badgeBonus = eligibleBadges.reduce((acc, b) => acc + b.bonus, 0);
-    const totalCurricularPoints = calculatedPoints + badgeBonus;
 
     // Legitimate daily tip points from verified history (20 XP leitura + 30 XP acerto = máx 50 XP por dia)
     const dailyTipPointsByDate = new Map<string, number>();
@@ -1047,9 +1018,9 @@ export const api = {
       dailyTipPoints += pts;
     });
 
-    const officialVerifiedPoints = welcomeBonus + totalCurricularPoints + dailyTipPoints;
+    const officialVerifiedPoints = calculatedPoints + dailyTipPoints;
 
-    // 5. User points are authoritatively derived from verified activities + bonuses
+    // 5. User points are authoritatively derived from verified activities + legitimate daily tips
     if (!isAdmin) {
       user.points = officialVerifiedPoints;
       setDoc(doc(db, 'users', user.id), { points: officialVerifiedPoints }, { merge: true }).catch(() => {});
@@ -1344,9 +1315,8 @@ export const api = {
     }
 
     // CÁLCULO AUTORITATIVO DE PONTOS TOTAIS DO ALUNO:
-    // Garante que cada atividade conta no máximo 100 XP (XP já atribuídos / sua melhor pontuação).
+    // Garante que cada atividade conta no máximo 100 XP (awardedXp).
     const isAdmin = isUserAdmin(user.email, user.role);
-    const welcomeBonus = isAdmin ? 0 : 100;
 
     let curricularPointsSum = 0;
     const validatedProgress: ActivityProgress[] = [];
@@ -1376,7 +1346,7 @@ export const api = {
       setDoc(doc(db, 'users', userId, 'pointsHistory', ptTx.id), ptTx).catch(() => {});
     }
 
-    // 3. Evaluate Badges Unlocking (Strictly once per badge, with bonus points)
+    // 3. Evaluate Badges Unlocking (Strictly once per badge, medals to display)
     const existingBadgeIds = new Set(achievements.map((a) => a.badgeId));
     const newBadges = evaluateEligibleBadges(validatedProgress, curricularPointsSum, existingBadgeIds);
 
@@ -1389,21 +1359,9 @@ export const api = {
       achievements.push(newAch);
       existingBadgeIds.add(badge.badgeId);
 
-      // Persist badge & badge transaction to Cloud Firestore
+      // Persist badge to Cloud Firestore
       setDoc(doc(db, 'users', userId, 'achievements', badge.badgeId), newAch).catch(() => {});
-
-      const badgeTx: PointTransaction = {
-        id: `pt-badge-${badge.badgeId}-${Date.now()}`,
-        userId,
-        amount: badge.bonus,
-        reason: `Desbloqueio de Medalha: ${badge.name}`,
-        timestamp: new Date().toISOString(),
-      };
-      setDoc(doc(db, 'users', userId, 'pointsHistory', badgeTx.id), badgeTx).catch(() => {});
     }
-
-    const allEligibleBadges = evaluateEligibleBadges(validatedProgress, curricularPointsSum, new Set());
-    const badgeBonus = allEligibleBadges.reduce((acc, b) => acc + b.bonus, 0);
 
     let dailyTipPoints = 0;
     try {
@@ -1416,7 +1374,7 @@ export const api = {
       }
     } catch {}
 
-    const authoritativeTotalPoints = isAdmin ? 0 : (welcomeBonus + curricularPointsSum + badgeBonus + dailyTipPoints);
+    const authoritativeTotalPoints = isAdmin ? 0 : (curricularPointsSum + dailyTipPoints);
     user.points = authoritativeTotalPoints;
     user.lastActivity = {
       themeId: payload.themeId,
