@@ -4,7 +4,8 @@ import { ALL_THEMES } from '../data/allThemesData';
 export interface ChallengeScoreDetail {
   id: string;
   title: string;
-  score: number; // 0 to 100
+  score: number; // 0 to 100 (melhor pontuação na BD)
+  awardedXp: number; // 0 to 100 (XP atribuídos por esta atividade)
   completed: boolean;
   attempts: number;
 }
@@ -14,6 +15,7 @@ export interface QuizScoreDetail {
   title: string;
   officialScore: number; // 1.ª tentativa oficial (0 to 100)
   bestScore: number; // melhor nota para treino/exibição (0 to 100)
+  awardedXp: number; // 0 to 100 (XP atribuídos por esta atividade)
   attempts: number;
   completed: boolean;
 }
@@ -234,10 +236,17 @@ export function getStudentThemeBreakdown(
     const completed = score >= 50;
     const attempts = record?.attempts ?? (record ? 1 : 0);
 
+    const awardedXp = record
+      ? (typeof record.awardedXp === 'number'
+          ? Math.max(0, Math.min(100, Math.round(record.awardedXp)))
+          : score)
+      : 0;
+
     return {
       id: c.id,
       title: c.title.pt,
       score,
+      awardedXp,
       completed,
       attempts,
     };
@@ -275,11 +284,18 @@ export function getStudentThemeBreakdown(
     quizCompleted = bestScore >= 50;
   }
 
+  const quizAwardedXp = quizRecord
+    ? (typeof quizRecord.awardedXp === 'number'
+        ? Math.max(0, Math.min(100, Math.round(quizRecord.awardedXp)))
+        : bestScore)
+    : 0;
+
   const quiz: QuizScoreDetail = {
     id: expectedQuizId,
     title: quizTitle,
     officialScore: bestScore, // Pontuação registada na BD
     bestScore,
+    awardedXp: quizAwardedXp,
     attempts: quizAttempts,
     completed: quizCompleted,
   };

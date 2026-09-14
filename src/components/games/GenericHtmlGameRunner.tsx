@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, RotateCcw, ShieldCheck, Check, X, KeyRound, Delete, Sparkles } from 'lucide-react';
 import { PostureCorrectionSimulator } from '../PostureCorrectionSimulator';
 import { AudioSpeakButton } from '../AudioSpeakButton';
-import { Language } from '../../types';
+import { Language, ActivityProgress } from '../../types';
 
 interface GenericHtmlGameRunnerProps {
   gameData: {
@@ -14,6 +14,7 @@ interface GenericHtmlGameRunnerProps {
     data: any;
   };
   language: Language;
+  existingProgress?: ActivityProgress;
   onBack: () => void;
   onReturnToGames?: () => void;
   onFinish: (score: number, maxScore: number, percentage: number) => void;
@@ -22,6 +23,7 @@ interface GenericHtmlGameRunnerProps {
 export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
   gameData,
   language,
+  existingProgress,
   onBack,
   onReturnToGames,
   onFinish,
@@ -1146,43 +1148,89 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
             </h3>
 
             {/* Percentage & Results Summary Pill */}
-            <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
-              resultPercentage === 100
-                ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
-                : 'bg-amber-100 border-amber-300 text-amber-900'
-            }`}>
-              <span>{resultPercentage}% {language === 'pt' ? 'de Precisão' : 'Accuracy'}</span>
-              {resultDetails && (
-                <>
-                  <span>•</span>
-                  <span>
-                    {resultDetails.correct} {language === 'pt' ? 'de' : 'of'} {resultDetails.total} {language === 'pt' ? 'Corretas' : 'Correct'}
-                  </span>
-                </>
-              )}
-              <span>•</span>
-              <span className="font-black">
-                {resultPercentage} XP
-              </span>
-            </div>
+            {(() => {
+              const prevBest = Math.max(
+                0,
+                Math.min(
+                  100,
+                  Math.round(
+                    Number(existingProgress?.bestScore ?? existingProgress?.score ?? existingProgress?.percentage ?? 0)
+                  )
+                )
+              );
+              const prevAwarded = typeof existingProgress?.awardedXp === 'number'
+                ? Math.max(0, Math.min(100, Math.round(existingProgress.awardedXp)))
+                : prevBest;
 
-            <p className={`text-xs sm:text-sm max-w-md mx-auto ${
-              resultPercentage === 100 ? 'text-emerald-800 font-bold' : 'text-amber-900 font-medium'
-            }`}>
-              {resultPercentage === 100 ? (
-                language === 'pt' ? (
-                  <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
-                ) : (
-                  <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
-                )
-              ) : (
-                language === 'pt' ? (
-                  <>Obtiveste <strong>{resultPercentage} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
-                ) : (
-                  <>You got <strong>{resultPercentage} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
-                )
-              )}
-            </p>
+              let deltaXp = Math.max(0, resultPercentage - prevBest);
+              deltaXp = Math.min(deltaXp, Math.max(0, 100 - prevAwarded));
+              if (resultPercentage <= prevBest || prevBest === 100 || prevAwarded >= 100) {
+                deltaXp = 0;
+              }
+
+              const newBest = Math.max(prevBest, resultPercentage);
+              const newTotalAwarded = Math.min(100, prevAwarded + deltaXp);
+
+              return (
+                <div className="space-y-3">
+                  <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
+                    resultPercentage === 100
+                      ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
+                      : 'bg-amber-100 border-amber-300 text-amber-900'
+                  }`}>
+                    <span>{resultPercentage}% {language === 'pt' ? 'nesta tentativa' : 'on this attempt'}</span>
+                    {resultDetails && (
+                      <>
+                        <span>•</span>
+                        <span>
+                          {resultDetails.correct} {language === 'pt' ? 'de' : 'of'} {resultDetails.total} {language === 'pt' ? 'Corretas' : 'Correct'}
+                        </span>
+                      </>
+                    )}
+                  </div>
+
+                  <div className="flex flex-wrap items-center justify-center gap-2">
+                    <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-800 border border-indigo-200">
+                      {language === 'pt' ? 'Melhor registo na BD:' : 'Best in DB:'} <strong>{newBest}%</strong>
+                    </span>
+                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold border ${
+                      deltaXp > 0
+                        ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                        : 'bg-slate-100 text-slate-700 border-slate-200'
+                    }`}>
+                      {deltaXp > 0 ? `+${deltaXp} XP ganhos` : (language === 'pt' ? '0 XP adicionais' : '0 additional XP')}
+                    </span>
+                    <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-900 border border-amber-200">
+                      {language === 'pt' ? 'XP da Atividade:' : 'Activity XP:'} <strong>{newTotalAwarded} / 100 XP</strong>
+                    </span>
+                  </div>
+
+                  <p className="text-xs sm:text-sm max-w-md mx-auto text-slate-700 font-medium leading-relaxed">
+                    {deltaXp > 0 ? (
+                      language === 'pt' ? (
+                        <>🎉 <strong>Parabéns pela tua melhoria!</strong> A BD foi atualizada para <strong>{newBest}%</strong> e recebeste <strong>+{deltaXp} XP</strong> pela diferença!</>
+                      ) : (
+                        <>🎉 <strong>Congratulations on your improvement!</strong> DB updated to <strong>{newBest}%</strong> and you earned <strong>+{deltaXp} XP</strong> for the difference!</>
+                      )
+                    ) : (
+                      language === 'pt' ? (
+                        newTotalAwarded === 100 ? (
+                          <>🏆 <strong>Parabéns!</strong> Já atingiste o limite máximo de <strong>100 XP</strong> nesta atividade.</>
+                        ) : (
+                          <>Como a tua pontuação nesta tentativa ({resultPercentage}%) é inferior ou igual à melhor ({newBest}%), a <strong>BD mantém {newBest}%</strong> e recebes <strong>0 XP adicionais</strong>.</>
+                        )
+                      ) : (
+                        newTotalAwarded === 100 ? (
+                          <>🏆 <strong>Congratulations!</strong> You have already reached the maximum of <strong>100 XP</strong> on this activity.</>
+                        ) : (
+                          <>Since your score on this attempt ({resultPercentage}%) is lower than or equal to your best ({newBest}%), the <strong>DB keeps {newBest}%</strong> and you receive <strong>0 additional XP</strong>.</>
+                        )
+                      )
+                    )}
+                  </p>
+                </div>
+              );
+            })()}
 
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
               <button

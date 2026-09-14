@@ -309,12 +309,26 @@ export default function App() {
               : `You earned ${newBadgesCount} new badge(s). View in your progress tab!`
           );
         } else {
-          showToast(
-            language === 'pt' ? '✅ Progresso Guardado na BD!' : '✅ Progress Saved to DB!',
-            res.earnedPoints && res.earnedPoints > 0
-              ? (language === 'pt' ? `+${res.earnedPoints} XP adicionados pela tua melhoria!` : `+${res.earnedPoints} XP added for your improvement!`)
-              : (language === 'pt' ? 'Pontuação registada! Manténs o teu melhor resultado na BD (0 XP adicionais).' : 'Score registered! You keep your best record in DB (0 additional XP).')
-          );
+          const earned = res.earnedPoints || 0;
+          const best = res.newBestScore ?? res.attemptScore ?? 0;
+          const awarded = res.awardedXp ?? best;
+          const attempt = res.attemptScore ?? 0;
+
+          if (earned > 0) {
+            showToast(
+              language === 'pt' ? `🎉 +${earned} XP Ganhos!` : `🎉 +${earned} XP Earned!`,
+              language === 'pt'
+                ? `Melhor pontuação: ${best}% | XP desta Atividade: ${awarded}/100 XP`
+                : `Best score: ${best}% | Activity XP: ${awarded}/100 XP`
+            );
+          } else {
+            showToast(
+              language === 'pt' ? 'Tentativa Registada (0 XP adicionais)' : 'Attempt Recorded (0 additional XP)',
+              language === 'pt'
+                ? `Obtiveste ${attempt}%. A BD mantém a melhor nota (${best}%). XP desta Atividade: ${awarded}/100 XP.`
+                : `Scored ${attempt}%. DB keeps your best score (${best}%). Activity XP: ${awarded}/100 XP.`
+            );
+          }
         }
       }
     } catch (err: unknown) {
@@ -719,10 +733,12 @@ export default function App() {
     // If challenge has structured gameData (TF, MC, Match, Order, etc.)
     const activeChallengeItem = currentTheme.challenges.find((c) => c.id === activeChallengeId);
     if (activeChallengeItem?.gameData) {
+      const existingProg = progressList.find((p) => p.activityId === activeChallengeId);
       return (
         <GenericHtmlGameRunner
           gameData={activeChallengeItem.gameData}
           language={language}
+          existingProgress={existingProg}
           onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({

@@ -521,43 +521,65 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
 
                               {/* Score */}
                               <td className="py-3 px-3 whitespace-nowrap font-black">
-                                {isFinalQuiz ? (
-                                  <div>
-                                    <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${getQuizMentionBadgeStyle(recordedBest).pillClass}`}>
-                                      {recordedBest}% • {getQuizMention(recordedBest)}
-                                    </span>
-                                    <span className="block text-[10px] text-slate-400 font-semibold mt-0.5">
-                                      {language === 'pt' ? 'Pontuação Registada na BD' : 'Score Recorded in DB'}
-                                    </span>
-                                    {item.attempts > 1 && (
-                                      <span className="block text-[10px] text-slate-500 font-medium">
-                                        {language === 'pt' ? `${item.attempts} tentativas` : `${item.attempts} attempts`}
-                                        {item.firstAttemptScore !== undefined && item.firstAttemptScore !== recordedBest ? ` (1.ª: ${item.firstAttemptScore}%)` : ''}
-                                      </span>
-                                    )}
-                                  </div>
-                                ) : item.bestPercentage !== undefined || item.bestScore !== undefined || item.score !== undefined ? (
-                                  <div>
-                                    <span
-                                      className={
-                                        recordedBest >= 50
-                                          ? 'text-emerald-600 text-sm'
-                                          : recordedBest > 0
-                                          ? 'text-amber-600 text-sm'
-                                          : 'text-rose-600 text-sm'
-                                      }
-                                    >
-                                      {recordedBest}% ({recordedBest} XP)
-                                    </span>
-                                    <span className="block text-[10px] text-slate-400 font-normal">
-                                      {recordedBest >= 50
-                                        ? (language === 'pt' ? '✓ Atingiu ≥50%' : '✓ Reached ≥50%')
-                                        : (language === 'pt' ? 'Necessário ≥50% para concluir' : 'Need ≥50% to complete')}
-                                    </span>
-                                  </div>
-                                ) : (
-                                  <span className="text-slate-400 font-normal">—</span>
-                                )}
+                                {(() => {
+                                  const itemAwardedXp = typeof item.awardedXp === 'number'
+                                    ? Math.max(0, Math.min(100, Math.round(item.awardedXp)))
+                                    : recordedBest;
+
+                                  if (isFinalQuiz) {
+                                    return (
+                                      <div>
+                                        <div className="flex items-center gap-1.5">
+                                          <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${getQuizMentionBadgeStyle(recordedBest).pillClass}`}>
+                                            {recordedBest}% • {getQuizMention(recordedBest)}
+                                          </span>
+                                          <span className="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 font-bold">
+                                            {itemAwardedXp} XP
+                                          </span>
+                                        </div>
+                                        <span className="block text-[10px] text-slate-400 font-semibold mt-0.5">
+                                          {language === 'pt' ? 'Melhor Pontuação na BD (máx. 100 XP)' : 'Best Score in DB (max 100 XP)'}
+                                        </span>
+                                        {item.attempts > 1 && (
+                                          <span className="block text-[10px] text-slate-500 font-medium">
+                                            {language === 'pt' ? `${item.attempts} tentativas` : `${item.attempts} attempts`}
+                                            {item.firstAttemptScore !== undefined && item.firstAttemptScore !== recordedBest ? ` (1.ª: ${item.firstAttemptScore}%)` : ''}
+                                          </span>
+                                        )}
+                                      </div>
+                                    );
+                                  }
+
+                                  if (item.bestPercentage !== undefined || item.bestScore !== undefined || item.score !== undefined) {
+                                    return (
+                                      <div>
+                                        <div className="flex items-center gap-1.5">
+                                          <span
+                                            className={
+                                              recordedBest >= 50
+                                                ? 'text-emerald-600 text-sm font-bold'
+                                                : recordedBest > 0
+                                                ? 'text-amber-600 text-sm font-bold'
+                                                : 'text-rose-600 text-sm font-bold'
+                                            }
+                                          >
+                                            {recordedBest}%
+                                          </span>
+                                          <span className="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 font-bold">
+                                            {itemAwardedXp} XP
+                                          </span>
+                                        </div>
+                                        <span className="block text-[10px] text-slate-400 font-normal">
+                                          {recordedBest >= 50
+                                            ? (language === 'pt' ? '✓ Atingiu ≥50%' : '✓ Reached ≥50%')
+                                            : (language === 'pt' ? 'Necessário ≥50% para concluir' : 'Need ≥50% to complete')}
+                                        </span>
+                                      </div>
+                                    );
+                                  }
+
+                                  return <span className="text-slate-400 font-normal">—</span>;
+                                })()}
                               </td>
 
                               {/* Attempts */}
@@ -713,37 +735,57 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
 
                       {/* Score */}
                       <td className="py-3 whitespace-nowrap font-black">
-                        {isFinalQuiz ? (
-                          <div>
-                            <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${getQuizMentionBadgeStyle(recordedBest).pillClass}`}>
-                              {recordedBest}% • {getQuizMention(recordedBest)}
-                            </span>
-                            <span className="block text-[10px] text-slate-400 font-semibold mt-0.5">
-                              {language === 'pt' ? 'Na BD' : 'In DB'}
-                            </span>
-                            {item.attempts > 1 && (
-                              <span className="block text-[10px] text-slate-500 font-medium">
-                                {language === 'pt' ? `${item.attempts} tent.` : `${item.attempts} att.`}
-                              </span>
-                            )}
-                          </div>
-                        ) : item.bestPercentage !== undefined || item.bestScore !== undefined || item.score !== undefined ? (
-                          <div>
-                            <span
-                              className={
-                                recordedBest >= 50
-                                  ? 'text-emerald-600'
-                                  : recordedBest > 0
-                                  ? 'text-amber-600'
-                                  : 'text-rose-600'
-                              }
-                            >
-                              {recordedBest}% ({recordedBest} XP)
-                            </span>
-                          </div>
-                        ) : (
-                          <span className="text-slate-400 font-normal">—</span>
-                        )}
+                        {(() => {
+                          const itemAwardedXp = typeof item.awardedXp === 'number'
+                            ? Math.max(0, Math.min(100, Math.round(item.awardedXp)))
+                            : recordedBest;
+
+                          if (isFinalQuiz) {
+                            return (
+                              <div>
+                                <div className="flex items-center gap-1.5">
+                                  <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${getQuizMentionBadgeStyle(recordedBest).pillClass}`}>
+                                    {recordedBest}% • {getQuizMention(recordedBest)}
+                                  </span>
+                                  <span className="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 font-bold">
+                                    {itemAwardedXp} XP
+                                  </span>
+                                </div>
+                                <span className="block text-[10px] text-slate-400 font-semibold mt-0.5">
+                                  {language === 'pt' ? 'Melhor na BD (máx. 100 XP)' : 'Best in DB (max 100 XP)'}
+                                </span>
+                                {item.attempts > 1 && (
+                                  <span className="block text-[10px] text-slate-500 font-medium">
+                                    {language === 'pt' ? `${item.attempts} tent.` : `${item.attempts} att.`}
+                                  </span>
+                                )}
+                              </div>
+                            );
+                          }
+
+                          if (item.bestPercentage !== undefined || item.bestScore !== undefined || item.score !== undefined) {
+                            return (
+                              <div className="flex items-center gap-1.5">
+                                <span
+                                  className={
+                                    recordedBest >= 50
+                                      ? 'text-emerald-600 font-bold'
+                                      : recordedBest > 0
+                                      ? 'text-amber-600 font-bold'
+                                      : 'text-rose-600 font-bold'
+                                  }
+                                >
+                                  {recordedBest}%
+                                </span>
+                                <span className="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 font-bold">
+                                  {itemAwardedXp} XP
+                                </span>
+                              </div>
+                            );
+                          }
+
+                          return <span className="text-slate-400 font-normal">—</span>;
+                        })()}
                       </td>
 
                       {/* Attempts */}

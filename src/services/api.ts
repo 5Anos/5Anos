@@ -1021,9 +1021,11 @@ export const api = {
       }
       validatedProgress.push(p);
 
-      // Cada atividade corresponde a um máximo de 100 XP (a sua melhor pontuação registada na BD)
-      const best = Math.max(0, Math.min(100, Math.round(Number(p.bestScore ?? p.score ?? p.bestPercentage ?? p.percentage ?? 0))));
-      calculatedPoints += best;
+      // Cada atividade corresponde a um máximo de 100 XP (XP já atribuídos / melhor pontuação registada na BD)
+      const actXp = typeof p.awardedXp === 'number'
+        ? Math.max(0, Math.min(100, Math.round(p.awardedXp)))
+        : Math.max(0, Math.min(100, Math.round(Number(p.bestScore ?? p.score ?? p.bestPercentage ?? p.percentage ?? 0))));
+      calculatedPoints += actXp;
     }
 
     // Derive badges dynamically based exclusively on validated curriculum activities
@@ -1153,6 +1155,10 @@ export const api = {
     lastActivity: User['lastActivity'];
     achievements: UserAchievement[];
     earnedPoints?: number;
+    prevBestScore?: number;
+    newBestScore?: number;
+    awardedXp?: number;
+    attemptScore?: number;
   }> {
     const rawUser = localStorage.getItem(CURRENT_USER_KEY);
     if (!rawUser) throw new Error('Inicia sessão para guardar o progresso.');
@@ -1223,36 +1229,85 @@ export const api = {
     let existing = progressList.find((p) => p.activityId === payload.activityId);
     let earnedPoints = 0;
 
-    // SISTEMA DE PONTOS:
-    // Cada desafio e quiz tem uma pontuação máxima de 100 pontos/XP (0% a 100%).
+    // =========================================================================
+    // REGRA CRÍTICA — XP E MELHOR PONTUAÇÃO POR ATIVIDADE
+    // É obrigatório separar PONTUAÇÃO DA ATIVIDADE de XP JÁ ATRIBUÍDOS ao aluno por essa atividade.
+    // Cada atividade pode atribuir, no máximo, 100 XP no total, independentemente do número de vezes que o aluno a repetir.
+    // =========================================================================
     const normalizedMaxScore = 100;
-    const normalizedScore = Math.max(0, Math.min(100, Math.round(finalPercentage ?? 0)));
+    const novaPontuacao = Math.max(0, Math.min(100, Math.round(finalPercentage ?? 0)));
+
+    // 1. Ler a melhor pontuação atual do aluno para aquela atividade (0 se for 1.ª tentativa)
+    const melhorPontuacaoAnterior = existing
+      ? Math.max(
+          0,
+          Math.min(
+            100,
+            Math.round(
+              Number(existing.bestScore ?? existing.score ?? existing.bestPercentage ?? existing.percentage ?? 0)
+            )
+          )
+        )
+      : 0;
+
+    // 2. Ler quanto XP já foi atribuído por aquela atividade (0 se for 1.ª tentativa)
+    const xpJaAtribuidoPelaAtividade = existing
+      ? (typeof existing.awardedXp === 'number'
+          ? Math.max(0, Math.min(100, Math.round(existing.awardedXp)))
+          : melhorPontuacaoAnterior)
+      : 0;
+
+    // 3. O XP adicional de uma tentativa deve ser calculado exclusivamente com base na melhoria da melhor pontuação:
+    // XP_ADICIONAL = MAX(0, NOVA_PONTUACAO - MELHOR_PONTUACAO_ANTERIOR)
+    let xpAdicional = Math.max(0, novaPontuacao - melhorPontuacaoAnterior);
+
+    // E o total de XP que uma atividade pode gerar deve estar limitado a 100:
+    // XP_ADICIONAL = MIN(XP_ADICIONAL, 100 - XP_JA_ATRIBUIDO_PELA_ATIVIDADE)
+    xpAdicional = Math.min(xpAdicional, Math.max(0, 100 - xpJaAtribuidoPelaAtividade));
+
+    // Comportamento obrigatório:
+    // - se nova pontuação < melhor pontuação → 0 XP
+    // - se nova pontuação = melhor pontuação → 0 XP
+    // - se nova pontuação > melhor pontuação → atribuir apenas a diferença
+    // - se melhor pontuação = 100% → 0 XP em todas as tentativas futuras
+    // - se XP já atribuídos pela atividade = 100 → 0 XP em todas as tentativas futuras
+    if (
+      novaPontuacao <= melhorPontuacaoAnterior ||
+      melhorPontuacaoAnterior === 100 ||
+      xpJaAtribuidoPelaAtividade >= 100
+    ) {
+      xpAdicional = 0;
+    }
+
+    // 4. Determinar nova melhor pontuação e novo total acumulado de XP atribuídos por esta atividade
+    const novaMelhorPontuacao = novaPontuacao > melhorPontuacaoAnterior
+      ? novaPontuacao
+      : melhorPontuacaoAnterior;
+
+    const novoXpAtribuido = Math.max(0, Math.min(100, xpJaAtribuidoPelaAtividade + xpAdicional));
+    earnedPoints = xpAdicional;
 
     if (!existing) {
-      // 1.ª TENTATIVA (FIRST ATTEMPT)
-      // Na primeira tentativa, o aluno recebe exatamente a percentagem obtida em XP (ex.: 67% -> 67 XP)
-      earnedPoints = normalizedScore;
-
-      // Uma atividade é considerada concluída para efeitos do progresso quando obtém pontuação superior ou igual a 50%
-      const isCompletedForProgress = normalizedScore >= 50;
-
+      // 1.ª TENTATIVA
+      const isCompletedForProgress = novaMelhorPontuacao >= 50;
       existing = {
         userId,
         activityId: payload.activityId,
         activityType: payload.activityType,
         themeId: payload.themeId,
         status: isCompletedForProgress ? 'completed' : 'in_progress',
-        score: normalizedScore,
+        score: novaPontuacao, // pontuação da tentativa atual
         maxScore: normalizedMaxScore,
-        percentage: normalizedScore,
+        percentage: novaPontuacao,
         attempts: 1,
-        bestScore: normalizedScore,
-        bestPercentage: normalizedScore,
-        firstAttemptScore: normalizedScore,
-        firstAttemptPercentage: normalizedScore,
+        bestScore: novaMelhorPontuacao, // melhor percentagem guardada na BD
+        bestPercentage: novaMelhorPontuacao,
+        firstAttemptScore: novaPontuacao,
+        firstAttemptPercentage: novaPontuacao,
         firstAttemptDate: new Date().toISOString(),
-        latestScore: normalizedScore,
-        latestPercentage: normalizedScore,
+        latestScore: novaPontuacao,
+        latestPercentage: novaPontuacao,
+        awardedXp: novoXpAtribuido, // total de XP já atribuídos por esta atividade (máx 100 XP)
         lastUpdated: new Date().toISOString(),
       };
       progressList.push(existing);
@@ -1260,64 +1315,36 @@ export const api = {
       // TENTATIVAS SEGUINTES (2.ª, 3.ª, ...)
       existing.attempts = (existing.attempts || 1) + 1;
       existing.lastUpdated = new Date().toISOString();
-      existing.latestScore = normalizedScore;
-      existing.latestPercentage = normalizedScore;
+      existing.latestScore = novaPontuacao;
+      existing.latestPercentage = novaPontuacao;
+      existing.score = novaPontuacao; // pontuação da tentativa atual
+      existing.percentage = novaPontuacao;
+      existing.maxScore = normalizedMaxScore;
 
       // Garantir integridade dos dados da 1.ª tentativa
       if (existing.firstAttemptScore === undefined) {
-        existing.firstAttemptScore = existing.score ?? normalizedScore;
+        existing.firstAttemptScore = existing.score ?? novaPontuacao;
       }
       if (existing.firstAttemptPercentage === undefined) {
-        existing.firstAttemptPercentage = existing.percentage ?? normalizedScore;
+        existing.firstAttemptPercentage = existing.percentage ?? novaPontuacao;
       }
       if (!existing.firstAttemptDate) {
         existing.firstAttemptDate = existing.lastUpdated;
       }
 
-      // REGRA OFICIAL DE PONTOS E XP (DESAFIOS E QUIZZES):
-      // Exemplo:
-      // 1. Na primeira tentativa, o aluno obtém 67% -> BD regista 67%, recebe 67 XP.
-      // 2. Na segunda tentativa, o aluno obtém 40% -> Como 40% < 67%, BD mantém 67%, recebe 0 XP adicionais.
-      // 3. Na terceira tentativa, o aluno obtém 100% -> BD é atualizada para 100%, recebe 100 - 67 = 33 XP.
-      // UMA ATIVIDADE SÓ PODE CORRESPONDER A UM MÁXIMO DE 100XP.
-      // Não devem ser somados XP pelo aluno andar a fazer várias vezes a mesma atividade.
+      // Regra de persistência:
+      // Se for superior, atualizar a melhor pontuação para a nova pontuação; se não for, manter.
+      existing.bestScore = novaMelhorPontuacao;
+      existing.bestPercentage = novaMelhorPontuacao;
+      existing.awardedXp = novoXpAtribuido;
 
-      const prevBest = Math.max(
-        0,
-        Math.min(
-          100,
-          Math.round(
-            Number(existing.bestScore ?? existing.score ?? existing.bestPercentage ?? existing.percentage ?? 0)
-          )
-        )
-      );
-
-      if (normalizedScore > prevBest) {
-        // Nova melhor pontuação obtida: BD é atualizada para a pontuação superior
-        existing.bestScore = normalizedScore;
-        existing.bestPercentage = normalizedScore;
-        existing.score = normalizedScore;
-        existing.percentage = normalizedScore;
-        existing.maxScore = normalizedMaxScore;
-        // Recebe apenas os XP da melhoria
-        earnedPoints = Math.max(0, normalizedScore - prevBest);
-      } else {
-        // Pontuação inferior ou igual: BD mantém a melhor pontuação e recebe 0 XP adicionais
-        existing.bestScore = prevBest;
-        existing.bestPercentage = prevBest;
-        existing.score = prevBest;
-        existing.percentage = prevBest;
-        existing.maxScore = normalizedMaxScore;
-        earnedPoints = 0;
-      }
-
-      // Uma atividade é considerada concluída para efeitos do progresso quando obtém uma pontuação superior ou igual a 50%
-      const isCompletedForProgress = (existing.bestScore ?? 0) >= 50;
+      // Atividade concluída para efeitos do currículo quando obtém melhor pontuação >= 50%
+      const isCompletedForProgress = novaMelhorPontuacao >= 50;
       existing.status = isCompletedForProgress ? 'completed' : 'in_progress';
     }
 
     // CÁLCULO AUTORITATIVO DE PONTOS TOTAIS DO ALUNO:
-    // Garante que cada atividade conta no máximo 100 XP (sua melhor pontuação).
+    // Garante que cada atividade conta no máximo 100 XP (XP já atribuídos / sua melhor pontuação).
     const isAdmin = isUserAdmin(user.email, user.role);
     const welcomeBonus = isAdmin ? 0 : 100;
 
@@ -1329,8 +1356,10 @@ export const api = {
         continue;
       }
       validatedProgress.push(p);
-      const actBest = Math.max(0, Math.min(100, Math.round(Number(p.bestScore ?? p.score ?? p.bestPercentage ?? p.percentage ?? 0))));
-      curricularPointsSum += actBest;
+      const actXp = typeof p.awardedXp === 'number'
+        ? Math.max(0, Math.min(100, Math.round(p.awardedXp)))
+        : Math.max(0, Math.min(100, Math.round(Number(p.bestScore ?? p.score ?? p.bestPercentage ?? p.percentage ?? 0))));
+      curricularPointsSum += actXp;
     }
 
     // 2. Audit log points transaction
@@ -1437,6 +1466,10 @@ export const api = {
       lastActivity: user.lastActivity,
       achievements,
       earnedPoints,
+      prevBestScore: melhorPontuacaoAnterior,
+      newBestScore: novaMelhorPontuacao,
+      awardedXp: novoXpAtribuido,
+      attemptScore: novaPontuacao,
     };
   },
 

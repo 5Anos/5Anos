@@ -51,6 +51,7 @@ export interface ActivityProgress {
   firstAttemptDate?: string;
   latestScore?: number;
   latestPercentage?: number;
+  awardedXp?: number; // Total de XP já atribuídos ao aluno por esta atividade específica (máx 100 XP)
   lastUpdated: string;
 }
 

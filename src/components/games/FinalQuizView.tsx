@@ -34,7 +34,7 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
   const [submitted, setSubmitted] = useState(false);
   const [earnedDeltaXP, setEarnedDeltaXP] = useState<number | null>(null);
 
-  // Tracking dynamic best score across attempts in this session
+  // Tracking dynamic best score and total awarded XP across attempts in this session
   const initialBest = Math.max(
     0,
     Math.min(
@@ -44,7 +44,12 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
       )
     )
   );
+  const initialAwarded = typeof existingProgress?.awardedXp === 'number'
+    ? Math.max(0, Math.min(100, Math.round(existingProgress.awardedXp)))
+    : initialBest;
+
   const [bestScoreInDb, setBestScoreInDb] = useState(initialBest);
+  const [totalXpAwarded, setTotalXpAwarded] = useState(initialAwarded);
   const [attemptCount, setAttemptCount] = useState(existingProgress?.attempts || 0);
 
   const t = translations[language];
@@ -106,19 +111,27 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
     });
 
     const prevBest = bestScoreInDb;
-    let delta = 0;
-    if (!hasPreviousAttempt) {
-      delta = percentage;
-    } else if (percentage > prevBest) {
-      delta = percentage - prevBest;
-    } else {
+    const prevAwarded = totalXpAwarded;
+
+    // FÓRMULA OBRIGATÓRIA:
+    // XP_ADICIONAL = MAX(0, NOVA_PONTUACAO - MELHOR_PONTUACAO_ANTERIOR)
+    let delta = Math.max(0, percentage - prevBest);
+
+    // E o total de XP que uma atividade pode gerar deve estar limitado a 100:
+    // XP_ADICIONAL = MIN(XP_ADICIONAL, 100 - XP_JA_ATRIBUIDO_PELA_ATIVIDADE)
+    delta = Math.min(delta, Math.max(0, 100 - prevAwarded));
+
+    // Se nova pontuação <= melhor pontuação OU melhor pontuação = 100% OU XP já atribuídos = 100 -> 0 XP
+    if (percentage <= prevBest || prevBest === 100 || prevAwarded >= 100) {
       delta = 0;
     }
 
+    const newBest = percentage > prevBest ? percentage : prevBest;
+    const newAwarded = Math.min(100, prevAwarded + delta);
+
     setEarnedDeltaXP(delta);
-    if (percentage > bestScoreInDb) {
-      setBestScoreInDb(percentage);
-    }
+    setBestScoreInDb(newBest);
+    setTotalXpAwarded(newAwarded);
     setAttemptCount((prev) => prev + 1);
 
     // Rule 1: Every challenge and quiz is worth exactly 100 points maximum.
@@ -260,7 +273,10 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                       ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
                       : 'bg-slate-100 text-slate-700 border-slate-200'
                   }`}>
-                    {(earnedDeltaXP ?? 0) > 0 ? `+${earnedDeltaXP} XP ganhos` : '0 XP adicionais'}
+                    {(earnedDeltaXP ?? 0) > 0 ? `+${earnedDeltaXP} XP ganhos` : (language === 'pt' ? '0 XP adicionais' : '0 additional XP')}
+                  </span>
+                  <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-900 border border-amber-200">
+                    {language === 'pt' ? 'XP da Atividade:' : 'Activity XP:'} <strong>{totalXpAwarded} / 100 XP</strong>
                   </span>
                 </div>
               </div>
