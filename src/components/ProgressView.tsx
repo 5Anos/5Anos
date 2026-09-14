@@ -538,7 +538,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                                       <div>
                                         <div className="flex items-center gap-1.5">
                                           <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${getQuizMentionBadgeStyle(officialScore).pillClass}`}>
-                                            {officialScore}% • {getQuizMention(officialScore, language)}
+                                            {getQuizMention(officialScore, language)}
                                           </span>
                                         </div>
                                         <span className="block text-[10px] text-emerald-800 font-bold mt-0.5">
@@ -547,8 +547,8 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                                         {item.attempts > 1 && (
                                           <span className="block text-[10px] text-slate-500 font-medium">
                                             {language === 'pt'
-                                              ? `${item.attempts} tentativas (Treino: ${recordedBest}%)`
-                                              : `${item.attempts} attempts (Practice: ${recordedBest}%)`}
+                                              ? `${item.attempts} tentativas (Treino)`
+                                              : `${item.attempts} attempts (Practice)`}
                                           </span>
                                         )}
                                       </div>
@@ -751,7 +751,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                               <div>
                                 <div className="flex items-center gap-1.5">
                                   <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${getQuizMentionBadgeStyle(officialScore).pillClass}`}>
-                                    {officialScore}% • {getQuizMention(officialScore, language)}
+                                    {getQuizMention(officialScore, language)}
                                   </span>
                                 </div>
                                 <span className="block text-[10px] text-emerald-800 font-bold mt-0.5">

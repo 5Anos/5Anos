@@ -621,7 +621,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                           return (
                             <span className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border ${getQuizMentionBadgeStyle(officialScore).pillClass}`}>
                               <CheckCircle2 className="w-3.5 h-3.5" />
-                              <span>{officialScore}% • {getQuizMention(officialScore, language)}</span>
+                              <span>{getQuizMention(officialScore, language)}</span>
                             </span>
                           );
                         })() : (
@@ -665,12 +665,12 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                                 <span className="text-[11px] font-bold text-emerald-900 flex items-center gap-1">
                                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
                                   <span>
-                                    {language === 'pt' ? 'Avaliação Oficial (1.ª Tentativa):' : 'Official Assessment (1st Attempt):'} {officialScore}% ({getQuizMention(officialScore, language)})
+                                    {language === 'pt' ? 'Avaliação Oficial (1.ª Tentativa):' : 'Official Assessment (1st Attempt):'} {getQuizMention(officialScore, language)}
                                   </span>
                                 </span>
                                 {record?.attempts && record.attempts > 1 && (
                                   <span className="text-[10px] text-slate-500 font-semibold block mt-0.5">
-                                    {record.attempts} {language === 'pt' ? `tentativas realizadas (Treino: melhor ${record.bestScore}%)` : `attempts completed (Practice: best ${record.bestScore}%)`}
+                                    {record.attempts} {language === 'pt' ? 'tentativas realizadas (Treino)' : 'attempts completed (Practice)'}
                                   </span>
                                 )}
                               </div>

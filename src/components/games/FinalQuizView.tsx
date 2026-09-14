@@ -168,8 +168,8 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                 <span>
                   {language === 'pt'
-                    ? `Avaliação Oficial: ${recordedOfficialScore}% (${getQuizMention(recordedOfficialScore, language)}) • Tentativa ${attemptCount + 1} (Treino)`
-                    : `Official Assessment: ${recordedOfficialScore}% (${getQuizMention(recordedOfficialScore, language)}) • Attempt ${attemptCount + 1} (Practice)`}
+                    ? `Avaliação Oficial: ${getQuizMention(recordedOfficialScore, language)} • Tentativa ${attemptCount + 1} (Treino)`
+                    : `Official Assessment: ${getQuizMention(recordedOfficialScore, language)} • Attempt ${attemptCount + 1} (Practice)`}
                 </span>
               </span>
             ) : (
@@ -222,13 +222,13 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
 
             <div className="space-y-4 py-1">
               <div>
-                <div className={`inline-block px-5 py-2 rounded-2xl text-xl sm:text-2xl font-black border shadow-2xs mb-2 ${badgeStyle.pillClass}`}>
-                  {currentMention} ({result.percentage}%)
+                <div className={`inline-block px-6 py-2.5 rounded-2xl text-2xl sm:text-3xl font-black border shadow-2xs mb-2 ${badgeStyle.pillClass}`}>
+                  {currentMention}
                 </div>
                 <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full text-xs sm:text-sm font-bold bg-indigo-50 border border-indigo-200 text-indigo-900 mx-auto">
-                  <span>{result.score} de {result.maxScore} Respostas Corretas nesta tentativa</span>
+                  <span>{result.score} de {result.maxScore} Respostas Corretas</span>
                   <span>•</span>
-                  <span>{result.percentage}%</span>
+                  <span>Menção: {currentMention}</span>
                 </div>
               </div>
 
@@ -237,21 +237,21 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                   language === 'pt' ? (
                     <>
                       <p>
-                        📝 A tua 1.ª tentativa foi registada como o teu resultado de avaliação:{' '}
-                        <strong className="text-indigo-900 font-bold">{result.percentage}% ({currentMention})</strong>.
+                        📝 A tua 1.ª tentativa foi registada como o teu resultado de avaliação com a menção:{' '}
+                        <strong className="text-indigo-900 font-bold">{currentMention}</strong>.
                       </p>
                       <p className="text-xs sm:text-sm text-slate-500 font-normal">
-                        Podes voltar a fazer o quiz para rever o que aprendeste e tentar melhorar o teu resultado. As novas tentativas servem apenas para treinar.
+                        Podes voltar a fazer o quiz para rever o que aprendeste e treinar. As novas tentativas servem apenas para praticar.
                       </p>
                     </>
                   ) : (
                     <>
                       <p>
-                        📝 Your 1st attempt has been recorded as your evaluation result:{' '}
-                        <strong className="text-indigo-900 font-bold">{result.percentage}% ({currentMention})</strong>.
+                        📝 Your 1st attempt has been recorded as your evaluation result with the mention:{' '}
+                        <strong className="text-indigo-900 font-bold">{currentMention}</strong>.
                       </p>
                       <p className="text-xs sm:text-sm text-slate-500 font-normal">
-                        You can retake the quiz to review what you learned and try to improve your score. New attempts serve purely for practice.
+                        You can retake the quiz to review what you learned and practice. New attempts serve purely for practice.
                       </p>
                     </>
                   )
@@ -259,27 +259,27 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                   language === 'pt' ? (
                     <>
                       <p>
-                        Obtiveste <strong className="text-indigo-900 font-bold">{result.percentage}% ({currentMention})</strong> nesta tentativa de treino.
+                        Obtiveste a menção <strong className="text-indigo-900 font-bold">{currentMention}</strong> nesta tentativa de treino.
                       </p>
                       <p className="text-xs sm:text-sm text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">
-                        A tua avaliação registada para a professora mantém-se em:{' '}
-                        <strong>{officialScoreToDisplay}% ({officialMention})</strong>.
+                        A tua avaliação registada para a professora mantém-se com a menção:{' '}
+                        <strong>{officialMention}</strong>.
                       </p>
                       <p className="text-xs sm:text-sm text-slate-500 font-normal">
-                        Podes voltar a fazer o quiz para rever o que aprendeste e tentar melhorar o teu resultado. As novas tentativas servem apenas para treinar.
+                        Podes voltar a fazer o quiz para rever o que aprendeste e treinar. As novas tentativas servem apenas para praticar.
                       </p>
                     </>
                   ) : (
                     <>
                       <p>
-                        You scored <strong className="text-indigo-900 font-bold">{result.percentage}% ({currentMention})</strong> on this practice attempt.
+                        You obtained <strong className="text-indigo-900 font-bold">{currentMention}</strong> on this practice attempt.
                       </p>
                       <p className="text-xs sm:text-sm text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">
-                        Your recorded evaluation score for the teacher remains:{' '}
-                        <strong>{officialScoreToDisplay}% ({officialMention})</strong>.
+                        Your recorded evaluation mention for the teacher remains:{' '}
+                        <strong>{officialMention}</strong>.
                       </p>
                       <p className="text-xs sm:text-sm text-slate-500 font-normal">
-                        You can retake the quiz to review what you learned and try to improve your score. New attempts serve purely for practice.
+                        You can retake the quiz to review what you learned and practice. New attempts serve purely for practice.
                       </p>
                     </>
                   )

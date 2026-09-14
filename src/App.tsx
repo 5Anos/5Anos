@@ -33,6 +33,7 @@ import { api, isUserAdmin, DEFAULT_THEME_VISIBILITY, DEFAULT_QUIZ_VISIBILITY } f
 import { User, ActivityProgress, UserAchievement, PointTransaction, Language, ThemeVisibilityMap, QuizVisibilityMap } from './types';
 import { ALL_THEMES } from './data/allThemesData';
 import { translations } from './i18n/translations';
+import { getQuizMention } from './utils/exportUtils';
 import { Sparkles, Lock, ArrowLeft } from 'lucide-react';
 
 type ViewMode = 'dashboard' | 'theme' | 'module' | 'challenge' | 'progress';
@@ -316,19 +317,21 @@ export default function App() {
           const isFirstAttempt = res.record?.attempts === 1;
           const attempt = res.attemptScore ?? 0;
           const official = res.record?.firstAttemptScore ?? attempt;
+          const attemptMention = getQuizMention(attempt, language);
+          const officialMention = getQuizMention(official, language);
           if (isFirstAttempt) {
             showToast(
-              language === 'pt' ? `📝 Avaliação Registada: ${attempt}%` : `📝 Assessment Recorded: ${attempt}%`,
+              language === 'pt' ? `📝 Avaliação Registada: ${attemptMention}` : `📝 Assessment Recorded: ${attemptMention}`,
               language === 'pt'
-                ? 'A tua 1.ª tentativa foi guardada como o teu resultado de avaliação.'
-                : 'Your 1st attempt has been saved as your official evaluation score.'
+                ? `A tua 1.ª tentativa foi guardada com a menção ${attemptMention}.`
+                : `Your 1st attempt has been saved with the mention ${attemptMention}.`
             );
           } else {
             showToast(
-              language === 'pt' ? `🔄 Treino Concluído: ${attempt}%` : `🔄 Practice Completed: ${attempt}%`,
+              language === 'pt' ? `🔄 Treino Concluído: ${attemptMention}` : `🔄 Practice Completed: ${attemptMention}`,
               language === 'pt'
-                ? `Tentativa de treino terminada. Avaliação oficial mantida em ${official}%.`
-                : `Practice attempt finished. Official evaluation remains ${official}%.`
+                ? `Tentativa de treino terminada. Avaliação oficial mantida com a menção ${officialMention}.`
+                : `Practice attempt finished. Official evaluation remains with mention ${officialMention}.`
             );
           }
         } else {
