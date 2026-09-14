@@ -1468,7 +1468,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                               ? 'bg-indigo-600 text-white'
                                               : 'bg-amber-500 text-white'
                                           }`}
-                                          title={`1.ª Tentativa (Oficial): ${breakdown.quiz.officialScore} pts | Melhor: ${breakdown.quiz.bestScore} pts`}
+                                          title={`1.ª Tentativa (Oficial): ${breakdown.quiz.officialScore} XP | Melhor: ${breakdown.quiz.bestScore} XP`}
                                         >
                                           {breakdown.quiz.officialScore} / 100
                                         </span>
@@ -2579,7 +2579,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                           +{stats.bonusPoints} <span className="text-xs font-semibold text-slate-400">XP</span>
                         </div>
                         <div className="text-[10px] text-sky-700 font-semibold mt-0.5">
-                          {language === 'pt' ? '50 pts acerto / 25 pts leitura' : '50 pts correct / 25 pts read'}
+                          {language === 'pt' ? '50 XP acerto / 25 XP leitura' : '50 XP correct / 25 XP read'}
                         </div>
                       </div>
 
@@ -2673,10 +2673,10 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                               {breakdown.quiz.title}
                             </div>
                             <div className="text-[11px] text-slate-500">
-                              Nota Oficial (1.ª Tentativa): <strong className="text-emerald-700 font-bold">{breakdown.quiz.officialScore} pts</strong>
+                              Nota Oficial (1.ª Tentativa): <strong className="text-emerald-700 font-bold">{breakdown.quiz.officialScore} XP</strong>
                               {breakdown.quiz.attempts > 1 && (
                                 <span className="ml-2 text-indigo-700">
-                                  (Melhor nota em {breakdown.quiz.attempts} tentativas: {breakdown.quiz.bestScore} pts)
+                                  (Melhor nota em {breakdown.quiz.attempts} tentativas: {breakdown.quiz.bestScore} XP)
                                 </span>
                               )}
                             </div>

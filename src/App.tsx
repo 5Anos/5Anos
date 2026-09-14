@@ -327,10 +327,10 @@ export default function App() {
             );
           } else {
             showToast(
-              language === 'pt' ? 'Tentativa Registada (0 XP adicionais)' : 'Attempt Recorded (0 additional XP)',
+              language === 'pt' ? 'Tentativa Concluída' : 'Attempt Completed',
               language === 'pt'
-                ? `Obtiveste ${attempt}%. A BD mantém a melhor nota (${best}%). XP desta Atividade: ${awarded}/100 XP.`
-                : `Scored ${attempt}%. DB keeps your best score (${best}%). Activity XP: ${awarded}/100 XP.`
+                ? `Obtiveste ${attempt}%. Melhor pontuação: ${best}%.`
+                : `Scored ${attempt}%. Best score: ${best}%.`
             );
           }
         }

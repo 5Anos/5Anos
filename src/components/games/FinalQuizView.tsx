@@ -226,21 +226,9 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
 
           <p className="text-sm sm:text-base text-indigo-200 max-w-2xl leading-relaxed">
             {language === 'pt'
-              ? 'Avalia os conhecimentos deste tema. Cada atividade corresponde a um máximo de 100 XP. Ao repetires, a BD guarda sempre a tua melhor pontuação e recebes apenas os XP da melhoria!'
-              : 'Assess your knowledge. Each activity corresponds to a maximum of 100 XP. On retries, the DB keeps your best score and you earn only improvement XP!'}
+              ? 'Avalia os teus conhecimentos neste tema. Podes realizar o quiz e repetir as vezes que quiseres para praticar!'
+              : 'Assess your knowledge in this theme. You can take the quiz and retry as many times as you like to practice!'}
           </p>
-
-          {/* Scoring rule note */}
-          <div className="pt-2">
-            <div className="inline-flex items-center gap-2 bg-indigo-900/60 border border-indigo-700/60 rounded-xl px-3.5 py-2 text-xs text-indigo-200">
-              <Zap className="w-4 h-4 text-amber-400 shrink-0" />
-              <span>
-                {language === 'pt'
-                  ? 'Regra de Pontuação: A BD guarda sempre a tua melhor pontuação (máx. 100 XP). Se melhorares, recebes a diferença em XP. Se tirares nota inferior, manténs a melhor e recebes 0 XP.'
-                  : 'Scoring Rule: DB always keeps your best score (max 100 XP). If you improve, you get the XP difference. If lower, you keep your best and get 0 XP.'}
-              </span>
-            </div>
-          </div>
         </div>
 
         {/* Ambient geometric blur */}
@@ -256,56 +244,39 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
           <div className="rounded-[2rem] bg-white border-2 border-indigo-100 p-6 sm:p-8 shadow-md mb-8 text-center space-y-4 animate-in zoom-in-95">
             <div className="text-5xl">{badgeStyle.emoji}</div>
 
-            <div className="space-y-3">
+            <div className="space-y-4 py-1">
               <div>
-                <div className={`inline-block px-4 py-1.5 rounded-2xl text-xl sm:text-2xl font-black border shadow-2xs mb-1.5 ${badgeStyle.pillClass}`}>
+                <div className={`inline-block px-5 py-2 rounded-2xl text-xl sm:text-2xl font-black border shadow-2xs mb-2 ${badgeStyle.pillClass}`}>
                   {currentMention} ({result.percentage}%)
                 </div>
-                <p className="text-xs sm:text-sm font-semibold text-slate-600">
-                  {result.score} de {result.maxScore} Respostas Corretas nesta tentativa
-                </p>
-                <div className="flex flex-wrap items-center justify-center gap-2 mt-2">
-                  <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-800 border border-indigo-200">
-                    {language === 'pt' ? 'Melhor registo na BD:' : 'Best in DB:'} <strong>{bestScoreInDb}%</strong>
-                  </span>
-                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold border ${
-                    (earnedDeltaXP ?? 0) > 0
-                      ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-                      : 'bg-slate-100 text-slate-700 border-slate-200'
-                  }`}>
-                    {(earnedDeltaXP ?? 0) > 0 ? `+${earnedDeltaXP} XP ganhos` : (language === 'pt' ? '0 XP adicionais' : '0 additional XP')}
-                  </span>
-                  <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-900 border border-amber-200">
-                    {language === 'pt' ? 'XP da Atividade:' : 'Activity XP:'} <strong>{totalXpAwarded} / 100 XP</strong>
-                  </span>
+                <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full text-xs sm:text-sm font-bold bg-indigo-50 border border-indigo-200 text-indigo-900 mx-auto">
+                  <span>{result.score} de {result.maxScore} Respostas Corretas</span>
+                  <span>•</span>
+                  <span>{result.percentage}%</span>
                 </div>
               </div>
 
-              <div className="bg-indigo-50/70 border border-indigo-200/80 rounded-2xl p-4 max-w-lg mx-auto text-xs sm:text-sm text-indigo-950">
-                <p className="leading-relaxed font-medium">
-                  {earnedDeltaXP !== null && earnedDeltaXP > 0 ? (
-                    attemptCount === 1 ? (
-                      language === 'pt' ? (
-                        <>É registado <strong>{result.percentage}%</strong> na BD. Recebeste <strong>+{earnedDeltaXP} XP</strong>! Podes repetir para tentar chegar aos 100 XP.</>
-                      ) : (
-                        <>Recorded <strong>{result.percentage}%</strong> in DB. You earned <strong>+{earnedDeltaXP} XP</strong>! You can retry to reach 100 XP.</>
-                      )
-                    ) : (
-                      language === 'pt' ? (
-                        <>🎉 <strong>Parabéns pela tua melhoria!</strong> A BD foi atualizada para <strong>{bestScoreInDb}%</strong> e recebeste <strong>+{earnedDeltaXP} XP</strong> pela diferença!</>
-                      ) : (
-                        <>🎉 <strong>Congratulations on your improvement!</strong> The DB was updated to <strong>{bestScoreInDb}%</strong> and you earned <strong>+{earnedDeltaXP} XP</strong> for the difference!</>
-                      )
-                    )
+              <p className="text-sm sm:text-base max-w-md mx-auto text-slate-700 font-medium leading-relaxed">
+                {result.percentage === 100 || totalXpAwarded === 100 ? (
+                  language === 'pt' ? (
+                    <>🏆 <strong>Parabéns!</strong> Já atingiste o limite máximo de <strong>100 XP</strong> nesta atividade.</>
                   ) : (
-                    language === 'pt' ? (
-                      <>Como a tua pontuação nesta tentativa ({result.percentage}%) é inferior ou igual à melhor ({bestScoreInDb}%), a <strong>BD mantém {bestScoreInDb}%</strong> e recebes <strong>0 XP adicionais</strong>. Uma atividade corresponde a um máximo de 100 XP.</>
-                    ) : (
-                      <>Since your score on this attempt ({result.percentage}%) is lower than or equal to your best ({bestScoreInDb}%), the <strong>DB keeps {bestScoreInDb}%</strong> and you receive <strong>0 additional XP</strong>. An activity corresponds to a maximum of 100 XP.</>
-                    )
-                  )}
-                </p>
-              </div>
+                    <>🏆 <strong>Congratulations!</strong> You have already reached the maximum of <strong>100 XP</strong> on this activity.</>
+                  )
+                ) : earnedDeltaXP !== null && earnedDeltaXP > 0 ? (
+                  language === 'pt' ? (
+                    <>🎉 <strong>Parabéns pela tua melhoria!</strong> Recebeste <strong>+{earnedDeltaXP} XP</strong> (Total: {totalXpAwarded} / 100 XP).</>
+                  ) : (
+                    <>🎉 <strong>Congratulations on your improvement!</strong> You earned <strong>+{earnedDeltaXP} XP</strong> (Total: {totalXpAwarded} / 100 XP).</>
+                  )
+                ) : (
+                  language === 'pt' ? (
+                    <>Obtiveste <strong>{result.percentage} XP</strong> nesta tentativa. Podes repetir o desafio para tentar alcançar os <strong>100 XP</strong>!</>
+                  ) : (
+                    <>You scored <strong>{result.percentage} XP</strong> on this attempt. You can retry the challenge to aim for <strong>100 XP</strong>!</>
+                  )
+                )}
+              </p>
             </div>
 
             <div className="flex items-center justify-center gap-3 pt-2">

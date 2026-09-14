@@ -580,9 +580,9 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
                 )
               ) : (
                 language === 'pt' ? (
-                  <>Obtiveste <strong>{finalScore}%</strong>. A BD regista sempre a tua melhor pontuação e recebes apenas os XP da melhoria (máx. 100 XP por atividade). Clica em "Repetir o Desafio" para tentar alcançar os 100 XP!</>
+                  <>Obtiveste <strong>{finalScore}%</strong>. Clica em "Repetir o Desafio" para tentar alcançar os 100 XP!</>
                 ) : (
-                  <>You got <strong>{finalScore}%</strong>. The DB always keeps your best score and you only earn XP for improvements (max 100 XP per activity). Click "Retry Challenge" to reach 100 XP!</>
+                  <>You got <strong>{finalScore}%</strong>. Click "Retry Challenge" to reach 100 XP!</>
                 )
               )}
             </p>

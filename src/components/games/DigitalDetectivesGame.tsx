@@ -361,7 +361,7 @@ export const DigitalDetectivesGame: React.FC<DigitalDetectivesGameProps> = ({
 
         <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 font-black text-xs md:text-sm border border-amber-200">
           <Award className="w-4 h-4 text-amber-500" />
-          <span>{score} pts</span>
+          <span>{score} XP</span>
         </div>
       </div>
 

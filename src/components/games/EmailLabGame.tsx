@@ -1144,7 +1144,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
                     : 'bg-rose-50 text-rose-800 border-rose-200'
                 }`}
               >
-                {language === 'pt' ? 'Pontuação:' : 'Score:'} {evaluationResult.totalScore} / {evaluationResult.maxScore} pts ({evaluationResult.percentage}%)
+                {language === 'pt' ? 'Pontuação:' : 'Score:'} {evaluationResult.totalScore} / {evaluationResult.maxScore} XP ({evaluationResult.percentage}%)
               </span>
               <span className={`px-3 py-1 rounded-full text-xs font-black border ${
                 evaluationResult.percentage >= 50
@@ -1207,7 +1207,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
                           : 'bg-rose-200/80 text-rose-900'
                       }`}
                     >
-                      {detail.score} / {detail.maxScore} pts
+                      {detail.score} / {detail.maxScore} XP
                     </span>
                   </div>
 

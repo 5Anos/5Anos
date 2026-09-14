@@ -1147,7 +1147,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                 : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
             </h3>
 
-            {/* Percentage & Results Summary Pill */}
+            {/* Percentage & Results Summary */}
             {(() => {
               const prevBest = Math.max(
                 0,
@@ -1172,10 +1172,10 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
               const newTotalAwarded = Math.min(100, prevAwarded + deltaXp);
 
               return (
-                <div className="space-y-3">
-                  <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
+                <div className="space-y-4 py-1">
+                  <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-5 py-2 rounded-full font-extrabold text-sm border shadow-2xs ${
                     resultPercentage === 100
-                      ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
+                      ? 'bg-emerald-100 border-emerald-300 text-emerald-900'
                       : 'bg-amber-100 border-amber-300 text-amber-900'
                   }`}>
                     <span>{resultPercentage}% {language === 'pt' ? 'nesta tentativa' : 'on this attempt'}</span>
@@ -1189,42 +1189,24 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                     )}
                   </div>
 
-                  <div className="flex flex-wrap items-center justify-center gap-2">
-                    <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-800 border border-indigo-200">
-                      {language === 'pt' ? 'Melhor registo na BD:' : 'Best in DB:'} <strong>{newBest}%</strong>
-                    </span>
-                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold border ${
-                      deltaXp > 0
-                        ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-                        : 'bg-slate-100 text-slate-700 border-slate-200'
-                    }`}>
-                      {deltaXp > 0 ? `+${deltaXp} XP ganhos` : (language === 'pt' ? '0 XP adicionais' : '0 additional XP')}
-                    </span>
-                    <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-900 border border-amber-200">
-                      {language === 'pt' ? 'XP da Atividade:' : 'Activity XP:'} <strong>{newTotalAwarded} / 100 XP</strong>
-                    </span>
-                  </div>
-
-                  <p className="text-xs sm:text-sm max-w-md mx-auto text-slate-700 font-medium leading-relaxed">
-                    {deltaXp > 0 ? (
+                  <p className="text-sm sm:text-base max-w-md mx-auto text-slate-700 font-medium leading-relaxed">
+                    {resultPercentage === 100 || newTotalAwarded === 100 ? (
                       language === 'pt' ? (
-                        <>🎉 <strong>Parabéns pela tua melhoria!</strong> A BD foi atualizada para <strong>{newBest}%</strong> e recebeste <strong>+{deltaXp} XP</strong> pela diferença!</>
+                        <>🏆 <strong>Parabéns!</strong> Já atingiste o limite máximo de <strong>100 XP</strong> nesta atividade.</>
                       ) : (
-                        <>🎉 <strong>Congratulations on your improvement!</strong> DB updated to <strong>{newBest}%</strong> and you earned <strong>+{deltaXp} XP</strong> for the difference!</>
+                        <>🏆 <strong>Congratulations!</strong> You have already reached the maximum of <strong>100 XP</strong> on this activity.</>
+                      )
+                    ) : deltaXp > 0 ? (
+                      language === 'pt' ? (
+                        <>🎉 <strong>Parabéns pela tua melhoria!</strong> Recebeste <strong>+{deltaXp} XP</strong> (Total: {newTotalAwarded} / 100 XP).</>
+                      ) : (
+                        <>🎉 <strong>Congratulations on your improvement!</strong> You earned <strong>+{deltaXp} XP</strong> (Total: {newTotalAwarded} / 100 XP).</>
                       )
                     ) : (
                       language === 'pt' ? (
-                        newTotalAwarded === 100 ? (
-                          <>🏆 <strong>Parabéns!</strong> Já atingiste o limite máximo de <strong>100 XP</strong> nesta atividade.</>
-                        ) : (
-                          <>Como a tua pontuação nesta tentativa ({resultPercentage}%) é inferior ou igual à melhor ({newBest}%), a <strong>BD mantém {newBest}%</strong> e recebes <strong>0 XP adicionais</strong>.</>
-                        )
+                        <>Obtiveste <strong>{resultPercentage} XP</strong> nesta tentativa. Podes repetir o desafio para tentar alcançar os <strong>100 XP</strong>!</>
                       ) : (
-                        newTotalAwarded === 100 ? (
-                          <>🏆 <strong>Congratulations!</strong> You have already reached the maximum of <strong>100 XP</strong> on this activity.</>
-                        ) : (
-                          <>Since your score on this attempt ({resultPercentage}%) is lower than or equal to your best ({newBest}%), the <strong>DB keeps {newBest}%</strong> and you receive <strong>0 additional XP</strong>.</>
-                        )
+                        <>You scored <strong>{resultPercentage} XP</strong> on this attempt. You can retry the challenge to aim for <strong>100 XP</strong>!</>
                       )
                     )}
                   </p>

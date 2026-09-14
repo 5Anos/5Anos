@@ -520,7 +520,7 @@ export const PlanetDigitalMissionGame: React.FC<PlanetDigitalMissionGameProps> =
         </div>
 
         <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 font-black text-xs md:text-sm border border-emerald-300">
-          🌱 <span>{currentTotalPoints} pts</span>
+          🌱 <span>{currentTotalPoints} XP</span>
         </div>
       </div>
 

@@ -300,7 +300,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                       <span>{new Date(ach.unlockedAt).toLocaleDateString()}</span>
                     </span>
                   ) : (
-                    <span>{language === 'pt' ? `Bónus: +${b.pointsBonus} pts` : `Bonus: +${b.pointsBonus} pts`}</span>
+                    <span>{language === 'pt' ? `Conquista Especial` : `Special Achievement`}</span>
                   )}
                 </div>
               </div>
@@ -548,7 +548,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                                           </span>
                                         </div>
                                         <span className="block text-[10px] text-slate-400 font-semibold mt-0.5">
-                                          {language === 'pt' ? 'Melhor Pontuação na BD (máx. 100 XP)' : 'Best Score in DB (max 100 XP)'}
+                                          {language === 'pt' ? 'Melhor Pontuação (máx. 100 XP)' : 'Best Score (max 100 XP)'}
                                         </span>
                                         {item.attempts > 1 && (
                                           <span className="block text-[10px] text-slate-500 font-medium">
@@ -762,7 +762,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                                   </span>
                                 </div>
                                 <span className="block text-[10px] text-slate-400 font-semibold mt-0.5">
-                                  {language === 'pt' ? 'Melhor na BD (máx. 100 XP)' : 'Best in DB (max 100 XP)'}
+                                  {language === 'pt' ? 'Melhor Pontuação (máx. 100 XP)' : 'Best Score (max 100 XP)'}
                                 </span>
                                 {item.attempts > 1 && (
                                   <span className="block text-[10px] text-slate-500 font-medium">
@@ -836,7 +836,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                   </p>
                 </div>
                 <span className="font-black text-amber-700 bg-amber-100/70 px-2.5 py-1 rounded-lg text-xs">
-                  +{tx.amount} pts
+                  +{tx.amount} XP
                 </span>
               </div>
             ))}

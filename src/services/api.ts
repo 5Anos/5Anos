@@ -377,7 +377,7 @@ export const api = {
             const isAdmin = isUserAdmin(emailNorm);
             const takenIds = await this.fetchTakenPublicIds();
             const publicId = cachedUser?.publicId || (isAdmin ? 'Docente_TIC' : generateSecurePublicId(takenIds));
-            const initialPoints = cachedUser?.points ?? 0;
+            const initialPoints = cachedUser?.points ?? (isAdmin ? 0 : 100);
 
             const user: User = {
               id: fbUser.uid,
@@ -391,6 +391,17 @@ export const api = {
               language: cachedUser?.language || 'pt',
               createdAt: cachedUser?.createdAt || new Date().toISOString(),
             };
+
+            if (!isAdmin && !cachedUser) {
+              const welcomeTx: PointTransaction = {
+                id: `pt-welcome-${Date.now()}`,
+                userId: fbUser.uid,
+                amount: 100,
+                reason: '🎉 Boas-vindas à Plataforma Educativa TIC (Primeiro acesso: +100 XP)',
+                timestamp: new Date().toISOString(),
+              };
+              setDoc(doc(db, 'users', fbUser.uid, 'pointsHistory', welcomeTx.id), welcomeTx).catch(() => {});
+            }
 
             try {
               await this.syncUserToFirestore(user);
@@ -582,8 +593,8 @@ export const api = {
         // Se Firebase Auth não permitir password/email ou der erro de rede, utiliza o ID local gerado
       }
 
-      // Pontuação inicial do aluno: 0 XP
-      const initialPoints = 0;
+      // Bónus de primeiro acesso: 100 XP para alunos no registo
+      const initialPoints = isAdmin ? 0 : 100;
       const finalAvatar = avatar || getDefaultAvatar(finalPublicId);
 
       const newUser: User = {
@@ -639,7 +650,21 @@ export const api = {
         }
       }
 
-      // 6. Registar em publicProfiles para o ranking de alunos
+      // 6. Registar transação de boas-vindas para o histórico de pontos
+      if (!isAdmin) {
+        const welcomeTx: PointTransaction = {
+          id: `pt-welcome-${Date.now()}`,
+          userId,
+          amount: 100,
+          reason: '🎉 Boas-vindas à Plataforma Educativa TIC (Registo: +100 XP)',
+          timestamp: new Date().toISOString(),
+        };
+        setDoc(doc(db, 'users', userId, 'pointsHistory', welcomeTx.id), welcomeTx).catch((e) => {
+          console.warn('Welcome pointsHistory notice:', e);
+        });
+      }
+
+      // 7. Registar em publicProfiles para o ranking de alunos
       if (!isAdmin) {
         try {
           await setDoc(
@@ -1018,9 +1043,11 @@ export const api = {
       dailyTipPoints += pts;
     });
 
-    const officialVerifiedPoints = calculatedPoints + dailyTipPoints;
+    // Bónus de primeiro acesso: 100 XP para alunos no registo
+    const welcomeBonus = isAdmin ? 0 : 100;
+    const officialVerifiedPoints = welcomeBonus + calculatedPoints + dailyTipPoints;
 
-    // 5. User points are authoritatively derived from verified activities + legitimate daily tips
+    // 5. User points are authoritatively derived from welcome bonus + verified activities + legitimate daily tips
     if (!isAdmin) {
       user.points = officialVerifiedPoints;
       setDoc(doc(db, 'users', user.id), { points: officialVerifiedPoints }, { merge: true }).catch(() => {});
@@ -1374,7 +1401,8 @@ export const api = {
       }
     } catch {}
 
-    const authoritativeTotalPoints = isAdmin ? 0 : (curricularPointsSum + dailyTipPoints);
+    const welcomeBonus = isAdmin ? 0 : 100;
+    const authoritativeTotalPoints = isAdmin ? 0 : (welcomeBonus + curricularPointsSum + dailyTipPoints);
     user.points = authoritativeTotalPoints;
     user.lastActivity = {
       themeId: payload.themeId,

@@ -134,7 +134,7 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 <Sparkles className="w-4 h-4 text-amber-500 fill-amber-400" />
                 <span>{user.points}</span>
-                <span className="hidden sm:inline font-semibold text-amber-700/80">pts</span>
+                <span className="font-semibold text-amber-700/80">XP</span>
               </div>
             )}
 

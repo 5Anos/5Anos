@@ -302,7 +302,7 @@ export const SearchOperatorsGame: React.FC<SearchOperatorsGameProps> = ({ langua
           </span>
           <div className="flex items-center gap-1 bg-amber-50 border border-amber-200 text-amber-900 px-3 py-1 rounded-full text-xs font-bold">
             <Sparkles className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
-            <span>{score} pts</span>
+            <span>{score} XP</span>
           </div>
         </div>
       </div>
