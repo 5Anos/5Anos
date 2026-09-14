@@ -65,7 +65,7 @@ export default function App() {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [leaderboardModalOpen, setLeaderboardModalOpen] = useState(false);
   const [adminModalOpen, setAdminModalOpen] = useState(false);
-  const [adminInitialTab, setAdminInitialTab] = useState<'students' | 'turmas' | 'themes' | 'danger'>('students');
+  const [adminInitialTab, setAdminInitialTab] = useState<'students' | 'scores' | 'turmas' | 'themes' | 'danger'>('students');
   const [toastMessage, setToastMessage] = useState<{ title: string; subtitle?: string } | null>(null);
 
   const t = translations[language];
@@ -219,7 +219,7 @@ export default function App() {
     }
   };
 
-  const handleOpenAdminWithTab = (tab: 'students' | 'turmas' | 'themes' | 'danger') => {
+  const handleOpenAdminWithTab = (tab: 'students' | 'scores' | 'turmas' | 'themes' | 'danger') => {
     setAdminInitialTab(tab);
     setAdminModalOpen(true);
   };

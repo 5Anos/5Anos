@@ -21,7 +21,7 @@ interface DashboardProps {
   onNavigateProgress: () => void;
   onOpenAuth: () => void;
   onOpenAdmin?: () => void;
-  onOpenAdminWithTab?: (tab: 'students' | 'turmas' | 'themes' | 'danger') => void;
+  onOpenAdminWithTab?: (tab: 'students' | 'scores' | 'turmas' | 'themes' | 'danger') => void;
   onToggleThemeVisibility?: (themeId: string) => void;
   onOpenLeaderboard?: () => void;
   onPointsAwarded?: (user: User | null, points: number, achievements: UserAchievement[]) => void;
@@ -171,7 +171,16 @@ export const Dashboard: React.FC<DashboardProps> = ({
               </button>
             )}
 
-            {onOpenAdmin && (
+            {onOpenAdminWithTab ? (
+              <button
+                type="button"
+                onClick={() => onOpenAdminWithTab('scores')}
+                className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+              >
+                <FileSpreadsheet className="w-4 h-4 text-slate-950" />
+                <span>{language === 'pt' ? 'Abrir Pautas XLS' : 'Open Records XLS'}</span>
+              </button>
+            ) : onOpenAdmin ? (
               <button
                 type="button"
                 onClick={onOpenAdmin}
@@ -180,7 +189,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <FileSpreadsheet className="w-4 h-4 text-slate-950" />
                 <span>{language === 'pt' ? 'Abrir Pautas XLS' : 'Open Records XLS'}</span>
               </button>
-            )}
+            ) : null}
           </div>
         </div>
       )}
