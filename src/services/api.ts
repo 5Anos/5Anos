@@ -213,6 +213,45 @@ export function evaluateEligibleBadges(
 
 let isRegisteringInProgress = false;
 
+/**
+ * Computa de forma autoritativa e segura todos os pontos ganhos através de Dicas Diárias / da Semana,
+ * agregando os registos multi-dispositivo da coleção dailyTips e da pointsHistory.
+ */
+export function calculateAuthoritativeDailyTipPoints(
+  dailyTipsList: Array<{ pointsEarned?: number; readPoints?: number; answerPoints?: number; date?: string; id?: string }>,
+  pointsHistoryList: PointTransaction[]
+): number {
+  const pointsByDate = new Map<string, number>();
+
+  if (Array.isArray(dailyTipsList)) {
+    for (const dt of dailyTipsList) {
+      const dateKey = dt.date || dt.id || 'unknown';
+      const pts = typeof dt.pointsEarned === 'number'
+        ? dt.pointsEarned
+        : ((dt.readPoints || 0) + (dt.answerPoints || 0));
+      if (pts > 0) {
+        pointsByDate.set(dateKey, Math.min(50, Math.max(0, pts)));
+      }
+    }
+  }
+
+  if (Array.isArray(pointsHistoryList)) {
+    for (const tx of pointsHistoryList) {
+      if (tx.id?.startsWith('pt-daily-') || tx.reason?.includes('Curiosidade') || tx.reason?.includes('Dica')) {
+        const dateKey = tx.timestamp ? tx.timestamp.split('T')[0] : (tx.id?.replace(/^pt-daily-(?:read|ans)-/, '').split('-')[0] || tx.id || 'unknown');
+        const currentSum = pointsByDate.get(dateKey) || 0;
+        pointsByDate.set(dateKey, Math.min(50, currentSum + Math.max(0, tx.amount || 0)));
+      }
+    }
+  }
+
+  let total = 0;
+  pointsByDate.forEach((pts) => {
+    total += pts;
+  });
+  return total;
+}
+
 export const api = {
   getToken(): string | null {
     return localStorage.getItem(TOKEN_KEY);
@@ -992,16 +1031,22 @@ export const api = {
       // achievements can also be derived from progress
     }
 
-    // 3. Fetch points history from Firestore
+    // 3. Fetch points history and daily tips from Firestore
+    let dailyTipsList: any[] = [];
     try {
-      const ptsCol = collection(db, 'users', user.id, 'pointsHistory');
-      const snap = await getDocs(query(ptsCol, limit(50)));
-      if (!snap.empty) {
-        pointsHistory = snap.docs.map((d) => d.data() as PointTransaction);
+      const [ptsSnap, dtSnap] = await Promise.allSettled([
+        getDocs(collection(db, 'users', user.id, 'pointsHistory')),
+        getDocs(collection(db, 'users', user.id, 'dailyTips')),
+      ]);
+      if (ptsSnap.status === 'fulfilled' && !ptsSnap.value.empty) {
+        pointsHistory = ptsSnap.value.docs.map((d) => d.data() as PointTransaction);
         pointsHistory.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
       }
+      if (dtSnap.status === 'fulfilled' && !dtSnap.value.empty) {
+        dailyTipsList = dtSnap.value.docs.map((d) => ({ ...d.data(), id: d.id }));
+      }
     } catch {
-      // points history can be empty
+      // points history and daily tips can be empty
     }
 
     // 4. Calculate verified points dynamically from progress strictly matching curriculum catalog
@@ -1035,22 +1080,15 @@ export const api = {
     const eligibleBadges = evaluateEligibleBadges(validatedProgress, calculatedPoints, new Set());
 
     // Legitimate daily tip points from verified history (20 XP leitura + 30 XP acerto = máx 50 XP por dia)
-    const dailyTipPointsByDate = new Map<string, number>();
-    for (const tx of pointsHistory) {
-      if (tx.id?.startsWith('pt-daily-') || tx.reason?.includes('Curiosidade') || tx.reason?.includes('Dica')) {
-        const dateKey = tx.timestamp ? tx.timestamp.split('T')[0] : tx.id;
-        const currentSum = dailyTipPointsByDate.get(dateKey) || 0;
-        dailyTipPointsByDate.set(dateKey, Math.min(50, currentSum + Math.max(0, tx.amount || 0)));
-      }
-    }
-    let dailyTipPoints = 0;
-    dailyTipPointsByDate.forEach((pts) => {
-      dailyTipPoints += pts;
-    });
+    const dailyTipPoints = calculateAuthoritativeDailyTipPoints(dailyTipsList, pointsHistory);
+
+    // Preservar qualquer bónus previamente obtido se superior
+    const existingBonusInUser = Math.max(0, (user.points || 0) - (100 + calculatedPoints));
+    const effectiveDailyTipPoints = Math.max(dailyTipPoints, existingBonusInUser);
 
     // Bónus de primeiro acesso: 100 XP para alunos no registo
     const welcomeBonus = isAdmin ? 0 : 100;
-    const officialVerifiedPoints = welcomeBonus + calculatedPoints + dailyTipPoints;
+    const officialVerifiedPoints = welcomeBonus + calculatedPoints + effectiveDailyTipPoints;
 
     // 5. User points are authoritatively derived from welcome bonus + verified activities + legitimate daily tips
     if (!isAdmin) {
@@ -1207,25 +1245,41 @@ export const api = {
       finalPercentage = Math.max(0, Math.min(100, Math.round(Number(finalPercentage) || 0)));
     }
 
-    // 1. Fetch current progress list & achievements from Firestore
+    // 1. Fetch current progress list, achievements, daily tips, and points history from Firestore
     let progressList: ActivityProgress[] = [];
     let achievements: UserAchievement[] = [];
+    let dailyTipsList: any[] = [];
+    let pointsHistoryList: PointTransaction[] = [];
 
     try {
-      const snapP = await getDocs(collection(db, 'users', userId, 'progress'));
-      if (!snapP.empty) {
-        progressList = snapP.docs.map((d) => d.data() as ActivityProgress);
+      const [snapP, snapA, snapDT, snapPH] = await Promise.allSettled([
+        getDocs(collection(db, 'users', userId, 'progress')),
+        getDocs(collection(db, 'users', userId, 'achievements')),
+        getDocs(collection(db, 'users', userId, 'dailyTips')),
+        getDocs(collection(db, 'users', userId, 'pointsHistory')),
+      ]);
+
+      if (snapP.status === 'fulfilled' && !snapP.value.empty) {
+        progressList = snapP.value.docs.map((d) => d.data() as ActivityProgress);
+      } else {
+        progressList = JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY + userId) || '[]');
+      }
+
+      if (snapA.status === 'fulfilled' && !snapA.value.empty) {
+        achievements = snapA.value.docs.map((d) => d.data() as UserAchievement);
+      } else {
+        achievements = JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + userId) || '[]');
+      }
+
+      if (snapDT.status === 'fulfilled' && !snapDT.value.empty) {
+        dailyTipsList = snapDT.value.docs.map((d) => ({ ...d.data(), id: d.id }));
+      }
+
+      if (snapPH.status === 'fulfilled' && !snapPH.value.empty) {
+        pointsHistoryList = snapPH.value.docs.map((d) => d.data() as PointTransaction);
       }
     } catch {
       progressList = JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY + userId) || '[]');
-    }
-
-    try {
-      const snapA = await getDocs(collection(db, 'users', userId, 'achievements'));
-      if (!snapA.empty) {
-        achievements = snapA.docs.map((d) => d.data() as UserAchievement);
-      }
-    } catch {
       achievements = JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + userId) || '[]');
     }
 
@@ -1450,19 +1504,22 @@ export const api = {
       setDoc(doc(db, 'users', userId, 'achievements', badge.badgeId), newAch).catch(() => {});
     }
 
-    let dailyTipPoints = 0;
-    try {
-      const dailyBonusRaw = localStorage.getItem('tic_daily_bonus_' + userId);
-      if (dailyBonusRaw) {
-        const parsed = JSON.parse(dailyBonusRaw);
-        if (typeof parsed?.points === 'number') {
-          dailyTipPoints = Math.min(1000, Math.max(0, parsed.points));
-        }
+    // CÁLCULO DE PONTOS DA DICA DIÁRIA / DA SEMANA:
+    // Garante que os pontos obtidos em Dicas Diárias nunca são apagados ou ignorados.
+    const dailyTipPoints = calculateAuthoritativeDailyTipPoints(dailyTipsList, pointsHistoryList);
+
+    // Salvaguarda: preserva qualquer bónus de dicas existente no perfil do aluno caso a leitura de Firestore falhe
+    const previousCurricularSum = progressList.reduce((acc, p) => {
+      if (isValidActivityId(p.activityId) && !isLearningQuiz(p.activityId, p.activityType)) {
+        return acc + (typeof p.awardedXp === 'number' ? Math.max(0, Math.min(100, Math.round(p.awardedXp))) : 0);
       }
-    } catch {}
+      return acc;
+    }, 0);
+    const existingBonusInUser = Math.max(0, (user.points || 0) - (100 + previousCurricularSum));
+    const effectiveDailyTipPoints = Math.max(dailyTipPoints, existingBonusInUser);
 
     const welcomeBonus = isAdmin ? 0 : 100;
-    const authoritativeTotalPoints = isAdmin ? 0 : (welcomeBonus + curricularPointsSum + dailyTipPoints);
+    const authoritativeTotalPoints = isAdmin ? 0 : (welcomeBonus + curricularPointsSum + effectiveDailyTipPoints);
     user.points = authoritativeTotalPoints;
     user.lastActivity = {
       themeId: payload.themeId,
@@ -2159,8 +2216,8 @@ export const api = {
           await Promise.allSettled(achSnap.docs.map((d) => deleteDoc(d.ref)));
         } catch {}
         try {
-          const ptsSnap = await getDocs(collection(db, 'users', studentId, 'pointsHistory'));
-          await Promise.allSettled(ptsSnap.docs.map((d) => deleteDoc(d.ref)));
+          const dtSnap = await getDocs(collection(db, 'users', studentId, 'dailyTips'));
+          await Promise.allSettled(dtSnap.docs.map((d) => deleteDoc(d.ref)));
         } catch {}
 
         // 2. Delete user and public profile
@@ -2237,6 +2294,10 @@ export const api = {
                   const ptsSnap = await getDocs(collection(db, 'users', id, 'pointsHistory'));
                   await Promise.allSettled(ptsSnap.docs.map((d) => deleteDoc(d.ref)));
                 } catch {}
+                try {
+                  const dtSnap = await getDocs(collection(db, 'users', id, 'dailyTips'));
+                  await Promise.allSettled(dtSnap.docs.map((d) => deleteDoc(d.ref)));
+                } catch {}
 
                 await deleteDoc(doc(db, 'users', id));
                 await deleteDoc(doc(db, 'publicProfiles', id));
@@ -2303,6 +2364,10 @@ export const api = {
                   const ptsSnap = await getDocs(collection(db, 'users', id, 'pointsHistory'));
                   await Promise.allSettled(ptsSnap.docs.map((d) => deleteDoc(d.ref)));
                 } catch {}
+                try {
+                  const dtSnap = await getDocs(collection(db, 'users', id, 'dailyTips'));
+                  await Promise.allSettled(dtSnap.docs.map((d) => deleteDoc(d.ref)));
+                } catch {}
 
                 await deleteDoc(doc(db, 'users', id));
                 await deleteDoc(doc(db, 'publicProfiles', id));
@@ -2365,6 +2430,10 @@ export const api = {
                 try {
                   const ptsSnap = await getDocs(collection(db, 'users', studentId, 'pointsHistory'));
                   await Promise.allSettled(ptsSnap.docs.map((d) => deleteDoc(d.ref)));
+                } catch {}
+                try {
+                  const dtSnap = await getDocs(collection(db, 'users', studentId, 'dailyTips'));
+                  await Promise.allSettled(dtSnap.docs.map((d) => deleteDoc(d.ref)));
                 } catch {}
 
                 // Delete primary doc and leaderboard profile
