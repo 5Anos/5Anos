@@ -265,24 +265,22 @@ export const InboxSortingGame: React.FC<InboxSortingGameProps> = ({ language, on
               </span>
               <span>•</span>
               <span className="font-black">
-                {Math.round((correctCount / EMAILS.length) * 100) >= 50
-                  ? (language === 'pt' ? '✓ Concluído (≥50%)' : '✓ Completed (≥50%)')
-                  : (language === 'pt' ? '<50% (A Treinar)' : '<50% (In Progress)')}
+                {Math.round((correctCount / EMAILS.length) * 100)} XP
               </span>
             </div>
             <p className="text-sm sm:text-base text-slate-600 max-w-md mx-auto">
               {correctCount === EMAILS.length ? (
-                language === 'pt'
-                  ? 'Parabéns! Classificaste corretamente todas as mensagens com 100% de pontuação máxima!'
-                  : 'Congratulations! You sorted all emails correctly with 100% maximum score!'
-              ) : Math.round((correctCount / EMAILS.length) * 100) >= 50 ? (
-                language === 'pt'
-                  ? `Muito bem! Obtiveste ${Math.round((correctCount / EMAILS.length) * 100)}%, alcançando 50% ou mais para concluir a atividade. Podes tentar novamente para melhorar e ganhar o XP da diferença!`
-                  : `Well done! You scored ${Math.round((correctCount / EMAILS.length) * 100)}%, reaching 50% or above to complete the activity. You can retry anytime to improve and earn extra XP!`
+                language === 'pt' ? (
+                  <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+                ) : (
+                  <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+                )
               ) : (
-                language === 'pt'
-                  ? `Obtiveste ${Math.round((correctCount / EMAILS.length) * 100)}% (${correctCount} de ${EMAILS.length} corretas). Para concluíres a atividade precisas de pelo menos 50% (superior ou igual a 50%). Tenta novamente!`
-                  : `You scored ${Math.round((correctCount / EMAILS.length) * 100)}%. To complete this activity you need at least 50%. Try again!`
+                language === 'pt' ? (
+                  <>Obtiveste <strong>{Math.round((correctCount / EMAILS.length) * 100)} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+                ) : (
+                  <>You got <strong>{Math.round((correctCount / EMAILS.length) * 100)} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+                )
               )}
             </p>
           </div>
@@ -293,7 +291,7 @@ export const InboxSortingGame: React.FC<InboxSortingGameProps> = ({ language, on
               className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
             >
               <RefreshCw className="w-4 h-4" />
-              <span>{language === 'pt' ? 'Repetir Desafio' : t.tryAgain}</span>
+              <span>{language === 'pt' ? 'Repetir o Desafio' : t.tryAgain}</span>
             </button>
             <button
               onClick={onBack}

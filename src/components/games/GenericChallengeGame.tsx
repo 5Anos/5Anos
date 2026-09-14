@@ -566,27 +566,25 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
             </span>
             <span>•</span>
             <span className="font-black">
-              {finalScore >= 50
-                ? (language === 'pt' ? '✓ Concluído (≥50%)' : '✓ Completed (≥50%)')
-                : (language === 'pt' ? '<50% (A Treinar)' : '<50% (In Progress)')}
+              {finalScore} XP
             </span>
           </div>
 
           <p className={`text-xs sm:text-sm max-w-md mx-auto ${
-            finalScore >= 50 ? 'text-emerald-800' : 'text-amber-900 font-medium'
+            finalScore === 100 ? 'text-emerald-800 font-bold' : 'text-amber-900 font-medium'
           }`}>
             {finalScore === 100 ? (
-              language === 'pt'
-                ? 'Excelente empenho! Acertaste em todas as questões e obtiveste a pontuação máxima de 100%!'
-                : 'Great job! You answered all questions correctly and reached the max score of 100%!'
-            ) : finalScore >= 50 ? (
-              language === 'pt'
-                ? `Muito bem! Obtiveste ${finalScore}%, alcançando os 50% ou mais para concluir a atividade. Lembra-te: podes repetir para melhorar e ganhar o XP da diferença!`
-                : `Well done! You scored ${finalScore}%, reaching 50% or above to complete the activity. You can retry anytime to improve your score and gain extra XP!`
+              language === 'pt' ? (
+                <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+              ) : (
+                <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+              )
             ) : (
-              language === 'pt'
-                ? `Obtiveste ${finalScore}%. Para concluíres o desafio precisas de pelo menos 50% (superior ou igual a 50%). Tenta novamente para melhorares o teu resultado!`
-                : `You scored ${finalScore}%. You need at least 50% to complete the challenge. Try again to improve your score!`
+              language === 'pt' ? (
+                <>Obtiveste <strong>{finalScore} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+              ) : (
+                <>You got <strong>{finalScore} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+              )
             )}
           </p>
 
@@ -596,7 +594,7 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
               className="px-4 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-2xs transition-colors"
             >
               <RotateCcw className="w-4 h-4" />
-              <span>{language === 'pt' ? 'Repetir Desafio' : 'Retry Challenge'}</span>
+              <span>{language === 'pt' ? 'Repetir o Desafio' : 'Retry Challenge'}</span>
             </button>
             <button
               onClick={onBack}

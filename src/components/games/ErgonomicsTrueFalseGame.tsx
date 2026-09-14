@@ -640,23 +640,25 @@ export const ErgonomicsTrueFalseGame: React.FC<ErgonomicsTrueFalseGameProps> = (
                         : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
                     </h3>
                     <p className="text-xs sm:text-sm font-medium opacity-90">
-                      {percentage === 100
-                        ? (language === 'pt'
-                          ? 'Acertaste em 5 de 5 situações (100% de pontuação máxima)!'
-                          : 'You got 5 out of 5 correct (100% max score)!')
-                        : percentage >= 50
-                        ? (language === 'pt'
-                          ? `Acertaste em ${correctCount} de 5 situações (${percentage}%). Concluíste a atividade (≥50%). Podes repetir para melhorar a tua pontuação e ganhar mais XP!`
-                          : `You got ${correctCount} of 5 correct (${percentage}%). Challenge completed (≥50%). You can retry to improve your score and earn extra XP!`)
-                        : (language === 'pt'
-                          ? `Acertaste em ${correctCount} de 5 situações (${percentage}%). Para concluíres a atividade precisas de pelo menos 50% (superior ou igual a 50%). Tenta novamente!`
-                          : `You got ${correctCount} of 5 correct (${percentage}%). To complete this activity you need at least 50%. Try again!`)}
+                      {percentage === 100 ? (
+                        language === 'pt' ? (
+                          <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+                        ) : (
+                          <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+                        )
+                      ) : (
+                        language === 'pt' ? (
+                          <>Obtiveste <strong>{percentage} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+                        ) : (
+                          <>You got <strong>{percentage} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+                        )
+                      )}
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-2xl sm:text-3xl font-black">{percentage}%</span>
+                  <span className="text-2xl sm:text-3xl font-black">{percentage} XP</span>
                 </div>
               </div>
 
@@ -668,7 +670,7 @@ export const ErgonomicsTrueFalseGame: React.FC<ErgonomicsTrueFalseGameProps> = (
                   className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-colors"
                 >
                   <RotateCcw className="w-4 h-4" />
-                  <span>{language === 'pt' ? 'Tentar Novamente' : 'Try Again'}</span>
+                  <span>{language === 'pt' ? 'Repetir o Desafio' : 'Try Again'}</span>
                 </button>
 
                 <button

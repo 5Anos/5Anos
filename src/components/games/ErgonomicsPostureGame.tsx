@@ -503,9 +503,19 @@ export const ErgonomicsPostureGame: React.FC<Props> = ({ language, onBack, onFin
               {language === 'pt' ? 'Mestre da Ergonomia e Bem-Estar!' : 'Master of Ergonomics & Well-Being!'}
             </h2>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-medium">
-              {language === 'pt'
-                ? 'Aprendeste a ajustar a postura na secretária, a regular a luz lateral e a combinar as pausas ativas corporais com o descanso visual da regra 20-20-20.'
-                : 'You mastered ergonomic desk posture, glare-free lighting, and combining active body breaks with the 20-20-20 visual rest rule.'}
+              {(50 + Math.round((scenarioScores.filter(Boolean).length / HABIT_SCENARIOS.length) * 50)) === 100 ? (
+                language === 'pt' ? (
+                  <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+                ) : (
+                  <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+                )
+              ) : (
+                language === 'pt' ? (
+                  <>Obtiveste <strong>{50 + Math.round((scenarioScores.filter(Boolean).length / HABIT_SCENARIOS.length) * 50)} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+                ) : (
+                  <>You got <strong>{50 + Math.round((scenarioScores.filter(Boolean).length / HABIT_SCENARIOS.length) * 50)} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+                )
+              )}
             </p>
           </div>
 
@@ -515,7 +525,9 @@ export const ErgonomicsPostureGame: React.FC<Props> = ({ language, onBack, onFin
               {50 + Math.round((scenarioScores.filter(Boolean).length / HABIT_SCENARIOS.length) * 50)}% {language === 'pt' ? 'de Pontuação' : 'Score'}
             </span>
             <span>•</span>
-            <span className="text-emerald-300">✓ {language === 'pt' ? 'Concluído (≥50%)' : 'Completed (≥50%)'}</span>
+            <span className="text-amber-300">
+              {50 + Math.round((scenarioScores.filter(Boolean).length / HABIT_SCENARIOS.length) * 50)} XP
+            </span>
           </div>
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -529,7 +541,7 @@ export const ErgonomicsPostureGame: React.FC<Props> = ({ language, onBack, onFin
               className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <RotateCcw className="w-4 h-4" />
-              <span>{language === 'pt' ? 'Jogar Novamente' : 'Play Again'}</span>
+              <span>{language === 'pt' ? 'Repetir o Desafio' : 'Play Again'}</span>
             </button>
             <button
               onClick={onBack}

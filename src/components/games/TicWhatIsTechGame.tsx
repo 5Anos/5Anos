@@ -773,52 +773,82 @@ export const TicWhatIsTechGame: React.FC<TicWhatIsTechGameProps> = ({
       )}
 
       {/* FINISHED CELEBRATION */}
-      {activePhase === 'finished' && (
-        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-xl text-center space-y-6 animate-in zoom-in-95">
-          <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-4xl mx-auto shadow-inner border border-emerald-200 animate-bounce">
-            🎉
-          </div>
+      {activePhase === 'finished' && (() => {
+        let score1 = 0;
+        ITEMS_DATA.forEach((item) => {
+          if (phase1Answers[item.id] === item.isTic) score1 += 1;
+        });
 
-          <div className="space-y-2 max-w-lg mx-auto">
-            <span className="text-xs font-black uppercase tracking-widest text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-              {language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed!'}
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-              {language === 'pt' ? 'Excelente Trabalho de Investigação TIC!' : 'Outstanding ICT Investigation Work!'}
-            </h2>
-            <p className="text-sm text-slate-600 leading-relaxed font-medium">
-              {language === 'pt'
-                ? 'Agora já sabes reconhecer que as TIC vão muito além de computadores e telemóveis: são tecnologias fundamentais para resolver problemas e comunicar!'
-                : 'Now you understand that ICT goes far beyond mere devices: it empowers us to solve problems and communicate effectively!'}
-            </p>
-          </div>
+        let score2 = 0;
+        PROBLEMS_DATA.forEach((prob) => {
+          const selectedId = problemAnswers[prob.id];
+          const opt = prob.options.find((o) => o.id === selectedId);
+          if (opt?.isBest) score2 += 1;
+        });
 
-          <div className="inline-flex flex-wrap items-center justify-center gap-2 px-5 py-2 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 font-extrabold text-sm sm:text-base">
-            <Award className="w-5 h-5 text-amber-500" />
-            <span>✓ {language === 'pt' ? 'Concluído (>50%)' : 'Completed (>50%)'}</span>
-          </div>
+        const totalCorrect = score1 + score2;
+        const maxPossible = ITEMS_DATA.length + PROBLEMS_DATA.length;
+        const finalPercentage = Math.round((totalCorrect / maxPossible) * 100);
 
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
-            <button
-              type="button"
-              onClick={handleRestart}
-              className="px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors flex items-center gap-2 cursor-pointer"
-            >
-              <RotateCcw className="w-4 h-4" />
-              <span>{language === 'pt' ? 'Repetir Desafio' : 'Play Again'}</span>
-            </button>
+        return (
+          <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-xl text-center space-y-6 animate-in zoom-in-95">
+            <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-4xl mx-auto shadow-inner border border-emerald-200 animate-bounce">
+              🎉
+            </div>
 
-            <button
-              type="button"
-              onClick={onBack}
-              className="px-6 py-2.5 rounded-xl font-black text-xs sm:text-sm bg-indigo-600 hover:bg-indigo-700 text-white transition-all shadow-md flex items-center gap-2 cursor-pointer hover:scale-102"
-            >
-              <Award className="w-4 h-4 text-amber-300" />
-              <span>{language === 'pt' ? 'Voltar aos Temas' : 'Back to Topics'}</span>
-            </button>
+            <div className="space-y-2 max-w-lg mx-auto">
+              <span className="text-xs font-black uppercase tracking-widest text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                {language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed!'}
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+                {language === 'pt' ? 'Excelente Trabalho de Investigação TIC!' : 'Outstanding ICT Investigation Work!'}
+              </h2>
+              <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                {finalPercentage === 100 ? (
+                  language === 'pt' ? (
+                    <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+                  ) : (
+                    <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+                  )
+                ) : (
+                  language === 'pt' ? (
+                    <>Obtiveste <strong>{finalPercentage} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+                  ) : (
+                    <>You got <strong>{finalPercentage} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+                  )
+                )}
+              </p>
+            </div>
+
+            <div className="inline-flex flex-wrap items-center justify-center gap-2 px-5 py-2 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 font-extrabold text-sm sm:text-base">
+              <Award className="w-5 h-5 text-amber-500" />
+              <span>{finalPercentage}% de Pontuação</span>
+              <span>•</span>
+              <span className="font-black text-emerald-700">{finalPercentage} XP</span>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
+              <button
+                type="button"
+                onClick={handleRestart}
+                className="px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors flex items-center gap-2 cursor-pointer"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span>{language === 'pt' ? 'Repetir o Desafio' : 'Play Again'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={onBack}
+                className="px-6 py-2.5 rounded-xl font-black text-xs sm:text-sm bg-indigo-600 hover:bg-indigo-700 text-white transition-all shadow-md flex items-center gap-2 cursor-pointer hover:scale-102"
+              >
+                <Award className="w-4 h-4 text-amber-300" />
+                <span>{language === 'pt' ? 'Voltar aos Temas' : 'Back to Topics'}</span>
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 };

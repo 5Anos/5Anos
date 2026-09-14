@@ -386,9 +386,19 @@ export const PlanetDigitalMissionGame: React.FC<PlanetDigitalMissionGameProps> =
               : 'Congratulations, Planet Guardian!'}
           </h2>
           <p className="text-slate-600 text-base md:text-lg mb-6 max-w-lg mx-auto font-medium">
-            {language === 'pt'
-              ? 'Aprendeste que cuidar da tecnologia também é cuidar do planeta e proteger o nosso futuro ecológico.'
-              : 'You learned that caring for technology is also caring for our planet and protecting our ecological future.'}
+            {currentTotalPoints === 100 ? (
+              language === 'pt' ? (
+                <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+              ) : (
+                <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+              )
+            ) : (
+              language === 'pt' ? (
+                <>Obtiveste <strong>{currentTotalPoints} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+              ) : (
+                <>You got <strong>{currentTotalPoints} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+              )
+            )}
           </p>
 
           {/* Score Box */}
@@ -398,7 +408,7 @@ export const PlanetDigitalMissionGame: React.FC<PlanetDigitalMissionGameProps> =
               {language === 'pt' ? 'Pontos Planeta Acumulados' : 'Accumulated Planet Points'}
             </span>
             <span className="text-4xl font-black text-emerald-900">
-              {currentTotalPoints} / 100
+              {currentTotalPoints} XP
             </span>
           </div>
 
@@ -466,7 +476,7 @@ export const PlanetDigitalMissionGame: React.FC<PlanetDigitalMissionGameProps> =
               className="px-6 py-3 rounded-2xl font-black bg-emerald-600 hover:bg-emerald-700 text-white shadow-md transition-all flex items-center justify-center gap-2 text-base cursor-pointer"
             >
               <RotateCcw className="w-5 h-5" />
-              {language === 'pt' ? 'Jogar Novamente' : 'Play Again'}
+              {language === 'pt' ? 'Repetir o Desafio' : 'Play Again'}
             </button>
             <button
               onClick={onBack}

@@ -538,24 +538,22 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
               </span>
               <span>•</span>
               <span className="font-black">
-                {Math.round((score / DILEMMAS.length) * 100) >= 50
-                  ? (language === 'pt' ? '✓ Concluído (≥50%)' : '✓ Completed (≥50%)')
-                  : (language === 'pt' ? '<50% (A Treinar)' : '<50% (In Progress)')}
+                {Math.round((score / DILEMMAS.length) * 100)} XP
               </span>
             </div>
             <p className="text-sm sm:text-base text-slate-600 max-w-md mx-auto">
               {score === DILEMMAS.length ? (
-                language === 'pt'
-                  ? 'Excelente empenho! Tomaste 100% de decisões exemplares e éticas. Parabéns!'
-                  : 'Great job! You made 100% exemplary choices. Congratulations!'
-              ) : Math.round((score / DILEMMAS.length) * 100) >= 50 ? (
-                language === 'pt'
-                  ? `Muito bem! Obtiveste ${Math.round((score / DILEMMAS.length) * 100)}%, alcançando os 50% ou mais para concluir a atividade. Podes tentar novamente para melhorar a pontuação e ganhar mais XP!`
-                  : `Well done! You scored ${Math.round((score / DILEMMAS.length) * 100)}%, reaching 50% or above to complete the activity. You can retry anytime to improve and earn extra XP!`
+                language === 'pt' ? (
+                  <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+                ) : (
+                  <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+                )
               ) : (
-                language === 'pt'
-                  ? `Obtiveste ${Math.round((score / DILEMMAS.length) * 100)}% (${score} de ${DILEMMAS.length} corretas). Para concluíres a atividade no teu progresso precisas de pelo menos 50% (superior ou igual a 50%). Tenta novamente!`
-                  : `You scored ${Math.round((score / DILEMMAS.length) * 100)}%. To complete this activity you need at least 50%. Try again!`
+                language === 'pt' ? (
+                  <>Obtiveste <strong>{Math.round((score / DILEMMAS.length) * 100)} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+                ) : (
+                  <>You got <strong>{Math.round((score / DILEMMAS.length) * 100)} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+                )
               )}
             </p>
           </div>
@@ -566,7 +564,7 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
               className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
             >
               <RefreshCw className="w-4 h-4" />
-              <span>{language === 'pt' ? 'Repetir Desafio' : t.tryAgain}</span>
+              <span>{language === 'pt' ? 'Repetir o Desafio' : t.tryAgain}</span>
             </button>
             <button
               onClick={onBack}

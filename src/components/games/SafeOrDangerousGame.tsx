@@ -594,24 +594,22 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
               </span>
               <span>•</span>
               <span className="font-black">
-                {Math.round((correctCount / SCENARIOS.length) * 100) > 50
-                  ? (language === 'pt' ? '✓ Concluído (>50%)' : '✓ Completed (>50%)')
-                  : (language === 'pt' ? '≤50% (A Treinar)' : '≤50% (In Progress)')}
+                {Math.round((correctCount / SCENARIOS.length) * 100)} XP
               </span>
             </div>
             <p className="text-sm sm:text-base text-slate-600 max-w-md mx-auto">
               {correctCount === SCENARIOS.length ? (
-                language === 'pt'
-                  ? 'Excelente empenho! Analisaste todos os 6 casos e tomaste 100% de decisões seguras!'
-                  : 'Great job! You analyzed all 6 cases and made 100% safe decisions!'
-              ) : Math.round((correctCount / SCENARIOS.length) * 100) > 50 ? (
-                language === 'pt'
-                  ? `Muito bem! Obtiveste ${Math.round((correctCount / SCENARIOS.length) * 100)}%, superando os 50% para concluir a atividade. Podes repetir para tentar obter 100% e ganhar o XP da melhoria!`
-                  : `Well done! You scored ${Math.round((correctCount / SCENARIOS.length) * 100)}%, reaching >50% to complete the activity. You can retry to improve and earn extra XP!`
+                language === 'pt' ? (
+                  <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+                ) : (
+                  <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+                )
               ) : (
-                language === 'pt'
-                  ? `Obtiveste ${Math.round((correctCount / SCENARIOS.length) * 100)}% (${correctCount} de ${SCENARIOS.length} corretas). Para concluíres a atividade no teu progresso precisas de mais de 50%. Tenta novamente!`
-                  : `You scored ${Math.round((correctCount / SCENARIOS.length) * 100)}%. You need over 50% to complete the activity. Try again!`
+                language === 'pt' ? (
+                  <>Obtiveste <strong>{Math.round((correctCount / SCENARIOS.length) * 100)} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+                ) : (
+                  <>You got <strong>{Math.round((correctCount / SCENARIOS.length) * 100)} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+                )
               )}
             </p>
           </div>
@@ -631,7 +629,7 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
               className="w-full sm:w-auto px-5 py-3 rounded-xl border border-slate-300 hover:bg-slate-50 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-2xs transition-colors"
             >
               <RefreshCw className="w-4 h-4" />
-              <span>{language === 'pt' ? 'Repetir Desafio' : t.tryAgain}</span>
+              <span>{language === 'pt' ? 'Repetir o Desafio' : t.tryAgain}</span>
             </button>
             <button
               onClick={onBack}

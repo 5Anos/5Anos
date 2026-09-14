@@ -211,6 +211,8 @@ export function evaluateEligibleBadges(
   return toUnlock;
 }
 
+let isRegisteringInProgress = false;
+
 export const api = {
   getToken(): string | null {
     return localStorage.getItem(TOKEN_KEY);
@@ -317,6 +319,10 @@ export const api = {
    */
   onAuthChange(callback: (user: User | null) => void) {
     return onAuthStateChanged(auth, async (fbUser: FirebaseUser | null) => {
+      if (isRegisteringInProgress) {
+        // Defer automatic onAuthChange handling during active registration flow to prevent race conditions
+        return;
+      }
       if (fbUser) {
         try {
           const userDocRef = doc(db, 'users', fbUser.uid);
@@ -332,6 +338,7 @@ export const api = {
               turma: isAdmin ? undefined : (data.turma || '5.º A'),
               role: isAdmin ? 'admin' : (data.role || 'student'),
               points: typeof data.points === 'number' ? data.points : 0,
+              avatar: data.avatar || getDefaultAvatar(data.publicId || data.name || fbUser.uid),
               language: data.language || 'pt',
               createdAt: data.createdAt || new Date().toISOString(),
               lastActivity: data.lastActivity,
@@ -352,23 +359,37 @@ export const api = {
             callback(user);
             return;
           } else {
-            // User authenticated in Firebase Auth, ensure document in Firestore
+            // User authenticated in Firebase Auth, check local storage first before fallback
+            const rawUserStr = localStorage.getItem(CURRENT_USER_KEY);
+            let cachedUser: User | null = null;
+            if (rawUserStr) {
+              try {
+                const parsed = JSON.parse(rawUserStr);
+                if (parsed && (parsed.id === fbUser.uid || parsed.email === fbUser.email?.toLowerCase().trim())) {
+                  cachedUser = parsed;
+                }
+              } catch {
+                // ignore
+              }
+            }
+
             const emailNorm = (fbUser.email || '').toLowerCase().trim();
             const isAdmin = isUserAdmin(emailNorm);
             const takenIds = await this.fetchTakenPublicIds();
-            const publicId = isAdmin ? 'Docente_TIC' : generateSecurePublicId(takenIds);
-            const initialPoints = isAdmin ? 0 : 100;
+            const publicId = cachedUser?.publicId || (isAdmin ? 'Docente_TIC' : generateSecurePublicId(takenIds));
+            const initialPoints = cachedUser?.points ?? (isAdmin ? 0 : 100);
 
             const user: User = {
               id: fbUser.uid,
-              name: fbUser.displayName || (isAdmin ? 'Professora Carla' : 'Estudante'),
+              name: cachedUser?.name || fbUser.displayName || (isAdmin ? 'Professora Carla' : 'Estudante'),
               email: emailNorm,
               publicId,
-              turma: isAdmin ? undefined : '5.º A',
+              turma: isAdmin ? undefined : (cachedUser?.turma || '5.º A'),
               role: isAdmin ? 'admin' : 'student',
               points: initialPoints,
-              language: 'pt',
-              createdAt: new Date().toISOString(),
+              avatar: cachedUser?.avatar || getDefaultAvatar(publicId),
+              language: cachedUser?.language || 'pt',
+              createdAt: cachedUser?.createdAt || new Date().toISOString(),
             };
 
             if (!isAdmin) {
@@ -382,7 +403,11 @@ export const api = {
               setDoc(doc(db, 'users', fbUser.uid, 'pointsHistory', welcomeTx.id), welcomeTx).catch(() => {});
             }
 
-            await this.syncUserToFirestore(user);
+            try {
+              await this.syncUserToFirestore(user);
+            } catch (err) {
+              console.warn('onAuthChange sync notice:', err);
+            }
             localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
             try {
               const token = await fbUser.getIdToken();
@@ -501,147 +526,171 @@ export const api = {
     language: Language = 'pt',
     avatar?: AvatarConfig
   ): Promise<{ user: User; token: string }> {
-    const normalizedEmail = email.trim().toLowerCase();
-    const cleanPassword = password.trim();
-    const trimmedPublicId = (publicId || '').trim();
-    const finalTurma = turma || '5.º A';
-    const isAdmin = isUserAdmin(normalizedEmail);
-
-    if (cleanPassword.length < 6) {
-      throw new Error(
-        language === 'pt'
-          ? 'A palavra-passe deve ter pelo menos 6 caracteres.'
-          : 'Password must have at least 6 characters.'
-      );
-    }
-
-    // 1. Fetch taken Nicknames from Firestore (public profiles have no PII)
-    const takenPublicIds = await this.fetchTakenPublicIds();
-    let finalPublicId = trimmedPublicId;
-
-    if (!finalPublicId || takenPublicIds.some((id) => id.toLowerCase().trim() === finalPublicId.toLowerCase())) {
-      finalPublicId = generateSecurePublicId(takenPublicIds);
-    }
-
-    // 2. Verify email uniqueness in Cloud Firestore users collection
+    isRegisteringInProgress = true;
     try {
-      const emailQ = query(collection(db, 'users'), where('email', '==', normalizedEmail), limit(1));
-      const emailSnap = await getDocs(emailQ);
-      if (!emailSnap.empty) {
+      const normalizedEmail = email.trim().toLowerCase();
+      const cleanPassword = password.trim();
+      const trimmedPublicId = (publicId || '').trim();
+      const finalTurma = turma || '5.º A';
+      const isAdmin = isUserAdmin(normalizedEmail);
+
+      if (cleanPassword.length < 6) {
         throw new Error(
           language === 'pt'
-            ? '❌ Já existe uma conta associada a este email. Por favor, faz login.'
-            : '❌ An account is already registered with this email. Please log in.'
+            ? 'A palavra-passe deve ter pelo menos 6 caracteres.'
+            : 'Password must have at least 6 characters.'
         );
       }
-    } catch (err: any) {
-      if (err.message?.includes('Já existe uma conta')) {
-        throw err;
+
+      // 1. Fetch taken Nicknames from Firestore (public profiles have no PII)
+      const takenPublicIds = await this.fetchTakenPublicIds();
+      let finalPublicId = trimmedPublicId;
+
+      if (!finalPublicId || takenPublicIds.some((id) => id.toLowerCase().trim() === finalPublicId.toLowerCase())) {
+        finalPublicId = generateSecurePublicId(takenPublicIds);
       }
-      console.warn('Email check in register notice:', err);
-    }
 
-    // 2. Tenta registar no Firebase Authentication para permitir login em qualquer dispositivo
-    let fbUser: FirebaseUser | null = null;
-    let userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
-
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, normalizedEmail, cleanPassword);
-      fbUser = userCredential.user;
-      userId = fbUser.uid;
+      // 2. Verify email uniqueness in Cloud Firestore users collection
       try {
-        await updateProfile(fbUser, { displayName: name.trim() });
-      } catch {
-        // ignora falha na atribuição de display name
+        const emailQ = query(collection(db, 'users'), where('email', '==', normalizedEmail), limit(1));
+        const emailSnap = await getDocs(emailQ);
+        if (!emailSnap.empty) {
+          throw new Error(
+            language === 'pt'
+              ? '❌ Já existe uma conta associada a este email. Por favor, faz login.'
+              : '❌ An account is already registered with this email. Please log in.'
+          );
+        }
+      } catch (err: any) {
+        if (err.message?.includes('Já existe uma conta')) {
+          throw err;
+        }
+        console.warn('Email check in register notice:', err);
       }
-    } catch (fbErr: any) {
-      console.warn('Firebase Auth user creation notice:', fbErr?.code || fbErr?.message);
-      if (fbErr?.code === 'auth/email-already-in-use') {
-        throw new Error(
-          language === 'pt'
-            ? '❌ Já existe uma conta associada a este email. Por favor, faz login.'
-            : '❌ An account is already registered with this email. Please log in.'
-        );
+
+      // 3. Tenta registar no Firebase Authentication para permitir login em qualquer dispositivo
+      let fbUser: FirebaseUser | null = null;
+      let userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, normalizedEmail, cleanPassword);
+        fbUser = userCredential.user;
+        userId = fbUser.uid;
+        try {
+          await updateProfile(fbUser, { displayName: name.trim() });
+        } catch {
+          // ignora falha na atribuição de display name
+        }
+      } catch (fbErr: any) {
+        console.warn('Firebase Auth user creation notice:', fbErr?.code || fbErr?.message);
+        if (fbErr?.code === 'auth/email-already-in-use') {
+          throw new Error(
+            language === 'pt'
+              ? '❌ Já existe uma conta associada a este email. Por favor, faz login.'
+              : '❌ An account is already registered with this email. Please log in.'
+          );
+        }
+        // Se Firebase Auth não permitir password/email ou der erro de rede, utiliza o ID local gerado
       }
-      // Se Firebase Auth não permitir password/email ou der erro de rede, utiliza o ID local gerado
-    }
 
-    // Bónus de primeiro acesso: 100 XP para alunos na primeira vez que entram na plataforma
-    const initialPoints = isAdmin ? 0 : 100;
-    const finalAvatar = avatar || getDefaultAvatar(finalPublicId);
+      // Bónus de primeiro acesso: 100 XP para alunos na primeira vez que entram na plataforma
+      const initialPoints = isAdmin ? 0 : 100;
+      const finalAvatar = avatar || getDefaultAvatar(finalPublicId);
 
-    const newUser: User = {
-      id: userId,
-      name: name.trim(),
-      email: normalizedEmail,
-      publicId: finalPublicId,
-      turma: isAdmin ? undefined : finalTurma,
-      role: isAdmin ? 'admin' : 'student',
-      language,
-      points: initialPoints,
-      avatar: finalAvatar,
-      createdAt: new Date().toISOString(),
-    };
-
-    // 3. Estabelecer sessão do aluno na plataforma
-    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
-    this.setToken(userId);
-
-    // 4. Guardar na coleção 'users' do Cloud Firestore (sem guardar palavras-passe)
-    const userPayload: any = {
-      id: userId,
-      name: name.trim(),
-      email: normalizedEmail,
-      publicId: finalPublicId,
-      turma: isAdmin ? null : finalTurma,
-      role: isAdmin ? 'admin' : 'student',
-      language,
-      points: initialPoints,
-      avatar: finalAvatar,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-    try {
-      await setDoc(doc(db, 'users', userId), userPayload);
-    } catch (error) {
-      handleFirestoreError(error, OperationType.CREATE, `users/${userId}`);
-    }
-
-    // 5. Registar transação de boas-vindas para o histórico de pontos
-    if (!isAdmin) {
-      const welcomeTx: PointTransaction = {
-        id: `pt-welcome-${Date.now()}`,
-        userId,
-        amount: 100,
-        reason: '🎉 Boas-vindas à Plataforma Educativa TIC (Primeiro acesso: +100 XP)',
-        timestamp: new Date().toISOString(),
+      const newUser: User = {
+        id: userId,
+        name: name.trim(),
+        email: normalizedEmail,
+        publicId: finalPublicId,
+        turma: isAdmin ? undefined : finalTurma,
+        role: isAdmin ? 'admin' : 'student',
+        language,
+        points: initialPoints,
+        avatar: finalAvatar,
+        createdAt: new Date().toISOString(),
       };
-      setDoc(doc(db, 'users', userId, 'pointsHistory', welcomeTx.id), welcomeTx).catch((e) => {
-        console.warn('Welcome pointsHistory notice:', e);
-      });
-    }
 
-    // 6. Registar em publicProfiles para o ranking de alunos
-    if (!isAdmin) {
-      try {
-        await setDoc(
-          doc(db, 'publicProfiles', userId),
-          {
-            id: userId,
-            publicId: finalPublicId,
-            turma: finalTurma,
-            role: 'student',
-            points: initialPoints,
-            avatar: finalAvatar,
-            updatedAt: new Date().toISOString(),
-          }
-        );
-      } catch (error) {
-        console.warn('publicProfiles notice in register:', error);
+      // 4. Estabelecer sessão do aluno na plataforma
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
+      let finalToken = userId;
+      if (fbUser) {
+        try {
+          finalToken = await fbUser.getIdToken();
+        } catch {
+          finalToken = userId;
+        }
       }
-    }
+      this.setToken(finalToken);
 
-    return { user: newUser, token: userId };
+      // 5. Guardar na coleção 'users' do Cloud Firestore (sem guardar palavras-passe)
+      const userPayload: any = {
+        id: userId,
+        name: name.trim(),
+        email: normalizedEmail,
+        publicId: finalPublicId,
+        turma: isAdmin ? null : finalTurma,
+        role: isAdmin ? 'admin' : 'student',
+        language,
+        points: initialPoints,
+        avatar: finalAvatar,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      try {
+        await setDoc(doc(db, 'users', userId), userPayload, { merge: true });
+      } catch (error) {
+        console.warn('Firestore user document save notice in register:', error);
+        // Retry gracefully without interrupting the student's registration
+        try {
+          await new Promise((r) => setTimeout(r, 200));
+          await setDoc(doc(db, 'users', userId), userPayload, { merge: true });
+        } catch (retryErr) {
+          console.warn('Firestore user document retry notice in register:', retryErr);
+        }
+      }
+
+      // 6. Registar transação de boas-vindas para o histórico de pontos
+      if (!isAdmin) {
+        const welcomeTx: PointTransaction = {
+          id: `pt-welcome-${Date.now()}`,
+          userId,
+          amount: 100,
+          reason: '🎉 Boas-vindas à Plataforma Educativa TIC (Primeiro acesso: +100 XP)',
+          timestamp: new Date().toISOString(),
+        };
+        setDoc(doc(db, 'users', userId, 'pointsHistory', welcomeTx.id), welcomeTx).catch((e) => {
+          console.warn('Welcome pointsHistory notice:', e);
+        });
+      }
+
+      // 7. Registar em publicProfiles para o ranking de alunos
+      if (!isAdmin) {
+        try {
+          await setDoc(
+            doc(db, 'publicProfiles', userId),
+            {
+              id: userId,
+              publicId: finalPublicId,
+              turma: finalTurma,
+              role: 'student',
+              points: initialPoints,
+              avatar: finalAvatar,
+              updatedAt: new Date().toISOString(),
+            },
+            { merge: true }
+          );
+        } catch (error) {
+          console.warn('publicProfiles notice in register:', error);
+        }
+      }
+
+      return { user: newUser, token: finalToken };
+    } finally {
+      setTimeout(() => {
+        isRegisteringInProgress = false;
+      }, 1000);
+    }
   },
 
   /**

@@ -424,9 +424,19 @@ export const CcBccSimulatorGame: React.FC<CcBccSimulatorGameProps> = ({ language
               {language === 'pt' ? 'Mestre do Correio Eletrónico e Privacidade!' : 'Master of Email Privacy & Etiquette!'}
             </h2>
             <p className="text-xs sm:text-sm text-blue-100 leading-relaxed font-medium">
-              {language === 'pt'
-                ? `Acertaste em ${correctCount} de ${SCENARIOS.length} casos de envio. Agora dominas a utilização do Para, Cc e Bcc e sabes como salvaguardar os dados dos teus colegas e professores!`
-                : `You mastered ${correctCount} of ${SCENARIOS.length} scenarios!`}
+              {Math.round((correctCount / SCENARIOS.length) * 100) === 100 ? (
+                language === 'pt' ? (
+                  <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+                ) : (
+                  <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+                )
+              ) : (
+                language === 'pt' ? (
+                  <>Obtiveste <strong>{Math.round((correctCount / SCENARIOS.length) * 100)} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+                ) : (
+                  <>You got <strong>{Math.round((correctCount / SCENARIOS.length) * 100)} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+                )
+              )}
             </p>
           </div>
 
@@ -434,10 +444,8 @@ export const CcBccSimulatorGame: React.FC<CcBccSimulatorGameProps> = ({ language
             <Sparkles className="w-5 h-5 text-amber-400" />
             <span>{Math.round((correctCount / SCENARIOS.length) * 100)}% {language === 'pt' ? 'de Pontuação' : 'Score'}</span>
             <span>•</span>
-            <span className={Math.round((correctCount / SCENARIOS.length) * 100) >= 50 ? 'text-emerald-300' : 'text-amber-300'}>
-              {Math.round((correctCount / SCENARIOS.length) * 100) >= 50
-                ? (language === 'pt' ? '✓ Concluído (≥50%)' : '✓ Completed (≥50%)')
-                : (language === 'pt' ? '<50% (A Treinar)' : '<50% (In Progress)')}
+            <span className="font-black text-amber-300">
+              {Math.round((correctCount / SCENARIOS.length) * 100)} XP
             </span>
           </div>
 
@@ -447,7 +455,7 @@ export const CcBccSimulatorGame: React.FC<CcBccSimulatorGameProps> = ({ language
               className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <RefreshCw className="w-4 h-4" />
-              <span>{language === 'pt' ? 'Repetir Desafio' : 'Try Again'}</span>
+              <span>{language === 'pt' ? 'Repetir o Desafio' : 'Try Again'}</span>
             </button>
             <button
               onClick={onBack}

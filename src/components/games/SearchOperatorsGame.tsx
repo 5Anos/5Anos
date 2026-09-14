@@ -474,16 +474,28 @@ export const SearchOperatorsGame: React.FC<SearchOperatorsGameProps> = ({ langua
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
               {language === 'pt' ? 'Mestre dos Operadores de Pesquisa!' : 'Search Operators Master!'}
             </h2>
-            <p className="text-slate-500 text-sm mt-1">
-              {language === 'pt'
-                ? 'Agora dominas as aspas "", o sinal de menos (-) e os operadores de domínio como um verdadeiro perito em TIC!'
-                : 'You now command quotation marks "", minus signs (-), and domain filters like a true ICT specialist!'}
+            <p className="text-slate-600 text-sm mt-1 max-w-md mx-auto">
+              {score === 100 ? (
+                language === 'pt' ? (
+                  <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+                ) : (
+                  <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+                )
+              ) : (
+                language === 'pt' ? (
+                  <>Obtiveste <strong>{score} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+                ) : (
+                  <>You got <strong>{score} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+                )
+              )}
             </p>
           </div>
 
-          <div className="inline-flex items-center gap-3 p-4 rounded-2xl bg-blue-50 border border-blue-200 text-blue-950 font-bold text-lg">
+          <div className="inline-flex items-center gap-3 p-3 rounded-2xl bg-blue-50 border border-blue-200 text-blue-950 font-extrabold text-sm sm:text-base">
             <Sparkles className="w-5 h-5 text-blue-600" />
-            <span>{score} de 100 pontos possíveis</span>
+            <span>{score}% de Pontuação</span>
+            <span>•</span>
+            <span className="text-blue-700">{score} XP</span>
           </div>
 
           <div className="flex items-center justify-center gap-3 pt-4">
@@ -492,7 +504,7 @@ export const SearchOperatorsGame: React.FC<SearchOperatorsGameProps> = ({ langua
               className="px-4 py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm flex items-center gap-2 shadow-2xs transition-colors cursor-pointer"
             >
               <RefreshCw className="w-4 h-4" />
-              <span>{language === 'pt' ? 'Repetir Desafio' : 'Play Again'}</span>
+              <span>{language === 'pt' ? 'Repetir o Desafio' : 'Play Again'}</span>
             </button>
             <button
               onClick={onBack}

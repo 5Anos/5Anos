@@ -39,36 +39,39 @@ service cloud.firestore {
       allow get: if isOwner(userId) || isAdmin() || !isSignedIn();
       allow list: if isAdmin() || !isSignedIn();
 
-      // Student registration: role must be student with initial points (0 to 100), complete registration schema, and cannot overwrite
-      allow create: if (
-        request.resource.data.role == 'student' &&
-        (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 100) &&
-        request.resource.data.id == userId &&
-        request.resource.data.name is string && request.resource.data.name.size() >= 2 &&
-        request.resource.data.email is string && request.resource.data.email.matches('.*@.*') &&
-        request.resource.data.turma is string &&
-        request.resource.data.publicId is string && request.resource.data.publicId.size() >= 3 &&
+      // User registration: allow student or teacher/admin to create their own profile without passwords
+      allow create: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
         !('password' in request.resource.data) &&
         !('passwordHash' in request.resource.data) &&
         !('passwordSalt' in request.resource.data) &&
-        !exists(/databases/$(database)/documents/users/$(userId))
+        request.resource.data.id == userId &&
+        (
+          // Student profile creation
+          (
+            request.resource.data.role == 'student' &&
+            (!('points' in request.resource.data) || (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 500))
+          ) ||
+          // Teacher / Admin profile creation
+          (
+            request.resource.data.role in ['admin', 'teacher'] || isTeacherEmail(request.resource.data.email)
+          )
+        )
       );
 
       // Profile updates:
       // 1) Allow student/owner or admin to update their own profile and points
-      // 2) Cannot escalate role to admin/teacher
-      // 3) Cannot alter email or inject passwords
+      // 2) Cannot alter email arbitrarily or inject passwords
       allow update: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
-        (isAdmin() || (
-          request.resource.data.role == resource.data.role &&
-          (!('points' in request.resource.data) || (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 3500)) &&
-          (!('email' in request.resource.data) || request.resource.data.email == resource.data.email)
-        )) &&
-        request.resource.data.role != 'admin' &&
-        request.resource.data.role != 'teacher' &&
         !('password' in request.resource.data) &&
         !('passwordHash' in request.resource.data) &&
-        !('passwordSalt' in request.resource.data)
+        !('passwordSalt' in request.resource.data) &&
+        (
+          isAdmin() || (
+            (request.resource.data.role == resource.data.role || request.resource.data.role == 'student') &&
+            (!('points' in request.resource.data) || (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 5000)) &&
+            (!('email' in request.resource.data) || request.resource.data.email == resource.data.email)
+          )
+        )
       );
 
       // Protect teacher accounts from deletion; only admin can delete students
@@ -136,10 +139,10 @@ service cloud.firestore {
     match /publicProfiles/{userId} {
       allow read: if true;
 
-      // Public profile creation: requires corresponding users/{userId} and initial points between 0 and 100
-      allow create: if (exists(/databases/$(database)/documents/users/$(userId)) || existsAfter(/databases/$(database)/documents/users/$(userId))) && (
+      // Public profile creation: privacy-first (no email, no real name, no passwords)
+      allow create: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
         request.resource.data.role == 'student' &&
-        (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 100) &&
+        (!('points' in request.resource.data) || (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 500)) &&
         request.resource.data.id == userId &&
         !('email' in request.resource.data) &&
         !('name' in request.resource.data) &&
@@ -148,11 +151,11 @@ service cloud.firestore {
         !('passwordSalt' in request.resource.data)
       );
 
-      // Student can update avatar, publicId, turma, points, counters
+      // Student or admin can update avatar, publicId, turma, points, counters
       allow update: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
         (isAdmin() || (
           request.resource.data.role == resource.data.role &&
-          (!('points' in request.resource.data) || (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 3500))
+          (!('points' in request.resource.data) || (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 5000))
         )) &&
         request.resource.data.role == 'student' &&
         !('email' in request.resource.data) &&

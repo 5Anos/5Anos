@@ -339,16 +339,28 @@ export const CopyOrCreditGame: React.FC<CopyOrCreditGameProps> = ({ language, on
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
               {language === 'pt' ? 'Defensor da Criatividade e Autoria!' : 'Creativity & Authorship Defender!'}
             </h2>
-            <p className="text-slate-500 text-sm mt-1">
-              {language === 'pt'
-                ? 'Aprendeste o valor da honestidade académica: parafrasear com as tuas palavras e citar sempre os autores dos textos e imagens!'
-                : 'You mastered academic integrity: paraphrasing with your own words and always crediting authors and photographers!'}
+            <p className="text-slate-600 text-sm mt-1 max-w-md mx-auto">
+              {Math.round((score / 90) * 100) === 100 ? (
+                language === 'pt' ? (
+                  <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+                ) : (
+                  <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+                )
+              ) : (
+                language === 'pt' ? (
+                  <>Obtiveste <strong>{Math.round((score / 90) * 100)} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+                ) : (
+                  <>You got <strong>{Math.round((score / 90) * 100)} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+                )
+              )}
             </p>
           </div>
 
-          <div className="inline-flex items-center gap-3 p-4 rounded-2xl bg-violet-50 border border-violet-200 text-violet-950 font-bold text-lg">
+          <div className="inline-flex items-center gap-3 p-3 rounded-2xl bg-violet-50 border border-violet-200 text-violet-950 font-extrabold text-sm sm:text-base">
             <Sparkles className="w-5 h-5 text-violet-600" />
-            <span>{score} de 90 pontos possíveis</span>
+            <span>{Math.round((score / 90) * 100)}% de Precisão</span>
+            <span>•</span>
+            <span className="text-violet-700">{Math.round((score / 90) * 100)} XP</span>
           </div>
 
           <div className="flex items-center justify-center gap-3 pt-4">
@@ -357,7 +369,7 @@ export const CopyOrCreditGame: React.FC<CopyOrCreditGameProps> = ({ language, on
               className="px-4 py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm flex items-center gap-2 shadow-2xs transition-colors cursor-pointer"
             >
               <RefreshCw className="w-4 h-4" />
-              <span>{language === 'pt' ? 'Repetir Desafio' : 'Play Again'}</span>
+              <span>{language === 'pt' ? 'Repetir o Desafio' : 'Play Again'}</span>
             </button>
             <button
               onClick={onBack}

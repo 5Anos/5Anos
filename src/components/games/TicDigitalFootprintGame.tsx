@@ -345,25 +345,23 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
                   </span>
                   <span>•</span>
                   <span className="font-black">
-                    {isPassed
-                      ? (language === 'pt' ? '✓ Concluído (>50%)' : '✓ Completed (>50%)')
-                      : (language === 'pt' ? '≤50% (A Treinar)' : '≤50% (In Progress)')}
+                    {pct} XP
                   </span>
                 </div>
 
                 <p className="text-sm text-slate-600 leading-relaxed font-medium">
                   {pct === 100 ? (
-                    language === 'pt'
-                      ? 'Excelente! Pensar sempre antes de publicar e proteger os teus dados privados são as marcas de um verdadeiro cidadão digital!'
-                      : 'Excellent! Thinking before posting and protecting your private data are marks of a true digital citizen!'
-                  ) : isPassed ? (
-                    language === 'pt'
-                      ? `Muito bem! Obtiveste ${pct}%, superando os 50% para concluir a atividade. Podes repetir para tentar alcançar os 100% e ganhar o XP da melhoria!`
-                      : `Well done! You scored ${pct}%, reaching >50% to complete the activity. You can retry to improve and earn extra XP!`
+                    language === 'pt' ? (
+                      <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+                    ) : (
+                      <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+                    )
                   ) : (
-                    language === 'pt'
-                      ? `Obtiveste ${pct}%. Lembra-te: precisas de mais de 50% para concluíres a atividade no teu progresso. Tenta novamente!`
-                      : `You scored ${pct}%. You need over 50% to complete the activity. Try again!`
+                    language === 'pt' ? (
+                      <>Obtiveste <strong>{pct} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+                    ) : (
+                      <>You got <strong>{pct} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+                    )
                   )}
                 </p>
               </div>
@@ -375,7 +373,7 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
                   className="px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors flex items-center gap-2 cursor-pointer shadow-2xs"
                 >
                   <RotateCcw className="w-4 h-4" />
-                  <span>{language === 'pt' ? 'Repetir Desafio' : 'Play Again'}</span>
+                  <span>{language === 'pt' ? 'Repetir o Desafio' : 'Play Again'}</span>
                 </button>
 
                 <button

@@ -631,25 +631,23 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
                 </span>
                 <span>•</span>
                 <span className="font-black">
-                  {pct >= 50
-                    ? (language === 'pt' ? '✓ Concluído (≥50%)' : '✓ Completed (≥50%)')
-                    : (language === 'pt' ? '<50% (A Treinar)' : '<50% (In Progress)')}
+                  {pct} XP
                 </span>
               </div>
 
               <p className="text-xs sm:text-sm text-emerald-100 leading-relaxed font-medium">
                 {pct === 100 ? (
-                  language === 'pt'
-                    ? 'Aprendeste a criar frases-passe longas e imprevisíveis, a nunca partilhar códigos SMS / 2FA com terceiros e alcançaste os 100% de pontuação máxima!'
-                    : 'You mastered passphrase generation, multi-factor codes defense, and reached the maximum 100% score!'
-                ) : pct >= 50 ? (
-                  language === 'pt'
-                    ? `Muito bem! Obtiveste ${pct}%, alcançando 50% ou mais para concluir a atividade. Podes repetir para tentar alcançar os 100% e ganhar o XP da melhoria!`
-                    : `Well done! You scored ${pct}%, reaching 50% or above to complete the activity. You can retry to improve and earn extra XP!`
+                  language === 'pt' ? (
+                    <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+                  ) : (
+                    <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+                  )
                 ) : (
-                  language === 'pt'
-                    ? `Obtiveste ${pct}%. Lembra-te: para concluíres a atividade no teu progresso precisas de pelo menos 50% (superior ou igual a 50%). Tenta novamente!`
-                    : `You scored ${pct}%. You need at least 50% to complete the activity. Try again!`
+                  language === 'pt' ? (
+                    <>Obtiveste <strong>{pct} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+                  ) : (
+                    <>You got <strong>{pct} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+                  )
                 )}
               </p>
             </div>
@@ -665,7 +663,7 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
                 className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <RefreshCw className="w-4 h-4" />
-                <span>{language === 'pt' ? 'Repetir Desafio' : 'Retry Challenge'}</span>
+                <span>{language === 'pt' ? 'Repetir o Desafio' : 'Retry Challenge'}</span>
               </button>
               <button
                 onClick={onBack}

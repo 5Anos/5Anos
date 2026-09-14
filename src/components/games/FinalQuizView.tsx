@@ -228,96 +228,56 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
       {submitted && (() => {
         const currentMention = getQuizMention(result.percentage);
         const badgeStyle = getQuizMentionBadgeStyle(result.percentage);
-        const officialScoreToUse = officialFirstScore !== undefined ? officialFirstScore : result.percentage;
-        const officialMention = getQuizMention(officialScoreToUse);
 
         return (
-        <div className="rounded-[2rem] bg-white border-2 border-indigo-100 p-6 sm:p-8 shadow-md mb-8 text-center space-y-4 animate-in zoom-in-95">
-          <div className="text-5xl">{badgeStyle.emoji}</div>
+          <div className="rounded-[2rem] bg-white border-2 border-indigo-100 p-6 sm:p-8 shadow-md mb-8 text-center space-y-4 animate-in zoom-in-95">
+            <div className="text-5xl">{badgeStyle.emoji}</div>
 
-          {/* Distinguish 1st attempt result vs practice attempt */}
-          {hasFirstAttempt ? (
             <div className="space-y-3">
-              <span className="inline-flex items-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                <BookOpen className="w-3.5 h-3.5 text-indigo-600" />
-                {language === 'pt' ? 'Tentativa de Treino Concluída' : 'Practice Attempt Completed'}
-              </span>
-
               <div>
                 <div className={`inline-block px-4 py-1.5 rounded-2xl text-xl sm:text-2xl font-black border shadow-2xs mb-1.5 ${badgeStyle.pillClass}`}>
                   {currentMention} ({result.percentage}%)
                 </div>
                 <p className="text-xs sm:text-sm font-semibold text-slate-500">
-                  {result.score} de {result.maxScore} Respostas Corretas • {result.percentage}%
+                  {result.score} de {result.maxScore} Respostas Corretas • {result.percentage} XP
                 </p>
               </div>
 
-              <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 max-w-lg mx-auto text-xs sm:text-sm text-amber-950 space-y-1">
-                <p className="font-bold flex items-center justify-center gap-1 text-amber-900">
-                  <ShieldCheck className="w-4 h-4 text-amber-600" />
-                  <span>
-                    {language === 'pt'
-                      ? `Avaliação Oficial Registada (1.ª tentativa): ${officialMention}`
-                      : `Official Registered Evaluation (1st attempt): ${officialMention}`}
-                  </span>
-                </p>
-                <p className="text-amber-800/90 leading-relaxed text-[11px] sm:text-xs">
-                  {language === 'pt'
-                    ? 'Esta tentativa serviu para treino e aprendizagem. As tentativas seguintes não alteram a tua menção oficial da 1.ª tentativa.'
-                    : 'This attempt served for learning and practice. Subsequent attempts do not modify your official evaluation from the 1st attempt.'}
-                </p>
-              </div>
-            </div>
-          ) : (
-            <div className="space-y-3">
-              <span className="inline-flex items-center gap-1 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-                {language === 'pt' ? '1.ª Tentativa Oficial Concluída' : '1st Official Attempt Completed'}
-              </span>
-
-              <div>
-                <div className={`inline-block px-5 py-2 rounded-2xl text-2xl sm:text-3xl font-black border shadow-xs mb-1.5 ${badgeStyle.pillClass}`}>
-                  {currentMention} ({result.percentage}%)
-                </div>
-                <p className="text-xs sm:text-sm font-semibold text-slate-500">
-                  {result.score} de {result.maxScore} Respostas Corretas • {result.percentage}% de Acertos
-                </p>
-              </div>
-
-              <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 max-w-lg mx-auto text-xs sm:text-sm text-emerald-950 space-y-1">
-                <p className="font-bold flex items-center justify-center gap-1 text-emerald-900">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                  <span>
-                    {language === 'pt'
-                      ? `Avaliação Oficial Registada: ${currentMention}`
-                      : `Official Registered Evaluation: ${currentMention}`}
-                  </span>
-                </p>
-                <p className="text-emerald-800/90 leading-relaxed text-[11px] sm:text-xs">
-                  {language === 'pt'
-                    ? 'A menção desta 1.ª tentativa ficou guardada permanentemente como a tua avaliação oficial. Podes repetir este quiz quantas vezes quiseres para continuar a treinar!'
-                    : 'The evaluation of this 1st attempt is permanently saved as your official score. You may repeat this quiz as many times as you like to practice!'}
+              <div className="bg-indigo-50/70 border border-indigo-200/80 rounded-2xl p-4 max-w-lg mx-auto text-xs sm:text-sm text-indigo-950">
+                <p className="leading-relaxed font-medium">
+                  {result.percentage === 100 ? (
+                    language === 'pt' ? (
+                      <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+                    ) : (
+                      <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+                    )
+                  ) : (
+                    language === 'pt' ? (
+                      <>Obtiveste <strong>{result.percentage} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+                    ) : (
+                      <>You got <strong>{result.percentage} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+                    )
+                  )}
                 </p>
               </div>
             </div>
-          )}
 
-          <div className="flex items-center justify-center gap-3 pt-2">
-            <button
-              onClick={handleRetry}
-              className="px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-2xs"
-            >
-              <RefreshCw className="w-4 h-4" />
-              <span>{language === 'pt' ? 'Treinar Novamente' : t.tryAgain}</span>
-            </button>
-            <button
-              onClick={onBack}
-              className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm cursor-pointer shadow-xs transition-colors"
-            >
-              {t.backToTheme}
-            </button>
+            <div className="flex items-center justify-center gap-3 pt-2">
+              <button
+                onClick={handleRetry}
+                className="px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-2xs"
+              >
+                <RefreshCw className="w-4 h-4" />
+                <span>{language === 'pt' ? 'Repetir o Desafio' : 'Play Again'}</span>
+              </button>
+              <button
+                onClick={onBack}
+                className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm cursor-pointer shadow-xs transition-colors"
+              >
+                {t.backToTheme}
+              </button>
+            </div>
           </div>
-        </div>
         );
       })()}
 

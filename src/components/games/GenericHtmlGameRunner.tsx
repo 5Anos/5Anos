@@ -1162,24 +1162,24 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
               )}
               <span>•</span>
               <span className="font-black">
-                {resultPercentage === 100 ? `+${gameData.xp} XP` : '0 XP'}
+                {resultPercentage} XP
               </span>
             </div>
 
             <p className={`text-xs sm:text-sm max-w-md mx-auto ${
-              resultPercentage === 100 ? 'text-emerald-800' : 'text-amber-900 font-medium'
+              resultPercentage === 100 ? 'text-emerald-800 font-bold' : 'text-amber-900 font-medium'
             }`}>
               {resultPercentage === 100 ? (
                 language === 'pt' ? (
-                  <>Parabéns! Acertaste em tudo na perfeição e ganhaste <strong>+{gameData.xp} XP</strong>!</>
+                  <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
                 ) : (
-                  <>Congratulations! You answered everything perfectly and earned <strong>+{gameData.xp} XP</strong>!</>
+                  <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
                 )
               ) : (
                 language === 'pt' ? (
-                  <>Obtiveste <strong>{resultPercentage}%</strong>. Lembra-te: para ganhares os <strong>+{gameData.xp} XP</strong> precisas de acertar em <strong>100%</strong> das respostas. Clica em "Repetir Desafio" para tentar novamente!</>
+                  <>Obtiveste <strong>{resultPercentage} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
                 ) : (
-                  <>You got <strong>{resultPercentage}%</strong>. Note: to earn the <strong>+{gameData.xp} XP</strong> you need to achieve <strong>100%</strong> accuracy. Click "Retry Challenge" to try again!</>
+                  <>You got <strong>{resultPercentage} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
                 )
               )}
             </p>
@@ -1190,7 +1190,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                 className="px-5 py-2.5 rounded-2xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-2xs transition-colors"
               >
                 <RotateCcw className="w-4 h-4" />
-                <span>{language === 'pt' ? 'Repetir Desafio' : 'Retry Challenge'}</span>
+                <span>{language === 'pt' ? 'Repetir o Desafio' : 'Retry Challenge'}</span>
               </button>
 
               <button

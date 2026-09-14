@@ -634,25 +634,23 @@ export const TicCyberbullyingGame: React.FC<TicCyberbullyingGameProps> = ({
                 </span>
                 <span>•</span>
                 <span className="font-black">
-                  {percentage > 50
-                    ? (language === 'pt' ? '✓ Concluído (>50%)' : '✓ Completed (>50%)')
-                    : (language === 'pt' ? '≤50% (A Treinar)' : '≤50% (In Progress)')}
+                  {percentage} XP
                 </span>
               </div>
 
               <p className="text-sm text-slate-600 leading-relaxed font-medium">
                 {percentage === 100 ? (
-                  language === 'pt'
-                    ? 'Excelente! Acertaste em todas as decisões do caso prático e alcançaste os 100% de pontuação máxima. Lembra-te: nunca estás sozinho! A Linha Internet Segura (800 21 90 90) está sempre disponível.'
-                    : 'Great job! You made 100% accurate decisions and reached the 100% max score. Safe Internet Helpline (800 21 90 90) is always available.'
-                ) : percentage > 50 ? (
-                  language === 'pt'
-                    ? `Muito bem! Obtiveste ${percentage}%, superando os 50% necessários para concluir a atividade. Podes repetir a qualquer momento para melhorar a pontuação e ganhar mais XP!`
-                    : `Well done! You scored ${percentage}%, reaching >50% to complete the activity. You can retry anytime to improve and earn extra XP!`
+                  language === 'pt' ? (
+                    <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+                  ) : (
+                    <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+                  )
                 ) : (
-                  language === 'pt'
-                    ? `Obtiveste ${percentage}% (${correctCount} de ${STORY_SCENARIOS.length} corretas). Para concluíres a atividade no teu progresso precisas de mais de 50%. Tenta novamente!`
-                    : `You scored ${percentage}%. To complete this activity you need over 50%. Try again!`
+                  language === 'pt' ? (
+                    <>Obtiveste <strong>{percentage} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+                  ) : (
+                    <>You got <strong>{percentage} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+                  )
                 )}
               </p>
             </div>
@@ -664,7 +662,7 @@ export const TicCyberbullyingGame: React.FC<TicCyberbullyingGameProps> = ({
                 className="px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors flex items-center gap-2 cursor-pointer shadow-2xs"
               >
                 <RotateCcw className="w-4 h-4" />
-                <span>{language === 'pt' ? 'Repetir Desafio' : 'Retry Challenge'}</span>
+                <span>{language === 'pt' ? 'Repetir o Desafio' : 'Retry Challenge'}</span>
               </button>
 
               <button

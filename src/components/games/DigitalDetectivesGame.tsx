@@ -248,17 +248,29 @@ export const DigitalDetectivesGame: React.FC<DigitalDetectivesGameProps> = ({
           <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-2">
             {rank.title}
           </h2>
-          <p className="text-slate-600 text-base md:text-lg mb-6 max-w-lg mx-auto">
-            {rank.desc}
+          <p className="text-slate-600 text-base md:text-lg mb-6 max-w-lg mx-auto font-medium">
+            {Math.round((score / (totalCases * 10)) * 100) === 100 ? (
+              language === 'pt' ? (
+                <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+              ) : (
+                <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+              )
+            ) : (
+              language === 'pt' ? (
+                <>Obtiveste <strong>{Math.round((score / (totalCases * 10)) * 100)} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+              ) : (
+                <>You got <strong>{Math.round((score / (totalCases * 10)) * 100)} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+              )
+            )}
           </p>
 
           {/* Score Box */}
           <div className="grid grid-cols-2 gap-4 max-w-md mx-auto mb-8">
             <div className="bg-amber-50 border-2 border-amber-200 rounded-2xl p-4">
               <span className="block text-xs font-bold text-amber-700 uppercase tracking-wider mb-1">
-                {language === 'pt' ? 'Pontos de Detetive' : 'Detective Points'}
+                {language === 'pt' ? 'Pontos Obtidos' : 'Earned Points'}
               </span>
-              <span className="text-3xl font-black text-amber-800">{score} / {totalCases * 10}</span>
+              <span className="text-3xl font-black text-amber-800">{Math.round((score / (totalCases * 10)) * 100)} XP</span>
             </div>
             <div className="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-4">
               <span className="block text-xs font-bold text-emerald-700 uppercase tracking-wider mb-1">
@@ -311,7 +323,7 @@ export const DigitalDetectivesGame: React.FC<DigitalDetectivesGameProps> = ({
               className="px-6 py-3 rounded-2xl font-bold bg-amber-500 hover:bg-amber-600 text-white shadow-md transition-all flex items-center justify-center gap-2 text-base cursor-pointer"
             >
               <RotateCcw className="w-5 h-5" />
-              {language === 'pt' ? 'Jogar Novamente' : 'Play Again'}
+              {language === 'pt' ? 'Repetir o Desafio' : 'Play Again'}
             </button>
             <button
               onClick={onBack}

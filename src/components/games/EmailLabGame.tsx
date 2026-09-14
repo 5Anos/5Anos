@@ -497,32 +497,18 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
 
     if (percentage === 100) {
       stars = 3;
-      overallTitle = language === 'pt' ? '🎉 Email Perfeito! 100% de Cotação!' : '🎉 Perfect Email! 100% Score!';
+      overallTitle = language === 'pt' ? '🎉 Desafio Concluído com 100% de Sucesso!' : '🎉 Perfect Email! 100% Score!';
       overallDescription =
         language === 'pt'
-          ? 'Estruturaste o email com excelência: destinatário correto, assunto claro, corpo da mensagem bem estruturado e ficheiro devidamente anexado!'
-          : 'You structured the email with excellence: recipient, subject line, greeting, polite message, and attachment!';
-    } else if (percentage >= 70) {
-      stars = 2;
-      overallTitle = language === 'pt' ? '👍 Bom Trabalho! Quase Perfeito!' : '👍 Good Job! Almost Perfect!';
-      overallDescription =
-        language === 'pt'
-          ? `Obtiveste ${totalScore} em 100 pontos (${percentage}%). A maioria dos elementos está correta, mas ainda podes afinar os detalhes assinalados para atingires os 100%! `
-          : `You scored ${totalScore} out of 100 points (${percentage}%). Review the feedback below to improve.`;
-    } else if (percentage >= 30) {
-      stars = 1;
-      overallTitle = language === 'pt' ? '⚠️ Email Incompleto ou com Erros' : '⚠️ Incomplete Email with Mistakes';
-      overallDescription =
-        language === 'pt'
-          ? `Obtiveste ${totalScore} em 100 pontos (${percentage}%). Vários elementos importantes estão em falta ou em campos incorretos. Consulta o relatório abaixo.`
-          : `You scored ${totalScore} out of 100 points (${percentage}%). Several essential elements are missing or misplaced.`;
+          ? 'Obtiveste 100 XP. Parabéns! Acertaste em todas as respostas!'
+          : 'You got 100 XP. Congratulations! You answered all questions correctly!';
     } else {
-      stars = 0;
-      overallTitle = language === 'pt' ? '❌ Email com Falhas Graves' : '❌ Email Missing Key Fields';
+      stars = percentage >= 70 ? 2 : percentage >= 30 ? 1 : 0;
+      overallTitle = language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!';
       overallDescription =
         language === 'pt'
-          ? `Obtiveste ${totalScore} em 100 pontos (${percentage}%). Um email necessita obrigatoriamente de destinatário ("Para"), assunto e corpo da mensagem.`
-          : `You scored ${totalScore} out of 100 points (${percentage}%). An email needs at least a recipient, subject and body.`;
+          ? `Obtiveste ${percentage} XP. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.`
+          : `You got ${percentage} XP. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.`;
     }
 
     return {
@@ -1256,7 +1242,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
                     className="w-full sm:w-1/2 py-2.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs sm:text-sm border border-indigo-200 transition-all cursor-pointer flex items-center justify-center gap-1.5"
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
-                    {language === 'pt' ? 'Corrigir e Tentar 100%' : 'Fix & Try 100%'}
+                    {language === 'pt' ? 'Repetir o Desafio' : 'Retry Challenge'}
                   </button>
                   <button
                     onClick={handleFinish}
