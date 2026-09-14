@@ -617,9 +617,9 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
 
                       {isFinalQuiz ? (
                         hasAttempted ? (
-                          <span className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border ${getQuizMentionBadgeStyle(record?.firstAttemptScore ?? record?.score ?? 0).pillClass}`}>
+                          <span className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border ${getQuizMentionBadgeStyle(record?.bestScore ?? record?.score ?? 0).pillClass}`}>
                             <CheckCircle2 className="w-3.5 h-3.5" />
-                            <span>{getQuizMention(record?.firstAttemptScore ?? record?.score ?? 0, language)}</span>
+                            <span>{record?.bestScore ?? record?.score ?? 0}% • {getQuizMention(record?.bestScore ?? record?.score ?? 0, language)}</span>
                           </span>
                         ) : (
                           <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full">
@@ -660,19 +660,19 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                               <span className="text-[11px] font-bold text-amber-900 flex items-center gap-1">
                                 <Zap className="w-3 h-3 fill-current text-amber-500" />
                                 <span>
-                                  {language === 'pt' ? 'Avaliação Oficial:' : 'Official Evaluation:'} {getQuizMention(record?.firstAttemptScore ?? record?.score ?? 0, language)}
+                                  {language === 'pt' ? 'Pontuação Registada na BD:' : 'Score Recorded in DB:'} {record?.bestScore ?? record?.score ?? 0}% ({getQuizMention(record?.bestScore ?? record?.score ?? 0, language)})
                                 </span>
                               </span>
                               {record?.attempts && record.attempts > 1 && (
                                 <span className="text-[10px] text-slate-500 font-semibold block">
-                                  {record.attempts} {language === 'pt' ? 'tentativas realizadas (treino)' : 'attempts completed (practice)'}
+                                  {record.attempts} {language === 'pt' ? 'tentativas realizadas' : 'attempts completed'}
                                 </span>
                               )}
                             </div>
                           ) : (
                             <span className="text-[11px] font-bold text-amber-700 flex items-center gap-1 mt-0.5">
                               <Zap className="w-3 h-3 fill-current text-amber-500" />
-                              <span>{language === 'pt' ? 'Avaliação qualitativa na 1.ª tentativa' : 'Qualitative evaluation on 1st attempt'}</span>
+                              <span>{language === 'pt' ? 'Cada atividade vale até 100 XP' : 'Each activity is worth up to 100 XP'}</span>
                             </span>
                           )
                         ) : hasAttempted ? (

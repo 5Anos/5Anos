@@ -523,15 +523,16 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                               <td className="py-3 px-3 whitespace-nowrap font-black">
                                 {isFinalQuiz ? (
                                   <div>
-                                    <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${getQuizMentionBadgeStyle(officialQuizScore).pillClass}`}>
-                                      {getQuizMention(officialQuizScore)}
+                                    <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${getQuizMentionBadgeStyle(recordedBest).pillClass}`}>
+                                      {recordedBest}% • {getQuizMention(recordedBest)}
                                     </span>
                                     <span className="block text-[10px] text-slate-400 font-semibold mt-0.5">
-                                      {language === 'pt' ? 'Menção Oficial (1.ª tentativa)' : 'Official Mention (1st attempt)'}
+                                      {language === 'pt' ? 'Pontuação Registada na BD' : 'Score Recorded in DB'}
                                     </span>
                                     {item.attempts > 1 && (
                                       <span className="block text-[10px] text-slate-500 font-medium">
-                                        {language === 'pt' ? `${item.attempts} treinos realizados` : `${item.attempts} practice runs`}
+                                        {language === 'pt' ? `${item.attempts} tentativas` : `${item.attempts} attempts`}
+                                        {item.firstAttemptScore !== undefined && item.firstAttemptScore !== recordedBest ? ` (1.ª: ${item.firstAttemptScore}%)` : ''}
                                       </span>
                                     )}
                                   </div>
@@ -714,15 +715,15 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                       <td className="py-3 whitespace-nowrap font-black">
                         {isFinalQuiz ? (
                           <div>
-                            <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${getQuizMentionBadgeStyle(officialQuizScore).pillClass}`}>
-                              {getQuizMention(officialQuizScore)}
+                            <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${getQuizMentionBadgeStyle(recordedBest).pillClass}`}>
+                              {recordedBest}% • {getQuizMention(recordedBest)}
                             </span>
                             <span className="block text-[10px] text-slate-400 font-semibold mt-0.5">
-                              {language === 'pt' ? 'Menção (1.ª tentativa)' : 'Mention (1st att.)'}
+                              {language === 'pt' ? 'Na BD' : 'In DB'}
                             </span>
                             {item.attempts > 1 && (
                               <span className="block text-[10px] text-slate-500 font-medium">
-                                {language === 'pt' ? `${item.attempts} treinos` : `${item.attempts} practices`}
+                                {language === 'pt' ? `${item.attempts} tent.` : `${item.attempts} att.`}
                               </span>
                             )}
                           </div>

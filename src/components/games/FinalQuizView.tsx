@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, CheckCircle2, AlertCircle, RefreshCw, Award, Sparkles, BookOpen, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, AlertCircle, RefreshCw, Award, Sparkles, BookOpen, ShieldCheck, Zap } from 'lucide-react';
 import { QuizQuestion, Language, ActivityProgress } from '../../types';
 import { translations } from '../../i18n/translations';
 import { getQuizMention, getQuizMentionBadgeStyle } from '../../utils/exportUtils';
@@ -32,14 +32,24 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
   const [isRetrying, setIsRetrying] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [earnedDeltaXP, setEarnedDeltaXP] = useState<number | null>(null);
+
+  // Tracking dynamic best score across attempts in this session
+  const initialBest = Math.max(
+    0,
+    Math.min(
+      100,
+      Math.round(
+        Number(existingProgress?.bestScore ?? existingProgress?.score ?? existingProgress?.percentage ?? 0)
+      )
+    )
+  );
+  const [bestScoreInDb, setBestScoreInDb] = useState(initialBest);
+  const [attemptCount, setAttemptCount] = useState(existingProgress?.attempts || 0);
+
   const t = translations[language];
 
-  const hasFirstAttempt = Boolean(
-    existingProgress &&
-    (existingProgress.firstAttemptScore !== undefined || (existingProgress.attempts && existingProgress.attempts > 0))
-  );
-
-  const officialFirstScore = existingProgress?.firstAttemptScore ?? existingProgress?.score;
+  const hasPreviousAttempt = attemptCount > 0;
   const [shuffledQuestions, setShuffledQuestions] = useState(() => {
     return questions.map((q) => {
       const optsPt = q.options.pt;
@@ -95,6 +105,22 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
       }
     });
 
+    const prevBest = bestScoreInDb;
+    let delta = 0;
+    if (!hasPreviousAttempt) {
+      delta = percentage;
+    } else if (percentage > prevBest) {
+      delta = percentage - prevBest;
+    } else {
+      delta = 0;
+    }
+
+    setEarnedDeltaXP(delta);
+    if (percentage > bestScoreInDb) {
+      setBestScoreInDb(percentage);
+    }
+    setAttemptCount((prev) => prev + 1);
+
     // Rule 1: Every challenge and quiz is worth exactly 100 points maximum.
     onFinish(percentage, 100, percentage, answersPayload);
   };
@@ -149,20 +175,20 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
               <span>Tema {themeNumber} • {language === 'pt' ? 'Quiz de Aprendizagem' : 'Learning Quiz'}</span>
             </span>
 
-            {/* Rule 3 indicator pill */}
-            {hasFirstAttempt ? (
+            {/* Score and Attempt indicator pill */}
+            {hasPreviousAttempt ? (
               <span className="inline-flex items-center gap-1 bg-amber-500/20 border border-amber-400/40 text-amber-200 px-2.5 py-1 rounded-full">
                 <BookOpen className="w-3.5 h-3.5 text-amber-400" />
                 <span>
                   {language === 'pt'
-                    ? `Treino Livre (Tentativa ${(existingProgress?.attempts || 1) + 1})`
-                    : `Free Practice (Attempt ${(existingProgress?.attempts || 1) + 1})`}
+                    ? `Melhor na BD: ${bestScoreInDb}% • Tentativa ${attemptCount + 1}`
+                    : `Best in DB: ${bestScoreInDb}% • Attempt ${attemptCount + 1}`}
                 </span>
               </span>
             ) : (
               <span className="inline-flex items-center gap-1 bg-emerald-500/20 border border-emerald-400/40 text-emerald-200 px-2.5 py-1 rounded-full">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                <span>{language === 'pt' ? '1.ª Tentativa Oficial' : '1st Official Attempt'}</span>
+                <span>{language === 'pt' ? '1.ª Tentativa • Até 100 XP' : '1st Attempt • Up to 100 XP'}</span>
               </span>
             )}
           </div>
@@ -175,8 +201,8 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
               id={`quiz-${themeNumber}-intro`}
               text={`${language === 'pt' ? `Quiz de Aprendizagem do Tema ${themeNumber}: ${themeTitle}` : `Learning Quiz: ${themeTitle}`}. ${
                 language === 'pt'
-                  ? 'Avalia todos os conhecimentos deste tema. Podes repetir quantas vezes quiseres para treinar!'
-                  : 'Assess all knowledge from this theme.'
+                  ? 'Avalia todos os conhecimentos deste tema. Podes repetir quantas vezes quiseres para melhorar e ganhar mais XP até ao limite de 100 XP!'
+                  : 'Assess all knowledge from this theme. You can retry as many times as you like to improve and earn more XP up to 100 XP!'
               }`}
               language={language}
               label={language === 'pt' ? 'Ouvir Quiz' : 'Listen Quiz'}
@@ -187,36 +213,20 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
 
           <p className="text-sm sm:text-base text-indigo-200 max-w-2xl leading-relaxed">
             {language === 'pt'
-              ? 'Avalia todos os conhecimentos deste tema. Podes repetir quantas vezes quiseres para treinar!'
-              : 'Assess all knowledge from this theme. You can retry as many times as you like for practice!'}
+              ? 'Avalia os conhecimentos deste tema. Cada atividade corresponde a um máximo de 100 XP. Ao repetires, a BD guarda sempre a tua melhor pontuação e recebes apenas os XP da melhoria!'
+              : 'Assess your knowledge. Each activity corresponds to a maximum of 100 XP. On retries, the DB keeps your best score and you earn only improvement XP!'}
           </p>
 
-          {/* Explicit reminder about first attempt evaluation rule */}
+          {/* Scoring rule note */}
           <div className="pt-2">
-            {hasFirstAttempt ? (
-              <div className="inline-flex flex-wrap items-center gap-2 bg-indigo-900/60 border border-indigo-700/60 rounded-xl px-3.5 py-2 text-xs text-indigo-200">
-                <span className="font-semibold text-amber-300">
-                  {language === 'pt' ? 'Avaliação Oficial (1.ª tentativa):' : 'Official Evaluation (1st attempt):'}
-                </span>
-                <span className="font-black text-white bg-indigo-800/90 px-2.5 py-1 rounded-md">
-                  {officialFirstScore !== undefined ? getQuizMention(officialFirstScore) : '—'}
-                </span>
-                <span className="text-indigo-300/80">
-                  {language === 'pt'
-                    ? '• As tentativas seguintes são para treino livre e não alteram a menção oficial.'
-                    : '• Further attempts are for practice and do not alter the official evaluation.'}
-                </span>
-              </div>
-            ) : (
-              <div className="inline-flex items-center gap-2 bg-emerald-950/40 border border-emerald-500/30 rounded-xl px-3.5 py-2 text-xs text-emerald-200">
-                <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>
-                  {language === 'pt'
-                    ? 'Nota importante: A avaliação obtida agora fica registada como a tua menção oficial permanente deste Quiz de Aprendizagem.'
-                    : 'Important note: The evaluation obtained now will be registered permanently as your official score for this Learning Quiz.'}
-                </span>
-              </div>
-            )}
+            <div className="inline-flex items-center gap-2 bg-indigo-900/60 border border-indigo-700/60 rounded-xl px-3.5 py-2 text-xs text-indigo-200">
+              <Zap className="w-4 h-4 text-amber-400 shrink-0" />
+              <span>
+                {language === 'pt'
+                  ? 'Regra de Pontuação: A BD guarda sempre a tua melhor pontuação (máx. 100 XP). Se melhorares, recebes a diferença em XP. Se tirares nota inferior, manténs a melhor e recebes 0 XP.'
+                  : 'Scoring Rule: DB always keeps your best score (max 100 XP). If you improve, you get the XP difference. If lower, you keep your best and get 0 XP.'}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -238,24 +248,44 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                 <div className={`inline-block px-4 py-1.5 rounded-2xl text-xl sm:text-2xl font-black border shadow-2xs mb-1.5 ${badgeStyle.pillClass}`}>
                   {currentMention} ({result.percentage}%)
                 </div>
-                <p className="text-xs sm:text-sm font-semibold text-slate-500">
-                  {result.score} de {result.maxScore} Respostas Corretas • {result.percentage} XP
+                <p className="text-xs sm:text-sm font-semibold text-slate-600">
+                  {result.score} de {result.maxScore} Respostas Corretas nesta tentativa
                 </p>
+                <div className="flex flex-wrap items-center justify-center gap-2 mt-2">
+                  <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-800 border border-indigo-200">
+                    {language === 'pt' ? 'Melhor registo na BD:' : 'Best in DB:'} <strong>{bestScoreInDb}%</strong>
+                  </span>
+                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold border ${
+                    (earnedDeltaXP ?? 0) > 0
+                      ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                      : 'bg-slate-100 text-slate-700 border-slate-200'
+                  }`}>
+                    {(earnedDeltaXP ?? 0) > 0 ? `+${earnedDeltaXP} XP ganhos` : '0 XP adicionais'}
+                  </span>
+                </div>
               </div>
 
               <div className="bg-indigo-50/70 border border-indigo-200/80 rounded-2xl p-4 max-w-lg mx-auto text-xs sm:text-sm text-indigo-950">
                 <p className="leading-relaxed font-medium">
-                  {result.percentage === 100 ? (
-                    language === 'pt' ? (
-                      <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+                  {earnedDeltaXP !== null && earnedDeltaXP > 0 ? (
+                    attemptCount === 1 ? (
+                      language === 'pt' ? (
+                        <>É registado <strong>{result.percentage}%</strong> na BD. Recebeste <strong>+{earnedDeltaXP} XP</strong>! Podes repetir para tentar chegar aos 100 XP.</>
+                      ) : (
+                        <>Recorded <strong>{result.percentage}%</strong> in DB. You earned <strong>+{earnedDeltaXP} XP</strong>! You can retry to reach 100 XP.</>
+                      )
                     ) : (
-                      <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
+                      language === 'pt' ? (
+                        <>🎉 <strong>Parabéns pela tua melhoria!</strong> A BD foi atualizada para <strong>{bestScoreInDb}%</strong> e recebeste <strong>+{earnedDeltaXP} XP</strong> pela diferença!</>
+                      ) : (
+                        <>🎉 <strong>Congratulations on your improvement!</strong> The DB was updated to <strong>{bestScoreInDb}%</strong> and you earned <strong>+{earnedDeltaXP} XP</strong> for the difference!</>
+                      )
                     )
                   ) : (
                     language === 'pt' ? (
-                      <>Obtiveste <strong>{result.percentage} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+                      <>Como a tua pontuação nesta tentativa ({result.percentage}%) é inferior ou igual à melhor ({bestScoreInDb}%), a <strong>BD mantém {bestScoreInDb}%</strong> e recebes <strong>0 XP adicionais</strong>. Uma atividade corresponde a um máximo de 100 XP.</>
                     ) : (
-                      <>You got <strong>{result.percentage} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+                      <>Since your score on this attempt ({result.percentage}%) is lower than or equal to your best ({bestScoreInDb}%), the <strong>DB keeps {bestScoreInDb}%</strong> and you receive <strong>0 additional XP</strong>. An activity corresponds to a maximum of 100 XP.</>
                     )
                   )}
                 </p>

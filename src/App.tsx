@@ -310,10 +310,10 @@ export default function App() {
           );
         } else {
           showToast(
-            language === 'pt' ? '✅ Progresso Guardado!' : '✅ Progress Saved!',
+            language === 'pt' ? '✅ Progresso Guardado na BD!' : '✅ Progress Saved to DB!',
             res.earnedPoints && res.earnedPoints > 0
-              ? (language === 'pt' ? `+${res.earnedPoints} XP ganhos!` : `+${res.earnedPoints} XP earned!`)
-              : (language === 'pt' ? 'Excelente trabalho!' : 'Great effort!')
+              ? (language === 'pt' ? `+${res.earnedPoints} XP adicionados pela tua melhoria!` : `+${res.earnedPoints} XP added for your improvement!`)
+              : (language === 'pt' ? 'Pontuação registada! Manténs o teu melhor resultado na BD (0 XP adicionais).' : 'Score registered! You keep your best record in DB (0 additional XP).')
           );
         }
       }

@@ -1009,8 +1009,8 @@ export const api = {
     const isAdmin = isUserAdmin(user.email, user.role);
     const welcomeBonus = isAdmin ? 0 : 100;
 
-    // Atividades — Jogo Desafio: o aluno acumula XP correspondente à sua melhor pontuação nessa atividade (máx. 100 XP)
-    // Quiz de Aprendizagem: o aluno recebe XP correspondente à percentagem da 1.ª tentativa oficial
+    // Atividades (Desafios e Quizzes): Cada atividade corresponde a um MÁXIMO DE 100 XP (sua melhor pontuação registada na BD).
+    // Não são somados XP pelo aluno fazer várias vezes a mesma atividade.
     let calculatedPoints = 0;
     const validatedProgress: ActivityProgress[] = [];
 
@@ -1021,14 +1021,9 @@ export const api = {
       }
       validatedProgress.push(p);
 
-      const isQuiz = isLearningQuiz(p.activityId, p.activityType);
-      if (isQuiz) {
-        const official = Math.max(0, Math.min(100, Math.round(Number(p.firstAttemptScore ?? p.score ?? p.firstAttemptPercentage ?? p.percentage ?? 0))));
-        calculatedPoints += official;
-      } else {
-        const best = Math.max(0, Math.min(100, Math.round(Number(p.bestScore ?? p.bestPercentage ?? p.score ?? p.percentage ?? 0))));
-        calculatedPoints += best;
-      }
+      // Cada atividade corresponde a um máximo de 100 XP (a sua melhor pontuação registada na BD)
+      const best = Math.max(0, Math.min(100, Math.round(Number(p.bestScore ?? p.score ?? p.bestPercentage ?? p.percentage ?? 0))));
+      calculatedPoints += best;
     }
 
     // Derive badges dynamically based exclusively on validated curriculum activities
@@ -1054,7 +1049,9 @@ export const api = {
 
     // 5. User points are authoritatively derived from verified activities + bonuses
     if (!isAdmin) {
-      user.points = Math.max(officialVerifiedPoints, user.points ?? 0);
+      user.points = officialVerifiedPoints;
+      setDoc(doc(db, 'users', user.id), { points: officialVerifiedPoints }, { merge: true }).catch(() => {});
+      setDoc(doc(db, 'publicProfiles', user.id), { points: officialVerifiedPoints }, { merge: true }).catch(() => {});
     } else {
       user.points = 0;
     }
@@ -1277,56 +1274,64 @@ export const api = {
         existing.firstAttemptDate = existing.lastUpdated;
       }
 
-      if (isQuiz) {
-        // REGRA ESPECIAL — QUIZ DE APRENDIZAGEM:
-        // A pontuação oficial registada na BD é sempre a obtida na 1.ª tentativa.
-        // Os pontos/XP atribuídos ao aluno correspondem à percentagem obtida na 1.ª tentativa.
-        // O aluno pode repetir para praticar, mas a pontuação oficial e os XP atribuídos mantêm-se (0 XP adicionais).
-        existing.score = existing.firstAttemptScore;
-        existing.percentage = existing.firstAttemptPercentage;
+      // REGRA OFICIAL DE PONTOS E XP (DESAFIOS E QUIZZES):
+      // Exemplo:
+      // 1. Na primeira tentativa, o aluno obtém 67% -> BD regista 67%, recebe 67 XP.
+      // 2. Na segunda tentativa, o aluno obtém 40% -> Como 40% < 67%, BD mantém 67%, recebe 0 XP adicionais.
+      // 3. Na terceira tentativa, o aluno obtém 100% -> BD é atualizada para 100%, recebe 100 - 67 = 33 XP.
+      // UMA ATIVIDADE SÓ PODE CORRESPONDER A UM MÁXIMO DE 100XP.
+      // Não devem ser somados XP pelo aluno andar a fazer várias vezes a mesma atividade.
+
+      const prevBest = Math.max(
+        0,
+        Math.min(
+          100,
+          Math.round(
+            Number(existing.bestScore ?? existing.score ?? existing.bestPercentage ?? existing.percentage ?? 0)
+          )
+        )
+      );
+
+      if (normalizedScore > prevBest) {
+        // Nova melhor pontuação obtida: BD é atualizada para a pontuação superior
+        existing.bestScore = normalizedScore;
+        existing.bestPercentage = normalizedScore;
+        existing.score = normalizedScore;
+        existing.percentage = normalizedScore;
         existing.maxScore = normalizedMaxScore;
-
-        if (normalizedScore > (existing.bestScore ?? 0)) {
-          existing.bestScore = normalizedScore;
-          existing.bestPercentage = normalizedScore;
-        }
-
-        // Concluído para efeitos de progresso quando a melhor pontuação for superior ou igual a 50%
-        const isCompletedForProgress = (existing.bestScore ?? existing.firstAttemptScore ?? 0) >= 50;
-        existing.status = isCompletedForProgress ? 'completed' : 'in_progress';
-        earnedPoints = 0;
+        // Recebe apenas os XP da melhoria
+        earnedPoints = Math.max(0, normalizedScore - prevBest);
       } else {
-        // REGRA ATIVIDADES — JOGO DESAFIO:
-        // 1. A pontuação obtida é registada na BD e guarda SEMPRE a melhor pontuação.
-        // 2. O aluno recebe XP apenas correspondente à melhoria da sua melhor pontuação anterior:
-        //    XP Adicionais = Novo Best - Antigo Best (máx. 100 XP por atividade).
-        // 3. Se obtiver pontuação inferior ou igual, mantém o melhor registo e recebe 0 XP adicionais.
-        const prevBest = Math.max(0, Math.min(100, Math.round(Number(existing.bestScore ?? existing.bestPercentage ?? existing.score ?? 0))));
-
-        if (normalizedScore > prevBest) {
-          existing.bestScore = normalizedScore;
-          existing.bestPercentage = normalizedScore;
-          existing.score = normalizedScore;
-          existing.percentage = normalizedScore;
-          existing.maxScore = normalizedMaxScore;
-          earnedPoints = Math.max(0, normalizedScore - prevBest);
-        } else {
-          // Pontuação igual ou inferior: mantém a melhor pontuação e não ganha XP adicionais
-          earnedPoints = 0;
-        }
-
-        // Uma atividade é considerada concluída para efeitos do progresso quando obtém uma pontuação superior ou igual a 50%
-        const isCompletedForProgress = (existing.bestScore ?? 0) >= 50;
-        existing.status = isCompletedForProgress ? 'completed' : 'in_progress';
+        // Pontuação inferior ou igual: BD mantém a melhor pontuação e recebe 0 XP adicionais
+        existing.bestScore = prevBest;
+        existing.bestPercentage = prevBest;
+        existing.score = prevBest;
+        existing.percentage = prevBest;
+        existing.maxScore = normalizedMaxScore;
+        earnedPoints = 0;
       }
+
+      // Uma atividade é considerada concluída para efeitos do progresso quando obtém uma pontuação superior ou igual a 50%
+      const isCompletedForProgress = (existing.bestScore ?? 0) >= 50;
+      existing.status = isCompletedForProgress ? 'completed' : 'in_progress';
     }
 
-    user.points = (user.points || 0) + earnedPoints;
-    user.lastActivity = {
-      themeId: payload.themeId,
-      title: payload.activityTitle || payload.activityId,
-      timestamp: new Date().toISOString(),
-    };
+    // CÁLCULO AUTORITATIVO DE PONTOS TOTAIS DO ALUNO:
+    // Garante que cada atividade conta no máximo 100 XP (sua melhor pontuação).
+    const isAdmin = isUserAdmin(user.email, user.role);
+    const welcomeBonus = isAdmin ? 0 : 100;
+
+    let curricularPointsSum = 0;
+    const validatedProgress: ActivityProgress[] = [];
+
+    for (const p of progressList) {
+      if (!isValidActivityId(p.activityId)) {
+        continue;
+      }
+      validatedProgress.push(p);
+      const actBest = Math.max(0, Math.min(100, Math.round(Number(p.bestScore ?? p.score ?? p.bestPercentage ?? p.percentage ?? 0))));
+      curricularPointsSum += actBest;
+    }
 
     // 2. Audit log points transaction
     if (earnedPoints > 0) {
@@ -1344,7 +1349,7 @@ export const api = {
 
     // 3. Evaluate Badges Unlocking (Strictly once per badge, with bonus points)
     const existingBadgeIds = new Set(achievements.map((a) => a.badgeId));
-    const newBadges = evaluateEligibleBadges(progressList, user.points, existingBadgeIds);
+    const newBadges = evaluateEligibleBadges(validatedProgress, curricularPointsSum, existingBadgeIds);
 
     for (const badge of newBadges) {
       const newAch: UserAchievement = {
@@ -1354,9 +1359,6 @@ export const api = {
       };
       achievements.push(newAch);
       existingBadgeIds.add(badge.badgeId);
-
-      // Award badge bonus points
-      user.points += badge.bonus;
 
       // Persist badge & badge transaction to Cloud Firestore
       setDoc(doc(db, 'users', userId, 'achievements', badge.badgeId), newAch).catch(() => {});
@@ -1370,6 +1372,28 @@ export const api = {
       };
       setDoc(doc(db, 'users', userId, 'pointsHistory', badgeTx.id), badgeTx).catch(() => {});
     }
+
+    const allEligibleBadges = evaluateEligibleBadges(validatedProgress, curricularPointsSum, new Set());
+    const badgeBonus = allEligibleBadges.reduce((acc, b) => acc + b.bonus, 0);
+
+    let dailyTipPoints = 0;
+    try {
+      const dailyBonusRaw = localStorage.getItem('tic_daily_bonus_' + userId);
+      if (dailyBonusRaw) {
+        const parsed = JSON.parse(dailyBonusRaw);
+        if (typeof parsed?.points === 'number') {
+          dailyTipPoints = Math.min(1000, Math.max(0, parsed.points));
+        }
+      }
+    } catch {}
+
+    const authoritativeTotalPoints = isAdmin ? 0 : (welcomeBonus + curricularPointsSum + badgeBonus + dailyTipPoints);
+    user.points = authoritativeTotalPoints;
+    user.lastActivity = {
+      themeId: payload.themeId,
+      title: payload.activityTitle || payload.activityId,
+      timestamp: new Date().toISOString(),
+    };
 
     // 4. Sync Progress and User Activity to Cloud Firestore
     try {

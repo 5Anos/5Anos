@@ -566,27 +566,27 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
             </span>
             <span>•</span>
             <span className="font-black">
-              {finalScore} XP
+              {finalScore}% (Máx. 100 XP)
             </span>
           </div>
 
-          <p className={`text-xs sm:text-sm max-w-md mx-auto ${
-            finalScore === 100 ? 'text-emerald-800 font-bold' : 'text-amber-900 font-medium'
-          }`}>
-            {finalScore === 100 ? (
-              language === 'pt' ? (
-                <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
+          <div className="bg-white/80 border border-slate-200/80 rounded-2xl p-4 max-w-lg mx-auto text-xs sm:text-sm text-slate-700 text-center">
+            <p className="leading-relaxed font-medium">
+              {finalScore === 100 ? (
+                language === 'pt' ? (
+                  <>🎉 Parabéns! Acertaste em todas as perguntas e atingiste a pontuação máxima desta atividade (<strong>100 XP</strong>)!</>
+                ) : (
+                  <>🎉 Congratulations! You answered all questions correctly and reached the max score for this activity (<strong>100 XP</strong>)!</>
+                )
               ) : (
-                <>You got <strong>100 XP</strong>. Congratulations! You answered all questions correctly!</>
-              )
-            ) : (
-              language === 'pt' ? (
-                <>Obtiveste <strong>{finalScore} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
-              ) : (
-                <>You got <strong>{finalScore} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
-              )
-            )}
-          </p>
+                language === 'pt' ? (
+                  <>Obtiveste <strong>{finalScore}%</strong>. A BD regista sempre a tua melhor pontuação e recebes apenas os XP da melhoria (máx. 100 XP por atividade). Clica em "Repetir o Desafio" para tentar alcançar os 100 XP!</>
+                ) : (
+                  <>You got <strong>{finalScore}%</strong>. The DB always keeps your best score and you only earn XP for improvements (max 100 XP per activity). Click "Retry Challenge" to reach 100 XP!</>
+                )
+              )}
+            </p>
+          </div>
 
           <div className="flex justify-center gap-3 pt-4">
             <button

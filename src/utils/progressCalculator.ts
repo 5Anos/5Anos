@@ -248,29 +248,27 @@ export function getStudentThemeBreakdown(
   const expectedQuizId = quizChallenge?.id || `quiz-final-tema${theme.number}`;
   const quizTitle = quizChallenge?.title?.pt || `Quiz Final: ${theme.title.pt}`;
 
-  // REGRA DA NOTA OFICIAL: 1.ª TENTATIVA (Mantida para avaliação formal)
+  // PONTUAÇÃO REGISTADA NA BD: Melhor pontuação (máx. 100 XP)
   let officialScore = 0;
   let bestScore = 0;
   let quizAttempts = 0;
   let quizCompleted = false;
 
   if (quizRecord) {
-    const rawOfficial =
-      quizRecord.firstAttemptScore ??
-      quizRecord.score ??
-      quizRecord.firstAttemptPercentage ??
-      quizRecord.percentage ??
-      quizRecord.bestScore ??
-      0;
-    officialScore = Math.max(0, Math.min(100, Math.round(Number(rawOfficial) || 0)));
-
-    // A pontuação utilizada para determinar se está concluída é a melhor pontuação registada na BD
     const rawBest =
       quizRecord.bestScore ??
-      quizRecord.bestPercentage ??
       quizRecord.score ??
-      officialScore;
+      quizRecord.bestPercentage ??
+      quizRecord.percentage ??
+      quizRecord.firstAttemptScore ??
+      0;
     bestScore = Math.max(0, Math.min(100, Math.round(Number(rawBest) || 0)));
+
+    const rawFirst =
+      quizRecord.firstAttemptScore ??
+      quizRecord.firstAttemptPercentage ??
+      bestScore;
+    officialScore = Math.max(0, Math.min(100, Math.round(Number(rawFirst) || 0)));
 
     quizAttempts = quizRecord.attempts ?? (quizRecord ? 1 : 0);
     // Concluída para efeitos de progresso quando obtém pontuação superior ou igual a 50%
@@ -280,7 +278,7 @@ export function getStudentThemeBreakdown(
   const quiz: QuizScoreDetail = {
     id: expectedQuizId,
     title: quizTitle,
-    officialScore,
+    officialScore: bestScore, // Pontuação registada na BD
     bestScore,
     attempts: quizAttempts,
     completed: quizCompleted,
@@ -299,9 +297,9 @@ export function getStudentThemeBreakdown(
     ? Math.max(0, Math.min(100, Math.round((completedActivitiesCount / totalActivitiesCount) * 100)))
     : 0;
 
-  // Pontuação curricular somada (melhor pontuação dos desafios + nota oficial da 1.ª tentativa do quiz)
+  // Pontuação curricular somada (melhor pontuação dos desafios + melhor pontuação do quiz, máx 100 XP cada)
   const challengePointsSum = challenges.reduce((acc, curr) => acc + curr.score, 0);
-  const totalPoints = challengePointsSum + officialScore;
+  const totalPoints = challengePointsSum + bestScore;
   const maxPoints = totalActivitiesCount * 100;
   const isFullyCompleted = totalActivitiesCount > 0 && completedActivitiesCount >= totalActivitiesCount;
 
