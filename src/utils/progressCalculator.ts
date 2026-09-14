@@ -5,7 +5,10 @@ export interface ChallengeScoreDetail {
   id: string;
   title: string;
   score: number; // 0 to 100 (melhor pontuação na BD)
-  awardedXp: number; // 0 to 100 (XP atribuídos por esta atividade)
+  bestScore: number; // 0 to 100 (melhor pontuação na BD)
+  latestScore: number; // 0 to 100 (tentativa mais recente)
+  firstAttemptScore: number; // 0 to 100 (1.ª tentativa)
+  awardedXp: number; // 0 to 100 (XP efetivamente atribuídos por esta atividade)
   completed: boolean;
   attempts: number;
 }
@@ -15,7 +18,8 @@ export interface QuizScoreDetail {
   title: string;
   officialScore: number; // 1.ª tentativa oficial (0 to 100)
   bestScore: number; // melhor nota para treino/exibição (0 to 100)
-  awardedXp: number; // 0 to 100 (XP atribuídos por esta atividade)
+  latestScore: number; // tentativa mais recente (0 to 100)
+  awardedXp: number; // 0 to 100 (XP efetivamente atribuídos por esta atividade)
   attempts: number;
   completed: boolean;
 }
@@ -29,7 +33,7 @@ export interface StudentThemeBreakdown {
   quizCompleted: boolean;
   completedActivitiesCount: number;
   totalActivitiesCount: number;
-  totalPoints: number; // Soma dos desafios + nota oficial do quiz
+  totalPoints: number; // Soma dos XP atribuídos aos desafios + XP atribuídos ao quiz (awardedXp)
   maxPoints: number; // totalActivitiesCount * 100
   percentage: number; // Math.round((totalPoints / maxPoints) * 100)
   isFullyCompleted: boolean;
@@ -228,24 +232,38 @@ export function getStudentThemeBreakdown(
     );
 
     // A pontuação utilizada deve ser a melhor pontuação atualmente registada na BD para essa atividade
-    const rawScore = record
+    const rawBest = record
       ? (record.bestScore ?? record.bestPercentage ?? record.score ?? record.percentage ?? 0)
       : 0;
-    const score = Math.max(0, Math.min(100, Math.round(Number(rawScore) || 0)));
+    const bestScore = Math.max(0, Math.min(100, Math.round(Number(rawBest) || 0)));
+
+    const rawLatest = record
+      ? (record.latestScore ?? record.latestPercentage ?? record.score ?? record.percentage ?? bestScore)
+      : 0;
+    const latestScore = Math.max(0, Math.min(100, Math.round(Number(rawLatest) || 0)));
+
+    const rawFirst = record
+      ? (record.firstAttemptScore ?? record.firstAttemptPercentage ?? bestScore)
+      : 0;
+    const firstAttemptScore = Math.max(0, Math.min(100, Math.round(Number(rawFirst) || 0)));
+
     // Uma atividade é considerada concluída para efeitos do progresso quando o aluno obtém uma pontuação superior ou igual a 50%
-    const completed = score >= 50;
+    const completed = bestScore >= 50;
     const attempts = record?.attempts ?? (record ? 1 : 0);
 
     const awardedXp = record
       ? (typeof record.awardedXp === 'number'
           ? Math.max(0, Math.min(100, Math.round(record.awardedXp)))
-          : score)
+          : bestScore)
       : 0;
 
     return {
       id: c.id,
       title: c.title.pt,
-      score,
+      score: bestScore,
+      bestScore,
+      latestScore,
+      firstAttemptScore,
       awardedXp,
       completed,
       attempts,
@@ -260,6 +278,7 @@ export function getStudentThemeBreakdown(
   // PONTUAÇÃO REGISTADA NA BD: Melhor pontuação (máx. 100 XP)
   let officialScore = 0;
   let bestScore = 0;
+  let latestScore = 0;
   let quizAttempts = 0;
   let quizCompleted = false;
 
@@ -279,9 +298,17 @@ export function getStudentThemeBreakdown(
       bestScore;
     officialScore = Math.max(0, Math.min(100, Math.round(Number(rawFirst) || 0)));
 
+    const rawLatest =
+      quizRecord.latestScore ??
+      quizRecord.latestPercentage ??
+      quizRecord.score ??
+      quizRecord.percentage ??
+      bestScore;
+    latestScore = Math.max(0, Math.min(100, Math.round(Number(rawLatest) || 0)));
+
     quizAttempts = quizRecord.attempts ?? (quizRecord ? 1 : 0);
     // Concluída para efeitos de progresso quando obtém pontuação superior ou igual a 50%
-    quizCompleted = bestScore >= 50;
+    quizCompleted = bestScore >= 50 || quizRecord.status === 'completed';
   }
 
   const quizAwardedXp = quizRecord
@@ -293,8 +320,9 @@ export function getStudentThemeBreakdown(
   const quiz: QuizScoreDetail = {
     id: expectedQuizId,
     title: quizTitle,
-    officialScore: bestScore, // Pontuação registada na BD
+    officialScore, // 1.ª tentativa oficial
     bestScore,
+    latestScore,
     awardedXp: quizAwardedXp,
     attempts: quizAttempts,
     completed: quizCompleted,
@@ -313,9 +341,9 @@ export function getStudentThemeBreakdown(
     ? Math.max(0, Math.min(100, Math.round((completedActivitiesCount / totalActivitiesCount) * 100)))
     : 0;
 
-  // Pontuação curricular somada (melhor pontuação dos desafios + melhor pontuação do quiz, máx 100 XP cada)
-  const challengePointsSum = challenges.reduce((acc, curr) => acc + curr.score, 0);
-  const totalPoints = challengePointsSum + bestScore;
+  // CÁLCULO DE XP CURRICULAR: Utiliza estritamente curr.awardedXp e quiz.awardedXp (NÃO score nem bestScore)
+  const challengePointsSum = challenges.reduce((acc, curr) => acc + curr.awardedXp, 0);
+  const totalPoints = challengePointsSum + quiz.awardedXp;
   const maxPoints = totalActivitiesCount * 100;
   const isFullyCompleted = totalActivitiesCount > 0 && completedActivitiesCount >= totalActivitiesCount;
 
