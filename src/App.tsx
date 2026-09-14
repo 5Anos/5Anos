@@ -178,8 +178,12 @@ export default function App() {
 
   // If active theme is locked and user is a student, automatically return to dashboard
   useEffect(() => {
-    if (!isAdmin && currentView === 'theme' && themeVisibility[currentTheme.id] === false) {
-      setCurrentView('dashboard');
+    if (!isAdmin && themeVisibility[currentTheme.id] === false) {
+      if (currentView === 'theme' || currentView === 'module' || currentView === 'challenge') {
+        setCurrentView('dashboard');
+        setActiveModuleId(null);
+        setActiveChallengeId(null);
+      }
     }
   }, [isAdmin, currentView, currentTheme.id, themeVisibility]);
 
@@ -338,6 +342,13 @@ export default function App() {
 
   // Navigation handlers
   const navigateToTheme = (themeId: string, moduleId?: string, challengeId?: string) => {
+    if (!isAdmin && themeVisibility[themeId] === false) {
+      showToast(
+        language === 'pt' ? '🔒 Tema Oculto' : '🔒 Theme Hidden',
+        language === 'pt' ? 'Este tema está temporariamente bloqueado pela professora.' : 'This theme is currently hidden by the teacher.'
+      );
+      return;
+    }
     setActiveThemeId(themeId);
     setActiveThemeTab('content');
     if (moduleId) {
@@ -941,6 +952,8 @@ export default function App() {
             achievements={achievements}
             pointsHistory={pointsHistory}
             language={language}
+            themeVisibility={themeVisibility}
+            isAdmin={isAdmin}
             onOpenAuth={() => setAuthModalOpen(true)}
           />
         )}

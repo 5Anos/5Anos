@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Award, Sparkles, CheckCircle2, Clock, Printer, TrendingUp, Trophy, Layers, Filter, LayoutGrid, List } from 'lucide-react';
-import { User, ActivityProgress, UserAchievement, PointTransaction, Language } from '../types';
+import { User, ActivityProgress, UserAchievement, PointTransaction, Language, ThemeVisibilityMap } from '../types';
 import { translations } from '../i18n/translations';
 import { BADGES } from '../data/badgesData';
 import { ALL_THEMES } from '../data/allThemesData';
@@ -15,6 +15,8 @@ interface ProgressViewProps {
   achievements: UserAchievement[];
   pointsHistory: PointTransaction[];
   language: Language;
+  themeVisibility?: ThemeVisibilityMap;
+  isAdmin?: boolean;
   onOpenAuth: () => void;
 }
 
@@ -24,16 +26,24 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
   achievements,
   pointsHistory,
   language,
+  themeVisibility,
+  isAdmin = false,
   onOpenAuth,
 }) => {
   const t = translations[language];
+
+  const visibleThemes = useMemo(() => {
+    return ALL_THEMES.filter(
+      (theme) => isAdmin || !themeVisibility || themeVisibility[theme.id] !== false
+    );
+  }, [isAdmin, themeVisibility]);
 
   const [selectedThemeFilter, setSelectedThemeFilter] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grouped' | 'list'>('grouped');
 
   const stats = useMemo(() => {
-    return getGlobalActivityStats(user, progressList, ALL_THEMES);
-  }, [user, progressList]);
+    return getGlobalActivityStats(user, progressList, visibleThemes);
+  }, [user, progressList, visibleThemes]);
 
   const completedCount = stats.completedActivities;
   const totalActivities = stats.totalActivities;
@@ -57,7 +67,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
 
   // Group activities by theme
   const themesWithProgress = useMemo(() => {
-    return ALL_THEMES.map((theme) => {
+    return visibleThemes.map((theme) => {
       const themeChallengeIds = new Set(theme.challenges.map((c) => c.id));
       const items = enrichedProgress.filter((p) => themeChallengeIds.has(p.activityId));
       const breakdown = getStudentThemeBreakdown(user, progressList, theme);
@@ -69,15 +79,15 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
         breakdown,
       };
     });
-  }, [enrichedProgress, progressList, user]);
+  }, [enrichedProgress, progressList, user, visibleThemes]);
 
   // Orphan/other activities (if any)
   const orphanItems = useMemo(() => {
-    const allKnownThemeIds = new Set(ALL_THEMES.map((t) => t.id));
+    const allKnownThemeIds = new Set(visibleThemes.map((t) => t.id));
     return enrichedProgress.filter(
       (p) => !allKnownThemeIds.has(p.meta.themeId) && !allKnownThemeIds.has(p.themeId)
     );
-  }, [enrichedProgress]);
+  }, [enrichedProgress, visibleThemes]);
 
   const handlePrint = () => {
     window.print();
@@ -353,9 +363,9 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
-            {language === 'pt' ? `Todos os Temas (${ALL_THEMES.length})` : `All Themes (${ALL_THEMES.length})`}
+            {language === 'pt' ? `Todos os Temas (${visibleThemes.length})` : `All Themes (${visibleThemes.length})`}
           </button>
-          {ALL_THEMES.map((th) => {
+          {visibleThemes.map((th) => {
             const isSelected = selectedThemeFilter === th.id;
             const themeRecords = enrichedProgress.filter(
               (p) => p.meta.themeId === th.id || p.themeId === th.id

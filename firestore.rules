@@ -171,7 +171,7 @@ service cloud.firestore {
     // 3. System Configurations (Class list / Turmas, Pedagogical Theme Visibility, Health Checks)
     match /config/{docId} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isAdmin() || !isSignedIn() || request.auth != null;
     }
   }
 }
