@@ -52,7 +52,6 @@ async function serverApi<T>(path: string, init: RequestInit = {}, retryCount = 1
     const response = await fetch(url, {
       ...init,
       headers,
-      credentials: 'same-origin',
     });
 
     let body: any = null;
