@@ -40,16 +40,65 @@ const QUIZ_VISIBILITY_KEY = 'tic_5ano_quiz_visibility';
 
 const API_BASE_URL = ((import.meta as any).env?.VITE_API_URL || '').replace(/\/$/, '');
 
-async function serverApi<T>(path: string, init: RequestInit = {}): Promise<T> {
+async function serverApi<T>(path: string, init: RequestInit = {}, retryCount = 1): Promise<T> {
   const token = localStorage.getItem(TOKEN_KEY);
   const headers = new Headers(init.headers || {});
   headers.set('Content-Type', 'application/json');
   if (token) headers.set('Authorization', `Bearer ${token}`);
-  const response = await fetch(`${API_BASE_URL}${path}`, { ...init, headers });
-  let body: any = null;
-  try { body = await response.json(); } catch { /* no body */ }
-  if (!response.ok) throw new Error(body?.error || 'Erro de comunicação com o servidor.');
-  return body as T;
+
+  const url = `${API_BASE_URL}${path}`;
+
+  try {
+    const response = await fetch(url, {
+      ...init,
+      headers,
+      credentials: 'same-origin',
+    });
+
+    let body: any = null;
+    const contentType = response.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      try {
+        body = await response.json();
+      } catch {
+        /* invalid json body */
+      }
+    } else if ((response.status >= 500 || response.status === 404 || response.status === 405 || response.status === 0) && retryCount > 0) {
+      // Proxy/Container cold-start returning non-JSON: wait 1.5s and retry once
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      return serverApi<T>(path, init, retryCount - 1);
+    }
+
+    if (!response.ok) {
+      if (body?.error) {
+        throw new Error(body.error);
+      }
+      if (response.status === 502 || response.status === 503 || response.status === 504) {
+        throw new Error('O servidor está a iniciar na nuvem. Por favor, aguarda 5 segundos e tenta novamente.');
+      }
+      if (response.status === 401) {
+        throw new Error('Credenciais inválidas ou sessão expirada.');
+      }
+      if (response.status === 403) {
+        throw new Error('Acesso não autorizado pelo servidor.');
+      }
+      throw new Error(`Erro de resposta do servidor (${response.status}). Por favor tenta novamente.`);
+    }
+
+    return body as T;
+  } catch (err: any) {
+    if (retryCount > 0 && (err?.name === 'TypeError' || err?.message?.includes('fetch'))) {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      return serverApi<T>(path, init, retryCount - 1);
+    }
+    if (err instanceof Error) {
+      if (err.message.includes('Failed to fetch') || err.name === 'TypeError') {
+        throw new Error('Não foi possível contactar o servidor. Verifica a ligação à internet ou tenta novamente dentro de instantes.');
+      }
+      throw err;
+    }
+    throw new Error('Erro de comunicação com o servidor.');
+  }
 }
 
 
