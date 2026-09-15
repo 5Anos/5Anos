@@ -79,9 +79,12 @@ export function evaluateActivitySubmissionServer(
   }
 
   // Case B: Interactive Module or Practical Challenge (Game/Lab)
-  // Clamped strictly to curricular maximum of 100 XP
-  const safePercentage = Math.min(100, Math.max(0, Math.round(Number(claimedPercentage) || 100)));
-  const safePoints = Math.min(100, Math.max(0, Math.round(safePercentage)));
+  // Clamped strictly to curricular maximum of 100 XP (preserves exact attempt score: 0, 20, 60, etc.)
+  const rawNum = typeof claimedPercentage === 'number'
+    ? claimedPercentage
+    : (claimedPercentage !== undefined && claimedPercentage !== null && claimedPercentage !== '' ? Number(claimedPercentage) : 0);
+  const safePercentage = Math.min(100, Math.max(0, Math.round(Number.isNaN(rawNum) ? 0 : rawNum)));
+  const safePoints = safePercentage;
 
   return {
     valid: true,

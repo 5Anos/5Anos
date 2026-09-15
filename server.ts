@@ -1108,11 +1108,14 @@ app.post('/api/progress/save', requireAuth, async (req: AuthenticatedRequest, re
     if (!isValidActivityId(activityId)) return res.status(400).json({ error: 'Atividade inválida ou não reconhecida no currículo.' });
     if (!['module', 'quiz', 'challenge'].includes(activityType)) return res.status(400).json({ error: 'Tipo de atividade inválido.' });
 
+    const claimedScore = body.percentage !== undefined
+      ? body.percentage
+      : (body.score !== undefined ? body.score : body.claimedPercentage);
     const evaluation = evaluateActivitySubmissionServer({
       activityId,
       activityType,
       quizAnswers: body.quizAnswers,
-      claimedPercentage: body.percentage ?? body.claimedPercentage,
+      claimedPercentage: claimedScore,
     });
     if (!evaluation.valid) return res.status(400).json({ error: evaluation.error || 'Atividade inválida.' });
 
