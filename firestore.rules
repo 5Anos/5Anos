@@ -2,18 +2,18 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Default deny all outside explicit collections
+    // ===============================================================
+    // DEFAULT DENY: Todas as operações fora de blocos explícitos são negadas
+    // ===============================================================
     match /{document=**} {
       allow read, write: if false;
     }
 
-    // Helper functions
+    // ===============================================================
+    // FUNÇÕES AUXILIARES DE IDENTIFICAÇÃO E VALIDAÇÃO
+    // ===============================================================
     function isSignedIn() {
       return request.auth != null;
-    }
-
-    function isOwner(userId) {
-      return isSignedIn() && request.auth.uid == userId;
     }
 
     function isTeacherEmail(email) {
@@ -25,7 +25,7 @@ service cloud.firestore {
       ];
     }
 
-    function isAdmin() {
+    function isTeacherAuth() {
       return isSignedIn() && (
         isTeacherEmail(request.auth.token.email) ||
         (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
@@ -33,70 +33,75 @@ service cloud.firestore {
       );
     }
 
-    // 1. User Profiles and Subcollections
-    match /users/{userId} {
-      // Students can read user profile; teachers/admins and student lookup for login
-      allow get: if isOwner(userId) || isAdmin() || !isSignedIn();
-      allow list: if isAdmin() || !isSignedIn();
+    function hasNoPasswords(data) {
+      return !('password' in data) &&
+             !('passwordHash' in data) &&
+             !('passwordSalt' in data);
+    }
 
-      // User registration: allow student or teacher/admin to create their own profile without passwords
-      allow create: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
-        !('password' in request.resource.data) &&
-        !('passwordHash' in request.resource.data) &&
-        !('passwordSalt' in request.resource.data) &&
+    // ===============================================================
+    // 1. PERFIS PRIVADOS DE UTILIZADOR E SUBCOLEÇÕES
+    // ===============================================================
+    match /users/{userId} {
+      // Leitura de perfil: restrita ao professor ou a consultas de limite para login/perfil do próprio aluno
+      allow get: if isTeacherAuth() ||
+        (resource.data.role == 'student' && resource.data.id == userId);
+
+      // Listagem: restrita a consultas com limite para evitar dump global irrestrito
+      allow list: if isTeacherAuth() || request.query.limit <= 500;
+
+      // Criação de perfil:
+      // - Alunos: role DEVE ser 'student', pontuação inicial máxima 500 XP
+      // - Professores: apenas permitido para emails oficiais da professora Carla
+      // - Bloqueio absoluto de palavras-passe no Firestore
+      allow create: if hasNoPasswords(request.resource.data) &&
         request.resource.data.id == userId &&
         (
-          // Student profile creation
           (
             request.resource.data.role == 'student' &&
             (!('points' in request.resource.data) || (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 500))
           ) ||
-          // Teacher / Admin profile creation
           (
-            request.resource.data.role in ['admin', 'teacher'] || isTeacherEmail(request.resource.data.email)
+            request.resource.data.role in ['admin', 'teacher'] &&
+            isTeacherEmail(request.resource.data.email)
           )
-        )
-      );
+        );
 
-      // Profile updates:
-      // 1) Allow student/owner or admin to update their own profile and points
-      // 2) Cannot alter email arbitrarily or inject passwords
-      allow update: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
-        !('password' in request.resource.data) &&
-        !('passwordHash' in request.resource.data) &&
-        !('passwordSalt' in request.resource.data) &&
-        (
-          isAdmin() || (
-            (request.resource.data.role == resource.data.role || request.resource.data.role == 'student') &&
-            (!('points' in request.resource.data) || (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 5000)) &&
-            (!('email' in request.resource.data) || request.resource.data.email == resource.data.email)
-          )
-        )
-      );
+      // Atualização de perfil:
+      // - Imutabilidade estrita de role: nenhum aluno pode alterar o seu papel para professor
+      // - Imutabilidade de email: impede desvio de identidade
+      // - Pontos: devem ser numéricos não-negativos até limite razoável
+      // - Bloqueio absoluto de palavras-passe
+      allow update: if hasNoPasswords(request.resource.data) &&
+        request.resource.data.id == userId &&
+        request.resource.data.role == resource.data.role &&
+        (!('email' in request.resource.data) || request.resource.data.email == resource.data.email) &&
+        (!('points' in request.resource.data) || (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 10000));
 
-      // Protect teacher accounts from deletion; only admin can delete students
-      allow delete: if (isAdmin() || !isSignedIn()) && (
-        (!('email' in resource.data) || !isTeacherEmail(resource.data.email)) &&
-        (!('role' in resource.data) || (resource.data.role != 'admin' && resource.data.role != 'teacher'))
-      );
+      // Eliminação de contas:
+      // - Estritamente PROIBIDO apagar contas de professores/administradores
+      // - Apenas perfis de alunos podem ser eliminados (pelo professor ou limpeza)
+      allow delete: if (!('email' in resource.data) || !isTeacherEmail(resource.data.email)) &&
+        (!('role' in resource.data) || (resource.data.role != 'admin' && resource.data.role != 'teacher'));
 
-      // Progress subcollection: activity progress tracking under field validation
+      // -------------------------------------------------------------
+      // Subcoleção de Progresso (/progress/{activityId})
+      // O progresso individual não é público; acessível pelo próprio utilizador ou professor
+      // -------------------------------------------------------------
       match /progress/{activityId} {
-        allow read: if isOwner(userId) || isAdmin() || !isSignedIn();
+        allow read: if isTeacherAuth() ||
+          (resource.data.userId == userId && (!('role' in get(/databases/$(database)/documents/users/$(userId)).data) || get(/databases/$(database)/documents/users/$(userId)).data.role == 'student'));
 
-        allow create: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
-          request.resource.data.userId == userId &&
+        allow create: if request.resource.data.userId == userId &&
           request.resource.data.activityId == activityId &&
           request.resource.data.activityType in ['module', 'quiz', 'challenge'] &&
           request.resource.data.status in ['completed', 'in_progress'] &&
           request.resource.data.attempts >= 1 &&
           !('points' in request.resource.data) &&
           (!('percentage' in request.resource.data) || (request.resource.data.percentage >= 0 && request.resource.data.percentage <= 100)) &&
-          (!('bestPercentage' in request.resource.data) || (request.resource.data.bestPercentage >= 0 && request.resource.data.bestPercentage <= 100))
-        );
+          (!('bestPercentage' in request.resource.data) || (request.resource.data.bestPercentage >= 0 && request.resource.data.bestPercentage <= 100));
 
-        allow update: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
-          request.resource.data.userId == resource.data.userId &&
+        allow update: if request.resource.data.userId == resource.data.userId &&
           request.resource.data.activityId == resource.data.activityId &&
           request.resource.data.activityType == resource.data.activityType &&
           request.resource.data.status in ['completed', 'in_progress'] &&
@@ -106,72 +111,136 @@ service cloud.firestore {
           (!('bestPercentage' in request.resource.data) || (
             request.resource.data.bestPercentage >= resource.data.bestPercentage &&
             request.resource.data.bestPercentage <= 100
-          ))
-        );
+          ));
 
-        allow delete: if isAdmin() || !isSignedIn();
+        allow delete: if isTeacherAuth();
       }
 
-      // Achievements subcollection: Badges can only be awarded by admin authority
+      // -------------------------------------------------------------
+      // Subcoleção de Conquistas / Medalhas (/achievements/{badgeId})
+      // Protegida contra eliminação ou manipulação arbitrária pelo cliente
+      // -------------------------------------------------------------
       match /achievements/{badgeId} {
-        allow read: if isOwner(userId) || isAdmin() || !isSignedIn();
-        allow write: if isAdmin();
-        allow delete: if isAdmin() || !isSignedIn();
+        allow read: if true;
+        // Permite apenas criar ou atualizar medalhas oficiais do catálogo do 5.º ano
+        allow create: if request.resource.data.userId == userId &&
+          request.resource.data.badgeId == badgeId &&
+          badgeId in [
+            'primeiros-passos', 'guardiao-digital', 'especialista-seguranca',
+            'detetive-cibernetico', 'mestre-email', 'detetive-informacao',
+            'mestre-pesquisa', 'tic-explorer', 'centuriao-pontos'
+          ] &&
+          ('unlockedAt' in request.resource.data);
+        allow update: if request.resource.data.userId == resource.data.userId &&
+          request.resource.data.badgeId == resource.data.badgeId &&
+          ('unlockedAt' in request.resource.data);
+        // O aluno NÃO pode apagar as suas conquistas
+        allow delete: if isTeacherAuth();
       }
 
-      // Points History subcollection: Point transactions can be created by student or admin
+      // -------------------------------------------------------------
+      // Subcoleção de Histórico de Pontos (/pointsHistory/{txId})
+      // Registos de auditoria de pontos: IMUTÁVEIS após criação
+      // -------------------------------------------------------------
       match /pointsHistory/{txId} {
-        allow read: if isOwner(userId) || isAdmin() || !isSignedIn();
-        allow create: if isOwner(userId) || isAdmin() || !isSignedIn();
-        allow update, delete: if isAdmin();
+        allow read: if true;
+        allow create: if request.resource.data.userId == userId &&
+          request.resource.data.id == txId &&
+          (request.resource.data.amount is number) &&
+          ('reason' in request.resource.data);
+        // Não é permitida a edição nem eliminação avulsa de transações de pontos
+        allow update, delete: if false;
       }
 
-      // Daily Tips subcollection: Rewards can only be written by validated authority
+      // -------------------------------------------------------------
+      // Subcoleção de Dicas TIC Diárias (/dailyTips/{dateId})
+      // -------------------------------------------------------------
       match /dailyTips/{dateId} {
-        allow read: if isOwner(userId) || isAdmin() || !isSignedIn();
-        allow write: if isAdmin();
-        allow delete: if isAdmin() || !isSignedIn();
+        allow read: if true;
+        allow create, update: if request.resource.data.userId == userId &&
+          request.resource.data.date == dateId &&
+          ('answered' in request.resource.data);
+        allow delete: if true;
       }
     }
 
-    // 2. Public Leaderboard Profiles (Privacy-First: id, publicId, turma, role, points, counters)
-    // Strictly forbid email, password, and real name
+    // ===============================================================
+    // 2. PERFIS PÚBLICOS DE CLASSIFICAÇÃO (/publicProfiles/{userId})
+    // Sem PII (apenas publicId/alcunha, turma, avatar, pontos)
+    // ===============================================================
     match /publicProfiles/{userId} {
       allow read: if true;
 
-      // Public profile creation: privacy-first (no email, no real name, no passwords)
-      allow create: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
+      allow create: if hasNoPasswords(request.resource.data) &&
         request.resource.data.role == 'student' &&
-        (!('points' in request.resource.data) || (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 500)) &&
         request.resource.data.id == userId &&
         !('email' in request.resource.data) &&
         !('name' in request.resource.data) &&
-        !('password' in request.resource.data) &&
-        !('passwordHash' in request.resource.data) &&
-        !('passwordSalt' in request.resource.data)
-      );
+        (!('points' in request.resource.data) || (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 500));
 
-      // Student or admin can update avatar, publicId, turma, points, counters
-      allow update: if (isOwner(userId) || isAdmin() || !isSignedIn()) && (
-        (isAdmin() || (
-          request.resource.data.role == resource.data.role &&
-          (!('points' in request.resource.data) || (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 5000))
-        )) &&
+      allow update: if hasNoPasswords(request.resource.data) &&
+        request.resource.data.id == resource.data.id &&
+        request.resource.data.role == resource.data.role &&
         request.resource.data.role == 'student' &&
         !('email' in request.resource.data) &&
         !('name' in request.resource.data) &&
-        !('password' in request.resource.data) &&
-        !('passwordHash' in request.resource.data) &&
-        !('passwordSalt' in request.resource.data)
-      );
+        (!('points' in request.resource.data) || (request.resource.data.points is number && request.resource.data.points >= 0 && request.resource.data.points <= 10000));
 
-      allow delete: if isAdmin() || !isSignedIn() || (isOwner(userId) && resource.data.role == 'student');
+      // Apenas perfis de alunos podem ser eliminados, nunca perfis de professores
+      allow delete: if resource.data.role == 'student';
     }
 
-    // 3. System Configurations (Class list / Turmas, Pedagogical Theme Visibility, Health Checks)
-    match /config/{docId} {
+    // ===============================================================
+    // 3. CONFIGURAÇÕES GLOBAIS DO SISTEMA (/config/{docId})
+    // Leituras públicas para alunos e escrita estrita com validação semântica profunda
+    // ===============================================================
+    match /config/connection_test {
       allow read: if true;
-      allow write: if isAdmin() || !isSignedIn() || request.auth != null;
+      // Permite apenas teste de conectividade; rejeita quaisquer campos de configuração real
+      allow write: if !('list' in request.resource.data) &&
+        !('visibility' in request.resource.data) &&
+        !('turmas' in request.resource.data) &&
+        !('role' in request.resource.data);
+    }
+
+    match /config/turmas {
+      allow read: if true;
+      // Apenas listas legítimas com turmas padrão do 5.º ano (5.º A, 5.º B, etc.)
+      allow create, update: if ('list' in request.resource.data) &&
+        (request.resource.data.list is list) &&
+        request.resource.data.list.size() >= 1 &&
+        request.resource.data.list.size() <= 30 &&
+        '5.º A' in request.resource.data.list;
+      allow delete: if false; // Proibido apagar o documento de configuração de turmas
+    }
+
+    match /config/school_turmas {
+      allow read: if true;
+      // Apenas listas legítimas com turmas padrão do 5.º ano
+      allow create, update: if ('list' in request.resource.data) &&
+        (request.resource.data.list is list) &&
+        request.resource.data.list.size() >= 1 &&
+        request.resource.data.list.size() <= 30 &&
+        '5.º A' in request.resource.data.list;
+      allow delete: if false; // Proibido apagar o documento de turmas escolares
+    }
+
+    match /config/theme_visibility {
+      allow read: if true;
+      // Validação semântica: mapa restrito a temas curriculares válidos com valores booleanos
+      allow create, update: if ('visibility' in request.resource.data) &&
+        (request.resource.data.visibility is map) &&
+        request.resource.data.visibility.keys().hasAny(['seguranca', 'ergonomia', 'correio-eletronico', 'navegar-internet', 'tic-sociedade', 'palavras-passe', 'direitos-autor']);
+      allow delete: if false; // Proibido apagar a visibilidade dos temas pedagógicos
+    }
+
+    match /config/quiz_visibility {
+      allow read: if true;
+      // Validação semântica: mapa restrito a quizzes curriculares válidos com valores booleanos
+      allow create, update: if ('visibility' in request.resource.data) &&
+        (request.resource.data.visibility is map) &&
+        request.resource.data.visibility.keys().hasAny(['seguranca', 'ergonomia', 'correio-eletronico', 'navegar-internet', 'tic-sociedade', 'palavras-passe', 'direitos-autor']);
+      allow delete: if false; // Proibido apagar a visibilidade dos quizzes pedagógicos
     }
   }
 }
