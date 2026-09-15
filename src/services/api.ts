@@ -497,6 +497,7 @@ export const api = {
       const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
       const role = isUserAdmin(normalizedEmail) ? 'admin' : 'student';
       const finalAvatar = avatar || getDefaultAvatar(finalPublicId);
+      const initialPoints = role === 'admin' ? 0 : 100;
       const nowIso = new Date().toISOString();
 
       const newUser: User = {
@@ -506,7 +507,7 @@ export const api = {
         role,
         turma: turma || '5.º A',
         publicId: finalPublicId,
-        points: 0,
+        points: initialPoints,
         language,
         avatar: finalAvatar,
         createdAt: nowIso,
@@ -515,7 +516,7 @@ export const api = {
       // Save directly to Cloud Firestore!
       await setDoc(doc(db, 'users', userId), {
         ...newUser,
-        xp: 0,
+        xp: initialPoints,
         level: 1,
         passwordHash: cleanPassword,
         updatedAt: nowIso,
@@ -533,11 +534,22 @@ export const api = {
         publicId: finalPublicId,
         turma: turma || '5.º A',
         avatar: finalAvatar,
-        points: 0,
-        xp: 0,
+        points: initialPoints,
+        xp: initialPoints,
         level: 1,
         updatedAt: nowIso,
       });
+
+      if (initialPoints > 0) {
+        const welcomeTxId = `pt-welcome-${Date.now()}`;
+        await setDoc(doc(db, 'users', userId, 'pointsHistory', welcomeTxId), {
+          id: welcomeTxId,
+          userId,
+          amount: 100,
+          reason: 'Bónus de Criação de Conta (+100 XP)',
+          timestamp: nowIso,
+        }).catch(() => {});
+      }
 
       const token = userId;
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
@@ -606,13 +618,21 @@ export const api = {
         throw new Error('Credenciais inválidas. Verifica o email e a palavra-passe.');
       }
 
+      let userPoints = Number(userData.points) || 0;
+      const userRole = isUserAdmin(normalizedEmail, userData.role) ? 'admin' : (userData.role || 'student');
+      if (userRole === 'student' && userPoints < 100) {
+        userPoints = 100;
+        setDoc(doc(db, 'users', userDoc.id), { points: 100, xp: 100 }, { merge: true }).catch(() => {});
+        setDoc(doc(db, 'publicProfiles', userDoc.id), { points: 100, xp: 100 }, { merge: true }).catch(() => {});
+      }
+
       const finalUser: User = {
         id: userDoc.id,
         email: normalizedEmail,
-        name: userData.name || (isUserAdmin(normalizedEmail) ? 'Professora Carla Oliveira' : 'Estudante'),
-        role: isUserAdmin(normalizedEmail, userData.role) ? 'admin' : (userData.role || 'student'),
+        name: userData.name || (userRole === 'admin' ? 'Professora Carla Oliveira' : 'Estudante'),
+        role: userRole,
         turma: userData.turma || '5.º A',
-        points: Number(userData.points) || 0,
+        points: userPoints,
         language: userData.language || 'pt',
         publicId: userData.publicId || userDoc.id,
         avatar: userData.avatar,
@@ -759,25 +779,82 @@ export const api = {
     // 2. Direct Cloud Firestore Fallback
     try {
       const nowIso = new Date().toISOString();
-      const progressRecord: ActivityProgress = {
+      const isQuiz = isLearningQuiz(payload.activityId, payload.activityType);
+      const attemptScore = Math.max(0, Math.min(100, Math.round(Number(payload.percentage || payload.score || 0))));
+
+      const progressDocRef = doc(db, 'users', current.id, 'progress', payload.activityId);
+      const existingDoc = await getDoc(progressDocRef);
+      const existing = existingDoc.exists() ? existingDoc.data() : null;
+      const prevBest = Math.max(0, Math.min(100, Math.round(Number(existing?.bestScore ?? existing?.bestPercentage ?? existing?.score ?? 0))));
+      const best = Math.max(prevBest, attemptScore);
+      const attempts = Number(existing?.attempts || 0) + 1;
+
+      let xpGain = 0;
+      let awardedXp = 0;
+
+      const progressRecord: Record<string, any> = {
         userId: current.id,
         activityId: payload.activityId,
         themeId: payload.themeId,
-        activityType: payload.activityType,
-        status: payload.status || 'completed',
-        score: payload.score,
-        maxScore: payload.maxScore,
-        percentage: payload.percentage,
-        attempts: 1,
+        activityType: isQuiz ? 'quiz' : payload.activityType,
+        status: isQuiz ? 'completed' : (best >= 50 ? 'completed' : 'in_progress'),
+        score: attemptScore,
+        maxScore: 100,
+        percentage: attemptScore,
+        attempts,
+        bestScore: best,
+        bestPercentage: best,
+        latestScore: attemptScore,
+        latestPercentage: attemptScore,
         lastUpdated: nowIso,
+        serverCalculated: false,
       };
 
-      // Save directly into Firestore subcollection
-      await setDoc(doc(db, 'users', current.id, 'progress', payload.activityId), progressRecord, { merge: true });
+      if (isQuiz) {
+        // 📚 Quiz de Aprendizagem: 0 XP, 1.ª tentativa oficial inalterável
+        xpGain = 0;
+        awardedXp = 0;
+        progressRecord.awardedXp = 0;
+        if (existing?.firstAttemptScore === undefined) {
+          progressRecord.firstAttemptScore = attemptScore;
+          progressRecord.firstAttemptPercentage = attemptScore;
+          progressRecord.firstAttemptDate = nowIso;
+        } else {
+          progressRecord.firstAttemptScore = existing.firstAttemptScore;
+          progressRecord.firstAttemptPercentage = existing.firstAttemptPercentage;
+          progressRecord.firstAttemptDate = existing.firstAttemptDate || nowIso;
+        }
+      } else {
+        // 🎮 Desafios Regulares: até 100 XP dependendo da pontuação máxima alcançada
+        xpGain = Math.max(0, best - prevBest);
+        awardedXp = best;
+        progressRecord.awardedXp = best;
+        if (existing?.firstAttemptScore === undefined) {
+          progressRecord.firstAttemptScore = attemptScore;
+          progressRecord.firstAttemptPercentage = attemptScore;
+          progressRecord.firstAttemptDate = nowIso;
+        } else {
+          progressRecord.firstAttemptScore = existing.firstAttemptScore;
+          progressRecord.firstAttemptPercentage = existing.firstAttemptPercentage;
+          progressRecord.firstAttemptDate = existing.firstAttemptDate || nowIso;
+        }
+      }
 
-      // Update user points
-      const pointsToAdd = payload.activityType === 'quiz' ? 50 : 25;
-      const newPoints = (Number(current.points) || 0) + pointsToAdd;
+      // Save directly into Firestore subcollection
+      await setDoc(progressDocRef, progressRecord, { merge: true });
+
+      if (xpGain > 0) {
+        const txId = `pt-act-${payload.activityId}-${Date.now()}`;
+        setDoc(doc(db, 'users', current.id, 'pointsHistory', txId), {
+          id: txId,
+          userId: current.id,
+          amount: xpGain,
+          reason: `🎮 Desafio TIC (+${xpGain} XP): ${payload.activityTitle || payload.activityId}`,
+          timestamp: nowIso,
+        }).catch(() => {});
+      }
+
+      const newPoints = (Number(current.points) || 100) + xpGain;
       const lastActivity = {
         themeId: payload.themeId,
         activityId: payload.activityId,
@@ -808,11 +885,15 @@ export const api = {
 
       return {
         success: true,
-        record: progressRecord,
+        record: progressRecord as ActivityProgress,
         userPoints: newPoints,
         lastActivity,
         achievements: [],
-        earnedPoints: pointsToAdd,
+        earnedPoints: xpGain,
+        prevBestScore: prevBest,
+        newBestScore: best,
+        awardedXp,
+        attemptScore,
       };
     } catch (dbErr) {
       console.error('Direct Firestore progress save error:', dbErr);
@@ -822,24 +903,139 @@ export const api = {
   async recordDailyTipRead(tipTitle: string, dateStr?: string): Promise<{ success: boolean; user: User | null; userPoints: number; earnedPoints: number; achievements: UserAchievement[] }> {
     const current = this.getCurrentSessionUser();
     if (!current) return { success: true, user: null, userPoints: 0, earnedPoints: 0, achievements: [] };
-    const result = await serverApi<any>('/api/daily-tip/read', { method: 'POST', body: JSON.stringify({ tipTitle, dateStr }) });
-    if (result.user) localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(result.user));
-    if (result.achievements) localStorage.setItem(ACHIEVEMENTS_STORAGE_KEY + current.id, JSON.stringify(result.achievements));
-    return { success: true, user: result.user || current, userPoints: Number(result.userPoints ?? result.user?.points ?? current.points ?? 0), earnedPoints: Number(result.earnedPoints || 0), achievements: result.achievements || [] };
+    const targetDate = dateStr || new Date().toISOString().split('T')[0];
+    try {
+      const result = await serverApi<any>('/api/daily-tip/read', { method: 'POST', body: JSON.stringify({ tipTitle, dateStr: targetDate }) });
+      if (result.user) localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(result.user));
+      if (result.achievements) localStorage.setItem(ACHIEVEMENTS_STORAGE_KEY + current.id, JSON.stringify(result.achievements));
+      return { success: true, user: result.user || current, userPoints: Number(result.userPoints ?? result.user?.points ?? current.points ?? 0), earnedPoints: Number(result.earnedPoints || 0), achievements: result.achievements || [] };
+    } catch (serverErr) {
+      console.warn('Server daily-tip read notice, falling back to direct Firestore:', serverErr);
+      try {
+        const nowIso = new Date().toISOString();
+        const tipRef = doc(db, 'users', current.id, 'dailyTips', targetDate);
+        const tipSnap = await getDoc(tipRef);
+        const existing = tipSnap.exists() ? tipSnap.data() : null;
+        if (existing?.read) {
+          return { success: true, user: current, userPoints: Number(current.points || 0), earnedPoints: 0, achievements: [] };
+        }
+        const earnedPoints = 20;
+        await setDoc(tipRef, {
+          userId: current.id,
+          date: targetDate,
+          tipTitle: tipTitle || 'Dica do Dia TIC',
+          read: true,
+          readAt: nowIso,
+          readPoints: 20,
+          pointsEarned: (Number(existing?.pointsEarned) || 0) + 20,
+          updatedAt: nowIso,
+        }, { merge: true });
+
+        const txId = `pt-tip-read-${targetDate}-${Date.now()}`;
+        setDoc(doc(db, 'users', current.id, 'pointsHistory', txId), {
+          id: txId,
+          userId: current.id,
+          amount: 20,
+          reason: `💡 Leitura da Dica do Dia (+20 XP): ${tipTitle}`,
+          timestamp: nowIso,
+        }).catch(() => {});
+
+        const newPoints = (Number(current.points) || 100) + earnedPoints;
+        await setDoc(doc(db, 'users', current.id), { points: newPoints, xp: newPoints, updatedAt: nowIso }, { merge: true });
+        await setDoc(doc(db, 'publicProfiles', current.id), { points: newPoints, xp: newPoints, updatedAt: nowIso }, { merge: true });
+
+        const updatedUser = { ...current, points: newPoints, xp: newPoints };
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
+        return { success: true, user: updatedUser, userPoints: newPoints, earnedPoints, achievements: [] };
+      } catch (fallbackErr) {
+        console.error('Fallback daily-tip read error:', fallbackErr);
+        throw fallbackErr;
+      }
+    }
   },
   async recordDailyTipBonus(tipTitle: string, bonusPoints = 30, dateStr?: string, answerDetails?: { selectedOptionId: string; isCorrect: boolean }): Promise<{ success: boolean; user: User | null; userPoints: number; earnedPoints: number; readingPoints: number; answerPoints: number; achievements: UserAchievement[] }> {
     const current = this.getCurrentSessionUser();
     if (!current) return { success: true, user: null, userPoints: 0, earnedPoints: 0, readingPoints: 0, answerPoints: 0, achievements: [] };
     if (!answerDetails?.selectedOptionId) throw new Error('Resposta da Dica do Dia não fornecida.');
-    const result = await serverApi<any>('/api/daily-tip/answer', { method: 'POST', body: JSON.stringify({ tipTitle, bonusPoints, dateStr, selectedOptionId: answerDetails.selectedOptionId }) });
-    if (result.user) localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(result.user));
-    if (result.achievements) localStorage.setItem(ACHIEVEMENTS_STORAGE_KEY + current.id, JSON.stringify(result.achievements));
-    return { success: true, user: result.user || current, userPoints: Number(result.userPoints ?? result.user?.points ?? current.points ?? 0), earnedPoints: Number(result.earnedPoints || 0), readingPoints: Number(result.readingPoints || 0), answerPoints: Number(result.answerPoints || 0), achievements: result.achievements || [] };
+    const targetDate = dateStr || new Date().toISOString().split('T')[0];
+    try {
+      const result = await serverApi<any>('/api/daily-tip/answer', { method: 'POST', body: JSON.stringify({ tipTitle, bonusPoints, dateStr: targetDate, selectedOptionId: answerDetails.selectedOptionId }) });
+      if (result.user) localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(result.user));
+      if (result.achievements) localStorage.setItem(ACHIEVEMENTS_STORAGE_KEY + current.id, JSON.stringify(result.achievements));
+      return { success: true, user: result.user || current, userPoints: Number(result.userPoints ?? result.user?.points ?? current.points ?? 0), earnedPoints: Number(result.earnedPoints || 0), readingPoints: Number(result.readingPoints || 0), answerPoints: Number(result.answerPoints || 0), achievements: result.achievements || [] };
+    } catch (serverErr) {
+      console.warn('Server daily-tip answer notice, falling back to direct Firestore:', serverErr);
+      try {
+        const nowIso = new Date().toISOString();
+        const tipRef = doc(db, 'users', current.id, 'dailyTips', targetDate);
+        const tipSnap = await getDoc(tipRef);
+        const existing = tipSnap.exists() ? tipSnap.data() : null;
+        if (existing?.answered) {
+          return { success: true, user: current, userPoints: Number(current.points || 0), earnedPoints: 0, readingPoints: Number(existing.readPoints || 0), answerPoints: Number(existing.answerPoints || 0), achievements: [] };
+        }
+        const answerPoints = answerDetails.isCorrect ? 30 : 0;
+        await setDoc(tipRef, {
+          userId: current.id,
+          date: targetDate,
+          tipTitle: tipTitle || 'Dica do Dia TIC',
+          answered: true,
+          answeredAt: nowIso,
+          selectedOptionId: answerDetails.selectedOptionId,
+          isCorrect: answerDetails.isCorrect,
+          answerPoints,
+          pointsEarned: (Number(existing?.pointsEarned) || 0) + answerPoints,
+          updatedAt: nowIso,
+        }, { merge: true });
+
+        if (answerPoints > 0) {
+          const txId = `pt-tip-ans-${targetDate}-${Date.now()}`;
+          setDoc(doc(db, 'users', current.id, 'pointsHistory', txId), {
+            id: txId,
+            userId: current.id,
+            amount: answerPoints,
+            reason: `💡 Pergunta da Dica do Dia (+${answerPoints} XP): ${tipTitle}`,
+            timestamp: nowIso,
+          }).catch(() => {});
+        }
+
+        const newPoints = (Number(current.points) || 100) + answerPoints;
+        await setDoc(doc(db, 'users', current.id), { points: newPoints, xp: newPoints, updatedAt: nowIso }, { merge: true });
+        await setDoc(doc(db, 'publicProfiles', current.id), { points: newPoints, xp: newPoints, updatedAt: nowIso }, { merge: true });
+
+        const updatedUser = { ...current, points: newPoints, xp: newPoints };
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
+        return { success: true, user: updatedUser, userPoints: newPoints, earnedPoints: answerPoints, readingPoints: Number(existing?.readPoints || 0), answerPoints, achievements: [] };
+      } catch (fallbackErr) {
+        console.error('Fallback daily-tip answer error:', fallbackErr);
+        throw fallbackErr;
+      }
+    }
   },
   async getDailyTipStatus(userId: string, dateStr: string): Promise<{ read: boolean; answered: boolean; selectedOptionId: string; isCorrect: boolean; pointsEarned: number; readPoints: number; answerPoints: number; timestamp: string } | null> {
     const current = this.getCurrentSessionUser();
     if (!current || current.id !== userId || !dateStr) return null;
-    try { return await serverApi<any>(`/api/daily-tip/status?date=${encodeURIComponent(dateStr)}`); } catch (err) { console.warn('Daily tip status fetch notice:', err); return null; }
+    try {
+      return await serverApi<any>(`/api/daily-tip/status?date=${encodeURIComponent(dateStr)}`);
+    } catch (err) {
+      console.warn('Daily tip status fetch notice, trying direct Firestore:', err);
+      try {
+        const snap = await getDoc(doc(db, 'users', userId, 'dailyTips', dateStr));
+        if (!snap.exists()) return null;
+        const data = snap.data();
+        return {
+          read: Boolean(data.read),
+          answered: Boolean(data.answered),
+          selectedOptionId: data.selectedOptionId || '',
+          isCorrect: Boolean(data.isCorrect),
+          pointsEarned: Number(data.pointsEarned || 0),
+          readPoints: Number(data.readPoints || 0),
+          answerPoints: Number(data.answerPoints || 0),
+          timestamp: data.updatedAt || data.readAt || data.answeredAt || '',
+        };
+      } catch {
+        return null;
+      }
+    }
   },
   async getTurmaRankings(userTurma?: string, isAdminUser = false): Promise<TurmaRanking[]> {
     const defaultTurmas = getTurmasList();

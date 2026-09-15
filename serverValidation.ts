@@ -100,3 +100,4 @@ export {
   isValidActivityId,
   getActivityDefinition,
 };
+export { BADGES } from './src/data/badgesData';

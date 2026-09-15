@@ -37,7 +37,7 @@ export type {
 /**
  * Retorna a menção qualitativa oficial para os Quizzes de Aprendizagem e Avaliações
  * Escala Oficial:
- * (0 a 19%) Não Satisfaz (Muito Fraco)
+ * (0% a 19%) Muito Fraco
  * (20% a 49%) Não Satisfaz
  * (50% a 69%) Satisfaz
  * (70% a 89%) Bom
@@ -49,7 +49,7 @@ export function getQualitativeLevel(percentage: number, lang: Language = 'pt'): 
   if (p >= 70) return lang === 'pt' ? 'Bom' : 'Good';
   if (p >= 50) return lang === 'pt' ? 'Satisfaz' : 'Satisfactory';
   if (p >= 20) return lang === 'pt' ? 'Não Satisfaz' : 'Unsatisfactory';
-  return lang === 'pt' ? 'Não Satisfaz (Muito Fraco)' : 'Needs Improvement';
+  return lang === 'pt' ? 'Muito Fraco' : 'Very Weak';
 }
 
 export function getQualitativeLevelWithRange(percentage: number, lang: Language = 'pt'): string {
@@ -58,7 +58,7 @@ export function getQualitativeLevelWithRange(percentage: number, lang: Language 
   if (p >= 70) return lang === 'pt' ? 'Bom (70% a 89%)' : 'Good (70% to 89%)';
   if (p >= 50) return lang === 'pt' ? 'Satisfaz (50% a 69%)' : 'Satisfactory (50% to 69%)';
   if (p >= 20) return lang === 'pt' ? 'Não Satisfaz (20% a 49%)' : 'Unsatisfactory (20% to 49%)';
-  return lang === 'pt' ? 'Não Satisfaz (Muito Fraco) (0 a 19%)' : 'Needs Improvement (0 to 19%)';
+  return lang === 'pt' ? 'Muito Fraco (0% a 19%)' : 'Very Weak (0% to 19%)';
 }
 
 export const getQuizMention = getQualitativeLevel;

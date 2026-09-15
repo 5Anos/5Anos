@@ -13,6 +13,7 @@ import {
   evaluateBadgesEarned,
   isValidActivityId,
   getActivityDefinition,
+  BADGES,
 } from './serverValidation';
 
 const app = express();
@@ -949,8 +950,11 @@ function validateDate(value: unknown): string | null {
 }
 
 function isLearningQuizServer(activityId: string, activityType?: string): boolean {
+  if (activityType === 'quiz') return true;
   const def = getActivityDefinition(activityId) as any;
-  return def?.type === 'quiz' || activityType === 'quiz';
+  if (def?.type === 'quiz') return true;
+  const idLower = (activityId || '').toLowerCase();
+  return idLower.startsWith('quiz-final') || idLower.includes('quiz-final-tema') || idLower.includes('final_quiz');
 }
 
 async function syncPublicProfile(userId: string) {
@@ -1032,18 +1036,49 @@ app.get('/api/me/data', requireAuth, async (req: AuthenticatedRequest, res) => {
     if (!userSnap.exists) return res.status(404).json({ error: 'Utilizador não encontrado.' });
     const user = userSnap.data() || {};
     const isTeacher = user.role === 'admin' || user.role === 'teacher' || isTeacherEmail(normalizeEmail(user.email));
-    if (!isTeacher && Number(user.points || 0) < 100) {
-      user.points = 100;
-      user.xp = 100;
-      await userRef.set({ points: 100, xp: 100, updatedAt: new Date().toISOString() }, { merge: true });
-      await syncPublicProfile(userId);
-    }
+
     const [progressSnap, achievementsSnap, pointsHistorySnap, dailyTipsSnap] = await Promise.all([
       userRef.collection('progress').get(),
       userRef.collection('achievements').get(),
       userRef.collection('pointsHistory').get(),
       userRef.collection('dailyTips').get(),
     ]);
+
+    // Recálculo consistente de pontos para estudantes
+    if (!isTeacher) {
+      let dailyPoints = 0;
+      dailyTipsSnap.docs.forEach((d) => {
+        dailyPoints += Math.max(0, Math.min(1000, Math.round(Number(d.data()?.pointsEarned || 0))));
+      });
+
+      let challengePoints = 0;
+      progressSnap.docs.forEach((d) => {
+        const p = d.data();
+        const pId = String(p.activityId || d.id);
+        const isQ = isLearningQuizServer(pId, p.activityType);
+        if (!isQ) {
+          const best = Math.max(0, Math.min(100, Math.round(Number(p.bestScore ?? p.bestPercentage ?? p.score ?? 0))));
+          challengePoints += best;
+        }
+      });
+
+      let badgeBonus = 0;
+      const unlockedIds = new Set(achievementsSnap.docs.map((d) => d.id));
+      for (const b of BADGES) {
+        if (unlockedIds.has(b.id)) {
+          badgeBonus += b.pointsBonus || 0;
+        }
+      }
+
+      const calculatedPoints = 100 + dailyPoints + challengePoints + badgeBonus;
+      if (Number(user.points || 0) < calculatedPoints || Number(user.points || 0) < 100) {
+        user.points = calculatedPoints;
+        user.xp = calculatedPoints;
+        await userRef.set({ points: calculatedPoints, xp: calculatedPoints, updatedAt: new Date().toISOString() }, { merge: true });
+        await syncPublicProfile(userId);
+      }
+    }
+
     return res.json({
       success: true,
       user,
@@ -1087,18 +1122,18 @@ app.post('/api/progress/save', requireAuth, async (req: AuthenticatedRequest, re
     const existing = existingSnap.exists ? (existingSnap.data() || {}) : null;
     const now = new Date().toISOString();
     const attemptScore = Math.max(0, Math.min(100, Math.round(Number(evaluation.percentage) || 0)));
-    const previousBest = Math.max(0, Math.min(100, Math.round(Number(existing?.bestPercentage ?? existing?.percentage ?? 0))));
+    const previousBest = Math.max(0, Math.min(100, Math.round(Number(existing?.bestScore ?? existing?.bestPercentage ?? existing?.score ?? 0))));
     const quiz = isLearningQuizServer(activityId, activityType);
-    // O aluno ganha 100 XP ao criar a conta e não quando realiza atividades
-    const xpGain = 0;
-    const awardedXp = 0;
-    const best = Math.max(previousBest, attemptScore);
     const attempts = Number(existing?.attempts || 0) + 1;
+    const best = Math.max(previousBest, attemptScore);
+
+    let xpGain = 0;
+    let awardedXp = 0;
 
     const record: Record<string, unknown> = {
       userId,
       activityId,
-      activityType: evaluation.activityType,
+      activityType: quiz ? 'quiz' : evaluation.activityType,
       themeId,
       status: quiz ? 'completed' : (best >= 50 ? 'completed' : 'in_progress'),
       score: attemptScore,
@@ -1109,32 +1144,164 @@ app.post('/api/progress/save', requireAuth, async (req: AuthenticatedRequest, re
       bestPercentage: best,
       latestScore: attemptScore,
       latestPercentage: attemptScore,
-      awardedXp: 0,
       lastUpdated: now,
       serverCalculated: true,
     };
-    if (existing?.firstAttemptScore === undefined) record.firstAttemptScore = attemptScore;
-    else record.firstAttemptScore = existing.firstAttemptScore;
-    if (existing?.firstAttemptPercentage === undefined) record.firstAttemptPercentage = attemptScore;
-    else record.firstAttemptPercentage = existing.firstAttemptPercentage;
-    record.firstAttemptDate = existing?.firstAttemptDate || now;
+
+    if (quiz) {
+      // 📚 QUIZ DE APRENDIZAGEM (1 por tema)
+      // O Quiz de Aprendizagem NÃO dá XP (0 XP).
+      xpGain = 0;
+      awardedXp = 0;
+      record.awardedXp = 0;
+
+      // 1.ª tentativa é a avaliação oficial (inalterável)
+      if (existing?.firstAttemptScore === undefined) {
+        record.firstAttemptScore = attemptScore;
+        record.firstAttemptPercentage = attemptScore;
+        record.firstAttemptDate = now;
+      } else {
+        record.firstAttemptScore = existing.firstAttemptScore;
+        record.firstAttemptPercentage = existing.firstAttemptPercentage;
+        record.firstAttemptDate = existing.firstAttemptDate || now;
+      }
+    } else {
+      // 🎮 DESAFIOS REGULARES / JOGOS
+      // Cada desafio pode dar até 100 XP dependendo do desempenho.
+      // Se o aluno repete com a mesma pontuação ou inferior, o XP só atualiza uma vez (xpGain = 0).
+      // Se superar o melhor resultado anterior (ex: de 80 para 100), ganha a diferença (+20 XP).
+      xpGain = Math.max(0, best - previousBest);
+      awardedXp = best;
+      record.awardedXp = best;
+
+      if (existing?.firstAttemptScore === undefined) {
+        record.firstAttemptScore = attemptScore;
+        record.firstAttemptPercentage = attemptScore;
+        record.firstAttemptDate = now;
+      } else {
+        record.firstAttemptScore = existing.firstAttemptScore;
+        record.firstAttemptPercentage = existing.firstAttemptPercentage;
+        record.firstAttemptDate = existing.firstAttemptDate || now;
+      }
+    }
 
     await progressRef.set(record, { merge: true });
 
-    const dailySnap = await userRef.collection('dailyTips').get();
-    let dailyPoints = 0;
-    dailySnap.docs.forEach(d => { dailyPoints += Math.max(0, Math.min(1000, Math.round(Number(d.data()?.pointsEarned || 0)))); });
-    const userSnap = await userRef.get();
+    if (xpGain > 0) {
+      const txId = `pt-act-${activityId}-${Date.now()}`;
+      await userRef.collection('pointsHistory').doc(txId).set({
+        id: txId,
+        userId,
+        amount: xpGain,
+        reason: `🎮 Desafio TIC (+${xpGain} XP): ${body.activityTitle || activityId}`,
+        timestamp: now,
+      });
+    }
+
+    // Carregar dados para avaliação de conquistas e pontos consolidados
+    const [allProgressSnap, achSnap, dailySnap, userSnap] = await Promise.all([
+      userRef.collection('progress').get(),
+      userRef.collection('achievements').get(),
+      userRef.collection('dailyTips').get(),
+      userRef.get(),
+    ]);
+
     const user = userSnap.data() || {};
     const isAdmin = user.role === 'admin' || user.role === 'teacher' || isTeacherEmail(normalizeEmail(user.email));
-    const totalPoints = isAdmin ? 0 : 100 + dailyPoints;
-    const lastActivity = { themeId, title: String(body.activityTitle || activityId).slice(0, 200), timestamp: now };
-    await userRef.set({ points: totalPoints, lastActivity, updatedAt: now }, { merge: true });
+
+    // Soma das Dicas do Dia
+    let dailyPoints = 0;
+    dailySnap.docs.forEach((d) => {
+      dailyPoints += Math.max(0, Math.min(1000, Math.round(Number(d.data()?.pointsEarned || 0))));
+    });
+
+    // Soma dos Desafios Regulares (cada desafio conta com a sua melhor pontuação até 100 XP, quizzes dão 0 XP)
+    let challengesPointsSum = 0;
+    const completedForBadges: { activityId: string; points: number; percentage?: number }[] = [];
+    allProgressSnap.docs.forEach((d) => {
+      const pData = d.data();
+      const pId = String(pData.activityId || d.id);
+      const isQ = isLearningQuizServer(pId, pData.activityType);
+      const pBest = Math.max(0, Math.min(100, Math.round(Number(pData.bestScore ?? pData.bestPercentage ?? pData.score ?? 0))));
+      if (!isQ) {
+        challengesPointsSum += pBest;
+      }
+      if (pBest >= 50 || pData.status === 'completed' || isQ) {
+        completedForBadges.push({ activityId: pId, points: pBest, percentage: pBest });
+      }
+    });
+
+    // Avaliar medalhas
+    const currentBaseXp = isAdmin ? 0 : 100 + dailyPoints + challengesPointsSum;
+    const existingBadgeIds = achSnap.docs.map((d) => d.id);
+    const badgeEval = evaluateBadgesEarned(completedForBadges, currentBaseXp, existingBadgeIds);
+    let newlyEarnedBonus = 0;
+
+    for (const b of badgeEval.newlyUnlockedBadges || []) {
+      await userRef.collection('achievements').doc(b.id).set({
+        id: b.id,
+        userId,
+        badgeId: b.id,
+        unlockedAt: now,
+      });
+      newlyEarnedBonus += b.pointsBonus || 0;
+      if (b.pointsBonus > 0) {
+        const txId = `pt-badge-${b.id}-${Date.now()}`;
+        await userRef.collection('pointsHistory').doc(txId).set({
+          id: txId,
+          userId,
+          amount: b.pointsBonus,
+          reason: `🏆 Conquista Desbloqueada (+${b.pointsBonus} XP): ${b.namePt || b.id}`,
+          timestamp: now,
+        });
+      }
+    }
+
+    let badgesBonusSum = 0;
+    const allUnlockedBadgeIds = new Set([...existingBadgeIds, ...(badgeEval.newlyUnlockedBadges || []).map((b) => b.id)]);
+    for (const badgeDef of BADGES) {
+      if (allUnlockedBadgeIds.has(badgeDef.id)) {
+        badgesBonusSum += badgeDef.pointsBonus || 0;
+      }
+    }
+
+    // Pontos totais oficiais do aluno: 100 XP inicial + Dicas do Dia + Desafios TIC (melhor pontuação) + Medalhas
+    const totalPoints = isAdmin ? 0 : (100 + dailyPoints + challengesPointsSum + badgesBonusSum);
+
+    const lastActivity = {
+      themeId,
+      title: String(body.activityTitle || activityId).slice(0, 200),
+      timestamp: now,
+    };
+
+    await userRef.set(
+      {
+        points: totalPoints,
+        xp: totalPoints,
+        lastActivity,
+        updatedAt: now,
+      },
+      { merge: true }
+    );
 
     await syncPublicProfile(userId);
-    const achievementsSnap = await userRef.collection('achievements').get();
-    const achievements = achievementsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-    return res.json({ success: true, record, user: { ...user, points: totalPoints, lastActivity }, userPoints: totalPoints, earnedPoints: 0, pointsEarned: 0, prevBestScore: previousBest, newBestScore: best, awardedXp: 0, attemptScore, achievements });
+
+    const updatedAchSnap = await userRef.collection('achievements').get();
+    const achievements = updatedAchSnap.docs.map((d) => ({ id: d.id, ...d.data() }));
+
+    return res.json({
+      success: true,
+      record,
+      user: { ...user, points: totalPoints, xp: totalPoints, lastActivity },
+      userPoints: totalPoints,
+      earnedPoints: xpGain + newlyEarnedBonus,
+      pointsEarned: xpGain,
+      prevBestScore: previousBest,
+      newBestScore: best,
+      awardedXp: record.awardedXp,
+      attemptScore,
+      achievements,
+    });
   } catch (error) {
     console.error('Progress save error:', error);
     return res.status(500).json({ error: 'Não foi possível guardar o progresso.' });
