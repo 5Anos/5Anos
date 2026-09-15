@@ -157,8 +157,8 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
 
           <p className="text-xs sm:text-sm text-indigo-100 leading-relaxed font-medium">
             {language === 'pt'
-              ? 'Continua a responder aos quizzes e a completar desafios para encher o teu troféu de pontos e desbloquear todas as medalhas!'
-              : 'Keep answering quizzes and completing challenges to fill your trophy with points and unlock all badges!'}
+              ? 'Continua a responder aos quizzes e a completar desafios para encher o teu troféu de XP e desbloquear todas as medalhas!'
+              : 'Keep answering quizzes and completing challenges to fill your trophy with XP and unlock all badges!'}
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-3">

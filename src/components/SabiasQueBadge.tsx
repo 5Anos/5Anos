@@ -22,8 +22,8 @@ export const SabiasQueBadge: React.FC<SabiasQueBadgeProps> = ({
             ? 'Sabias Que? Desafio diário concluído. Clica para rever a dica e a pergunta.'
             : 'Did you know? Daily challenge completed. Click to review tip and question.'
           : language === 'pt'
-          ? 'Sabias Que? Clica e ganha pontos! Descobre a dica do dia e responde à pergunta.'
-          : 'Did you know? Click and earn points! Discover today\'s tip and answer the question.'
+          ? 'Sabias Que? Clica e ganha XP! Descobre a dica do dia e responde à pergunta.'
+          : 'Did you know? Click and earn XP! Discover today\'s tip and answer the question.'
       }
       className="group relative w-full flex flex-col items-center justify-center p-2 rounded-[2.5rem] bg-linear-to-b from-indigo-50/60 via-purple-50/40 to-sky-50/50 border-2 border-indigo-100/90 shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] cursor-pointer focus:outline-hidden focus:ring-4 focus:ring-indigo-400/40"
     >

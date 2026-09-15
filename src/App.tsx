@@ -338,28 +338,8 @@ export default function App() {
                 : `Practice attempt finished. Official evaluation remains with mention ${officialMention}.`
             );
           }
-        } else {
-          // 🎮 Desafios e Jogos Regulares: Feedback transparente do ganho de XP e total acumulado
-          const xpGained = res.earnedPoints ?? 0;
-          const currentAccumulated = res.awardedXp ?? res.record?.awardedXp ?? res.newBestScore ?? res.record?.bestScore ?? 0;
-          const attempt = res.attemptScore ?? payload.percentage ?? payload.score ?? 0;
-
-          if (xpGained > 0) {
-            showToast(
-              language === 'pt' ? `🎉 +${xpGained} XP Ganho!` : `🎉 +${xpGained} XP Earned!`,
-              language === 'pt'
-                ? `Tentativa: ${attempt} pts | Melhor: ${currentAccumulated} pts | Total deste desafio: ${currentAccumulated}/100 XP`
-                : `Score: ${attempt} pts | Best: ${currentAccumulated} pts | Total for challenge: ${currentAccumulated}/100 XP`
-            );
-          } else {
-            showToast(
-              language === 'pt' ? `🎮 Desafio Concluído: ${attempt} pts` : `🎮 Challenge Finished: ${attempt} pts`,
-              language === 'pt'
-                ? `Melhor pontuação anterior mantida: ${currentAccumulated} pts (Acumulado: ${currentAccumulated}/100 XP, +0 XP)`
-                : `Previous best maintained: ${currentAccumulated} pts (Accumulated: ${currentAccumulated}/100 XP, +0 XP)`
-            );
-          }
         }
+        // Atividades normais e desafios não exibem pop-up de XP ganho
       }
     } catch (err: unknown) {
       console.error('Failed to save progress', err);

@@ -492,8 +492,8 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                 </h2>
                 <p className="text-xs sm:text-sm text-amber-100 font-medium mt-0.5">
                   {language === 'pt'
-                    ? 'Ganha pontos XP, desbloqueia medalhas e testa as tuas habilidades neste tema!'
-                    : 'Earn XP points, unlock badges, and test your skills in this topic!'}
+                    ? 'Ganha XP, desbloqueia medalhas e testa as tuas habilidades neste tema!'
+                    : 'Earn XP, unlock badges, and test your skills in this topic!'}
                 </p>
               </div>
             </div>

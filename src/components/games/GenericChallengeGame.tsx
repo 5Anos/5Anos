@@ -314,8 +314,8 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
   const challenge = CHALLENGE_DATA[challengeId] || {
     title: { pt: 'Desafio Prático', en: 'Practical Challenge' },
     instructions: {
-      pt: 'Responde às situações com rigor e atenção para ganhares pontos e medalhas!',
-      en: 'Answer each scenario with attention to detail to unlock badges and points!',
+      pt: 'Responde às situações com rigor e atenção para ganhares XP e medalhas!',
+      en: 'Answer each scenario with attention to detail to unlock badges and XP!',
     },
     questions: [
       {
@@ -556,86 +556,39 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
               : (language === 'pt' ? 'Tentativa Realizada!' : 'Attempt Completed!')}
           </h2>
 
-          {(() => {
-            const prevBest = Math.max(
-              0,
-              Math.min(
-                100,
-                Math.round(
-                  Number(existingProgress?.bestScore ?? existingProgress?.score ?? existingProgress?.percentage ?? 0)
+          <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
+            finalScore >= 50
+              ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
+              : 'bg-amber-100 border-amber-300 text-amber-900'
+          }`}>
+            <span>{finalScore} XP {language === 'pt' ? 'nesta tentativa' : 'on this attempt'}</span>
+            <span>•</span>
+            <span>
+              {correctCount} {language === 'pt' ? 'de' : 'of'} {challenge.questions.length} {language === 'pt' ? 'Corretas' : 'Correct'}
+            </span>
+            <span>•</span>
+            <span className="font-black">
+              (Máx. 100 XP)
+            </span>
+          </div>
+
+          <div className="bg-white/80 border border-slate-200/80 rounded-2xl p-4 max-w-lg mx-auto text-xs sm:text-sm text-slate-700 text-center">
+            <p className="leading-relaxed font-medium">
+              {finalScore === 100 ? (
+                language === 'pt' ? (
+                  <>🎉 Parabéns! Acertaste em todas as perguntas e atingiste a pontuação máxima desta atividade (<strong>100 XP</strong>)!</>
+                ) : (
+                  <>🎉 Congratulations! You answered all questions correctly and reached the max score for this activity (<strong>100 XP</strong>)!</>
                 )
-              )
-            );
-            const bestScore = Math.max(prevBest, finalScore);
-            const deltaXp = Math.max(0, bestScore - prevBest);
-
-            return (
-              <div className="space-y-4 py-1">
-                {/* 4 Cards: Tentativa | Melhor Pontuação | XP Ganho | XP Acumulado */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-lg mx-auto text-left">
-                  <div className="bg-white/90 border border-slate-200 rounded-2xl p-3 text-center shadow-2xs">
-                    <span className="text-[11px] font-bold text-slate-500 uppercase block tracking-wider">
-                      {language === 'pt' ? 'Tentativa' : 'This Attempt'}
-                    </span>
-                    <span className="text-xl font-black text-slate-800">
-                      {finalScore} pts
-                    </span>
-                  </div>
-
-                  <div className="bg-white/90 border border-slate-200 rounded-2xl p-3 text-center shadow-2xs">
-                    <span className="text-[11px] font-bold text-slate-500 uppercase block tracking-wider">
-                      {language === 'pt' ? 'Melhor Pontuação' : 'Best Score'}
-                    </span>
-                    <span className="text-xl font-black text-indigo-700">
-                      {bestScore} pts
-                    </span>
-                  </div>
-
-                  <div className="bg-white/90 border border-slate-200 rounded-2xl p-3 text-center shadow-2xs">
-                    <span className="text-[11px] font-bold text-slate-500 uppercase block tracking-wider">
-                      {language === 'pt' ? 'XP Ganho' : 'XP Earned'}
-                    </span>
-                    <span className={`text-xl font-black ${deltaXp > 0 ? 'text-emerald-600' : 'text-slate-500'}`}>
-                      {deltaXp > 0 ? `+${deltaXp} XP` : '0 XP'}
-                    </span>
-                  </div>
-
-                  <div className="bg-white/90 border border-slate-200 rounded-2xl p-3 text-center shadow-2xs">
-                    <span className="text-[11px] font-bold text-slate-500 uppercase block tracking-wider">
-                      {language === 'pt' ? 'XP Acumulado' : 'Accumulated'}
-                    </span>
-                    <span className="text-xl font-black text-amber-600">
-                      {bestScore}/100 XP
-                    </span>
-                  </div>
-                </div>
-
-                <div className="bg-white/85 border border-slate-200/80 rounded-2xl p-4 max-w-lg mx-auto text-xs sm:text-sm text-slate-700 text-center shadow-2xs">
-                  <p className="leading-relaxed font-medium">
-                    {bestScore === 100 ? (
-                      language === 'pt' ? (
-                        <>🎉 <strong>Parabéns!</strong> Atingiste a pontuação máxima deste desafio (<strong>100/100 XP</strong>)!</>
-                      ) : (
-                        <>🎉 <strong>Congratulations!</strong> You reached the maximum score for this challenge (<strong>100/100 XP</strong>)!</>
-                      )
-                    ) : deltaXp > 0 ? (
-                      language === 'pt' ? (
-                        <>🎉 <strong>Excelente evolução!</strong> Subiste de {prevBest} para {bestScore} pontos e recebeste <strong>+{deltaXp} XP</strong> (Total deste desafio: {bestScore}/100 XP).</>
-                      ) : (
-                        <>🎉 <strong>Great progress!</strong> You improved from {prevBest} to {bestScore} points and earned <strong>+{deltaXp} XP</strong> (Total for this challenge: {bestScore}/100 XP).</>
-                      )
-                    ) : (
-                      language === 'pt' ? (
-                        <>Conseguiste <strong>{finalScore} pontos</strong>. Como a tua melhor pontuação anterior foi <strong>{bestScore}</strong>, não ganhas XP adicional e manténs <strong>{bestScore}/100 XP</strong>.</>
-                      ) : (
-                        <>You scored <strong>{finalScore} points</strong>. Since your previous best was <strong>{bestScore}</strong>, you earn no additional XP and keep <strong>{bestScore}/100 XP</strong>.</>
-                      )
-                    )}
-                  </p>
-                </div>
-              </div>
-            );
-          })()}
+              ) : (
+                language === 'pt' ? (
+                  <>Obtiveste <strong>{finalScore} XP</strong>. Clica em "Repetir o Desafio" para tentar alcançar os 100 XP!</>
+                ) : (
+                  <>You got <strong>{finalScore} XP</strong>. Click "Retry Challenge" to reach 100 XP!</>
+                )
+              )}
+            </p>
+          </div>
 
           <div className="flex justify-center gap-3 pt-4">
             <button

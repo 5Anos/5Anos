@@ -62,7 +62,7 @@ export const translations = {
     step5Title: '5. ✅ Testa os Teus Conhecimentos',
     showReflection: 'Ver pista para refletir',
     hideReflection: 'Ocultar reflexão',
-    miniQuizPrompt: 'Responde às perguntas para verificar o que aprendeste e ganhar pontos:',
+    miniQuizPrompt: 'Responde às perguntas para verificar o que aprendeste e ganhar XP:',
     nextStep: 'Próximo passo',
     previousStep: 'Passo anterior',
     finishModule: 'Concluir Aprendizagem e Guardar Progresso',
@@ -84,7 +84,7 @@ export const translations = {
 
     // Progress page
     myProgressTitle: 'O Meu Progresso Escolar',
-    myProgressSubtitle: 'Acompanha a tua evolução, pontos acumulados, medalhas conquistadas e histórico de tentativas.',
+    myProgressSubtitle: 'Acompanha a tua evolução, XP acumulado, medalhas conquistadas e histórico de tentativas.',
     themeProgress: 'Progresso por Tema',
     badgesCollection: 'Galeria de Conquistas e Medalhas',
     unlockedAtDate: 'Desbloqueada em {date}',
@@ -114,7 +114,7 @@ export const translations = {
     passwordSecurityNotice: '🛡️ A tua palavra-passe é encriptada e guardada com segurança.',
     logoutConfirm: 'Tens a certeza de que pretendes terminar sessão?',
     studentAccount: 'Conta de Aluno',
-    guestNotice: 'Estás a explorar em modo visitante. Inicia sessão para guardar pontos e conquistas permanentemente!',
+    guestNotice: 'Estás a explorar em modo visitante. Inicia sessão para guardar XP e conquistas permanentemente!',
   },
   en: {
     appTitle: 'TIC 5 — Descomplica!',

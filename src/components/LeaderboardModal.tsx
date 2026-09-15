@@ -206,8 +206,8 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                     {language === 'pt' ? '⚡ Como funciona o Ranking da tua Turma?' : '⚡ How Class Ranking works'}
                   </span>
                   {language === 'pt'
-                    ? 'Cada atividade concluída, jogo ganho ou questionário superado por qualquer aluno soma pontos para a turma! Podes consultar a posição de todas as turmas de 5.º ano.'
-                    : 'Every activity completed, game won, or quiz passed by any student adds points to the class! You can see the rank of all 5th grade classes.'}
+                    ? 'Cada atividade concluída, jogo ganho ou questionário superado por qualquer aluno soma XP para a turma! Podes consultar a posição de todas as turmas de 5.º ano.'
+                    : 'Every activity completed, game won, or quiz passed by any student adds XP to the class! You can see the rank of all 5th grade classes.'}
                 </div>
               </div>
 
@@ -452,13 +452,13 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                                     <Users className="w-6 h-6 mx-auto mb-1.5 text-slate-300" />
                                     <p className="text-xs font-medium">
                                       {language === 'pt'
-                                        ? 'Ainda não há alunos com pontos registados nesta turma.'
-                                        : 'No students with registered points in this class yet.'}
+                                        ? 'Ainda não há alunos com XP registado nesta turma.'
+                                        : 'No students with registered XP in this class yet.'}
                                     </p>
                                     <p className="text-[11px] text-slate-400 mt-0.5">
                                       {language === 'pt'
-                                        ? `Sê o primeiro a criar conta no ${tr.turma} e ganha pontos!`
-                                        : `Be the first to register in ${tr.turma} and earn points!`}
+                                        ? `Sê o primeiro a criar conta no ${tr.turma} e ganha XP!`
+                                        : `Be the first to register in ${tr.turma} and earn XP!`}
                                     </p>
                                   </div>
                                 ) : (
@@ -533,8 +533,8 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                         ? '🔒 Modo Professora: Consulta o ranking geral de alunos ou filtra por turma.'
                         : '🔒 Teacher Mode: Viewing general student rankings or filtering by class.'
                       : language === 'pt'
-                      ? `🔒 Ranking da tua turma (${userTurma}): Consulta os pontos e medalhas dos teus colegas de turma através de Nicknames anónimos.`
-                      : `🔒 Your class leaderboard (${userTurma}): View points and badges for classmates via anonymous Nicknames.`}
+                      ? `🔒 Ranking da tua turma (${userTurma}): Consulta o XP e medalhas dos teus colegas de turma através de Nicknames anónimos.`
+                      : `🔒 Your class leaderboard (${userTurma}): View XP and badges for classmates via anonymous Nicknames.`}
                   </span>
                 </div>
 
@@ -622,8 +622,8 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                     {isAdmin && selectedTurmaFilter !== 'all'
                       ? `Não existem alunos registados na turma ${selectedTurmaFilter}.`
                       : language === 'pt'
-                      ? `Ainda não existem colegas com pontos registados na turma ${userTurma}. Conclui desafios para liderar o ranking!`
-                      : `No classmates with points recorded yet in ${userTurma}. Complete challenges to top the leaderboard!`}
+                      ? `Ainda não existem colegas com XP registado na turma ${userTurma}. Conclui desafios para liderar o ranking!`
+                      : `No classmates with XP recorded yet in ${userTurma}. Complete challenges to top the leaderboard!`}
                   </p>
                   {isAdmin && selectedTurmaFilter !== 'all' && (
                     <button
