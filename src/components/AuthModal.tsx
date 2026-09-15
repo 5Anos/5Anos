@@ -7,7 +7,6 @@ import {
   CheckCircle2,
   AlertCircle,
   ArrowRight,
-  KeyRound,
   RefreshCw,
   ShieldCheck,
   GraduationCap,

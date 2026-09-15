@@ -537,19 +537,19 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
     });
   };
 
-  // Action: Delete ALL Students (Novo Ano Letivo)
+  // Action: Delete ALL Students (Novo Ano Letivo e Limpeza Total da BD)
   const promptDeleteAllStudents = () => {
     const totalCount = students.length;
     setConfirmDialog({
       isOpen: true,
-      title: language === 'pt' ? '🚨 Eliminar TODOS os Alunos (Novo Ano Letivo)' : '🚨 Delete ALL Students (School Year Reset)',
+      title: language === 'pt' ? '🚨 Eliminar TODOS os Alunos e Limpar BD' : '🚨 Delete ALL Students & Purge DB',
       description: language === 'pt'
-        ? `Esta ação irá eliminar permanentemente todos os ${totalCount} alunos registados em todas as turmas da plataforma.`
-        : `This action will permanently delete all ${totalCount} registered students across all classes.`,
+        ? `Esta ação irá eliminar permanentemente todas as contas de alunos (${totalCount} ativos) e limpar efetivamente todos os registos e subcoleções residuais na base de dados.`
+        : `This action will permanently delete all student accounts (${totalCount} active) and effectively purge all residual records and subcollections in the database.`,
       warningText: language === 'pt'
-        ? '⚠️ ATENÇÃO: Todas as contas de alunos, pontuações XP, histórico de atividades e pautas serão apagados. A conta da Professora Carla (imaginebycarla2023@gmail.com) e a configuração de turmas permanecerão 100% seguras e intactas.'
-        : '⚠️ WARNING: All student accounts and grades will be cleared. The teacher account remains safe.',
-      confirmLabel: language === 'pt' ? 'CONFIRMAR ELIMINAÇÃO TOTAL DE ALUNOS' : 'CONFIRM PURGE OF ALL STUDENTS',
+        ? '⚠️ ATENÇÃO: Todas as contas de alunos, pontuações XP, histórico de atividades, progresso, conquistas e subcoleções residuais serão 100% eliminados da base de dados. Apenas a conta de professor(a) e as turmas configuradas serão mantidas.'
+        : '⚠️ WARNING: All student accounts, XP scores, and database subcollections will be completely wiped. Only the teacher account and configured classes will remain.',
+      confirmLabel: language === 'pt' ? 'CONFIRMAR LIMPEZA TOTAL DA BD' : 'CONFIRM PURGE OF ALL STUDENTS',
       isDanger: true,
       action: async () => {
         const res = await api.adminDeleteAllStudents();
@@ -2248,11 +2248,11 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                 </div>
                 <button
                   onClick={promptDeleteAllStudents}
-                  disabled={students.length === 0}
-                  className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-black text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-black text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  title={language === 'pt' ? 'Eliminar todos os alunos e limpar qualquer resíduo da base de dados' : 'Delete all students and clean all database residuals'}
                 >
                   <Trash2 className="w-4 h-4" />
-                  <span>{language === 'pt' ? 'Eliminar Todos os Alunos' : 'Purge All Students'}</span>
+                  <span>{language === 'pt' ? 'Eliminar Todos os Alunos e Limpar BD' : 'Purge All Students & Clean DB'}</span>
                 </button>
               </div>
             </div>

@@ -237,6 +237,10 @@ export default function App() {
   };
 
   const showToast = (title: string, subtitle?: string) => {
+    const combined = `${title} ${subtitle || ''}`.toLowerCase();
+    if (combined.includes('xp ganho') || combined.includes('xp earned') || combined.includes('+100xp') || combined.includes('+100 xp')) {
+      return;
+    }
     setToastMessage({ title, subtitle });
     setTimeout(() => {
       setToastMessage(null);
@@ -334,28 +338,8 @@ export default function App() {
                 : `Practice attempt finished. Official evaluation remains with mention ${officialMention}.`
             );
           }
-        } else {
-          const earned = res.earnedPoints || 0;
-          const best = res.newBestScore ?? res.attemptScore ?? 0;
-          const awarded = res.awardedXp ?? best;
-          const attempt = res.attemptScore ?? 0;
-
-          if (earned > 0) {
-            showToast(
-              language === 'pt' ? `🎉 +${earned} XP Ganhos!` : `🎉 +${earned} XP Earned!`,
-              language === 'pt'
-                ? `Melhor pontuação: ${best}% | XP desta Atividade: ${awarded}/100 XP`
-                : `Best score: ${best}% | Activity XP: ${awarded}/100 XP`
-            );
-          } else {
-            showToast(
-              language === 'pt' ? 'Tentativa Concluída' : 'Attempt Completed',
-              language === 'pt'
-                ? `Obtiveste ${attempt}%. Melhor pontuação: ${best}%.`
-                : `Scored ${attempt}%. Best score: ${best}%.`
-            );
-          }
         }
+        // Atividades normais e desafios não exibem pop-up de XP ganho
       }
     } catch (err: unknown) {
       console.error('Failed to save progress', err);

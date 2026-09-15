@@ -229,7 +229,7 @@ export const Header: React.FC<HeaderProps> = ({
                         )}
                       </div>
                       <p className="text-sm font-bold text-slate-900 truncate">{user.name}</p>
-                      <p className="text-xs text-slate-500 truncate">{user.email}</p>
+                      {isAdmin && <p className="text-xs text-slate-500 truncate">{user.email}</p>}
                       {user.publicId && (
                         <div className="mt-2 p-2 rounded-xl bg-slate-50 border border-slate-200">
                           <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">{language === 'pt' ? 'ID Público Anónimo' : 'Public ID'}</p>
