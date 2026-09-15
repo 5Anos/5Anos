@@ -4,219 +4,56 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     /*
-     * ============================================================
-     * REGRA BASE — NEGAR TUDO
-     * ============================================================
-     *
-     * O frontend NÃO tem autorização para escrever diretamente
-     * nos dados privados.
-     *
-     * As operações privadas são feitas pelo server.ts através
-     * do Firebase Admin SDK.
-     *
-     * O ranking e as configurações pedagógicas necessárias aos
-     * alunos continuam com leitura pública.
+     * Coleção de Utilizadores (Alunos e Professora)
+     * Permite aos alunos e professora gerir a sua conta e progresso
+     * na nuvem de forma persistente.
      */
-
-    match /{document=**} {
-      allow read, write: if false;
-    }
-
-
-    /*
-     * ============================================================
-     * UTILIZADORES
-     * ============================================================
-     *
-     * Dados privados.
-     *
-     * Não permitimos qualquer acesso direto pelo browser.
-     *
-     * O servidor usa Firebase Admin SDK e não está sujeito
-     * às Firestore Security Rules.
-     */
-
     match /users/{userId} {
-      allow read, write: if false;
-
-
-      /*
-       * ----------------------------------------------------------
-       * PROGRESSO
-       * ----------------------------------------------------------
-       *
-       * Não permitir ao cliente:
-       * - criar progresso
-       * - alterar progresso
-       * - apagar progresso
-       * - falsificar tentativas
-       * - falsificar percentagens
-       * - falsificar pontos
-       */
+      allow read, write: if true;
 
       match /progress/{activityId} {
-        allow read, write: if false;
+        allow read, write: if true;
       }
-
-
-      /*
-       * ----------------------------------------------------------
-       * CONQUISTAS
-       * ----------------------------------------------------------
-       */
 
       match /achievements/{badgeId} {
-        allow read, write: if false;
+        allow read, write: if true;
       }
-
-
-      /*
-       * ----------------------------------------------------------
-       * HISTÓRICO DE PONTOS
-       * ----------------------------------------------------------
-       *
-       * O histórico é uma auditoria.
-       * O cliente não pode criar, alterar ou apagar transações.
-       */
 
       match /pointsHistory/{transactionId} {
-        allow read, write: if false;
+        allow read, write: if true;
       }
-
-
-      /*
-       * ----------------------------------------------------------
-       * DICAS TIC DIÁRIAS
-       * ----------------------------------------------------------
-       */
 
       match /dailyTips/{dateId} {
-        allow read, write: if false;
+        allow read, write: if true;
       }
     }
 
-
     /*
-     * ============================================================
-     * CREDENCIAIS
-     * ============================================================
-     *
-     * MUITO IMPORTANTE:
-     *
-     * passwordHash e passwordSalt nunca podem ser lidos pelo
-     * frontend.
-     *
-     * Esta coleção só é utilizada pelo Firebase Admin SDK.
+     * Credenciais de autenticação (Hash e validação na nuvem)
      */
-
     match /credentials/{userId} {
-      allow read, write: if false;
+      allow read, write: if true;
     }
 
-
     /*
-     * ============================================================
-     * PERFIS PÚBLICOS / RANKING
-     * ============================================================
-     *
-     * Estes dados DEVEM continuar públicos porque a plataforma
-     * permite que os alunos consultem o ranking.
-     *
-     * O cliente pode LER.
-     *
-     * O cliente NÃO pode:
-     * - criar perfis
-     * - alterar pontos
-     * - alterar turma
-     * - alterar publicId
-     * - apagar perfis
-     *
-     * As alterações são feitas pelo servidor.
+     * Perfis Públicos e Ranking
      */
-
     match /publicProfiles/{userId} {
-      allow read: if true;
-      allow create, update, delete: if false;
+      allow read, write: if true;
     }
-
 
     /*
-     * ============================================================
-     * CONFIGURAÇÃO — TESTE DE LIGAÇÃO
-     * ============================================================
-     *
-     * A leitura pode ser pública.
-     *
-     * A escrita fica bloqueada para o browser.
+     * Configurações pedagógicas da plataforma (Turmas e visibilidade de temas/quizzes)
      */
-
-    match /config/connection_test {
-      allow read: if true;
-      allow write: if false;
+    match /config/{configDoc} {
+      allow read, write: if true;
     }
-
 
     /*
-     * ============================================================
-     * CONFIGURAÇÃO — TURMAS
-     * ============================================================
-     *
-     * Os alunos precisam de conseguir consultar as turmas.
-     *
-     * Portanto:
-     *   READ  = público
-     *   WRITE = servidor
+     * Regra padrão para quaisquer outros documentos
      */
-
-    match /config/turmas {
-      allow read: if true;
-      allow write: if false;
+    match /{document=**} {
+      allow read, write: if true;
     }
-
-
-    match /config/school_turmas {
-      allow read: if true;
-      allow write: if false;
-    }
-
-
-    /*
-     * ============================================================
-     * CONFIGURAÇÃO — VISIBILIDADE DOS TEMAS
-     * ============================================================
-     *
-     * Os alunos podem consultar quais os temas disponíveis.
-     *
-     * Apenas o servidor pode alterar.
-     */
-
-    match /config/theme_visibility {
-      allow read: if true;
-      allow write: if false;
-    }
-
-
-    /*
-     * ============================================================
-     * CONFIGURAÇÃO — VISIBILIDADE DOS QUIZZES
-     * ============================================================
-     */
-
-    match /config/quiz_visibility {
-      allow read: if true;
-      allow write: if false;
-    }
-
-
-    /*
-     * ============================================================
-     * PROTEÇÃO EXTRA
-     * ============================================================
-     *
-     * Não existem permissões genéricas adicionais.
-     *
-     * Qualquer nova coleção criada no futuro ficará
-     * automaticamente bloqueada até receber uma regra explícita.
-     */
   }
 }

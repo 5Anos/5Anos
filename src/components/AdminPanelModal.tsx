@@ -117,8 +117,6 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   const [editingStudent, setEditingStudent] = useState<User | null>(null);
   const [editName, setEditName] = useState('');
   const [editTurma, setEditTurma] = useState('');
-  const [editNewPassword, setEditNewPassword] = useState('');
-  const [showEditPassword, setShowEditPassword] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
   const [editError, setEditError] = useState('');
   const [editSuccess, setEditSuccess] = useState('');
@@ -326,15 +324,12 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
     setEditingStudent(student);
     setEditName(student.name || '');
     setEditTurma(student.turma || turmasList[0] || '5.º A');
-    setEditNewPassword('');
-    setShowEditPassword(false);
     setEditError('');
     setEditSuccess('');
   };
 
   const closeEditModal = () => {
     setEditingStudent(null);
-    setEditNewPassword('');
     setEditError('');
     setEditSuccess('');
   };
@@ -345,17 +340,11 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
     setEditError('');
     setEditSuccess('');
 
-    if (editNewPassword && editNewPassword.length < 6) {
-      setEditError(language === 'pt' ? 'A nova palavra-passe deve ter pelo menos 6 caracteres.' : 'Password must have at least 6 characters.');
-      return;
-    }
-
     setEditLoading(true);
     try {
       await api.adminUpdateStudent(editingStudent.id, editingStudent.email, {
         newName: editName.trim() !== editingStudent.name ? editName.trim() : undefined,
         newTurma: editTurma !== editingStudent.turma ? editTurma : undefined,
-        newPassword: editNewPassword ? editNewPassword : undefined,
       });
 
       setEditSuccess(language === 'pt' ? 'Dados do aluno atualizados com sucesso!' : 'Student updated successfully!');
@@ -2360,40 +2349,6 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                       </option>
                     ))}
                   </select>
-                </div>
-
-                <div className="pt-1 border-t border-slate-100">
-                  <div className="flex items-center justify-between mb-1">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                      <KeyRound className="w-3.5 h-3.5 text-indigo-600" />
-                      <span>{language === 'pt' ? 'Alterar Palavra-passe' : 'Change Password'}</span>
-                    </label>
-                    <span className="text-[10px] text-slate-400 font-medium">
-                      {language === 'pt' ? '(Deixar vazio para manter)' : '(Leave blank to keep)'}
-                    </span>
-                  </div>
-                  <div className="relative">
-                    <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-2.5 pointer-events-none" />
-                    <input
-                      type={showEditPassword ? 'text' : 'password'}
-                      value={editNewPassword}
-                      onChange={(e) => setEditNewPassword(e.target.value)}
-                      placeholder={language === 'pt' ? 'Nova palavra-passe (mín. 6 carateres)' : 'New password (min 6 chars)'}
-                      className="w-full pl-9 pr-9 py-2 rounded-xl border border-slate-200 text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 font-mono"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowEditPassword(!showEditPassword)}
-                      className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 cursor-pointer"
-                    >
-                      {showEditPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </div>
-                  <p className="text-[11px] text-slate-500 mt-1">
-                    {language === 'pt'
-                      ? 'Permite redefinir a palavra-passe do aluno caso se tenha esquecido.'
-                      : 'Allows resetting forgotten student password.'}
-                  </p>
                 </div>
 
                 <div className="flex items-center gap-2 pt-3 border-t border-slate-100">
