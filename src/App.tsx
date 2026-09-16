@@ -307,39 +307,11 @@ export default function App() {
           return [...prev, res.record];
         });
 
-        // Check for newly unlocked badges
+        // Update unlocked badges without interrupting the activity completion screen
         if (res.achievements && res.achievements.length > achievements.length) {
-          const newBadgesCount = res.achievements.length - achievements.length;
           setAchievements(res.achievements);
-          showToast(
-            language === 'pt' ? '🎖️ Nova Conquista Desbloqueada!' : '🎖️ New Achievement Unlocked!',
-            language === 'pt'
-              ? `Ganhaste ${newBadgesCount} nova(s) medalha(s). Consulta no teu progresso!`
-              : `You earned ${newBadgesCount} new badge(s). View in your progress tab!`
-          );
-        } else if (payload.activityType === 'quiz') {
-          const isFirstAttempt = res.record?.attempts === 1;
-          const attempt = res.attemptScore ?? 0;
-          const official = res.record?.firstAttemptScore ?? attempt;
-          const attemptMention = getQuizMention(attempt, language);
-          const officialMention = getQuizMention(official, language);
-          if (isFirstAttempt) {
-            showToast(
-              language === 'pt' ? `📝 Avaliação Registada: ${attemptMention}` : `📝 Assessment Recorded: ${attemptMention}`,
-              language === 'pt'
-                ? `A tua 1.ª tentativa foi guardada com a menção ${attemptMention}.`
-                : `Your 1st attempt has been saved with the mention ${attemptMention}.`
-            );
-          } else {
-            showToast(
-              language === 'pt' ? `🔄 Treino Concluído: ${attemptMention}` : `🔄 Practice Completed: ${attemptMention}`,
-              language === 'pt'
-                ? `Tentativa de treino terminada. Avaliação oficial mantida com a menção ${officialMention}.`
-                : `Practice attempt finished. Official evaluation remains with mention ${officialMention}.`
-            );
-          }
         }
-        // Atividades normais e desafios não exibem pop-up de XP ganho
+        // Atividades, quizzes e desafios apresentam o resultado apenas uma vez no próprio ecrã
       }
     } catch (err: unknown) {
       console.error('Failed to save progress', err);
