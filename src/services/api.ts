@@ -1210,12 +1210,46 @@ export const api = {
    */
   async getStudentProgress(studentId: string): Promise<ActivityProgress[]> {
     if (!studentId) return [];
-    try { const result = await serverApi<{ progress: ActivityProgress[] }>(`/api/teacher/students/${encodeURIComponent(studentId)}/progress`); return result.progress || []; } catch (err) { console.warn('Could not fetch student progress from server:', err); return []; }
+    try {
+      const result = await serverApi<{ progress: ActivityProgress[] }>(`/api/teacher/students/${encodeURIComponent(studentId)}/progress`);
+      if (result && Array.isArray(result.progress)) {
+        return result.progress;
+      }
+    } catch (err) {
+      console.warn('Could not fetch student progress from server, falling back to direct Firestore:', err);
+    }
+    // Direct Firestore fallback
+    try {
+      const snap = await getDocs(collection(db, 'users', studentId, 'progress'));
+      const list: ActivityProgress[] = [];
+      snap.forEach((d) => {
+        list.push({ id: d.id, ...(d.data() as any) });
+      });
+      return list;
+    } catch (dbErr) {
+      console.error('Direct Firestore student progress error:', dbErr);
+      return [];
+    }
   },
+
   async getStudentsProgressBatch(studentIds: string[]): Promise<Record<string, ActivityProgress[]>> {
     const result: Record<string, ActivityProgress[]> = {};
     if (!studentIds || studentIds.length === 0) return result;
 
+    // First attempt server-side batch endpoint
+    try {
+      const serverRes = await serverApi<{ progressMap: Record<string, ActivityProgress[]> }>('/api/teacher/students/progress-batch', {
+        method: 'POST',
+        body: JSON.stringify({ studentIds }),
+      });
+      if (serverRes && serverRes.progressMap && Object.keys(serverRes.progressMap).length > 0) {
+        return serverRes.progressMap;
+      }
+    } catch (err) {
+      console.warn('Batch progress endpoint failed, falling back to parallel individual fetch:', err);
+    }
+
+    // Fallback: parallel fetch with direct Firestore support
     await Promise.allSettled(
       studentIds.map(async (id) => {
         try {
@@ -1236,7 +1270,7 @@ export const api = {
   async getAllStudentsForAdmin(): Promise<User[]> {
     try {
       const result = await serverApi<{ students: User[] }>('/api/teacher/students');
-      if (result?.students) {
+      if (result?.students && Array.isArray(result.students)) {
         return result.students.sort((a,b) => (a.turma || '5.º A').localeCompare(b.turma || '5.º A') || (b.points || 0) - (a.points || 0));
       }
     } catch (err) {
@@ -1244,12 +1278,12 @@ export const api = {
     }
     // Direct Firestore fallback
     try {
-      const snap = await getDocs(query(collection(db, 'users'), where('role', '==', 'student'), limit(500)));
+      const snap = await getDocs(query(collection(db, 'users'), limit(500)));
       const students: User[] = [];
       snap.forEach((d) => {
         const u = d.data() as User;
         if (!isUserAdmin(u.email, u.role)) {
-          students.push({ ...u, id: d.id });
+          students.push({ ...u, id: d.id, role: u.role || 'student' });
         }
       });
       return students.sort((a,b) => (a.turma || '5.º A').localeCompare(b.turma || '5.º A') || (b.points || 0) - (a.points || 0));

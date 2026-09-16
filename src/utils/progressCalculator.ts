@@ -209,6 +209,34 @@ export function findThemeQuizRecord(
   return undefined;
 }
 
+const CHALLENGE_ALIASES_MAP: Record<string, string[]> = {
+  'jogo-email-order': ['jogo-email-order', 'desafio-escrever-email', 'desafio-email'],
+  'jogo-email-mc': ['jogo-email-mc', 'desafio-organizar-inbox'],
+  'jogo-email-tf': ['jogo-email-tf', 'desafio-cc-bcc'],
+  'jogo-pass-builder-interactive': ['jogo-pass-builder-interactive', 'desafio-palavra-passe', 'desafio-cofre-forte'],
+  'jogo-pass-mc': ['jogo-pass-mc'],
+  'jogo-pass-tf': ['jogo-pass-tf'],
+  'jogo-pass-match': ['jogo-pass-match'],
+  'jogo-seguranca-mc': ['jogo-seguranca-mc', 'desafio-detetive-phishing'],
+  'jogo-seguranca-tf': ['jogo-seguranca-tf', 'desafio-seguro-perigoso'],
+  'jogo-seguranca-mc2': ['jogo-seguranca-mc2', 'desafio-o-que-farias'],
+  'desafio-tic-seguranca-cyberbullying': ['desafio-tic-seguranca-cyberbullying'],
+  'desafio-tic-pegada-ecra-lixo': ['desafio-tic-pegada-ecra-lixo'],
+  'desafio-tic-o-que-e': ['desafio-tic-o-que-e'],
+  'desafio-detetives-digitais': ['desafio-detetives-digitais'],
+  'desafio-missao-planeta-digital': ['desafio-missao-planeta-digital'],
+  'jogo-ergo-tf': ['jogo-ergo-tf', 'desafio-ergo-tf'],
+  'jogo-ergo-mc': ['jogo-ergo-mc'],
+  'jogo-ergo-match': ['jogo-ergo-match', 'desafio-corrige-postura', 'jogo-ergo-seguro-incorreto'],
+  'jogo-net-mc': ['jogo-net-mc', 'desafio-palavras-chave'],
+  'jogo-net-tf': ['jogo-net-tf', 'desafio-misterio-aspas'],
+  'jogo-net-match': ['jogo-net-match'],
+  'jogo-copy-match': ['jogo-copy-match', 'desafio-copiar-criar'],
+  'jogo-copy-true-false': ['jogo-copy-true-false', 'desafio-fontes-fiaveis', 'desafio-detetive-fontes-academicas'],
+  'jogo-ref-classify': ['jogo-ref-classify', 'challenge-apa7-simulator-detective'],
+  'jogo-ref-order': ['jogo-ref-order'],
+};
+
 /**
  * Calcula o detalhe estruturado e métricas de um aluno para um determinado tema
  * FONTE ÚNICA DE VERDADE para aluno, professora, pautas, XLSX, CSV e gráficos
@@ -223,10 +251,12 @@ export function getStudentThemeBreakdown(
 
   // 1. Processar Desafios Regulares
   const challenges: ChallengeScoreDetail[] = regularChallenges.map((c) => {
-    // Procura por ID exato ou variantes comuns
+    // Procura por ID exato, aliases conhecidos ou variantes comuns
+    const knownAliases = CHALLENGE_ALIASES_MAP[c.id] || [c.id];
     const record = studentProgress.find(
       (p) =>
         p.activityId === c.id ||
+        knownAliases.includes(p.activityId) ||
         p.activityId === c.id.replace('desafio-', 'jogo-') ||
         p.activityId === c.id.replace('jogo-', 'desafio-')
     );

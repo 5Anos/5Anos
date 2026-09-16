@@ -63,6 +63,40 @@ for (const theme of ALL_THEMES) {
   }
 }
 
+// 4. Aliases & Specialized Challenge IDs used throughout the app
+const challengeAliases: { id: string; themeId: string; title: string; type: 'challenge' | 'quiz' }[] = [
+  { id: 'desafio-seguro-perigoso', themeId: 'seguranca', title: 'Seguro ou Perigoso?', type: 'challenge' },
+  { id: 'jogo-ergo-seguro-incorreto', themeId: 'ergonomia', title: 'Ergonomia: Seguro ou Incorreto?', type: 'challenge' },
+  { id: 'desafio-palavra-passe', themeId: 'palavras-passe', title: 'Laboratório da Palavra-passe', type: 'challenge' },
+  { id: 'desafio-cofre-forte', themeId: 'palavras-passe', title: 'O Cofre-Forte Digital', type: 'challenge' },
+  { id: 'desafio-detetive-phishing', themeId: 'seguranca', title: 'O Detetive de Phishing', type: 'challenge' },
+  { id: 'desafio-o-que-farias', themeId: 'seguranca', title: 'O que farias?', type: 'challenge' },
+  { id: 'desafio-escrever-email', themeId: 'correio-eletronico', title: 'Constrói um Email', type: 'challenge' },
+  { id: 'desafio-email', themeId: 'correio-eletronico', title: 'Desafio do Email', type: 'challenge' },
+  { id: 'desafio-organizar-inbox', themeId: 'correio-eletronico', title: 'O Organizador de Correio', type: 'challenge' },
+  { id: 'desafio-cc-bcc', themeId: 'correio-eletronico', title: 'O Enigma do Cc e Bcc', type: 'challenge' },
+  { id: 'desafio-palavras-chave', themeId: 'navegar-internet', title: 'O Mestre das Palavras-Chave', type: 'challenge' },
+  { id: 'desafio-fontes-fiaveis', themeId: 'direitos-autor', title: 'O Detetive de Fontes Fiáveis', type: 'challenge' },
+  { id: 'desafio-detetive-fontes-academicas', themeId: 'direitos-autor', title: 'Fontes Académicas e Fiáveis', type: 'challenge' },
+  { id: 'desafio-misterio-aspas', themeId: 'navegar-internet', title: 'O Mistério das Aspas e Operadores', type: 'challenge' },
+  { id: 'desafio-copiar-criar', themeId: 'direitos-autor', title: 'Copiar ou Criar? Direitos e Plágio', type: 'challenge' },
+  { id: 'desafio-corrige-postura', themeId: 'ergonomia', title: 'Corrige a Postura do Aluno', type: 'challenge' },
+  { id: 'desafio-ergo-tf', themeId: 'ergonomia', title: 'Postura e Hábitos: V ou F?', type: 'challenge' },
+  { id: 'challenge-apa7-simulator-detective', themeId: 'direitos-autor', title: 'Desafio do Detetive APA 7', type: 'challenge' },
+];
+
+for (const alias of challengeAliases) {
+  if (!activitiesMap.has(alias.id)) {
+    activitiesMap.set(alias.id, {
+      id: alias.id,
+      themeId: alias.themeId,
+      title: alias.title,
+      type: alias.type,
+      maxPoints: 100,
+    });
+  }
+}
+
 export function isValidActivityId(activityId: string): boolean {
   if (!activityId) return false;
   return activitiesMap.has(activityId);

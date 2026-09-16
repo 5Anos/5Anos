@@ -1530,11 +1530,29 @@ async function purgeAllStudentDataAndResiduals(): Promise<{ deletedCount: number
 
 app.get('/api/teacher/students', requireAuth, requireTeacher, async (_req, res) => {
   try {
-    const snap = await db.collection('users').where('role', '==', 'student').limit(500).get();
-    return res.json({ success: true, students: snap.docs.map(d => {
-      const u = d.data();
-      return { id: d.id, name: u.name, email: u.email, publicId: u.publicId, turma: u.turma, role: u.role, language: u.language, points: Number(u.points || 0), createdAt: u.createdAt, avatar: u.avatar, lastActivity: u.lastActivity };
-    }) });
+    const snap = await db.collection('users').limit(500).get();
+    const students = snap.docs
+      .filter(d => {
+        const u = d.data();
+        return u.role !== 'teacher' && u.role !== 'admin' && !isTeacherEmail(u.email);
+      })
+      .map(d => {
+        const u = d.data();
+        return {
+          id: d.id,
+          name: u.name,
+          email: u.email,
+          publicId: u.publicId,
+          turma: u.turma,
+          role: u.role || 'student',
+          language: u.language,
+          points: Number(u.points || 0),
+          createdAt: u.createdAt,
+          avatar: u.avatar,
+          lastActivity: u.lastActivity,
+        };
+      });
+    return res.json({ success: true, students });
   } catch (error) {
     console.error('Teacher students error:', error);
     return res.status(500).json({ error: 'Não foi possível carregar os alunos.' });
@@ -1543,15 +1561,43 @@ app.get('/api/teacher/students', requireAuth, requireTeacher, async (_req, res) 
 
 app.get('/api/teacher/students/:userId/progress', requireAuth, requireTeacher, async (req, res) => {
   try {
-    const userId = String(req.params.userId || '');
-    if (!isValidUserId(userId)) return res.status(400).json({ error: 'ID de utilizador inválido.' });
+    const userId = String(req.params.userId || '').trim();
+    if (!userId) return res.status(400).json({ error: 'ID de utilizador inválido.' });
     const userSnap = await db.collection('users').doc(userId).get();
-    if (!userSnap.exists || userSnap.data()?.role !== 'student') return res.status(404).json({ error: 'Aluno não encontrado.' });
+    if (!userSnap.exists) return res.status(404).json({ error: 'Aluno não encontrado.' });
+    const uData = userSnap.data() || {};
+    if (uData.role === 'teacher' || uData.role === 'admin' || isTeacherEmail(uData.email)) {
+      return res.status(404).json({ error: 'Utilizador não é um aluno.' });
+    }
     const snap = await db.collection('users').doc(userId).collection('progress').get();
     return res.json({ success: true, progress: snap.docs.map(d => ({ id: d.id, ...d.data() })) });
   } catch (error) {
     console.error('Teacher student progress error:', error);
     return res.status(500).json({ error: 'Não foi possível carregar o progresso do aluno.' });
+  }
+});
+
+app.post('/api/teacher/students/progress-batch', requireAuth, requireTeacher, async (req, res) => {
+  try {
+    const studentIds: string[] = Array.isArray(req.body?.studentIds) ? req.body.studentIds : [];
+    if (studentIds.length === 0) return res.json({ success: true, progressMap: {} });
+
+    const progressMap: Record<string, unknown[]> = {};
+    await Promise.allSettled(
+      studentIds.map(async (sid) => {
+        if (!sid) return;
+        try {
+          const snap = await db.collection('users').doc(sid).collection('progress').get();
+          progressMap[sid] = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        } catch {
+          progressMap[sid] = [];
+        }
+      })
+    );
+    return res.json({ success: true, progressMap });
+  } catch (error) {
+    console.error('Teacher progress-batch error:', error);
+    return res.status(500).json({ error: 'Não foi possível carregar o progresso dos alunos em lote.' });
   }
 });
 
