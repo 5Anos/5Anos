@@ -561,15 +561,23 @@ export const api = {
     }
   },
 
-  async login(email: string, password: string): Promise<{ user: User; token: string }> {
-    const normalizedEmail = email.trim().toLowerCase();
+  async login(identifierOrEmail: string, password: string): Promise<{ user: User; token: string }> {
+    const rawInput = (identifierOrEmail || '').trim();
     const cleanPassword = password.trim();
-    if (!normalizedEmail || !cleanPassword) throw new Error('Por favor, preenche todos os campos.');
+    if (!rawInput || !cleanPassword) throw new Error('Por favor, preenche todos os campos.');
+
+    const normalizedIdentifier = rawInput.toLowerCase();
 
     // 1. Attempt server-side login
     try {
       const result = await serverApi<{ user: User; token: string }>('/api/auth/login', {
-        method: 'POST', body: JSON.stringify({ email: normalizedEmail, password: cleanPassword }),
+        method: 'POST',
+        body: JSON.stringify({
+          identifier: normalizedIdentifier,
+          username: normalizedIdentifier,
+          email: normalizedIdentifier,
+          password: cleanPassword,
+        }),
       });
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(result.user));
       this.setToken(result.token);
@@ -584,18 +592,29 @@ export const api = {
 
     // 2. Direct Cloud Firestore Fallback
     try {
-      const q = query(collection(db, 'users'), where('email', '==', normalizedEmail), limit(1));
-      const snap = await getDocs(q);
-      if (snap.empty) {
+      let snap: any = null;
+      if (normalizedIdentifier.includes('@')) {
+        const q = query(collection(db, 'users'), where('email', '==', normalizedIdentifier), limit(1));
+        snap = await getDocs(q);
+      } else {
+        const qUser = query(collection(db, 'users'), where('username', '==', normalizedIdentifier), limit(1));
+        snap = await getDocs(qUser);
+        if (snap.empty) {
+          const qSyn = query(collection(db, 'users'), where('email', '==', `${normalizedIdentifier}@aluno.tic`), limit(1));
+          snap = await getDocs(qSyn);
+        }
+      }
+
+      if (!snap || snap.empty) {
         throw new Error('Credenciais inválidas ou utilizador não encontrado.');
       }
 
       const userDoc = snap.docs[0];
-      const userData = userDoc.data() as User & { passwordHash?: string; passwordSalt?: string };
+      const userData = userDoc.data() as User & { passwordHash?: string; passwordSalt?: string; initialPassword?: string };
 
       // Check password: direct match or credentials doc
       let match = false;
-      if (userData.passwordHash === cleanPassword) {
+      if (userData.passwordHash === cleanPassword || userData.initialPassword === cleanPassword) {
         match = true;
       } else {
         const credSnap = await getDoc(doc(db, 'credentials', userDoc.id));
@@ -608,18 +627,19 @@ export const api = {
       }
 
       // Check if designated teacher
-      if (!match && isUserAdmin(normalizedEmail, userData.role)) {
+      if (!match && isUserAdmin(userData.email || normalizedIdentifier, userData.role)) {
         if (cleanPassword === 'Trabalhar*2026') {
           match = true;
         }
       }
 
       if (!match) {
-        throw new Error('Credenciais inválidas. Verifica o email e a palavra-passe.');
+        throw new Error('Credenciais inválidas. Verifica o utilizador e a palavra-passe.');
       }
 
       let userPoints = Number(userData.points) || 0;
-      const userRole = isUserAdmin(normalizedEmail, userData.role) ? 'admin' : (userData.role || 'student');
+      const userEmail = userData.email || (normalizedIdentifier.includes('@') ? normalizedIdentifier : `${normalizedIdentifier}@aluno.tic`);
+      const userRole = isUserAdmin(userEmail, userData.role) ? 'admin' : (userData.role || 'student');
       if (userRole === 'student' && userPoints < 100) {
         userPoints = 100;
         setDoc(doc(db, 'users', userDoc.id), { points: 100, xp: 100 }, { merge: true }).catch(() => {});
@@ -628,8 +648,14 @@ export const api = {
 
       const finalUser: User = {
         id: userDoc.id,
-        email: normalizedEmail,
+        email: userEmail,
         name: userData.name || (userRole === 'admin' ? 'Professora Carla Oliveira' : 'Estudante'),
+        fullName: userData.fullName,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        greetingName: userData.greetingName,
+        username: userData.username,
+        initialPassword: userData.initialPassword,
         role: userRole,
         turma: userData.turma || '5.º A',
         points: userPoints,
@@ -1296,6 +1322,25 @@ export const api = {
     if (!studentId) throw new Error('Identificador do aluno não fornecido.');
     if (updates.newPassword && updates.newPassword.length < 8) throw new Error('A palavra-passe deve ter pelo menos 8 caracteres.');
     return await serverApi(`/api/teacher/students/${encodeURIComponent(studentId)}`, { method: 'PATCH', body: JSON.stringify({ email: studentEmail, ...updates }) });
+  },
+
+  async importStudentsBatch(students: Array<{ name: string; turma: string }>, defaultTurma?: string): Promise<{
+    success: boolean;
+    summary: { totalInFile: number; createdCount: number; existedCount: number; errorsCount: number };
+    created: Array<{ id: string; name: string; turma: string; username: string; password: string }>;
+    existed: Array<{ name: string; turma: string; username: string; initialPassword?: string }>;
+    errors: Array<{ name?: string; turma?: string; error: string }>;
+  }> {
+    return await serverApi('/api/teacher/students/import-batch', {
+      method: 'POST',
+      body: JSON.stringify({ students, defaultTurma }),
+    });
+  },
+
+  async resetStudentPassword(userId: string): Promise<{ success: boolean; newPassword: string; message: string }> {
+    return await serverApi(`/api/teacher/students/${encodeURIComponent(userId)}/reset-password`, {
+      method: 'POST',
+    });
   },
   async adminDeleteStudent(studentId: string, studentEmail: string): Promise<{ success: boolean; message: string }> {
     if (!studentId) throw new Error('Identificador do aluno não fornecido.');

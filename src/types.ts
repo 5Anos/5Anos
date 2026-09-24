@@ -17,6 +17,12 @@ export interface AvatarConfig {
 export interface User {
   id: string;
   name: string; // Real Name (Private to student and teacher)
+  fullName?: string;
+  firstName?: string;
+  lastName?: string;
+  greetingName?: string;
+  username?: string;
+  initialPassword?: string;
   email: string;
   publicId: string; // Safe Public Identifier (e.g. Panda_Feliz_701)
   turma?: string; // Class (e.g. 5.º A) - optional/undefined for teachers and administrators

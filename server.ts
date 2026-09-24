@@ -15,6 +15,13 @@ import {
   getActivityDefinition,
   BADGES,
 } from './serverValidation';
+import {
+  generateKidUsername,
+  generateKidPassword,
+  parseStudentName,
+  normalizeTurmaName,
+} from './src/utils/studentCredentials';
+import { getDefaultAvatar } from './src/utils/avatarUtils';
 
 const app = express();
 const PORT = 3000;
@@ -416,171 +423,10 @@ app.get('/api/health', (_req, res) => {
    AUTH — REGISTER
    ============================================================ */
 
-app.post('/api/auth/register', async (req, res) => {
-  try {
-    const {
-      email,
-      password,
-      name,
-      turma,
-      publicId,
-      avatar,
-      language,
-    } = req.body || {};
-
-    const normalizedEmail = normalizeEmail(email);
-    const userId = crypto.randomUUID();
-
-    if (String(name || '').trim().length < 1 || String(name || '').trim().length > 100) {
-      return res.status(400).json({ error: 'Nome inválido.' });
-    }
-
-    if (!isValidEmail(normalizedEmail)) {
-      return res.status(400).json({
-        error: 'Email inválido.',
-      });
-    }
-
-    if (!isValidPassword(String(password || ''))) {
-      return res.status(400).json({
-        error: 'A palavra-passe deve ter entre 8 e 128 caracteres.',
-      });
-    }
-
-    if (!isValidPublicId(String(publicId || ''))) {
-      return res.status(400).json({
-        error: 'Nome público inválido.',
-      });
-    }
-
-    /*
-     * O endpoint público só permite criação de alunos.
-     * A criação de professor não pode ser feita pelo cliente.
-     */
-    const finalRole = 'student';
-
-    const userRef = db.collection('users').doc(String(userId));
-
-    const existingUser = await userRef.get();
-
-    if (existingUser.exists) {
-      return res.status(409).json({
-        error: 'Esse utilizador já existe.',
-      });
-    }
-
-    const emailQuery = await db
-      .collection('users')
-      .where('email', '==', normalizedEmail)
-      .limit(1)
-      .get();
-
-    if (!emailQuery.empty) {
-      return res.status(409).json({
-        error: 'Esse email já está registado.',
-      });
-    }
-
-    const publicIdQuery = await db
-      .collection('publicProfiles')
-      .where('publicId', '==', String(publicId))
-      .limit(1)
-      .get();
-
-    if (!publicIdQuery.empty) {
-      return res.status(409).json({
-        error: 'Esse nome público já está a ser utilizado.',
-      });
-    }
-
-    const passwordResult = await hashPassword(
-      String(password)
-    );
-
-    const now = new Date().toISOString();
-
-    const initialPoints = 100;
-
-    const userData = {
-      id: String(userId),
-      email: normalizedEmail,
-      name: String(name || '').trim().slice(0, 100),
-      turma: String(turma || '').trim().slice(0, 50),
-      publicId: String(publicId).trim(),
-      avatar: String(avatar || '').slice(0, 100),
-      language: String(language || 'pt-PT').slice(0, 20),
-      role: finalRole,
-      points: initialPoints,
-      xp: initialPoints,
-      createdAt: now,
-      updatedAt: now,
-    };
-
-    const publicProfileData = {
-      id: String(userId),
-      publicId: String(publicId).trim(),
-      turma: String(turma || '').trim().slice(0, 50),
-      avatar: String(avatar || '').slice(0, 100),
-      points: initialPoints,
-      role: finalRole,
-    };
-
-    /*
-     * credentials NÃO é acessível pelo cliente.
-     * Apenas Firebase Admin pode escrever aqui.
-     */
-    const credentialData = {
-      userId: String(userId),
-      passwordHash: passwordResult.hash,
-      passwordSalt: passwordResult.salt,
-      createdAt: now,
-      updatedAt: now,
-    };
-
-    const batch = db.batch();
-
-    batch.set(userRef, userData);
-
-    batch.set(
-      db.collection('publicProfiles').doc(String(userId)),
-      publicProfileData
-    );
-
-    batch.set(
-      db.collection('credentials').doc(String(userId)),
-      credentialData
-    );
-
-    const welcomeTxId = `pt-welcome-${Date.now()}`;
-    batch.set(
-      userRef.collection('pointsHistory').doc(welcomeTxId),
-      {
-        id: welcomeTxId,
-        userId: String(userId),
-        amount: 100,
-        reason: 'Bónus de Criação de Conta (+100 XP)',
-        timestamp: now,
-      }
-    );
-
-    await batch.commit();
-
-    const sessionToken = createSessionToken(
-      String(userId)
-    );
-
-    return res.status(201).json({
-      success: true,
-      token: sessionToken,
-      user: userData,
-    });
-  } catch (error) {
-    console.error('Register error:', error);
-
-    return res.status(500).json({
-      error: 'Não foi possível criar a conta.',
-    });
-  }
+app.post('/api/auth/register', async (_req, res) => {
+  return res.status(403).json({
+    error: 'A criação autónoma de contas foi desativada. As contas dos alunos são criadas e geridas pela professora de TIC.',
+  });
 });
 
 /* ============================================================
@@ -591,14 +437,17 @@ app.post('/api/auth/login', async (req, res) => {
   try {
     const {
       email,
+      username,
+      identifier: rawIdentifier,
       password,
     } = req.body || {};
 
-    const normalizedEmail = normalizeEmail(email);
+    const rawInput = String(rawIdentifier || username || email || '').trim();
+    const identifier = rawInput.toLowerCase();
 
-    if (!isValidEmail(normalizedEmail)) {
+    if (!identifier) {
       return res.status(400).json({
-        error: 'Email inválido.',
+        error: 'Por favor, introduz o teu nome de utilizador ou email.',
       });
     }
 
@@ -612,22 +461,54 @@ app.post('/api/auth/login', async (req, res) => {
       });
     }
 
-    const snapshot = await db
-      .collection('users')
-      .where('email', '==', normalizedEmail)
-      .limit(1)
-      .get();
+    let userDoc: any = null;
 
-    /*
-     * Não revelar se o email existe.
-     */
-    if (snapshot.empty) {
+    // 1. If identifier has '@', search by email
+    if (identifier.includes('@')) {
+      const qEmail = await db
+        .collection('users')
+        .where('email', '==', identifier)
+        .limit(1)
+        .get();
+      if (!qEmail.empty) userDoc = qEmail.docs[0];
+    }
+
+    // 2. If not found or no '@', search by username
+    if (!userDoc) {
+      const qUser = await db
+        .collection('users')
+        .where('username', '==', identifier)
+        .limit(1)
+        .get();
+      if (!qUser.empty) userDoc = qUser.docs[0];
+    }
+
+    // 3. Fallback: search by synthetic email `${identifier}@aluno.tic`
+    if (!userDoc && !identifier.includes('@')) {
+      const qSyn = await db
+        .collection('users')
+        .where('email', '==', `${identifier}@aluno.tic`)
+        .limit(1)
+        .get();
+      if (!qSyn.empty) userDoc = qSyn.docs[0];
+    }
+
+    // 4. Fallback: search by publicId
+    if (!userDoc) {
+      const qPub = await db
+        .collection('users')
+        .where('publicId', '==', identifier.toUpperCase())
+        .limit(1)
+        .get();
+      if (!qPub.empty) userDoc = qPub.docs[0];
+    }
+
+    if (!userDoc) {
       return res.status(401).json({
-        error: 'Email ou palavra-passe incorretos.',
+        error: 'Utilizador ou palavra-passe incorretos.',
       });
     }
 
-    const userDoc = snapshot.docs[0];
     const user = userDoc.data();
 
     const credentialSnap = await db
@@ -651,7 +532,6 @@ app.post('/api/auth/login', async (req, res) => {
         );
       }
 
-      // Suporte para edição direta de palavra-passe na BD (credentials.passwordHash ou credentials.password)
       if (!passwordValid) {
         if (
           credentials.passwordHash === password ||
@@ -672,9 +552,8 @@ app.post('/api/auth/login', async (req, res) => {
       }
     }
 
-    // Suporte para edição direta de palavra-passe na BD na coleção users (users.password ou users.passwordHash)
     if (!passwordValid) {
-      const userPlainPassword = user.password || user.passwordHash;
+      const userPlainPassword = user.initialPassword || user.password || user.passwordHash;
       if (
         typeof userPlainPassword === 'string' &&
         userPlainPassword === password
@@ -694,7 +573,7 @@ app.post('/api/auth/login', async (req, res) => {
     }
 
     if (!passwordValid) {
-      if (!credentialSnap.exists && !user.password && !user.passwordHash) {
+      if (!credentialSnap.exists && !user.password && !user.passwordHash && !user.initialPassword) {
         return res.status(401).json({
           error:
             'Esta conta precisa de definir novamente a palavra-passe antes de poder iniciar sessão.',
@@ -703,7 +582,7 @@ app.post('/api/auth/login', async (req, res) => {
       }
 
       return res.status(401).json({
-        error: 'Email ou palavra-passe incorretos.',
+        error: 'Utilizador ou palavra-passe incorretos.',
       });
     }
 
@@ -987,12 +866,19 @@ app.patch('/api/me/profile', requireAuth, async (req: AuthenticatedRequest, res)
     const current = currentSnap.data() || {};
     const updates: Record<string, unknown> = { updatedAt: new Date().toISOString() };
 
-    if (body.name !== undefined) {
+    const isStudent = current.role === 'student' || (!current.role && !isTeacherEmail(current.email));
+    if (isStudent && (body.name !== undefined || body.turma !== undefined || body.publicId !== undefined)) {
+      return res.status(403).json({
+        error: 'Os dados do aluno (nome, turma e utilizador) são geridos pela professora e não podem ser alterados.',
+      });
+    }
+
+    if (!isStudent && body.name !== undefined) {
       const name = String(body.name).trim();
       if (!name || name.length > 100) return res.status(400).json({ error: 'Nome inválido.' });
       updates.name = name;
     }
-    if (body.turma !== undefined) {
+    if (!isStudent && body.turma !== undefined) {
       const turma = String(body.turma).trim();
       if (turma.length > 50) return res.status(400).json({ error: 'Turma inválida.' });
       updates.turma = turma;
@@ -1003,7 +889,7 @@ app.patch('/api/me/profile', requireAuth, async (req: AuthenticatedRequest, res)
       updates.language = language;
     }
     if (body.avatar !== undefined) updates.avatar = cleanAvatar(body.avatar);
-    if (body.publicId !== undefined) {
+    if (!isStudent && body.publicId !== undefined) {
       const publicId = String(body.publicId).trim();
       if (!isValidPublicId(publicId)) return res.status(400).json({ error: 'Nome público inválido.' });
       if (publicId.toLowerCase() !== String(current.publicId || '').toLowerCase()) {
@@ -1530,7 +1416,7 @@ async function purgeAllStudentDataAndResiduals(): Promise<{ deletedCount: number
 
 app.get('/api/teacher/students', requireAuth, requireTeacher, async (_req, res) => {
   try {
-    const snap = await db.collection('users').limit(500).get();
+    const snap = await db.collection('users').limit(1000).get();
     const students = snap.docs
       .filter(d => {
         const u = d.data();
@@ -1541,6 +1427,12 @@ app.get('/api/teacher/students', requireAuth, requireTeacher, async (_req, res) 
         return {
           id: d.id,
           name: u.name,
+          fullName: u.fullName || u.name,
+          firstName: u.firstName,
+          lastName: u.lastName,
+          greetingName: u.greetingName,
+          username: u.username || (u.email ? u.email.split('@')[0] : ''),
+          initialPassword: u.initialPassword || u.password || '',
           email: u.email,
           publicId: u.publicId,
           turma: u.turma,
@@ -1556,6 +1448,211 @@ app.get('/api/teacher/students', requireAuth, requireTeacher, async (_req, res) 
   } catch (error) {
     console.error('Teacher students error:', error);
     return res.status(500).json({ error: 'Não foi possível carregar os alunos.' });
+  }
+});
+
+/* ============================================================
+   TEACHER — IMPORT STUDENTS BATCH (XLS/XLSX)
+   ============================================================ */
+
+app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, async (req, res) => {
+  try {
+    const rawStudents = Array.isArray(req.body?.students) ? req.body.students : [];
+    const defaultTurma = req.body?.defaultTurma ? normalizeTurmaName(String(req.body.defaultTurma)) : '';
+
+    if (rawStudents.length === 0) {
+      return res.status(400).json({ error: 'Nenhum aluno fornecido para importação.' });
+    }
+
+    // 1. Fetch existing users to check collisions and avoid duplicates
+    const existingSnap = await db.collection('users').limit(1000).get();
+    const existingUsernames = new Set<string>();
+    const existingPasswords = new Set<string>();
+    const existingStudentsMap = new Map<string, any>();
+
+    for (const doc of existingSnap.docs) {
+      const data = doc.data();
+      if (data.username) existingUsernames.add(String(data.username).toLowerCase());
+      if (data.initialPassword) existingPasswords.add(String(data.initialPassword));
+      if (data.password) existingPasswords.add(String(data.password));
+      if (data.turma && data.name) {
+        const key = `${normalizeTurmaName(data.turma)}__${String(data.name).trim().toLowerCase()}`;
+        existingStudentsMap.set(key, { id: doc.id, ...data });
+      }
+    }
+
+    const created: any[] = [];
+    const existed: any[] = [];
+    const errors: any[] = [];
+
+    // Process students
+    for (const item of rawStudents) {
+      const rawName = String(item?.name || item?.Nome || item?.nome || item?.aluno || '').trim();
+      const rawTurma = String(item?.turma || item?.Turma || defaultTurma || '5.º A').trim();
+
+      if (!rawName) {
+        errors.push({ item, error: 'Linha com nome vazio.' });
+        continue;
+      }
+
+      const normalizedTurma = normalizeTurmaName(rawTurma);
+      const studentKey = `${normalizedTurma}__${rawName.toLowerCase()}`;
+
+      if (existingStudentsMap.has(studentKey)) {
+        const found = existingStudentsMap.get(studentKey);
+        existed.push({
+          name: rawName,
+          turma: normalizedTurma,
+          username: found.username || '',
+          initialPassword: found.initialPassword || '',
+        });
+        continue;
+      }
+
+      try {
+        const { fullName, firstName, lastName, greetingName } = parseStudentName(rawName);
+        const username = generateKidUsername(fullName, normalizedTurma, existingUsernames);
+        const password = generateKidPassword(existingPasswords);
+        const userId = crypto.randomUUID();
+        const now = new Date().toISOString();
+
+        const hashed = await hashPassword(password);
+        const publicId = username.toUpperCase();
+
+        const userData = {
+          id: userId,
+          name: fullName,
+          fullName: fullName,
+          firstName: firstName,
+          lastName: lastName,
+          greetingName: greetingName,
+          username: username,
+          initialPassword: password,
+          turma: normalizedTurma,
+          email: `${username}@aluno.tic`,
+          publicId: publicId,
+          role: 'student',
+          language: 'pt',
+          points: 100,
+          xp: 100,
+          avatar: getDefaultAvatar(username),
+          createdAt: now,
+          updatedAt: now,
+        };
+
+        const credData = {
+          userId,
+          passwordHash: hashed.hash,
+          passwordSalt: hashed.salt,
+          createdAt: now,
+          updatedAt: now,
+        };
+
+        const publicData = {
+          id: userId,
+          publicId: publicId,
+          turma: normalizedTurma,
+          avatar: getDefaultAvatar(username),
+          points: 100,
+          role: 'student',
+        };
+
+        const batch = db.batch();
+        batch.set(db.collection('users').doc(userId), userData);
+        batch.set(db.collection('credentials').doc(userId), credData);
+        batch.set(db.collection('publicProfiles').doc(userId), publicData);
+        batch.set(
+          db.collection('users').doc(userId).collection('pointsHistory').doc(`pt-welcome-${Date.now()}-${Math.floor(Math.random()*1000)}`),
+          {
+            id: `pt-welcome-${Date.now()}`,
+            userId: userId,
+            amount: 100,
+            reason: 'Bónus de Boas-vindas (+100 XP)',
+            timestamp: now,
+          }
+        );
+
+        await batch.commit();
+
+        created.push({
+          id: userId,
+          name: fullName,
+          turma: normalizedTurma,
+          username,
+          password,
+        });
+
+        existingStudentsMap.set(studentKey, userData);
+      } catch (err: any) {
+        errors.push({ name: rawName, turma: normalizedTurma, error: err.message || 'Erro ao criar conta.' });
+      }
+    }
+
+    return res.json({
+      success: true,
+      summary: {
+        totalInFile: rawStudents.length,
+        createdCount: created.length,
+        existedCount: existed.length,
+        errorsCount: errors.length,
+      },
+      created,
+      existed,
+      errors,
+    });
+  } catch (error) {
+    console.error('Teacher import students error:', error);
+    return res.status(500).json({ error: 'Falha ao importar alunos.' });
+  }
+});
+
+/* ============================================================
+   TEACHER — RESET STUDENT PASSWORD
+   ============================================================ */
+
+app.post('/api/teacher/students/:userId/reset-password', requireAuth, requireTeacher, async (req, res) => {
+  try {
+    const userId = String(req.params.userId || '').trim();
+    if (!isValidUserId(userId)) return res.status(400).json({ error: 'ID de utilizador inválido.' });
+
+    const userRef = db.collection('users').doc(userId);
+    const snap = await userRef.get();
+    if (!snap.exists || snap.data()?.role !== 'student') {
+      return res.status(404).json({ error: 'Aluno não encontrado.' });
+    }
+
+    // Collect all existing passwords
+    const allUsers = await db.collection('users').limit(1000).get();
+    const existingPasswords = new Set<string>();
+    for (const d of allUsers.docs) {
+      const u = d.data();
+      if (u.initialPassword) existingPasswords.add(String(u.initialPassword));
+    }
+
+    const newPassword = generateKidPassword(existingPasswords);
+    const hashed = await hashPassword(newPassword);
+    const now = new Date().toISOString();
+
+    await db.collection('credentials').doc(userId).set({
+      userId,
+      passwordHash: hashed.hash,
+      passwordSalt: hashed.salt,
+      updatedAt: now,
+    }, { merge: true });
+
+    await userRef.set({
+      initialPassword: newPassword,
+      updatedAt: now,
+    }, { merge: true });
+
+    return res.json({
+      success: true,
+      newPassword,
+      message: 'Palavra-passe redefinida com sucesso!',
+    });
+  } catch (error) {
+    console.error('Reset student password error:', error);
+    return res.status(500).json({ error: 'Não foi possível redefinir a palavra-passe.' });
   }
 });
 

@@ -192,8 +192,8 @@ export const Header: React.FC<HeaderProps> = ({
                     <p className="text-[10px] font-bold uppercase tracking-widest leading-tight text-slate-400">
                       {isAdmin ? (language === 'pt' ? 'Professora' : 'Teacher') : (language === 'pt' ? 'Estudante' : 'Student')}
                     </p>
-                    <p className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors truncate max-w-[120px]">
-                      {user.name}
+                    <p className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors truncate max-w-[140px]">
+                      {isAdmin ? user.name : (user.greetingName || (user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user.name))}
                     </p>
                   </div>
                   {isAdmin ? (

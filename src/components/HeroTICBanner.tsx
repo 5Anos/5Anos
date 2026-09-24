@@ -55,8 +55,8 @@ export const HeroTICBanner: React.FC<HeroTICBannerProps> = ({
           {/* Greeting Badge with Decorative Rays */}
           <div className="flex flex-wrap items-center justify-between gap-3 px-1">
             <div className="relative inline-flex items-center gap-2">
-              <span className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight font-sans">
-                Olá!
+              <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight font-sans">
+                {user ? `Olá, ${user.greetingName || (user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user.name)}!` : 'Olá!'}
               </span>
               <span className="text-3xl sm:text-4xl lg:text-5xl inline-block animate-bounce origin-bottom-right">
                 👋

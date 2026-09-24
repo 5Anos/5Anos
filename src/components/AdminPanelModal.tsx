@@ -58,13 +58,15 @@ import {
 import { ALL_THEMES, THEMES_BY_ID } from '../data/allThemesData';
 import { CartoonAvatar } from './avatar/CartoonAvatar';
 import { getDefaultAvatar } from '../utils/avatarUtils';
+import { StudentCredentialsTab } from './admin/StudentCredentialsTab';
+import { StudentImportTab } from './admin/StudentImportTab';
 
 interface AdminPanelModalProps {
   isOpen: boolean;
   onClose: () => void;
   currentUser: User | null;
   language: Language;
-  initialTab?: 'students' | 'scores' | 'turmas' | 'themes' | 'danger';
+  initialTab?: 'students' | 'credentials' | 'import' | 'scores' | 'turmas' | 'themes' | 'danger';
 }
 
 interface ConfirmDialogState {
@@ -84,12 +86,13 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   language,
   initialTab = 'students',
 }) => {
-  const [activeTab, setActiveTab] = useState<'students' | 'scores' | 'turmas' | 'themes' | 'danger'>('students');
+  const [activeTab, setActiveTab] = useState<'students' | 'credentials' | 'import' | 'scores' | 'turmas' | 'themes' | 'danger'>(initialTab);
   const [students, setStudents] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedTurma, setSelectedTurma] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [feedbackMsg, setFeedbackMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [visiblePasswords, setVisiblePasswords] = useState<Record<string, boolean>>({});
 
   // Scores by Theme & Activity Progress State
   const [selectedThemeForScores, setSelectedThemeForScores] = useState<string>('tic-sociedade');
@@ -740,6 +743,36 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
             </button>
 
             <button
+              onClick={() => setActiveTab('credentials')}
+              className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                activeTab === 'credentials'
+                  ? 'bg-white text-amber-800 shadow-xs border border-slate-200'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+              }`}
+            >
+              <KeyRound className="w-4 h-4 text-amber-600" />
+              <span>{language === 'pt' ? 'Cartões & Impressão' : 'Cards & Print'}</span>
+              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-amber-100 text-amber-800 font-black">
+                A4
+              </span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('import')}
+              className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                activeTab === 'import'
+                  ? 'bg-white text-indigo-700 shadow-xs border border-slate-200'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+              }`}
+            >
+              <PlusCircle className="w-4 h-4 text-indigo-600" />
+              <span>{language === 'pt' ? 'Importar Alunos (XLS)' : 'Import (XLS)'}</span>
+              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-indigo-100 text-indigo-800 font-black">
+                +
+              </span>
+            </button>
+
+            <button
               onClick={() => {
                 setActiveTab('scores');
                 if (Object.keys(progressMap).length === 0 && students.length > 0) {
@@ -926,6 +959,26 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                     <span className="hidden md:inline">{language === 'pt' ? 'Pauta por Tema' : 'Scores by Theme'}</span>
                   </button>
 
+                  {/* Cartões & Impressão Shortcut */}
+                  <button
+                    onClick={() => setActiveTab('credentials')}
+                    className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
+                    title="Ver cartões de credenciais recortáveis e imprimir em folha A4"
+                  >
+                    <KeyRound className="w-4 h-4 text-amber-100" />
+                    <span>{language === 'pt' ? 'Cartões & Impressão' : 'Cards & Print'}</span>
+                  </button>
+
+                  {/* Importar XLS Shortcut */}
+                  <button
+                    onClick={() => setActiveTab('import')}
+                    className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
+                    title="Carregar ficheiro Excel (.xlsx) com lista de alunos"
+                  >
+                    <PlusCircle className="w-4 h-4 text-indigo-100" />
+                    <span>{language === 'pt' ? 'Importar Alunos' : 'Import'}</span>
+                  </button>
+
                   {/* Export XLS */}
                   <button
                     onClick={handleExportXLS}
@@ -1046,8 +1099,8 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                         </th>
                         <th className="py-3 px-3">Turma</th>
                         <th className="py-3 px-3">Nome do Aluno</th>
-                        <th className="py-3 px-3">Email</th>
-                        <th className="py-3 px-3">ID Público</th>
+                        <th className="py-3 px-3">Utilizador</th>
+                        <th className="py-3 px-3">Palavra-passe</th>
                         <th className="py-3 px-3 text-right">Pontos (XP)</th>
                         <th className="py-3 px-3">Data Registo</th>
                         <th className="py-3 px-3 text-center">Ações</th>
@@ -1056,6 +1109,10 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                     <tbody className="divide-y divide-slate-100 bg-white">
                       {filteredStudents.map((student) => {
                         const isChecked = selectedStudentIds.has(student.id || student.email);
+                        const username = student.username || (student.email ? student.email.split('@')[0] : 'aluno');
+                        const password = student.initialPassword || (student as any).password || '••••••••';
+                        const showPass = visiblePasswords[student.id];
+
                         return (
                           <tr
                             key={student.id || student.email}
@@ -1087,14 +1144,34 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                     size={32}
                                   />
                                 </div>
-                                <span>{student.name || 'Estudante'}</span>
+                                <div>
+                                  <div>{student.fullName || student.name || 'Estudante'}</div>
+                                  <div className="text-[10px] text-slate-400 font-mono font-normal">{student.publicId}</div>
+                                </div>
                               </div>
                             </td>
-                            <td className="py-2.5 px-3 whitespace-nowrap text-slate-600 font-mono text-xs">
-                              {student.email}
+                            <td className="py-2.5 px-3 whitespace-nowrap font-mono text-xs text-indigo-900 font-bold">
+                              {username}
                             </td>
-                            <td className="py-2.5 px-3 whitespace-nowrap text-slate-500 font-mono text-xs">
-                              {student.publicId}
+                            <td className="py-2.5 px-3 whitespace-nowrap">
+                              <div className="flex items-center gap-1.5 font-mono text-xs">
+                                <span className={showPass ? 'font-bold text-slate-900' : 'text-slate-400'}>
+                                  {showPass ? password : '••••••••'}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    setVisiblePasswords((prev) => ({
+                                      ...prev,
+                                      [student.id]: !prev[student.id],
+                                    }))
+                                  }
+                                  className="text-slate-400 hover:text-slate-600 cursor-pointer p-0.5"
+                                  title={showPass ? 'Ocultar palavra-passe' : 'Mostrar palavra-passe'}
+                                >
+                                  {showPass ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                                </button>
+                              </div>
                             </td>
                             <td className="py-2.5 px-3 whitespace-nowrap text-right font-black text-indigo-700">
                               {student.points ?? 0} XP
@@ -1117,9 +1194,26 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                   <FileSpreadsheet className="w-3.5 h-3.5" />
                                 </button>
                                 <button
+                                  onClick={async () => {
+                                    if (!window.confirm(`Pretendes gerar uma nova palavra-passe para ${student.name}?`)) return;
+                                    try {
+                                      const res = await api.resetStudentPassword(student.id);
+                                      showToast('success', `Nova palavra-passe de ${student.name}: ${res.newPassword}`);
+                                      setVisiblePasswords((prev) => ({ ...prev, [student.id]: true }));
+                                      await loadStudents();
+                                    } catch (err: any) {
+                                      showToast('error', err.message || 'Erro ao redefinir.');
+                                    }
+                                  }}
+                                  className="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-600 hover:text-white text-amber-700 border border-amber-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
+                                  title="Redefinir palavra-passe do aluno"
+                                >
+                                  <KeyRound className="w-3.5 h-3.5" />
+                                </button>
+                                <button
                                   onClick={() => openEditModal(student)}
                                   className="p-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-600 hover:text-white text-indigo-700 border border-indigo-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
-                                  title="Editar nome, turma ou palavra-passe"
+                                  title="Editar nome, turma ou dados"
                                 >
                                   <Edit className="w-3.5 h-3.5" />
                                 </button>
@@ -1155,6 +1249,27 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
               )}
             </div>
           </>
+        )}
+
+        {/* TAB 2: CARTÕES & IMPRESSÃO */}
+        {activeTab === 'credentials' && (
+          <StudentCredentialsTab
+            students={students}
+            turmasList={turmasList}
+            language={language}
+            onStudentUpdated={loadStudents}
+          />
+        )}
+
+        {/* TAB 3: IMPORTAR ALUNOS (XLS / XLSX) */}
+        {activeTab === 'import' && (
+          <StudentImportTab
+            turmasList={turmasList}
+            existingStudents={students}
+            language={language}
+            onImportSuccess={loadStudents}
+            onNavigateToCredentials={() => setActiveTab('credentials')}
+          />
         )}
 
         {/* TAB: PAUTA DE DESAFIOS E QUIZZES POR TEMA (EXPORTAÇÃO XLS) */}
