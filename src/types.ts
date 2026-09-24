@@ -185,6 +185,8 @@ export interface ThemeDefinition {
   finalQuiz: QuizQuestion[]; // Comprehensive quiz (15-20 questions)
 }
 
+export type Theme = ThemeDefinition;
+
 export interface TurmaRanking {
   turma: string;
   totalPoints: number;

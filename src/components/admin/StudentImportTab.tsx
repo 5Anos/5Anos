@@ -279,8 +279,8 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
   const [editRowName, setEditRowName] = useState('');
   const [editRowTurma, setEditRowTurma] = useState('');
 
-  // Wipe database before creating: teacher recommended option
-  const [wipeFirst, setWipeFirst] = useState<boolean>(true);
+  // Wipe database before creating: disabled by default to keep all classes cumulative
+  const [wipeFirst, setWipeFirst] = useState<boolean>(false);
 
   // Parsed students list
   const [parsedRows, setParsedRows] = useState<ParsedStudentRow[]>([]);
@@ -511,6 +511,7 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
     setProcessedSheets([]);
     setImportResult(null);
     setParseError(null);
+    setWipeFirst(false);
   };
 
   const handleDeleteRow = (index: number) => {
@@ -808,23 +809,71 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
                 </div>
               )}
 
-              {/* Wipe before create toggle */}
-              <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200 flex items-start gap-3">
-                <input
-                  type="checkbox"
-                  id="opt-wipe-first"
-                  checked={wipeFirst}
-                  onChange={(e) => setWipeFirst(e.target.checked)}
-                  className="mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer"
-                />
-                <label htmlFor="opt-wipe-first" className="text-xs sm:text-sm text-amber-950 cursor-pointer">
-                  <strong className="block font-bold text-amber-950">
-                    🧹 Limpar base de dados de alunos antes de criar (Recomendado)
-                  </strong>
-                  <span className="text-amber-800 text-xs">
-                    Elimina contas de alunos antigas ou incompletas e cria os novos utilizadores de raiz na base de dados, com nomes completos, utilizadores amigáveis e zero erros. A conta da professora Carla Oliveira fica 100% protegida e ativa.
+              {/* Import Strategy: Preserve Other Classes vs Wipe */}
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                    <Layers className="w-4 h-4 text-indigo-600" />
+                    Modo de Importação & Gestão de Turmas:
                   </span>
-                </label>
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-200">
+                    Múltiplas Turmas Ativo
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {/* Option 1: Cumulative / Add without wiping (DEFAULT) */}
+                  <label
+                    className={`p-3.5 rounded-xl border-2 transition-all cursor-pointer flex items-start gap-3 ${
+                      !wipeFirst
+                        ? 'bg-emerald-50/60 border-emerald-500 text-emerald-950 shadow-xs'
+                        : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="import-mode-strategy"
+                      checked={!wipeFirst}
+                      onChange={() => setWipeFirst(false)}
+                      className="mt-1 w-4 h-4 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
+                    />
+                    <div className="text-xs space-y-1">
+                      <strong className="block font-black text-slate-900 flex items-center gap-1.5">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <span>Acumular & Manter Outras Turmas (Padrão)</span>
+                      </strong>
+                      <p className="text-slate-600 text-[11px] leading-relaxed">
+                        Preserva todos os alunos já importados das outras turmas (ex: 5.º A, 5.º B, 5.º C...). Adiciona os novos alunos e atualiza sem apagar ninguém.
+                      </p>
+                    </div>
+                  </label>
+
+                  {/* Option 2: Full wipe */}
+                  <label
+                    className={`p-3.5 rounded-xl border-2 transition-all cursor-pointer flex items-start gap-3 ${
+                      wipeFirst
+                        ? 'bg-rose-50/60 border-rose-500 text-rose-950 shadow-xs'
+                        : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="import-mode-strategy"
+                      checked={wipeFirst}
+                      onChange={() => setWipeFirst(true)}
+                      className="mt-1 w-4 h-4 text-rose-600 focus:ring-rose-500 cursor-pointer"
+                    />
+                    <div className="text-xs space-y-1">
+                      <strong className="block font-black text-rose-900 flex items-center gap-1.5">
+                        <ShieldAlert className="w-4 h-4 text-rose-600 shrink-0" />
+                        <span>Substituir Toda a Base de Alunos</span>
+                      </strong>
+                      <p className="text-slate-600 text-[11px] leading-relaxed">
+                        Apaga todos os alunos anteriores para iniciar um ano letivo do zero. <em>(A conta da professora Carla permanece sempre ativa).</em>
+                      </p>
+                    </div>
+                  </label>
+                </div>
               </div>
 
               {/* Error display */}

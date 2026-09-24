@@ -9,6 +9,7 @@ import { getThemeImage } from '../data/themeImages';
 import { isUserAdmin, DEFAULT_THEME_VISIBILITY } from '../services/api';
 import { HeroTICBanner } from './HeroTICBanner';
 import { DailyTipWidget } from './DailyTipWidget';
+import { GlobalProgressBar } from './GlobalProgressBar';
 import { getStudentThemeBreakdown } from '../utils/progressCalculator';
 import { getStudentFirstAndLastName } from '../utils/studentCredentials';
 
@@ -143,6 +144,17 @@ export const Dashboard: React.FC<DashboardProps> = ({
         onOpenLeaderboard={onOpenLeaderboard}
         onNavigateProgress={onNavigateProgress}
         onNavigateTheme={onNavigateTheme}
+      />
+
+      {/* Global Curriculum Progress Bar */}
+      <GlobalProgressBar
+        user={user}
+        progressList={progressList}
+        themes={displayedThemes}
+        language={language}
+        onNavigateTheme={onNavigateTheme}
+        onNavigateProgress={onNavigateProgress}
+        onOpenAuth={onOpenAuth}
       />
 
       {/* Main 12-Column Grid for Themes & Sidebar */}
