@@ -497,7 +497,7 @@ export const api = {
       const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
       const role = isUserAdmin(normalizedEmail) ? 'admin' : 'student';
       const finalAvatar = avatar || getDefaultAvatar(finalPublicId);
-      const initialPoints = role === 'admin' ? 0 : 100;
+      const initialPoints = 0;
       const nowIso = new Date().toISOString();
 
       const newUser: User = {
@@ -539,17 +539,6 @@ export const api = {
         level: 1,
         updatedAt: nowIso,
       });
-
-      if (initialPoints > 0) {
-        const welcomeTxId = `pt-welcome-${Date.now()}`;
-        await setDoc(doc(db, 'users', userId, 'pointsHistory', welcomeTxId), {
-          id: welcomeTxId,
-          userId,
-          amount: 100,
-          reason: 'Bónus de Criação de Conta (+100 XP)',
-          timestamp: nowIso,
-        }).catch(() => {});
-      }
 
       const token = userId;
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
@@ -640,11 +629,6 @@ export const api = {
       let userPoints = Number(userData.points) || 0;
       const userEmail = userData.email || (normalizedIdentifier.includes('@') ? normalizedIdentifier : `${normalizedIdentifier}@aluno.tic`);
       const userRole = isUserAdmin(userEmail, userData.role) ? 'admin' : (userData.role || 'student');
-      if (userRole === 'student' && userPoints < 100) {
-        userPoints = 100;
-        setDoc(doc(db, 'users', userDoc.id), { points: 100, xp: 100 }, { merge: true }).catch(() => {});
-        setDoc(doc(db, 'publicProfiles', userDoc.id), { points: 100, xp: 100 }, { merge: true }).catch(() => {});
-      }
 
       const finalUser: User = {
         id: userDoc.id,
@@ -880,7 +864,7 @@ export const api = {
         }).catch(() => {});
       }
 
-      const newPoints = (Number(current.points) || 100) + xpGain;
+      const newPoints = (Number(current.points) || 0) + xpGain;
       const lastActivity = {
         themeId: payload.themeId,
         activityId: payload.activityId,
@@ -966,7 +950,7 @@ export const api = {
           timestamp: nowIso,
         }).catch(() => {});
 
-        const newPoints = (Number(current.points) || 100) + earnedPoints;
+        const newPoints = (Number(current.points) || 0) + earnedPoints;
         await setDoc(doc(db, 'users', current.id), { points: newPoints, xp: newPoints, updatedAt: nowIso }, { merge: true });
         await setDoc(doc(db, 'publicProfiles', current.id), { points: newPoints, xp: newPoints, updatedAt: nowIso }, { merge: true });
 
@@ -1024,7 +1008,7 @@ export const api = {
           }).catch(() => {});
         }
 
-        const newPoints = (Number(current.points) || 100) + answerPoints;
+        const newPoints = (Number(current.points) || 0) + answerPoints;
         await setDoc(doc(db, 'users', current.id), { points: newPoints, xp: newPoints, updatedAt: nowIso }, { merge: true });
         await setDoc(doc(db, 'publicProfiles', current.id), { points: newPoints, xp: newPoints, updatedAt: nowIso }, { merge: true });
 
@@ -1607,5 +1591,16 @@ export const api = {
       window.removeEventListener('tic_quiz_visibility_updated', handleLocalUpdate);
       unsubscribeFirestore();
     };
+  },
+  async recalibratePoints(): Promise<{ success: boolean; message: string; updatedCount: number }> {
+    try {
+      return await serverApi<{ success: boolean; message: string; updatedCount: number }>(
+        '/api/teacher/students/recalibrate-points',
+        { method: 'POST' }
+      );
+    } catch (err: any) {
+      console.error('Recalibrate points error:', err);
+      throw new Error(err?.message || 'Falha ao sincronizar pontuações.');
+    }
   },
 };

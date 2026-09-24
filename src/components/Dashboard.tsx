@@ -10,6 +10,7 @@ import { isUserAdmin, DEFAULT_THEME_VISIBILITY } from '../services/api';
 import { HeroTICBanner } from './HeroTICBanner';
 import { DailyTipWidget } from './DailyTipWidget';
 import { getStudentThemeBreakdown } from '../utils/progressCalculator';
+import { getStudentFirstAndLastName } from '../utils/studentCredentials';
 
 interface DashboardProps {
   user: User | null;
@@ -129,7 +130,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            {language === 'pt' ? 'Olá' : 'Hello'}, {user ? user.name : (language === 'pt' ? 'Estudante' : 'Student')}! 👋
+            {language === 'pt' ? 'Olá' : 'Hello'}, {user ? (isAdmin ? user.name : getStudentFirstAndLastName(user)) : (language === 'pt' ? 'Estudante' : 'Student')}! 👋
           </h1>
         </div>
       </header>

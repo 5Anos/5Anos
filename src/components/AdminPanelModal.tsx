@@ -54,6 +54,9 @@ import {
   getTotalChallengesCount,
   getTotalQuizzesCount,
   getGlobalCurricularMaxPoints,
+  getStudentFullName,
+  getStudentFirstAndLastName,
+  exportStudentCredentialsToExcel,
 } from '../utils/exportUtils';
 import { ALL_THEMES, THEMES_BY_ID } from '../data/allThemesData';
 import { CartoonAvatar } from './avatar/CartoonAvatar';
@@ -678,6 +681,27 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
     );
   };
 
+  const [isRecalibratingXP, setIsRecalibratingXP] = useState(false);
+
+  const handleExportCredentialsXLS = () => {
+    if (filteredStudents.length === 0) return;
+    exportStudentCredentialsToExcel(filteredStudents, selectedTurma);
+    showToast('success', 'Credenciais dos alunos (Nome Completo, Utilizador e Palavra-passe) exportadas em XLS!');
+  };
+
+  const handleRecalibrateXP = async () => {
+    try {
+      setIsRecalibratingXP(true);
+      const res = await api.recalibratePoints();
+      showToast('success', res.message || 'Pontuações dos alunos sincronizadas com sucesso com o trabalho real.');
+      await loadStudents();
+    } catch (err: any) {
+      showToast('error', err.message || 'Erro ao sincronizar pontuações.');
+    } finally {
+      setIsRecalibratingXP(false);
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
       <div
@@ -984,10 +1008,32 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                     onClick={handleExportXLS}
                     disabled={filteredStudents.length === 0}
                     className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shrink-0"
-                    title="Descarregar ficheiro Excel (.xlsx)"
+                    title="Descarregar ficheiro Excel com todos os dados dos alunos (.xlsx)"
                   >
                     <FileSpreadsheet className="w-4 h-4" />
                     <span>XLS</span>
+                  </button>
+
+                  {/* Export Credenciais XLS */}
+                  <button
+                    onClick={handleExportCredentialsXLS}
+                    disabled={filteredStudents.length === 0}
+                    className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shrink-0"
+                    title="Descarregar folha de credenciais dos alunos (Utilizador e Palavra-passe) para impressão e recorte (.xlsx)"
+                  >
+                    <KeyRound className="w-4 h-4 text-indigo-200" />
+                    <span>{language === 'pt' ? 'Credenciais (XLS)' : 'Credentials'}</span>
+                  </button>
+
+                  {/* Recalibrar XP */}
+                  <button
+                    onClick={handleRecalibrateXP}
+                    disabled={isRecalibratingXP || students.length === 0}
+                    className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-bold border border-slate-200 transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shrink-0"
+                    title="Sincronizar e recalibrar pontuações dos alunos, garantindo que refletem apenas os desafios e dicas realizadas (sem 100 XP inicial)"
+                  >
+                    <RefreshCw className={`w-3.5 h-3.5 text-slate-500 ${isRecalibratingXP ? 'animate-spin text-indigo-600' : ''}`} />
+                    <span className="hidden sm:inline">{isRecalibratingXP ? 'A sincronizar...' : 'Sincronizar XP'}</span>
                   </button>
 
                   {/* Export Dicas Diárias XLS */}
@@ -1145,8 +1191,14 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                   />
                                 </div>
                                 <div>
-                                  <div>{student.fullName || student.name || 'Estudante'}</div>
-                                  <div className="text-[10px] text-slate-400 font-mono font-normal">{student.publicId}</div>
+                                  <div className="font-bold text-slate-900 leading-tight">
+                                    {getStudentFullName(student) || student.name || 'Estudante'}
+                                  </div>
+                                  <div className="text-[11px] text-indigo-700 font-semibold flex items-center gap-1.5 mt-0.5">
+                                    <span>Cartão: {getStudentFirstAndLastName(student)}</span>
+                                    <span className="text-slate-300">•</span>
+                                    <span className="text-[10px] text-slate-400 font-mono font-normal">{student.publicId}</span>
+                                  </div>
                                 </div>
                               </div>
                             </td>
@@ -1531,8 +1583,14 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                     </span>
                                   </td>
                                   <td className="py-2.5 px-3 whitespace-nowrap">
-                                    <div className="font-bold text-slate-900">{student.name || 'Estudante'}</div>
-                                    <div className="text-[11px] text-slate-400 font-mono">{student.publicId}</div>
+                                    <div className="font-bold text-slate-900 leading-tight">
+                                      {getStudentFullName(student) || student.name || 'Estudante'}
+                                    </div>
+                                    <div className="text-[11px] text-indigo-700 font-semibold flex items-center gap-1.5 mt-0.5">
+                                      <span>Cartão: {getStudentFirstAndLastName(student)}</span>
+                                      <span className="text-slate-300">•</span>
+                                      <span className="text-[10px] text-slate-400 font-mono font-normal">{student.publicId}</span>
+                                    </div>
                                   </td>
                                   <td className="py-2.5 px-3 whitespace-nowrap text-slate-600 font-mono text-xs">
                                     {student.email}

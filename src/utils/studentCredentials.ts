@@ -105,6 +105,36 @@ export function formatStudentGreeting(fullName?: string, firstName?: string, las
 }
 
 /**
+ * Retorna sempre o Primeiro e Último Nome do aluno para saudações e cartões individuais.
+ * Exemplo: "Anderson Oliveira" ou "Maria Silva"
+ */
+export function getStudentFirstAndLastName(
+  student?: { fullName?: string; name?: string; firstName?: string; lastName?: string; greetingName?: string } | string | null
+): string {
+  if (!student) return 'Aluno';
+  if (typeof student === 'string') {
+    const parsed = parseStudentName(student);
+    return parsed.greetingName || student || 'Aluno';
+  }
+  if (student.greetingName) return student.greetingName;
+  if (student.firstName && student.lastName) return `${student.firstName} ${student.lastName}`;
+  const raw = student.fullName || student.name || '';
+  const parsed = parseStudentName(raw);
+  return parsed.greetingName || raw || 'Aluno';
+}
+
+/**
+ * Retorna o Nome Completo do aluno tal como consta nos ficheiros originais da turma.
+ */
+export function getStudentFullName(
+  student?: { fullName?: string; name?: string } | string | null
+): string {
+  if (!student) return '';
+  if (typeof student === 'string') return student.trim();
+  return (student.fullName || student.name || '').trim();
+}
+
+/**
  * Generates an intuitive, kid-friendly unique username for a 10-year-old student
  * Format: primeironome.ultimonome (ex: anderson.o, claudia.dos, artur.pawel)
  * If collision: appends turma identifier (ex: anderson.o.5a) or small number

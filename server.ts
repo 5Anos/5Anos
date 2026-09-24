@@ -1121,7 +1121,7 @@ app.post('/api/progress/save', requireAuth, async (req: AuthenticatedRequest, re
     });
 
     // Avaliar medalhas
-    const currentBaseXp = isAdmin ? 0 : 100 + dailyPoints + challengesPointsSum;
+    const currentBaseXp = isAdmin ? 0 : dailyPoints + challengesPointsSum;
     const existingBadgeIds = achSnap.docs.map((d) => d.id);
     const badgeEval = evaluateBadgesEarned(completedForBadges, currentBaseXp, existingBadgeIds);
     let newlyEarnedBonus = 0;
@@ -1154,8 +1154,8 @@ app.post('/api/progress/save', requireAuth, async (req: AuthenticatedRequest, re
       }
     }
 
-    // Pontos totais oficiais do aluno: 100 XP inicial + Dicas do Dia + Desafios TIC (melhor pontuação) + Medalhas
-    const totalPoints = isAdmin ? 0 : (100 + dailyPoints + challengesPointsSum + badgesBonusSum);
+    // Pontos totais oficiais do aluno: Dicas do Dia + Desafios TIC (melhor pontuação) + Medalhas (sem bónus inicial artificial)
+    const totalPoints = isAdmin ? 0 : (dailyPoints + challengesPointsSum + badgesBonusSum);
 
     const lastActivity = {
       themeId,
@@ -1533,8 +1533,8 @@ app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, asyn
           publicId: publicId,
           role: 'student',
           language: 'pt',
-          points: 100,
-          xp: 100,
+          points: 0,
+          xp: 0,
           avatar: getDefaultAvatar(username),
           createdAt: now,
           updatedAt: now,
@@ -1553,7 +1553,7 @@ app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, asyn
           publicId: publicId,
           turma: normalizedTurma,
           avatar: getDefaultAvatar(username),
-          points: 100,
+          points: 0,
           role: 'student',
         };
 
@@ -1561,16 +1561,6 @@ app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, asyn
         batch.set(db.collection('users').doc(userId), userData);
         batch.set(db.collection('credentials').doc(userId), credData);
         batch.set(db.collection('publicProfiles').doc(userId), publicData);
-        batch.set(
-          db.collection('users').doc(userId).collection('pointsHistory').doc(`pt-welcome-${Date.now()}-${Math.floor(Math.random()*1000)}`),
-          {
-            id: `pt-welcome-${Date.now()}`,
-            userId: userId,
-            amount: 100,
-            reason: 'Bónus de Boas-vindas (+100 XP)',
-            timestamp: now,
-          }
-        );
 
         await batch.commit();
 
@@ -1603,6 +1593,87 @@ app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, asyn
   } catch (error) {
     console.error('Teacher import students error:', error);
     return res.status(500).json({ error: 'Falha ao importar alunos.' });
+  }
+});
+
+/* ============================================================
+   TEACHER — RECALIBRATE STUDENT POINTS (REMOVE ARTIFICIAL 100 XP)
+   ============================================================ */
+
+async function recalibrateStudentsPoints() {
+  let updatedCount = 0;
+  const snap = await db.collection('users').where('role', '==', 'student').limit(500).get();
+  for (const doc of snap.docs) {
+    const u = doc.data();
+    const userRef = doc.ref;
+
+    // Remove pt-welcome docs from pointsHistory
+    const phSnap = await userRef.collection('pointsHistory').get();
+    let hadWelcome = false;
+    for (const phDoc of phSnap.docs) {
+      const phData = phDoc.data();
+      if (phDoc.id.startsWith('pt-welcome-') || (phData.reason && phData.reason.includes('Boas-vindas'))) {
+        hadWelcome = true;
+        await phDoc.ref.delete().catch(() => {});
+      }
+    }
+
+    // Sum real challenges progress
+    const progSnap = await userRef.collection('progress').get();
+    let challengesSum = 0;
+    for (const p of progSnap.docs) {
+      const pData = p.data();
+      const pId = String(pData.activityId || p.id);
+      const isQ = isLearningQuizServer(pId, pData.activityType);
+      const pBest = Math.max(0, Math.min(100, Math.round(Number(pData.bestScore ?? pData.bestPercentage ?? pData.score ?? 0))));
+      if (!isQ) {
+        challengesSum += pBest;
+      }
+    }
+
+    // Sum daily tips
+    const dailySnap = await userRef.collection('dailyTips').get();
+    let dailySum = 0;
+    for (const d of dailySnap.docs) {
+      dailySum += Math.max(0, Math.min(1000, Math.round(Number(d.data()?.pointsEarned || 0))));
+    }
+
+    // Sum badges bonus
+    const achSnap = await userRef.collection('achievements').get();
+    let achBonus = 0;
+    const achIds = new Set(achSnap.docs.map((d) => d.id));
+    for (const b of BADGES) {
+      if (achIds.has(b.id)) {
+        achBonus += b.pointsBonus || 0;
+      }
+    }
+
+    const realEarnedPoints = challengesSum + dailySum + achBonus;
+    if (hadWelcome || Number(u.points || 0) !== realEarnedPoints) {
+      await userRef.update({
+        points: realEarnedPoints,
+        xp: realEarnedPoints,
+      }).catch(() => {});
+      await db.collection('publicProfiles').doc(doc.id).set({
+        points: realEarnedPoints,
+      }, { merge: true }).catch(() => {});
+      updatedCount++;
+    }
+  }
+  return updatedCount;
+}
+
+app.post('/api/teacher/students/recalibrate-points', requireAuth, requireTeacher, async (_req, res) => {
+  try {
+    const updatedCount = await recalibrateStudentsPoints();
+    return res.json({
+      success: true,
+      message: `Pontuações sincronizadas com sucesso. ${updatedCount} alunos ajustados para a pontuação real ganha nas atividades.`,
+      updatedCount,
+    });
+  } catch (error) {
+    console.error('Recalibrate points error:', error);
+    return res.status(500).json({ error: 'Falha ao sincronizar pontuações.' });
   }
 });
 
@@ -1948,6 +2019,14 @@ async function startServer() {
       console.log(
         `TIC 5 — Descomplica! running on port ${PORT}`
       );
+      // Run asynchronous recalibration to ensure no student holds unearned 100 XP
+      recalibrateStudentsPoints().then((cnt) => {
+        if (cnt > 0) {
+          console.log(`[XP Sync] Recalibrated ${cnt} student accounts to exact earned XP.`);
+        }
+      }).catch((err) => {
+        console.warn('[XP Sync] Notice during initial startup recalibration:', err);
+      });
     }
   );
 }

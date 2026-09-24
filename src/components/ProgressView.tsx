@@ -8,6 +8,7 @@ import { quizGameTrophy } from '../data/themeImages';
 import { resolveActivityInfo } from '../utils/activityMetadata';
 import { getQuizMention, getQuizMentionBadgeStyle } from '../utils/exportUtils';
 import { getGlobalActivityStats, getStudentThemeBreakdown } from '../utils/progressCalculator';
+import { getStudentFirstAndLastName } from '../utils/studentCredentials';
 
 interface ProgressViewProps {
   user: User | null;
@@ -108,7 +109,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
           <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-500 font-medium mt-1">
             {user ? (
               <>
-                <span className="font-bold text-slate-800">{user.name}</span>
+                <span className="font-bold text-slate-800">{getStudentFirstAndLastName(user)}</span>
                 {user.turma && (
                   <span className="px-2.5 py-0.5 rounded-full font-black bg-indigo-100 text-indigo-800 border border-indigo-200 text-xs">
                     Turma {user.turma}
@@ -148,8 +149,8 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
           <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight">
             {user
               ? language === 'pt'
-                ? `Parabéns pela tua dedicação, ${user.name}!`
-                : `Great job on your progress, ${user.name}!`
+                ? `Parabéns pela tua dedicação, ${getStudentFirstAndLastName(user)}!`
+                : `Great job on your progress, ${getStudentFirstAndLastName(user)}!`
               : language === 'pt'
               ? 'Explora, joga e ganha medalhas digitais!'
               : 'Explore, play and earn digital badges!'}

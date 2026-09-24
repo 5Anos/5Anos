@@ -7,6 +7,7 @@ import { TicDescomplicaLogo } from './TicDescomplicaLogo';
 import { CartoonAvatar } from './avatar/CartoonAvatar';
 import { AvatarCreatorModal } from './avatar/AvatarCreatorModal';
 import { getDefaultAvatar } from '../utils/avatarUtils';
+import { getStudentFirstAndLastName } from '../utils/studentCredentials';
 
 interface HeaderProps {
   user: User | null;
@@ -193,7 +194,7 @@ export const Header: React.FC<HeaderProps> = ({
                       {isAdmin ? (language === 'pt' ? 'Professora' : 'Teacher') : (language === 'pt' ? 'Estudante' : 'Student')}
                     </p>
                     <p className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors truncate max-w-[140px]">
-                      {isAdmin ? user.name : (user.greetingName || (user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user.name))}
+                      {isAdmin ? user.name : getStudentFirstAndLastName(user)}
                     </p>
                   </div>
                   {isAdmin ? (
@@ -228,7 +229,7 @@ export const Header: React.FC<HeaderProps> = ({
                           </span>
                         )}
                       </div>
-                      <p className="text-sm font-bold text-slate-900 truncate">{user.name}</p>
+                      <p className="text-sm font-bold text-slate-900 truncate">{isAdmin ? user.name : getStudentFirstAndLastName(user)}</p>
                       {isAdmin && <p className="text-xs text-slate-500 truncate">{user.email}</p>}
                       {user.publicId && (
                         <div className="mt-2 p-2 rounded-xl bg-slate-50 border border-slate-200">

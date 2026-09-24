@@ -15,6 +15,7 @@ import {
   StudentThemeBreakdown,
   GlobalActivityStats,
 } from './progressCalculator';
+import { getStudentFullName, getStudentFirstAndLastName } from './studentCredentials';
 
 export {
   getStudentThemeBreakdown,
@@ -25,6 +26,8 @@ export {
   getTotalChallengesCount,
   getTotalQuizzesCount,
   getGlobalCurricularMaxPoints,
+  getStudentFullName,
+  getStudentFirstAndLastName,
 };
 
 export type {
@@ -159,7 +162,8 @@ export function exportThemeScoresToExcel(
       const rowObj: Record<string, any> = {
         'N.º': idx + 1,
         'Turma': student.turma || '5.º A',
-        'Nome do Aluno': student.name || 'Sem Nome',
+        'Nome Completo': getStudentFullName(student) || 'Sem Nome',
+        'Primeiro e Último Nome': getStudentFirstAndLastName(student),
         'Email': student.email || '',
         'ID Público': student.publicId || '',
       };
@@ -221,7 +225,8 @@ export function exportThemeScoresToExcel(
     const rowObj: Record<string, any> = {
       'N.º': idx + 1,
       'Turma': student.turma || '5.º A',
-      'Nome do Aluno': student.name || 'Sem Nome',
+      'Nome Completo': getStudentFullName(student) || 'Sem Nome',
+      'Primeiro e Último Nome': getStudentFirstAndLastName(student),
       'Email': student.email || '',
       'ID Público': student.publicId || '',
       'Pontuação Global (XP)': student.points ?? 0,
@@ -273,7 +278,8 @@ export function exportThemeScoresToExcel(
       const rowObj: Record<string, any> = {
         'N.º': idx + 1,
         'Turma': student.turma || '5.º A',
-        'Nome do Aluno': student.name || 'Sem Nome',
+        'Nome Completo': getStudentFullName(student) || 'Sem Nome',
+        'Primeiro e Último Nome': getStudentFirstAndLastName(student),
         'Email': student.email || '',
       };
 
@@ -321,7 +327,8 @@ export function exportThemeScoresToExcel(
     return {
       'N.º': idx + 1,
       'Turma': student.turma || '5.º A',
-      'Nome do Aluno': student.name || 'Sem Nome',
+      'Nome Completo': getStudentFullName(student) || 'Sem Nome',
+      'Primeiro e Último Nome': getStudentFirstAndLastName(student),
       'Email': student.email || '',
       'ID Público': student.publicId || '',
       'Pontos Ganhos em Dicas Diárias & Bónus (XP)': tipsAndBonusXP,
@@ -376,7 +383,8 @@ export function exportDailyTipsScoresToExcel(
     return {
       'N.º': idx + 1,
       'Turma': student.turma || '5.º A',
-      'Nome do Aluno': student.name || 'Sem Nome',
+      'Nome Completo': getStudentFullName(student) || 'Sem Nome',
+      'Primeiro e Último Nome': getStudentFirstAndLastName(student),
       'Email Institucional': student.email || '',
       'ID Público (Nickname)': student.publicId || '',
       'Pontos Dicas Diárias & Bónus (XP)': tipsAndBonusXP,
@@ -423,7 +431,10 @@ export function exportStudentsToExcel(students: User[], selectedTurma?: string):
   const rows = filtered.map((s, idx) => ({
     'N.º': idx + 1,
     'Turma': s.turma || '5.º A',
-    'Nome Completo': s.name || 'Sem Nome',
+    'Nome Completo': getStudentFullName(s) || 'Sem Nome',
+    'Primeiro e Último Nome': getStudentFirstAndLastName(s),
+    'Nome de Utilizador': s.username || (s.email ? s.email.split('@')[0] : ''),
+    'Palavra-passe': s.initialPassword || (s as any).password || '',
     'Email Institucional': s.email || '',
     'ID Público (Nickname)': s.publicId || '',
     'Pontuação Total (XP)': s.points ?? 0,
@@ -437,7 +448,10 @@ export function exportStudentsToExcel(students: User[], selectedTurma?: string):
   worksheet['!cols'] = [
     { wch: 6 },  // N.º
     { wch: 10 }, // Turma
-    { wch: 28 }, // Nome Completo
+    { wch: 30 }, // Nome Completo
+    { wch: 22 }, // Primeiro e Último Nome
+    { wch: 18 }, // Nome de Utilizador
+    { wch: 16 }, // Palavra-passe
     { wch: 32 }, // Email
     { wch: 22 }, // ID Público
     { wch: 18 }, // Pontuação Total
@@ -484,6 +498,9 @@ export function exportStudentsToCSV(students: User[], selectedTurma?: string): v
     'N.º',
     'Turma',
     'Nome Completo',
+    'Primeiro e Último Nome',
+    'Nome de Utilizador',
+    'Palavra-passe',
     'Email',
     'ID Público',
     'Pontuação (XP)',
@@ -494,7 +511,10 @@ export function exportStudentsToCSV(students: User[], selectedTurma?: string): v
   const csvRows = filtered.map((s, idx) => [
     idx + 1,
     sanitizeCsvCell(s.turma || '5.º A'),
-    sanitizeCsvCell(s.name || 'Sem Nome'),
+    sanitizeCsvCell(getStudentFullName(s) || 'Sem Nome'),
+    sanitizeCsvCell(getStudentFirstAndLastName(s)),
+    sanitizeCsvCell(s.username || (s.email ? s.email.split('@')[0] : '')),
+    sanitizeCsvCell(s.initialPassword || (s as any).password || ''),
     sanitizeCsvCell(s.email || ''),
     sanitizeCsvCell(s.publicId || ''),
     s.points ?? 0,
@@ -557,7 +577,7 @@ export function exportThemeScoresToCSV(
     return [
       idx + 1,
       sanitizeCsvCell(student.turma || '5.º A'),
-      sanitizeCsvCell(student.name || 'Sem Nome'),
+      sanitizeCsvCell(getStudentFullName(student) || 'Sem Nome'),
       sanitizeCsvCell(student.email || ''),
       sanitizeCsvCell(student.publicId || ''),
       ...breakdown.challenges.map((c) => c.score),
@@ -586,4 +606,53 @@ export function exportThemeScoresToCSV(
   link.click();
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
+}
+
+/**
+ * Dedicated export for Student Credentials (Utilizador e Palavra-passe) by turma or all turmas
+ */
+export function exportStudentCredentialsToExcel(students: User[], selectedTurma?: string): void {
+  const filtered = selectedTurma && selectedTurma !== 'all'
+    ? students.filter((s) => (s.turma || '').trim() === selectedTurma.trim())
+    : students;
+
+  const rows = filtered.map((s, idx) => ({
+    'N.º': idx + 1,
+    'Turma': s.turma || '5.º A',
+    'Nome Completo': getStudentFullName(s) || 'Sem Nome',
+    'Primeiro e Último Nome (Cartão)': getStudentFirstAndLastName(s),
+    'Nome de Utilizador': s.username || (s.email ? s.email.split('@')[0] : ''),
+    'Palavra-passe': s.initialPassword || (s as any).password || '',
+    'ID Público': s.publicId || '',
+    'Pontuação (XP)': s.points ?? 0,
+    'Data Criação': s.createdAt ? new Date(s.createdAt).toLocaleDateString('pt-PT') : '',
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(rows);
+
+  worksheet['!cols'] = [
+    { wch: 6 },  // N.º
+    { wch: 12 }, // Turma
+    { wch: 32 }, // Nome Completo
+    { wch: 26 }, // Primeiro e Último Nome
+    { wch: 20 }, // Nome de Utilizador
+    { wch: 18 }, // Palavra-passe
+    { wch: 20 }, // ID Público
+    { wch: 16 }, // Pontos (XP)
+    { wch: 16 }, // Data Criação
+  ];
+
+  const workbook = XLSX.utils.book_new();
+  const safeSheetName = selectedTurma && selectedTurma !== 'all'
+    ? `Credenciais ${selectedTurma}`.replace(/[\/\?\*\\\[\]:]/g, '')
+    : 'Credenciais Turmas';
+  XLSX.utils.book_append_sheet(workbook, worksheet, safeSheetName.substring(0, 31));
+
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const turmaSlug = selectedTurma && selectedTurma !== 'all'
+    ? selectedTurma.replace(/[^a-zA-Z0-9]/g, '_')
+    : 'Todas_Turmas';
+  const fileName = `TIC5_Credenciais_Alunos_${turmaSlug}_${todayStr}.xlsx`;
+
+  XLSX.writeFile(workbook, fileName);
 }

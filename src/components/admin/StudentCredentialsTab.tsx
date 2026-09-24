@@ -12,9 +12,12 @@ import {
   EyeOff,
   AlertCircle,
   Sparkles,
+  FileSpreadsheet,
 } from 'lucide-react';
 import { User, Language } from '../../types';
 import { api } from '../../services/api';
+import { getStudentFirstAndLastName, getStudentFullName } from '../../utils/studentCredentials';
+import { exportStudentCredentialsToExcel } from '../../utils/exportUtils';
 
 interface StudentCredentialsTabProps {
   students: User[];
@@ -91,6 +94,10 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
     window.print();
   };
 
+  const handleDownloadExcel = () => {
+    exportStudentCredentialsToExcel(filteredStudents, selectedTurma);
+  };
+
   return (
     <div className="flex-1 flex flex-col min-h-0 bg-slate-50">
       {/* Top Filter and Actions Bar - hidden in print */}
@@ -149,6 +156,16 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
                 className="w-full pl-9 pr-3 py-1.5 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
               />
             </div>
+
+            <button
+              onClick={handleDownloadExcel}
+              disabled={filteredStudents.length === 0}
+              className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50 shrink-0"
+              title="Descarregar folha de cálculo com todas as credenciais (Nome Completo, Utilizador e Palavra-passe)"
+            >
+              <FileSpreadsheet className="w-4 h-4" />
+              <span className="hidden sm:inline">{language === 'pt' ? 'Descarregar XLS' : 'Export XLS'}</span>
+            </button>
 
             <button
               onClick={handlePrint}
@@ -234,9 +251,14 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
                         <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 print:text-black">
                           TIC 5 — Descomplica!
                         </span>
-                        <h4 className="text-sm font-black text-slate-900 leading-tight print:text-base">
-                          {student.fullName || student.name}
+                        <h4 className="text-base font-black text-slate-900 leading-tight print:text-lg">
+                          {getStudentFirstAndLastName(student)}
                         </h4>
+                        {student.fullName && student.fullName.trim() !== getStudentFirstAndLastName(student).trim() && (
+                          <p className="text-[10px] text-slate-400 font-medium truncate max-w-[200px] mt-0.5 print:text-slate-600 print:text-[9px]">
+                            {student.fullName}
+                          </p>
+                        )}
                       </div>
                       <span className="px-2 py-0.5 rounded-md text-xs font-black bg-indigo-50 text-indigo-700 border border-indigo-200 print:border-black print:text-black print:bg-transparent shrink-0">
                         {student.turma || '5.º Ano'}
