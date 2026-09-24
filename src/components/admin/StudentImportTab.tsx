@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Upload,
   FileSpreadsheet,
   CheckCircle2,
   AlertCircle,
-  AlertTriangle,
   Users,
   KeyRound,
   ArrowRight,
   RefreshCw,
-  HelpCircle,
-  FolderPlus,
-  Check,
+  ClipboardPaste,
+  Sparkles,
+  UserCheck,
+  FileText,
 } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import { User, Language } from '../../types';
@@ -28,7 +28,8 @@ interface StudentImportTabProps {
 interface ParsedStudentRow {
   name: string;
   turma: string;
-  isDuplicateInDB: boolean;
+  matchedExistingStudent?: User;
+  actionType: 'update_name' | 'already_complete' | 'create_new';
 }
 
 export const StudentImportTab: React.FC<StudentImportTabProps> = ({
@@ -38,20 +39,96 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
   onImportSuccess,
   onNavigateToCredentials,
 }) => {
+  const [activeMode, setActiveMode] = useState<'upload' | 'paste'>('paste');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [defaultTurma, setDefaultTurma] = useState<string>(turmasList[0] || '5.º A');
-  const [parsedRows, setParsedRows] = useState<ParsedStudentRow[]>([]);
+  const [pastedText, setPastedText] = useState<string>('');
   const [parsing, setParsing] = useState(false);
   const [importing, setImporting] = useState(false);
   const [parseError, setParseError] = useState<string | null>(null);
 
   // Result state
   const [importResult, setImportResult] = useState<{
-    summary: { totalInFile: number; createdCount: number; existedCount: number; errorsCount: number };
+    summary: { totalInFile: number; createdCount: number; updatedCount?: number; existedCount: number; errorsCount: number };
     created: Array<{ id: string; name: string; turma: string; username: string; password: string }>;
+    updated?: Array<{ id: string; oldName?: string; name: string; turma: string; username: string }>;
     existed: Array<{ name: string; turma: string; username: string }>;
     errors: Array<{ name?: string; turma?: string; error: string }>;
   } | null>(null);
+
+  // Helper to match a raw student name to existing students
+  const matchStudent = (rawName: string, turma: string): { matched?: User; actionType: 'update_name' | 'already_complete' | 'create_new' } => {
+    const clean = rawName.replace(/^\d+[\s\.\-\)]+\s*/, '').trim().toLowerCase();
+    const cleanBase = clean.replace(/\s+[a-z]$/i, '').trim();
+
+    const inTurma = existingStudents.filter(
+      (s) => (s.turma || '').trim().toLowerCase() === turma.trim().toLowerCase()
+    );
+
+    // Exact match
+    const exact = inTurma.find((s) => {
+      const fn = (s.fullName || s.name || '').trim().toLowerCase();
+      const n = (s.name || '').trim().toLowerCase();
+      return fn === clean || n === clean;
+    });
+
+    if (exact) {
+      const currentFull = (exact.fullName || exact.name || '').trim();
+      if (rawName.trim().length > currentFull.length) {
+        return { matched: exact, actionType: 'update_name' };
+      }
+      return { matched: exact, actionType: 'already_complete' };
+    }
+
+    // Prefix / truncated match (e.g. existing "José Júlio d" vs pasted "José Júlio de Almeida")
+    const prefixMatch = inTurma.find((s) => {
+      const existingName = (s.name || s.fullName || '').trim().toLowerCase();
+      const exBase = existingName.replace(/\s+[a-z]$/i, '').trim();
+      return (
+        (exBase.length >= 4 && clean.startsWith(exBase)) ||
+        (cleanBase.length >= 4 && existingName.startsWith(cleanBase))
+      );
+    });
+
+    if (prefixMatch) {
+      return { matched: prefixMatch, actionType: 'update_name' };
+    }
+
+    return { actionType: 'create_new' };
+  };
+
+  // Live parsed rows when in 'paste' mode
+  const pasteParsedRows = useMemo<ParsedStudentRow[]>(() => {
+    if (activeMode !== 'paste' || !pastedText.trim()) return [];
+
+    const lines = pastedText
+      .split('\n')
+      .map((l) => l.trim())
+      .filter((l) => l.length > 0);
+
+    const rows: ParsedStudentRow[] = [];
+
+    for (const line of lines) {
+      // Clean leading numbers like "1 - ", "1. ", "1\t"
+      const cleaned = line.replace(/^\d+[\s\.\-\)\t]+\s*/, '').trim();
+      // Skip headers like "Nº Nome Turma"
+      if (!cleaned || /^(n[º\.]|nome|turma|aluno|student)/i.test(cleaned)) continue;
+
+      const { matched, actionType } = matchStudent(cleaned, defaultTurma);
+
+      rows.push({
+        name: cleaned,
+        turma: defaultTurma,
+        matchedExistingStudent: matched,
+        actionType,
+      });
+    }
+
+    return rows;
+  }, [activeMode, pastedText, defaultTurma, existingStudents]);
+
+  // File Upload handler (XLSX, XLS, CSV)
+  const [fileParsedRows, setFileParsedRows] = useState<ParsedStudentRow[]>([]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -76,19 +153,14 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
           throw new Error('O ficheiro parece estar vazio ou não contém dados legíveis.');
         }
 
-        const existingMap = new Set(
-          existingStudents.map((s) => `${(s.turma || '').trim().toLowerCase()}__${(s.name || '').trim().toLowerCase()}`)
-        );
-
         const rows: ParsedStudentRow[] = [];
 
         for (const item of data) {
-          // Identify name column
           let rawName =
+            item['Nome Completo'] ||
+            item['Nome do Aluno'] ||
             item.Nome ||
             item.nome ||
-            item['Nome do Aluno'] ||
-            item['Nome Completo'] ||
             item.Aluno ||
             item.aluno ||
             item.Name ||
@@ -96,7 +168,6 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
             item.Student ||
             '';
 
-          // If no specific header matched, check if any column value looks like a name
           if (!rawName) {
             const values = Object.values(item).map((v) => String(v).trim());
             const candidate = values.find((v) => v.length > 2 && !v.includes('@') && !/^\d+$/.test(v));
@@ -106,7 +177,6 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
           rawName = String(rawName).trim();
           if (!rawName) continue;
 
-          // Identify turma column
           let rawTurma =
             item.Turma ||
             item.turma ||
@@ -117,13 +187,14 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
 
           rawTurma = String(rawTurma).trim() || defaultTurma;
 
-          const key = `${rawTurma.toLowerCase()}__${rawName.toLowerCase()}`;
-          const isDuplicate = existingMap.has(key);
+          const cleanedName = rawName.replace(/^\d+[\s\.\-\)]+\s*/, '').trim();
+          const { matched, actionType } = matchStudent(cleanedName, rawTurma);
 
           rows.push({
-            name: rawName,
+            name: cleanedName,
             turma: rawTurma,
-            isDuplicateInDB: isDuplicate,
+            matchedExistingStudent: matched,
+            actionType,
           });
         }
 
@@ -131,7 +202,7 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
           throw new Error('Não foi possível identificar nomes de alunos nas colunas do ficheiro.');
         }
 
-        setParsedRows(rows);
+        setFileParsedRows(rows);
       } catch (err: any) {
         console.error('File parse error:', err);
         setParseError(err.message || 'Erro ao processar ficheiro Excel.');
@@ -148,20 +219,23 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
     reader.readAsBinaryString(file);
   };
 
+  const currentRows = activeMode === 'paste' ? pasteParsedRows : fileParsedRows;
+
   const handleStartImport = async () => {
-    if (parsedRows.length === 0) return;
+    if (currentRows.length === 0) return;
     setImporting(true);
     setParseError(null);
 
     try {
       const res = await api.importStudentsBatch(
-        parsedRows.map((r) => ({ name: r.name, turma: r.turma })),
+        currentRows.map((r) => ({ name: r.name, turma: r.turma })),
         defaultTurma
       );
 
       setImportResult({
         summary: res.summary,
         created: res.created || [],
+        updated: res.updated || [],
         existed: res.existed || [],
         errors: res.errors || [],
       });
@@ -169,7 +243,7 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
       onImportSuccess();
     } catch (err: any) {
       console.error('Batch import error:', err);
-      setParseError(err.message || 'Erro ao criar contas dos alunos.');
+      setParseError(err.message || 'Erro ao atualizar / criar contas dos alunos.');
     } finally {
       setImporting(false);
     }
@@ -177,10 +251,15 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
 
   const handleReset = () => {
     setSelectedFile(null);
-    setParsedRows([]);
+    setPastedText('');
+    setFileParsedRows([]);
     setImportResult(null);
     setParseError(null);
   };
+
+  const updateCount = currentRows.filter((r) => r.actionType === 'update_name').length;
+  const newCount = currentRows.filter((r) => r.actionType === 'create_new').length;
+  const readyCount = currentRows.filter((r) => r.actionType === 'already_complete').length;
 
   return (
     <div className="flex-1 flex flex-col min-h-0 bg-slate-50 overflow-y-auto p-4 sm:p-6">
@@ -188,55 +267,111 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
         {/* Banner Explanatório */}
         <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs flex items-start gap-4">
           <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
-            <FileSpreadsheet className="w-6 h-6" />
+            <Sparkles className="w-6 h-6" />
           </div>
           <div>
             <h3 className="text-base font-bold text-slate-900">
-              {language === 'pt' ? 'Importação Automática de Turmas e Alunos (XLS / XLSX)' : 'Import Students from Excel'}
+              {language === 'pt'
+                ? 'Atualizar Nomes Completos & Importar Alunos'
+                : 'Update Full Student Names & Import'}
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
-              Carrega o ficheiro Excel com os nomes dos teus alunos. O sistema analisa a folha, cria as contas com nomes de utilizador únicos e gera palavras-passe simples (fáceis de digitar por alunos de 10 anos). Se carregares o ficheiro novamente, não haverá duplicações.
+              Podes colar a lista com os <strong>Nomes Completos</strong> diretamente do PDF / Word ou carregar uma folha de cálculo Excel. O sistema atualiza automaticamente os nomes truncados existentes (mantendo todo o histórico, pontos XP, credenciais e palavras-passe intactos) e cria novas contas caso encontre novos alunos.
             </p>
           </div>
         </div>
 
-        {/* Step 1: Upload File & Settings (shown if no import result yet) */}
+        {/* Step 1: Input Form (hidden if showing results) */}
         {!importResult && (
           <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-xs space-y-5">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
-              {/* Default Turma */}
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                  Turma predefinida (se o ficheiro não tiver coluna 'Turma'):
-                </label>
-                <select
-                  value={defaultTurma}
-                  onChange={(e) => setDefaultTurma(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
-                >
-                  {turmasList.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            {/* Mode Selector Tabs */}
+            <div className="flex items-center gap-2 border-b border-slate-200 pb-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveMode('paste');
+                  setParseError(null);
+                }}
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                  activeMode === 'paste'
+                    ? 'bg-indigo-600 text-white shadow-xs'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`}
+              >
+                <ClipboardPaste className="w-4 h-4" />
+                <span>Colar Lista do PDF / Texto (Mais Rápido)</span>
+              </button>
 
-              {/* Upload Input */}
-              <div>
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveMode('upload');
+                  setParseError(null);
+                }}
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                  activeMode === 'upload'
+                    ? 'bg-indigo-600 text-white shadow-xs'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`}
+              >
+                <FileSpreadsheet className="w-4 h-4" />
+                <span>Carregar Ficheiro Excel (.xlsx / .csv)</span>
+              </button>
+            </div>
+
+            {/* Turma Selector */}
+            <div className="max-w-xs">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                Turma Selecionada:
+              </label>
+              <select
+                value={defaultTurma}
+                onChange={(e) => setDefaultTurma(e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-800 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
+              >
+                {turmasList.map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Mode A: Paste Text from PDF */}
+            {activeMode === 'paste' && (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                    Copia os Nomes Completos do PDF e cola aqui (um por linha):
+                  </label>
+                  <span className="text-[11px] text-slate-400 font-medium">
+                    Suporta números à frente (ex: "1. José Júlio de Almeida")
+                  </span>
+                </div>
+                <textarea
+                  rows={8}
+                  value={pastedText}
+                  onChange={(e) => setPastedText(e.target.value)}
+                  placeholder={`Exemplo (pode colar diretamente da tabela do PDF):\n1 Anderson Oliveira Silva\n2 Artur Pawel Kowalski\n...\n14 José Júlio de Almeida`}
+                  className="w-full p-3.5 font-mono text-xs sm:text-sm rounded-xl border border-slate-200 bg-slate-50 focus:bg-white text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
+                />
+              </div>
+            )}
+
+            {/* Mode B: Upload File */}
+            {activeMode === 'upload' && (
+              <div className="space-y-3">
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
                   Selecionar Ficheiro Excel (.xlsx, .xls, .csv):
                 </label>
-                <div className="relative">
-                  <input
-                    type="file"
-                    accept=".xlsx, .xls, .csv"
-                    onChange={handleFileUpload}
-                    className="block w-full text-xs sm:text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer border border-slate-200 rounded-xl"
-                  />
-                </div>
+                <input
+                  type="file"
+                  accept=".xlsx, .xls, .csv"
+                  onChange={handleFileUpload}
+                  className="block w-full text-xs sm:text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer border border-slate-200 rounded-xl bg-slate-50"
+                />
               </div>
-            </div>
+            )}
 
             {/* Parsing error */}
             {parseError && (
@@ -247,49 +382,75 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
             )}
 
             {/* Preview of rows detected */}
-            {parsedRows.length > 0 && (
+            {currentRows.length > 0 && (
               <div className="space-y-3 pt-4 border-t border-slate-100 animate-in fade-in">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4 text-indigo-600" />
                     <h4 className="text-sm font-bold text-slate-900">
-                      Alunos detetados no ficheiro ({parsedRows.length})
+                      Alunos Analisados ({currentRows.length})
                     </h4>
                   </div>
-                  <div className="flex items-center gap-3 text-xs">
-                    <span className="text-emerald-700 font-semibold flex items-center gap-1">
-                      <CheckCircle2 className="w-3.5 h-3.5" />
-                      {parsedRows.filter((r) => !r.isDuplicateInDB).length} novos
-                    </span>
-                    <span className="text-slate-500 font-medium">
-                      {parsedRows.filter((r) => r.isDuplicateInDB).length} já na base de dados
-                    </span>
+                  <div className="flex flex-wrap items-center gap-2.5 text-xs">
+                    {updateCount > 0 && (
+                      <span className="px-2 py-0.5 rounded-md bg-amber-50 text-amber-800 border border-amber-200 font-bold flex items-center gap-1">
+                        <Sparkles className="w-3 h-3 text-amber-600" />
+                        {updateCount} a atualizar com Nome Completo
+                      </span>
+                    )}
+                    {newCount > 0 && (
+                      <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-800 border border-indigo-200 font-bold flex items-center gap-1">
+                        <CheckCircle2 className="w-3 h-3 text-indigo-600" />
+                        {newCount} novas contas
+                      </span>
+                    )}
+                    {readyCount > 0 && (
+                      <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 font-medium">
+                        {readyCount} já completos
+                      </span>
+                    )}
                   </div>
                 </div>
 
-                <div className="max-h-60 overflow-y-auto border border-slate-200 rounded-xl divide-y divide-slate-100 text-xs">
-                  {parsedRows.map((row, idx) => (
+                <div className="max-h-64 overflow-y-auto border border-slate-200 rounded-xl divide-y divide-slate-100 text-xs">
+                  {currentRows.map((row, idx) => (
                     <div
                       key={idx}
                       className={`p-2.5 flex items-center justify-between ${
-                        row.isDuplicateInDB ? 'bg-slate-50 text-slate-500' : 'bg-white text-slate-900'
+                        row.actionType === 'update_name'
+                          ? 'bg-amber-50/50'
+                          : row.actionType === 'create_new'
+                          ? 'bg-white'
+                          : 'bg-slate-50'
                       }`}
                     >
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-slate-400 w-6">{idx + 1}.</span>
-                        <span className="font-semibold">{row.name}</span>
+                      <div className="flex items-center gap-2 min-w-0 pr-2">
+                        <span className="font-mono text-slate-400 w-6 shrink-0">{idx + 1}.</span>
+                        <div className="truncate">
+                          <span className="font-bold text-slate-900">{row.name}</span>
+                          {row.actionType === 'update_name' && row.matchedExistingStudent && (
+                            <span className="ml-2 text-[11px] text-amber-800 italic">
+                              (substituirá o nome truncado "{row.matchedExistingStudent.fullName || row.matchedExistingStudent.name}")
+                            </span>
+                          )}
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 shrink-0">
                         <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-bold border border-indigo-200 text-[11px]">
                           {row.turma}
                         </span>
-                        {row.isDuplicateInDB ? (
-                          <span className="text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
-                            Já existente
+                        {row.actionType === 'update_name' ? (
+                          <span className="text-[10px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-md border border-amber-300 flex items-center gap-1">
+                            <Sparkles className="w-3 h-3" />
+                            Atualizar Nome Completo
+                          </span>
+                        ) : row.actionType === 'create_new' ? (
+                          <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                            Novo Aluno
                           </span>
                         ) : (
-                          <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                            Novo aluno
+                          <span className="text-[10px] text-slate-500 bg-slate-200 px-2 py-0.5 rounded-md">
+                            Nome já atualizado
                           </span>
                         )}
                       </div>
@@ -304,23 +465,25 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
                     onClick={handleReset}
                     className="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 text-xs font-bold transition-colors cursor-pointer"
                   >
-                    Cancelar
+                    Limpar
                   </button>
                   <button
                     type="button"
                     disabled={importing}
                     onClick={handleStartImport}
-                    className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                    className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
                   >
                     {importing ? (
                       <>
                         <RefreshCw className="w-4 h-4 animate-spin" />
-                        <span>A criar contas...</span>
+                        <span>A processar alunos...</span>
                       </>
                     ) : (
                       <>
-                        <Upload className="w-4 h-4" />
-                        <span>Confirmar e Criar {parsedRows.filter((r) => !r.isDuplicateInDB).length} Contas</span>
+                        <Sparkles className="w-4 h-4" />
+                        <span>
+                          Confirmar e Gravar ({updateCount} Atualizações, {newCount} Novos)
+                        </span>
                       </>
                     )}
                   </button>
@@ -340,10 +503,10 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
               </div>
               <div>
                 <h3 className="text-lg font-black text-slate-900">
-                  Importação Concluída com Sucesso!
+                  Nomes de Alunos Atualizados com Sucesso!
                 </h3>
                 <p className="text-xs text-slate-500">
-                  O ficheiro foi processado e as credenciais foram geradas de forma segura.
+                  Os nomes completos oficiais foram registados na base de dados. Todos os ficheiros exportados conterão agora o nome integral dos alunos.
                 </p>
               </div>
             </div>
@@ -351,45 +514,54 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
             {/* Metrics Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
-                <p className="text-xs text-slate-500 font-semibold uppercase">Total no Ficheiro</p>
+                <p className="text-xs text-slate-500 font-semibold uppercase">Total Processado</p>
                 <p className="text-2xl font-black text-slate-900 mt-1">{importResult.summary.totalInFile}</p>
               </div>
 
+              <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-center">
+                <p className="text-xs text-amber-800 font-semibold uppercase flex items-center justify-center gap-1">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Nomes Atualizados
+                </p>
+                <p className="text-2xl font-black text-amber-900 mt-1">{importResult.summary.updatedCount ?? 0}</p>
+              </div>
+
               <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-center">
-                <p className="text-xs text-emerald-700 font-semibold uppercase">Contas Criadas</p>
+                <p className="text-xs text-emerald-700 font-semibold uppercase">Novas Contas</p>
                 <p className="text-2xl font-black text-emerald-800 mt-1">{importResult.summary.createdCount}</p>
               </div>
 
-              <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-center">
-                <p className="text-xs text-amber-700 font-semibold uppercase">Já Existiam</p>
-                <p className="text-2xl font-black text-amber-800 mt-1">{importResult.summary.existedCount}</p>
-              </div>
-
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
-                <p className="text-xs text-slate-500 font-semibold uppercase">Erros / Ignorados</p>
-                <p className="text-2xl font-black text-slate-700 mt-1">{importResult.summary.errorsCount}</p>
+                <p className="text-xs text-slate-500 font-semibold uppercase">Já Existiam</p>
+                <p className="text-2xl font-black text-slate-700 mt-1">{importResult.summary.existedCount}</p>
               </div>
             </div>
 
-            {/* Table of newly created accounts */}
-            {importResult.created.length > 0 && (
+            {/* Table of updated accounts */}
+            {importResult.updated && importResult.updated.length > 0 && (
               <div className="space-y-2">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700">
-                  Novas contas criadas ({importResult.created.length}):
+                <h4 className="text-xs font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                  Alunos com Nome Completo Atualizado ({importResult.updated.length}):
                 </h4>
-                <div className="max-h-56 overflow-y-auto border border-slate-200 rounded-xl divide-y divide-slate-100 text-xs">
-                  {importResult.created.map((c) => (
-                    <div key={c.id} className="p-2.5 flex items-center justify-between hover:bg-slate-50">
+                <div className="max-h-56 overflow-y-auto border border-amber-200 rounded-xl divide-y divide-amber-100 text-xs bg-amber-50/30">
+                  {importResult.updated.map((u) => (
+                    <div key={u.id} className="p-2.5 flex items-center justify-between">
                       <div>
-                        <span className="font-bold text-slate-900">{c.name}</span>
+                        <span className="font-bold text-slate-900">{u.name}</span>
+                        {u.oldName && (
+                          <span className="ml-2 text-[10px] text-slate-400 line-through">
+                            {u.oldName}
+                          </span>
+                        )}
                         <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 font-bold">
-                          {c.turma}
+                          {u.turma}
                         </span>
                       </div>
-                      <div className="flex items-center gap-3 font-mono text-xs">
-                        <span className="text-slate-600">Utilizador: <strong>{c.username}</strong></span>
-                        <span className="text-indigo-700">Senha: <strong>{c.password}</strong></span>
-                      </div>
+                      <span className="text-emerald-700 font-bold text-xs flex items-center gap-1">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        Atualizado
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -400,10 +572,10 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
             <div className="p-4 rounded-xl bg-indigo-50 border border-indigo-200 flex flex-col sm:flex-row items-center justify-between gap-3">
               <div>
                 <p className="text-sm font-bold text-indigo-950">
-                  Pronto para entregar as credenciais aos alunos?
+                  Tudo pronto e atualizado!
                 </p>
                 <p className="text-xs text-indigo-800">
-                  Clica abaixo para aceder à folha de cartões com linhas tracejadas prontas a recortar e imprimir.
+                  Agora podes descarregar a folha Excel ou imprimir os cartões — todos terão o Nome Completo oficial.
                 </p>
               </div>
               <div className="flex items-center gap-2">
@@ -412,7 +584,7 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
                   onClick={handleReset}
                   className="px-3.5 py-2 rounded-xl text-xs font-bold text-indigo-700 hover:bg-indigo-100 transition-colors cursor-pointer"
                 >
-                  Importar Outro Ficheiro
+                  Atualizar Outra Turma
                 </button>
                 <button
                   type="button"
@@ -420,7 +592,7 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
                   className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold shadow-md transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
                 >
                   <KeyRound className="w-4 h-4" />
-                  <span>Ver e Imprimir Credenciais</span>
+                  <span>Ver e Descarregar XLS</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>

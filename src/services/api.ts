@@ -1310,8 +1310,9 @@ export const api = {
 
   async importStudentsBatch(students: Array<{ name: string; turma: string }>, defaultTurma?: string): Promise<{
     success: boolean;
-    summary: { totalInFile: number; createdCount: number; existedCount: number; errorsCount: number };
+    summary: { totalInFile: number; createdCount: number; updatedCount?: number; existedCount: number; errorsCount: number };
     created: Array<{ id: string; name: string; turma: string; username: string; password: string }>;
+    updated?: Array<{ id: string; oldName?: string; name: string; turma: string; username: string }>;
     existed: Array<{ name: string; turma: string; username: string; initialPassword?: string }>;
     errors: Array<{ name?: string; turma?: string; error: string }>;
   }> {

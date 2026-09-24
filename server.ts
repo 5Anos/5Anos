@@ -1468,27 +1468,37 @@ app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, asyn
     const existingSnap = await db.collection('users').limit(1000).get();
     const existingUsernames = new Set<string>();
     const existingPasswords = new Set<string>();
-    const existingStudentsMap = new Map<string, any>();
+    const existingStudentsList: any[] = [];
 
     for (const doc of existingSnap.docs) {
       const data = doc.data();
       if (data.username) existingUsernames.add(String(data.username).toLowerCase());
       if (data.initialPassword) existingPasswords.add(String(data.initialPassword));
       if (data.password) existingPasswords.add(String(data.password));
-      if (data.turma && data.name) {
-        const key = `${normalizeTurmaName(data.turma)}__${String(data.name).trim().toLowerCase()}`;
-        existingStudentsMap.set(key, { id: doc.id, ...data });
+      if (data.role !== 'teacher' && data.role !== 'admin' && !isTeacherEmail(data.email)) {
+        existingStudentsList.push({ id: doc.id, ...data });
       }
     }
 
     const created: any[] = [];
+    const updated: any[] = [];
     const existed: any[] = [];
     const errors: any[] = [];
 
     // Process students
-    for (const item of rawStudents) {
-      const rawName = String(item?.name || item?.Nome || item?.nome || item?.aluno || '').trim();
-      const rawTurma = String(item?.turma || item?.Turma || defaultTurma || '5.º A').trim();
+    for (let i = 0; i < rawStudents.length; i++) {
+      const item = rawStudents[i];
+      const rawName = String(
+        item?.name ||
+        item?.Nome ||
+        item?.nome ||
+        item?.['Nome Completo'] ||
+        item?.['Nome do Aluno'] ||
+        item?.aluno ||
+        ''
+      ).trim();
+      const rawTurma = String(item?.turma || item?.Turma || item?.['Ano/Turma'] || defaultTurma || '5.º A').trim();
+      const rawNumber = Number(item?.number || item?.['N.º'] || item?.['Nº'] || item?.numero || item?.num || (i + 1));
 
       if (!rawName) {
         errors.push({ item, error: 'Linha com nome vazio.' });
@@ -1496,21 +1506,86 @@ app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, asyn
       }
 
       const normalizedTurma = normalizeTurmaName(rawTurma);
-      const studentKey = `${normalizedTurma}__${rawName.toLowerCase()}`;
+      const cleanRawName = rawName.replace(/^\d+[\s\.\-\)]+\s*/, '').trim();
+      const rawNameLower = cleanRawName.toLowerCase();
 
-      if (existingStudentsMap.has(studentKey)) {
-        const found = existingStudentsMap.get(studentKey);
-        existed.push({
-          name: rawName,
-          turma: normalizedTurma,
-          username: found.username || '',
-          initialPassword: found.initialPassword || '',
-        });
+      // Find if this student already exists in this turma
+      const matched = existingStudentsList.find((existing) => {
+        const existingTurma = normalizeTurmaName(existing.turma || '');
+        if (existingTurma !== normalizedTurma) return false;
+
+        const exFullName = String(existing.fullName || existing.name || '').trim().toLowerCase();
+        const exName = String(existing.name || '').trim().toLowerCase();
+
+        // 1. Exact match
+        if (exFullName === rawNameLower || exName === rawNameLower) return true;
+
+        // 2. Prefix / Truncated match (handles when existing name was truncated e.g. "José Júlio d" matching "José Júlio de...")
+        const exBase = exName.replace(/\s+[a-z]$/i, '').trim();
+        if (exBase.length >= 4 && rawNameLower.startsWith(exBase)) return true;
+
+        const rawBase = rawNameLower.replace(/\s+[a-z]$/i, '').trim();
+        if (rawBase.length >= 4 && exFullName.startsWith(rawBase)) return true;
+
+        // 3. Username match
+        if (item.username && existing.username && String(item.username).toLowerCase() === String(existing.username).toLowerCase()) {
+          return true;
+        }
+
+        return false;
+      });
+
+      if (matched) {
+        const { fullName, firstName, lastName, greetingName } = parseStudentName(cleanRawName);
+        const currentFullName = String(matched.fullName || matched.name || '').trim();
+
+        // If the new name is more complete or different, update the database record!
+        if (fullName.length > currentFullName.length || fullName.toLowerCase() !== currentFullName.toLowerCase()) {
+          try {
+            const updates = {
+              name: fullName,
+              fullName: fullName,
+              firstName: firstName,
+              lastName: lastName,
+              greetingName: greetingName,
+              updatedAt: new Date().toISOString(),
+            };
+            await db.collection('users').doc(matched.id).set(updates, { merge: true });
+            await db.collection('publicProfiles').doc(matched.id).set({
+              name: fullName,
+              firstName: firstName,
+              lastName: lastName,
+            }, { merge: true });
+
+            // Update in-memory reference
+            matched.name = fullName;
+            matched.fullName = fullName;
+            matched.firstName = firstName;
+            matched.lastName = lastName;
+
+            updated.push({
+              id: matched.id,
+              oldName: currentFullName,
+              name: fullName,
+              turma: normalizedTurma,
+              username: matched.username || '',
+            });
+          } catch (err: any) {
+            errors.push({ name: cleanRawName, turma: normalizedTurma, error: `Erro ao atualizar nome: ${err.message}` });
+          }
+        } else {
+          existed.push({
+            name: cleanRawName,
+            turma: normalizedTurma,
+            username: matched.username || '',
+            initialPassword: matched.initialPassword || '',
+          });
+        }
         continue;
       }
 
       try {
-        const { fullName, firstName, lastName, greetingName } = parseStudentName(rawName);
+        const { fullName, firstName, lastName, greetingName } = parseStudentName(cleanRawName);
         const username = generateKidUsername(fullName, normalizedTurma, existingUsernames);
         const password = generateKidPassword(existingPasswords);
         const userId = crypto.randomUUID();
@@ -1572,9 +1647,11 @@ app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, asyn
           password,
         });
 
-        existingStudentsMap.set(studentKey, userData);
+        existingStudentsList.push(userData);
+        existingUsernames.add(username.toLowerCase());
+        existingPasswords.add(password);
       } catch (err: any) {
-        errors.push({ name: rawName, turma: normalizedTurma, error: err.message || 'Erro ao criar conta.' });
+        errors.push({ name: cleanRawName, turma: normalizedTurma, error: err.message || 'Erro ao criar conta.' });
       }
     }
 
@@ -1583,10 +1660,12 @@ app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, asyn
       summary: {
         totalInFile: rawStudents.length,
         createdCount: created.length,
+        updatedCount: updated.length,
         existedCount: existed.length,
         errorsCount: errors.length,
       },
       created,
+      updated,
       existed,
       errors,
     });
@@ -1781,7 +1860,12 @@ app.patch('/api/teacher/students/:userId', requireAuth, requireTeacher, async (r
     if (body.newName !== undefined) {
       const name = String(body.newName).trim();
       if (!name || name.length > 100) return res.status(400).json({ error: 'Nome inválido.' });
-      updates.name = name;
+      const parsed = parseStudentName(name);
+      updates.name = parsed.fullName;
+      updates.fullName = parsed.fullName;
+      updates.firstName = parsed.firstName;
+      updates.lastName = parsed.lastName;
+      updates.greetingName = parsed.greetingName;
     }
     if (body.newTurma !== undefined) {
       const turma = String(body.newTurma).trim();

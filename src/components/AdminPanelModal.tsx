@@ -329,7 +329,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   // Edit single student
   const openEditModal = (student: User) => {
     setEditingStudent(student);
-    setEditName(student.name || '');
+    setEditName(student.fullName || student.name || '');
     setEditTurma(student.turma || turmasList[0] || '5.º A');
     setEditError('');
     setEditSuccess('');
@@ -349,8 +349,9 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
 
     setEditLoading(true);
     try {
+      const currentFullName = (editingStudent.fullName || editingStudent.name || '').trim();
       await api.adminUpdateStudent(editingStudent.id, editingStudent.email, {
-        newName: editName.trim() !== editingStudent.name ? editName.trim() : undefined,
+        newName: editName.trim() !== currentFullName ? editName.trim() : undefined,
         newTurma: editTurma !== editingStudent.turma ? editTurma : undefined,
       });
 
