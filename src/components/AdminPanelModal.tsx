@@ -130,6 +130,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   // Confirmation Modal State
   const [confirmDialog, setConfirmDialog] = useState<ConfirmDialogState | null>(null);
   const [actionLoading, setActionLoading] = useState(false);
+  const [isRecalibratingXP, setIsRecalibratingXP] = useState(false);
 
   // Load Turmas, Students and Theme Visibility whenever modal opens
   useEffect(() => {
@@ -680,8 +681,6 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
         : 'Daily Tips & Bonus scores exported to XLS!'
     );
   };
-
-  const [isRecalibratingXP, setIsRecalibratingXP] = useState(false);
 
   const handleExportCredentialsXLS = () => {
     if (filteredStudents.length === 0) return;
