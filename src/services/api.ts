@@ -29,6 +29,12 @@ import { generateSecurePublicId } from '../utils/publicIdGenerator';
 import { getTurmasList, addTurma, removeTurmas } from '../data/turmasData';
 import { getDefaultAvatar } from '../utils/avatarUtils';
 import { isValidActivityId, evaluateQuizSubmission, evaluateDailyTipSubmission } from '../data/activityCatalog';
+import {
+  generateKidUsername,
+  generateKidPassword,
+  parseStudentName,
+  normalizeTurmaName,
+} from '../utils/studentCredentials';
 
 const TOKEN_KEY = 'tic_5ano_auth_token';
 const CURRENT_USER_KEY = 'tic_5ano_current_user';
@@ -43,9 +49,6 @@ const DEV_BACKEND_URL = 'https://ais-dev-kjaqxx5aijnf7yk2ybqnmq-275430484727.eur
 function resolveApiBaseUrl(): string {
   const envUrl = (import.meta as any).env?.VITE_API_URL;
   if (envUrl) return envUrl.replace(/\/$/, '');
-  if (typeof window !== 'undefined' && window.location.hostname.includes('ais-pre-')) {
-    return DEV_BACKEND_URL;
-  }
   return '';
 }
 
@@ -334,6 +337,163 @@ export function calculateAuthoritativeDailyTipPoints(
     total += pts;
   });
   return total;
+}
+
+async function directFirestoreImportStudentsBatch(
+  students: Array<{ name: string; turma?: string; number?: number; username?: string; password?: string }>,
+  defaultTurma = '5.º A',
+  wipeAllStudentsFirst = false
+) {
+  let deletedCount = 0;
+  if (wipeAllStudentsFirst) {
+    const usersSnap = await getDocs(collection(db, 'users'));
+    for (const d of usersSnap.docs) {
+      const u = d.data();
+      if (!isUserAdmin(u.email, u.role)) {
+        await deleteDoc(d.ref).catch(() => {});
+        await deleteDoc(doc(db, 'credentials', d.id)).catch(() => {});
+        await deleteDoc(doc(db, 'publicProfiles', d.id)).catch(() => {});
+        deletedCount++;
+      }
+    }
+  }
+
+  const existingUsersSnap = await getDocs(collection(db, 'users'));
+  const existingUsernames = new Set<string>();
+  const existingPasswords = new Set<string>();
+  const existingStudents: any[] = [];
+
+  for (const d of existingUsersSnap.docs) {
+    const data = d.data();
+    if (data.username) existingUsernames.add(String(data.username).toLowerCase());
+    if (data.initialPassword) existingPasswords.add(String(data.initialPassword));
+    if (data.password) existingPasswords.add(String(data.password));
+    if (!isUserAdmin(data.email, data.role)) {
+      existingStudents.push({ id: d.id, ...data });
+    }
+  }
+
+  const created: any[] = [];
+  const updated: any[] = [];
+  const existed: any[] = [];
+  const errors: any[] = [];
+
+  for (let i = 0; i < students.length; i++) {
+    const item = students[i];
+    const rawName = String(item?.name || '').trim();
+    const rawTurma = String(item?.turma || defaultTurma || '5.º A').trim();
+    if (!rawName) {
+      errors.push({ name: '', error: 'Linha sem nome.' });
+      continue;
+    }
+
+    const normalizedTurma = normalizeTurmaName(rawTurma);
+    const cleanRawName = rawName.replace(/^\d+[\s\.\-\)]+\s*/, '').trim();
+    const rawNameLower = cleanRawName.toLowerCase();
+
+    const matched = existingStudents.find((existing) => {
+      const exTurma = normalizeTurmaName(existing.turma || '');
+      if (exTurma !== normalizedTurma) return false;
+      const exFullName = String(existing.fullName || existing.name || '').trim().toLowerCase();
+      const exName = String(existing.name || '').trim().toLowerCase();
+      if (exFullName === rawNameLower || exName === rawNameLower) return true;
+      const exBase = exName.replace(/\s+[a-z]$/i, '').trim();
+      if (exBase.length >= 4 && rawNameLower.startsWith(exBase)) return true;
+      const rawBase = rawNameLower.replace(/\s+[a-z]$/i, '').trim();
+      if (rawBase.length >= 4 && exFullName.startsWith(rawBase)) return true;
+      return false;
+    });
+
+    const { fullName, firstName, lastName, greetingName } = parseStudentName(cleanRawName);
+
+    if (matched) {
+      const currentFullName = String(matched.fullName || matched.name || '').trim();
+      if (fullName.length > currentFullName.length || fullName.toLowerCase() !== currentFullName.toLowerCase()) {
+        try {
+          const updates = { name: fullName, fullName, firstName, lastName, greetingName, updatedAt: new Date().toISOString() };
+          await setDoc(doc(db, 'users', matched.id), updates, { merge: true });
+          await setDoc(doc(db, 'publicProfiles', matched.id), { name: fullName }, { merge: true }).catch(() => {});
+          updated.push({ id: matched.id, oldName: currentFullName, name: fullName, turma: normalizedTurma, username: matched.username });
+        } catch (e: any) {
+          errors.push({ name: fullName, error: e.message });
+        }
+      } else {
+        existed.push({ name: currentFullName, turma: normalizedTurma, username: matched.username });
+      }
+    } else {
+      try {
+        const studentId = `student_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+        const username = item.username || generateKidUsername(fullName, normalizedTurma, existingUsernames);
+        const password = item.password || generateKidPassword(existingPasswords);
+        const avatar = getDefaultAvatar(cleanRawName);
+
+        const newUserDoc = {
+          id: studentId,
+          email: `${username}@aluno.tic.escola`,
+          name: fullName,
+          fullName: fullName,
+          firstName: firstName,
+          lastName: lastName,
+          greetingName: greetingName,
+          turma: normalizedTurma,
+          username: username,
+          role: 'student',
+          points: 0,
+          xp: 0,
+          avatar: avatar,
+          language: 'pt',
+          initialPassword: password,
+          password: password,
+          isFirstLogin: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+
+        await setDoc(doc(db, 'users', studentId), newUserDoc);
+        await setDoc(doc(db, 'credentials', studentId), {
+          userId: studentId,
+          username: username,
+          passwordHash: password,
+          rawPassword: password,
+          createdAt: new Date().toISOString(),
+        });
+        await setDoc(doc(db, 'publicProfiles', studentId), {
+          id: studentId,
+          name: fullName,
+          turma: normalizedTurma,
+          avatar: avatar,
+          points: 0,
+        });
+
+        created.push({
+          id: studentId,
+          name: fullName,
+          turma: normalizedTurma,
+          username: username,
+          password: password,
+        });
+      } catch (createErr: any) {
+        errors.push({ name: fullName, error: createErr.message });
+      }
+    }
+  }
+
+  return {
+    success: true,
+    wipedBefore: wipeAllStudentsFirst,
+    wipedStats: { deletedCount, purgedResidualsCount: 0 },
+    summary: {
+      totalInFile: students.length,
+      createdCount: created.length,
+      updatedCount: updated.length,
+      existedCount: existed.length,
+      errorsCount: errors.length,
+    },
+    created,
+    updated,
+    existed,
+    errors,
+  };
 }
 
 export const api = {
@@ -1327,7 +1487,7 @@ export const api = {
 
   async importStudentsBatch(
     students: Array<{ name: string; turma?: string; number?: number; username?: string; password?: string }>,
-    defaultTurma?: string,
+    defaultTurma = '5.º A',
     wipeAllStudentsFirst = false
   ): Promise<{
     success: boolean;
@@ -1339,10 +1499,15 @@ export const api = {
     existed: Array<{ name: string; turma: string; username: string; initialPassword?: string }>;
     errors: Array<{ name?: string; turma?: string; error: string }>;
   }> {
-    return await serverApi('/api/teacher/students/import-batch', {
-      method: 'POST',
-      body: JSON.stringify({ students, defaultTurma, wipeAllStudentsFirst }),
-    });
+    try {
+      return await serverApi('/api/teacher/students/import-batch', {
+        method: 'POST',
+        body: JSON.stringify({ students, defaultTurma, wipeAllStudentsFirst }),
+      });
+    } catch (serverErr) {
+      console.warn('Server import-batch API notice; executing direct client-side Firestore fallback:', serverErr);
+      return await directFirestoreImportStudentsBatch(students, defaultTurma, wipeAllStudentsFirst);
+    }
   },
 
   async resetStudentPassword(userId: string): Promise<{ success: boolean; newPassword: string; message: string }> {

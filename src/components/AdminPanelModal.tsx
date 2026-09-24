@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import {
   X,
   FileSpreadsheet,
@@ -31,10 +31,11 @@ import {
   BookOpen,
   Sparkles,
   Check,
-  ToggleLeft,
-  ToggleRight,
-  ListOrdered,
-  ExternalLink,
+  ChevronDown,
+  Printer,
+  Sliders,
+  Scissors,
+  HelpCircle,
 } from 'lucide-react';
 import { User, Language, ThemeVisibilityMap, QuizVisibilityMap, ActivityProgress } from '../types';
 import { api, isUserAdmin, DEFAULT_THEME_VISIBILITY, DEFAULT_QUIZ_VISIBILITY } from '../services/api';
@@ -48,14 +49,6 @@ import {
   getStudentThemeBreakdown,
   getQualitativeLevel,
   getGlobalActivityStats,
-  getThemeMaxPoints,
-  getThemeActivityCount,
-  getTotalActivitiesCount,
-  getTotalChallengesCount,
-  getTotalQuizzesCount,
-  getGlobalCurricularMaxPoints,
-  getStudentFullName,
-  getStudentFirstAndLastName,
   exportStudentCredentialsToExcel,
 } from '../utils/exportUtils';
 import { ALL_THEMES, THEMES_BY_ID } from '../data/allThemesData';
@@ -69,7 +62,7 @@ interface AdminPanelModalProps {
   onClose: () => void;
   currentUser: User | null;
   language: Language;
-  initialTab?: 'students' | 'credentials' | 'import' | 'scores' | 'turmas' | 'themes' | 'danger';
+  initialTab?: 'students' | 'credentials' | 'import' | 'scores' | 'turmas' | 'themes' | 'danger' | 'settings';
 }
 
 interface ConfirmDialogState {
@@ -89,13 +82,26 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   language,
   initialTab = 'students',
 }) => {
-  const [activeTab, setActiveTab] = useState<'students' | 'credentials' | 'import' | 'scores' | 'turmas' | 'themes' | 'danger'>(initialTab);
+  // Navigation: 4 main tabs
+  const [activeTab, setActiveTab] = useState<'students' | 'import' | 'credentials' | 'settings'>('students');
+
+  // Sub-modes for Alunos & Pautas
+  const [assessmentMode, setAssessmentMode] = useState<'global' | 'theme'>('global');
+
+  // Sub-sections for Configurações & Turmas
+  const [settingsSection, setSettingsSection] = useState<'themes' | 'quizzes' | 'turmas' | 'danger'>('themes');
+
+  // Students & Turmas
   const [students, setStudents] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedTurma, setSelectedTurma] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [feedbackMsg, setFeedbackMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [visiblePasswords, setVisiblePasswords] = useState<Record<string, boolean>>({});
+
+  // Export dropdown state
+  const [exportDropdownOpen, setExportDropdownOpen] = useState(false);
+  const exportDropdownRef = useRef<HTMLDivElement>(null);
 
   // Scores by Theme & Activity Progress State
   const [selectedThemeForScores, setSelectedThemeForScores] = useState<string>('tic-sociedade');
@@ -111,7 +117,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   const [quizVisibility, setQuizVisibility] = useState<QuizVisibilityMap>(DEFAULT_QUIZ_VISIBILITY);
   const [togglingQuizId, setTogglingQuizId] = useState<string | null>(null);
 
-  // Turmas local list state (for reactive updates upon creation/deletion)
+  // Turmas list state
   const [turmasList, setTurmasList] = useState<string[]>([]);
   const [newTurmaName, setNewTurmaName] = useState('');
   const [creatingTurma, setCreatingTurma] = useState(false);
@@ -132,12 +138,32 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   const [actionLoading, setActionLoading] = useState(false);
   const [isRecalibratingXP, setIsRecalibratingXP] = useState(false);
 
-  // Load Turmas, Students and Theme Visibility whenever modal opens
+  // Route initialTab to the correct tab and sub-section
   useEffect(() => {
     if (isOpen) {
-      if (initialTab) {
-        setActiveTab(initialTab);
+      if (initialTab === 'credentials') {
+        setActiveTab('credentials');
+      } else if (initialTab === 'import') {
+        setActiveTab('import');
+      } else if (initialTab === 'scores') {
+        setActiveTab('students');
+        setAssessmentMode('theme');
+      } else if (initialTab === 'turmas') {
+        setActiveTab('settings');
+        setSettingsSection('turmas');
+      } else if (initialTab === 'themes') {
+        setActiveTab('settings');
+        setSettingsSection('themes');
+      } else if (initialTab === 'danger') {
+        setActiveTab('settings');
+        setSettingsSection('danger');
+      } else if (initialTab === 'settings') {
+        setActiveTab('settings');
+      } else {
+        setActiveTab('students');
+        setAssessmentMode('global');
       }
+
       setTurmasList(getTurmasList());
       loadStudents();
       loadThemeVisibility();
@@ -146,22 +172,60 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
     }
   }, [isOpen, initialTab]);
 
+  // Click outside listener for export dropdown
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (exportDropdownRef.current && !exportDropdownRef.current.contains(event.target as Node)) {
+        setExportDropdownOpen(false);
+      }
+    };
+    if (exportDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [exportDropdownOpen]);
+
   // Keyboard shortcut to close
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen && !editingStudent && !confirmDialog) {
+      if (e.key === 'Escape' && isOpen && !editingStudent && !confirmDialog && !detailStudent) {
         onClose();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onClose, editingStudent, confirmDialog]);
+  }, [isOpen, onClose, editingStudent, confirmDialog, detailStudent]);
 
   const showToast = (type: 'success' | 'error', text: string) => {
     setFeedbackMsg({ type, text });
     setTimeout(() => {
       setFeedbackMsg((prev) => (prev?.text === text ? null : prev));
-    }, 5000);
+    }, 4500);
+  };
+
+  const loadStudents = async () => {
+    setLoading(true);
+    try {
+      const studentsList = await api.getAllStudentsForAdmin();
+      setStudents(studentsList || []);
+      const registeredTurmas = Array.from(
+        new Set(
+          (studentsList || [])
+            .map((s: User) => (s.turma || '').trim())
+            .filter(Boolean)
+        )
+      ) as string[];
+
+      const staticList = getTurmasList();
+      const merged = Array.from(new Set([...staticList, ...registeredTurmas])).sort();
+      setTurmasList(merged);
+    } catch (err: any) {
+      showToast('error', err?.message || 'Erro ao carregar lista de alunos.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const loadProgressForStudents = async (studentList: User[]) => {
@@ -177,40 +241,18 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
     }
   };
 
-  const loadStudents = async () => {
-    setLoading(true);
-    try {
-      const data = await api.getAllStudentsForAdmin();
-      setStudents(data);
-      // Asynchronously fetch progress records for challenges and quizzes
-      loadProgressForStudents(data);
-    } catch (err) {
-      console.error('Failed to load students:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const refreshTurmas = () => {
-    setTurmasList(getTurmasList());
-  };
-
   const loadThemeVisibility = async () => {
     try {
       const map = await api.getThemeVisibility();
       setThemeVisibility(map);
-    } catch (err) {
-      console.error('Failed to load theme visibility:', err);
-    }
-
-    try {
       const qMap = await api.getQuizVisibility();
       setQuizVisibility(qMap);
     } catch (err) {
-      console.error('Failed to load quiz visibility:', err);
+      console.error('Error fetching visibility:', err);
     }
   };
 
+  // Toggle Quiz Visibility
   const handleToggleQuiz = async (themeId: string, currentVal: boolean) => {
     setTogglingQuizId(themeId);
     const nextVal = !currentVal;
@@ -225,11 +267,11 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       showToast(
         'success',
         nextVal
-          ? (language === 'pt' ? `🏆 Quiz do ${themeName} agora VISÍVEL para alunos!` : `🏆 Quiz of ${themeName} is now VISIBLE to students!`)
-          : (language === 'pt' ? `🔒 Quiz do ${themeName} agora OCULTO para alunos.` : `🔒 Quiz of ${themeName} is now HIDDEN for students.`)
+          ? (language === 'pt' ? `🏆 Quiz do ${themeName} agora VISÍVEL para os alunos!` : `🏆 Quiz of ${themeName} is visible!`)
+          : (language === 'pt' ? `🔒 Quiz do ${themeName} agora OCULTO aos alunos.` : `🔒 Quiz of ${themeName} hidden.`)
       );
     } catch (err: any) {
-      showToast('error', err?.message || 'Erro ao atualizar visibilidade do quiz.');
+      showToast('error', err?.message || 'Erro ao atualizar quiz.');
       setQuizVisibility(quizVisibility);
     } finally {
       setTogglingQuizId(null);
@@ -248,14 +290,15 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       showToast(
         'success',
         visible
-          ? (language === 'pt' ? '🌟 Quizzes de Aprendizagem de TODOS os temas tornados VISÍVEIS!' : '🌟 Quizzes for ALL themes are now visible!')
-          : (language === 'pt' ? '🔒 Quizzes de Aprendizagem de todos os temas OCULTADOS aos alunos.' : '🔒 Quizzes for all themes hidden.')
+          ? '🌟 Quizzes de Aprendizagem de TODOS os temas tornados VISÍVEIS!'
+          : '🔒 Quizzes de todos os temas OCULTADOS aos alunos.'
       );
     } catch (err: any) {
       showToast('error', err?.message || 'Erro ao atualizar visibilidade dos quizzes.');
     }
   };
 
+  // Toggle Theme Visibility
   const handleToggleTheme = async (themeId: string, currentVal: boolean) => {
     setTogglingThemeId(themeId);
     const nextVal = !currentVal;
@@ -270,12 +313,11 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       showToast(
         'success',
         nextVal
-          ? (language === 'pt' ? `✅ ${themeName} agora VISÍVEL e desbloqueado para os alunos!` : `✅ ${themeName} is now VISIBLE to students!`)
-          : (language === 'pt' ? `🔒 ${themeName} agora OCULTO / BLOQUEADO para os alunos.` : `🔒 ${themeName} is now HIDDEN for students.`)
+          ? `✅ ${themeName} agora VISÍVEL e desbloqueado para os alunos!`
+          : `🔒 ${themeName} agora BLOQUEADO / OCULTO aos alunos.`
       );
     } catch (err: any) {
       showToast('error', err?.message || 'Erro ao atualizar visibilidade do tema.');
-      // Revert on error
       setThemeVisibility(themeVisibility);
     } finally {
       setTogglingThemeId(null);
@@ -294,8 +336,8 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       showToast(
         'success',
         visible
-          ? (language === 'pt' ? '🌟 Todos os 7 temas foram DESBLOQUEADOS e estão visíveis para os alunos!' : '🌟 All 7 themes unlocked!')
-          : (language === 'pt' ? '🔒 Todos os temas foram OCULTADOS aos alunos.' : '🔒 All themes hidden.')
+          ? '🌟 Todos os 7 temas foram DESBLOQUEADOS para os alunos!'
+          : '🔒 Todos os temas foram OCULTADOS aos alunos.'
       );
     } catch (err: any) {
       showToast('error', err?.message || 'Erro ao atualizar temas.');
@@ -313,9 +355,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       await api.saveThemeVisibility(nextMap);
       showToast(
         'success',
-        language === 'pt'
-          ? `🎯 Temas do 1 ao ${themeNumber} agora DESBLOQUEADOS para os alunos (Temas ${themeNumber + 1 > 7 ? 'Nenhum' : `${themeNumber + 1} a 7`} bloqueados).`
-          : `🎯 Themes 1 to ${themeNumber} are now visible!`
+        `🎯 Temas do 1 ao ${themeNumber} agora DESBLOQUEADOS (Temas ${themeNumber + 1 > 7 ? 'Nenhum' : `${themeNumber + 1} a 7`} bloqueados).`
       );
     } catch (err: any) {
       showToast('error', err?.message || 'Erro ao atualizar temas.');
@@ -326,7 +366,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
     return ALL_THEMES.filter((t) => themeVisibility[t.id] !== false).length;
   }, [themeVisibility]);
 
-  // Edit single student
+  // Edit single student modal
   const openEditModal = (student: User) => {
     setEditingStudent(student);
     setEditName(student.fullName || student.name || '');
@@ -359,15 +399,15 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       await loadStudents();
       setTimeout(() => {
         closeEditModal();
-      }, 1000);
+      }, 900);
     } catch (err: any) {
-      setEditError(err?.message || (language === 'pt' ? 'Erro ao atualizar dados do aluno.' : 'Error updating student.'));
+      setEditError(err?.message || 'Erro ao atualizar dados do aluno.');
     } finally {
       setEditLoading(false);
     }
   };
 
-  // Selection helpers
+  // Filter students
   const filteredStudents = useMemo(() => {
     return students.filter((s) => {
       const matchesTurma = selectedTurma === 'all' || (s.turma || '').trim() === selectedTurma.trim();
@@ -375,7 +415,9 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       const matchesSearch =
         !query ||
         (s.name || '').toLowerCase().includes(query) ||
+        (s.fullName || '').toLowerCase().includes(query) ||
         (s.email || '').toLowerCase().includes(query) ||
+        (s.username || '').toLowerCase().includes(query) ||
         (s.publicId || '').toLowerCase().includes(query) ||
         (s.turma || '').toLowerCase().includes(query);
 
@@ -431,17 +473,17 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   const promptDeleteSingleStudent = (student: User) => {
     setConfirmDialog({
       isOpen: true,
-      title: language === 'pt' ? 'Eliminar Aluno' : 'Delete Student',
+      title: language === 'pt' ? 'Eliminar Conta do Aluno' : 'Delete Student Account',
       description: language === 'pt'
-        ? `Tens a certeza que desejas eliminar o aluno "${student.name}" (${student.email}) da turma ${student.turma || '5.º A'}?`
-        : `Are you sure you want to delete student "${student.name}" (${student.email})?`,
+        ? `Tens a certeza de que pretendes eliminar a conta de ${student.fullName || student.name} (${student.turma || 'Sem turma'})?`
+        : `Are you sure you want to delete ${student.name}?`,
       warningText: language === 'pt'
-        ? 'Esta ação é irreversível e removerá todo o progresso, pontos (XP) e medalhas deste aluno da base de dados.'
-        : 'This action cannot be undone and will delete all progress and XP for this student.',
-      confirmLabel: language === 'pt' ? 'Sim, Eliminar Aluno' : 'Yes, Delete Student',
+        ? 'Todas as pontuações XP, atividades e pautas deste aluno serão permanentemente removidas.'
+        : 'All XP scores and activity progress for this student will be wiped.',
+      confirmLabel: language === 'pt' ? 'Eliminar Aluno' : 'Delete Student',
       isDanger: true,
       action: async () => {
-        await api.adminDeleteStudent(student.id, student.email);
+        const res = await api.adminDeleteStudent(student.id, student.email);
         setSelectedStudentIds((prev) => {
           const next = new Set(prev);
           next.delete(student.id);
@@ -449,29 +491,32 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
           return next;
         });
         await loadStudents();
-        showToast('success', language === 'pt' ? `Aluno "${student.name}" eliminado com sucesso.` : 'Student deleted successfully.');
+        showToast('success', res.message);
       },
     });
   };
 
   // Action: Delete Selected Students
   const promptDeleteSelectedStudents = () => {
-    if (selectedStudentIds.size === 0) return;
     const count = selectedStudentIds.size;
+    if (count === 0) return;
+
     setConfirmDialog({
       isOpen: true,
-      title: language === 'pt' ? `Eliminar ${count} Aluno(s) Selecionado(s)` : `Delete ${count} Selected Student(s)`,
+      title: language === 'pt' ? `Eliminar ${count} Alunos Selecionados` : `Delete ${count} Selected Students`,
       description: language === 'pt'
-        ? `Tens a certeza que pretendes eliminar os ${count} alunos selecionados da plataforma?`
-        : `Are you sure you want to delete the ${count} selected students?`,
+        ? `Pretendes eliminar permanentemente as ${count} contas de alunos selecionadas?`
+        : `Permanently delete the ${count} selected student accounts?`,
       warningText: language === 'pt'
-        ? 'Todos os registos e pontuações destes alunos serão apagados permanentemente.'
-        : 'All records and scores for these students will be permanently deleted.',
-      confirmLabel: language === 'pt' ? `Eliminar ${count} Alunos` : `Delete ${count} Students`,
+        ? 'Esta ação é irreversível. As contas, credenciais e histórico de quizzes dos alunos selecionados serão apagados.'
+        : 'This action cannot be undone.',
+      confirmLabel: language === 'pt' ? `Eliminar (${count}) Alunos` : `Delete (${count}) Students`,
       isDanger: true,
       action: async () => {
-        const ids = Array.from(selectedStudentIds);
-        const res = await api.adminDeleteStudents(ids);
+        const studentsToDelete = students.filter((s) => selectedStudentIds.has(s.id || s.email));
+        const res = await api.adminDeleteStudents(
+          studentsToDelete.map((s) => s.id || s.email)
+        );
         setSelectedStudentIds(new Set());
         await loadStudents();
         showToast('success', res.message);
@@ -479,53 +524,51 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
     });
   };
 
-  // Action: Delete all students of a specific Turma
-  const promptDeleteStudentsByTurma = (turmaName: string) => {
-    const studentsInTurma = students.filter((s) => (s.turma || '').trim() === turmaName.trim());
-    const count = studentsInTurma.length;
+  // Action: Delete Students of a Turma
+  const promptDeleteStudentsByTurma = (turma: string) => {
+    const inTurmaCount = students.filter((s) => (s.turma || '').trim() === turma.trim()).length;
     setConfirmDialog({
       isOpen: true,
-      title: language === 'pt' ? `Eliminar Alunos da Turma ${turmaName}` : `Delete Students in Class ${turmaName}`,
+      title: language === 'pt' ? `Limpar Alunos da Turma ${turma}` : `Purge Students of ${turma}`,
       description: language === 'pt'
-        ? `Vais eliminar todos os ${count} alunos pertencentes à turma ${turmaName}.`
-        : `You will delete all ${count} students belonging to class ${turmaName}.`,
+        ? `Esta ação irá eliminar todos os ${inTurmaCount} alunos inscritos na turma ${turma}. A turma em si continuará registada.`
+        : `Delete all ${inTurmaCount} students in class ${turma}.`,
       warningText: language === 'pt'
-        ? `Atenção: Todos os registos de pauta e pontuações da turma ${turmaName} serão apagados. A turma continuará disponível na lista de turmas.`
-        : `Warning: All records and scores for class ${turmaName} will be cleared.`,
-      confirmLabel: language === 'pt' ? `Eliminar ${count} Alunos da ${turmaName}` : `Delete ${count} Students`,
+        ? `Apenas os alunos da turma ${turma} serão eliminados. As restantes turmas não serão afetadas.`
+        : 'Only students of this class will be affected.',
+      confirmLabel: language === 'pt' ? `Limpar Alunos (${inTurmaCount})` : 'Clear Students',
       isDanger: true,
       action: async () => {
-        const res = await api.adminDeleteStudentsByTurmas([turmaName]);
+        const res = await api.adminDeleteStudentsByTurmas([turma]);
+        setSelectedStudentIds(new Set());
         await loadStudents();
         showToast('success', res.message);
       },
     });
   };
 
-  // Action: Delete Turma (Class)
-  const promptDeleteTurma = (turmaName: string) => {
-    const studentsInTurma = students.filter((s) => (s.turma || '').trim() === turmaName.trim());
-    const count = studentsInTurma.length;
-
+  // Action: Delete Turma
+  const promptDeleteTurma = (turma: string) => {
+    const inTurmaCount = students.filter((s) => (s.turma || '').trim() === turma.trim()).length;
     setConfirmDialog({
       isOpen: true,
-      title: language === 'pt' ? `Eliminar Turma ${turmaName}` : `Delete Class ${turmaName}`,
+      title: language === 'pt' ? `Eliminar Turma ${turma}` : `Delete Class ${turma}`,
       description: language === 'pt'
-        ? `Pretendes remover a turma "${turmaName}" da plataforma?`
-        : `Do you want to remove class "${turmaName}" from the platform?`,
-      warningText: count > 0
+        ? `Pretendes eliminar a turma "${turma}" e remover o respetivo registo?${
+            inTurmaCount > 0 ? ` Atenção: Existem ${inTurmaCount} aluno(s) nesta turma que também serão removidos.` : ''
+          }`
+        : `Delete class ${turma}?`,
+      warningText: inTurmaCount > 0
         ? language === 'pt'
-          ? `Existem atualmente ${count} aluno(s) inscritos nesta turma. Ao confirmar, a turma será removida e todos os seus ${count} alunos serão igualmente eliminados da base de dados.`
-          : `There are currently ${count} student(s) in this class. They will also be removed.`
-        : language === 'pt'
-          ? `Esta turma não tem alunos inscritos. Apenas será removida da lista de turmas.`
-          : `This class has no students and will be removed from the list.`,
-      confirmLabel: language === 'pt' ? `Sim, Eliminar Turma ${turmaName}` : `Yes, Delete Class ${turmaName}`,
+          ? `⚠️ Serão também eliminados os ${inTurmaCount} alunos desta turma.`
+          : `⚠️ All ${inTurmaCount} students of this class will be deleted.`
+        : undefined,
+      confirmLabel: language === 'pt' ? 'Eliminar Turma' : 'Delete Class',
       isDanger: true,
       action: async () => {
-        const res = await api.adminDeleteTurmas([turmaName], true);
+        const res = await api.adminDeleteTurmas([turma], true);
         setTurmasList(res.turmas);
-        if (selectedTurma === turmaName) {
+        if (selectedTurma === turma) {
           setSelectedTurma('all');
         }
         await loadStudents();
@@ -534,19 +577,19 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
     });
   };
 
-  // Action: Delete ALL Students (Novo Ano Letivo e Limpeza Total da BD)
+  // Action: Delete ALL Students (Novo Ano Letivo)
   const promptDeleteAllStudents = () => {
     const totalCount = students.length;
     setConfirmDialog({
       isOpen: true,
       title: language === 'pt' ? '🚨 Eliminar TODOS os Alunos e Limpar BD' : '🚨 Delete ALL Students & Purge DB',
       description: language === 'pt'
-        ? `Esta ação irá eliminar permanentemente todas as contas de alunos (${totalCount} ativos) e limpar efetivamente todos os registos e subcoleções residuais na base de dados.`
-        : `This action will permanently delete all student accounts (${totalCount} active) and effectively purge all residual records and subcollections in the database.`,
+        ? `Esta ação irá eliminar permanentemente todas as contas de alunos (${totalCount} registados) e limpar registos residuais na base de dados para um novo ano letivo.`
+        : `This action will permanently delete all student accounts (${totalCount} registered).`,
       warningText: language === 'pt'
-        ? '⚠️ ATENÇÃO: Todas as contas de alunos, pontuações XP, histórico de atividades, progresso, conquistas e subcoleções residuais serão 100% eliminados da base de dados. Apenas a conta de professor(a) e as turmas configuradas serão mantidas.'
-        : '⚠️ WARNING: All student accounts, XP scores, and database subcollections will be completely wiped. Only the teacher account and configured classes will remain.',
-      confirmLabel: language === 'pt' ? 'CONFIRMAR LIMPEZA TOTAL DA BD' : 'CONFIRM PURGE OF ALL STUDENTS',
+        ? '⚠️ ATENÇÃO: Todas as contas de alunos, pontuações XP, atividades e histórico de quizzes serão 100% eliminados. A conta de professora (imaginebycarla2023@gmail.com) e as turmas serão 100% PRESERVADAS.'
+        : '⚠️ WARNING: All student accounts and XP scores will be completely wiped. Teacher account and classes are preserved.',
+      confirmLabel: language === 'pt' ? 'CONFIRMAR LIMPEZA TOTAL DA BD' : 'CONFIRM PURGE',
       isDanger: true,
       action: async () => {
         const res = await api.adminDeleteAllStudents();
@@ -557,7 +600,6 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
     });
   };
 
-  // Execute confirm dialog action
   const handleExecuteConfirm = async () => {
     if (!confirmDialog) return;
     setActionLoading(true);
@@ -591,16 +633,12 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   const isAdmin = currentUser && isUserAdmin(currentUser.email, currentUser.role);
   if (!isAdmin) return null;
 
+  // Export handlers
   const handleExportXLS = () => {
     if (filteredStudents.length === 0) return;
     exportStudentsToExcel(filteredStudents, selectedTurma);
-    showToast('success', 'Ficheiro Excel (.xlsx) transferido com sucesso!');
-  };
-
-  const handleExportCSV = () => {
-    if (filteredStudents.length === 0) return;
-    exportStudentsToCSV(filteredStudents, selectedTurma);
-    showToast('success', 'Ficheiro CSV transferido com sucesso!');
+    showToast('success', 'Pauta Geral Excel (.xlsx) transferida com sucesso!');
+    setExportDropdownOpen(false);
   };
 
   const handleExportThemeXLS = async () => {
@@ -618,12 +656,8 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       }
     }
     exportThemeScoresToExcel(filteredStudents, currentMap, selectedThemeForScores, selectedTurma);
-    showToast(
-      'success',
-      selectedThemeForScores === 'all'
-        ? (language === 'pt' ? 'Caderno Completo (7 Temas em XLS) exportado com sucesso!' : 'All 7 themes workbook exported successfully!')
-        : (language === 'pt' ? 'Pauta de desafios e quizzes do tema exportada com sucesso em XLS!' : 'Theme scores exported to XLS!')
-    );
+    showToast('success', 'Pauta de desafios e quizzes exportada com sucesso em XLS!');
+    setExportDropdownOpen(false);
   };
 
   const handleExportFull7ThemesXLS = async () => {
@@ -641,23 +675,8 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       }
     }
     exportThemeScoresToExcel(filteredStudents, currentMap, 'all', selectedTurma);
-    showToast(
-      'success',
-      language === 'pt'
-        ? 'Caderno Completo de Avaliação (7 Temas com Resumo Geral) exportado com sucesso em XLS!'
-        : 'All 7 themes complete assessment workbook exported to XLS!'
-    );
-  };
-
-  const handleExportThemeCSV = () => {
-    if (filteredStudents.length === 0) return;
-    if (selectedThemeForScores === 'all') {
-      handleExportFull7ThemesXLS();
-    } else {
-      const theme = THEMES_BY_ID[selectedThemeForScores] || ALL_THEMES.find((t) => t.id === selectedThemeForScores) || ALL_THEMES[0];
-      exportThemeScoresToCSV(filteredStudents, progressMap, theme, selectedTurma);
-      showToast('success', language === 'pt' ? 'Ficheiro CSV do tema exportado com sucesso!' : 'Theme CSV exported!');
-    }
+    showToast('success', 'Caderno Completo de Avaliação (7 Temas com Resumo Geral) exportado em XLS!');
+    setExportDropdownOpen(false);
   };
 
   const handleExportDailyTipsXLS = async () => {
@@ -675,30 +694,35 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       }
     }
     exportDailyTipsScoresToExcel(filteredStudents, currentMap, selectedTurma);
-    showToast(
-      'success',
-      language === 'pt'
-        ? 'Pauta de Dicas Diárias TIC e Bónus exportada com sucesso em XLS!'
-        : 'Daily Tips & Bonus scores exported to XLS!'
-    );
+    showToast('success', 'Pauta de Dicas Diárias TIC e Bónus exportada em XLS!');
+    setExportDropdownOpen(false);
   };
 
   const handleExportCredentialsXLS = () => {
     if (filteredStudents.length === 0) return;
     exportStudentCredentialsToExcel(filteredStudents, selectedTurma);
-    showToast('success', 'Credenciais dos alunos (Nome Completo, Utilizador e Palavra-passe) exportadas em XLS!');
+    showToast('success', 'Folha de credenciais dos alunos exportada em XLS!');
+    setExportDropdownOpen(false);
+  };
+
+  const handleExportCSV = () => {
+    if (filteredStudents.length === 0) return;
+    exportStudentsToCSV(filteredStudents, selectedTurma);
+    showToast('success', 'Ficheiro CSV transferido com sucesso!');
+    setExportDropdownOpen(false);
   };
 
   const handleRecalibrateXP = async () => {
     try {
       setIsRecalibratingXP(true);
       const res = await api.recalibratePoints();
-      showToast('success', res.message || 'Pontuações dos alunos sincronizadas com sucesso com o trabalho real.');
+      showToast('success', res.message || 'Pontuações dos alunos sincronizadas.');
       await loadStudents();
     } catch (err: any) {
       showToast('error', err.message || 'Erro ao sincronizar pontuações.');
     } finally {
       setIsRecalibratingXP(false);
+      setExportDropdownOpen(false);
     }
   };
 
@@ -709,22 +733,22 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
         className="relative w-full max-w-6xl h-[92vh] max-h-[95vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200"
       >
         {/* Modal Header */}
-        <div className="p-4 sm:p-6 bg-linear-to-r from-indigo-900 via-indigo-850 to-slate-900 text-white flex items-center justify-between border-b border-indigo-800/60 shrink-0">
+        <div className="p-4 sm:p-5 bg-linear-to-r from-indigo-900 via-indigo-850 to-slate-900 text-white flex items-center justify-between border-b border-indigo-800/60 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center shadow-inner text-amber-400 shrink-0">
+            <div className="w-11 h-11 rounded-2xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center shadow-inner text-amber-400 shrink-0">
               <ShieldCheck className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
-                  {language === 'pt' ? 'Área Reservada da Professora / Administrador' : 'Teacher / Admin Portal'}
+                  Área Reservada da Professora Carla Oliveira
                 </span>
-                <span className="text-xs text-indigo-300 font-mono">
+                <span className="text-xs text-indigo-300 font-mono hidden sm:inline">
                   {currentUser?.email}
                 </span>
               </div>
-              <h2 className="text-lg sm:text-2xl font-black text-white mt-1">
-                {language === 'pt' ? 'Pautas de Avaliação & Gestão de Turmas' : 'Class Assessment & Class Management'}
+              <h2 className="text-lg sm:text-2xl font-black text-white mt-0.5">
+                {language === 'pt' ? 'Gestão de Turmas & Pautas de Avaliação TIC' : 'Class Assessment & Management'}
               </h2>
             </div>
           </div>
@@ -738,22 +762,13 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
           </button>
         </div>
 
-        {/* Access check notice if not admin */}
-        {!isAdmin && (
-          <div className="p-4 bg-amber-50 border-b border-amber-200 flex items-center gap-3 text-amber-800 text-sm shrink-0">
-            <AlertCircle className="w-5 h-5 shrink-0 text-amber-600" />
-            <p>
-              Acesso exclusivo para administradores e professores registados. Inicia sessão com a tua conta de professor para gerir turmas e pautas.
-            </p>
-          </div>
-        )}
-
-        {/* Navigation Tabs */}
+        {/* 4 PRIMARY NAVIGATION TABS */}
         <div className="bg-slate-100/90 border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between gap-2 overflow-x-auto shrink-0">
           <div className="flex items-center gap-1.5 py-2">
+            {/* Tab 1: Alunos & Pautas */}
             <button
               onClick={() => setActiveTab('students')}
-              className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
                 activeTab === 'students'
                   ? 'bg-white text-indigo-700 shadow-xs border border-slate-200'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
@@ -766,9 +781,26 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
               </span>
             </button>
 
+            {/* Tab 2: Importar Alunos */}
+            <button
+              onClick={() => setActiveTab('import')}
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                activeTab === 'import'
+                  ? 'bg-white text-indigo-700 shadow-xs border border-slate-200'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+              }`}
+            >
+              <FileSpreadsheet className="w-4 h-4 text-indigo-600" />
+              <span>{language === 'pt' ? 'Importar Alunos (XLS)' : 'Import (XLS)'}</span>
+              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-indigo-100 text-indigo-800 font-black">
+                +
+              </span>
+            </button>
+
+            {/* Tab 3: Cartões & Credenciais */}
             <button
               onClick={() => setActiveTab('credentials')}
-              className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
                 activeTab === 'credentials'
                   ? 'bg-white text-amber-800 shadow-xs border border-slate-200'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
@@ -781,85 +813,17 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
               </span>
             </button>
 
+            {/* Tab 4: Configurações & Turmas */}
             <button
-              onClick={() => setActiveTab('import')}
-              className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
-                activeTab === 'import'
-                  ? 'bg-white text-indigo-700 shadow-xs border border-slate-200'
+              onClick={() => setActiveTab('settings')}
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                activeTab === 'settings'
+                  ? 'bg-white text-slate-800 shadow-xs border border-slate-200'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
               }`}
             >
-              <PlusCircle className="w-4 h-4 text-indigo-600" />
-              <span>{language === 'pt' ? 'Importar Alunos (XLS)' : 'Import (XLS)'}</span>
-              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-indigo-100 text-indigo-800 font-black">
-                +
-              </span>
-            </button>
-
-            <button
-              onClick={() => {
-                setActiveTab('scores');
-                if (Object.keys(progressMap).length === 0 && students.length > 0) {
-                  loadProgressForStudents(students);
-                }
-              }}
-              className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
-                activeTab === 'scores'
-                  ? 'bg-white text-emerald-700 shadow-xs border border-slate-200'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
-              }`}
-            >
-              <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
-              <span>{language === 'pt' ? 'Desafios & Quizzes (Pauta XLS)' : 'Challenges & Quizzes (XLS)'}</span>
-              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-emerald-100 text-emerald-800 font-black">
-                XLS
-              </span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('turmas')}
-              className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
-                activeTab === 'turmas'
-                  ? 'bg-white text-indigo-700 shadow-xs border border-slate-200'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
-              }`}
-            >
-              <Layers className="w-4 h-4 text-indigo-600" />
-              <span>{language === 'pt' ? 'Gestão de Turmas' : 'Class Management'}</span>
-              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-200 text-slate-700 font-black">
-                {turmasList.length}
-              </span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('themes')}
-              className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
-                activeTab === 'themes'
-                  ? 'bg-white text-indigo-700 shadow-xs border border-slate-200'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
-              }`}
-            >
-              <BookOpen className="w-4 h-4 text-indigo-600" />
-              <span>{language === 'pt' ? 'Visibilidade dos Temas' : 'Theme Visibility'}</span>
-              <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-black ${
-                visibleThemesCount === 7
-                  ? 'bg-emerald-100 text-emerald-800'
-                  : 'bg-amber-100 text-amber-800'
-              }`}>
-                {visibleThemesCount}/7
-              </span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('danger')}
-              className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
-                activeTab === 'danger'
-                  ? 'bg-rose-50 text-rose-700 shadow-xs border border-rose-200'
-                  : 'text-slate-600 hover:text-rose-600 hover:bg-rose-50/50'
-              }`}
-            >
-              <Trash2 className="w-4 h-4 text-rose-500" />
-              <span>{language === 'pt' ? 'Limpeza & Eliminações' : 'Purge & Resets'}</span>
+              <Sliders className="w-4 h-4 text-indigo-600" />
+              <span>{language === 'pt' ? 'Configurações & Turmas' : 'Settings & Classes'}</span>
             </button>
           </div>
 
@@ -902,9 +866,9 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
 
         {/* TAB 1: ALUNOS & PAUTAS */}
         {activeTab === 'students' && (
-          <>
-            {/* Control Bar: Turma filter, Search, Batch Delete, Exports */}
-            <div className="p-4 sm:p-5 bg-slate-50 border-b border-slate-200 space-y-3 shrink-0">
+          <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-slate-50">
+            {/* Control Bar: Class Filter, Search, Mode Switch, Unified Export */}
+            <div className="p-4 bg-white border-b border-slate-200 space-y-3 shrink-0 shadow-2xs">
               <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
                 {/* Turma filter pills */}
                 <div className="flex flex-wrap items-center gap-1.5">
@@ -935,7 +899,11 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                         }`}
                       >
                         <span>{turma}</span>
-                        <span className={`text-[10px] px-1 py-0.2 rounded-full ${selectedTurma === turma ? 'bg-indigo-700 text-white' : 'bg-slate-100 text-slate-600'}`}>
+                        <span
+                          className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                            selectedTurma === turma ? 'bg-indigo-700 text-white' : 'bg-slate-100 text-slate-600'
+                          }`}
+                        >
                           {countInTurma}
                         </span>
                       </button>
@@ -943,367 +911,514 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                   })}
                 </div>
 
-                {/* Search & Actions */}
-                <div className="flex flex-wrap sm:flex-nowrap items-center gap-2">
-                  <div className="relative flex-1 sm:w-60">
-                    <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder={language === 'pt' ? 'Pesquisar aluno ou email...' : 'Search student...'}
-                      className="w-full pl-9 pr-3 py-1.5 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
-                    />
+                {/* Right controls: View Mode toggle & Unified Export Menu */}
+                <div className="flex items-center gap-2 flex-wrap">
+                  {/* Mode switcher */}
+                  <div className="bg-slate-100 p-1 rounded-xl flex items-center gap-1 border border-slate-200 shrink-0">
+                    <button
+                      onClick={() => setAssessmentMode('global')}
+                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        assessmentMode === 'global'
+                          ? 'bg-white text-indigo-700 shadow-2xs'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      📊 Pauta Geral
+                    </button>
+                    <button
+                      onClick={() => {
+                        setAssessmentMode('theme');
+                        if (Object.keys(progressMap).length === 0 && students.length > 0) {
+                          loadProgressForStudents(students);
+                        }
+                      }}
+                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        assessmentMode === 'theme'
+                          ? 'bg-white text-emerald-700 shadow-2xs'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      🏆 Desafios & Quizzes
+                    </button>
                   </div>
 
-                  {/* Batch Delete button if students are checked */}
-                  {selectedStudentIds.size > 0 && (
+                  {/* UNIFIED EXPORT DROPDOWN MENU */}
+                  <div className="relative" ref={exportDropdownRef}>
                     <button
-                      onClick={promptDeleteSelectedStudents}
-                      className="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer shrink-0 animate-in fade-in"
-                      title="Eliminar os alunos selecionados"
+                      onClick={() => setExportDropdownOpen(!exportDropdownOpen)}
+                      className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
                     >
-                      <Trash2 className="w-3.5 h-3.5" />
-                      <span>{language === 'pt' ? `Eliminar (${selectedStudentIds.size})` : `Delete (${selectedStudentIds.size})`}</span>
+                      <Download className="w-4 h-4" />
+                      <span>{language === 'pt' ? 'Exportar Pauta' : 'Export'}</span>
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform ${exportDropdownOpen ? 'rotate-180' : ''}`} />
                     </button>
-                  )}
 
-                  {/* Shortcut to Theme Scores XLS */}
-                  <button
-                    onClick={() => {
-                      setActiveTab('scores');
-                      if (Object.keys(progressMap).length === 0 && students.length > 0) {
-                        loadProgressForStudents(students);
-                      }
-                    }}
-                    className="px-3 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs sm:text-sm font-bold shadow-2xs transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
-                    title="Aceder à pauta de desafios e quizzes por tema"
-                  >
-                    <Award className="w-4 h-4 text-indigo-600" />
-                    <span className="hidden md:inline">{language === 'pt' ? 'Pauta por Tema' : 'Scores by Theme'}</span>
-                  </button>
+                    {exportDropdownOpen && (
+                      <div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-200 py-2 z-50 animate-in fade-in zoom-in-95 duration-150">
+                        <div className="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-100">
+                          Exportações em Excel & Pautas
+                        </div>
 
-                  {/* Cartões & Impressão Shortcut */}
-                  <button
-                    onClick={() => setActiveTab('credentials')}
-                    className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
-                    title="Ver cartões de credenciais recortáveis e imprimir em folha A4"
-                  >
-                    <KeyRound className="w-4 h-4 text-amber-100" />
-                    <span>{language === 'pt' ? 'Cartões & Impressão' : 'Cards & Print'}</span>
-                  </button>
+                        <button
+                          onClick={handleExportXLS}
+                          className="w-full px-3.5 py-2 text-left text-xs font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center gap-2.5 cursor-pointer"
+                        >
+                          <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
+                          <div>
+                            <div className="font-bold">Pauta Geral de Alunos (.xlsx)</div>
+                            <div className="text-[10px] text-slate-400">XP, nível qualitativo e turmas</div>
+                          </div>
+                        </button>
 
-                  {/* Importar XLS Shortcut */}
-                  <button
-                    onClick={() => setActiveTab('import')}
-                    className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
-                    title="Carregar ficheiro Excel (.xlsx) com lista de alunos"
-                  >
-                    <PlusCircle className="w-4 h-4 text-indigo-100" />
-                    <span>{language === 'pt' ? 'Importar Alunos' : 'Import'}</span>
-                  </button>
+                        <button
+                          onClick={handleExportFull7ThemesXLS}
+                          className="w-full px-3.5 py-2 text-left text-xs font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center gap-2.5 cursor-pointer"
+                        >
+                          <Award className="w-4 h-4 text-indigo-600" />
+                          <div>
+                            <div className="font-bold">Caderno Completo dos 7 Temas (.xlsx)</div>
+                            <div className="text-[10px] text-slate-400">Todos os desafios, quizzes e pauta final</div>
+                          </div>
+                        </button>
 
-                  {/* Export XLS */}
-                  <button
-                    onClick={handleExportXLS}
-                    disabled={filteredStudents.length === 0}
-                    className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shrink-0"
-                    title="Descarregar ficheiro Excel com todos os dados dos alunos (.xlsx)"
-                  >
-                    <FileSpreadsheet className="w-4 h-4" />
-                    <span>XLS</span>
-                  </button>
+                        <button
+                          onClick={handleExportDailyTipsXLS}
+                          className="w-full px-3.5 py-2 text-left text-xs font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center gap-2.5 cursor-pointer"
+                        >
+                          <Sparkles className="w-4 h-4 text-amber-500" />
+                          <div>
+                            <div className="font-bold">Pauta de Dicas Diárias TIC (.xlsx)</div>
+                            <div className="text-[10px] text-slate-400">Participação diária e bónus XP</div>
+                          </div>
+                        </button>
 
-                  {/* Export Credenciais XLS */}
-                  <button
-                    onClick={handleExportCredentialsXLS}
-                    disabled={filteredStudents.length === 0}
-                    className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shrink-0"
-                    title="Descarregar folha de credenciais dos alunos (Utilizador e Palavra-passe) para impressão e recorte (.xlsx)"
-                  >
-                    <KeyRound className="w-4 h-4 text-indigo-200" />
-                    <span>{language === 'pt' ? 'Credenciais (XLS)' : 'Credentials'}</span>
-                  </button>
+                        <button
+                          onClick={handleExportCredentialsXLS}
+                          className="w-full px-3.5 py-2 text-left text-xs font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center gap-2.5 cursor-pointer"
+                        >
+                          <KeyRound className="w-4 h-4 text-amber-600" />
+                          <div>
+                            <div className="font-bold">Folha de Credenciais (.xlsx)</div>
+                            <div className="text-[10px] text-slate-400">Utilizadores e palavras-passe para o professor</div>
+                          </div>
+                        </button>
 
-                  {/* Recalibrar XP */}
-                  <button
-                    onClick={handleRecalibrateXP}
-                    disabled={isRecalibratingXP || students.length === 0}
-                    className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-bold border border-slate-200 transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shrink-0"
-                    title="Sincronizar e recalibrar pontuações dos alunos, garantindo que refletem apenas os desafios e dicas realizadas (sem 100 XP inicial)"
-                  >
-                    <RefreshCw className={`w-3.5 h-3.5 text-slate-500 ${isRecalibratingXP ? 'animate-spin text-indigo-600' : ''}`} />
-                    <span className="hidden sm:inline">{isRecalibratingXP ? 'A sincronizar...' : 'Sincronizar XP'}</span>
-                  </button>
+                        <div className="my-1 border-t border-slate-100" />
 
-                  {/* Export Dicas Diárias XLS */}
-                  <button
-                    onClick={handleExportDailyTipsXLS}
-                    disabled={filteredStudents.length === 0}
-                    className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shrink-0"
-                    title="Exportar pauta detalhada de participação e pontuações nas Dicas Diárias TIC (.xlsx)"
-                  >
-                    <Sparkles className="w-4 h-4 text-amber-100" />
-                    <span>{language === 'pt' ? '💡 Dicas do Dia (XLS)' : '💡 Daily Tips (XLS)'}</span>
-                  </button>
+                        <button
+                          onClick={handleExportCSV}
+                          className="w-full px-3.5 py-2 text-left text-xs font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center gap-2.5 cursor-pointer"
+                        >
+                          <Download className="w-4 h-4 text-slate-500" />
+                          <div>
+                            <div className="font-bold">Exportar CSV</div>
+                            <div className="text-[10px] text-slate-400">Formato universal delimitado</div>
+                          </div>
+                        </button>
 
-                  {/* Export CSV */}
-                  <button
-                    onClick={handleExportCSV}
-                    disabled={filteredStudents.length === 0}
-                    className="px-3 py-1.5 rounded-xl bg-slate-700 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1 cursor-pointer disabled:opacity-50 shrink-0"
-                    title="Descarregar ficheiro CSV"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    <span>CSV</span>
-                  </button>
+                        <button
+                          onClick={handleRecalibrateXP}
+                          disabled={isRecalibratingXP || students.length === 0}
+                          className="w-full px-3.5 py-2 text-left text-xs font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center gap-2.5 cursor-pointer disabled:opacity-50"
+                        >
+                          <RefreshCw className={`w-4 h-4 text-slate-400 ${isRecalibratingXP ? 'animate-spin text-indigo-600' : ''}`} />
+                          <div>
+                            <div className="font-bold">Sincronizar Pontuações XP</div>
+                            <div className="text-[10px] text-slate-400">Recalibra XP com atividades reais</div>
+                          </div>
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
 
-              {/* Metrics row */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
-                <div className="p-2.5 bg-white rounded-xl border border-slate-200 shadow-2xs">
-                  <div className="flex items-center justify-between text-slate-500 mb-0.5">
-                    <span className="text-[10px] font-bold uppercase tracking-wider">
-                      {selectedTurma === 'all' ? 'Total Alunos' : `Alunos ${selectedTurma}`}
-                    </span>
-                    <Users className="w-3.5 h-3.5 text-indigo-600" />
-                  </div>
-                  <p className="text-lg font-black text-slate-900">{stats.total}</p>
+              {/* Row 2: Search and selection info */}
+              <div className="flex items-center justify-between gap-3 flex-wrap pt-1">
+                <div className="relative flex-1 max-w-md">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder={language === 'pt' ? 'Pesquisar por nome, turma ou utilizador...' : 'Search student...'}
+                    className="w-full pl-9 pr-3 py-1.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:bg-white"
+                  />
                 </div>
 
-                <div className="p-2.5 bg-white rounded-xl border border-slate-200 shadow-2xs">
-                  <div className="flex items-center justify-between text-slate-500 mb-0.5">
-                    <span className="text-[10px] font-bold uppercase tracking-wider">
-                      {language === 'pt' ? 'Média Pontos' : 'Average Score'}
-                    </span>
-                    <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
-                  </div>
-                  <p className="text-lg font-black text-emerald-700">{stats.avgPoints} XP</p>
-                </div>
+                <div className="flex items-center gap-3">
+                  {/* Batch Delete button if selected */}
+                  {selectedStudentIds.size > 0 && (
+                    <button
+                      onClick={promptDeleteSelectedStudents}
+                      className="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer animate-in fade-in"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      <span>{language === 'pt' ? `Eliminar Selecionados (${selectedStudentIds.size})` : `Delete (${selectedStudentIds.size})`}</span>
+                    </button>
+                  )}
 
-                <div className="p-2.5 bg-white rounded-xl border border-slate-200 shadow-2xs">
-                  <div className="flex items-center justify-between text-slate-500 mb-0.5">
-                    <span className="text-[10px] font-bold uppercase tracking-wider">
-                      {language === 'pt' ? 'Pontuação Máxima' : 'Top Score'}
+                  {/* Summary Metric Badges */}
+                  <div className="flex items-center gap-2 text-xs text-slate-500">
+                    <span>
+                      Total: <strong className="text-slate-900 font-bold">{stats.total}</strong>
                     </span>
-                    <Award className="w-3.5 h-3.5 text-amber-500" />
-                  </div>
-                  <p className="text-lg font-black text-amber-600">{stats.maxPoints} XP</p>
-                </div>
-
-                <div className="p-2.5 bg-white rounded-xl border border-slate-200 shadow-2xs">
-                  <div className="flex items-center justify-between text-slate-500 mb-0.5">
-                    <span className="text-[10px] font-bold uppercase tracking-wider">
-                      {language === 'pt' ? 'Turmas c/ Alunos' : 'Active Classes'}
+                    <span>•</span>
+                    <span>
+                      Média: <strong className="text-indigo-700 font-bold">{stats.avgPoints} XP</strong>
                     </span>
-                    <GraduationCap className="w-3.5 h-3.5 text-indigo-500" />
                   </div>
-                  <p className="text-lg font-black text-indigo-900">{stats.activeTurmasCount} / {turmasList.length}</p>
                 </div>
               </div>
             </div>
 
-            {/* Students Table with visible vertical scrollbar (barra lateral) */}
-            <div className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 custom-scrollbar flex flex-col">
-              {loading ? (
-                <div className="py-20 text-center">
-                  <RefreshCw className="w-8 h-8 text-indigo-600 animate-spin mx-auto mb-3" />
-                  <p className="text-sm font-medium text-slate-600">
-                    A carregar os registos dos alunos da Base de Dados Cloud Firestore...
-                  </p>
-                </div>
-              ) : filteredStudents.length === 0 ? (
-                <div className="py-14 text-center bg-slate-50/60 rounded-2xl border border-dashed border-slate-300">
-                  <Users className="w-10 h-10 text-slate-400 mx-auto mb-2" />
-                  <p className="text-base font-bold text-slate-700">
-                    Nenhum aluno encontrado {selectedTurma !== 'all' ? `na turma ${selectedTurma}` : ''}
-                  </p>
-                  <p className="text-xs text-slate-500 mt-1 max-w-md mx-auto">
-                    Os alunos inscritos aparecerão aqui e poderás gerir as respetivas notas, palavras-passe, turmas ou efetuar a sua eliminação quando necessário.
-                  </p>
-                </div>
-              ) : (
-                <div className="flex flex-col border border-slate-200 rounded-2xl overflow-hidden shadow-2xs bg-white">
-                  <div className="overflow-x-auto overflow-y-auto max-h-[50vh] sm:max-h-[56vh] custom-scrollbar">
-                    <table className="w-full text-left text-xs sm:text-sm border-collapse">
-                      <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200 uppercase tracking-wider text-[11px] sticky top-0 z-20 shadow-xs">
-                      <tr>
-                        <th className="py-3 px-3 w-10 text-center">
-                          <button
-                            type="button"
-                            onClick={toggleSelectAllFiltered}
-                            className="p-1 rounded text-slate-500 hover:text-indigo-600 cursor-pointer"
-                            title={allFilteredSelected ? 'Desmarcar todos' : 'Selecionar todos'}
-                          >
-                            {allFilteredSelected ? (
-                              <CheckSquare className="w-4 h-4 text-indigo-600" />
-                            ) : (
-                              <Square className="w-4 h-4 text-slate-400" />
-                            )}
-                          </button>
-                        </th>
-                        <th className="py-3 px-3">Turma</th>
-                        <th className="py-3 px-3">Nome do Aluno</th>
-                        <th className="py-3 px-3">Utilizador</th>
-                        <th className="py-3 px-3">Palavra-passe</th>
-                        <th className="py-3 px-3 text-right">Pontos (XP)</th>
-                        <th className="py-3 px-3">Data Registo</th>
-                        <th className="py-3 px-3 text-center">Ações</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100 bg-white">
-                      {filteredStudents.map((student) => {
-                        const isChecked = selectedStudentIds.has(student.id || student.email);
-                        const username = student.username || (student.email ? student.email.split('@')[0] : 'aluno');
-                        const password = student.initialPassword || (student as any).password || '••••••••';
-                        const showPass = visiblePasswords[student.id];
-
-                        return (
-                          <tr
-                            key={student.id || student.email}
-                            className={`hover:bg-indigo-50/40 transition-colors ${isChecked ? 'bg-indigo-50/60' : ''}`}
-                          >
-                            <td className="py-2.5 px-3 text-center">
+            {/* VIEW MODE A: PAUTA GERAL (XP, NÍVEIS, CREDENCIAIS) */}
+            {assessmentMode === 'global' && (
+              <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+                {filteredStudents.length === 0 ? (
+                  <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 p-8">
+                    <div className="w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-3">
+                      <Users className="w-8 h-8" />
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-900">
+                      {language === 'pt' ? 'Nenhum aluno registado nesta turma' : 'No students found'}
+                    </h3>
+                    <p className="text-xs text-slate-500 max-w-md mx-auto mt-1">
+                      {language === 'pt'
+                        ? 'Carrega o teu ficheiro Excel (.xls / .xlsx) na aba "Importar Alunos" para criar os utilizadores.'
+                        : 'Import students via Excel (.xls / .xlsx) in the Import tab.'}
+                    </p>
+                    <button
+                      onClick={() => setActiveTab('import')}
+                      className="mt-4 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs transition-all cursor-pointer"
+                    >
+                      Importar Alunos por Excel
+                    </button>
+                  </div>
+                ) : (
+                  <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs text-slate-700">
+                        <thead className="bg-slate-100 text-slate-600 uppercase text-[10px] font-black border-b border-slate-200 sticky top-0 z-10">
+                          <tr>
+                            <th className="py-3 px-3 w-10 text-center">
                               <button
-                                type="button"
-                                onClick={() => toggleSelectStudent(student.id || student.email)}
-                                className="p-1 rounded text-slate-400 hover:text-indigo-600 cursor-pointer"
+                                onClick={toggleSelectAllFiltered}
+                                className="cursor-pointer text-slate-500 hover:text-indigo-600"
+                                title="Selecionar todos"
                               >
-                                {isChecked ? (
+                                {allFilteredSelected ? (
                                   <CheckSquare className="w-4 h-4 text-indigo-600" />
                                 ) : (
                                   <Square className="w-4 h-4" />
                                 )}
                               </button>
-                            </td>
-                            <td className="py-2.5 px-3 whitespace-nowrap">
-                              <span className="px-2 py-0.5 rounded-md text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
-                                {student.turma || '5.º A'}
-                              </span>
-                            </td>
-                            <td className="py-2.5 px-3 whitespace-nowrap font-bold text-slate-900">
-                              <div className="flex items-center gap-2.5">
-                                <div className="w-8 h-8 rounded-xl overflow-hidden shadow-2xs shrink-0 ring-1 ring-slate-200">
-                                  <CartoonAvatar
-                                    config={student.avatar || getDefaultAvatar(student.publicId || student.name)}
-                                    size={32}
-                                  />
-                                </div>
-                                <div>
-                                  <div className="font-bold text-slate-900 leading-tight">
-                                    {getStudentFullName(student) || student.name || 'Estudante'}
-                                  </div>
-                                  <div className="text-[11px] text-indigo-700 font-semibold flex items-center gap-1.5 mt-0.5">
-                                    <span>Cartão: {getStudentFirstAndLastName(student)}</span>
-                                    <span className="text-slate-300">•</span>
-                                    <span className="text-[10px] text-slate-400 font-mono font-normal">{student.publicId}</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="py-2.5 px-3 whitespace-nowrap font-mono text-xs text-indigo-900 font-bold">
-                              {username}
-                            </td>
-                            <td className="py-2.5 px-3 whitespace-nowrap">
-                              <div className="flex items-center gap-1.5 font-mono text-xs">
-                                <span className={showPass ? 'font-bold text-slate-900' : 'text-slate-400'}>
-                                  {showPass ? password : '••••••••'}
-                                </span>
-                                <button
-                                  type="button"
-                                  onClick={() =>
-                                    setVisiblePasswords((prev) => ({
-                                      ...prev,
-                                      [student.id]: !prev[student.id],
-                                    }))
-                                  }
-                                  className="text-slate-400 hover:text-slate-600 cursor-pointer p-0.5"
-                                  title={showPass ? 'Ocultar palavra-passe' : 'Mostrar palavra-passe'}
-                                >
-                                  {showPass ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
-                                </button>
-                              </div>
-                            </td>
-                            <td className="py-2.5 px-3 whitespace-nowrap text-right font-black text-indigo-700">
-                              {student.points ?? 0} XP
-                            </td>
-                            <td className="py-2.5 px-3 whitespace-nowrap text-slate-500 text-xs">
-                              {student.createdAt ? new Date(student.createdAt).toLocaleDateString('pt-PT') : '—'}
-                            </td>
-                            <td className="py-2.5 px-3 whitespace-nowrap text-center">
-                              <div className="flex items-center justify-center gap-1.5">
-                                <button
-                                  onClick={() => {
-                                    setDetailStudent(student);
-                                    if (!progressMap[student.id]) {
-                                      loadProgressForStudents([student]);
-                                    }
-                                  }}
-                                  className="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-700 border border-emerald-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
-                                  title="Ver pauta de desafios e quizzes deste aluno"
-                                >
-                                  <FileSpreadsheet className="w-3.5 h-3.5" />
-                                </button>
-                                <button
-                                  onClick={async () => {
-                                    if (!window.confirm(`Pretendes gerar uma nova palavra-passe para ${student.name}?`)) return;
-                                    try {
-                                      const res = await api.resetStudentPassword(student.id);
-                                      showToast('success', `Nova palavra-passe de ${student.name}: ${res.newPassword}`);
-                                      setVisiblePasswords((prev) => ({ ...prev, [student.id]: true }));
-                                      await loadStudents();
-                                    } catch (err: any) {
-                                      showToast('error', err.message || 'Erro ao redefinir.');
-                                    }
-                                  }}
-                                  className="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-600 hover:text-white text-amber-700 border border-amber-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
-                                  title="Redefinir palavra-passe do aluno"
-                                >
-                                  <KeyRound className="w-3.5 h-3.5" />
-                                </button>
-                                <button
-                                  onClick={() => openEditModal(student)}
-                                  className="p-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-600 hover:text-white text-indigo-700 border border-indigo-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
-                                  title="Editar nome, turma ou dados"
-                                >
-                                  <Edit className="w-3.5 h-3.5" />
-                                </button>
-                                <button
-                                  onClick={() => promptDeleteSingleStudent(student)}
-                                  className="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-600 hover:text-white text-rose-600 border border-rose-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
-                                  title="Eliminar este aluno permanentemente"
-                                >
-                                  <Trash2 className="w-3.5 h-3.5" />
-                                </button>
-                              </div>
-                            </td>
+                            </th>
+                            <th className="py-3 px-2 w-12 text-center">N.º</th>
+                            <th className="py-3 px-4">Nome Completo do Aluno</th>
+                            <th className="py-3 px-3 w-24">Turma</th>
+                            <th className="py-3 px-3 w-32">Utilizador</th>
+                            <th className="py-3 px-3 w-36">Palavra-passe</th>
+                            <th className="py-3 px-3 w-24 text-right">XP</th>
+                            <th className="py-3 px-3 w-28 text-center">Nível</th>
+                            <th className="py-3 px-3 w-36 text-center">Ações</th>
                           </tr>
-                        );
-                      })}
-                    </tbody>
-                    </table>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                          {filteredStudents.map((student, idx) => {
+                            const isSelected = selectedStudentIds.has(student.id || student.email);
+                            const isPasswordVisible = !!visiblePasswords[student.id];
+
+                            return (
+                              <tr
+                                key={student.id || idx}
+                                className={`hover:bg-slate-50/80 transition-colors ${
+                                  isSelected ? 'bg-indigo-50/40' : ''
+                                }`}
+                              >
+                                <td className="py-2.5 px-3 text-center">
+                                  <button
+                                    onClick={() => toggleSelectStudent(student.id || student.email)}
+                                    className="cursor-pointer text-slate-400 hover:text-indigo-600"
+                                  >
+                                    {isSelected ? (
+                                      <CheckSquare className="w-4 h-4 text-indigo-600" />
+                                    ) : (
+                                      <Square className="w-4 h-4" />
+                                    )}
+                                  </button>
+                                </td>
+                                <td className="py-2.5 px-2 text-center font-bold text-slate-400">
+                                  {idx + 1}
+                                </td>
+                                <td className="py-2.5 px-4">
+                                  <div className="flex items-center gap-2.5">
+                                    <div className="w-8 h-8 rounded-xl overflow-hidden ring-1 ring-slate-200 shrink-0 bg-slate-100">
+                                      <CartoonAvatar
+                                        config={student.avatar || getDefaultAvatar(student.publicId || student.name)}
+                                        size={32}
+                                      />
+                                    </div>
+                                    <div>
+                                      <div className="font-bold text-slate-900 text-xs sm:text-sm">
+                                        {student.fullName || student.name}
+                                      </div>
+                                      <div className="text-[10px] text-slate-400 font-mono">
+                                        {student.publicId || student.email}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td className="py-2.5 px-3">
+                                  <span className="px-2 py-0.5 rounded-lg bg-indigo-50 text-indigo-700 font-black text-[11px] border border-indigo-100">
+                                    {student.turma || '5.º A'}
+                                  </span>
+                                </td>
+                                <td className="py-2.5 px-3 font-mono text-slate-600 text-xs">
+                                  {student.username || student.email?.split('@')[0] || '—'}
+                                </td>
+                                <td className="py-2.5 px-3">
+                                  <div className="flex items-center gap-1.5">
+                                    <span className="font-mono text-xs font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
+                                      {isPasswordVisible
+                                        ? student.initialPassword || '******'
+                                        : '••••••••'}
+                                    </span>
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        setVisiblePasswords((prev) => ({
+                                          ...prev,
+                                          [student.id]: !prev[student.id],
+                                        }))
+                                      }
+                                      className="p-1 rounded-md text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 cursor-pointer"
+                                      title={isPasswordVisible ? 'Ocultar' : 'Mostrar'}
+                                    >
+                                      {isPasswordVisible ? (
+                                        <EyeOff className="w-3.5 h-3.5" />
+                                      ) : (
+                                        <Eye className="w-3.5 h-3.5" />
+                                      )}
+                                    </button>
+                                  </div>
+                                </td>
+                                <td className="py-2.5 px-3 text-right font-black text-indigo-700 text-xs">
+                                  {student.points || 0} XP
+                                </td>
+                                <td className="py-2.5 px-3 text-center">
+                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                    {getQualitativeLevel(Math.min(100, Math.round(((student.points || 0) / 1000) * 100)))}
+                                  </span>
+                                </td>
+                                <td className="py-2.5 px-3 text-center">
+                                  <div className="flex items-center justify-center gap-1">
+                                    {/* View Activity Breakdown */}
+                                    <button
+                                      onClick={() => {
+                                        setDetailStudent(student);
+                                        if (!progressMap[student.id]) {
+                                          loadProgressForStudents([student]);
+                                        }
+                                      }}
+                                      className="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-700 border border-emerald-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
+                                      title="Ver pauta de desafios e quizzes do aluno"
+                                    >
+                                      <FileSpreadsheet className="w-3.5 h-3.5" />
+                                    </button>
+
+                                    {/* Reset Password */}
+                                    <button
+                                      onClick={async () => {
+                                        if (!window.confirm(`Pretendes redefinir a palavra-passe de ${student.name}?`)) return;
+                                        try {
+                                          const res = await api.resetStudentPassword(student.id);
+                                          showToast('success', `Nova palavra-passe de ${student.name}: ${res.newPassword}`);
+                                          setVisiblePasswords((prev) => ({ ...prev, [student.id]: true }));
+                                          await loadStudents();
+                                        } catch (err: any) {
+                                          showToast('error', err.message || 'Erro ao redefinir.');
+                                        }
+                                      }}
+                                      className="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-600 hover:text-white text-amber-700 border border-amber-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
+                                      title="Redefinir palavra-passe"
+                                    >
+                                      <KeyRound className="w-3.5 h-3.5" />
+                                    </button>
+
+                                    {/* Edit Student */}
+                                    <button
+                                      onClick={() => openEditModal(student)}
+                                      className="p-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-600 hover:text-white text-indigo-700 border border-indigo-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
+                                      title="Editar aluno"
+                                    >
+                                      <Edit className="w-3.5 h-3.5" />
+                                    </button>
+
+                                    {/* Delete Student */}
+                                    <button
+                                      onClick={() => promptDeleteSingleStudent(student)}
+                                      className="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-600 hover:text-white text-rose-600 border border-rose-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
+                                      title="Eliminar aluno"
+                                    >
+                                      <Trash2 className="w-3.5 h-3.5" />
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                  <div className="p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 shrink-0">
-                    <span className="flex items-center gap-1.5 font-medium">
-                      <span>↕️</span>
-                      <span>
-                        {language === 'pt'
-                          ? `A mostrar ${filteredStudents.length} aluno(s). Utiliza a barra lateral à direita para ver todos.`
-                          : `Showing ${filteredStudents.length} student(s). Use the right sidebar/scrollbar to browse.`}
+                )}
+              </div>
+            )}
+
+            {/* VIEW MODE B: PAUTA POR TEMA (DESAFIOS & QUIZZES) */}
+            {assessmentMode === 'theme' && (
+              <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+                {/* Theme Selector Pills */}
+                <div className="p-3 bg-white rounded-2xl border border-slate-200 flex items-center gap-1.5 overflow-x-auto shadow-2xs">
+                  {ALL_THEMES.map((t) => (
+                    <button
+                      key={t.id}
+                      onClick={() => setSelectedThemeForScores(t.id)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+                        selectedThemeForScores === t.id
+                          ? 'bg-emerald-600 text-white shadow-xs'
+                          : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
+                      }`}
+                    >
+                      <span className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[10px]">
+                        {t.number}
                       </span>
-                    </span>
-                    <span className="text-slate-400 font-semibold">
-                      {selectedTurma === 'all' ? 'Todas as Turmas' : selectedTurma}
-                    </span>
-                  </div>
+                      <span>{t.title.pt}</span>
+                    </button>
+                  ))}
                 </div>
-              )}
-            </div>
-          </>
+
+                {/* Theme Table */}
+                {(() => {
+                  const currentTheme = ALL_THEMES.find((t) => t.id === selectedThemeForScores) || ALL_THEMES[0];
+
+                  return (
+                    <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
+                      <div className="p-4 bg-linear-to-r from-emerald-50 to-indigo-50 border-b border-slate-200 flex items-center justify-between">
+                        <div>
+                          <h4 className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <Award className="w-4 h-4 text-emerald-600" />
+                            <span>Tema {currentTheme.number}: {currentTheme.title.pt}</span>
+                          </h4>
+                          <p className="text-xs text-slate-500 mt-0.5">
+                            Pauta de desafios e quizzes oficiais com 1.ª tentativa e melhor resultado.
+                          </p>
+                        </div>
+
+                        <button
+                          onClick={handleExportThemeXLS}
+                          className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-all flex items-center gap-1.5 cursor-pointer"
+                        >
+                          <FileSpreadsheet className="w-3.5 h-3.5" />
+                          <span>Exportar XLS deste Tema</span>
+                        </button>
+                      </div>
+
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-left text-xs text-slate-700">
+                          <thead className="bg-slate-100 text-slate-600 uppercase text-[10px] font-black border-b border-slate-200 sticky top-0">
+                            <tr>
+                              <th className="py-2.5 px-3 w-12 text-center">N.º</th>
+                              <th className="py-2.5 px-4">Nome do Aluno</th>
+                              <th className="py-2.5 px-3 w-24">Turma</th>
+                              <th className="py-2.5 px-3 text-center">Desafio 1</th>
+                              <th className="py-2.5 px-3 text-center">Desafio 2</th>
+                              <th className="py-2.5 px-3 text-center">Desafio 3</th>
+                              <th className="py-2.5 px-3 text-center">Desafio 4</th>
+                              <th className="py-2.5 px-3 text-center">Quiz (Oficial)</th>
+                              <th className="py-2.5 px-3 text-center">Nível</th>
+                              <th className="py-2.5 px-3 text-right">XP Tema</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-slate-100">
+                            {filteredStudents.map((student, idx) => {
+                              const sProgress = progressMap[student.id] || progressMap[student.email] || [];
+                              const breakdown = getStudentThemeBreakdown(student, sProgress, currentTheme);
+
+                              return (
+                                <tr key={student.id} className="hover:bg-slate-50 transition-colors">
+                                  <td className="py-2 px-3 text-center font-bold text-slate-400">
+                                    {idx + 1}
+                                  </td>
+                                  <td className="py-2 px-4 font-bold text-slate-900">
+                                    {student.fullName || student.name}
+                                  </td>
+                                  <td className="py-2 px-3">
+                                    <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-bold text-[10px]">
+                                      {student.turma}
+                                    </span>
+                                  </td>
+                                  {breakdown.challenges.map((ch, chIdx) => (
+                                    <td key={chIdx} className="py-2 px-3 text-center">
+                                      <span
+                                        className={`px-1.5 py-0.5 rounded text-[11px] font-bold ${
+                                          ch.completed ? 'text-emerald-700 bg-emerald-50' : 'text-slate-400'
+                                        }`}
+                                      >
+                                        {ch.score}
+                                      </span>
+                                    </td>
+                                  ))}
+                                  {/* Pad if fewer than 4 challenges */}
+                                  {Array.from({ length: Math.max(0, 4 - breakdown.challenges.length) }).map((_, padIdx) => (
+                                    <td key={`pad-${padIdx}`} className="py-2 px-3 text-center text-slate-300">
+                                      —
+                                    </td>
+                                  ))}
+                                  <td className="py-2 px-3 text-center">
+                                    <span className="px-2 py-0.5 rounded-lg bg-indigo-50 text-indigo-700 font-bold">
+                                      {breakdown.quiz.officialScore}%
+                                    </span>
+                                  </td>
+                                  <td className="py-2 px-3 text-center font-bold">
+                                    <span className="text-emerald-700">
+                                      {getQualitativeLevel(breakdown.quiz.officialScore)}
+                                    </span>
+                                  </td>
+                                  <td className="py-2 px-3 text-right font-black text-emerald-700">
+                                    {breakdown.totalPoints} XP
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
+          </div>
         )}
 
-        {/* TAB 2: CARTÕES & IMPRESSÃO */}
+        {/* TAB 2: IMPORTAR ALUNOS (XLS / XLSX / PDF / ZIP / PASTE) */}
+        {activeTab === 'import' && (
+          <StudentImportTab
+            turmasList={turmasList}
+            existingStudents={students}
+            language={language}
+            onImportSuccess={loadStudents}
+            onNavigateToCredentials={() => setActiveTab('credentials')}
+            onNavigateToStudents={() => {
+              setActiveTab('students');
+              setAssessmentMode('global');
+            }}
+          />
+        )}
+
+        {/* TAB 3: CARTÕES & CREDENCIAIS (A4 PRINT READY) */}
         {activeTab === 'credentials' && (
           <StudentCredentialsTab
             students={students}
@@ -1313,562 +1428,400 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
           />
         )}
 
-        {/* TAB 3: IMPORTAR ALUNOS (XLS / XLSX) */}
-        {activeTab === 'import' && (
-          <StudentImportTab
-            turmasList={turmasList}
-            existingStudents={students}
-            language={language}
-            onImportSuccess={loadStudents}
-            onNavigateToCredentials={() => setActiveTab('credentials')}
-          />
-        )}
+        {/* TAB 4: CONFIGURAÇÕES & TURMAS (CENTRALIZADAS) */}
+        {activeTab === 'settings' && (
+          <div className="flex-1 flex flex-col min-h-0 bg-slate-50 overflow-hidden">
+            {/* Sub-navigation bar */}
+            <div className="p-3 sm:p-4 bg-white border-b border-slate-200 flex items-center gap-2 overflow-x-auto shrink-0 shadow-2xs">
+              <button
+                onClick={() => setSettingsSection('themes')}
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                  settingsSection === 'themes'
+                    ? 'bg-indigo-600 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                }`}
+              >
+                <BookOpen className="w-4 h-4" />
+                <span>{language === 'pt' ? 'Visibilidade dos Temas' : 'Theme Visibility'}</span>
+                <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-white/20 font-black">
+                  {visibleThemesCount}/7
+                </span>
+              </button>
 
-        {/* TAB: PAUTA DE DESAFIOS E QUIZZES POR TEMA (EXPORTAÇÃO XLS) */}
-        {activeTab === 'scores' && (
-          <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-slate-50">
-            {/* Top Toolbar */}
-            <div className="p-3 sm:p-3.5 bg-white border-b border-slate-200 shadow-2xs shrink-0 space-y-2.5">
-              {/* Row 1: Turmas Pills & Export Buttons */}
-              <div className="flex items-center justify-between gap-3 flex-wrap">
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500 mr-1 flex items-center gap-1">
-                    <Filter className="w-3.5 h-3.5" />
-                    {language === 'pt' ? 'Turma:' : 'Class:'}
-                  </span>
-                  <button
-                    onClick={() => setSelectedTurma('all')}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                      selectedTurma === 'all'
-                        ? 'bg-emerald-600 text-white shadow-xs'
-                        : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
-                    }`}
-                  >
-                    {language === 'pt' ? 'Todas as Turmas' : 'All Classes'} ({students.length})
-                  </button>
-                  {turmasList.map((turma) => {
-                    const countInTurma = students.filter((s) => (s.turma || '').trim() === turma.trim()).length;
-                    return (
-                      <button
-                        key={turma}
-                        onClick={() => setSelectedTurma(turma)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
-                          selectedTurma === turma
-                            ? 'bg-emerald-600 text-white shadow-xs'
-                            : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
-                        }`}
-                      >
-                        <span>{turma}</span>
-                        <span
-                          className={`text-[10px] px-1 py-0.2 rounded-full ${
-                            selectedTurma === turma ? 'bg-emerald-700 text-white' : 'bg-slate-100 text-slate-600'
-                          }`}
-                        >
-                          {countInTurma}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
+              <button
+                onClick={() => setSettingsSection('quizzes')}
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                  settingsSection === 'quizzes'
+                    ? 'bg-indigo-600 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                }`}
+              >
+                <Award className="w-4 h-4" />
+                <span>{language === 'pt' ? 'Quizzes de Aprendizagem' : 'Quizzes'}</span>
+              </button>
 
-                {/* Export Buttons */}
-                <div className="flex items-center gap-2 flex-wrap">
-                  <button
-                    onClick={handleExportThemeXLS}
-                    disabled={filteredStudents.length === 0}
-                    className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shrink-0"
-                    title="Exportar pauta detalhada do tema em Excel (.xlsx)"
-                  >
-                    <FileSpreadsheet className="w-4 h-4" />
-                    <span>
-                      {selectedThemeForScores === 'all'
-                        ? (language === 'pt' ? 'Exportar Todos os Temas (XLS)' : 'Export All Themes (XLS)')
-                        : (language === 'pt' ? 'Exportar Pauta do Tema (XLS)' : 'Export Theme Scores (XLS)')}
-                    </span>
-                  </button>
+              <button
+                onClick={() => setSettingsSection('turmas')}
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                  settingsSection === 'turmas'
+                    ? 'bg-indigo-600 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                }`}
+              >
+                <Layers className="w-4 h-4" />
+                <span>{language === 'pt' ? 'Gestão de Turmas' : 'Classes'}</span>
+                <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-200 text-slate-700 font-black">
+                  {turmasList.length}
+                </span>
+              </button>
 
-                  <button
-                    onClick={handleExportFull7ThemesXLS}
-                    disabled={filteredStudents.length === 0}
-                    className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shrink-0"
-                    title="Exportar caderno completo de avaliação com resumo global e 7 folhas temáticas (.xlsx)"
-                  >
-                    <Award className="w-4 h-4" />
-                    <span className="hidden sm:inline">
-                      {language === 'pt' ? 'Caderno Completo (7 Temas XLS)' : 'Master Workbook (7 Themes)'}
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={handleExportDailyTipsXLS}
-                    disabled={filteredStudents.length === 0}
-                    className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shrink-0"
-                    title="Exportar pauta detalhada de participação e pontuações nas Dicas Diárias TIC (.xlsx)"
-                  >
-                    <Sparkles className="w-4 h-4 text-amber-100" />
-                    <span>{language === 'pt' ? '💡 Dicas do Dia (XLS)' : '💡 Daily Tips (XLS)'}</span>
-                  </button>
-
-                  <button
-                    onClick={handleExportThemeCSV}
-                    disabled={filteredStudents.length === 0}
-                    className="px-3 py-1.5 rounded-xl bg-slate-700 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold shadow-xs transition-colors flex items-center gap-1 cursor-pointer disabled:opacity-50 shrink-0"
-                    title="Exportar dados em formato CSV"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    <span>CSV</span>
-                  </button>
-
-                  <button
-                    onClick={() => loadProgressForStudents(students)}
-                    disabled={loadingProgress}
-                    className="p-1.5 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 transition-colors cursor-pointer shrink-0"
-                    title="Recarregar progresso dos alunos da base de dados"
-                  >
-                    <RefreshCw className={`w-4 h-4 ${loadingProgress ? 'animate-spin text-emerald-600' : ''}`} />
-                  </button>
-                </div>
-              </div>
-
-              {/* Row 2: Theme Selector & Search */}
-              <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 pt-2 border-t border-slate-100">
-                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500 mr-1 flex items-center gap-1 shrink-0">
-                    <BookOpen className="w-3.5 h-3.5" />
-                    {language === 'pt' ? 'Tema:' : 'Theme:'}
-                  </span>
-                  <button
-                    onClick={() => setSelectedThemeForScores('all')}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 ${
-                      selectedThemeForScores === 'all'
-                        ? 'bg-indigo-600 text-white shadow-xs'
-                        : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
-                    }`}
-                  >
-                    {language === 'pt' ? '🌐 Visão Global (7 Temas)' : '🌐 All Themes Overview'}
-                  </button>
-                  {ALL_THEMES.map((theme) => {
-                    const isSelected = selectedThemeForScores === theme.id;
-                    return (
-                      <button
-                        key={theme.id}
-                        onClick={() => setSelectedThemeForScores(theme.id)}
-                        className={`px-2.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 flex items-center gap-1.5 ${
-                          isSelected
-                            ? 'bg-emerald-600 text-white shadow-xs'
-                            : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
-                        }`}
-                        title={theme.title.pt}
-                      >
-                        <span
-                          className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-black ${
-                            isSelected ? 'bg-white text-emerald-700' : 'bg-slate-100 text-slate-700'
-                          }`}
-                        >
-                          {theme.number}
-                        </span>
-                        <span>{theme.title.pt.split(':')[0] || `Tema ${theme.number}`}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="relative w-full lg:w-72 shrink-0">
-                  <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder={language === 'pt' ? 'Filtrar por aluno, email ou ID...' : 'Filter by student or email...'}
-                    className="w-full pl-9 pr-3 py-1.5 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
-                  />
-                </div>
-              </div>
+              <button
+                onClick={() => setSettingsSection('danger')}
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                  settingsSection === 'danger'
+                    ? 'bg-rose-600 text-white shadow-xs'
+                    : 'text-rose-600 hover:bg-rose-50'
+                }`}
+              >
+                <Trash2 className="w-4 h-4" />
+                <span>{language === 'pt' ? 'Zona de Segurança / Novo Ano' : 'Reset Zone'}</span>
+              </button>
             </div>
 
-            {/* Table Area */}
-            <div className="flex-1 min-h-0 p-3 sm:p-4 flex flex-col">
-              {loadingProgress && Object.keys(progressMap).length === 0 ? (
-                <div className="p-12 text-center text-slate-500 flex flex-col items-center justify-center gap-3">
-                  <RefreshCw className="w-8 h-8 animate-spin text-emerald-600" />
-                  <p className="font-semibold text-sm">
-                    {language === 'pt'
-                      ? 'A carregar pautas e registos de atividades da base de dados...'
-                      : 'Loading activity records...'}
-                  </p>
-                </div>
-              ) : filteredStudents.length === 0 ? (
-                <div className="p-12 text-center text-slate-400 bg-white rounded-2xl border border-slate-200">
-                  <Users className="w-10 h-10 mx-auto mb-2 opacity-30 text-slate-500" />
-                  <p className="text-base font-bold text-slate-600">
-                    {language === 'pt' ? 'Nenhum aluno encontrado' : 'No students found'}
-                  </p>
-                  <p className="text-xs text-slate-400 mt-1">
-                    {language === 'pt'
-                      ? 'Verifica os filtros de turma e pesquisa selecionados.'
-                      : 'Check the class and search filters.'}
-                  </p>
-                </div>
-              ) : selectedThemeForScores !== 'all' ? (
-                // SPECIFIC THEME TABLE
-                (() => {
-                  const currentTheme =
-                    THEMES_BY_ID[selectedThemeForScores] ||
-                    ALL_THEMES.find((t) => t.id === selectedThemeForScores) ||
-                    ALL_THEMES[0];
-                  const regularChallenges = currentTheme.challenges.filter((c) => c.type !== 'final_quiz');
-
-                  return (
-                    <div className="flex-1 min-h-0 bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden flex flex-col">
-                      <div className="p-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2 flex-wrap shrink-0">
-                        <div className="flex items-center gap-2">
-                          <span className="w-6 h-6 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center">
-                            {currentTheme.number}
-                          </span>
-                          <h4 className="font-bold text-slate-800 text-sm">
-                            {currentTheme.title.pt}
-                          </h4>
-                        </div>
-                        <div className="text-xs text-slate-500 font-semibold">
-                          {language === 'pt'
-                            ? `A mostrar ${filteredStudents.length} aluno(s) • ${selectedTurma === 'all' ? 'Todas as Turmas' : selectedTurma}`
-                            : `Showing ${filteredStudents.length} student(s)`}
-                        </div>
+            {/* Sub-section Content */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5">
+              {/* SECTION A: THEME VISIBILITY */}
+              {settingsSection === 'themes' && (
+                <div className="space-y-5 max-w-5xl mx-auto">
+                  {/* Explanatory banner */}
+                  <div className="p-5 rounded-3xl bg-linear-to-r from-indigo-900 to-slate-900 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div className="flex items-start gap-3.5">
+                      <div className="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-400/30 flex items-center justify-center text-amber-300 shrink-0 text-xl">
+                        📚
                       </div>
-
-                      <div className="flex-1 min-h-0 overflow-x-auto overflow-y-auto custom-scrollbar">
-                        <table className="w-full text-left text-sm border-collapse">
-                          <thead className="bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider border-b border-slate-200 sticky top-0 z-20 shadow-xs">
-                            <tr>
-                              <th className="py-3 px-3 w-12 text-center">N.º</th>
-                              <th className="py-3 px-3 w-20">Turma</th>
-                              <th className="py-3 px-3 min-w-[160px]">Aluno</th>
-                              <th className="py-3 px-3 min-w-[190px]">Email Institucional</th>
-                              {regularChallenges.map((ch, idx) => (
-                                <th key={ch.id} className="py-3 px-3 text-center min-w-[130px]" title={ch.title.pt}>
-                                  <div className="font-bold">Desafio {idx + 1}</div>
-                                  <div className="text-[10px] text-slate-500 font-normal truncate max-w-[130px]">
-                                    {ch.title.pt}
-                                  </div>
-                                </th>
-                              ))}
-                              <th className="py-3 px-3 text-center min-w-[150px]">
-                                <div className="font-bold text-emerald-800">Quiz de Aprendizagem</div>
-                                <div className="text-[10px] text-emerald-600 font-normal">1.ª Tent. (Oficial)</div>
-                              </th>
-                              <th className="py-3 px-3 text-right min-w-[120px]">
-                                <div className="font-bold">Total Tema</div>
-                                <div className="text-[10px] text-slate-500 font-normal">Máx: {getThemeMaxPoints(currentTheme)} XP</div>
-                              </th>
-                              <th className="py-3 px-3 text-center min-w-[110px]">Aproveitamento</th>
-                              <th className="py-3 px-3 text-center w-24">Ações</th>
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-slate-100">
-                            {filteredStudents.map((student, idx) => {
-                              const sProgress = progressMap[student.id] || progressMap[student.email] || [];
-                              const breakdown = getStudentThemeBreakdown(student, sProgress, currentTheme);
-
-                              return (
-                                <tr
-                                  key={student.id || student.email}
-                                  className="hover:bg-slate-50/80 transition-colors"
-                                >
-                                  <td className="py-2.5 px-3 text-center text-xs font-semibold text-slate-400">
-                                    {idx + 1}
-                                  </td>
-                                  <td className="py-2.5 px-3 whitespace-nowrap">
-                                    <span className="px-2 py-0.5 rounded-lg bg-indigo-50 text-indigo-700 text-xs font-bold border border-indigo-200">
-                                      {student.turma || '5.º A'}
-                                    </span>
-                                  </td>
-                                  <td className="py-2.5 px-3 whitespace-nowrap">
-                                    <div className="font-bold text-slate-900 leading-tight">
-                                      {getStudentFullName(student) || student.name || 'Estudante'}
-                                    </div>
-                                    <div className="text-[11px] text-indigo-700 font-semibold flex items-center gap-1.5 mt-0.5">
-                                      <span>Cartão: {getStudentFirstAndLastName(student)}</span>
-                                      <span className="text-slate-300">•</span>
-                                      <span className="text-[10px] text-slate-400 font-mono font-normal">{student.publicId}</span>
-                                    </div>
-                                  </td>
-                                  <td className="py-2.5 px-3 whitespace-nowrap text-slate-600 font-mono text-xs">
-                                    {student.email}
-                                  </td>
-
-                                  {/* Regular Challenges */}
-                                  {breakdown.challenges.map((ch) => (
-                                    <td key={ch.id} className="py-2.5 px-3 text-center whitespace-nowrap">
-                                      {ch.completed || ch.score > 0 ? (
-                                        <span
-                                          className={`inline-block px-2.5 py-1 rounded-lg text-xs font-bold shadow-2xs ${
-                                            ch.score >= 90
-                                              ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
-                                              : ch.score >= 50
-                                              ? 'bg-indigo-100 text-indigo-800 border border-indigo-200'
-                                              : 'bg-amber-100 text-amber-800 border border-amber-200'
-                                          }`}
-                                          title={`Pontuação: ${ch.score}/100`}
-                                        >
-                                          {ch.score} / 100
-                                        </span>
-                                      ) : (
-                                        <span className="text-slate-300 font-bold">—</span>
-                                      )}
-                                    </td>
-                                  ))}
-
-                                   {/* Quiz Final */}
-                                  <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                    {breakdown.quiz.completed || breakdown.quiz.attempts > 0 ? (
-                                      <div className="inline-flex flex-col items-center">
-                                        <span
-                                          className={`px-2.5 py-1 rounded-lg text-xs font-black shadow-2xs ${
-                                            breakdown.quiz.officialScore >= 90
-                                              ? 'bg-emerald-600 text-white'
-                                              : breakdown.quiz.officialScore >= 50
-                                              ? 'bg-indigo-600 text-white'
-                                              : 'bg-amber-500 text-white'
-                                          }`}
-                                          title={`Avaliação (1.ª Tentativa): ${breakdown.quiz.officialScore}% | Treino (Melhor Tentativa): ${breakdown.quiz.bestScore}%`}
-                                        >
-                                          {breakdown.quiz.officialScore}%
-                                        </span>
-                                        <span className="text-[10px] text-emerald-800 font-bold mt-0.5">
-                                          {getQualitativeLevel(breakdown.quiz.officialScore)}
-                                        </span>
-                                        <span className="text-[9px] text-slate-400 font-medium">
-                                          {breakdown.quiz.attempts} {breakdown.quiz.attempts === 1 ? 'tentativa' : 'tentativas'}
-                                        </span>
-                                      </div>
-                                    ) : (
-                                      <span className="text-slate-300 font-bold">—</span>
-                                    )}
-                                  </td>
-
-                                  {/* Total Points */}
-                                  <td className="py-2.5 px-3 text-right whitespace-nowrap">
-                                    <span className="font-black text-indigo-700 text-sm">
-                                      {breakdown.totalPoints} XP
-                                    </span>
-                                    <span className="text-[10px] text-slate-400 block font-semibold">/ {breakdown.maxPoints} XP</span>
-                                  </td>
-
-                                  {/* Percentage / Evaluation */}
-                                  <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                    <div className="inline-flex flex-col items-center">
-                                      <span
-                                        className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                                          breakdown.percentage >= 90
-                                            ? 'bg-emerald-100 text-emerald-800'
-                                            : breakdown.percentage >= 70
-                                            ? 'bg-blue-100 text-blue-800'
-                                            : breakdown.percentage >= 50
-                                            ? 'bg-indigo-100 text-indigo-800'
-                                            : breakdown.percentage > 0
-                                            ? 'bg-amber-100 text-amber-800'
-                                            : 'bg-slate-100 text-slate-500'
-                                        }`}
-                                      >
-                                        {breakdown.percentage}%
-                                      </span>
-                                      <span className="text-[9px] text-slate-400 font-medium mt-0.5">
-                                        {getQualitativeLevel(breakdown.percentage).split(' ')[0]}
-                                      </span>
-                                    </div>
-                                  </td>
-
-                                   {/* Action */}
-                                  <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                    <button
-                                      onClick={() => setDetailStudent(student)}
-                                      className="p-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-600 hover:text-white text-indigo-700 border border-indigo-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
-                                      title="Ver pauta completa dos 7 temas deste aluno"
-                                    >
-                                      <ExternalLink className="w-3.5 h-3.5" />
-                                    </button>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
-                      </div>
-                      <div className="p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 shrink-0">
-                        <span className="flex items-center gap-1.5 font-medium">
-                          <span>↕️</span>
-                          <span>
-                            {language === 'pt'
-                              ? `A mostrar ${filteredStudents.length} aluno(s). Utiliza a barra lateral à direita para percorrer todos os alunos.`
-                              : `Showing ${filteredStudents.length} student(s). Use the right scrollbar to view all.`}
-                          </span>
-                        </span>
-                        <span className="font-semibold text-emerald-700">Tema {currentTheme.number}: {currentTheme.title.pt}</span>
+                      <div>
+                        <h3 className="text-base font-bold text-white">
+                          {language === 'pt' ? 'Controlo Pedagógico do Ritmo de Aprendizagem' : 'Pacing Control'}
+                        </h3>
+                        <p className="text-xs text-indigo-200 mt-1 max-w-xl">
+                          Controla quais os temas visíveis para os alunos. Podes desbloquear tema a tema à medida que avanças nas aulas de TIC.
+                        </p>
                       </div>
                     </div>
-                  );
-                })()
-              ) : (
-                // ALL THEMES OVERVIEW TABLE
-                <div className="flex-1 min-h-0 bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden flex flex-col">
-                  <div className="p-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2 flex-wrap shrink-0">
-                    <div className="flex items-center gap-2">
-                      <span className="w-6 h-6 rounded-lg bg-indigo-600 text-white font-black text-xs flex items-center justify-center">
-                        🌐
-                      </span>
-                      <h4 className="font-bold text-slate-800 text-sm">
-                        {language === 'pt'
-                          ? 'Pauta Global: Pontuação Consolidada dos 7 Temas & Dicas Diárias'
-                          : 'Consolidated Scores across all 7 Themes & Daily Tips'}
-                      </h4>
-                    </div>
-                    <div className="text-xs text-slate-500 font-semibold">
-                      {language === 'pt' ? `Total Curricular: ${getGlobalCurricularMaxPoints()} XP` : `Curricular Max: ${getGlobalCurricularMaxPoints()} XP`}
+
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <button
+                        onClick={() => handleSetAllThemes(true)}
+                        className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors cursor-pointer shadow-xs"
+                      >
+                        Desbloquear Todos (7)
+                      </button>
+                      <button
+                        onClick={() => handleSetAllThemes(false)}
+                        className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-colors cursor-pointer"
+                      >
+                        Bloquear Todos
+                      </button>
                     </div>
                   </div>
 
-                  <div className="flex-1 min-h-0 overflow-x-auto overflow-y-auto custom-scrollbar">
-                    <table className="w-full text-left text-sm border-collapse">
-                      <thead className="bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider border-b border-slate-200 sticky top-0 z-20 shadow-xs">
-                        <tr>
-                          <th className="py-3 px-3 w-12 text-center">N.º</th>
-                          <th className="py-3 px-3 w-20">Turma</th>
-                          <th className="py-3 px-3 min-w-[160px]">Aluno</th>
-                          <th className="py-3 px-3 min-w-[190px]">Email Institucional</th>
-                          {ALL_THEMES.map((t) => (
-                            <th key={t.id} className="py-3 px-2 text-center min-w-[95px]" title={t.title.pt}>
-                              <div className="font-bold text-[11px]">Tema {t.number}</div>
-                              <div className="text-[9px] text-slate-400 font-normal">/ {getThemeMaxPoints(t)}</div>
-                            </th>
-                          ))}
-                          <th className="py-3 px-3 text-right min-w-[120px]">
-                            <div className="font-bold">Total Temas</div>
-                            <div className="text-[10px] text-slate-500 font-normal">/ {getGlobalCurricularMaxPoints()} XP</div>
-                          </th>
-                          <th className="py-3 px-3 text-center min-w-[120px]" title="Pontos obtidos em Dicas Diárias TIC e Bónus">
-                            <div className="font-bold text-amber-700 flex items-center justify-center gap-1">
-                              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                              <span>Dicas & Bónus</span>
+                  {/* Themes Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                    {ALL_THEMES.map((theme) => {
+                      const isVisible = themeVisibility[theme.id] !== false;
+                      const isToggling = togglingThemeId === theme.id;
+
+                      return (
+                        <div
+                          key={theme.id}
+                          className={`p-4 rounded-2xl border transition-all flex items-center justify-between gap-3 ${
+                            isVisible
+                              ? 'bg-white border-slate-200 shadow-2xs'
+                              : 'bg-slate-100/70 border-slate-200 opacity-75'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <span
+                              className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm ${
+                                isVisible ? 'bg-indigo-600 text-white' : 'bg-slate-300 text-slate-600'
+                              }`}
+                            >
+                              {theme.number}
+                            </span>
+                            <div>
+                              <h4 className="font-bold text-slate-900 text-sm">
+                                {theme.title.pt}
+                              </h4>
+                              <span className="text-[11px] text-slate-500">
+                                {isVisible ? '🟢 Visível e acessível aos alunos' : '🔒 Bloqueado / Oculto'}
+                              </span>
                             </div>
-                            <div className="text-[10px] text-amber-600 font-normal">Diárias XP</div>
-                          </th>
-                          <th className="py-3 px-3 text-right min-w-[120px]">
-                            <div className="font-bold text-indigo-900">Total Global</div>
-                            <div className="text-[10px] text-indigo-700 font-normal">Pontuação Total</div>
-                          </th>
-                          <th className="py-3 px-3 text-center min-w-[100px]">Média</th>
-                          <th className="py-3 px-3 text-center w-24">Ações</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-slate-100">
-                        {filteredStudents.map((student, idx) => {
-                          const sProgress = progressMap[student.id] || progressMap[student.email] || [];
-                          const stats = getGlobalActivityStats(student, sProgress, ALL_THEMES);
+                          </div>
 
-                          return (
-                            <tr key={student.id || student.email} className="hover:bg-slate-50/80 transition-colors">
-                              <td className="py-2.5 px-3 text-center text-xs font-semibold text-slate-400">
-                                {idx + 1}
-                              </td>
-                              <td className="py-2.5 px-3 whitespace-nowrap">
-                                <span className="px-2 py-0.5 rounded-lg bg-indigo-50 text-indigo-700 text-xs font-bold border border-indigo-200">
-                                  {student.turma || '5.º A'}
-                                </span>
-                              </td>
-                              <td className="py-2.5 px-3 whitespace-nowrap">
-                                <div className="font-bold text-slate-900">{student.name || 'Estudante'}</div>
-                                <div className="text-[11px] text-slate-400 font-mono">{student.publicId}</div>
-                              </td>
-                              <td className="py-2.5 px-3 whitespace-nowrap text-slate-600 font-mono text-xs">
-                                {student.email}
-                              </td>
-
-                              {/* Themes 1 to 7 */}
-                              {stats.themeBreakdowns.map((b) => (
-                                <td key={b.theme.id} className="py-2.5 px-2 text-center whitespace-nowrap">
-                                  <span
-                                    className={`inline-block px-2 py-0.5 rounded-lg text-xs font-bold ${
-                                      b.percentage >= 90
-                                        ? 'bg-emerald-100 text-emerald-800'
-                                        : b.percentage >= 50
-                                        ? 'bg-indigo-50 text-indigo-800'
-                                        : b.totalPoints > 0
-                                        ? 'bg-amber-50 text-amber-800'
-                                        : 'text-slate-300'
-                                    }`}
-                                    title={`${b.theme.title.pt}: ${b.totalPoints}/${b.maxPoints} XP (${b.percentage}%)`}
-                                  >
-                                    {b.totalPoints > 0 ? `${b.totalPoints}` : '—'}
-                                  </span>
-                                </td>
-                              ))}
-
-                              {/* Total Temas Curriculares */}
-                              <td className="py-2.5 px-3 text-right whitespace-nowrap">
-                                <span className="font-bold text-slate-800 text-sm">
-                                  {stats.totalCurricularPoints} XP
-                                </span>
-                              </td>
-
-                              {/* Dicas Diárias & Bónus */}
-                              <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                <span className={`inline-block px-2 py-0.5 rounded-lg text-xs font-bold ${
-                                  stats.bonusPoints > 0 ? 'bg-amber-100 text-amber-900 border border-amber-200' : 'text-slate-300'
-                                }`}>
-                                  {stats.bonusPoints > 0 ? `+${stats.bonusPoints} XP` : '0 XP'}
-                                </span>
-                              </td>
-
-                              {/* Total Global */}
-                              <td className="py-2.5 px-3 text-right whitespace-nowrap">
-                                <span className="font-black text-indigo-700 text-sm">
-                                  {stats.totalPoints} XP
-                                </span>
-                              </td>
-
-                              {/* Average % */}
-                              <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                <span
-                                  className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                                    stats.globalPercentage >= 90
-                                      ? 'bg-emerald-100 text-emerald-800'
-                                      : stats.globalPercentage >= 50
-                                      ? 'bg-indigo-100 text-indigo-800'
-                                      : stats.globalPercentage > 0
-                                      ? 'bg-amber-100 text-amber-800'
-                                      : 'bg-slate-100 text-slate-500'
-                                  }`}
-                                >
-                                  {stats.globalPercentage}%
-                                </span>
-                              </td>
-
-                              {/* Actions */}
-                              <td className="py-2.5 px-3 text-center whitespace-nowrap">
-                                <button
-                                  onClick={() => setDetailStudent(student)}
-                                  className="p-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-600 hover:text-white text-indigo-700 border border-indigo-200 text-xs font-bold transition-all cursor-pointer shadow-2xs"
-                                  title="Ver detalhe individual dos 7 temas"
-                                >
-                                  <ExternalLink className="w-3.5 h-3.5" />
-                                </button>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                          <button
+                            onClick={() => handleToggleTheme(theme.id, isVisible)}
+                            disabled={isToggling}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                              isVisible
+                                ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200'
+                                : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
+                            }`}
+                          >
+                            {isToggling ? 'A guardar...' : isVisible ? 'Ativo' : 'Bloqueado'}
+                          </button>
+                        </div>
+                      );
+                    })}
                   </div>
-                  <div className="p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 shrink-0">
-                    <span className="flex items-center gap-1.5 font-medium">
-                      <span>↕️</span>
-                      <span>
-                        {language === 'pt'
-                          ? `A mostrar ${filteredStudents.length} aluno(s). Utiliza a barra lateral à direita para ver todas as pontuações.`
-                          : `Showing ${filteredStudents.length} student(s). Use the right scrollbar to view all.`}
+                </div>
+              )}
+
+              {/* SECTION B: QUIZZES VISIBILITY */}
+              {settingsSection === 'quizzes' && (
+                <div className="space-y-5 max-w-5xl mx-auto">
+                  <div className="p-5 rounded-3xl bg-linear-to-r from-indigo-900 to-slate-900 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div className="flex items-start gap-3.5">
+                      <div className="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-400/30 flex items-center justify-center text-amber-300 shrink-0 text-xl">
+                        🏆
+                      </div>
+                      <div>
+                        <h3 className="text-base font-bold text-white">
+                          {language === 'pt' ? 'Visibilidade dos Quizzes de Avaliação' : 'Quizzes Visibility'}
+                        </h3>
+                        <p className="text-xs text-indigo-200 mt-1 max-w-xl">
+                          Ativa ou desativa os quizzes oficiais. Podes mantê-los ocultos até ao momento do teste em sala de aula.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <button
+                        onClick={() => handleSetAllQuizzes(true)}
+                        className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors cursor-pointer shadow-xs"
+                      >
+                        Tornar Todos Visíveis
+                      </button>
+                      <button
+                        onClick={() => handleSetAllQuizzes(false)}
+                        className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-colors cursor-pointer"
+                      >
+                        Ocultar Todos
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                    {ALL_THEMES.map((theme) => {
+                      const isVisible = quizVisibility[theme.id] !== false;
+                      const isToggling = togglingQuizId === theme.id;
+
+                      return (
+                        <div
+                          key={theme.id}
+                          className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs flex items-center justify-between gap-3"
+                        >
+                          <div className="flex items-center gap-3">
+                            <span className="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs">
+                              Q{theme.number}
+                            </span>
+                            <div>
+                              <h4 className="font-bold text-slate-900 text-sm">
+                                Quiz Tema {theme.number}: {theme.title.pt}
+                              </h4>
+                              <span className="text-[11px] text-slate-500">
+                                {isVisible ? '🟢 Visível na plataforma' : '🔒 Oculto aos alunos'}
+                              </span>
+                            </div>
+                          </div>
+
+                          <button
+                            onClick={() => handleToggleQuiz(theme.id, isVisible)}
+                            disabled={isToggling}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                              isVisible
+                                ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200'
+                                : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
+                            }`}
+                          >
+                            {isToggling ? '...' : isVisible ? 'Visível' : 'Oculto'}
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* SECTION C: GESTÃO DE TURMAS */}
+              {settingsSection === 'turmas' && (
+                <div className="space-y-5 max-w-5xl mx-auto">
+                  {/* Create Turma Form */}
+                  <div className="p-5 bg-white rounded-3xl border border-slate-200 shadow-xs space-y-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center">
+                        <FolderPlus className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-900 text-sm">
+                          {language === 'pt' ? 'Criar Nova Turma' : 'Create Class'}
+                        </h4>
+                        <p className="text-xs text-slate-500">
+                          Adiciona novas turmas para registo de alunos e organização das pautas.
+                        </p>
+                      </div>
+                    </div>
+
+                    <form onSubmit={handleCreateTurmaSubmit} className="flex items-center gap-2 pt-2">
+                      <input
+                        type="text"
+                        value={newTurmaName}
+                        onChange={(e) => setNewTurmaName(e.target.value)}
+                        placeholder="Ex: 5.º G, 5.º H, 6.º A..."
+                        className="flex-1 px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-slate-300 bg-white font-bold text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                      />
+                      <button
+                        type="submit"
+                        disabled={creatingTurma || !newTurmaName.trim()}
+                        className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs transition-colors cursor-pointer disabled:opacity-50 flex items-center gap-1.5 shrink-0"
+                      >
+                        {creatingTurma ? (
+                          <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                        ) : (
+                          <PlusCircle className="w-3.5 h-3.5" />
+                        )}
+                        <span>Criar Turma</span>
+                      </button>
+                    </form>
+                  </div>
+
+                  {/* Active Turmas Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5">
+                    {turmasList.map((turma) => {
+                      const count = students.filter((s) => (s.turma || '').trim() === turma.trim()).length;
+                      const inTurmaStudents = students.filter((s) => (s.turma || '').trim() === turma.trim());
+                      const totalXP = inTurmaStudents.reduce((sum, s) => sum + (s.points || 0), 0);
+                      const avgXP = count > 0 ? Math.round(totalXP / count) : 0;
+
+                      return (
+                        <div
+                          key={turma}
+                          className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs flex flex-col justify-between gap-3"
+                        >
+                          <div className="flex items-start justify-between gap-2">
+                            <div>
+                              <span className="px-2.5 py-1 rounded-xl bg-indigo-600 text-white font-black text-sm shadow-xs">
+                                {turma}
+                              </span>
+                              <div className="mt-2 text-xs text-slate-600 space-y-0.5">
+                                <p><strong>{count}</strong> alunos inscritos</p>
+                                <p>Média: <strong className="text-emerald-700">{avgXP} XP</strong></p>
+                              </div>
+                            </div>
+
+                            <button
+                              onClick={() => promptDeleteTurma(turma)}
+                              className="p-1.5 rounded-lg text-rose-500 hover:bg-rose-50 cursor-pointer"
+                              title={`Eliminar turma ${turma}`}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+
+                          <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+                            <button
+                              onClick={() => {
+                                setSelectedTurma(turma);
+                                setActiveTab('students');
+                              }}
+                              className="text-indigo-600 hover:underline font-bold cursor-pointer"
+                            >
+                              Ver Alunos →
+                            </button>
+                            {count > 0 && (
+                              <button
+                                onClick={() => promptDeleteStudentsByTurma(turma)}
+                                className="text-rose-600 hover:underline font-medium text-[11px] cursor-pointer"
+                              >
+                                Limpar Alunos
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* SECTION D: ZONA DE SEGURANÇA & TRANSIÇÃO DE ANO LETIVO */}
+              {settingsSection === 'danger' && (
+                <div className="space-y-5 max-w-4xl mx-auto">
+                  <div className="p-4 bg-amber-50 rounded-2xl border border-amber-200 flex items-start gap-3 text-amber-900 text-xs sm:text-sm">
+                    <ShieldAlert className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="font-bold">Zona de Segurança Pedagógica</strong>
+                      <p className="mt-0.5 text-amber-800">
+                        Estas operações servem para transição de ano letivo ou reiniciar as pautas escolares. A conta da professora Carla Oliveira (imaginebycarla2023@gmail.com) está permanentemente protegida contra eliminação.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Action 1: Delete Students of Specific Class */}
+                  <div className="p-5 bg-white rounded-3xl border border-slate-200 shadow-2xs space-y-3">
+                    <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                      <Users className="w-4 h-4 text-indigo-600" />
+                      <span>1. Limpar Alunos por Turma Específica</span>
+                    </h4>
+                    <p className="text-xs text-slate-500">
+                      Elimina todos os alunos de uma turma em particular, mantendo intactas as outras turmas.
+                    </p>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
+                      {turmasList.map((turma) => {
+                        const count = students.filter((s) => (s.turma || '').trim() === turma.trim()).length;
+                        return (
+                          <button
+                            key={turma}
+                            onClick={() => promptDeleteStudentsByTurma(turma)}
+                            disabled={count === 0}
+                            className="p-3 rounded-xl border border-rose-200 bg-rose-50/40 hover:bg-rose-600 hover:text-white text-rose-800 text-xs font-bold transition-all flex flex-col items-center justify-center gap-1 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                          >
+                            <span>{turma}</span>
+                            <span className="text-[10px] opacity-75">({count} alunos)</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Action 2: Purge ALL Students */}
+                  <div className="p-6 bg-rose-50/70 rounded-3xl border-2 border-rose-200 shadow-2xs space-y-4">
+                    <div className="flex items-start gap-3.5">
+                      <div className="w-12 h-12 rounded-2xl bg-rose-600 text-white flex items-center justify-center shadow-xs shrink-0">
+                        <AlertTriangle className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h4 className="text-base font-black text-rose-950">
+                          2. Limpeza Total da Base de Dados (Novo Ano Letivo)
+                        </h4>
+                        <p className="text-xs sm:text-sm text-rose-800 mt-1">
+                          Elimina todas as contas de alunos ({students.length} registados) e pontuações na base de dados para começar um novo ano letivo.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-rose-200/60">
+                      <span className="text-xs text-rose-700 font-semibold">
+                        🔒 A conta de professora continua 100% ativa.
                       </span>
-                    </span>
-                    <span className="font-semibold text-indigo-700">7 Temas Curriculares + Dicas Diárias</span>
+                      <button
+                        onClick={promptDeleteAllStudents}
+                        className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-black text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        <span>Eliminar Todos os Alunos e Limpar BD</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
@@ -1876,581 +1829,24 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
           </div>
         )}
 
-        {/* TAB 2: GESTÃO DE TURMAS (CRIAR E ELIMINAR TURMAS) */}
-        {activeTab === 'turmas' && (
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
-            {/* Create Turma Card */}
-            <div className="p-5 sm:p-6 bg-linear-to-br from-indigo-50/70 to-slate-50 rounded-2xl border border-indigo-100 shadow-2xs">
-              <div className="flex items-center gap-2.5 mb-2">
-                <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-xs">
-                  <FolderPlus className="w-4 h-4" />
-                </div>
-                <div>
-                  <h3 className="text-base font-bold text-slate-900">
-                    {language === 'pt' ? 'Criar Nova Turma' : 'Create New Class'}
-                  </h3>
-                  <p className="text-xs text-slate-500">
-                    {language === 'pt'
-                      ? 'Adiciona novas turmas para que os alunos possam selecioná-las no registo e nas pautas.'
-                      : 'Add new classes to let students select them during sign-up.'}
-                  </p>
-                </div>
-              </div>
-
-              <form onSubmit={handleCreateTurmaSubmit} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 mt-4">
-                <div className="relative flex-1">
-                  <input
-                    type="text"
-                    required
-                    value={newTurmaName}
-                    onChange={(e) => setNewTurmaName(e.target.value)}
-                    placeholder={language === 'pt' ? 'Ex: 5.º G, 5.º H, 6.º A, Turma TIC...' : 'Ex: 5.º G, 6.º A...'}
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-sm font-semibold text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  disabled={creatingTurma || !newTurmaName.trim()}
-                  className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 shrink-0"
-                >
-                  {creatingTurma ? (
-                    <RefreshCw className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <>
-                      <PlusCircle className="w-4 h-4" />
-                      <span>{language === 'pt' ? 'Criar Turma' : 'Add Class'}</span>
-                    </>
-                  )}
-                </button>
-              </form>
-
-              {/* Quick suggestions */}
-              <div className="flex items-center gap-1.5 flex-wrap mt-3 text-xs text-slate-500">
-                <span className="font-semibold">{language === 'pt' ? 'Sugestões rápidas:' : 'Quick suggestions:'}</span>
-                {['5.º G', '5.º H', '5.º I', '6.º A', '6.º B'].map((sug) => (
-                  <button
-                    key={sug}
-                    type="button"
-                    onClick={() => setNewTurmaName(sug)}
-                    className="px-2 py-0.5 rounded-md bg-white border border-slate-200 hover:border-indigo-400 text-slate-700 text-[11px] font-bold cursor-pointer"
-                  >
-                    + {sug}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* List of Active Turmas */}
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="text-sm font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
-                  <Layers className="w-4 h-4 text-indigo-600" />
-                  <span>{language === 'pt' ? 'Turmas Ativas na Escola' : 'Active Classes'} ({turmasList.length})</span>
-                </h4>
-                <span className="text-xs text-slate-500">
-                  {language === 'pt' ? 'Podes eliminar turmas individualmente ou os seus alunos' : 'Manage each class'}
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-                {turmasList.map((turma) => {
-                  const turmaStudents = students.filter((s) => (s.turma || '').trim() === turma.trim());
-                  const count = turmaStudents.length;
-                  const totalXP = turmaStudents.reduce((sum, s) => sum + (s.points || 0), 0);
-                  const avgXP = count > 0 ? Math.round(totalXP / count) : 0;
-
-                  return (
-                    <div
-                      key={turma}
-                      className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs hover:shadow-xs transition-shadow flex flex-col justify-between gap-3"
-                    >
-                      <div className="flex items-start justify-between gap-2">
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <span className="px-2.5 py-1 rounded-xl bg-indigo-600 text-white font-black text-sm shadow-xs">
-                              {turma}
-                            </span>
-                            <span className="text-xs font-bold text-slate-600">
-                              {count} {count === 1 ? 'aluno' : 'alunos'}
-                            </span>
-                          </div>
-                          <div className="mt-2 text-xs text-slate-500 space-y-0.5">
-                            <p>XP Total: <strong className="text-indigo-700 font-bold">{totalXP} XP</strong></p>
-                            <p>Média: <strong className="text-emerald-700 font-bold">{avgXP} XP/aluno</strong></p>
-                          </div>
-                        </div>
-
-                        <button
-                          onClick={() => promptDeleteTurma(turma)}
-                          className="p-2 rounded-xl bg-rose-50 hover:bg-rose-600 hover:text-white text-rose-600 border border-rose-200 transition-colors cursor-pointer shrink-0"
-                          title={`Eliminar turma ${turma}`}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-
-                      <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-2 text-xs">
-                        <button
-                          onClick={() => {
-                            setSelectedTurma(turma);
-                            setActiveTab('students');
-                          }}
-                          className="text-indigo-600 hover:text-indigo-800 font-bold cursor-pointer hover:underline"
-                        >
-                          {language === 'pt' ? 'Ver Alunos →' : 'View Students →'}
-                        </button>
-
-                        {count > 0 && (
-                          <button
-                            onClick={() => promptDeleteStudentsByTurma(turma)}
-                            className="text-rose-600 hover:text-rose-800 font-medium text-[11px] cursor-pointer hover:underline"
-                          >
-                            {language === 'pt' ? 'Limpar Alunos' : 'Clear Students'}
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* TAB: VISIBILIDADE DOS TEMAS (Controlo de Ritmo de Aprendizagem) */}
-        {activeTab === 'themes' && (
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
-            {/* Guide & Notice Card */}
-            <div className="p-5 sm:p-6 rounded-3xl bg-linear-to-r from-indigo-900 via-indigo-950 to-slate-900 text-white shadow-md border border-indigo-700/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div className="flex items-start gap-3.5">
-                <div className="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-400/40 flex items-center justify-center text-amber-300 shrink-0 text-xl shadow-inner">
-                  📚
-                </div>
-                <div className="space-y-1 max-w-2xl">
-                  <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
-                      {language === 'pt' ? 'Controlo Pedagógico & Ritmo de Aulas' : 'Pedagogical Pacing Control'}
-                    </span>
-                    <span className="text-xs text-indigo-300 font-mono">
-                      {currentUser?.email}
-                    </span>
-                  </div>
-                  <h3 className="text-base sm:text-lg font-black text-white">
-                    {language === 'pt'
-                      ? 'Ocultar ou Mostrar Temas aos Alunos'
-                      : 'Show or Hide Themes for Students'}
-                  </h3>
-                  <p className="text-xs text-indigo-200 leading-relaxed">
-                    {language === 'pt'
-                      ? 'Como Administradora/Professora, podes controlar o ritmo de aprendizagem libertando cada tema à medida que avanças nas aulas. Os temas marcados como Ocultos ficam bloqueados aos alunos com a indicação "Em breve nas próximas aulas!".'
-                      : 'Control learning pacing by unlocking each theme as you progress in classes. Hidden themes appear locked to students.'}
-                  </p>
-                </div>
-              </div>
-
-              {/* Status Pill */}
-              <div className="bg-white/10 backdrop-blur-xs border border-white/15 px-4 py-3 rounded-2xl text-center shrink-0 w-full md:w-auto">
-                <div className="text-2xl font-black text-amber-300">
-                  {visibleThemesCount} <span className="text-xs text-white/70 font-normal">/ {ALL_THEMES.length} visíveis</span>
-                </div>
-                <div className="text-[11px] text-indigo-200 font-semibold mt-0.5">
-                  {visibleThemesCount === ALL_THEMES.length
-                    ? (language === 'pt' ? 'Todos Desbloqueados' : 'All Unlocked')
-                    : (language === 'pt' ? `${ALL_THEMES.length - visibleThemesCount} tema(s) em espera` : `${ALL_THEMES.length - visibleThemesCount} locked`)}
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Action Presets */}
-            <div className="p-4 sm:p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-xs font-bold text-slate-700 uppercase tracking-wider">
-                  <Sparkles className="w-4 h-4 text-amber-500" />
-                  <span>{language === 'pt' ? 'Ações Rápidas de Configuração' : 'Quick Presets'}</span>
-                </div>
-              </div>
-
-              {/* Theme Presets */}
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs text-slate-500 font-bold mr-1">
-                  {language === 'pt' ? 'Temas:' : 'Themes:'}
-                </span>
-
-                <button
-                  type="button"
-                  onClick={() => handleSetAllThemes(true)}
-                  className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
-                >
-                  <Eye className="w-3.5 h-3.5" />
-                  <span>{language === 'pt' ? '🌟 Desbloquear Todos os Temas' : 'Unlock All Themes'}</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => handleSetThemesUpTo(1)}
-                  className="px-3 py-1.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer"
-                >
-                  <Lock className="w-3.5 h-3.5 text-amber-600" />
-                  <span>{language === 'pt' ? '🔒 Apenas Tema 1' : 'Only Theme 1'}</span>
-                </button>
-
-                <div className="h-5 w-px bg-slate-200 hidden sm:block mx-1" />
-
-                <span className="text-xs text-slate-500 font-medium">
-                  {language === 'pt' ? 'Até ao:' : 'Up to:'}
-                </span>
-
-                {[2, 3, 4, 5, 6].map((num) => (
-                  <button
-                    key={num}
-                    type="button"
-                    onClick={() => handleSetThemesUpTo(num)}
-                    className="px-2 py-1 rounded-lg bg-white border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50 text-indigo-900 font-bold text-xs transition-colors cursor-pointer"
-                  >
-                    T{num}
-                  </button>
-                ))}
-              </div>
-
-              {/* Quiz Selection Checklist Grid */}
-              <div className="pt-3 border-t border-slate-200 space-y-2.5">
-                <div className="flex items-center justify-between flex-wrap gap-2">
-                  <div className="flex items-center gap-2">
-                    <Award className="w-4 h-4 text-amber-600" />
-                    <span className="text-xs text-amber-900 font-extrabold uppercase tracking-wider">
-                      {language === 'pt' ? 'Seleção de Quizzes Visíveis aos Alunos' : 'Select Visible Quizzes for Students'}
-                    </span>
-                    <span className="text-[11px] font-black px-2.5 py-0.5 rounded-full bg-amber-200/90 text-amber-950 border border-amber-300">
-                      {ALL_THEMES.filter((t) => quizVisibility[t.id] === true).length} / {ALL_THEMES.length} {language === 'pt' ? 'Visíveis' : 'Visible'}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleSetAllQuizzes(true)}
-                      className="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-[11px] transition-colors flex items-center gap-1 cursor-pointer"
-                    >
-                      <Eye className="w-3 h-3" />
-                      <span>{language === 'pt' ? 'Marcar Todos' : 'Check All'}</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => handleSetAllQuizzes(false)}
-                      className="px-2.5 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-[11px] transition-colors flex items-center gap-1 cursor-pointer"
-                    >
-                      <Lock className="w-3 h-3 text-slate-600" />
-                      <span>{language === 'pt' ? 'Desmarcar Todos' : 'Uncheck All'}</span>
-                    </button>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                  {ALL_THEMES.map((t) => {
-                    const isQuizVis = quizVisibility[t.id] === true;
-                    return (
-                      <label
-                        key={`quiz-select-${t.id}`}
-                        className={`flex items-center justify-between p-2.5 rounded-xl border-2 cursor-pointer transition-all ${
-                          isQuizVis
-                            ? 'bg-amber-100/90 border-amber-400 text-amber-950 font-extrabold shadow-2xs'
-                            : 'bg-white border-slate-200 text-slate-600 hover:border-amber-300'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2 min-w-0">
-                          <input
-                            type="checkbox"
-                            checked={isQuizVis}
-                            onChange={() => handleToggleQuiz(t.id, isQuizVis)}
-                            className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500 cursor-pointer shrink-0"
-                          />
-                          <div className="truncate">
-                            <div className="text-xs font-bold truncate">Tema {t.number}: {t.title[language]}</div>
-                          </div>
-                        </div>
-                        <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md shrink-0 ml-1.5 ${
-                          isQuizVis ? 'bg-amber-300 text-amber-950' : 'bg-slate-100 text-slate-500'
-                        }`}>
-                          {isQuizVis ? 'Visível' : 'Oculto'}
-                        </span>
-                      </label>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-
-            {/* 7 Themes List with Interactive Toggles */}
-            <div className="space-y-3.5">
-              <div className="flex items-center justify-between">
-                <h4 className="text-sm font-black text-slate-900 flex items-center gap-2">
-                  <ListOrdered className="w-4 h-4 text-indigo-600" />
-                  <span>{language === 'pt' ? 'Lista de Temas Curriculares (7 Temas)' : 'Curriculum Themes (7 Themes)'}</span>
-                </h4>
-                <span className="text-xs text-slate-500">
-                  {language === 'pt' ? 'Controle a visibilidade do Tema e do Quiz de cada tema separadamente' : 'Control Theme and Quiz visibility separately'}
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 gap-3.5">
-                {ALL_THEMES.map((theme) => {
-                  const isVisible = themeVisibility[theme.id] !== false;
-                  const isQuizVisible = quizVisibility[theme.id] === true;
-                  const isTogglingTheme = togglingThemeId === theme.id;
-                  const isTogglingQuiz = togglingQuizId === theme.id;
-
-                  return (
-                    <div
-                      key={theme.id}
-                      className={`p-4 sm:p-5 rounded-2xl border transition-all duration-200 ${
-                        isVisible
-                          ? 'bg-white border-emerald-300 shadow-xs hover:border-emerald-400'
-                          : 'bg-slate-50/80 border-slate-200 hover:border-slate-300 opacity-90'
-                      }`}
-                    >
-                      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-                        {/* Theme Info */}
-                        <div className="flex items-start gap-3.5 max-w-xl">
-                          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shadow-xs shrink-0 ${
-                            isVisible
-                              ? 'bg-emerald-50 border border-emerald-200 text-emerald-900'
-                              : 'bg-slate-200 border border-slate-300 text-slate-500'
-                          }`}>
-                            {theme.icon}
-                          </div>
-
-                          <div className="space-y-1">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <span className={`text-[11px] font-black px-2.5 py-0.5 rounded-full border ${
-                                isVisible
-                                  ? 'bg-emerald-100 text-emerald-900 border-emerald-300'
-                                  : 'bg-slate-200 text-slate-700 border-slate-300'
-                              }`}>
-                                Tema {theme.number}
-                              </span>
-
-                              {isVisible ? (
-                                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                                  <Eye className="w-3 h-3 text-emerald-600" />
-                                  <span>{language === 'pt' ? 'Tema Visível' : 'Theme Visible'}</span>
-                                </span>
-                              ) : (
-                                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
-                                  <Lock className="w-3 h-3 text-amber-600" />
-                                  <span>{language === 'pt' ? 'Tema Bloqueado' : 'Theme Locked'}</span>
-                                </span>
-                              )}
-
-                              {isQuizVisible ? (
-                                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-900 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">
-                                  <Award className="w-3 h-3 text-amber-600" />
-                                  <span>{language === 'pt' ? '🏆 Quiz Visível' : '🏆 Quiz Visible'}</span>
-                                </span>
-                              ) : (
-                                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full border border-slate-300">
-                                  <Lock className="w-3 h-3 text-slate-500" />
-                                  <span>{language === 'pt' ? '🔒 Quiz Oculto' : '🔒 Quiz Hidden'}</span>
-                                </span>
-                              )}
-                            </div>
-
-                            <h5 className={`text-base font-bold leading-tight ${
-                              isVisible ? 'text-slate-900' : 'text-slate-700'
-                            }`}>
-                              {theme.title[language]}
-                            </h5>
-
-                            <p className="text-xs text-slate-500 line-clamp-1">
-                              {theme.tagline[language]}
-                            </p>
-
-                            <div className="flex items-center gap-3 pt-1 text-[11px] text-slate-400">
-                              <span>📖 {theme.lessons?.length || 0} lições</span>
-                              <span>•</span>
-                              <span>🎮 {theme.challenges.length} desafios</span>
-                              <span>•</span>
-                              <span>🎯 Quiz final ({theme.finalQuiz?.length || 15} perguntas)</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Dual Toggle Action Controls */}
-                        <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 w-full lg:w-auto justify-between lg:justify-end pt-3 lg:pt-0 border-t lg:border-t-0 border-slate-200 shrink-0">
-                          {/* Theme Toggle Button */}
-                          <button
-                            type="button"
-                            onClick={() => handleToggleTheme(theme.id, isVisible)}
-                            disabled={isTogglingTheme}
-                            className={`px-3.5 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs disabled:opacity-50 ${
-                              isVisible
-                                ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
-                                : 'bg-slate-700 hover:bg-slate-800 text-white'
-                            }`}
-                          >
-                            {isTogglingTheme ? (
-                              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                            ) : isVisible ? (
-                              <>
-                                <Eye className="w-3.5 h-3.5" />
-                                <span>{language === 'pt' ? 'Tema: Visível' : 'Theme: Visible'}</span>
-                              </>
-                            ) : (
-                              <>
-                                <Lock className="w-3.5 h-3.5 text-amber-300" />
-                                <span>{language === 'pt' ? 'Tema: Bloqueado' : 'Theme: Locked'}</span>
-                              </>
-                            )}
-                          </button>
-
-                          {/* Quiz Toggle Button */}
-                          <button
-                            type="button"
-                            onClick={() => handleToggleQuiz(theme.id, isQuizVisible)}
-                            disabled={isTogglingQuiz}
-                            className={`px-3.5 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs disabled:opacity-50 ${
-                              isQuizVisible
-                                ? 'bg-amber-400 hover:bg-amber-500 text-slate-950 border border-amber-500'
-                                : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300'
-                            }`}
-                          >
-                            {isTogglingQuiz ? (
-                              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                            ) : isQuizVisible ? (
-                              <>
-                                <Eye className="w-3.5 h-3.5 text-amber-900" />
-                                <span>{language === 'pt' ? 'Quiz: Visível' : 'Quiz: Visible'}</span>
-                              </>
-                            ) : (
-                              <>
-                                <Lock className="w-3.5 h-3.5 text-slate-600" />
-                                <span>{language === 'pt' ? 'Quiz: Oculto' : 'Quiz: Hidden'}</span>
-                              </>
-                            )}
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* TAB 4: LIMPEZA & REDEFINIÇÃO GLOBAL (ZONA DE PERIGO) */}
-        {activeTab === 'danger' && (
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5">
-            <div className="p-4 bg-amber-50 rounded-2xl border border-amber-200 flex items-start gap-3 text-amber-900 text-xs sm:text-sm">
-              <ShieldAlert className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-              <div>
-                <strong className="font-bold">{language === 'pt' ? 'Zona de Limpeza e Transição de Ano Letivo' : 'Reset and Transition Zone'}</strong>
-                <p className="mt-0.5 text-amber-800">
-                  {language === 'pt'
-                    ? 'Usa estas opções para apagar alunos de turmas específicas ou reiniciar as pautas para um novo ano letivo. A conta de professora (imaginebycarla2023@gmail.com) nunca é apagada por estas operações.'
-                    : 'Use these controls to purge classes or reset for a new school year. Teacher accounts are preserved.'}
-                </p>
-              </div>
-            </div>
-
-            {/* Option 1: Delete Students of Specific Classes */}
-            <div className="p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-3">
-              <div className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-indigo-600" />
-                <h4 className="text-sm font-bold text-slate-900">
-                  {language === 'pt' ? '1. Eliminar Alunos por Turma Específica' : '1. Delete Students by Class'}
-                </h4>
-              </div>
-              <p className="text-xs text-slate-600">
-                {language === 'pt'
-                  ? 'Escolhe uma turma para eliminar todos os respetivos alunos, mantendo as outras turmas intactas.'
-                  : 'Choose a class to delete all its students while preserving other classes.'}
-              </p>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 pt-2">
-                {turmasList.map((turma) => {
-                  const count = students.filter((s) => (s.turma || '').trim() === turma.trim()).length;
-                  return (
-                    <button
-                      key={turma}
-                      onClick={() => promptDeleteStudentsByTurma(turma)}
-                      disabled={count === 0}
-                      className="p-3 rounded-xl border border-rose-200 bg-rose-50/50 hover:bg-rose-600 hover:text-white text-rose-800 text-xs font-bold transition-all flex flex-col items-center justify-center gap-1 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                      <span>{turma}</span>
-                      <span className="text-[10px] opacity-80">({count} alunos)</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Option 2: Full Reset / Delete ALL Students */}
-            <div className="p-5 sm:p-6 bg-rose-50/60 rounded-2xl border-2 border-rose-200 shadow-2xs space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-rose-600 text-white flex items-center justify-center shadow-xs shrink-0">
-                  <AlertTriangle className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="text-base font-black text-rose-950">
-                    {language === 'pt' ? '2. Eliminar TODOS os Alunos da Plataforma' : '2. Delete ALL Students Across All Classes'}
-                  </h4>
-                  <p className="text-xs sm:text-sm text-rose-800 mt-1">
-                    {language === 'pt'
-                      ? `Elimina permanentemente todas as contas dos ${students.length} alunos atualmente registados, respetivas pontuações XP, pautas e histórico de quizzes.`
-                      : `Permanently deletes all ${students.length} student accounts and records across all classes.`}
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                <div className="text-xs text-rose-700 font-medium">
-                  🔒 {language === 'pt' ? 'Apenas a conta de professor(a) será mantida.' : 'Only the teacher account will be kept.'}
-                </div>
-                <button
-                  onClick={promptDeleteAllStudents}
-                  className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-black text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
-                  title={language === 'pt' ? 'Eliminar todos os alunos e limpar qualquer resíduo da base de dados' : 'Delete all students and clean all database residuals'}
-                >
-                  <Trash2 className="w-4 h-4" />
-                  <span>{language === 'pt' ? 'Eliminar Todos os Alunos e Limpar BD' : 'Purge All Students & Clean DB'}</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Modal Footer */}
-        <div className="p-4 sm:p-5 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 shrink-0">
+        <div className="p-3 sm:p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 shrink-0">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
             <span>
-              {language === 'pt'
-                ? `Total de ${students.length} aluno(s) registado(s) em ${turmasList.length} turma(s).`
-                : `${students.length} student(s) registered in ${turmasList.length} class(es).`}
+              {students.length} alunos registados em {turmasList.length} turmas.
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handleExportXLS}
-              disabled={filteredStudents.length === 0}
-              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shadow-2xs"
-            >
-              <FileSpreadsheet className="w-4 h-4" />
-              <span>{language === 'pt' ? 'Descarregar XLS' : 'Download XLS'}</span>
-            </button>
-            <button
-              onClick={onClose}
-              className="px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 font-bold transition-colors cursor-pointer"
-            >
-              {language === 'pt' ? 'Fechar' : 'Close'}
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            className="px-4 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 font-bold transition-colors cursor-pointer"
+          >
+            {language === 'pt' ? 'Fechar' : 'Close'}
+          </button>
         </div>
 
-        {/* SUB-MODAL: Edit Student Details (Password & Turma) */}
+        {/* SUB-MODAL: Edit Student Details */}
         {editingStudent && (
           <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs animate-in fade-in duration-200">
             <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
@@ -2461,7 +1857,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                   </div>
                   <div>
                     <h3 className="text-base font-bold text-white">
-                      {language === 'pt' ? 'Gerir Registo do Aluno' : 'Manage Student Record'}
+                      Editar Dados do Aluno
                     </h3>
                     <p className="text-xs text-indigo-200 font-mono">
                       {editingStudent.email}
@@ -2493,28 +1889,25 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
               <form onSubmit={handleSaveStudent} className="p-5 space-y-4">
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
-                    {language === 'pt' ? 'Nome do Aluno' : 'Student Name'}
+                    Nome Completo
                   </label>
                   <input
                     type="text"
                     required
                     value={editName}
                     onChange={(e) => setEditName(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center justify-between">
-                    <span>{language === 'pt' ? 'Mudar Turma do Aluno' : 'Change Class'}</span>
-                    <span className="text-[11px] text-indigo-600 font-semibold">
-                      {language === 'pt' ? 'Atual:' : 'Current:'} {editingStudent.turma || '5.º A'}
-                    </span>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+                    Mudar Turma
                   </label>
                   <select
                     value={editTurma}
                     onChange={(e) => setEditTurma(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 bg-white"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-indigo-500 bg-white"
                   >
                     {turmasList.map((t) => (
                       <option key={t} value={t}>
@@ -2530,7 +1923,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                     onClick={closeEditModal}
                     className="flex-1 py-2 px-3 rounded-xl border border-slate-200 text-slate-700 text-xs sm:text-sm font-bold hover:bg-slate-50 transition-colors cursor-pointer"
                   >
-                    {language === 'pt' ? 'Cancelar' : 'Cancel'}
+                    Cancelar
                   </button>
                   <button
                     type="submit"
@@ -2542,7 +1935,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                     ) : (
                       <>
                         <Save className="w-4 h-4" />
-                        <span>{language === 'pt' ? 'Guardar Alterações' : 'Save Changes'}</span>
+                        <span>Guardar Alterações</span>
                       </>
                     )}
                   </button>
@@ -2581,7 +1974,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                 </p>
 
                 {confirmDialog.warningText && (
-                  <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs">
+                  <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold">
                     {confirmDialog.warningText}
                   </div>
                 )}
@@ -2593,7 +1986,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                     disabled={actionLoading}
                     className="flex-1 py-2.5 px-4 rounded-xl border border-slate-200 text-slate-700 text-xs sm:text-sm font-bold hover:bg-slate-50 transition-colors cursor-pointer disabled:opacity-50"
                   >
-                    {language === 'pt' ? 'Cancelar' : 'Cancel'}
+                    Cancelar
                   </button>
                   <button
                     type="button"
@@ -2622,13 +2015,12 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
         {detailStudent && (
           <div className="fixed inset-0 z-60 flex items-center justify-center p-3 sm:p-6 bg-slate-900/70 backdrop-blur-xs overflow-y-auto">
             <div className="relative w-full max-w-4xl max-h-[90vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-              {/* Header */}
-              <div className="p-4 sm:p-6 bg-linear-to-r from-indigo-900 via-indigo-800 to-slate-900 text-white flex items-center justify-between border-b border-indigo-700 shrink-0">
+              <div className="p-4 sm:p-5 bg-linear-to-r from-indigo-900 via-indigo-800 to-slate-900 text-white flex items-center justify-between border-b border-indigo-700 shrink-0">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl overflow-hidden ring-2 ring-indigo-400/40 shadow-inner shrink-0 bg-white">
+                  <div className="w-11 h-11 rounded-2xl overflow-hidden ring-2 ring-indigo-400/40 shadow-inner shrink-0 bg-white">
                     <CartoonAvatar
                       config={detailStudent.avatar || getDefaultAvatar(detailStudent.publicId || detailStudent.name)}
-                      size={48}
+                      size={44}
                     />
                   </div>
                   <div>
@@ -2640,12 +2032,9 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                         {detailStudent.publicId}
                       </span>
                     </div>
-                    <h3 className="text-lg sm:text-xl font-black text-white mt-0.5">
-                      {detailStudent.name || 'Estudante'}
+                    <h3 className="text-lg font-black text-white mt-0.5">
+                      {detailStudent.fullName || detailStudent.name}
                     </h3>
-                    <p className="text-xs text-slate-300 font-mono">
-                      {detailStudent.email}
-                    </p>
                   </div>
                 </div>
 
@@ -2657,100 +2046,21 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                 </button>
               </div>
 
-              {/* Student Themes Breakdown Content */}
               <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-slate-50">
-                {/* Top Summary Stats for Student */}
-                {(() => {
-                  const sProgress = progressMap[detailStudent.id] || progressMap[detailStudent.email] || [];
-                  const stats = getGlobalActivityStats(detailStudent, sProgress, ALL_THEMES);
-
-                  return (
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                      <div className="p-3 bg-white rounded-2xl border border-slate-200 shadow-2xs flex flex-col justify-between">
-                        <div className="flex items-center justify-between text-slate-500 mb-1">
-                          <span className="text-[10px] font-bold uppercase tracking-wider">
-                            {language === 'pt' ? 'Total Global (XP)' : 'Total Global XP'}
-                          </span>
-                          <Award className="w-4 h-4 text-amber-500" />
-                        </div>
-                        <div className="text-xl font-black text-indigo-700">
-                          {stats.totalPoints} <span className="text-xs font-semibold text-slate-400">XP</span>
-                        </div>
-                        <div className="text-[10px] text-slate-500 mt-0.5">
-                          {language === 'pt' ? 'Acumulado com bónus e dicas' : 'Includes daily bonuses'}
-                        </div>
-                      </div>
-
-                      <div className="p-3 bg-white rounded-2xl border border-slate-200 shadow-2xs flex flex-col justify-between">
-                        <div className="flex items-center justify-between text-slate-500 mb-1">
-                          <span className="text-[10px] font-bold uppercase tracking-wider">
-                            {language === 'pt' ? 'Temas Curriculares' : 'Curricular XP'}
-                          </span>
-                          <TrendingUp className="w-4 h-4 text-emerald-600" />
-                        </div>
-                        <div className="text-xl font-black text-emerald-700">
-                          {stats.totalCurricularPoints} <span className="text-xs font-semibold text-slate-400">/ {stats.globalMaxPoints} XP</span>
-                        </div>
-                        <div className="text-[10px] text-emerald-600 font-semibold mt-0.5">
-                          {stats.globalPercentage}% {language === 'pt' ? 'aproveitamento' : 'achievement'}
-                        </div>
-                      </div>
-
-                      <div className="p-3 bg-white rounded-2xl border border-slate-200 shadow-2xs flex flex-col justify-between">
-                        <div className="flex items-center justify-between text-slate-500 mb-1">
-                          <span className="text-[10px] font-bold uppercase tracking-wider">
-                            {language === 'pt' ? 'Dicas Diárias & Bónus' : 'Daily Tips & Bonus'}
-                          </span>
-                          <Sparkles className="w-4 h-4 text-sky-500" />
-                        </div>
-                        <div className="text-xl font-black text-sky-600">
-                          +{stats.bonusPoints} <span className="text-xs font-semibold text-slate-400">XP</span>
-                        </div>
-                        <div className="text-[10px] text-sky-700 font-semibold mt-0.5">
-                          {language === 'pt' ? '50 XP acerto / 25 XP leitura' : '50 XP correct / 25 XP read'}
-                        </div>
-                      </div>
-
-                      <div className="p-3 bg-white rounded-2xl border border-slate-200 shadow-2xs flex flex-col justify-between">
-                        <div className="flex items-center justify-between text-slate-500 mb-1">
-                          <span className="text-[10px] font-bold uppercase tracking-wider">
-                            {language === 'pt' ? 'Atividades Feitas' : 'Completed Activities'}
-                          </span>
-                          <CheckCircle2 className="w-4 h-4 text-indigo-600" />
-                        </div>
-                        <div className="text-xl font-black text-slate-900">
-                          {stats.completedActivities} <span className="text-xs font-semibold text-slate-400">/ {stats.totalActivities}</span>
-                        </div>
-                        <div className="text-[10px] text-slate-500 mt-0.5">
-                          {stats.completedChallenges}/{stats.totalChallenges} {language === 'pt' ? 'desafios' : 'challenges'} • {stats.completedQuizzes}/{stats.totalQuizzes} {language === 'pt' ? 'quizzes' : 'quizzes'}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })()}
-
                 {ALL_THEMES.map((theme) => {
                   const sProgress = progressMap[detailStudent.id] || progressMap[detailStudent.email] || [];
                   const breakdown = getStudentThemeBreakdown(detailStudent, sProgress, theme);
 
                   return (
-                    <div
-                      key={theme.id}
-                      className="bg-white rounded-2xl border border-slate-200 p-4 shadow-2xs space-y-3"
-                    >
-                      <div className="flex items-center justify-between border-b border-slate-100 pb-2.5 flex-wrap gap-2">
+                    <div key={theme.id} className="bg-white rounded-2xl border border-slate-200 p-4 shadow-2xs space-y-3">
+                      <div className="flex items-center justify-between border-b border-slate-100 pb-2 flex-wrap gap-2">
                         <div className="flex items-center gap-2">
-                          <span className="w-7 h-7 rounded-xl bg-indigo-600 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                          <span className="w-7 h-7 rounded-xl bg-indigo-600 text-white font-black text-xs flex items-center justify-center">
                             {theme.number}
                           </span>
-                          <div>
-                            <h4 className="font-bold text-slate-900 text-sm">
-                              {theme.title.pt}
-                            </h4>
-                            <span className="text-[11px] text-slate-400">
-                              {breakdown.completedActivitiesCount} de {breakdown.totalActivitiesCount} atividades concluídas
-                            </span>
-                          </div>
+                          <h4 className="font-bold text-slate-900 text-sm">
+                            {theme.title.pt}
+                          </h4>
                         </div>
 
                         <div className="flex items-center gap-2">
@@ -2763,85 +2073,35 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                         </div>
                       </div>
 
-                      {/* Challenges Grid */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
                         {breakdown.challenges.map((ch, chIdx) => (
                           <div
                             key={ch.id}
-                            className={`p-3 rounded-xl border text-xs flex flex-col justify-between gap-1.5 ${
-                              ch.completed
-                                ? 'bg-emerald-50/50 border-emerald-200 text-emerald-900'
-                                : 'bg-slate-50 border-slate-200 text-slate-600'
+                            className={`p-2.5 rounded-xl border text-xs flex flex-col justify-between gap-1 ${
+                              ch.completed ? 'bg-emerald-50/50 border-emerald-200' : 'bg-slate-50 border-slate-200 text-slate-500'
                             }`}
                           >
-                            <div>
-                              <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                                Desafio {chIdx + 1}
-                              </div>
-                              <div className="font-semibold text-slate-800 line-clamp-2 mt-0.5">
-                                {ch.title}
-                              </div>
-                            </div>
-                            <div className="flex items-center justify-between pt-1 border-t border-slate-200/60 font-bold">
-                              <span>Pontos:</span>
-                              <span className={ch.score > 0 ? 'text-emerald-700' : 'text-slate-400'}>
-                                {ch.score} / 100
-                              </span>
-                            </div>
+                            <span className="font-bold text-slate-800 truncate">{ch.title}</span>
+                            <span className="font-bold text-emerald-700">{ch.score} / 100 XP</span>
                           </div>
                         ))}
                       </div>
 
-                      {/* Quiz Card */}
-                      <div className="p-3 bg-linear-to-r from-emerald-50 to-indigo-50 rounded-xl border border-emerald-200 text-xs flex items-center justify-between flex-wrap gap-2">
-                        <div className="flex items-center gap-2">
-                          <Award className="w-5 h-5 text-emerald-600 shrink-0" />
-                          <div>
-                            <div className="font-bold text-slate-800">
-                              {breakdown.quiz.title}
-                            </div>
-                            <div className="text-[11px] text-slate-500">
-                              Avaliação Oficial (1.ª Tentativa): <strong className="text-emerald-700 font-bold">{breakdown.quiz.officialScore}%</strong>
-                              {breakdown.quiz.attempts > 1 && (
-                                <span className="ml-2 text-indigo-700">
-                                  ({breakdown.quiz.attempts} tentativas de treino • Melhor resultado: {breakdown.quiz.bestScore}%)
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center gap-1.5 font-bold">
-                          <span className="px-2.5 py-1 rounded-lg bg-emerald-600 text-white shadow-xs">
-                            {breakdown.quiz.officialScore}%
-                          </span>
-                          <span className="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-900 border border-emerald-300 text-xs font-bold">
-                            {getQualitativeLevel(breakdown.quiz.officialScore)}
-                          </span>
-                        </div>
+                      <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-xs flex items-center justify-between">
+                        <span className="font-bold text-slate-700">Quiz Oficial (1.ª Tentativa):</span>
+                        <span className="font-black text-indigo-700">{breakdown.quiz.officialScore}% ({getQualitativeLevel(breakdown.quiz.officialScore)})</span>
                       </div>
                     </div>
                   );
                 })}
               </div>
 
-              {/* Footer */}
-              <div className="p-4 bg-white border-t border-slate-200 flex items-center justify-between gap-2 shrink-0">
-                <button
-                  onClick={() => {
-                    exportThemeScoresToExcel([detailStudent], progressMap, 'all', detailStudent.turma);
-                    showToast('success', 'Caderno individual exportado com sucesso em XLS!');
-                  }}
-                  className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors cursor-pointer flex items-center gap-1.5"
-                >
-                  <FileSpreadsheet className="w-4 h-4" />
-                  <span>Exportar Pauta deste Aluno em XLS</span>
-                </button>
+              <div className="p-4 bg-white border-t border-slate-200 flex justify-end">
                 <button
                   onClick={() => setDetailStudent(null)}
-                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold cursor-pointer"
                 >
-                  {language === 'pt' ? 'Fechar' : 'Close'}
+                  Fechar
                 </button>
               </div>
             </div>

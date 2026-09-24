@@ -14,10 +14,16 @@ import {
   FileArchive,
   Trash2,
   ShieldAlert,
+  Edit2,
+  Check,
+  X,
+  Layers,
+  Download,
 } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import { User, Language } from '../../types';
 import { api } from '../../services/api';
+import { exportStudentCredentialsToExcel } from '../../utils/exportUtils';
 
 interface StudentImportTabProps {
   turmasList: string[];
@@ -25,13 +31,228 @@ interface StudentImportTabProps {
   language: Language;
   onImportSuccess: () => void;
   onNavigateToCredentials: () => void;
+  onNavigateToStudents?: () => void;
 }
 
 interface ParsedStudentRow {
+  id?: string;
+  number: number;
   name: string;
   turma: string;
-  matchedExistingStudent?: User;
-  actionType: 'update_name' | 'already_complete' | 'create_new';
+  source?: string;
+}
+
+function detectTurmaFromString(input: string): string | null {
+  if (!input) return null;
+  const mSpecific = input.match(/(?:5|5\.|5º|5\.º)\s*[-_ ]*([a-zA-Z])\b/i);
+  if (mSpecific && mSpecific[1]) {
+    return `5.º ${mSpecific[1].toUpperCase()}`;
+  }
+  const mTurma = input.match(/\b(?:turma|turma_)\s*[:\-–]?\s*([a-zA-Z])\b/i);
+  if (mTurma && mTurma[1]) {
+    return `5.º ${mTurma[1].toUpperCase()}`;
+  }
+  if (/^[a-zA-Z]$/.test(input.trim())) {
+    return `5.º ${input.trim().toUpperCase()}`;
+  }
+  return null;
+}
+
+function parseExcelClient(
+  buffer: ArrayBuffer,
+  defaultTurma: string,
+  fileName: string
+): { sheets: string[]; students: ParsedStudentRow[] } {
+  const data = new Uint8Array(buffer);
+  const wb = XLSX.read(data, { type: 'array' });
+  const students: ParsedStudentRow[] = [];
+  const sheets: string[] = [];
+
+  const fileTurma = detectTurmaFromString(fileName) || defaultTurma;
+
+  for (const sheetName of wb.SheetNames) {
+    const lowerSheet = sheetName.toLowerCase().trim();
+    if (wb.SheetNames.length > 1 && (lowerSheet.includes('instru') || lowerSheet === 'capa' || lowerSheet === 'menu')) {
+      continue;
+    }
+
+    const sheet = wb.Sheets[sheetName];
+    if (!sheet) continue;
+
+    const rawMatrix: any[][] = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+    if (!rawMatrix || rawMatrix.length === 0) continue;
+
+    sheets.push(sheetName);
+    const sheetTurma = detectTurmaFromString(sheetName) || fileTurma;
+
+    // Scan top 15 rows for header row
+    let headerRowIdx = -1;
+    let nameCol = -1;
+    let firstNameCol = -1;
+    let lastNameCol = -1;
+    let numCol = -1;
+    let turmaCol = -1;
+
+    for (let r = 0; r < Math.min(rawMatrix.length, 15); r++) {
+      const row = rawMatrix[r];
+      if (!Array.isArray(row)) continue;
+
+      for (let c = 0; c < row.length; c++) {
+        const val = String(row[c] || '').toLowerCase().trim();
+        if (nameCol === -1 && (
+          val === 'nome' ||
+          val === 'nome do aluno' ||
+          val === 'nome completo' ||
+          val === 'nome do estudante' ||
+          val === 'aluno' ||
+          val === 'estudante' ||
+          val === 'student' ||
+          val === 'name' ||
+          val === 'designação' ||
+          val === 'designacao' ||
+          val === 'nome_aluno'
+        )) {
+          nameCol = c;
+          headerRowIdx = r;
+        }
+
+        if (firstNameCol === -1 && (val === 'nome próprio' || val === 'nome proprio' || val === 'primeiro nome')) {
+          firstNameCol = c;
+          headerRowIdx = r;
+        }
+
+        if (lastNameCol === -1 && (val === 'apelido' || val === 'sobrenome' || val === 'último nome' || val === 'ultimo nome')) {
+          lastNameCol = c;
+          headerRowIdx = r;
+        }
+
+        if (numCol === -1 && (
+          val === 'n.º' ||
+          val === 'nº' ||
+          val === 'numero' ||
+          val === 'número' ||
+          val === 'num' ||
+          val === 'no.' ||
+          val === 'n' ||
+          val === '#'
+        )) {
+          numCol = c;
+          headerRowIdx = r;
+        }
+
+        if (turmaCol === -1 && (val === 'turma' || val === 'classe' || val === 'ano/turma' || val === 'class')) {
+          turmaCol = c;
+        }
+      }
+
+      if (nameCol !== -1 || (firstNameCol !== -1 && lastNameCol !== -1)) break;
+    }
+
+    // Heuristic fallback if header not found
+    if (nameCol === -1 && (firstNameCol === -1 || lastNameCol === -1)) {
+      let bestCol = -1;
+      let maxHits = 0;
+
+      for (let c = 0; c < 15; c++) {
+        let hits = 0;
+        for (let r = 0; r < Math.min(rawMatrix.length, 35); r++) {
+          const val = String(rawMatrix[r]?.[c] || '').trim();
+          if (
+            val.length >= 6 &&
+            val.includes(' ') &&
+            !val.includes('@') &&
+            !/^\d+$/.test(val) &&
+            /[a-zA-ZÀ-ÿ]/.test(val)
+          ) {
+            hits++;
+          }
+        }
+        if (hits > maxHits) {
+          maxHits = hits;
+          bestCol = c;
+        }
+      }
+
+      if (maxHits >= 2) {
+        nameCol = bestCol;
+        headerRowIdx = 0;
+      }
+    }
+
+    if (nameCol === -1 && (firstNameCol === -1 || lastNameCol === -1)) continue;
+
+    const startRow = headerRowIdx >= 0 ? headerRowIdx + 1 : 0;
+    let autoNum = 1;
+
+    for (let r = startRow; r < rawMatrix.length; r++) {
+      const row = rawMatrix[r];
+      if (!row || !Array.isArray(row)) continue;
+
+      let rawName = '';
+      if (nameCol !== -1 && row[nameCol] !== undefined) {
+        rawName = String(row[nameCol] || '').trim();
+      } else if (firstNameCol !== -1 && lastNameCol !== -1) {
+        const fn = String(row[firstNameCol] || '').trim();
+        const ln = String(row[lastNameCol] || '').trim();
+        rawName = `${fn} ${ln}`.trim();
+      }
+
+      if (!rawName) continue;
+
+      const lower = rawName.toLowerCase();
+      if (
+        lower.includes('total de alunos') ||
+        lower.includes('total alunos') ||
+        lower.includes('página ') ||
+        lower.includes('pagina ') ||
+        lower.includes('ano letivo') ||
+        lower.includes('agrupamento') ||
+        lower.includes('diretor de turma') ||
+        lower.includes('diretora de turma') ||
+        lower.includes('estabelecimento')
+      ) {
+        continue;
+      }
+
+      let num = autoNum;
+      if (numCol !== -1 && row[numCol] !== undefined && row[numCol] !== '') {
+        const parsed = parseInt(String(row[numCol]).trim(), 10);
+        if (!isNaN(parsed) && parsed > 0 && parsed <= 60) {
+          num = parsed;
+        }
+      }
+
+      // Check if leading number in name
+      const matchNumInName = rawName.match(/^(\d{1,2})[\s\.\-\)]+(.+)$/);
+      if (matchNumInName) {
+        num = parseInt(matchNumInName[1], 10);
+        rawName = matchNumInName[2].trim();
+      }
+
+      // Remove trailing status tags or dates
+      rawName = rawName.replace(/\s+\(?(?:ativo|matriculado|ordin[aá]rio|transferido|retido)\)?/gi, '').trim();
+      rawName = rawName.replace(/\s+\d{2}[\/\-]\d{2}[\/\-]\d{2,4}/g, '').trim();
+      rawName = rawName.replace(/\s+/g, ' ');
+
+      if (rawName.length < 3 || !/[a-zA-ZÀ-ÿ]/.test(rawName)) continue;
+      if (/^(sim|não|nao|m|f|masculino|feminino)$/i.test(rawName)) continue;
+
+      let rowTurma = sheetTurma;
+      if (turmaCol !== -1 && row[turmaCol]) {
+        rowTurma = detectTurmaFromString(String(row[turmaCol])) || rowTurma;
+      }
+
+      students.push({
+        number: num,
+        name: rawName,
+        turma: rowTurma,
+        source: `${fileName} [${sheetName}]`,
+      });
+      autoNum = num + 1;
+    }
+  }
+
+  return { sheets, students };
 }
 
 export const StudentImportTab: React.FC<StudentImportTabProps> = ({
@@ -40,6 +261,7 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
   language,
   onImportSuccess,
   onNavigateToCredentials,
+  onNavigateToStudents,
 }) => {
   const [activeMode, setActiveMode] = useState<'upload' | 'paste'>('upload');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -48,13 +270,20 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
   const [parsing, setParsing] = useState(false);
   const [importing, setImporting] = useState(false);
   const [parseError, setParseError] = useState<string | null>(null);
-  const [zipFilesProcessed, setZipFilesProcessed] = useState<string[]>([]);
+  const [processedSheets, setProcessedSheets] = useState<string[]>([]);
+  const [previewFilterTurma, setPreviewFilterTurma] = useState<string>('all');
+  const [searchPreview, setSearchPreview] = useState<string>('');
 
-  // Wipe database options
+  // Editing single row in preview
+  const [editingRowIndex, setEditingRowIndex] = useState<number | null>(null);
+  const [editRowName, setEditRowName] = useState('');
+  const [editRowTurma, setEditRowTurma] = useState('');
+
+  // Wipe database before creating: teacher recommended option
   const [wipeFirst, setWipeFirst] = useState<boolean>(true);
-  const [showConfirmWipeModal, setShowConfirmWipeModal] = useState<boolean>(false);
-  const [wipingDatabase, setWipingDatabase] = useState<boolean>(false);
-  const [wipeMessage, setWipeMessage] = useState<string | null>(null);
+
+  // Parsed students list
+  const [parsedRows, setParsedRows] = useState<ParsedStudentRow[]>([]);
 
   // Result state
   const [importResult, setImportResult] = useState<{
@@ -64,98 +293,83 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
     summary: { totalInFile: number; createdCount: number; updatedCount?: number; existedCount: number; errorsCount: number };
     created: Array<{ id: string; name: string; turma: string; username: string; password?: string }>;
     updated?: Array<{ id: string; oldName?: string; name: string; turma: string; username: string }>;
-    existed: Array<{ name: string; turma: string; username: string }>;
     errors: Array<{ name?: string; turma?: string; error: string }>;
   } | null>(null);
 
-  // Helper to match a raw student name to existing students
-  const matchStudent = (rawName: string, turma: string): { matched?: User; actionType: 'update_name' | 'already_complete' | 'create_new' } => {
-    if (wipeFirst) {
-      return { actionType: 'create_new' };
+  // Process pasted text
+  const handleParsePastedText = () => {
+    if (!pastedText.trim()) {
+      setParseError('Cola a lista de alunos na caixa de texto antes de continuar.');
+      return;
     }
+    setParseError(null);
+    setParsing(true);
 
-    const clean = rawName.replace(/^\d+[\s\.\-\)]+\s*/, '').trim().toLowerCase();
-    const cleanBase = clean.replace(/\s+[a-z]$/i, '').trim();
+    try {
+      const lines = pastedText.split(/\r?\n/).map((l) => l.trim()).filter((l) => l.length > 0);
+      const rows: ParsedStudentRow[] = [];
+      let currentTurma = defaultTurma;
+      let autoNum = 1;
 
-    const inTurma = existingStudents.filter(
-      (s) => (s.turma || '').trim().toLowerCase() === turma.trim().toLowerCase()
-    );
+      for (const line of lines) {
+        const detected = detectTurmaFromString(line);
+        if (detected && (line.toLowerCase().includes('turma') || line.toLowerCase().includes('5º') || line.toLowerCase().includes('5.º'))) {
+          currentTurma = detected;
+          autoNum = 1;
+          continue;
+        }
 
-    // Exact match
-    const exact = inTurma.find((s) => {
-      const fn = (s.fullName || s.name || '').trim().toLowerCase();
-      const n = (s.name || '').trim().toLowerCase();
-      return fn === clean || n === clean;
-    });
+        let cleanLine = line.replace(/^\d+[\s\.\-\)\t:]+\s*/, '').trim();
+        if (!cleanLine || /^(n[º\.]|nome|turma|aluno|estudante|ano letivo)/i.test(cleanLine)) continue;
 
-    if (exact) {
-      const currentFull = (exact.fullName || exact.name || '').trim();
-      if (rawName.trim().length > currentFull.length) {
-        return { matched: exact, actionType: 'update_name' };
+        let num = autoNum;
+        const matchNum = line.match(/^(\d{1,2})[\s\.\-\)\t:]+(.+)$/);
+        if (matchNum) {
+          const parsed = parseInt(matchNum[1], 10);
+          if (parsed > 0 && parsed <= 60) {
+            num = parsed;
+            cleanLine = matchNum[2].trim();
+          }
+        }
+
+        cleanLine = cleanLine.replace(/\s+\(?(?:ativo|matriculado|ordin[aá]rio)\)?/gi, '').trim();
+        cleanLine = cleanLine.replace(/\s+/g, ' ');
+
+        if (cleanLine.length >= 3 && /[a-zA-ZÀ-ÿ]/.test(cleanLine)) {
+          rows.push({
+            number: num,
+            name: cleanLine,
+            turma: currentTurma,
+            source: 'Texto colado',
+          });
+          autoNum = num + 1;
+        }
       }
-      return { matched: exact, actionType: 'already_complete' };
+
+      if (rows.length === 0) {
+        throw new Error('Não foram encontrados nomes de alunos válidos no texto colado. Verifica o formato e tenta novamente.');
+      }
+
+      setParsedRows(rows);
+      setProcessedSheets(['Texto colado']);
+    } catch (err: any) {
+      setParseError(err.message || 'Erro ao processar texto.');
+    } finally {
+      setParsing(false);
     }
-
-    // Prefix / truncated match (e.g. existing "José Júlio d" vs pasted "José Júlio de Almeida")
-    const prefixMatch = inTurma.find((s) => {
-      const existingName = (s.name || s.fullName || '').trim().toLowerCase();
-      const exBase = existingName.replace(/\s+[a-z]$/i, '').trim();
-      return (
-        (exBase.length >= 4 && clean.startsWith(exBase)) ||
-        (cleanBase.length >= 4 && existingName.startsWith(cleanBase))
-      );
-    });
-
-    if (prefixMatch) {
-      return { matched: prefixMatch, actionType: 'update_name' };
-    }
-
-    return { actionType: 'create_new' };
   };
 
-  // Live parsed rows when in 'paste' mode
-  const pasteParsedRows = useMemo<ParsedStudentRow[]>(() => {
-    if (activeMode !== 'paste' || !pastedText.trim()) return [];
-
-    const lines = pastedText
-      .split('\n')
-      .map((l) => l.trim())
-      .filter((l) => l.length > 0);
-
-    const rows: ParsedStudentRow[] = [];
-
-    for (const line of lines) {
-      // Clean leading numbers like "1 - ", "1. ", "1\t"
-      const cleaned = line.replace(/^\d+[\s\.\-\)\t]+\s*/, '').trim();
-      // Skip headers like "Nº Nome Turma"
-      if (!cleaned || /^(n[º\.]|nome|turma|aluno|student)/i.test(cleaned)) continue;
-
-      const { matched, actionType } = matchStudent(cleaned, defaultTurma);
-
-      rows.push({
-        name: cleaned,
-        turma: defaultTurma,
-        matchedExistingStudent: matched,
-        actionType,
-      });
-    }
-
-    return rows;
-  }, [activeMode, pastedText, defaultTurma, existingStudents, wipeFirst]);
-
-  // File Upload handler (ZIP, PDF, XLSX, XLS, CSV)
-  const [fileParsedRows, setFileParsedRows] = useState<ParsedStudentRow[]>([]);
-
+  // Process uploaded file (XLS, XLSX, CSV, PDF, ZIP)
   const processFile = async (file: File) => {
     setSelectedFile(file);
     setParseError(null);
     setImportResult(null);
     setParsing(true);
-    setZipFilesProcessed([]);
+    setProcessedSheets([]);
 
     const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
 
-    // 1. If PDF or ZIP: parse via server PDF/ZIP engine!
+    // 1. If PDF or ZIP: parse via server engine
     if (ext === '.pdf' || ext === '.zip') {
       try {
         const reader = new FileReader();
@@ -166,25 +380,17 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
 
             if (!res.students || res.students.length === 0) {
               throw new Error(
-                `Não foi possível detetar alunos no ficheiro ${file.name}. Certifica-te de que o ficheiro contém a lista de alunos com nomes legíveis.`
+                `Não foi possível detetar alunos no ficheiro ${file.name}. Certifica-te de que contém nomes legíveis de alunos.`
               );
             }
 
-            setZipFilesProcessed(res.filesProcessed || []);
-
-            const rows: ParsedStudentRow[] = res.students.map((s) => {
-              const cleanedName = s.name.trim();
-              const turma = s.turma || defaultTurma;
-              const { matched, actionType } = matchStudent(cleanedName, turma);
-              return {
-                name: cleanedName,
-                turma,
-                matchedExistingStudent: matched,
-                actionType: wipeFirst ? 'create_new' : actionType,
-              };
-            });
-
-            setFileParsedRows(rows);
+            setProcessedSheets(res.filesProcessed || []);
+            setParsedRows(res.students.map((s, idx) => ({
+              number: s.number || idx + 1,
+              name: s.name.trim(),
+              turma: s.turma || defaultTurma,
+              source: s.sourceFile || file.name,
+            })));
           } catch (err: any) {
             console.error('File parse error:', err);
             setParseError(err.message || 'Erro ao processar ficheiro PDF / ZIP.');
@@ -194,7 +400,7 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
         };
 
         reader.onerror = () => {
-          setParseError('Erro ao ler o ficheiro localmente.');
+          setParseError('Erro ao ler o ficheiro no navegador.');
           setParsing(false);
         };
 
@@ -206,84 +412,48 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
       return;
     }
 
-    // 2. If Excel / CSV: parse directly or via XLSX
-    const reader = new FileReader();
-    reader.onload = (evt) => {
-      try {
-        const bstr = evt.target?.result;
-        const wb = XLSX.read(bstr, { type: 'binary' });
-        const wsname = wb.SheetNames[0];
-        const ws = wb.Sheets[wsname];
-        const data: any[] = XLSX.utils.sheet_to_json(ws, { defval: '' });
+    // 2. If Excel (.xlsx, .xls) or CSV: parse with ArrayBuffer client-side, with server fallback
+    try {
+      const buffer = await file.arrayBuffer();
+      const clientResult = parseExcelClient(buffer, defaultTurma, file.name);
 
-        if (!data || data.length === 0) {
-          throw new Error('O ficheiro parece estar vazio ou não contém dados legíveis.');
-        }
-
-        const rows: ParsedStudentRow[] = [];
-
-        for (const item of data) {
-          let rawName =
-            item['Nome Completo'] ||
-            item['Nome do Aluno'] ||
-            item.Nome ||
-            item.nome ||
-            item.Aluno ||
-            item.aluno ||
-            item.Name ||
-            item.name ||
-            item.Student ||
-            '';
-
-          if (!rawName) {
-            const values = Object.values(item).map((v) => String(v).trim());
-            const candidate = values.find((v) => v.length > 2 && !v.includes('@') && !/^\d+$/.test(v));
-            if (candidate) rawName = candidate;
-          }
-
-          rawName = String(rawName).trim();
-          if (!rawName) continue;
-
-          let rawTurma =
-            item.Turma ||
-            item.turma ||
-            item['Ano/Turma'] ||
-            item.Ano ||
-            item.Class ||
-            defaultTurma;
-
-          rawTurma = String(rawTurma).trim() || defaultTurma;
-
-          const cleanedName = rawName.replace(/^\d+[\s\.\-\)]+\s*/, '').trim();
-          const { matched, actionType } = matchStudent(cleanedName, rawTurma);
-
-          rows.push({
-            name: cleanedName,
-            turma: rawTurma,
-            matchedExistingStudent: matched,
-            actionType: wipeFirst ? 'create_new' : actionType,
-          });
-        }
-
-        if (rows.length === 0) {
-          throw new Error('Não foi possível identificar nomes de alunos nas colunas do ficheiro.');
-        }
-
-        setFileParsedRows(rows);
-      } catch (err: any) {
-        console.error('File parse error:', err);
-        setParseError(err.message || 'Erro ao processar ficheiro Excel.');
-      } finally {
+      if (clientResult.students.length > 0) {
+        setProcessedSheets(clientResult.sheets);
+        setParsedRows(clientResult.students);
         setParsing(false);
+        return;
       }
-    };
 
-    reader.onerror = () => {
-      setParseError('Erro ao ler o ficheiro.');
+      // Fallback: send to server endpoint
+      const reader = new FileReader();
+      reader.onload = async (evt) => {
+        try {
+          const dataUrl = (evt.target?.result as string) || '';
+          const res = await api.parseStudentsFile(dataUrl, file.name, defaultTurma);
+          if (!res.students || res.students.length === 0) {
+            throw new Error(
+              `Não foi possível detetar nomes de alunos no ficheiro ${file.name}. Verifica se contém uma coluna com o nome dos alunos.`
+            );
+          }
+          setProcessedSheets(res.filesProcessed || []);
+          setParsedRows(res.students.map((s, idx) => ({
+            number: s.number || idx + 1,
+            name: s.name.trim(),
+            turma: s.turma || defaultTurma,
+            source: s.sourceFile || file.name,
+          })));
+        } catch (serverErr: any) {
+          setParseError(serverErr.message || 'Erro ao processar ficheiro Excel.');
+        } finally {
+          setParsing(false);
+        }
+      };
+      reader.readAsDataURL(file);
+    } catch (err: any) {
+      console.error('Excel parse error:', err);
+      setParseError(err.message || 'Erro ao ler ficheiro Excel.');
       setParsing(false);
-    };
-
-    reader.readAsBinaryString(file);
+    }
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -302,36 +472,15 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
     }
   };
 
-  const currentRows = activeMode === 'paste' ? pasteParsedRows : fileParsedRows;
-
-  // Direct wipe of student database
-  const handleDirectWipeDatabase = async () => {
-    setWipingDatabase(true);
-    setWipeMessage(null);
-    try {
-      const res = await api.adminDeleteAllStudents();
-      setWipeMessage(
-        `Base de dados limpa com sucesso: ${res.deletedCount} contas de alunos foram eliminadas. A conta de professora continua 100% ativa!`
-      );
-      setShowConfirmWipeModal(false);
-      onImportSuccess();
-    } catch (err: any) {
-      console.error('Direct wipe error:', err);
-      setParseError(err.message || 'Erro ao limpar a base de dados.');
-    } finally {
-      setWipingDatabase(false);
-    }
-  };
-
-  // Import Action
+  // Start Batch Creation / Import
   const handleStartImport = async () => {
-    if (currentRows.length === 0) return;
+    if (parsedRows.length === 0) return;
     setImporting(true);
     setParseError(null);
 
     try {
       const res = await api.importStudentsBatch(
-        currentRows.map((r) => ({ name: r.name, turma: r.turma })),
+        parsedRows.map((r) => ({ name: r.name, turma: r.turma })),
         defaultTurma,
         wipeFirst
       );
@@ -343,14 +492,13 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
         summary: res.summary,
         created: res.created || [],
         updated: res.updated || [],
-        existed: res.existed || [],
         errors: res.errors || [],
       });
 
       onImportSuccess();
     } catch (err: any) {
       console.error('Batch import error:', err);
-      setParseError(err.message || 'Erro ao atualizar / criar contas dos alunos.');
+      setParseError(err.message || 'Erro ao criar contas de alunos na base de dados.');
     } finally {
       setImporting(false);
     }
@@ -359,143 +507,244 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
   const handleReset = () => {
     setSelectedFile(null);
     setPastedText('');
-    setFileParsedRows([]);
-    setZipFilesProcessed([]);
+    setParsedRows([]);
+    setProcessedSheets([]);
     setImportResult(null);
     setParseError(null);
-    setWipeMessage(null);
   };
 
-  const updateCount = currentRows.filter((r) => r.actionType === 'update_name').length;
-  const newCount = currentRows.filter((r) => r.actionType === 'create_new').length;
-  const readyCount = currentRows.filter((r) => r.actionType === 'already_complete').length;
+  const handleDeleteRow = (index: number) => {
+    setParsedRows((prev) => prev.filter((_, idx) => idx !== index));
+  };
 
-  // Group currentRows by Turma for convenient preview
-  const byTurmaSummary = useMemo(() => {
+  const startEditRow = (index: number, row: ParsedStudentRow) => {
+    setEditingRowIndex(index);
+    setEditRowName(row.name);
+    setEditRowTurma(row.turma);
+  };
+
+  const saveEditRow = (index: number) => {
+    if (!editRowName.trim()) return;
+    setParsedRows((prev) =>
+      prev.map((r, idx) =>
+        idx === index ? { ...r, name: editRowName.trim(), turma: editRowTurma.trim() || r.turma } : r
+      )
+    );
+    setEditingRowIndex(null);
+  };
+
+  // Group summary by turma
+  const byTurmaCounts = useMemo(() => {
     const counts: Record<string, number> = {};
-    for (const r of currentRows) {
+    for (const r of parsedRows) {
       counts[r.turma] = (counts[r.turma] || 0) + 1;
     }
     return counts;
-  }, [currentRows]);
+  }, [parsedRows]);
+
+  const uniqueTurmas = useMemo(() => Object.keys(byTurmaCounts).sort(), [byTurmaCounts]);
+
+  const filteredPreviewRows = useMemo(() => {
+    return parsedRows.filter((r) => {
+      const matchTurma = previewFilterTurma === 'all' || r.turma === previewFilterTurma;
+      const matchSearch =
+        !searchPreview.trim() ||
+        r.name.toLowerCase().includes(searchPreview.toLowerCase().trim()) ||
+        String(r.number).includes(searchPreview.trim());
+      return matchTurma && matchSearch;
+    });
+  }, [parsedRows, previewFilterTurma, searchPreview]);
 
   return (
     <div className="flex-1 flex flex-col min-h-0 bg-slate-50 overflow-y-auto p-4 sm:p-6">
-      <div className="max-w-4xl mx-auto w-full space-y-6">
-        {/* Banner Explanatório */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs flex flex-col sm:flex-row items-start justify-between gap-4">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
-              <Sparkles className="w-6 h-6" />
+      <div className="max-w-5xl mx-auto w-full space-y-5">
+        {/* Header Banner */}
+        <div className="bg-linear-to-r from-indigo-900 via-indigo-850 to-slate-900 text-white rounded-3xl p-5 sm:p-6 shadow-md border border-indigo-700/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-400/30 flex items-center justify-center text-amber-400 shrink-0">
+              <FileSpreadsheet className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900">
-                {language === 'pt'
-                  ? 'Importação de Alunos (ZIP, PDF, Excel) & Nomes Completos'
-                  : 'Student Import (ZIP, PDF, Excel) & Full Names'}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
-                Carrega o teu ficheiro <strong>5TIC_PDFs.zip</strong> (ou ficheiros PDF / Excel individuais) ou cola a lista diretamente do PDF. O sistema extrai automaticamente todas as turmas e nomes completos sem cortes, e permite apagar e recriar os utilizadores de raiz na base de dados com zero erros.
-              </p>
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                  Assistente de Criação & Importação
+                </span>
+                <span className="text-xs text-indigo-300">5.º Ano TIC</span>
+              </div>
+              <h2 className="text-lg sm:text-xl font-black text-white mt-1">
+                {language === 'pt' ? 'Importar Alunos por Excel (.xls / .xlsx), PDF ou Colar' : 'Import Students via Excel (.xls / .xlsx), PDF or Paste'}
+              </h2>
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setShowConfirmWipeModal(true)}
-            className="px-3.5 py-2 rounded-xl text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer self-start sm:self-auto"
-            title="Apaga todas as contas antigas de alunos da BD"
-          >
-            <Trash2 className="w-4 h-4 text-rose-600" />
-            <span>Limpar BD Alunos</span>
-          </button>
+          <div className="text-xs text-indigo-200 bg-white/10 px-3 py-1.5 rounded-xl border border-white/10 shrink-0">
+            {language === 'pt' ? 'Seguro & Sem Nomes Truncados' : 'GDPR Compliant & Full Names'}
+          </div>
         </div>
 
-        {/* Wipe feedback message */}
-        {wipeMessage && (
-          <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs sm:text-sm flex items-start gap-2.5 animate-in fade-in">
-            <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-            <div>
-              <p className="font-bold">Base de Dados Limpa!</p>
-              <p className="mt-0.5">{wipeMessage}</p>
+        {/* POST-IMPORT SUCCESS RESULT CARD */}
+        {importResult && (
+          <div className="bg-white rounded-3xl border border-emerald-200 p-6 sm:p-8 shadow-md space-y-6 animate-in zoom-in-95 duration-200">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                <CheckCircle2 className="w-8 h-8" />
+              </div>
+              <div>
+                <h3 className="text-xl font-black text-slate-900">
+                  {language === 'pt'
+                    ? `🎉 ${importResult.summary.createdCount} Alunos Criados com Sucesso na Base de Dados!`
+                    : `🎉 ${importResult.summary.createdCount} Students Successfully Created!`}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                  {importResult.wipedBefore && (
+                    <span className="text-emerald-700 font-semibold mr-2">
+                      🧹 A base de dados foi limpa antes da criação.
+                    </span>
+                  )}
+                  Todas as contas, utilizadores e palavras-passe amigáveis foram gerados com nomes completos e sem erros.
+                </p>
+              </div>
+            </div>
+
+            {/* Quick Action Navigation Buttons */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+              <button
+                type="button"
+                onClick={onNavigateToCredentials}
+                className="p-4 rounded-2xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <KeyRound className="w-5 h-5" />
+                <span>{language === 'pt' ? 'Ver Cartões de Acesso (Imprimir A4)' : 'View Printable Cards (A4)'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  if (importResult.created.length > 0) {
+                    exportStudentCredentialsToExcel(
+                      importResult.created.map((c) => ({
+                        ...c,
+                        fullName: c.name,
+                        initialPassword: c.password,
+                        email: `${c.username}@aluno.tic`,
+                      } as any)),
+                      'all'
+                    );
+                  }
+                }}
+                className="p-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Download className="w-5 h-5" />
+                <span>{language === 'pt' ? 'Descarregar Excel de Credenciais' : 'Download Credentials XLS'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  if (onNavigateToStudents) onNavigateToStudents();
+                  handleReset();
+                }}
+                className="p-4 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Users className="w-5 h-5" />
+                <span>{language === 'pt' ? 'Ver Pauta de Alunos' : 'View Students Roster'}</span>
+              </button>
+            </div>
+
+            {/* Summary details */}
+            <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-xs text-slate-600 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <strong>Total de Alunos:</strong> {importResult.summary.createdCount} novos criados
+                {importResult.summary.updatedCount ? `, ${importResult.summary.updatedCount} atualizados` : ''}
+              </div>
+              <button
+                type="button"
+                onClick={handleReset}
+                className="text-indigo-600 hover:text-indigo-800 font-bold underline cursor-pointer"
+              >
+                Importar outro ficheiro
+              </button>
             </div>
           </div>
         )}
 
-        {/* Step 1: Input Form (hidden if showing results) */}
+        {/* INPUT AND PREVIEW SECTION (Visible when not showing results) */}
         {!importResult && (
-          <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-xs space-y-5">
-            {/* Mode Selector Tabs */}
-            <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setActiveMode('upload');
-                  setParseError(null);
-                }}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
-                  activeMode === 'upload'
-                    ? 'bg-indigo-600 text-white shadow-xs'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }`}
-              >
-                <FileArchive className="w-4 h-4" />
-                <span>Carregar Ficheiro (ZIP, PDF, Excel)</span>
-              </button>
+          <div className="space-y-5">
+            {/* Step 1: Input controls */}
+            <div className="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-xs space-y-5">
+              {/* Mode switch */}
+              <div className="flex items-center justify-between flex-wrap gap-2 border-b border-slate-100 pb-4">
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveMode('upload');
+                      setParseError(null);
+                    }}
+                    className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                      activeMode === 'upload'
+                        ? 'bg-indigo-600 text-white shadow-xs'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
+                  >
+                    <FileSpreadsheet className="w-4 h-4" />
+                    <span>Carregar Ficheiro (Excel .xls / .xlsx, PDF, ZIP)</span>
+                  </button>
 
-              <button
-                type="button"
-                onClick={() => {
-                  setActiveMode('paste');
-                  setParseError(null);
-                }}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
-                  activeMode === 'paste'
-                    ? 'bg-indigo-600 text-white shadow-xs'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }`}
-              >
-                <ClipboardPaste className="w-4 h-4" />
-                <span>Colar Lista do PDF / Texto</span>
-              </button>
-            </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveMode('paste');
+                      setParseError(null);
+                    }}
+                    className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                      activeMode === 'paste'
+                        ? 'bg-indigo-600 text-white shadow-xs'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
+                  >
+                    <ClipboardPaste className="w-4 h-4" />
+                    <span>Colar Lista de Alunos (Texto / PDF)</span>
+                  </button>
+                </div>
 
-            {/* Turma Selector */}
-            <div className="max-w-xs">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                Turma Pré-definida (se não detetada no ficheiro):
-              </label>
-              <select
-                value={defaultTurma}
-                onChange={(e) => setDefaultTurma(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-800 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
-              >
-                {turmasList.map((t) => (
-                  <option key={t} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </select>
-            </div>
+                {/* Default Turma Selector */}
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="font-bold text-slate-500 uppercase tracking-wider">
+                    Turma padrão:
+                  </span>
+                  <select
+                    value={defaultTurma}
+                    onChange={(e) => setDefaultTurma(e.target.value)}
+                    className="px-3 py-1.5 rounded-xl border border-slate-300 bg-white font-bold text-slate-800 focus:ring-2 focus:ring-indigo-500 text-xs"
+                  >
+                    {turmasList.map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
-            {/* Mode A: Upload File (ZIP, PDF, XLSX, CSV) */}
-            {activeMode === 'upload' && (
-              <div className="space-y-4">
+              {/* Mode A: Upload File */}
+              {activeMode === 'upload' && (
                 <div
                   onDragOver={handleDragOver}
                   onDrop={handleDrop}
-                  className="border-2 border-dashed border-indigo-200 hover:border-indigo-400 bg-indigo-50/30 rounded-2xl p-6 sm:p-8 text-center transition-all flex flex-col items-center justify-center cursor-pointer"
-                  onClick={() => document.getElementById('student-file-input')?.click()}
+                  onClick={() => document.getElementById('admin-student-file-input')?.click()}
+                  className="border-2 border-dashed border-indigo-200 hover:border-indigo-400 bg-indigo-50/20 hover:bg-indigo-50/50 rounded-2xl p-6 sm:p-10 text-center transition-all flex flex-col items-center justify-center cursor-pointer group"
                 >
                   <input
-                    id="student-file-input"
+                    id="admin-student-file-input"
                     type="file"
-                    accept=".zip,.pdf,.xlsx,.xls,.csv"
+                    accept=".xls,.xlsx,.csv,.pdf,.zip"
                     onChange={handleFileUpload}
                     className="hidden"
                   />
 
-                  <div className="w-16 h-16 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center mb-3">
+                  <div className="w-16 h-16 rounded-2xl bg-indigo-100 group-hover:bg-indigo-600 text-indigo-600 group-hover:text-white flex items-center justify-center mb-3 transition-colors shadow-xs">
                     {parsing ? (
                       <RefreshCw className="w-8 h-8 animate-spin" />
                     ) : (
@@ -503,362 +752,281 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
                     )}
                   </div>
 
-                  <p className="text-sm sm:text-base font-bold text-slate-900">
+                  <p className="text-sm sm:text-base font-black text-slate-900">
                     {parsing
-                      ? 'A descompactar ZIP e a extrair alunos dos ficheiros...'
+                      ? 'A ler e a extrair alunos do ficheiro Excel / PDF...'
                       : selectedFile
-                      ? `Ficheiro: ${selectedFile.name}`
-                      : 'Clica aqui ou arrasta o ficheiro 5TIC_PDFs.zip, PDFs ou Excel'}
+                      ? `Ficheiro carregado: ${selectedFile.name}`
+                      : 'Arrasta o teu ficheiro Excel (.xls / .xlsx), PDF ou ZIP para aqui'}
                   </p>
                   <p className="text-xs text-slate-500 mt-1 max-w-md">
-                    Formatos suportados: <strong>.ZIP</strong> (contendo vários PDFs de turmas), <strong>.PDF</strong> (pautas/listas de alunos), <strong>.XLSX</strong>, <strong>.XLS</strong> ou <strong>.CSV</strong>.
+                    Suporta ficheiros de agrupamento com múltiplas turmas (ex: 5.º A, 5.º B, 5.º C...), cabeçalhos personalizados e listas de alunos oficiais.
                   </p>
-                </div>
-              </div>
-            )}
 
-            {/* Mode B: Paste Text from PDF */}
-            {activeMode === 'paste' && (
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-                    Copia os Nomes Completos do PDF e cola aqui (um por linha):
-                  </label>
-                  <span className="text-[11px] text-slate-400 font-medium">
-                    Suporta números à frente (ex: "1. José Júlio de Almeida")
-                  </span>
-                </div>
-                <textarea
-                  rows={8}
-                  value={pastedText}
-                  onChange={(e) => setPastedText(e.target.value)}
-                  placeholder={`Exemplo (pode colar diretamente da tabela do PDF):\n1 Anderson Oliveira Silva\n2 Artur Pawel Kowalski\n...\n14 José Júlio de Almeida`}
-                  className="w-full p-3.5 font-mono text-xs sm:text-sm rounded-xl border border-slate-200 bg-slate-50 focus:bg-white text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
-                />
-              </div>
-            )}
-
-            {/* Wipe First Option Toggle */}
-            <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200 flex items-start gap-3">
-              <input
-                type="checkbox"
-                id="wipe-db-first"
-                checked={wipeFirst}
-                onChange={(e) => setWipeFirst(e.target.checked)}
-                className="mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer"
-              />
-              <label htmlFor="wipe-db-first" className="text-xs sm:text-sm text-amber-900 cursor-pointer">
-                <strong className="block text-amber-950 font-bold mb-0.5">
-                  🧹 Apagar tudo na BD antes de criar (Recomendado)
-                </strong>
-                Elimina todas as contas antigas com nomes truncados e cria os novos utilizadores de raiz na base de dados com nomes completos e zero erros. A conta da professora Carla Oliveira fica 100% preservada.
-              </label>
-            </div>
-
-            {/* Parsing error */}
-            {parseError && (
-              <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm flex items-start gap-2.5 animate-in fade-in">
-                <AlertCircle className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
-                <span>{parseError}</span>
-              </div>
-            )}
-
-            {/* Files in ZIP info */}
-            {zipFilesProcessed.length > 0 && (
-              <div className="p-3.5 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-900 text-xs flex items-center gap-2">
-                <FileArchive className="w-4 h-4 text-indigo-600 shrink-0" />
-                <span>
-                  <strong>{zipFilesProcessed.length} ficheiros descompactados do ZIP:</strong>{' '}
-                  {zipFilesProcessed.join(', ')}
-                </span>
-              </div>
-            )}
-
-            {/* Preview of rows detected */}
-            {currentRows.length > 0 && (
-              <div className="space-y-3 pt-4 border-t border-slate-100 animate-in fade-in">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    <Users className="w-4 h-4 text-indigo-600" />
-                    <h4 className="text-sm font-bold text-slate-900">
-                      Alunos Analisados ({currentRows.length})
-                    </h4>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-2.5 text-xs">
-                    {Object.entries(byTurmaSummary).map(([turma, count]) => (
+                  <div className="flex items-center gap-1.5 mt-3 flex-wrap justify-center">
+                    {['.XLSX', '.XLS', '.CSV', '.PDF', '.ZIP'].map((f) => (
                       <span
-                        key={turma}
-                        className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-bold border border-indigo-200"
+                        key={f}
+                        className="px-2 py-0.5 rounded-md bg-white border border-slate-200 text-slate-600 text-[10px] font-black"
                       >
-                        {turma}: {count}
+                        {f}
                       </span>
                     ))}
                   </div>
                 </div>
+              )}
 
-                <div className="max-h-64 overflow-y-auto border border-slate-200 rounded-xl divide-y divide-slate-100 text-xs">
-                  {currentRows.map((row, idx) => (
-                    <div
-                      key={idx}
-                      className={`p-2.5 flex items-center justify-between ${
-                        wipeFirst
-                          ? 'bg-white'
-                          : row.actionType === 'update_name'
-                          ? 'bg-amber-50/50'
-                          : row.actionType === 'create_new'
-                          ? 'bg-white'
-                          : 'bg-slate-50'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2 min-w-0 pr-2">
-                        <span className="font-mono text-slate-400 w-6 shrink-0">{idx + 1}.</span>
-                        <div className="truncate">
-                          <span className="font-bold text-slate-900">{row.name}</span>
-                          {!wipeFirst && row.actionType === 'update_name' && row.matchedExistingStudent && (
-                            <span className="ml-2 text-[11px] text-amber-800 italic">
-                              (substituirá o nome "{row.matchedExistingStudent.fullName || row.matchedExistingStudent.name}")
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 shrink-0">
-                        <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-bold border border-indigo-200 text-[11px]">
-                          {row.turma}
-                        </span>
-                        {wipeFirst ? (
-                          <span className="text-[10px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-200">
-                            Novo Utilizador
-                          </span>
-                        ) : row.actionType === 'update_name' ? (
-                          <span className="text-[10px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-md border border-amber-300 flex items-center gap-1">
-                            <Sparkles className="w-3 h-3" />
-                            Atualizar Nome Completo
-                          </span>
-                        ) : row.actionType === 'create_new' ? (
-                          <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
-                            Novo Aluno
-                          </span>
-                        ) : (
-                          <span className="text-[10px] text-slate-500 bg-slate-200 px-2 py-0.5 rounded-md">
-                            Nome já atualizado
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Import Action Button */}
-                <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <p className="text-xs text-slate-500">
-                    {wipeFirst
-                      ? '🧹 A base de dados será limpa e todos os alunos serão criados de raiz.'
-                      : `A atualizar ${updateCount} nomes e a criar ${newCount} contas novas.`}
-                  </p>
-                  <div className="flex items-center gap-3 self-end sm:self-auto">
+              {/* Mode B: Paste Text */}
+              {activeMode === 'paste' && (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                      Copia os nomes do ficheiro da escola e cola aqui:
+                    </label>
+                    <span className="text-[11px] text-slate-500">
+                      Suporta números no início (ex: "1. Afonso Henriques")
+                    </span>
+                  </div>
+                  <textarea
+                    rows={6}
+                    value={pastedText}
+                    onChange={(e) => setPastedText(e.target.value)}
+                    placeholder={`1 Afonso Henriques Silva\n2 Beatriz Maria Santos\n3 Carlos Eduardo Ferreira\n...`}
+                    className="w-full p-3 font-mono text-xs sm:text-sm rounded-xl border border-slate-300 bg-slate-50 text-slate-900 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
+                  />
+                  <div className="flex justify-end">
                     <button
                       type="button"
-                      onClick={handleReset}
-                      className="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 text-xs font-bold transition-colors cursor-pointer"
+                      onClick={handleParsePastedText}
+                      disabled={!pastedText.trim() || parsing}
+                      className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs transition-colors cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
                     >
-                      Limpar
-                    </button>
-                    <button
-                      type="button"
-                      disabled={importing}
-                      onClick={handleStartImport}
-                      className={`px-6 py-2.5 rounded-xl font-bold text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50 text-white ${
-                        wipeFirst
-                          ? 'bg-rose-600 hover:bg-rose-700'
-                          : 'bg-indigo-600 hover:bg-indigo-700'
-                      }`}
-                    >
-                      {importing ? (
-                        <>
-                          <RefreshCw className="w-4 h-4 animate-spin" />
-                          <span>
-                            {wipeFirst
-                              ? 'A limpar BD e a criar utilizadores...'
-                              : 'A processar alunos...'}
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          <Sparkles className="w-4 h-4" />
-                          <span>
-                            {wipeFirst
-                              ? `🧹 Apagar BD e Criar ${currentRows.length} Alunos`
-                              : `Gravar (${updateCount} Atualizações, ${newCount} Novos)`}
-                          </span>
-                        </>
-                      )}
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Processar Texto</span>
                     </button>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
-        )}
+              )}
 
-        {/* Step 2: Import Result Summary */}
-        {importResult && (
-          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-md space-y-6 animate-in fade-in">
-            {/* Success Header */}
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
-                <CheckCircle2 className="w-7 h-7" />
+              {/* Wipe before create toggle */}
+              <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200 flex items-start gap-3">
+                <input
+                  type="checkbox"
+                  id="opt-wipe-first"
+                  checked={wipeFirst}
+                  onChange={(e) => setWipeFirst(e.target.checked)}
+                  className="mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer"
+                />
+                <label htmlFor="opt-wipe-first" className="text-xs sm:text-sm text-amber-950 cursor-pointer">
+                  <strong className="block font-bold text-amber-950">
+                    🧹 Limpar base de dados de alunos antes de criar (Recomendado)
+                  </strong>
+                  <span className="text-amber-800 text-xs">
+                    Elimina contas de alunos antigas ou incompletas e cria os novos utilizadores de raiz na base de dados, com nomes completos, utilizadores amigáveis e zero erros. A conta da professora Carla Oliveira fica 100% protegida e ativa.
+                  </span>
+                </label>
               </div>
-              <div>
-                <h3 className="text-lg font-black text-slate-900">
-                  {importResult.wipedBefore
-                    ? 'Base de Dados Limpa e Utilizadores Criados de Raiz!'
-                    : 'Nomes de Alunos Atualizados com Sucesso!'}
-                </h3>
-                <p className="text-xs text-slate-500">
-                  {importResult.wipedBefore
-                    ? `Foram eliminados ${importResult.wipedStats?.deletedCount || 0} utilizadores antigos e criados ${importResult.created.length} utilizadores limpos com os nomes completos.`
-                    : 'Os nomes completos oficiais foram registados na base de dados. Todos os ficheiros exportados conterão agora o nome integral dos alunos.'}
-                </p>
-              </div>
+
+              {/* Error display */}
+              {parseError && (
+                <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm flex items-start gap-2.5 animate-in fade-in">
+                  <AlertCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="font-bold">Atenção ao processar ficheiro:</strong>
+                    <p className="mt-0.5">{parseError}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Sheets detected info */}
+              {processedSheets.length > 0 && (
+                <div className="p-3 bg-indigo-50 border border-indigo-200 rounded-xl text-xs text-indigo-900 flex items-center gap-2">
+                  <Layers className="w-4 h-4 text-indigo-600 shrink-0" />
+                  <span>
+                    <strong>Folhas / Turmas identificadas:</strong> {processedSheets.join(', ')}
+                  </span>
+                </div>
+              )}
             </div>
 
-            {/* Metrics Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
-                <p className="text-xs text-slate-500 font-semibold uppercase">Total Ficheiro</p>
-                <p className="text-2xl font-black text-slate-900 mt-1">{importResult.summary.totalInFile}</p>
-              </div>
+            {/* PREVIEW AND CREATION CARD */}
+            {parsedRows.length > 0 && (
+              <div className="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-sm space-y-4 animate-in fade-in">
+                {/* Header of preview */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                  <div>
+                    <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
+                      <Users className="w-5 h-5 text-indigo-600" />
+                      <span>{parsedRows.length} Alunos Detetados para Criação</span>
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Revê a lista antes de avançar. Podes corrigir nomes, alterar turmas ou remover linhas.
+                    </p>
+                  </div>
 
-              <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-center">
-                <p className="text-xs text-emerald-700 font-semibold uppercase">Contas Criadas</p>
-                <p className="text-2xl font-black text-emerald-800 mt-1">{importResult.summary.createdCount}</p>
-              </div>
+                  {/* Primary Import Button */}
+                  <button
+                    type="button"
+                    onClick={handleStartImport}
+                    disabled={importing || parsedRows.length === 0}
+                    className="px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 shrink-0"
+                  >
+                    {importing ? (
+                      <>
+                        <RefreshCw className="w-4 h-4 animate-spin" />
+                        <span>A criar contas na base de dados...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="w-4 h-4 text-amber-300" />
+                        <span>Criar {parsedRows.length} Alunos na Base de Dados</span>
+                      </>
+                    )}
+                  </button>
+                </div>
 
-              <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-center">
-                <p className="text-xs text-amber-800 font-semibold uppercase flex items-center justify-center gap-1">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  Nomes Atualizados
-                </p>
-                <p className="text-2xl font-black text-amber-900 mt-1">{importResult.summary.updatedCount ?? 0}</p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
-                <p className="text-xs text-slate-500 font-semibold uppercase">Erros</p>
-                <p className="text-2xl font-black text-slate-700 mt-1">{importResult.summary.errorsCount}</p>
-              </div>
-            </div>
-
-            {/* Table of created accounts with full credentials */}
-            {importResult.created && importResult.created.length > 0 && (
-              <div className="space-y-2">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-900 flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  Utilizadores Criados com Nome Completo ({importResult.created.length}):
-                </h4>
-                <div className="max-h-56 overflow-y-auto border border-emerald-200 rounded-xl divide-y divide-emerald-100 text-xs bg-emerald-50/20">
-                  {importResult.created.map((c) => (
-                    <div key={c.id} className="p-2.5 flex items-center justify-between">
-                      <div>
-                        <span className="font-bold text-slate-900">{c.name}</span>
-                        <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 font-bold">
-                          {c.turma}
-                        </span>
-                        <span className="ml-2 font-mono text-[11px] text-slate-500">
-                          @{c.username}
-                        </span>
-                      </div>
-                      {c.password && (
-                        <span className="font-mono text-xs px-2 py-0.5 rounded bg-slate-100 text-slate-800 font-bold">
-                          {c.password}
-                        </span>
-                      )}
-                    </div>
+                {/* Turmas Pills Summary */}
+                <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider mr-1">
+                    Filtrar pré-visualização:
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setPreviewFilterTurma('all')}
+                    className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      previewFilterTurma === 'all'
+                        ? 'bg-indigo-600 text-white shadow-xs'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    }`}
+                  >
+                    Todas as Turmas ({parsedRows.length})
+                  </button>
+                  {uniqueTurmas.map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => setPreviewFilterTurma(t)}
+                      className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                        previewFilterTurma === t
+                          ? 'bg-indigo-600 text-white shadow-xs'
+                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      }`}
+                    >
+                      <span>{t}</span>
+                      <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-white/30 text-current font-black">
+                        {byTurmaCounts[t]}
+                      </span>
+                    </button>
                   ))}
+                </div>
+
+                {/* Table search */}
+                <div className="pt-2">
+                  <input
+                    type="text"
+                    value={searchPreview}
+                    onChange={(e) => setSearchPreview(e.target.value)}
+                    placeholder="Pesquisar na lista pré-visualizada..."
+                    className="w-full max-w-xs px-3 py-1.5 text-xs bg-slate-50 rounded-xl border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                  />
+                </div>
+
+                {/* Students Table */}
+                <div className="overflow-x-auto max-h-96 rounded-2xl border border-slate-200">
+                  <table className="w-full text-left text-xs text-slate-700">
+                    <thead className="bg-slate-100 text-slate-600 uppercase text-[10px] font-black sticky top-0 border-b border-slate-200">
+                      <tr>
+                        <th className="py-2.5 px-3 w-12 text-center">N.º</th>
+                        <th className="py-2.5 px-4">Nome Completo do Aluno</th>
+                        <th className="py-2.5 px-3 w-28">Turma</th>
+                        <th className="py-2.5 px-3 w-28 text-right">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {filteredPreviewRows.map((row, idx) => {
+                        const originalIndex = parsedRows.indexOf(row);
+                        const isEditing = editingRowIndex === originalIndex;
+
+                        return (
+                          <tr key={idx} className="hover:bg-slate-50 transition-colors">
+                            <td className="py-2 px-3 text-center font-bold text-slate-400">
+                              {row.number}
+                            </td>
+                            <td className="py-2 px-4">
+                              {isEditing ? (
+                                <input
+                                  type="text"
+                                  value={editRowName}
+                                  onChange={(e) => setEditRowName(e.target.value)}
+                                  className="w-full px-2 py-1 rounded-md border border-indigo-400 bg-white text-xs font-bold text-slate-800"
+                                />
+                              ) : (
+                                <span className="font-bold text-slate-900">{row.name}</span>
+                              )}
+                            </td>
+                            <td className="py-2 px-3">
+                              {isEditing ? (
+                                <input
+                                  type="text"
+                                  value={editRowTurma}
+                                  onChange={(e) => setEditRowTurma(e.target.value)}
+                                  className="w-full px-2 py-1 rounded-md border border-indigo-400 bg-white text-xs font-bold text-slate-800"
+                                />
+                              ) : (
+                                <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-black text-[11px] border border-indigo-100">
+                                  {row.turma}
+                                </span>
+                              )}
+                            </td>
+                            <td className="py-2 px-3 text-right">
+                              {isEditing ? (
+                                <div className="flex items-center justify-end gap-1">
+                                  <button
+                                    type="button"
+                                    onClick={() => saveEditRow(originalIndex)}
+                                    className="p-1 rounded-md bg-emerald-50 text-emerald-600 hover:bg-emerald-100 cursor-pointer"
+                                    title="Guardar"
+                                  >
+                                    <Check className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => setEditingRowIndex(null)}
+                                    className="p-1 rounded-md bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer"
+                                    title="Cancelar"
+                                  >
+                                    <X className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
+                              ) : (
+                                <div className="flex items-center justify-end gap-1">
+                                  <button
+                                    type="button"
+                                    onClick={() => startEditRow(originalIndex, row)}
+                                    className="p-1 rounded-md text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 cursor-pointer"
+                                    title="Editar nome ou turma"
+                                  >
+                                    <Edit2 className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDeleteRow(originalIndex)}
+                                    className="p-1 rounded-md text-slate-400 hover:text-rose-600 hover:bg-rose-50 cursor-pointer"
+                                    title="Remover linha"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             )}
-
-            {/* Next Steps CTA */}
-            <div className="p-4 rounded-xl bg-indigo-50 border border-indigo-200 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <div>
-                <p className="text-sm font-bold text-indigo-950">
-                  Tudo pronto e configurado sem erros!
-                </p>
-                <p className="text-xs text-indigo-800">
-                  Podes aceder à secção de Credenciais para descarregar o Excel completo com todos os Nomes, Utilizadores e Palavras-passe.
-                </p>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleReset}
-                  className="px-3.5 py-2 rounded-xl text-xs font-bold text-indigo-700 hover:bg-indigo-100 transition-colors cursor-pointer"
-                >
-                  Importar Mais
-                </button>
-                <button
-                  type="button"
-                  onClick={onNavigateToCredentials}
-                  className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold shadow-md transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
-                >
-                  <KeyRound className="w-4 h-4" />
-                  <span>Ver e Descarregar Excel</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Confirmation Modal to Wipe Database */}
-        {showConfirmWipeModal && (
-          <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in">
-            <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-rose-100">
-              <div className="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mx-auto">
-                <ShieldAlert className="w-6 h-6" />
-              </div>
-
-              <div className="text-center">
-                <h3 className="text-base font-black text-slate-900">
-                  Apagar Todas as Contas de Alunos da BD?
-                </h3>
-                <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                  Esta ação irá apagar <strong>todas as contas de alunos</strong> e respetivos resíduos na base de dados, permitindo criar a lista limpa com nomes completos sem conflitos.
-                </p>
-                <p className="text-xs font-bold text-emerald-700 mt-2 bg-emerald-50 py-1.5 px-3 rounded-lg border border-emerald-200">
-                  ✓ A tua conta de professora (Carla Oliveira) permanecerá 100% segura e intacta.
-                </p>
-              </div>
-
-              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmWipeModal(false)}
-                  disabled={wipingDatabase}
-                  className="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 text-xs font-bold cursor-pointer"
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="button"
-                  onClick={handleDirectWipeDatabase}
-                  disabled={wipingDatabase}
-                  className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-md transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
-                >
-                  {wipingDatabase ? (
-                    <>
-                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                      <span>A apagar alunos...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Trash2 className="w-3.5 h-3.5" />
-                      <span>Sim, Apagar Tudo</span>
-                    </>
-                  )}
-                </button>
-              </div>
-            </div>
           </div>
         )}
       </div>

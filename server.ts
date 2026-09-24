@@ -1545,6 +1545,201 @@ function parseStudentsFromLines(lines: string[], defaultTurma = '5.º A'): Array
   return students;
 }
 
+function parseStudentsFromExcelWorkbook(
+  wb: XLSX.WorkBook,
+  defaultTurma = '5.º A',
+  sourceFile = 'arquivo.xlsx'
+): { filesOrSheets: string[]; students: Array<{ number: number; name: string; turma: string; sourceFile?: string }> } {
+  const students: Array<{ number: number; name: string; turma: string; sourceFile?: string }> = [];
+  const filesOrSheets: string[] = [];
+
+  for (const sheetName of wb.SheetNames) {
+    // Skip obvious instruction/meta sheets if there are multiple sheets
+    const lowerSheet = sheetName.toLowerCase().trim();
+    if (wb.SheetNames.length > 1 && (lowerSheet.includes('instru') || lowerSheet === 'capa' || lowerSheet === 'menu')) {
+      continue;
+    }
+
+    const sheet = wb.Sheets[sheetName];
+    if (!sheet) continue;
+
+    const rawMatrix: any[][] = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+    if (!rawMatrix || rawMatrix.length === 0) continue;
+
+    filesOrSheets.push(sheetName);
+    const sheetDetectedTurma = detectTurmaFromString(sheetName) || defaultTurma;
+
+    // 1. Locate header row & column indexes
+    let headerRowIdx = -1;
+    let nameCol = -1;
+    let firstNameCol = -1;
+    let lastNameCol = -1;
+    let numCol = -1;
+    let turmaCol = -1;
+
+    for (let r = 0; r < Math.min(rawMatrix.length, 15); r++) {
+      const row = rawMatrix[r];
+      if (!Array.isArray(row)) continue;
+
+      for (let c = 0; c < row.length; c++) {
+        const val = String(row[c] || '').toLowerCase().trim();
+        if (nameCol === -1 && (
+          val === 'nome' ||
+          val === 'nome do aluno' ||
+          val === 'nome completo' ||
+          val === 'nome do estudante' ||
+          val === 'aluno' ||
+          val === 'estudante' ||
+          val === 'student' ||
+          val === 'name' ||
+          val === 'designação' ||
+          val === 'designacao' ||
+          val === 'nome_aluno'
+        )) {
+          nameCol = c;
+          headerRowIdx = r;
+        }
+
+        if (firstNameCol === -1 && (val === 'nome próprio' || val === 'nome proprio' || val === 'primeiro nome')) {
+          firstNameCol = c;
+          headerRowIdx = r;
+        }
+
+        if (lastNameCol === -1 && (val === 'apelido' || val === 'sobrenome' || val === 'último nome' || val === 'ultimo nome')) {
+          lastNameCol = c;
+          headerRowIdx = r;
+        }
+
+        if (numCol === -1 && (
+          val === 'n.º' ||
+          val === 'nº' ||
+          val === 'numero' ||
+          val === 'número' ||
+          val === 'num' ||
+          val === 'no.' ||
+          val === 'n' ||
+          val === '#'
+        )) {
+          numCol = c;
+          headerRowIdx = r;
+        }
+
+        if (turmaCol === -1 && (val === 'turma' || val === 'classe' || val === 'ano/turma' || val === 'class')) {
+          turmaCol = c;
+        }
+      }
+
+      if (nameCol !== -1 || (firstNameCol !== -1 && lastNameCol !== -1)) break;
+    }
+
+    // 2. Fallback heuristic: if no explicit header row, find column with full names
+    if (nameCol === -1 && (firstNameCol === -1 || lastNameCol === -1)) {
+      let bestCol = -1;
+      let maxHits = 0;
+
+      for (let c = 0; c < 15; c++) {
+        let hits = 0;
+        for (let r = 0; r < Math.min(rawMatrix.length, 40); r++) {
+          const val = String(rawMatrix[r]?.[c] || '').trim();
+          if (
+            val.length >= 6 &&
+            val.includes(' ') &&
+            !val.includes('@') &&
+            !/^\d+$/.test(val) &&
+            /[a-zA-ZÀ-ÿ]/.test(val)
+          ) {
+            hits++;
+          }
+        }
+        if (hits > maxHits) {
+          maxHits = hits;
+          bestCol = c;
+        }
+      }
+
+      if (maxHits >= 2) {
+        nameCol = bestCol;
+        headerRowIdx = 0;
+      }
+    }
+
+    if (nameCol === -1 && (firstNameCol === -1 || lastNameCol === -1)) continue;
+
+    const startRow = headerRowIdx >= 0 ? headerRowIdx + 1 : 0;
+    let autoNum = 1;
+
+    for (let r = startRow; r < rawMatrix.length; r++) {
+      const row = rawMatrix[r];
+      if (!row || !Array.isArray(row)) continue;
+
+      let rawName = '';
+      if (nameCol !== -1 && row[nameCol] !== undefined) {
+        rawName = String(row[nameCol] || '').trim();
+      } else if (firstNameCol !== -1 && lastNameCol !== -1) {
+        const fn = String(row[firstNameCol] || '').trim();
+        const ln = String(row[lastNameCol] || '').trim();
+        rawName = `${fn} ${ln}`.trim();
+      }
+
+      if (!rawName) continue;
+
+      const lower = rawName.toLowerCase();
+      if (
+        lower.includes('total de alunos') ||
+        lower.includes('total alunos') ||
+        lower.includes('página ') ||
+        lower.includes('pagina ') ||
+        lower.includes('ano letivo') ||
+        lower.includes('agrupamento') ||
+        lower.includes('diretor de turma') ||
+        lower.includes('diretora de turma') ||
+        lower.includes('estabelecimento') ||
+        lower.includes('data de emiss')
+      ) {
+        continue;
+      }
+
+      let num = autoNum;
+      if (numCol !== -1 && row[numCol] !== undefined && row[numCol] !== '') {
+        const parsed = parseInt(String(row[numCol]).trim(), 10);
+        if (!isNaN(parsed) && parsed > 0 && parsed <= 60) {
+          num = parsed;
+        }
+      }
+
+      // Check if leading number exists in name: "1 - Afonso Silva" or "1. Afonso Silva"
+      const matchNumInName = rawName.match(/^(\d{1,2})[\s\.\-\)]+(.+)$/);
+      if (matchNumInName) {
+        num = parseInt(matchNumInName[1], 10);
+        rawName = matchNumInName[2].trim();
+      }
+
+      // Remove trailing status tags or dates
+      rawName = rawName.replace(/\s+\(?(?:ativo|matriculado|ordin[aá]rio|transferido|retido)\)?/gi, '').trim();
+      rawName = rawName.replace(/\s+\d{2}[\/\-]\d{2}[\/\-]\d{2,4}/g, '').trim();
+      rawName = rawName.replace(/\s+/g, ' ');
+
+      if (rawName.length < 3 || !/[a-zA-ZÀ-ÿ]/.test(rawName)) continue;
+      if (/^(sim|não|nao|m|f|masculino|feminino)$/i.test(rawName)) continue;
+
+      let rowTurma = sheetDetectedTurma;
+      if (turmaCol !== -1 && row[turmaCol]) {
+        rowTurma = detectTurmaFromString(String(row[turmaCol])) || rowTurma;
+      }
+
+      students.push({
+        number: num,
+        name: rawName,
+        turma: rowTurma,
+        sourceFile: `${sourceFile} [${sheetName}]`,
+      });
+      autoNum = num + 1;
+    }
+  }
+
+  return { filesOrSheets, students };
+}
+
 async function parseAnyStudentFile(
   fileName: string,
   buffer: Buffer,
@@ -1577,18 +1772,8 @@ async function parseAnyStudentFile(
         } else if (entryExt === '.xlsx' || entryExt === '.xls') {
           filesProcessed.push(entryName);
           const wb = XLSX.read(fileData, { type: 'buffer' });
-          for (const sheetName of wb.SheetNames) {
-            const sheet = wb.Sheets[sheetName];
-            const rows: any[] = XLSX.utils.sheet_to_json(sheet, { defval: '' });
-            const sheetTurma = detectTurmaFromString(sheetName) || entryTurma;
-            rows.forEach((r, idx) => {
-              const name = String(r['Nome Completo'] || r['Nome'] || r['nome'] || r['Aluno'] || '').trim();
-              if (name && name.length >= 3) {
-                const num = Number(r['N.º'] || r['Nº'] || r['Numero'] || idx + 1);
-                allStudents.push({ number: num, name, turma: sheetTurma, sourceFile: entryName });
-              }
-            });
-          }
+          const res = parseStudentsFromExcelWorkbook(wb, entryTurma, entryName);
+          res.students.forEach((s) => allStudents.push(s));
         } else if (entryExt === '.csv' || entryExt === '.txt') {
           filesProcessed.push(entryName);
           const text = fileData.toString('utf-8');
@@ -1609,24 +1794,31 @@ async function parseAnyStudentFile(
   } else if (ext === '.xlsx' || ext === '.xls') {
     filesProcessed.push(fileName);
     const wb = XLSX.read(buffer, { type: 'buffer' });
-    for (const sheetName of wb.SheetNames) {
-      const sheet = wb.Sheets[sheetName];
-      const rows: any[] = XLSX.utils.sheet_to_json(sheet, { defval: '' });
-      const sheetTurma = detectTurmaFromString(sheetName) || fileTurma;
-      rows.forEach((r, idx) => {
-        const name = String(r['Nome Completo'] || r['Nome'] || r['nome'] || r['Aluno'] || '').trim();
-        if (name && name.length >= 3) {
-          const num = Number(r['N.º'] || r['Nº'] || r['Numero'] || idx + 1);
-          allStudents.push({ number: num, name, turma: sheetTurma, sourceFile: fileName });
-        }
-      });
-    }
+    const res = parseStudentsFromExcelWorkbook(wb, fileTurma, fileName);
+    res.students.forEach((s) => allStudents.push(s));
+    res.filesOrSheets.forEach((sh) => {
+      if (!filesProcessed.includes(sh)) filesProcessed.push(sh);
+    });
   } else if (ext === '.csv' || ext === '.txt') {
     filesProcessed.push(fileName);
+    // Support semicolon-separated or comma-separated CSV
     const text = buffer.toString('utf-8');
     const lines = text.split(/\r?\n/);
-    const extracted = parseStudentsFromLines(lines, fileTurma);
-    extracted.forEach((s) => allStudents.push({ ...s, sourceFile: fileName }));
+    // Check if line contains delimiters like ; or ,
+    const firstNonEmpty = lines.find((l) => l.trim().length > 0) || '';
+    if (firstNonEmpty.includes(';') || firstNonEmpty.includes(',') || firstNonEmpty.includes('\t')) {
+      const wb = XLSX.read(buffer, { type: 'buffer' });
+      const res = parseStudentsFromExcelWorkbook(wb, fileTurma, fileName);
+      if (res.students.length > 0) {
+        res.students.forEach((s) => allStudents.push(s));
+      } else {
+        const extracted = parseStudentsFromLines(lines, fileTurma);
+        extracted.forEach((s) => allStudents.push({ ...s, sourceFile: fileName }));
+      }
+    } else {
+      const extracted = parseStudentsFromLines(lines, fileTurma);
+      extracted.forEach((s) => allStudents.push({ ...s, sourceFile: fileName }));
+    }
   }
 
   return { filesProcessed, students: allStudents };
@@ -1706,7 +1898,19 @@ app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, asyn
     const existed: any[] = [];
     const errors: any[] = [];
 
-    // Process students
+    const studentsToCommit: Array<{
+      userId: string;
+      fullName: string;
+      normalizedTurma: string;
+      username: string;
+      password: string;
+      cleanRawName: string;
+      userData: any;
+      credData: any;
+      publicData: any;
+    }> = [];
+
+    // Process students and prepare records
     for (let i = 0; i < rawStudents.length; i++) {
       const item = rawStudents[i];
       const rawName = String(
@@ -1719,7 +1923,6 @@ app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, asyn
         ''
       ).trim();
       const rawTurma = String(item?.turma || item?.Turma || item?.['Ano/Turma'] || defaultTurma || '5.º A').trim();
-      const rawNumber = Number(item?.number || item?.['N.º'] || item?.['Nº'] || item?.numero || item?.num || (i + 1));
 
       if (!rawName) {
         errors.push({ item, error: 'Linha com nome vazio.' });
@@ -1741,7 +1944,7 @@ app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, asyn
         // 1. Exact match
         if (exFullName === rawNameLower || exName === rawNameLower) return true;
 
-        // 2. Prefix / Truncated match (handles when existing name was truncated e.g. "José Júlio d" matching "José Júlio de...")
+        // 2. Prefix / Truncated match
         const exBase = exName.replace(/\s+[a-z]$/i, '').trim();
         if (exBase.length >= 4 && rawNameLower.startsWith(exBase)) return true;
 
@@ -1760,7 +1963,6 @@ app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, asyn
         const { fullName, firstName, lastName, greetingName } = parseStudentName(cleanRawName);
         const currentFullName = String(matched.fullName || matched.name || '').trim();
 
-        // If the new name is more complete or different, update the database record!
         if (fullName.length > currentFullName.length || fullName.toLowerCase() !== currentFullName.toLowerCase()) {
           try {
             const updates = {
@@ -1778,7 +1980,6 @@ app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, asyn
               lastName: lastName,
             }, { merge: true });
 
-            // Update in-memory reference
             matched.name = fullName;
             matched.fullName = fullName;
             matched.firstName = firstName;
@@ -1853,26 +2054,54 @@ app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, asyn
           role: 'student',
         };
 
-        const batch = db.batch();
-        batch.set(db.collection('users').doc(userId), userData);
-        batch.set(db.collection('credentials').doc(userId), credData);
-        batch.set(db.collection('publicProfiles').doc(userId), publicData);
-
-        await batch.commit();
-
-        created.push({
-          id: userId,
-          name: fullName,
-          turma: normalizedTurma,
-          username,
-          password,
-        });
-
         existingStudentsList.push(userData);
         existingUsernames.add(username.toLowerCase());
         existingPasswords.add(password);
+
+        studentsToCommit.push({
+          userId,
+          fullName,
+          normalizedTurma,
+          username,
+          password,
+          cleanRawName,
+          userData,
+          credData,
+          publicData,
+        });
       } catch (err: any) {
-        errors.push({ name: cleanRawName, turma: normalizedTurma, error: err.message || 'Erro ao criar conta.' });
+        errors.push({ name: cleanRawName, turma: normalizedTurma, error: err.message || 'Erro ao processar dados da conta.' });
+      }
+    }
+
+    // Commit students in chunks of 50 (150 writes per batch, well within Firestore 500 limit)
+    const CHUNK_SIZE = 50;
+    for (let c = 0; c < studentsToCommit.length; c += CHUNK_SIZE) {
+      const chunk = studentsToCommit.slice(c, c + CHUNK_SIZE);
+      const batch = db.batch();
+
+      for (const s of chunk) {
+        batch.set(db.collection('users').doc(s.userId), s.userData);
+        batch.set(db.collection('credentials').doc(s.userId), s.credData);
+        batch.set(db.collection('publicProfiles').doc(s.userId), s.publicData);
+      }
+
+      try {
+        await batch.commit();
+        for (const s of chunk) {
+          created.push({
+            id: s.userId,
+            name: s.fullName,
+            turma: s.normalizedTurma,
+            username: s.username,
+            password: s.password,
+          });
+        }
+      } catch (batchErr: any) {
+        console.error('Batch commit error:', batchErr);
+        for (const s of chunk) {
+          errors.push({ name: s.cleanRawName, turma: s.normalizedTurma, error: batchErr.message || 'Erro ao gravar lote na base de dados.' });
+        }
       }
     }
 
