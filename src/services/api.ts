@@ -1308,8 +1308,31 @@ export const api = {
     return await serverApi(`/api/teacher/students/${encodeURIComponent(studentId)}`, { method: 'PATCH', body: JSON.stringify({ email: studentEmail, ...updates }) });
   },
 
-  async importStudentsBatch(students: Array<{ name: string; turma: string }>, defaultTurma?: string): Promise<{
+  async parseStudentsFile(
+    fileBase64: string,
+    fileName: string,
+    defaultTurma?: string
+  ): Promise<{
     success: boolean;
+    fileName: string;
+    filesProcessed: string[];
+    totalFound: number;
+    students: Array<{ number: number; name: string; turma: string; sourceFile?: string }>;
+  }> {
+    return await serverApi('/api/teacher/students/parse-file', {
+      method: 'POST',
+      body: JSON.stringify({ fileBase64, fileName, defaultTurma }),
+    });
+  },
+
+  async importStudentsBatch(
+    students: Array<{ name: string; turma?: string; number?: number; username?: string; password?: string }>,
+    defaultTurma?: string,
+    wipeAllStudentsFirst = false
+  ): Promise<{
+    success: boolean;
+    wipedBefore?: boolean;
+    wipedStats?: { deletedCount: number; purgedResidualsCount: number };
     summary: { totalInFile: number; createdCount: number; updatedCount?: number; existedCount: number; errorsCount: number };
     created: Array<{ id: string; name: string; turma: string; username: string; password: string }>;
     updated?: Array<{ id: string; oldName?: string; name: string; turma: string; username: string }>;
@@ -1318,7 +1341,7 @@ export const api = {
   }> {
     return await serverApi('/api/teacher/students/import-batch', {
       method: 'POST',
-      body: JSON.stringify({ students, defaultTurma }),
+      body: JSON.stringify({ students, defaultTurma, wipeAllStudentsFirst }),
     });
   },
 

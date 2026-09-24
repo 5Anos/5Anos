@@ -23,6 +23,9 @@ import {
 } from './src/utils/studentCredentials';
 import { getDefaultAvatar } from './src/utils/avatarUtils';
 
+import JSZip from 'jszip';
+import * as XLSX from 'xlsx';
+
 const app = express();
 const PORT = 3000;
 
@@ -38,7 +41,8 @@ app.use((req, res, next) => {
   }
   next();
 });
-app.use(express.json({ limit: '256kb' }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 /* ============================================================
    FIREBASE ADMIN
@@ -1452,7 +1456,215 @@ app.get('/api/teacher/students', requireAuth, requireTeacher, async (_req, res) 
 });
 
 /* ============================================================
-   TEACHER — IMPORT STUDENTS BATCH (XLS/XLSX)
+   TEACHER — PARSE STUDENTS FILE (ZIP, PDF, XLSX, CSV)
+   ============================================================ */
+
+async function extractTextFromPdfBuffer(buffer: Buffer): Promise<string> {
+  try {
+    const mod: any = await import('pdf-parse');
+    const PDFParse = mod.PDFParse || mod.default?.PDFParse || mod.default;
+    if (typeof PDFParse === 'function') {
+      const parser = new PDFParse({ data: buffer });
+      const res = await parser.getText();
+      await parser.destroy().catch(() => {});
+      return res?.text || '';
+    }
+  } catch (err) {
+    console.error('Error in extractTextFromPdfBuffer:', err);
+  }
+  return '';
+}
+
+function detectTurmaFromString(input: string): string | null {
+  if (!input) return null;
+  const mSpecific = input.match(/(?:5|5\.|5º|5\.º)\s*[-_ ]*([a-fA-F])\b/i);
+  if (mSpecific && mSpecific[1]) {
+    return `5.º ${mSpecific[1].toUpperCase()}`;
+  }
+  const mTurma = input.match(/\b(?:turma|turma_)\s*[:\-–]?\s*([a-fA-F])\b/i);
+  if (mTurma && mTurma[1]) {
+    return `5.º ${mTurma[1].toUpperCase()}`;
+  }
+  return null;
+}
+
+function parseStudentsFromLines(lines: string[], defaultTurma = '5.º A'): Array<{ number: number; name: string; turma: string }> {
+  const students: Array<{ number: number; name: string; turma: string }> = [];
+  let currentTurma = defaultTurma;
+  let autoNumber = 1;
+
+  const blacklist = [
+    'ano letivo', 'agrupamento', 'escola', 'lista de alunos', 'diretor', 'página', 'pagina',
+    'data de nasc', 'data nasc', 'processo', 'situação', 'situacao', 'matrícula', 'matricula', 'disciplina',
+    'tecnologias da informação', 'tecnologias da informacao', 'informação e comunicação', 'tic', 'nome do aluno',
+    'relatório', 'relatorio', 'inovar', 'giae', 'sige', 'dge', 'subsídio', 'subsidio', 'escalão', 'escalao',
+    'total de alunos', 'nº de alunos', 'sexo', 'idade', 'contacto', 'morada', 'ministério da educação',
+    'republica portuguesa', 'educação e ciência', 'estabelecimento'
+  ];
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) continue;
+    const lower = line.toLowerCase();
+
+    const detected = detectTurmaFromString(line);
+    if (detected && (lower.includes('turma') || lower.includes('5º') || lower.includes('5.º') || lower.includes('ano'))) {
+      currentTurma = detected;
+      autoNumber = 1;
+      continue;
+    }
+
+    if (blacklist.some(b => lower.includes(b))) continue;
+
+    const match = line.match(/^(\d{1,2})[\s\.\-\)\t:]+(.+)$/);
+    let number = autoNumber;
+    let rawName = line;
+
+    if (match) {
+      const parsedNum = parseInt(match[1], 10);
+      if (parsedNum >= 1 && parsedNum <= 50) {
+        number = parsedNum;
+        autoNumber = parsedNum + 1;
+        rawName = match[2];
+      }
+    }
+
+    let cleanName = rawName.split(/\t+|\s{3,}|\s+\d{2}[\/\-]\d{2}[\/\-]\d{2,4}/)[0].trim();
+    cleanName = cleanName.replace(/\s+/g, ' ');
+
+    if (cleanName.length < 3 || !/[a-zA-ZÀ-ÿ]/.test(cleanName)) continue;
+    if (/^(sim|não|nao|m|f|masculino|feminino|ativo|matriculado|ordinario|n\/a)$/i.test(cleanName)) continue;
+
+    students.push({
+      number,
+      name: cleanName,
+      turma: currentTurma,
+    });
+  }
+
+  return students;
+}
+
+async function parseAnyStudentFile(
+  fileName: string,
+  buffer: Buffer,
+  defaultTurma = '5.º A'
+): Promise<{ filesProcessed: string[]; students: Array<{ number: number; name: string; turma: string; sourceFile?: string }> }> {
+  const ext = path.extname(fileName).toLowerCase();
+  const filesProcessed: string[] = [];
+  const allStudents: Array<{ number: number; name: string; turma: string; sourceFile?: string }> = [];
+
+  const fileTurma = detectTurmaFromString(fileName) || defaultTurma;
+
+  if (ext === '.zip' || (buffer.length > 4 && buffer[0] === 0x50 && buffer[1] === 0x4B)) {
+    const zip = await JSZip.loadAsync(buffer);
+    const entryNames = Object.keys(zip.files)
+      .filter((name) => !zip.files[name].dir && !name.includes('__MACOSX') && !path.basename(name).startsWith('.'))
+      .sort();
+
+    for (const entryName of entryNames) {
+      try {
+        const fileData = await zip.files[entryName].async('nodebuffer');
+        const entryExt = path.extname(entryName).toLowerCase();
+        const entryTurma = detectTurmaFromString(entryName) || fileTurma;
+
+        if (entryExt === '.pdf') {
+          filesProcessed.push(entryName);
+          const pdfText = await extractTextFromPdfBuffer(fileData);
+          const lines = pdfText.split(/\r?\n/);
+          const extracted = parseStudentsFromLines(lines, entryTurma);
+          extracted.forEach((s) => allStudents.push({ ...s, sourceFile: entryName }));
+        } else if (entryExt === '.xlsx' || entryExt === '.xls') {
+          filesProcessed.push(entryName);
+          const wb = XLSX.read(fileData, { type: 'buffer' });
+          for (const sheetName of wb.SheetNames) {
+            const sheet = wb.Sheets[sheetName];
+            const rows: any[] = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+            const sheetTurma = detectTurmaFromString(sheetName) || entryTurma;
+            rows.forEach((r, idx) => {
+              const name = String(r['Nome Completo'] || r['Nome'] || r['nome'] || r['Aluno'] || '').trim();
+              if (name && name.length >= 3) {
+                const num = Number(r['N.º'] || r['Nº'] || r['Numero'] || idx + 1);
+                allStudents.push({ number: num, name, turma: sheetTurma, sourceFile: entryName });
+              }
+            });
+          }
+        } else if (entryExt === '.csv' || entryExt === '.txt') {
+          filesProcessed.push(entryName);
+          const text = fileData.toString('utf-8');
+          const lines = text.split(/\r?\n/);
+          const extracted = parseStudentsFromLines(lines, entryTurma);
+          extracted.forEach((s) => allStudents.push({ ...s, sourceFile: entryName }));
+        }
+      } catch (entryErr) {
+        console.warn(`Could not parse entry ${entryName} in ZIP:`, entryErr);
+      }
+    }
+  } else if (ext === '.pdf') {
+    filesProcessed.push(fileName);
+    const pdfText = await extractTextFromPdfBuffer(buffer);
+    const lines = pdfText.split(/\r?\n/);
+    const extracted = parseStudentsFromLines(lines, fileTurma);
+    extracted.forEach((s) => allStudents.push({ ...s, sourceFile: fileName }));
+  } else if (ext === '.xlsx' || ext === '.xls') {
+    filesProcessed.push(fileName);
+    const wb = XLSX.read(buffer, { type: 'buffer' });
+    for (const sheetName of wb.SheetNames) {
+      const sheet = wb.Sheets[sheetName];
+      const rows: any[] = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+      const sheetTurma = detectTurmaFromString(sheetName) || fileTurma;
+      rows.forEach((r, idx) => {
+        const name = String(r['Nome Completo'] || r['Nome'] || r['nome'] || r['Aluno'] || '').trim();
+        if (name && name.length >= 3) {
+          const num = Number(r['N.º'] || r['Nº'] || r['Numero'] || idx + 1);
+          allStudents.push({ number: num, name, turma: sheetTurma, sourceFile: fileName });
+        }
+      });
+    }
+  } else if (ext === '.csv' || ext === '.txt') {
+    filesProcessed.push(fileName);
+    const text = buffer.toString('utf-8');
+    const lines = text.split(/\r?\n/);
+    const extracted = parseStudentsFromLines(lines, fileTurma);
+    extracted.forEach((s) => allStudents.push({ ...s, sourceFile: fileName }));
+  }
+
+  return { filesProcessed, students: allStudents };
+}
+
+app.post('/api/teacher/students/parse-file', requireAuth, requireTeacher, async (req, res) => {
+  try {
+    const fileName = String(req.body?.fileName || '').trim() || 'document.pdf';
+    const fileBase64 = String(req.body?.fileBase64 || '').trim();
+    const defaultTurma = req.body?.defaultTurma ? normalizeTurmaName(String(req.body.defaultTurma)) : '5.º A';
+
+    if (!fileBase64) {
+      return res.status(400).json({ error: 'Ficheiro não fornecido (fileBase64 vazio).' });
+    }
+
+    const cleanBase64 = fileBase64.replace(/^data:.*?;base64,/, '');
+    const buffer = Buffer.from(cleanBase64, 'base64');
+
+    if (buffer.length === 0) {
+      return res.status(400).json({ error: 'Ficheiro vazio ou corrompido.' });
+    }
+
+    const result = await parseAnyStudentFile(fileName, buffer, defaultTurma);
+    return res.json({
+      success: true,
+      fileName,
+      filesProcessed: result.filesProcessed,
+      totalFound: result.students.length,
+      students: result.students,
+    });
+  } catch (err: any) {
+    console.error('Teacher parse-file error:', err);
+    return res.status(500).json({ error: `Erro ao processar ficheiro: ${err.message || 'formato inválido'}` });
+  }
+});
+
+/* ============================================================
+   TEACHER — IMPORT STUDENTS BATCH (XLS/XLSX/PDF/ZIP/PASTE)
    ============================================================ */
 
 app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, async (req, res) => {
@@ -1462,6 +1674,15 @@ app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, asyn
 
     if (rawStudents.length === 0) {
       return res.status(400).json({ error: 'Nenhum aluno fornecido para importação.' });
+    }
+
+    // 0. If teacher explicitly requested to wipe the student database first
+    let wipedBefore = false;
+    let wipedStats = { deletedCount: 0, purgedResidualsCount: 0 };
+    if (req.body?.wipeAllStudentsFirst === true) {
+      console.log('🧹 wipeAllStudentsFirst requested by teacher. Purging all students and residuals...');
+      wipedStats = await purgeAllStudentDataAndResiduals();
+      wipedBefore = true;
     }
 
     // 1. Fetch existing users to check collisions and avoid duplicates
@@ -1657,6 +1878,8 @@ app.post('/api/teacher/students/import-batch', requireAuth, requireTeacher, asyn
 
     return res.json({
       success: true,
+      wipedBefore,
+      wipedStats,
       summary: {
         totalInFile: rawStudents.length,
         createdCount: created.length,
