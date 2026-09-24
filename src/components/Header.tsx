@@ -117,7 +117,7 @@ export const Header: React.FC<HeaderProps> = ({
                   className="py-5 text-sm font-extrabold text-indigo-950 hover:text-indigo-900 transition-colors flex items-center gap-2 cursor-pointer bg-linear-to-r from-amber-100 to-amber-200/90 hover:from-amber-200 hover:to-amber-300 px-3.5 my-2.5 rounded-xl border border-amber-300 shadow-2xs"
                 >
                   <ShieldCheck className="w-4 h-4 text-indigo-800" />
-                  <span>{language === 'pt' ? 'Área da Professora (XLS)' : 'Teacher Portal (XLS)'}</span>
+                  <span>{language === 'pt' ? 'Área do Professor' : 'Teacher Portal'}</span>
                 </button>
               )}
             </nav>
@@ -263,8 +263,8 @@ export const Header: React.FC<HeaderProps> = ({
                         }}
                         className="w-full text-left px-4 py-2 text-xs sm:text-sm text-indigo-950 bg-amber-50 hover:bg-amber-100 flex items-center gap-2 font-bold cursor-pointer border-b border-amber-200/80"
                       >
-                        <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
-                        <span>{language === 'pt' ? '📗 Pautas das Turmas (XLS)' : '📗 Class Records (XLS)'}</span>
+                        <ShieldCheck className="w-4 h-4 text-indigo-800" />
+                        <span>{language === 'pt' ? 'Área do Professor' : 'Teacher Portal'}</span>
                       </button>
                     )}
 
@@ -370,7 +370,7 @@ export const Header: React.FC<HeaderProps> = ({
               className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-black text-indigo-950 bg-amber-100 border border-amber-300 flex items-center gap-3"
             >
               <ShieldCheck className="w-5 h-5 text-indigo-800" />
-              <span>{language === 'pt' ? 'Área da Professora & Pautas XLS' : 'Teacher Portal & XLS Records'}</span>
+              <span>{language === 'pt' ? 'Área do Professor' : 'Teacher Portal'}</span>
             </button>
           )}
 

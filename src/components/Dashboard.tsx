@@ -135,66 +135,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
       </header>
 
-      {/* Admin / Teacher Welcome Banner */}
-      {isAdmin && (
-        <div className="p-5 sm:p-6 rounded-3xl bg-linear-to-r from-indigo-950 via-indigo-900 to-slate-900 text-white shadow-lg border border-amber-400/30 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-          <div className="flex items-start sm:items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-400/40 flex items-center justify-center text-amber-300 shrink-0">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
-                  {language === 'pt' ? 'Área da Professora / Administrador' : 'Teacher / Administrator'}
-                </span>
-                <span className="text-xs text-indigo-300 font-mono">{user?.email}</span>
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold text-white mt-1">
-                {language === 'pt' ? 'Gestão de Aulas, Pautas & Controlo de Temas' : 'Class Records & Curriculum Controls'}
-              </h3>
-              <p className="text-xs text-indigo-200 mt-0.5 max-w-2xl">
-                {language === 'pt'
-                  ? 'Consulte os alunos registados por turma com nome real, notas e pontuação (XP), e controle a visibilidade dos 7 temas de acordo com o ritmo das aulas.'
-                  : 'View registered students by class and control theme visibility for the students.'}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2.5 w-full lg:w-auto">
-            {onOpenAdminWithTab && (
-              <button
-                type="button"
-                onClick={() => onOpenAdminWithTab('themes')}
-                className="px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 shrink-0 cursor-pointer"
-              >
-                <BookOpen className="w-4 h-4 text-slate-950" />
-                <span>{language === 'pt' ? 'Gerir Visibilidade dos Temas' : 'Manage Themes'}</span>
-              </button>
-            )}
-
-            {onOpenAdminWithTab ? (
-              <button
-                type="button"
-                onClick={() => onOpenAdminWithTab('scores')}
-                className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 shrink-0 cursor-pointer"
-              >
-                <FileSpreadsheet className="w-4 h-4 text-slate-950" />
-                <span>{language === 'pt' ? 'Abrir Pautas XLS' : 'Open Records XLS'}</span>
-              </button>
-            ) : onOpenAdmin ? (
-              <button
-                type="button"
-                onClick={onOpenAdmin}
-                className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 shrink-0 cursor-pointer"
-              >
-                <FileSpreadsheet className="w-4 h-4 text-slate-950" />
-                <span>{language === 'pt' ? 'Abrir Pautas XLS' : 'Open Records XLS'}</span>
-              </button>
-            ) : null}
-          </div>
-        </div>
-      )}
-
       {/* Welcome & Introduction Presentation - Exact Visual from User Design */}
       <HeroTICBanner
         user={user}
