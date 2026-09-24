@@ -1434,35 +1434,45 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
             {/* Sub-navigation bar */}
             <div className="p-3 sm:p-4 bg-white border-b border-slate-200 flex items-center gap-2 overflow-x-auto shrink-0 shadow-2xs">
               <button
+                type="button"
                 onClick={() => setSettingsSection('themes')}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
                   settingsSection === 'themes'
                     ? 'bg-indigo-600 text-white shadow-xs'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`}
               >
                 <BookOpen className="w-4 h-4" />
-                <span>{language === 'pt' ? 'Visibilidade dos Temas' : 'Theme Visibility'}</span>
-                <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-white/20 font-black">
-                  {visibleThemesCount}/7
+                <span>{language === 'pt' ? 'Visibilidade dos Temas (7)' : 'Theme Visibility'}</span>
+                <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
+                  settingsSection === 'themes' ? 'bg-white/20 text-white' : 'bg-indigo-50 text-indigo-700 border border-indigo-200'
+                }`}>
+                  {visibleThemesCount}/7 Ativos
                 </span>
               </button>
 
               <button
+                type="button"
                 onClick={() => setSettingsSection('quizzes')}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
                   settingsSection === 'quizzes'
                     ? 'bg-indigo-600 text-white shadow-xs'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`}
               >
                 <Award className="w-4 h-4" />
-                <span>{language === 'pt' ? 'Quizzes de Aprendizagem' : 'Quizzes'}</span>
+                <span>{language === 'pt' ? 'Visibilidade dos Quizzes (7)' : 'Quizzes Visibility'}</span>
+                <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
+                  settingsSection === 'quizzes' ? 'bg-white/20 text-white' : 'bg-amber-100 text-amber-900 border border-amber-200'
+                }`}>
+                  {ALL_THEMES.filter((t) => quizVisibility[t.id] === true).length}/7 Ativos
+                </span>
               </button>
 
               <button
+                type="button"
                 onClick={() => setSettingsSection('turmas')}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
                   settingsSection === 'turmas'
                     ? 'bg-indigo-600 text-white shadow-xs'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
@@ -1470,14 +1480,17 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
               >
                 <Layers className="w-4 h-4" />
                 <span>{language === 'pt' ? 'Gestão de Turmas' : 'Classes'}</span>
-                <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-200 text-slate-700 font-black">
+                <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
+                  settingsSection === 'turmas' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-700 border border-slate-200'
+                }`}>
                   {turmasList.length}
                 </span>
               </button>
 
               <button
+                type="button"
                 onClick={() => setSettingsSection('danger')}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
                   settingsSection === 'danger'
                     ? 'bg-rose-600 text-white shadow-xs'
                     : 'text-rose-600 hover:bg-rose-50'
@@ -1494,33 +1507,45 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
               {settingsSection === 'themes' && (
                 <div className="space-y-5 max-w-5xl mx-auto">
                   {/* Explanatory banner */}
-                  <div className="p-5 rounded-3xl bg-linear-to-r from-indigo-900 to-slate-900 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                  <div className="p-5 rounded-3xl bg-linear-to-r from-indigo-900 via-indigo-850 to-slate-900 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm border border-indigo-700/40">
                     <div className="flex items-start gap-3.5">
                       <div className="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-400/30 flex items-center justify-center text-amber-300 shrink-0 text-xl">
                         📚
                       </div>
                       <div>
-                        <h3 className="text-base font-bold text-white">
-                          {language === 'pt' ? 'Controlo Pedagógico do Ritmo de Aprendizagem' : 'Pacing Control'}
+                        <div className="flex items-center gap-2">
+                          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                            Controlo Curricular
+                          </span>
+                          <span className="text-xs text-indigo-300 font-semibold">
+                            {visibleThemesCount} de 7 Temas Ativos
+                          </span>
+                        </div>
+                        <h3 className="text-base sm:text-lg font-black text-white mt-1">
+                          {language === 'pt' ? 'Visibilidade dos 7 Temas Curriculares TIC' : 'Curriculum Themes Visibility'}
                         </h3>
-                        <p className="text-xs text-indigo-200 mt-1 max-w-xl">
-                          Controla quais os temas visíveis para os alunos. Podes desbloquear tema a tema à medida que avanças nas aulas de TIC.
+                        <p className="text-xs text-indigo-200 mt-0.5 max-w-xl">
+                          Permite controlar o ritmo das aulas. Podes desbloquear tema a tema ou todos em simultâneo.
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2 flex-wrap">
+                    <div className="flex items-center gap-2 flex-wrap shrink-0">
                       <button
+                        type="button"
                         onClick={() => handleSetAllThemes(true)}
-                        className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors cursor-pointer shadow-xs"
+                        className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all cursor-pointer shadow-xs flex items-center gap-1.5"
                       >
-                        Desbloquear Todos (7)
+                        <Eye className="w-3.5 h-3.5" />
+                        <span>Desbloquear Todos (7)</span>
                       </button>
                       <button
+                        type="button"
                         onClick={() => handleSetAllThemes(false)}
-                        className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-colors cursor-pointer"
+                        className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
                       >
-                        Bloquear Todos
+                        <Lock className="w-3.5 h-3.5" />
+                        <span>Bloquear Todos</span>
                       </button>
                     </div>
                   </div>
@@ -1536,13 +1561,13 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                           key={theme.id}
                           className={`p-4 rounded-2xl border transition-all flex items-center justify-between gap-3 ${
                             isVisible
-                              ? 'bg-white border-slate-200 shadow-2xs'
-                              : 'bg-slate-100/70 border-slate-200 opacity-75'
+                              ? 'bg-white border-slate-200 shadow-xs'
+                              : 'bg-slate-100/80 border-slate-200 opacity-80'
                           }`}
                         >
                           <div className="flex items-center gap-3">
                             <span
-                              className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm ${
+                              className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black text-sm shadow-xs shrink-0 ${
                                 isVisible ? 'bg-indigo-600 text-white' : 'bg-slate-300 text-slate-600'
                               }`}
                             >
@@ -1550,24 +1575,49 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                             </span>
                             <div>
                               <h4 className="font-bold text-slate-900 text-sm">
-                                {theme.title.pt}
+                                Tema {theme.number}: {theme.title.pt}
                               </h4>
-                              <span className="text-[11px] text-slate-500">
-                                {isVisible ? '🟢 Visível e acessível aos alunos' : '🔒 Bloqueado / Oculto'}
+                              <span className={`text-[11px] font-semibold flex items-center gap-1 mt-0.5 ${
+                                isVisible ? 'text-emerald-700' : 'text-amber-800'
+                              }`}>
+                                {isVisible ? (
+                                  <>
+                                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    <span>Visível e acessível aos alunos</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Lock className="w-3 h-3 text-amber-600" />
+                                    <span>Bloqueado / Oculto</span>
+                                  </>
+                                )}
                               </span>
                             </div>
                           </div>
 
                           <button
+                            type="button"
                             onClick={() => handleToggleTheme(theme.id, isVisible)}
                             disabled={isToggling}
-                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                            className={`px-4 py-2 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs ${
                               isVisible
-                                ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200'
-                                : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
+                                ? 'bg-emerald-100 hover:bg-emerald-200 text-emerald-900 border border-emerald-300'
+                                : 'bg-slate-200 hover:bg-slate-300 text-slate-800 border border-slate-300'
                             }`}
                           >
-                            {isToggling ? 'A guardar...' : isVisible ? 'Ativo' : 'Bloqueado'}
+                            {isToggling ? (
+                              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                            ) : isVisible ? (
+                              <>
+                                <Eye className="w-3.5 h-3.5 text-emerald-700" />
+                                <span>Visível</span>
+                              </>
+                            ) : (
+                              <>
+                                <Lock className="w-3.5 h-3.5 text-amber-700" />
+                                <span>Oculto</span>
+                              </>
+                            )}
                           </button>
                         </div>
                       );
@@ -1579,71 +1629,114 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
               {/* SECTION B: QUIZZES VISIBILITY */}
               {settingsSection === 'quizzes' && (
                 <div className="space-y-5 max-w-5xl mx-auto">
-                  <div className="p-5 rounded-3xl bg-linear-to-r from-indigo-900 to-slate-900 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                  <div className="p-5 rounded-3xl bg-linear-to-r from-indigo-900 via-indigo-850 to-slate-900 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm border border-indigo-700/40">
                     <div className="flex items-start gap-3.5">
                       <div className="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-400/30 flex items-center justify-center text-amber-300 shrink-0 text-xl">
                         🏆
                       </div>
                       <div>
-                        <h3 className="text-base font-bold text-white">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                            Avaliação & Quizzes
+                          </span>
+                          <span className="text-xs text-indigo-300 font-semibold">
+                            {ALL_THEMES.filter((t) => quizVisibility[t.id] === true).length} de 7 Quizzes Ativos
+                          </span>
+                        </div>
+                        <h3 className="text-base sm:text-lg font-black text-white mt-1">
                           {language === 'pt' ? 'Visibilidade dos Quizzes de Avaliação' : 'Quizzes Visibility'}
                         </h3>
-                        <p className="text-xs text-indigo-200 mt-1 max-w-xl">
-                          Ativa ou desativa os quizzes oficiais. Podes mantê-los ocultos até ao momento do teste em sala de aula.
+                        <p className="text-xs text-indigo-200 mt-0.5 max-w-xl">
+                          Ativa ou desativa os quizzes oficiais. Mantém-nos ocultos até ao momento do teste em sala de aula para evitar respostas antecipadas.
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2 flex-wrap">
+                    <div className="flex items-center gap-2 flex-wrap shrink-0">
                       <button
+                        type="button"
                         onClick={() => handleSetAllQuizzes(true)}
-                        className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors cursor-pointer shadow-xs"
+                        className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all cursor-pointer shadow-xs flex items-center gap-1.5"
                       >
-                        Tornar Todos Visíveis
+                        <Eye className="w-3.5 h-3.5" />
+                        <span>Tornar Todos Visíveis</span>
                       </button>
                       <button
+                        type="button"
                         onClick={() => handleSetAllQuizzes(false)}
-                        className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-colors cursor-pointer"
+                        className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
                       >
-                        Ocultar Todos
+                        <Lock className="w-3.5 h-3.5" />
+                        <span>Ocultar Todos</span>
                       </button>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
                     {ALL_THEMES.map((theme) => {
-                      const isVisible = quizVisibility[theme.id] !== false;
+                      const isVisible = quizVisibility[theme.id] === true;
                       const isToggling = togglingQuizId === theme.id;
 
                       return (
                         <div
                           key={theme.id}
-                          className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs flex items-center justify-between gap-3"
+                          className={`p-4 rounded-2xl border transition-all flex items-center justify-between gap-3 ${
+                            isVisible
+                              ? 'bg-white border-amber-300/80 shadow-xs'
+                              : 'bg-slate-100/80 border-slate-200 opacity-80'
+                          }`}
                         >
                           <div className="flex items-center gap-3">
-                            <span className="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs">
+                            <span className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-xs shadow-xs shrink-0 ${
+                              isVisible ? 'bg-amber-400 text-slate-950 font-black' : 'bg-slate-300 text-slate-600'
+                            }`}>
                               Q{theme.number}
                             </span>
                             <div>
                               <h4 className="font-bold text-slate-900 text-sm">
                                 Quiz Tema {theme.number}: {theme.title.pt}
                               </h4>
-                              <span className="text-[11px] text-slate-500">
-                                {isVisible ? '🟢 Visível na plataforma' : '🔒 Oculto aos alunos'}
+                              <span className={`text-[11px] font-semibold flex items-center gap-1 mt-0.5 ${
+                                isVisible ? 'text-emerald-700' : 'text-amber-800'
+                              }`}>
+                                {isVisible ? (
+                                  <>
+                                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    <span>Visível e acessível aos alunos</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Lock className="w-3 h-3 text-amber-600" />
+                                    <span>Oculto aos alunos</span>
+                                  </>
+                                )}
                               </span>
                             </div>
                           </div>
 
                           <button
+                            type="button"
                             onClick={() => handleToggleQuiz(theme.id, isVisible)}
                             disabled={isToggling}
-                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                            className={`px-4 py-2 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs ${
                               isVisible
-                                ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200'
-                                : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
+                                ? 'bg-emerald-100 hover:bg-emerald-200 text-emerald-900 border border-emerald-300'
+                                : 'bg-slate-200 hover:bg-slate-300 text-slate-800 border border-slate-300'
                             }`}
                           >
-                            {isToggling ? '...' : isVisible ? 'Visível' : 'Oculto'}
+                            {isToggling ? (
+                              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                            ) : isVisible ? (
+                              <>
+                                <Eye className="w-3.5 h-3.5 text-emerald-700" />
+                                <span>Visível</span>
+                              </>
+                            ) : (
+                              <>
+                                <Lock className="w-3.5 h-3.5 text-amber-700" />
+                                <span>Oculto</span>
+                              </>
+                            )}
                           </button>
                         </div>
                       );

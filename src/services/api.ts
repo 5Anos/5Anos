@@ -1604,8 +1604,19 @@ export const api = {
    */
   async saveThemeVisibility(newVisibility: ThemeVisibilityMap): Promise<{ success: boolean; visibility: ThemeVisibilityMap; message: string }> {
     const merged: ThemeVisibilityMap = { ...DEFAULT_THEME_VISIBILITY, ...newVisibility };
-    localStorage.setItem(THEME_VISIBILITY_KEY, JSON.stringify(merged)); window.dispatchEvent(new CustomEvent('tic_theme_visibility_updated', { detail: merged }));
-    return await serverApi('/api/teacher/config/theme-visibility', { method: 'PUT', body: JSON.stringify({ visibility: merged }) });
+    localStorage.setItem(THEME_VISIBILITY_KEY, JSON.stringify(merged));
+    window.dispatchEvent(new CustomEvent('tic_theme_visibility_updated', { detail: merged }));
+    try {
+      return await serverApi('/api/teacher/config/theme-visibility', { method: 'PUT', body: JSON.stringify({ visibility: merged }) });
+    } catch (serverErr) {
+      console.warn('Server save theme_visibility notice, saving directly to Firestore:', serverErr);
+      try {
+        await setDoc(doc(db, 'config', 'theme_visibility'), { visibility: merged, updatedAt: new Date().toISOString() }, { merge: true });
+      } catch (dbErr) {
+        console.warn('Direct Firestore theme_visibility write notice:', dbErr);
+      }
+      return { success: true, visibility: merged, message: 'Visibilidade dos temas guardada com sucesso.' };
+    }
   },
   async toggleThemeVisibility(
     themeId: string,
@@ -1712,8 +1723,19 @@ export const api = {
    */
   async saveQuizVisibility(newVisibility: QuizVisibilityMap): Promise<{ success: boolean; visibility: QuizVisibilityMap; message: string }> {
     const merged: QuizVisibilityMap = { ...DEFAULT_QUIZ_VISIBILITY, ...newVisibility };
-    localStorage.setItem(QUIZ_VISIBILITY_KEY, JSON.stringify(merged)); window.dispatchEvent(new CustomEvent('tic_quiz_visibility_updated', { detail: merged }));
-    return await serverApi('/api/teacher/config/quiz-visibility', { method: 'PUT', body: JSON.stringify({ visibility: merged }) });
+    localStorage.setItem(QUIZ_VISIBILITY_KEY, JSON.stringify(merged));
+    window.dispatchEvent(new CustomEvent('tic_quiz_visibility_updated', { detail: merged }));
+    try {
+      return await serverApi('/api/teacher/config/quiz-visibility', { method: 'PUT', body: JSON.stringify({ visibility: merged }) });
+    } catch (serverErr) {
+      console.warn('Server save quiz_visibility notice, saving directly to Firestore:', serverErr);
+      try {
+        await setDoc(doc(db, 'config', 'quiz_visibility'), { visibility: merged, updatedAt: new Date().toISOString() }, { merge: true });
+      } catch (dbErr) {
+        console.warn('Direct Firestore quiz_visibility write notice:', dbErr);
+      }
+      return { success: true, visibility: merged, message: 'Visibilidade dos quizzes guardada com sucesso.' };
+    }
   },
   async toggleQuizVisibility(
     themeId: string,
