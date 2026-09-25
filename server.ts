@@ -23,6 +23,15 @@ import {
   getStudentCardPassword,
 } from './src/utils/studentCredentials';
 import { getDefaultAvatar } from './src/utils/avatarUtils';
+import {
+  isTeacherEmail,
+  isTeacherIdentifier,
+  isUserAdmin,
+  normalizeEmail,
+  TEACHER_ADMIN_EMAILS,
+  TEACHER_USERNAMES,
+  TEACHER_PUBLIC_IDS,
+} from './src/utils/teacherAuth';
 
 import JSZip from 'jszip';
 import * as XLSX from 'xlsx';
@@ -383,27 +392,49 @@ function createSessionToken(userId: string): string {
 function verifySessionToken(token: string): SessionPayload | null {
   try {
     if (!SESSION_SECRET || !token) return null;
-    const decoded = Buffer.from(token, 'base64url').toString('utf8');
-    const parts = decoded.split('.');
-    if (parts.length !== 4) return null;
 
-    const [userId, timestampStr, sessionId, signature] = parts;
-    if (!userId || !timestampStr || !sessionId || !signature) return null;
+    // 1. Signed server session token: base64url(userId.timestamp.sessionId.signature)
+    try {
+      const decoded = Buffer.from(token, 'base64url').toString('utf8');
+      const parts = decoded.split('.');
+      if (parts.length === 4) {
+        const [userId, timestampStr, sessionId, signature] = parts;
+        if (userId && timestampStr && sessionId && signature) {
+          const payload = `${userId}.${timestampStr}.${sessionId}`;
+          const expectedSignature = crypto.createHmac('sha256', SESSION_SECRET).update(payload).digest('hex');
+          if (safeEqual(signature, expectedSignature)) {
+            const issuedAt = Number(timestampStr);
+            if (Number.isFinite(issuedAt)) {
+              if (Date.now() - issuedAt <= MAX_SESSION_AGE && issuedAt <= Date.now() + 60_000) {
+                if (!revokedSessionIds.has(sessionId) && !revokedSessionIds.has(token)) {
+                  return { userId, issuedAt, sessionId };
+                }
+              }
+            }
+          }
+        }
+      }
+    } catch {}
 
-    const payload = `${userId}.${timestampStr}.${sessionId}`;
-    const expectedSignature = crypto.createHmac('sha256', SESSION_SECRET).update(payload).digest('hex');
-    if (!safeEqual(signature, expectedSignature)) return null;
+    // 2. Direct Firestore fallback session token: teacher_<userId>_<timestamp> or std_<userId>_<timestamp>
+    if (token.startsWith('teacher_') || token.startsWith('std_')) {
+      const parts = token.split('_');
+      if (parts.length >= 3) {
+        const timestampStr = parts[parts.length - 1];
+        const userId = parts.slice(1, parts.length - 1).join('_');
+        const issuedAt = Number(timestampStr);
 
-    const issuedAt = Number(timestampStr);
-    if (!Number.isFinite(issuedAt)) return null;
+        if (userId && Number.isFinite(issuedAt)) {
+          if (Date.now() - issuedAt <= MAX_SESSION_AGE && issuedAt <= Date.now() + 60_000) {
+            if (!revokedSessionIds.has(token) && !revokedSessionIds.has(userId)) {
+              return { userId, issuedAt, sessionId: token };
+            }
+          }
+        }
+      }
+    }
 
-    if (Date.now() - issuedAt > MAX_SESSION_AGE) return null;
-    if (issuedAt > Date.now() + 60_000) return null;
-
-    // Fast in-memory check
-    if (revokedSessionIds.has(sessionId)) return null;
-
-    return { userId, issuedAt, sessionId };
+    return null;
   } catch {
     return null;
   }
@@ -426,19 +457,24 @@ async function isSessionRevoked(sessionId: string): Promise<boolean> {
 
 async function revokeSession(token: string): Promise<boolean> {
   try {
-    const decoded = Buffer.from(token, 'base64url').toString('utf8');
-    const parts = decoded.split('.');
-    if (parts.length === 4) {
-      const sessionId = parts[2];
-      if (sessionId) {
+    if (!token) return false;
+    revokedSessionIds.add(token);
+
+    let sessionId = token;
+    try {
+      const decoded = Buffer.from(token, 'base64url').toString('utf8');
+      const parts = decoded.split('.');
+      if (parts.length === 4 && parts[2]) {
+        sessionId = parts[2];
         revokedSessionIds.add(sessionId);
-        await db.collection('revoked_sessions').doc(sessionId).set({
-          sessionId,
-          revokedAt: new Date().toISOString(),
-        });
-        return true;
       }
-    }
+    } catch {}
+
+    await db.collection('revoked_sessions').doc(sessionId).set({
+      sessionId,
+      revokedAt: new Date().toISOString(),
+    });
+    return true;
   } catch (err) {
     console.error('[Auth] Erro ao revogar sessão:', err);
   }
@@ -451,10 +487,6 @@ function getBearerToken(req: Request): string | null {
   return header.slice('Bearer '.length).trim() || null;
 }
 
-function normalizeEmail(value: unknown): string {
-  return String(value || '').trim().toLowerCase();
-}
-
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
@@ -464,18 +496,7 @@ function isValidUserId(userId: string): boolean {
 }
 
 function isValidPassword(password: string): boolean {
-  return typeof password === 'string' && password.length >= 4 && password.length <= 128;
-}
-
-const TEACHER_EMAILS = [
-  'imaginebycarla2023@gmail.com',
-  'imaginebacarla2023@gmail.com',
-  'prof.carla@escola.pt',
-  'carla.oliveira@escola.pt',
-];
-
-function isTeacherEmail(email: string): boolean {
-  return TEACHER_EMAILS.includes(normalizeEmail(email));
+  return typeof password === 'string' && password.length >= 8 && password.length <= 128;
 }
 
 function isLearningQuizServer(activityId: string, activityType?: string): boolean {
@@ -536,8 +557,10 @@ async function requireAuth(req: AuthenticatedRequest, res: Response, next: NextF
 async function requireTeacher(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   if (!req.user || !req.userId) return res.status(401).json({ error: 'Sessão necessária.' });
   const role = req.user.role;
-  const email = normalizeEmail(req.user.email);
-  if (role === 'teacher' || role === 'admin' || isTeacherEmail(email)) return next();
+  const email = req.user.email;
+  const username = req.user.username;
+  const publicId = req.user.publicId;
+  if (isUserAdmin(email, role, username, publicId)) return next();
   return res.status(403).json({ error: 'Apenas a professora pode executar esta operação.' });
 }
 
@@ -608,6 +631,11 @@ app.post('/api/auth/login', async (req, res) => {
     if (!userDoc) {
       const qPub = await db.collection('users').where('publicId', '==', identifier.toUpperCase()).limit(1).get();
       if (!qPub.empty) userDoc = qPub.docs[0];
+    }
+    // 5. Search teacher document directly if teacher identifier
+    if (!userDoc && isTeacherIdentifier(identifier)) {
+      const tSnap = await db.collection('users').doc('teacher-carla').get();
+      if (tSnap.exists) userDoc = tSnap;
     }
 
     // Anti-enumeration: uniform error response on user not found

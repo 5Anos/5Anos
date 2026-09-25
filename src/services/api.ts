@@ -241,7 +241,7 @@ export const api = {
       }
 
       // Student transitional migration (only for non-teacher students)
-      const isTeacher = userData.role === 'teacher' || userData.role === 'admin' || isTeacherEmail(userData.email);
+      const isTeacher = isUserAdmin(userData.email, userData.role, userData.username, userData.publicId);
       if (!isTeacher) {
         // Legacy fallback support for transitional students if not yet hashed
         if (!isPasswordValid && (userData as any).initialPassword) {
@@ -293,10 +293,15 @@ export const api = {
   },
 
   async setupPassword(identifier: string, initialPassword: string, newPassword: string): Promise<{ success: boolean; user: User; token: string; message: string }> {
+    const cleanNew = String(newPassword || '').trim();
+    if (cleanNew.length < 8 || cleanNew.length > 128) {
+      throw new Error('A palavra-passe deve ter entre 8 e 128 caracteres.');
+    }
+
     try {
       const res = await serverApi<{ success: boolean; user: User; token: string; message: string }>('/api/auth/setup-password', {
         method: 'POST',
-        body: JSON.stringify({ identifier, initialPassword, newPassword }),
+        body: JSON.stringify({ identifier, initialPassword, newPassword: cleanNew }),
       });
       if (res.token) this.setToken(res.token);
       if (res.user) localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(res.user));
@@ -307,7 +312,7 @@ export const api = {
 
     // Direct Firestore password setup
     const loginRes = await this.login(identifier, initialPassword);
-    const hashed = await hashPasswordClient(newPassword);
+    const hashed = await hashPasswordClient(cleanNew);
     const now = new Date().toISOString();
 
     await setDoc(doc(db, 'credentials', loginRes.user.id), {
@@ -491,16 +496,21 @@ export const api = {
     const current = this.getCurrentSessionUser();
     if (!current) throw new Error('Inicia sessão primeiro.');
 
+    const cleanNew = String(newPassword || '').trim();
+    if (cleanNew.length < 8 || cleanNew.length > 128) {
+      throw new Error('A palavra-passe deve ter entre 8 e 128 caracteres.');
+    }
+
     try {
       return await serverApi('/api/user/change-password', {
         method: 'POST',
-        body: JSON.stringify({ currentPassword, newPassword }),
+        body: JSON.stringify({ currentPassword, newPassword: cleanNew }),
       });
     } catch (err: any) {
       if (!(err instanceof ServerUnavailableError)) throw err;
     }
 
-    const hashed = await hashPasswordClient(newPassword);
+    const hashed = await hashPasswordClient(cleanNew);
     const now = new Date().toISOString();
     await setDoc(doc(db, 'credentials', current.id), {
       userId: current.id,
