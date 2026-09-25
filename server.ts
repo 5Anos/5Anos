@@ -304,13 +304,67 @@ async function verifyPassword(password: string, storedHash: string, salt: string
 }
 
 /* ============================================================
-   REVOCABLE SESSION TOKENS WITH UNIQUE SESSION ID
+   REVOCABLE SESSION TOKENS WITH PERSISTENT REVOCATION
    ============================================================ */
 
-const SESSION_SECRET = process.env.SESSION_SECRET || 'plataforma_tic_5ano_default_super_secret_session_key_2026';
+const isProductionEnv = process.env.NODE_ENV === 'production';
+let resolvedSessionSecret = process.env.SESSION_SECRET;
 
-// In-memory revoked session set (synced to Firestore collection 'revoked_sessions')
+if (!resolvedSessionSecret) {
+  if (isProductionEnv) {
+    console.error('FATAL: A variável de ambiente SESSION_SECRET é obrigatória em ambiente de produção.');
+    process.exit(1);
+  } else {
+    console.warn('[Security Notice] SESSION_SECRET não foi configurada no ambiente de desenvolvimento. A gerar uma chave segura e aleatória em runtime para a sessão atual.');
+    resolvedSessionSecret = crypto.randomBytes(32).toString('hex');
+  }
+}
+
+const SESSION_SECRET: string = resolvedSessionSecret;
+
+// In-memory revoked session set with persistent backing in Firestore collection 'revoked_sessions'
 const revokedSessionIds = new Set<string>();
+const MAX_SESSION_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days validity
+
+async function initRevokedSessions(): Promise<void> {
+  try {
+    const cutoffDate = new Date(Date.now() - MAX_SESSION_AGE).toISOString();
+    const snap = await db.collection('revoked_sessions').where('revokedAt', '>=', cutoffDate).get();
+    snap.docs.forEach((doc) => {
+      revokedSessionIds.add(doc.id);
+    });
+    console.log(`[Auth] Carregadas ${revokedSessionIds.size} sessões revogadas da base de dados.`);
+
+    // Realtime sync to ensure multi-instance / live consistency
+    db.collection('revoked_sessions').onSnapshot((snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === 'added' || change.type === 'modified') {
+          revokedSessionIds.add(change.doc.id);
+        } else if (change.type === 'removed') {
+          revokedSessionIds.delete(change.doc.id);
+        }
+      });
+    }, (err) => {
+      console.warn('[Auth] Aviso no listener de sessões revogadas:', err?.message);
+    });
+  } catch (err) {
+    console.warn('[Auth] Não foi possível pré-carregar sessões revogadas do Firestore:', err);
+  }
+}
+
+// Hourly cleanup of revoked session records older than 7 days
+setInterval(async () => {
+  try {
+    const cutoffDate = new Date(Date.now() - MAX_SESSION_AGE).toISOString();
+    const oldDocs = await db.collection('revoked_sessions').where('revokedAt', '<', cutoffDate).limit(100).get();
+    for (const doc of oldDocs.docs) {
+      revokedSessionIds.delete(doc.id);
+      await doc.ref.delete().catch((e) => console.warn('[Auth] Erro ao eliminar sessão expirada:', e));
+    }
+  } catch (err) {
+    console.warn('[Auth] Erro na limpeza periódica de sessões revogadas:', err);
+  }
+}, 60 * 60 * 1000);
 
 interface SessionPayload {
   userId: string;
@@ -343,12 +397,10 @@ function verifySessionToken(token: string): SessionPayload | null {
     const issuedAt = Number(timestampStr);
     if (!Number.isFinite(issuedAt)) return null;
 
-    // 7 days validity
-    const MAX_SESSION_AGE = 7 * 24 * 60 * 60 * 1000;
     if (Date.now() - issuedAt > MAX_SESSION_AGE) return null;
     if (issuedAt > Date.now() + 60_000) return null;
 
-    // Check if session ID was explicitly revoked on logout
+    // Fast in-memory check
     if (revokedSessionIds.has(sessionId)) return null;
 
     return { userId, issuedAt, sessionId };
@@ -357,7 +409,22 @@ function verifySessionToken(token: string): SessionPayload | null {
   }
 }
 
-function revokeSession(token: string): boolean {
+async function isSessionRevoked(sessionId: string): Promise<boolean> {
+  if (!sessionId) return true;
+  if (revokedSessionIds.has(sessionId)) return true;
+  try {
+    const docSnap = await db.collection('revoked_sessions').doc(sessionId).get();
+    if (docSnap.exists) {
+      revokedSessionIds.add(sessionId);
+      return true;
+    }
+  } catch (err) {
+    console.error('[Auth] Erro ao verificar estado da sessão no Firestore:', err);
+  }
+  return false;
+}
+
+async function revokeSession(token: string): Promise<boolean> {
   try {
     const decoded = Buffer.from(token, 'base64url').toString('utf8');
     const parts = decoded.split('.');
@@ -365,14 +432,16 @@ function revokeSession(token: string): boolean {
       const sessionId = parts[2];
       if (sessionId) {
         revokedSessionIds.add(sessionId);
-        db.collection('revoked_sessions').doc(sessionId).set({
+        await db.collection('revoked_sessions').doc(sessionId).set({
           sessionId,
           revokedAt: new Date().toISOString(),
-        }).catch(() => {});
+        });
         return true;
       }
     }
-  } catch {}
+  } catch (err) {
+    console.error('[Auth] Erro ao revogar sessão:', err);
+  }
   return false;
 }
 
@@ -398,13 +467,15 @@ function isValidPassword(password: string): boolean {
   return typeof password === 'string' && password.length >= 4 && password.length <= 128;
 }
 
+const TEACHER_EMAILS = [
+  'imaginebycarla2023@gmail.com',
+  'imaginebacarla2023@gmail.com',
+  'prof.carla@escola.pt',
+  'carla.oliveira@escola.pt',
+];
+
 function isTeacherEmail(email: string): boolean {
-  return [
-    'imaginebycarla2023@gmail.com',
-    'imaginebacarla2023@gmail.com',
-    'prof.carla@escola.pt',
-    'carla.oliveira@escola.pt',
-  ].includes(normalizeEmail(email));
+  return TEACHER_EMAILS.includes(normalizeEmail(email));
 }
 
 function isLearningQuizServer(activityId: string, activityType?: string): boolean {
@@ -428,6 +499,11 @@ async function requireAuth(req: AuthenticatedRequest, res: Response, next: NextF
 
     const session = verifySessionToken(token);
     if (!session) return res.status(401).json({ error: 'Sessão inválida ou expirada.' });
+
+    // Check persistent revocation state
+    if (await isSessionRevoked(session.sessionId)) {
+      return res.status(401).json({ error: 'Sessão revogada. Por favor inicia sessão novamente.' });
+    }
 
     const userDoc = await db.collection('users').doc(session.userId).get();
     if (!userDoc.exists) return res.status(401).json({ error: 'Utilizador não encontrado.' });
@@ -2011,6 +2087,9 @@ app.post('/api/teacher/students/recalibrate-points', requireAuth, requireTeacher
 
 async function startServer() {
   const isProduction = process.env.NODE_ENV === 'production';
+
+  // Initialize and hydrate revoked session IDs from persistent storage
+  await initRevokedSessions();
 
   if (!isProduction) {
     const vite = await createViteServer({

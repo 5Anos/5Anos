@@ -37,6 +37,14 @@ import {
   normalizeTurmaName,
   getStudentCardPassword,
 } from '../utils/studentCredentials';
+import {
+  isTeacherEmail,
+  isTeacherIdentifier,
+  isUserAdmin,
+  TEACHER_ADMIN_EMAILS,
+} from '../utils/teacherAuth';
+
+export { isTeacherEmail, isTeacherIdentifier, isUserAdmin, TEACHER_ADMIN_EMAILS };
 
 const TOKEN_KEY = 'tic_5ano_auth_token';
 const CURRENT_USER_KEY = 'tic_5ano_current_user';
@@ -65,19 +73,6 @@ export const DEFAULT_QUIZ_VISIBILITY: QuizVisibilityMap = {
   'navegar-internet': true,
   'direitos-autor': true,
 };
-
-export function isUserAdmin(email?: string | null, role?: string): boolean {
-  if (role === 'admin' || role === 'teacher') return true;
-  if (!email) return false;
-  const normalized = email.toLowerCase().trim();
-  const adminEmails = [
-    'imaginebycarla2023@gmail.com',
-    'imaginebacarla2023@gmail.com',
-    'prof.carla@escola.pt',
-    'carla.oliveira@escola.pt',
-  ];
-  return adminEmails.includes(normalized);
-}
 
 function resolveApiBaseUrl(): string {
   const envUrl = (import.meta as any).env?.VITE_API_URL;
@@ -190,51 +185,41 @@ export const api = {
     // 2. Direct Firestore fallback (for GitHub Pages / Standalone environments)
     const lowerId = cleanId.toLowerCase();
 
-    // Teacher direct login check
-    if (isUserAdmin(lowerId) || lowerId === 'prof.carla@escola.pt' || lowerId === 'imaginebycarla2023@gmail.com') {
-      if (cleanPass === 'Trabalhar*2026' || cleanPass.length >= 6) {
-        const teacherUser: User = {
-          id: 'teacher-carla',
-          name: 'Professora Carla Oliveira',
-          fullName: 'Professora Carla Oliveira',
-          firstName: 'Carla',
-          lastName: 'Oliveira',
-          greetingName: 'Prof. Carla',
-          email: 'imaginebycarla2023@gmail.com',
-          username: 'prof.carla',
-          publicId: 'PROF_CARLA',
-          turma: 'Professora TIC',
-          role: 'teacher',
-          language: 'pt',
-          points: 9999,
-          avatar: getDefaultAvatar('prof.carla'),
-          createdAt: new Date().toISOString(),
-        };
-        const mockToken = `teacher_${Date.now()}_${Math.random().toString(36).substring(2)}`;
-        this.setToken(mockToken);
-        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(teacherUser));
-        return { success: true, user: teacherUser, token: mockToken };
-      }
-      throw new Error('Credenciais da professora inválidas.');
-    }
-
-    // Student login in Firestore
     try {
       const usersRef = collection(db, 'users');
-      // Query by username or email or publicId
-      const q = query(usersRef, where('username', '==', lowerId));
-      const snap = await getDocs(q);
+      let foundDoc: any = null;
 
-      let foundDoc = snap.docs[0];
-      if (!foundDoc) {
+      // Search by username
+      const qUser = query(usersRef, where('username', '==', lowerId));
+      const snapUser = await getDocs(qUser);
+      if (!snapUser.empty) {
+        foundDoc = snapUser.docs[0];
+      }
+
+      // Search by email
+      if (!foundDoc && lowerId.includes('@')) {
         const qEmail = query(usersRef, where('email', '==', lowerId));
         const snapEmail = await getDocs(qEmail);
-        foundDoc = snapEmail.docs[0];
+        if (!snapEmail.empty) {
+          foundDoc = snapEmail.docs[0];
+        }
       }
+
+      // Search by publicId
       if (!foundDoc) {
         const qPublic = query(usersRef, where('publicId', '==', cleanId.toUpperCase()));
         const snapPublic = await getDocs(qPublic);
-        foundDoc = snapPublic.docs[0];
+        if (!snapPublic.empty) {
+          foundDoc = snapPublic.docs[0];
+        }
+      }
+
+      // Check teacher-carla document explicitly if identifier belongs to teacher
+      if (!foundDoc && isTeacherIdentifier(lowerId)) {
+        const teacherDocSnap = await getDoc(doc(db, 'users', 'teacher-carla'));
+        if (teacherDocSnap.exists()) {
+          foundDoc = teacherDocSnap;
+        }
       }
 
       if (!foundDoc) {
@@ -244,7 +229,7 @@ export const api = {
       const userData = foundDoc.data() as User;
       userData.id = foundDoc.id;
 
-      // Check credentials document for PBKDF2 hash & salt
+      // Check credentials document for PBKDF2 / Scrypt hash & salt
       const credSnap = await getDoc(doc(db, 'credentials', foundDoc.id));
       let isPasswordValid = false;
 
@@ -255,35 +240,38 @@ export const api = {
         }
       }
 
-      // Legacy fallback support for transitional students if not yet hashed
-      if (!isPasswordValid && (userData as any).initialPassword) {
-        if ((userData as any).initialPassword === cleanPass) {
-          isPasswordValid = true;
-          // Auto-migrate to secure hash in credentials collection
-          const hashed = await hashPasswordClient(cleanPass);
-          await setDoc(doc(db, 'credentials', foundDoc.id), {
-            userId: foundDoc.id,
-            passwordHash: hashed.hash,
-            passwordSalt: hashed.salt,
-            passwordChangedAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          }, { merge: true }).catch(() => {});
+      // Student transitional migration (only for non-teacher students)
+      const isTeacher = userData.role === 'teacher' || userData.role === 'admin' || isTeacherEmail(userData.email);
+      if (!isTeacher) {
+        // Legacy fallback support for transitional students if not yet hashed
+        if (!isPasswordValid && (userData as any).initialPassword) {
+          if ((userData as any).initialPassword === cleanPass) {
+            isPasswordValid = true;
+            const hashed = await hashPasswordClient(cleanPass);
+            await setDoc(doc(db, 'credentials', foundDoc.id), {
+              userId: foundDoc.id,
+              passwordHash: hashed.hash,
+              passwordSalt: hashed.salt,
+              passwordChangedAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            }, { merge: true }).catch((e) => console.warn('[Auth] Migração de credencial falhou:', e));
+          }
         }
-      }
 
-      // Card password fallback support (deterministic password from card)
-      if (!isPasswordValid) {
-        const cardPass = getStudentCardPassword(userData);
-        if (cardPass === cleanPass) {
-          isPasswordValid = true;
-          const hashed = await hashPasswordClient(cleanPass);
-          await setDoc(doc(db, 'credentials', foundDoc.id), {
-            userId: foundDoc.id,
-            passwordHash: hashed.hash,
-            passwordSalt: hashed.salt,
-            passwordChangedAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          }, { merge: true }).catch(() => {});
+        // Card password fallback support (deterministic password from card)
+        if (!isPasswordValid) {
+          const cardPass = getStudentCardPassword(userData);
+          if (cardPass === cleanPass) {
+            isPasswordValid = true;
+            const hashed = await hashPasswordClient(cleanPass);
+            await setDoc(doc(db, 'credentials', foundDoc.id), {
+              userId: foundDoc.id,
+              passwordHash: hashed.hash,
+              passwordSalt: hashed.salt,
+              passwordChangedAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            }, { merge: true }).catch((e) => console.warn('[Auth] Registo de palavra-passe do cartão falhou:', e));
+          }
         }
       }
 
@@ -291,12 +279,14 @@ export const api = {
         throw new Error('Utilizador ou palavra-passe incorretos.');
       }
 
-      const token = `std_${foundDoc.id}_${Date.now()}`;
+      const token = isTeacher
+        ? `teacher_${foundDoc.id}_${Date.now()}`
+        : `std_${foundDoc.id}_${Date.now()}`;
       this.setToken(token);
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userData));
       return { success: true, user: userData, token };
     } catch (err: any) {
-      if (err.message?.includes('incorretos') || err.message?.includes('inválidas')) throw err;
+      if (err.message?.includes('incorretos') || err.message?.includes('inválidas') || err.message?.includes('não encontrado')) throw err;
       console.error('Firestore login error:', err);
       throw new Error('Erro ao iniciar sessão na base de dados. Verifica os teus dados.');
     }
@@ -450,10 +440,20 @@ export const api = {
         body: JSON.stringify({ avatar: newAvatar }),
       });
       return;
-    } catch {}
+    } catch (err: any) {
+      if (!(err instanceof ServerUnavailableError)) {
+        console.warn('[Avatar] Servidor indisponível, a gravar diretamente no Firestore:', err?.message);
+      }
+    }
 
-    await setDoc(doc(db, 'users', current.id), { avatar: newAvatar }, { merge: true }).catch(() => {});
-    await setDoc(doc(db, 'publicProfiles', current.id), { avatar: newAvatar }, { merge: true }).catch(() => {});
+    try {
+      const now = new Date().toISOString();
+      await setDoc(doc(db, 'users', current.id), { avatar: newAvatar, updatedAt: now }, { merge: true });
+      await setDoc(doc(db, 'publicProfiles', current.id), { avatar: newAvatar }, { merge: true });
+    } catch (err) {
+      console.error('[Avatar] Erro ao gravar avatar no Firestore:', err);
+      throw new Error('Não foi possível guardar o novo avatar na base de dados.');
+    }
   },
 
   async updateUserAvatar(userIdOrAvatar: any, maybeAvatar?: any): Promise<void> {
@@ -473,9 +473,18 @@ export const api = {
         body: JSON.stringify({ language: newLang }),
       });
       return;
-    } catch {}
+    } catch (err: any) {
+      if (!(err instanceof ServerUnavailableError)) {
+        console.warn('[Language] Servidor indisponível, a gravar diretamente no Firestore:', err?.message);
+      }
+    }
 
-    await setDoc(doc(db, 'users', current.id), { language: newLang }, { merge: true }).catch(() => {});
+    try {
+      await setDoc(doc(db, 'users', current.id), { language: newLang, updatedAt: new Date().toISOString() }, { merge: true });
+    } catch (err) {
+      console.error('[Language] Erro ao atualizar idioma no Firestore:', err);
+      throw new Error('Não foi possível atualizar o idioma na base de dados.');
+    }
   },
 
   async changePassword(currentPassword: string, newPassword: string): Promise<{ success: boolean; message: string }> {
@@ -552,10 +561,16 @@ export const api = {
     const calcPercentage = Math.min(100, Math.max(0, Math.round(Number(payload.percentage ?? payload.score ?? 100))));
     const now = new Date().toISOString();
     const progressDocRef = doc(db, 'users', current.id, 'progress', payload.activityId);
-    const existingSnap = await getDoc(progressDocRef);
-    const existingData = existingSnap.exists() ? existingSnap.data() : null;
+    
+    let existingData: any = null;
+    try {
+      const existingSnap = await getDoc(progressDocRef);
+      existingData = existingSnap.exists() ? existingSnap.data() : null;
+    } catch (e) {
+      console.warn('[Progress] Aviso ao ler progresso existente:', e);
+    }
 
-    const prevBest = Number(existingData?.bestPercentage || existingData?.score || 0);
+    const prevBest = Number(existingData?.bestPercentage || existingData?.bestScore || existingData?.score || 0);
     const newBest = Math.max(prevBest, calcPercentage);
     const earnedXp = Math.max(0, newBest - prevBest);
 
@@ -569,11 +584,17 @@ export const api = {
       bestScore: newBest,
       bestPercentage: newBest,
       percentage: calcPercentage,
+      awardedXp: newBest,
       attempts: (Number(existingData?.attempts) || 0) + 1,
       lastUpdated: now,
     };
 
-    await setDoc(progressDocRef, record, { merge: true });
+    try {
+      await setDoc(progressDocRef, record, { merge: true });
+    } catch (err) {
+      console.error('[Progress] Erro ao gravar registo de progresso no Firestore:', err);
+      throw new Error('Não foi possível guardar o progresso da atividade na base de dados.');
+    }
 
     const newPoints = (current.points || 0) + earnedXp;
     const updatedUser: User = {
@@ -587,18 +608,23 @@ export const api = {
     };
 
     localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
-    await setDoc(doc(db, 'users', current.id), {
-      points: newPoints,
-      lastActivity: updatedUser.lastActivity,
-    }, { merge: true }).catch(() => {});
+    
+    try {
+      await setDoc(doc(db, 'users', current.id), {
+        points: newPoints,
+        lastActivity: updatedUser.lastActivity,
+      }, { merge: true });
 
-    await setDoc(doc(db, 'publicProfiles', current.id), {
-      points: newPoints,
-      turma: current.turma || '',
-      avatar: current.avatar,
-      role: 'student',
-      publicId: current.publicId || current.username?.toUpperCase() || 'ALUNO',
-    }, { merge: true }).catch(() => {});
+      await setDoc(doc(db, 'publicProfiles', current.id), {
+        points: newPoints,
+        turma: current.turma || '',
+        avatar: current.avatar,
+        role: 'student',
+        publicId: current.publicId || current.username?.toUpperCase() || 'ALUNO',
+      }, { merge: true });
+    } catch (syncErr) {
+      console.warn('[Progress] Aviso ao sincronizar perfil público:', syncErr);
+    }
 
     return {
       success: true,
@@ -633,25 +659,35 @@ export const api = {
 
     const todayStr = dateStr || new Date().toISOString().split('T')[0];
     const tipRef = doc(db, 'users', current.id, 'dailyTips', todayStr);
-    const snap = await getDoc(tipRef);
+    let snap: any = null;
+    try {
+      snap = await getDoc(tipRef);
+    } catch (e) {
+      console.warn('[DailyTip] Erro ao ler estado da dica diária:', e);
+    }
     let earned = 0;
 
-    if (!snap.exists() || !snap.data()?.read) {
+    if (!snap?.exists() || !snap.data()?.read) {
       earned = 20;
-      await setDoc(tipRef, {
-        read: true,
-        readPoints: 20,
-        pointsEarned: 20,
-        tipTitle: tipTitle || 'Dica do Dia',
-        timestamp: new Date().toISOString(),
-      }, { merge: true });
+      try {
+        await setDoc(tipRef, {
+          read: true,
+          readPoints: 20,
+          pointsEarned: 20,
+          tipTitle: tipTitle || 'Dica do Dia',
+          timestamp: new Date().toISOString(),
+        }, { merge: true });
 
-      const newPts = (current.points || 0) + earned;
-      const updatedUser = { ...current, points: newPts };
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
-      await setDoc(doc(db, 'users', current.id), { points: newPts }, { merge: true }).catch(() => {});
-      await setDoc(doc(db, 'publicProfiles', current.id), { points: newPts }, { merge: true }).catch(() => {});
-      return { success: true, user: updatedUser, userPoints: newPts, earnedPoints: earned, achievements: [] };
+        const newPts = (current.points || 0) + earned;
+        const updatedUser = { ...current, points: newPts };
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
+        await setDoc(doc(db, 'users', current.id), { points: newPts }, { merge: true });
+        await setDoc(doc(db, 'publicProfiles', current.id), { points: newPts }, { merge: true });
+        return { success: true, user: updatedUser, userPoints: newPts, earnedPoints: earned, achievements: [] };
+      } catch (saveErr) {
+        console.error('[DailyTip] Erro ao gravar leitura da dica:', saveErr);
+        throw new Error('Não foi possível registar os pontos da dica do dia.');
+      }
     }
 
     return { success: true, user: current, userPoints: current.points || 0, earnedPoints: 0, achievements: [] };
@@ -682,34 +718,44 @@ export const api = {
 
     const todayStr = dateStr || new Date().toISOString().split('T')[0];
     const tipRef = doc(db, 'users', current.id, 'dailyTips', todayStr);
-    const snap = await getDoc(tipRef);
+    let snap: any = null;
+    try {
+      snap = await getDoc(tipRef);
+    } catch (e) {
+      console.warn('[DailyTip] Erro ao ler resposta da dica:', e);
+    }
     const isCorrect = answerDetails?.isCorrect ?? true;
     const ansPoints = isCorrect ? Math.min(30, bonusPoints) : 0;
 
-    if (!snap.exists() || !snap.data()?.answered) {
-      await setDoc(tipRef, {
-        answered: true,
-        selectedOptionId: answerDetails?.selectedOptionId || '',
-        isCorrect,
-        answerPoints: ansPoints,
-        pointsEarned: (snap.data()?.readPoints || 20) + ansPoints,
-        timestamp: new Date().toISOString(),
-      }, { merge: true });
+    if (!snap?.exists() || !snap.data()?.answered) {
+      try {
+        await setDoc(tipRef, {
+          answered: true,
+          selectedOptionId: answerDetails?.selectedOptionId || '',
+          isCorrect,
+          answerPoints: ansPoints,
+          pointsEarned: (snap?.data()?.readPoints || 20) + ansPoints,
+          timestamp: new Date().toISOString(),
+        }, { merge: true });
 
-      const newPts = (current.points || 0) + ansPoints;
-      const updatedUser = { ...current, points: newPts };
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
-      await setDoc(doc(db, 'users', current.id), { points: newPts }, { merge: true }).catch(() => {});
-      await setDoc(doc(db, 'publicProfiles', current.id), { points: newPts }, { merge: true }).catch(() => {});
-      return {
-        success: true,
-        user: updatedUser,
-        userPoints: newPts,
-        earnedPoints: ansPoints,
-        readingPoints: 20,
-        answerPoints: ansPoints,
-        achievements: [],
-      };
+        const newPts = (current.points || 0) + ansPoints;
+        const updatedUser = { ...current, points: newPts };
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
+        await setDoc(doc(db, 'users', current.id), { points: newPts }, { merge: true });
+        await setDoc(doc(db, 'publicProfiles', current.id), { points: newPts }, { merge: true });
+        return {
+          success: true,
+          user: updatedUser,
+          userPoints: newPts,
+          earnedPoints: ansPoints,
+          readingPoints: 20,
+          answerPoints: ansPoints,
+          achievements: [],
+        };
+      } catch (ansErr) {
+        console.error('[DailyTip] Erro ao registar resposta da dica:', ansErr);
+        throw new Error('Não foi possível registar o desafio da dica.');
+      }
     }
 
     return {
@@ -1248,17 +1294,24 @@ export const api = {
       localStorage.removeItem(POINTS_STORAGE_KEY + studentId);
       return result;
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) throw err;
+      if (!(err instanceof ServerUnavailableError)) {
+        console.warn('[Admin] Servidor indisponível, a eliminar diretamente no Firestore:', err?.message);
+      }
     }
 
-    await deleteDoc(doc(db, 'users', studentId)).catch(() => {});
-    await deleteDoc(doc(db, 'credentials', studentId)).catch(() => {});
-    await deleteDoc(doc(db, 'publicProfiles', studentId)).catch(() => {});
+    try {
+      await deleteDoc(doc(db, 'users', studentId));
+      await deleteDoc(doc(db, 'credentials', studentId)).catch((e) => console.warn('[Admin] Credencial já inexistente:', e));
+      await deleteDoc(doc(db, 'publicProfiles', studentId)).catch((e) => console.warn('[Admin] Perfil público já inexistente:', e));
 
-    localStorage.removeItem(PROGRESS_STORAGE_KEY + studentId);
-    localStorage.removeItem(ACHIEVEMENTS_STORAGE_KEY + studentId);
-    localStorage.removeItem(POINTS_STORAGE_KEY + studentId);
-    return { success: true, message: 'Aluno eliminado com sucesso.' };
+      localStorage.removeItem(PROGRESS_STORAGE_KEY + studentId);
+      localStorage.removeItem(ACHIEVEMENTS_STORAGE_KEY + studentId);
+      localStorage.removeItem(POINTS_STORAGE_KEY + studentId);
+      return { success: true, message: 'Aluno eliminado com sucesso.' };
+    } catch (err: any) {
+      console.error('[Admin] Erro ao eliminar aluno no Firestore:', err);
+      throw new Error('Não foi possível eliminar o aluno da base de dados.');
+    }
   },
 
   async adminDeleteStudents(studentIds: string[]): Promise<{ success: boolean; message: string }> {
@@ -1270,15 +1323,22 @@ export const api = {
         body: JSON.stringify({ studentIds }),
       });
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) throw err;
+      if (!(err instanceof ServerUnavailableError)) {
+        console.warn('[Admin] Servidor indisponível, a eliminar lote no Firestore:', err?.message);
+      }
     }
 
-    for (const sid of studentIds) {
-      await deleteDoc(doc(db, 'users', sid)).catch(() => {});
-      await deleteDoc(doc(db, 'credentials', sid)).catch(() => {});
-      await deleteDoc(doc(db, 'publicProfiles', sid)).catch(() => {});
+    try {
+      for (const sid of studentIds) {
+        await deleteDoc(doc(db, 'users', sid)).catch((e) => console.warn('[Admin] Erro ao eliminar user:', sid, e));
+        await deleteDoc(doc(db, 'credentials', sid)).catch((e) => console.warn('[Admin] Erro ao eliminar cred:', sid, e));
+        await deleteDoc(doc(db, 'publicProfiles', sid)).catch((e) => console.warn('[Admin] Erro ao eliminar publicProfile:', sid, e));
+      }
+      return { success: true, message: `${studentIds.length} alunos eliminados com sucesso.` };
+    } catch (err: any) {
+      console.error('[Admin] Erro na eliminação em lote no Firestore:', err);
+      throw new Error('Não foi possível concluir a eliminação de todos os alunos.');
     }
-    return { success: true, message: `${studentIds.length} alunos eliminados com sucesso.` };
   },
 
   async adminCreateTurma(turmaName: string): Promise<{ success: boolean; message: string; turmas: string[] }> {
@@ -1288,29 +1348,42 @@ export const api = {
     const current = getTurmasList();
     const updated = Array.from(new Set([...current, clean]));
     saveTurmasList(updated);
-    await setDoc(doc(db, 'config', 'turmas'), { list: updated, updatedAt: new Date().toISOString() }, { merge: true }).catch(() => {});
+
+    try {
+      await setDoc(doc(db, 'config', 'turmas'), { list: updated, updatedAt: new Date().toISOString() }, { merge: true });
+    } catch (err) {
+      console.warn('[Admin] Aviso ao guardar turmas no Firestore:', err);
+    }
 
     try {
       await serverApi('/api/teacher/turmas', {
         method: 'POST',
         body: JSON.stringify({ name: clean }),
       });
-    } catch {}
+    } catch (err: any) {
+      if (!(err instanceof ServerUnavailableError)) {
+        console.warn('[Admin] Erro ao sincronizar nova turma com o servidor:', err?.message);
+      }
+    }
 
     return { success: true, message: `Turma ${clean} criada com sucesso.`, turmas: updated };
   },
 
   async adminDeleteStudentsByTurmas(turmas: string[]): Promise<{ success: boolean; message: string }> {
     const normalizedSet = new Set(turmas.map(t => normalizeTurmaName(t)));
-    const snap = await getDocs(collection(db, 'users'));
+    try {
+      const snap = await getDocs(collection(db, 'users'));
 
-    for (const d of snap.docs) {
-      const u = d.data();
-      if (u.role !== 'teacher' && normalizedSet.has(normalizeTurmaName(u.turma || ''))) {
-        await deleteDoc(doc(db, 'users', d.id)).catch(() => {});
-        await deleteDoc(doc(db, 'credentials', d.id)).catch(() => {});
-        await deleteDoc(doc(db, 'publicProfiles', d.id)).catch(() => {});
+      for (const d of snap.docs) {
+        const u = d.data();
+        if (u.role !== 'teacher' && !isUserAdmin(u.email, u.role) && normalizedSet.has(normalizeTurmaName(u.turma || ''))) {
+          await deleteDoc(doc(db, 'users', d.id)).catch((e) => console.warn('[Admin] Erro ao apagar utilizador de turma:', e));
+          await deleteDoc(doc(db, 'credentials', d.id)).catch((e) => console.warn('[Admin] Erro ao apagar credenciais de turma:', e));
+          await deleteDoc(doc(db, 'publicProfiles', d.id)).catch((e) => console.warn('[Admin] Erro ao apagar perfil público de turma:', e));
+        }
       }
+    } catch (err) {
+      console.error('[Admin] Erro ao eliminar alunos por turma no Firestore:', err);
     }
 
     try {
@@ -1318,7 +1391,11 @@ export const api = {
         method: 'DELETE',
         body: JSON.stringify({ turmas }),
       });
-    } catch {}
+    } catch (err: any) {
+      if (!(err instanceof ServerUnavailableError)) {
+        console.warn('[Admin] Erro ao contactar endpoint de eliminação por turmas:', err?.message);
+      }
+    }
 
     return { success: true, message: 'Alunos da turma eliminados com sucesso.' };
   },
@@ -1332,14 +1409,23 @@ export const api = {
     const current = getTurmasList();
     const updated = current.filter(t => !normalizedToRemove.has(normalizeTurmaName(t)));
     saveTurmasList(updated);
-    await setDoc(doc(db, 'config', 'turmas'), { list: updated, updatedAt: new Date().toISOString() }, { merge: true }).catch(() => {});
+
+    try {
+      await setDoc(doc(db, 'config', 'turmas'), { list: updated, updatedAt: new Date().toISOString() }, { merge: true });
+    } catch (err) {
+      console.warn('[Admin] Aviso ao atualizar turmas no Firestore:', err);
+    }
 
     try {
       await serverApi('/api/teacher/turmas', {
         method: 'DELETE',
         body: JSON.stringify({ turmas, deleteStudents }),
       });
-    } catch {}
+    } catch (err: any) {
+      if (!(err instanceof ServerUnavailableError)) {
+        console.warn('[Admin] Erro ao contactar endpoint de remoção de turmas:', err?.message);
+      }
+    }
 
     return { success: true, message: 'Turmas eliminadas com sucesso.', turmas: updated };
   },
@@ -1349,19 +1435,27 @@ export const api = {
   },
 
   async adminPurgeAllData(): Promise<{ success: boolean; message: string }> {
-    const snap = await getDocs(collection(db, 'users'));
-    for (const d of snap.docs) {
-      const u = d.data();
-      if (u.role !== 'teacher' && !isUserAdmin(u.email, u.role)) {
-        await deleteDoc(doc(db, 'users', d.id)).catch(() => {});
-        await deleteDoc(doc(db, 'credentials', d.id)).catch(() => {});
-        await deleteDoc(doc(db, 'publicProfiles', d.id)).catch(() => {});
+    try {
+      const snap = await getDocs(collection(db, 'users'));
+      for (const d of snap.docs) {
+        const u = d.data();
+        if (u.role !== 'teacher' && !isUserAdmin(u.email, u.role)) {
+          await deleteDoc(doc(db, 'users', d.id)).catch((e) => console.warn('[Purge] Erro user:', e));
+          await deleteDoc(doc(db, 'credentials', d.id)).catch((e) => console.warn('[Purge] Erro cred:', e));
+          await deleteDoc(doc(db, 'publicProfiles', d.id)).catch((e) => console.warn('[Purge] Erro profile:', e));
+        }
       }
+    } catch (err) {
+      console.error('[Purge] Erro ao apagar alunos do Firestore:', err);
     }
 
     try {
       await serverApi('/api/teacher/purge-all-data', { method: 'DELETE' });
-    } catch {}
+    } catch (err: any) {
+      if (!(err instanceof ServerUnavailableError)) {
+        console.warn('[Purge] Erro no endpoint purge-all-data:', err?.message);
+      }
+    }
 
     return { success: true, message: 'Todos os alunos e registos foram eliminados de raiz.' };
   },
@@ -1373,13 +1467,19 @@ export const api = {
         localStorage.setItem(THEME_VISIBILITY_KEY, JSON.stringify(res.visibility));
         return { ...DEFAULT_THEME_VISIBILITY, ...res.visibility };
       }
-    } catch {}
+    } catch (err: any) {
+      if (!(err instanceof ServerUnavailableError)) {
+        console.warn('[ThemeVisibility] Erro ao consultar servidor:', err?.message);
+      }
+    }
     try {
       const snap = await getDoc(doc(db, 'config', 'theme_visibility'));
       if (snap.exists() && snap.data()?.visibility) {
         return { ...DEFAULT_THEME_VISIBILITY, ...snap.data()?.visibility };
       }
-    } catch {}
+    } catch (err) {
+      console.warn('[ThemeVisibility] Erro ao consultar Firestore:', err);
+    }
     const local = localStorage.getItem(THEME_VISIBILITY_KEY);
     if (local) {
       try { return { ...DEFAULT_THEME_VISIBILITY, ...JSON.parse(local) }; } catch {}
@@ -1391,13 +1491,23 @@ export const api = {
     const merged = { ...DEFAULT_THEME_VISIBILITY, ...newVisibility };
     localStorage.setItem(THEME_VISIBILITY_KEY, JSON.stringify(merged));
     window.dispatchEvent(new CustomEvent('tic_theme_visibility_updated', { detail: merged }));
-    await setDoc(doc(db, 'config', 'theme_visibility'), { visibility: merged, updatedAt: new Date().toISOString() }, { merge: true }).catch(() => {});
+
+    try {
+      await setDoc(doc(db, 'config', 'theme_visibility'), { visibility: merged, updatedAt: new Date().toISOString() }, { merge: true });
+    } catch (err) {
+      console.warn('[ThemeVisibility] Erro ao gravar no Firestore:', err);
+    }
+
     try {
       await serverApi('/api/config/theme-visibility', {
         method: 'POST',
         body: JSON.stringify({ visibility: merged }),
       });
-    } catch {}
+    } catch (err: any) {
+      if (!(err instanceof ServerUnavailableError)) {
+        console.warn('[ThemeVisibility] Erro ao sincronizar com servidor:', err?.message);
+      }
+    }
     return { success: true, visibility: merged };
   },
 
@@ -1420,7 +1530,7 @@ export const api = {
           localStorage.setItem(THEME_VISIBILITY_KEY, JSON.stringify(merged));
           callback(merged);
         }
-      }, () => {});
+      }, (err) => console.warn('[ThemeVisibility] Snapshot listener warning:', err?.message));
     } catch {}
     return () => {
       window.removeEventListener('tic_theme_visibility_updated', handleLocalUpdate);
@@ -1435,13 +1545,19 @@ export const api = {
         localStorage.setItem(QUIZ_VISIBILITY_KEY, JSON.stringify(res.visibility));
         return { ...DEFAULT_QUIZ_VISIBILITY, ...res.visibility };
       }
-    } catch {}
+    } catch (err: any) {
+      if (!(err instanceof ServerUnavailableError)) {
+        console.warn('[QuizVisibility] Erro ao consultar servidor:', err?.message);
+      }
+    }
     try {
       const snap = await getDoc(doc(db, 'config', 'quiz_visibility'));
       if (snap.exists() && snap.data()?.visibility) {
         return { ...DEFAULT_QUIZ_VISIBILITY, ...snap.data()?.visibility };
       }
-    } catch {}
+    } catch (err) {
+      console.warn('[QuizVisibility] Erro ao consultar Firestore:', err);
+    }
     const local = localStorage.getItem(QUIZ_VISIBILITY_KEY);
     if (local) {
       try { return { ...DEFAULT_QUIZ_VISIBILITY, ...JSON.parse(local) }; } catch {}
@@ -1453,13 +1569,23 @@ export const api = {
     const merged = { ...DEFAULT_QUIZ_VISIBILITY, ...newVisibility };
     localStorage.setItem(QUIZ_VISIBILITY_KEY, JSON.stringify(merged));
     window.dispatchEvent(new CustomEvent('tic_quiz_visibility_updated', { detail: merged }));
-    await setDoc(doc(db, 'config', 'quiz_visibility'), { visibility: merged, updatedAt: new Date().toISOString() }, { merge: true }).catch(() => {});
+
+    try {
+      await setDoc(doc(db, 'config', 'quiz_visibility'), { visibility: merged, updatedAt: new Date().toISOString() }, { merge: true });
+    } catch (err) {
+      console.warn('[QuizVisibility] Erro ao gravar no Firestore:', err);
+    }
+
     try {
       await serverApi('/api/config/quiz-visibility', {
         method: 'POST',
         body: JSON.stringify({ visibility: merged }),
       });
-    } catch {}
+    } catch (err: any) {
+      if (!(err instanceof ServerUnavailableError)) {
+        console.warn('[QuizVisibility] Erro ao sincronizar com servidor:', err?.message);
+      }
+    }
     return { success: true, visibility: merged };
   },
 
@@ -1482,7 +1608,7 @@ export const api = {
           localStorage.setItem(QUIZ_VISIBILITY_KEY, JSON.stringify(merged));
           callback(merged);
         }
-      }, () => {});
+      }, (err) => console.warn('[QuizVisibility] Snapshot listener warning:', err?.message));
     } catch {}
     return () => {
       window.removeEventListener('tic_quiz_visibility_updated', handleLocalUpdate);

@@ -30,9 +30,32 @@ export class ErrorBoundary extends Component<Props, State> {
     window.location.reload();
   };
 
-  private handleReset = () => {
-    localStorage.clear();
+  private handleControlledRecovery = () => {
+    try {
+      // Safe targeted cache cleanup: remove transient view/cache keys while preserving credentials
+      const preserveKeys = new Set(['tic_5ano_auth_token', 'tic_5ano_current_user']);
+      const keysToRemove: string[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && !preserveKeys.has(key)) {
+          // Remove transient UI/navigation cache, theme caches or corrupted keys
+          keysToRemove.push(key);
+        }
+      }
+      keysToRemove.forEach((k) => localStorage.removeItem(k));
+      sessionStorage.clear();
+    } catch (e) {
+      console.warn('Controlled recovery warning:', e);
+    }
     window.location.reload();
+  };
+
+  private handleFullReset = () => {
+    if (window.confirm('Isto irá terminar a tua sessão e repor todas as definições locais. Desejas continuar?')) {
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.reload();
+    }
   };
 
   public render() {
@@ -48,7 +71,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 Ocorreu um problema ao carregar a página
               </h1>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Não te preocupes! Podes tentar recarregar a plataforma educativa ou reiniciar o estado local.
+                Não te preocupes! Podes recarregar a página ou recuperar o estado temporário sem perder a tua sessão.
               </p>
             </div>
 
@@ -58,18 +81,27 @@ export class ErrorBoundary extends Component<Props, State> {
               </div>
             )}
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            <div className="flex flex-col gap-2.5 pt-2">
+              <div className="flex flex-col sm:flex-row gap-2.5">
+                <button
+                  onClick={this.handleReload}
+                  className="flex-1 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm transition-colors cursor-pointer shadow-xs"
+                >
+                  🔄 Recarregar Página
+                </button>
+                <button
+                  onClick={this.handleControlledRecovery}
+                  className="flex-1 py-3 px-4 rounded-xl border border-indigo-200 bg-indigo-50/60 text-indigo-700 hover:bg-indigo-100 font-bold text-sm transition-colors cursor-pointer"
+                >
+                  🛠️ Recuperar Estado
+                </button>
+              </div>
+
               <button
-                onClick={this.handleReload}
-                className="flex-1 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm transition-colors cursor-pointer"
+                onClick={this.handleFullReset}
+                className="py-2 px-3 text-xs font-semibold text-slate-500 hover:text-rose-600 transition-colors cursor-pointer"
               >
-                🔄 Recarregar Página
-              </button>
-              <button
-                onClick={this.handleReset}
-                className="py-3 px-4 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 font-semibold text-sm transition-colors cursor-pointer"
-              >
-                Limpar Cache
+                Terminar Sessão e Repor Tudo
               </button>
             </div>
           </div>
