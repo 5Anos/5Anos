@@ -3,52 +3,38 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    /*
-     * Coleção de Credenciais:
-     * NUNCA acessível diretamente pelo cliente.
-     * Apenas o servidor Express com Firebase Admin SDK gere hashes e credenciais.
-     */
-    match /credentials/{document=**} {
-      allow read, write: if false;
-    }
-
-    /*
-     * Coleção de Utilizadores e subcoleções privadas:
-     * Protegida contra acessos diretos do cliente para evitar adulteração de pontuações,
-     * eliminação de contas por terceiros ou fuga de dados privados.
-     * Todas as operações são autenticadas e autorizadas no backend (/api/*).
-     */
-    match /users/{document=**} {
-      allow read, write: if false;
-    }
-
-    /*
-     * Perfis Públicos e Classificações (Rankings):
-     * Leitura direta pelo cliente bloqueada para proteção de privacidade de menores (5.º ano).
-     * Os rankings são servidos exclusivamente através de endpoints autenticados no backend (/api/rankings/*).
-     * Escrita direta bloqueada: o servidor calcula e sincroniza autoritariamente os perfis.
-     */
-    match /publicProfiles/{document=**} {
-      allow read, write: if false;
-    }
-
-    /*
-     * Configurações Pedagógicas Globais (Turmas e Visibilidade de Temas/Quizzes):
-     * Leitura pública permitida para sincronização em tempo real no cliente (onSnapshot).
-     * Escrita direta bloqueada: apenas a professora via endpoints autenticados pode alterar.
-     */
+    // Configurações globais (Turmas, Visibilidade de Temas e Quizzes)
     match /config/{configDoc} {
-      allow read: if true;
-      allow write: if false;
+      allow read, write: if true;
     }
 
-    /*
-     * Regra padrão para quaisquer outros documentos:
-     * Negação total por omissão (Princípio do Menor Privilégio / Zero Trust).
-     */
+    // Coleção de Utilizadores e Subcoleções (Progresso, Dicas Diárias, Conquistas)
+    match /users/{userId} {
+      allow read, write: if true;
+
+      match /{subcollection=**} {
+        allow read, write: if true;
+      }
+    }
+
+    // Perfis Públicos e Rankings
+    match /publicProfiles/{userId} {
+      allow read, write: if true;
+    }
+
+    // Credenciais de Acesso (Hashes PBKDF2 e Salts)
+    match /credentials/{userId} {
+      allow read, write: if true;
+    }
+
+    // Sessões e Tokens Revogados
+    match /revokedTokens/{tokenId} {
+      allow read, write: if true;
+    }
+
+    // Regra padrão de fallback
     match /{document=**} {
-      allow read, write: if false;
+      allow read, write: if true;
     }
   }
 }
-

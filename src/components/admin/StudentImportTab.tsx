@@ -412,7 +412,7 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
       return;
     }
 
-    // 2. If Excel (.xlsx, .xls) or CSV: parse with ArrayBuffer client-side, with server fallback
+    // 2. If Excel (.xlsx, .xls), CSV, or other spreadsheets: parse 100% client-side with SheetJS
     try {
       const buffer = await file.arrayBuffer();
       const clientResult = parseExcelClient(buffer, defaultTurma, file.name);
@@ -424,31 +424,33 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
         return;
       }
 
-      // Fallback: send to server endpoint
-      const reader = new FileReader();
-      reader.onload = async (evt) => {
-        try {
-          const dataUrl = (evt.target?.result as string) || '';
-          const res = await api.parseStudentsFile(dataUrl, file.name, defaultTurma);
-          if (!res.students || res.students.length === 0) {
-            throw new Error(
-              `Não foi possível detetar nomes de alunos no ficheiro ${file.name}. Verifica se contém uma coluna com o nome dos alunos.`
-            );
+      // Fallback: try CSV/plain text line extraction
+      try {
+        const text = new TextDecoder('utf-8').decode(buffer);
+        const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length >= 3);
+        const fallbackRows: ParsedStudentRow[] = [];
+        let autoNum = 1;
+        for (const line of lines) {
+          const cleanLine = line.replace(/^[0-9]+[\.\-\s\)]+/, '').trim();
+          if (cleanLine.length >= 3 && /[a-zA-ZÀ-ÿ]/.test(cleanLine) && !cleanLine.toLowerCase().includes('aluno') && !cleanLine.toLowerCase().includes('turma')) {
+            fallbackRows.push({
+              number: autoNum++,
+              name: cleanLine,
+              turma: defaultTurma,
+              source: file.name,
+            });
           }
-          setProcessedSheets(res.filesProcessed || []);
-          setParsedRows(res.students.map((s, idx) => ({
-            number: s.number || idx + 1,
-            name: s.name.trim(),
-            turma: s.turma || defaultTurma,
-            source: s.sourceFile || file.name,
-          })));
-        } catch (serverErr: any) {
-          setParseError(serverErr.message || 'Erro ao processar ficheiro Excel.');
-        } finally {
-          setParsing(false);
         }
-      };
-      reader.readAsDataURL(file);
+        if (fallbackRows.length > 0) {
+          setProcessedSheets([file.name]);
+          setParsedRows(fallbackRows);
+          setParsing(false);
+          return;
+        }
+      } catch {}
+
+      setParseError(`Não foi possível detetar nomes de alunos no ficheiro ${file.name}. Verifica se contém uma coluna com o nome dos alunos.`);
+      setParsing(false);
     } catch (err: any) {
       console.error('Excel parse error:', err);
       setParseError(err.message || 'Erro ao ler ficheiro Excel.');
