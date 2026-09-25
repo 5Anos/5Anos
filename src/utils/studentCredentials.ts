@@ -214,3 +214,50 @@ export function generateKidPassword(existingPasswords: Set<string>): string {
   existingPasswords.add(fallback);
   return fallback;
 }
+
+/**
+ * Returns the plain-text password for student cards, printing, and teacher management.
+ * If password or initialPassword is present and not a masked string, returns it. Otherwise generates a friendly, stable password.
+ */
+export function getStudentCardPassword(student: {
+  username?: string;
+  id?: string;
+  name?: string;
+  fullName?: string;
+  password?: string;
+  initialPassword?: string;
+  plainPassword?: string;
+}): string {
+  const isInvalid = (p?: string) =>
+    !p ||
+    typeof p !== 'string' ||
+    p.includes('•') ||
+    p.includes('••') ||
+    p.includes('[Cifrada') ||
+    p.includes('Cifrada') ||
+    p.includes('Protegida') ||
+    p.includes('hash') ||
+    p.includes('pbkdf2');
+
+  if (student.password && !isInvalid(student.password)) {
+    return student.password;
+  }
+  if (student.initialPassword && !isInvalid(student.initialPassword)) {
+    return student.initialPassword;
+  }
+  if (student.plainPassword && !isInvalid(student.plainPassword)) {
+    return student.plainPassword;
+  }
+
+  // Deterministic friendly password for 10-year-olds: Word*2026 (ex: Estrela*2026, Sol*2026, Lua*2026)
+  const seedStr = (student.username || student.fullName || student.name || student.id || 'aluno').toLowerCase();
+  let hash = 0;
+  for (let i = 0; i < seedStr.length; i++) {
+    hash = ((hash << 5) - hash) + seedStr.charCodeAt(i);
+    hash |= 0;
+  }
+  const wordIdx = Math.abs(hash) % KID_FRIENDLY_WORDS.length;
+  const word = KID_FRIENDLY_WORDS[wordIdx];
+  const capWord = word.charAt(0).toUpperCase() + word.slice(1);
+  return `${capWord}*2026`;
+}

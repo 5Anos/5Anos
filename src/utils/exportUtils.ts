@@ -15,7 +15,7 @@ import {
   StudentThemeBreakdown,
   GlobalActivityStats,
 } from './progressCalculator';
-import { getStudentFullName, getStudentFirstAndLastName } from './studentCredentials';
+import { getStudentFullName, getStudentFirstAndLastName, getStudentCardPassword } from './studentCredentials';
 
 export {
   getStudentThemeBreakdown,
@@ -434,7 +434,7 @@ export function exportStudentsToExcel(students: User[], selectedTurma?: string):
     'Nome Completo': getStudentFullName(s) || 'Sem Nome',
     'Primeiro e Último Nome': getStudentFirstAndLastName(s),
     'Nome de Utilizador': s.username || (s.email ? s.email.split('@')[0] : ''),
-    'Palavra-passe': '[Cifrada / Protegida]',
+    'Palavra-passe': getStudentCardPassword(s),
     'Email Institucional': s.email || '',
     'ID Público (Nickname)': s.publicId || '',
     'Pontuação Total (XP)': s.points ?? 0,
@@ -622,7 +622,7 @@ export function exportStudentCredentialsToExcel(students: User[], selectedTurma?
     'Nome Completo': getStudentFullName(s) || 'Sem Nome',
     'Primeiro e Último Nome (Cartão)': getStudentFirstAndLastName(s),
     'Nome de Utilizador': s.username || (s.email ? s.email.split('@')[0] : ''),
-    'Palavra-passe': '[Cifrada / Protegida]',
+    'Palavra-passe': getStudentCardPassword(s),
     'ID Público': s.publicId || '',
     'Pontuação (XP)': s.points ?? 0,
     'Data Criação': s.createdAt ? new Date(s.createdAt).toLocaleDateString('pt-PT') : '',

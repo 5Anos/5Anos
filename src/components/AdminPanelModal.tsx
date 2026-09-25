@@ -36,10 +36,17 @@ import {
   Sliders,
   Scissors,
   HelpCircle,
+  Copy,
 } from 'lucide-react';
 import { User, Language, ThemeVisibilityMap, QuizVisibilityMap, ActivityProgress } from '../types';
 import { api, isUserAdmin, DEFAULT_THEME_VISIBILITY, DEFAULT_QUIZ_VISIBILITY } from '../services/api';
 import { getTurmasList } from '../data/turmasData';
+import {
+  getStudentCardPassword,
+  generateKidPassword,
+  getStudentFirstAndLastName,
+  getStudentFullName,
+} from '../utils/studentCredentials';
 import {
   exportStudentsToExcel,
   exportStudentsToCSV,
@@ -129,6 +136,9 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   const [editingStudent, setEditingStudent] = useState<User | null>(null);
   const [editName, setEditName] = useState('');
   const [editTurma, setEditTurma] = useState('');
+  const [editPassword, setEditPassword] = useState('');
+  const [showEditPassword, setShowEditPassword] = useState(false);
+  const [customPasswords, setCustomPasswords] = useState<Record<string, string>>({});
   const [editLoading, setEditLoading] = useState(false);
   const [editError, setEditError] = useState('');
   const [editSuccess, setEditSuccess] = useState('');
@@ -371,12 +381,17 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
     setEditingStudent(student);
     setEditName(student.fullName || student.name || '');
     setEditTurma(student.turma || turmasList[0] || '5.º A');
+    const curPass = customPasswords[student.id] || student.password || student.initialPassword || getStudentCardPassword(student);
+    setEditPassword(curPass);
+    setShowEditPassword(false);
     setEditError('');
     setEditSuccess('');
   };
 
   const closeEditModal = () => {
     setEditingStudent(null);
+    setEditPassword('');
+    setShowEditPassword(false);
     setEditError('');
     setEditSuccess('');
   };
@@ -387,15 +402,30 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
     setEditError('');
     setEditSuccess('');
 
+    const trimmedPass = editPassword.trim();
+    if (trimmedPass && trimmedPass.length < 4) {
+      setEditError('A palavra-passe deve ter pelo menos 4 caracteres.');
+      return;
+    }
+
     setEditLoading(true);
     try {
       const currentFullName = (editingStudent.fullName || editingStudent.name || '').trim();
+      const nameChanged = editName.trim() !== currentFullName;
+      const turmaChanged = editTurma !== editingStudent.turma;
+
       await api.adminUpdateStudent(editingStudent.id, editingStudent.email, {
-        newName: editName.trim() !== currentFullName ? editName.trim() : undefined,
-        newTurma: editTurma !== editingStudent.turma ? editTurma : undefined,
+        newName: nameChanged ? editName.trim() : undefined,
+        newTurma: turmaChanged ? editTurma : undefined,
+        newPassword: trimmedPass || undefined,
       });
 
-      setEditSuccess(language === 'pt' ? 'Dados do aluno atualizados com sucesso!' : 'Student updated successfully!');
+      if (trimmedPass) {
+        setCustomPasswords((prev) => ({ ...prev, [editingStudent.id]: trimmedPass }));
+        setVisiblePasswords((prev) => ({ ...prev, [editingStudent.id]: true }));
+      }
+
+      setEditSuccess(language === 'pt' ? 'Dados e palavra-passe atualizados com sucesso!' : 'Student updated successfully!');
       await loadStudents();
       setTimeout(() => {
         closeEditModal();
@@ -1178,9 +1208,37 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                   {student.username || student.email?.split('@')[0] || '—'}
                                 </td>
                                 <td className="py-2.5 px-3">
-                                  <span className="font-mono text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
-                                    •••••••• (Cifrada)
-                                  </span>
+                                  {(() => {
+                                    const studentPass = customPasswords[student.id] || student.password || student.initialPassword || getStudentCardPassword(student);
+                                    const isPassVisible = !!visiblePasswords[student.id];
+
+                                    return (
+                                      <div className="flex items-center gap-1.5">
+                                        <span className="font-mono text-xs font-bold text-indigo-700 bg-indigo-50/80 px-2 py-0.5 rounded-md border border-indigo-200/80">
+                                          {isPassVisible ? studentPass : '••••••••'}
+                                        </span>
+                                        <button
+                                          type="button"
+                                          onClick={() => setVisiblePasswords((prev) => ({ ...prev, [student.id]: !prev[student.id] }))}
+                                          className="p-1 text-slate-400 hover:text-indigo-600 cursor-pointer"
+                                          title={isPassVisible ? 'Ocultar palavra-passe' : 'Ver palavra-passe'}
+                                        >
+                                          {isPassVisible ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                                        </button>
+                                        <button
+                                          type="button"
+                                          onClick={() => {
+                                            navigator.clipboard.writeText(studentPass);
+                                            showToast('success', `Palavra-passe de ${getStudentFirstAndLastName(student)} copiada!`);
+                                          }}
+                                          className="p-1 text-slate-400 hover:text-indigo-600 cursor-pointer"
+                                          title="Copiar palavra-passe"
+                                        >
+                                          <Copy className="w-3.5 h-3.5" />
+                                        </button>
+                                      </div>
+                                    );
+                                  })()}
                                 </td>
                                 <td className="py-2.5 px-3 text-right font-black text-indigo-700 text-xs">
                                   {student.points || 0} XP
@@ -1209,10 +1267,11 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                     {/* Reset Password */}
                                     <button
                                       onClick={async () => {
-                                        if (!window.confirm(`Pretendes redefinir a palavra-passe de ${student.name}?`)) return;
+                                        if (!window.confirm(`Pretendes gerar uma nova palavra-passe para ${getStudentFirstAndLastName(student)}?`)) return;
                                         try {
                                           const res = await api.resetStudentPassword(student.id);
-                                          showToast('success', `Nova palavra-passe de ${student.name}: ${res.newPassword}`);
+                                          showToast('success', `Nova palavra-passe de ${getStudentFirstAndLastName(student)}: ${res.newPassword}`);
+                                          setCustomPasswords((prev) => ({ ...prev, [student.id]: res.newPassword }));
                                           setVisiblePasswords((prev) => ({ ...prev, [student.id]: true }));
                                           await loadStudents();
                                         } catch (err: any) {
@@ -1987,6 +2046,47 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                       </option>
                     ))}
                   </select>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                      Palavra-passe do Aluno
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const generated = generateKidPassword(new Set());
+                        setEditPassword(generated);
+                        setShowEditPassword(true);
+                      }}
+                      className="text-[11px] font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 cursor-pointer"
+                    >
+                      <Sparkles className="w-3 h-3" />
+                      <span>Gerar Nova</span>
+                    </button>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type={showEditPassword ? 'text' : 'password'}
+                      required
+                      value={editPassword}
+                      onChange={(e) => setEditPassword(e.target.value)}
+                      placeholder="Mínimo 4 caracteres (ex: estrela123)"
+                      className="w-full pl-3 pr-10 py-2 rounded-xl border border-slate-300 text-sm font-mono font-bold text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowEditPassword(!showEditPassword)}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer p-1"
+                      title={showEditPassword ? 'Ocultar' : 'Ver'}
+                    >
+                      {showEditPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    Fácil para crianças de 10 anos digitarem (ex: palavra + 3 números).
+                  </p>
                 </div>
 
                 <div className="flex items-center gap-2 pt-3 border-t border-slate-100">

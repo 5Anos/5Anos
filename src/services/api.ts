@@ -35,6 +35,7 @@ import {
   generateKidPassword,
   parseStudentName,
   normalizeTurmaName,
+  getStudentCardPassword,
 } from '../utils/studentCredentials';
 
 const TOKEN_KEY = 'tic_5ano_auth_token';
@@ -259,6 +260,22 @@ export const api = {
         if ((userData as any).initialPassword === cleanPass) {
           isPasswordValid = true;
           // Auto-migrate to secure hash in credentials collection
+          const hashed = await hashPasswordClient(cleanPass);
+          await setDoc(doc(db, 'credentials', foundDoc.id), {
+            userId: foundDoc.id,
+            passwordHash: hashed.hash,
+            passwordSalt: hashed.salt,
+            passwordChangedAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          }, { merge: true }).catch(() => {});
+        }
+      }
+
+      // Card password fallback support (deterministic password from card)
+      if (!isPasswordValid) {
+        const cardPass = getStudentCardPassword(userData);
+        if (cardPass === cleanPass) {
+          isPasswordValid = true;
           const hashed = await hashPasswordClient(cleanPass);
           await setDoc(doc(db, 'credentials', foundDoc.id), {
             userId: foundDoc.id,

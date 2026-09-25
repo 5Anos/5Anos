@@ -20,6 +20,7 @@ import {
   generateKidPassword,
   parseStudentName,
   normalizeTurmaName,
+  getStudentCardPassword,
 } from './src/utils/studentCredentials';
 import { getDefaultAvatar } from './src/utils/avatarUtils';
 
@@ -394,7 +395,7 @@ function isValidUserId(userId: string): boolean {
 }
 
 function isValidPassword(password: string): boolean {
-  return typeof password === 'string' && password.length >= 8 && password.length <= 128;
+  return typeof password === 'string' && password.length >= 4 && password.length <= 128;
 }
 
 function isTeacherEmail(email: string): boolean {
@@ -542,17 +543,31 @@ app.post('/api/auth/login', async (req, res) => {
     const user = userDoc.data();
     const credentialSnap = await db.collection('credentials').doc(userDoc.id).get();
 
-    if (!credentialSnap.exists) {
-      recordLoginFailure(ip, identifier);
-      return res.status(401).json({ error: 'Utilizador ou palavra-passe incorretos.' });
+    let passwordValid = false;
+    if (credentialSnap.exists) {
+      const credentials = credentialSnap.data() || {};
+      passwordValid = await verifyPassword(
+        password,
+        String(credentials.passwordHash || ''),
+        String(credentials.passwordSalt || '')
+      );
     }
 
-    const credentials = credentialSnap.data() || {};
-    const passwordValid = await verifyPassword(
-      password,
-      String(credentials.passwordHash || ''),
-      String(credentials.passwordSalt || '')
-    );
+    if (!passwordValid) {
+      const cardPass = getStudentCardPassword(user);
+      if (cardPass === password) {
+        passwordValid = true;
+        const hashed = await hashPassword(password);
+        const now = new Date().toISOString();
+        await db.collection('credentials').doc(userDoc.id).set({
+          userId: userDoc.id,
+          passwordHash: hashed.hash,
+          passwordSalt: hashed.salt,
+          passwordChangedAt: now,
+          updatedAt: now,
+        }, { merge: true }).catch(() => {});
+      }
+    }
 
     if (!passwordValid) {
       recordLoginFailure(ip, identifier);
@@ -1752,7 +1767,7 @@ app.patch('/api/teacher/students/:userId', requireAuth, requireTeacher, async (r
 
     if (body.newPassword !== undefined) {
       const password = String(body.newPassword);
-      if (!isValidPassword(password)) return res.status(400).json({ error: 'A palavra-passe deve ter entre 8 e 128 caracteres.' });
+      if (!isValidPassword(password)) return res.status(400).json({ error: 'A palavra-passe deve ter pelo menos 4 caracteres.' });
       const h = await hashPassword(password);
       const now = new Date().toISOString();
       await db.collection('credentials').doc(userId).set({
