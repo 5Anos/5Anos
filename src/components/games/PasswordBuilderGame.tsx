@@ -606,7 +606,7 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
                   : 'text-amber-300 bg-amber-400/20 border-amber-400/30'
               }`}>
                 {pct === 100
-                  ? (language === 'pt' ? 'Desafio Concluído com 100%!' : 'Challenge Completed with 100%!')
+                  ? (language === 'pt' ? 'Desafio Concluído! 100 XP Ganhos!' : 'Challenge Completed! 100 XP Earned!')
                   : pct >= 50
                   ? (language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed Successfully!')
                   : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}

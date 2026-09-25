@@ -577,17 +577,17 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
           <div className="space-y-2">
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
               {correctCount === SCENARIOS.length
-                ? (language === 'pt' ? 'Laboratório Concluído com 100% de Sucesso!' : 'Security Lab Completed with 100%!')
-                : Math.round((correctCount / SCENARIOS.length) * 100) > 50
+                ? (language === 'pt' ? 'Laboratório Concluído! 100 XP Ganhos!' : 'Security Lab Completed! 100 XP Earned!')
+                : Math.round((correctCount / SCENARIOS.length) * 100) >= 50
                 ? (language === 'pt' ? 'Laboratório Concluído com Sucesso!' : 'Security Lab Completed Successfully!')
                 : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
             </h2>
             <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
-              Math.round((correctCount / SCENARIOS.length) * 100) > 50
+              Math.round((correctCount / SCENARIOS.length) * 100) >= 50
                 ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
                 : 'bg-amber-100 border-amber-300 text-amber-900'
             }`}>
-              <span>{Math.round((correctCount / SCENARIOS.length) * 100)}% {language === 'pt' ? 'de Pontuação' : 'Score'}</span>
+              <span>{Math.round((correctCount / SCENARIOS.length) * 100)} XP</span>
               <span>•</span>
               <span>
                 {correctCount} {language === 'pt' ? 'de' : 'of'} {SCENARIOS.length} {language === 'pt' ? 'Decisões Corretas' : 'Correct'}

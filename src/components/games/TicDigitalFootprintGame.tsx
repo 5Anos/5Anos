@@ -320,7 +320,7 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
                     : 'text-amber-800 bg-amber-50 border-amber-200'
                 }`}>
                   {pct === 100
-                    ? (language === 'pt' ? 'Cidadão Digital Consciente (100%)!' : 'Conscious Digital Citizen (100%)!')
+                    ? (language === 'pt' ? 'Cidadão Digital Consciente (100 XP)!' : 'Conscious Digital Citizen (100 XP)!')
                     : isPassed
                     ? (language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed Successfully!')
                     : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
@@ -338,14 +338,14 @@ export const TicDigitalFootprintGame: React.FC<TicDigitalFootprintGameProps> = (
                     ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
                     : 'bg-amber-100 border-amber-300 text-amber-900'
                 }`}>
-                  <span>{pct}% {language === 'pt' ? 'de Pontuação' : 'Score'}</span>
+                  <span className="font-black">{pct} XP</span>
                   <span>•</span>
                   <span>
                     {correctCount} {language === 'pt' ? 'de' : 'of'} {ITEMS_LIST.length} {language === 'pt' ? 'Decisões Corretas' : 'Correct'}
                   </span>
                   <span>•</span>
                   <span className="font-black">
-                    {pct} XP
+                    (Máx. 100 XP)
                   </span>
                 </div>
 

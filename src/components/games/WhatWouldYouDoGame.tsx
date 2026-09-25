@@ -521,7 +521,7 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
           <div className="space-y-2">
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
               {score === DILEMMAS.length
-                ? (language === 'pt' ? 'Dilemas Superados com 100% de Sucesso!' : 'Dilemmas Completed with 100%!')
+                ? (language === 'pt' ? 'Dilemas Superados! 100 XP Ganhos!' : 'Dilemmas Completed! 100 XP Earned!')
                 : Math.round((score / DILEMMAS.length) * 100) >= 50
                 ? (language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed Successfully!')
                 : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
@@ -531,7 +531,7 @@ export const WhatWouldYouDoGame: React.FC<WhatWouldYouDoGameProps> = ({ language
                 ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
                 : 'bg-amber-100 border-amber-300 text-amber-900'
             }`}>
-              <span>{Math.round((score / DILEMMAS.length) * 100)}% {language === 'pt' ? 'de Pontuação' : 'Score'}</span>
+              <span>{Math.round((score / DILEMMAS.length) * 100)} XP</span>
               <span>•</span>
               <span>
                 {score} {language === 'pt' ? 'de' : 'of'} {DILEMMAS.length} {language === 'pt' ? 'Decisões Exemplares' : 'Exemplary Choices'}

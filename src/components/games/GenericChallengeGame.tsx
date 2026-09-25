@@ -550,7 +550,7 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
           <Trophy className={`w-16 h-16 mx-auto ${finalScore >= 50 ? 'text-amber-500' : 'text-amber-600'}`} />
           <h2 className={`text-2xl font-black ${finalScore >= 50 ? 'text-slate-900' : 'text-amber-950'}`}>
             {finalScore === 100
-              ? (language === 'pt' ? 'Desafio Concluído com 100% de Sucesso!' : 'Challenge Completed with 100% Success!')
+              ? (language === 'pt' ? 'Desafio Concluído! 100 XP Ganhos!' : 'Challenge Completed! 100 XP Earned!')
               : finalScore >= 50
               ? (language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed Successfully!')
               : (language === 'pt' ? 'Tentativa Realizada!' : 'Attempt Completed!')}

@@ -634,7 +634,7 @@ export const ErgonomicsTrueFalseGame: React.FC<ErgonomicsTrueFalseGameProps> = (
                   <div>
                     <h3 className="font-black text-base sm:text-lg">
                       {percentage === 100
-                        ? (language === 'pt' ? 'Excelente! Dominas a Ergonomia com 100%!' : 'Excellent! You mastered Ergonomics 100%!')
+                        ? (language === 'pt' ? 'Excelente! Dominas a Ergonomia com 100 XP!' : 'Excellent! You mastered Ergonomics with 100 XP!')
                         : percentage >= 50
                         ? (language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed Successfully!')
                         : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}

@@ -497,7 +497,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
 
     if (percentage === 100) {
       stars = 3;
-      overallTitle = language === 'pt' ? '🎉 Desafio Concluído com 100% de Sucesso!' : '🎉 Perfect Email! 100% Score!';
+      overallTitle = language === 'pt' ? '🎉 Desafio Concluído com 100 XP!' : '🎉 Perfect Email! 100 XP Earned!';
       overallDescription =
         language === 'pt'
           ? 'Obtiveste 100 XP. Parabéns! Acertaste em todas as respostas!'
@@ -1263,7 +1263,7 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
                     onClick={handleFinish}
                     className="w-full sm:w-2/3 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-emerald-600/20 transition-all cursor-pointer hover:scale-[1.01] active:scale-98 flex items-center justify-center gap-1.5"
                   >
-                    <span>{language === 'pt' ? 'Concluir Desafio (100%) →' : 'Complete Challenge (100%) →'}</span>
+                    <span>{language === 'pt' ? 'Concluir Desafio (100 XP) →' : 'Complete Challenge (100 XP) →'}</span>
                   </button>
                 </>
               )}

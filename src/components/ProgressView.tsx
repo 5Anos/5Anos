@@ -515,7 +515,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                                 </span>
                               </td>
 
-                              {/* Status */}
+                               {/* Status */}
                               <td className="py-3 px-3 whitespace-nowrap">
                                 {isActivityCompleted ? (
                                   <span className="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-full font-bold text-xs">
@@ -525,7 +525,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                                 ) : (
                                   <span className="inline-flex items-center gap-1 text-amber-700 bg-amber-50 border border-amber-200/60 px-2 py-0.5 rounded-full font-semibold text-xs">
                                     <Clock className="w-3.5 h-3.5 text-amber-600" />
-                                    <span>{language === 'pt' ? '<50% (A Treinar)' : '<50% (In Progress)'}</span>
+                                    <span>{language === 'pt' ? 'A Treinar' : 'In Progress'}</span>
                                   </span>
                                 )}
                               </td>
@@ -564,25 +564,14 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                                     return (
                                       <div>
                                         <div className="flex items-center gap-1.5">
-                                          <span
-                                            className={
-                                              recordedBest >= 50
-                                                ? 'text-emerald-600 text-sm font-bold'
-                                                : recordedBest > 0
-                                                ? 'text-amber-600 text-sm font-bold'
-                                                : 'text-rose-600 text-sm font-bold'
-                                            }
-                                          >
-                                            {recordedBest}%
-                                          </span>
-                                          <span className="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 font-bold">
+                                          <span className="text-xs px-2.5 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-200 font-black text-sm">
                                             {itemAwardedXp} XP
                                           </span>
                                         </div>
-                                        <span className="block text-[10px] text-slate-400 font-normal">
+                                        <span className="block text-[10px] text-slate-400 font-normal mt-0.5">
                                           {recordedBest >= 50
-                                            ? (language === 'pt' ? '✓ Atingiu ≥50%' : '✓ Reached ≥50%')
-                                            : (language === 'pt' ? 'Necessário ≥50% para concluir' : 'Need ≥50% to complete')}
+                                            ? (language === 'pt' ? '✓ Concluído' : '✓ Completed')
+                                            : (language === 'pt' ? 'Em curso' : 'In progress')}
                                         </span>
                                       </div>
                                     );
@@ -738,7 +727,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                         ) : (
                           <span className="inline-flex items-center gap-1 text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full font-semibold text-xs border border-amber-200/60">
                             <Clock className="w-3.5 h-3.5" />
-                            <span>{language === 'pt' ? '<50% (A Treinar)' : '<50% (In Progress)'}</span>
+                            <span>{language === 'pt' ? 'A Treinar' : 'In Progress'}</span>
                           </span>
                         )}
                       </td>
@@ -774,17 +763,6 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                           if (item.bestPercentage !== undefined || item.bestScore !== undefined || item.score !== undefined) {
                             return (
                               <div className="flex items-center gap-1.5">
-                                <span
-                                  className={
-                                    recordedBest >= 50
-                                      ? 'text-emerald-600 font-bold'
-                                      : recordedBest > 0
-                                      ? 'text-amber-600 font-bold'
-                                      : 'text-rose-600 font-bold'
-                                  }
-                                >
-                                  {recordedBest}%
-                                </span>
                                 <span className="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 font-bold">
                                   {itemAwardedXp} XP
                                 </span>

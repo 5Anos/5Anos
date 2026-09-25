@@ -1143,7 +1143,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
               resultPercentage === 100 ? 'text-emerald-950' : 'text-amber-950'
             }`}>
               {resultPercentage === 100
-                ? (language === 'pt' ? 'Desafio Concluído com 100% de Sucesso!' : 'Challenge Completed with 100% Success!')
+                ? (language === 'pt' ? 'Desafio Concluído! 100 XP Ganhos!' : 'Challenge Completed! 100 XP Earned!')
                 : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
             </h3>
 

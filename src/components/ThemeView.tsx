@@ -633,12 +633,12 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                       ) : isDone ? (
                         <span className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border text-emerald-700 bg-emerald-100 border-emerald-200">
                           <CheckCircle2 className="w-3.5 h-3.5" />
-                          <span>{bestScore}% ({language === 'pt' ? 'Concluído' : 'Completed'})</span>
+                          <span>{bestScore} XP ({language === 'pt' ? 'Concluído' : 'Completed'})</span>
                         </span>
                       ) : hasAttempted ? (
                         <span className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border text-amber-800 bg-amber-100 border-amber-300">
                           <Clock className="w-3.5 h-3.5 text-amber-600" />
-                          <span>{bestScore}% (&lt;50%)</span>
+                          <span>{bestScore} XP (A Treinar)</span>
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full">
