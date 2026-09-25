@@ -4,56 +4,51 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     /*
-     * Coleção de Utilizadores (Alunos e Professora)
-     * Permite aos alunos e professora gerir a sua conta e progresso
-     * na nuvem de forma persistente.
+     * Coleção de Credenciais:
+     * NUNCA acessível diretamente pelo cliente.
+     * Apenas o servidor Express com Firebase Admin SDK gere hashes e credenciais.
      */
-    match /users/{userId} {
-      allow read, write: if true;
-
-      match /progress/{activityId} {
-        allow read, write: if true;
-      }
-
-      match /achievements/{badgeId} {
-        allow read, write: if true;
-      }
-
-      match /pointsHistory/{transactionId} {
-        allow read, write: if true;
-      }
-
-      match /dailyTips/{dateId} {
-        allow read, write: if true;
-      }
+    match /credentials/{document=**} {
+      allow read, write: if false;
     }
 
     /*
-     * Credenciais de autenticação (Hash e validação na nuvem)
+     * Coleção de Utilizadores e subcoleções privadas:
+     * Protegida contra acessos diretos do cliente para evitar adulteração de pontuações,
+     * eliminação de contas por terceiros ou fuga de dados privados.
+     * Todas as operações são autenticadas e autorizadas no backend (/api/*).
      */
-    match /credentials/{userId} {
-      allow read, write: if true;
+    match /users/{document=**} {
+      allow read, write: if false;
     }
 
     /*
-     * Perfis Públicos e Ranking
+     * Perfis Públicos e Classificações (Rankings):
+     * Leitura pública permitida para exibir a tabela de classificação e cartões de turma.
+     * Escrita direta bloqueada: o servidor calcula e sincroniza autoritariamente os perfis.
      */
     match /publicProfiles/{userId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if false;
     }
 
     /*
-     * Configurações pedagógicas da plataforma (Turmas e visibilidade de temas/quizzes)
+     * Configurações Pedagógicas Globais (Turmas e Visibilidade de Temas/Quizzes):
+     * Leitura pública permitida para sincronização em tempo real no cliente (onSnapshot).
+     * Escrita direta bloqueada: apenas a professora via endpoints autenticados pode alterar.
      */
     match /config/{configDoc} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if false;
     }
 
     /*
-     * Regra padrão para quaisquer outros documentos
+     * Regra padrão para quaisquer outros documentos:
+     * Negação total por omissão (Princípio do Menor Privilégio / Zero Trust).
      */
     match /{document=**} {
-      allow read, write: if true;
+      allow read, write: if false;
     }
   }
 }
+

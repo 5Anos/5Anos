@@ -275,6 +275,7 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
           })
           .then((res) => {
             if (onPointsEarned) onPointsEarned(25);
+            window.dispatchEvent(new CustomEvent('tic_progress_saved', { detail: res }));
           })
           .catch(() => {});
       }

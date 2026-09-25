@@ -2,6 +2,7 @@ import {
   isValidActivityId,
   getActivityDefinition,
   evaluateQuizSubmission,
+  getQuizQuestionsForActivity,
   evaluateDailyTipSubmission,
   evaluateBadgesEarned,
 } from './src/data/activityCatalog';
@@ -51,7 +52,20 @@ export function evaluateActivitySubmissionServer(
 
   // Case A: Quiz Evaluation (Authoritative server-side grading)
   if (actDef?.type === 'quiz' || activityType === 'quiz') {
-    if (quizAnswers) {
+    const questions = getQuizQuestionsForActivity(activityId);
+    if (questions && questions.length > 0) {
+      if (!quizAnswers || (typeof quizAnswers === 'object' && Object.keys(quizAnswers).length === 0)) {
+        return {
+          valid: false,
+          error: 'As respostas do quiz são obrigatórias para avaliação oficial pelo servidor.',
+          activityId,
+          activityType: 'quiz',
+          pointsEarned: 0,
+          percentage: 0,
+          isFirstAttemptOfficial: false,
+          serverCalculated: true,
+        };
+      }
       const quizResult = evaluateQuizSubmission(activityId, quizAnswers);
       if (quizResult) {
         return {
@@ -65,7 +79,7 @@ export function evaluateActivitySubmissionServer(
         };
       }
     }
-    // If quiz submitted without answers array, validate with clamped percentage (max 100)
+    // If quiz has no structured questions in catalog, validate with clamped percentage (max 100)
     const safePercentage = Math.min(100, Math.max(0, Math.round(Number(claimedPercentage) || 0)));
     return {
       valid: true,

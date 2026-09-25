@@ -170,10 +170,35 @@ export default function App() {
       }
     });
 
+    const handleProgressEvent = (e: any) => {
+      if (e?.detail) {
+        const res = e.detail;
+        if (res.userPoints !== undefined) {
+          setUser((prev) => (prev ? { ...prev, points: res.userPoints, lastActivity: res.lastActivity } : null));
+        }
+        if (res.record) {
+          setProgressList((prev) => {
+            const idx = prev.findIndex((p) => p.activityId === res.record.activityId);
+            if (idx >= 0) {
+              const next = [...prev];
+              next[idx] = res.record;
+              return next;
+            }
+            return [...prev, res.record];
+          });
+        }
+        if (res.achievements && Array.isArray(res.achievements)) {
+          setAchievements(res.achievements);
+        }
+      }
+    };
+    window.addEventListener('tic_progress_saved', handleProgressEvent);
+
     return () => {
       if (typeof unsubVisibility === 'function') unsubVisibility();
       if (typeof unsubQuizVisibility === 'function') unsubQuizVisibility();
       if (typeof unsubscribeAuth === 'function') unsubscribeAuth();
+      window.removeEventListener('tic_progress_saved', handleProgressEvent);
     };
   }, []);
 
@@ -322,6 +347,11 @@ export default function App() {
       }
     } catch (err: unknown) {
       console.error('Failed to save progress', err);
+      const msg = (err as any)?.message || 'Erro ao sincronizar resultado com o servidor.';
+      showToast(
+        language === 'pt' ? '⚠️ Não foi possível guardar o resultado' : '⚠️ Could not save progress',
+        msg
+      );
     }
   };
 

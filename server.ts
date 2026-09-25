@@ -592,13 +592,6 @@ app.post('/api/auth/login', async (req, res) => {
 
     const token = createSessionToken(userDoc.id);
 
-    const isTeacher = user.role === 'admin' || user.role === 'teacher' || isTeacherEmail(normalizeEmail(user.email));
-    if (!isTeacher && Number(user.points || 0) < 100) {
-      user.points = 100;
-      await userDoc.ref.set({ points: 100, xp: 100, updatedAt: new Date().toISOString() }, { merge: true });
-      await syncPublicProfile(userDoc.id);
-    }
-
     return res.json({
       success: true,
       token,
@@ -636,13 +629,6 @@ app.post(
   '/api/auth/logout',
   requireAuth,
   async (_req: AuthenticatedRequest, res) => {
-    /*
-     * As sessões são stateless.
-     *
-     * O cliente elimina o token.
-     * Para invalidar sessões individualmente no futuro,
-     * podemos adicionar uma sessionVersion ao utilizador.
-     */
     return res.json({
       success: true,
     });
@@ -650,73 +636,63 @@ app.post(
 );
 
 /* ============================================================
-   AUTH — REDEFINIR OU DEFINIR NOVA PALAVRA-PASSE
+   AUTH — ALTERAR PALAVRA-PASSE (AUTENTICADO COM PASSWORD ATUAL)
    ============================================================ */
 
-app.post('/api/auth/reset-password', async (req, res) => {
+app.post('/api/auth/change-password', requireAuth, async (req: AuthenticatedRequest, res) => {
   try {
-    const { email, password } = req.body || {};
-    const normalizedEmail = normalizeEmail(email);
+    const userId = req.userId!;
+    const { currentPassword, newPassword } = req.body || {};
 
-    if (!isValidEmail(normalizedEmail)) {
-      return res.status(400).json({
-        error: 'Email inválido.',
-      });
+    if (!currentPassword || typeof currentPassword !== 'string') {
+      return res.status(400).json({ error: 'Palavra-passe atual obrigatória.' });
     }
 
-    if (!isValidPassword(String(password || ''))) {
-      return res.status(400).json({
-        error: 'A palavra-passe deve ter entre 8 e 128 caracteres.',
-      });
+    if (!isValidPassword(String(newPassword || ''))) {
+      return res.status(400).json({ error: 'A nova palavra-passe deve ter entre 8 e 128 caracteres.' });
     }
 
-    const snapshot = await db
-      .collection('users')
-      .where('email', '==', normalizedEmail)
-      .limit(1)
-      .get();
-
-    if (snapshot.empty) {
-      return res.status(404).json({
-        error: 'Não foi encontrada nenhuma conta com este email.',
-      });
+    const credSnap = await db.collection('credentials').doc(userId).get();
+    if (!credSnap.exists) {
+      return res.status(404).json({ error: 'Credenciais não encontradas.' });
     }
 
-    const userDoc = snapshot.docs[0];
-    const passwordResult = await hashPassword(String(password));
+    const credData = credSnap.data() || {};
+    const valid = await verifyPassword(currentPassword, credData.passwordHash, credData.passwordSalt);
+    if (!valid) {
+      return res.status(401).json({ error: 'Palavra-passe atual incorreta.' });
+    }
 
-    await db.collection('credentials').doc(userDoc.id).set(
-      {
-        userId: userDoc.id,
-        passwordHash: passwordResult.hash,
-        passwordSalt: passwordResult.salt,
-        updatedAt: new Date().toISOString(),
-      },
-      { merge: true }
-    );
+    const hashed = await hashPassword(String(newPassword));
+    const now = new Date().toISOString();
 
-    // Atualiza timestamp e sincroniza
-    await userDoc.ref.set(
-      {
-        updatedAt: new Date().toISOString(),
-      },
-      { merge: true }
-    );
+    await db.collection('credentials').doc(userId).set({
+      userId,
+      passwordHash: hashed.hash,
+      passwordSalt: hashed.salt,
+      updatedAt: now,
+    }, { merge: true });
 
-    const token = createSessionToken(userDoc.id);
+    await db.collection('users').doc(userId).set({
+      initialPassword: String(newPassword),
+      updatedAt: now,
+    }, { merge: true });
 
-    return res.json({
-      success: true,
-      token,
-      user: userDoc.data(),
-      message: 'Palavra-passe definida e atualizada com sucesso!',
-    });
+    return res.json({ success: true, message: 'Palavra-passe alterada com sucesso!' });
   } catch (error) {
-    console.error('Reset password error:', error);
-    return res.status(500).json({
-      error: 'Erro ao definir a nova palavra-passe.',
-    });
+    console.error('Change password error:', error);
+    return res.status(500).json({ error: 'Não foi possível alterar a palavra-passe.' });
   }
+});
+
+/* ============================================================
+   AUTH — RESET PASSWORD (DESATIVADO PARA PEDIDOS NÃO-AUTORIZADOS)
+   ============================================================ */
+
+app.post('/api/auth/reset-password', async (_req, res) => {
+  return res.status(403).json({
+    error: 'A recuperação autónoma de palavra-passe foi desativada por segurança. A professora de TIC pode redefinir a palavra-passe no painel de gestão de alunos.',
+  });
 });
 
 /* ============================================================
@@ -1015,6 +991,16 @@ app.post('/api/progress/save', requireAuth, async (req: AuthenticatedRequest, re
     const isTeacher = user.role === 'admin' || user.role === 'teacher' || isTeacherEmail(normalizeEmail(user.email));
 
     const quiz = isLearningQuizServer(activityId, activityType);
+    if (!isTeacher) {
+      const thVisSnap = await db.collection('config').doc('theme_visibility').get();
+      const thVisData = thVisSnap.exists ? thVisSnap.data()?.visibility || {} : {};
+      if (thVisData[themeId] === false) {
+        return res.status(403).json({
+          error: 'Este tema pedagógico está atualmente oculto pela professora de TIC e não aceita submissões.',
+        });
+      }
+    }
+
     if (quiz && !isTeacher) {
       const qVisSnap = await db.collection('config').doc('quiz_visibility').get();
       const qVisData = qVisSnap.exists ? qVisSnap.data()?.visibility || {} : {};
@@ -1217,10 +1203,23 @@ app.post('/api/progress/save', requireAuth, async (req: AuthenticatedRequest, re
    DAILY TIP
    ============================================================ */
 
+function isAllowedDailyTipDate(dateStr: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return false;
+  const now = new Date();
+  const todayStr = now.toISOString().slice(0, 10);
+  const yesterdayStr = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  const tomorrowStr = new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  return dateStr === todayStr || dateStr === yesterdayStr || dateStr === tomorrowStr;
+}
+
 app.post('/api/daily-tip/read', requireAuth, async (req: AuthenticatedRequest, res) => {
   try {
     const userId = req.userId!;
-    const date = validateDate(req.body?.dateStr) || new Date().toISOString().slice(0, 10);
+    const rawDate = validateDate(req.body?.dateStr) || new Date().toISOString().slice(0, 10);
+    if (!isAllowedDailyTipDate(rawDate)) {
+      return res.status(400).json({ error: 'Apenas a Dica do Dia da data atual pode ser acedida.' });
+    }
+    const date = rawDate;
     const tipTitle = String(req.body?.tipTitle || 'Dica do Dia').slice(0, 200);
     const ref = db.collection('users').doc(userId).collection('dailyTips').doc(date);
     const snap = await ref.get();
@@ -1249,7 +1248,11 @@ app.post('/api/daily-tip/read', requireAuth, async (req: AuthenticatedRequest, r
 app.post('/api/daily-tip/answer', requireAuth, async (req: AuthenticatedRequest, res) => {
   try {
     const userId = req.userId!;
-    const date = validateDate(req.body?.dateStr) || new Date().toISOString().slice(0, 10);
+    const rawDate = validateDate(req.body?.dateStr) || new Date().toISOString().slice(0, 10);
+    if (!isAllowedDailyTipDate(rawDate)) {
+      return res.status(400).json({ error: 'Apenas a Dica do Dia da data atual pode ser respondida.' });
+    }
+    const date = rawDate;
     const tipTitle = String(req.body?.tipTitle || 'Dica do Dia').slice(0, 200);
     const selectedOptionId = String(req.body?.selectedOptionId || '').slice(0, 100);
     if (!selectedOptionId) return res.status(400).json({ error: 'Resposta da Dica do Dia não fornecida.' });
@@ -2342,6 +2345,7 @@ app.patch('/api/teacher/students/:userId', requireAuth, requireTeacher, async (r
       if (!isValidPassword(password)) return res.status(400).json({ error: 'A palavra-passe deve ter entre 8 e 128 caracteres.' });
       const h = await hashPassword(password);
       await db.collection('credentials').doc(userId).set({ userId, passwordHash: h.hash, passwordSalt: h.salt, updatedAt: new Date().toISOString() }, { merge: true });
+      await userRef.set({ initialPassword: password, updatedAt: new Date().toISOString() }, { merge: true });
     }
     await syncPublicProfile(userId);
     return res.json({ success: true, message: 'Aluno atualizado com sucesso.' });
@@ -2514,7 +2518,12 @@ app.post('/api/badges/evaluate', requireAuth, async (req: AuthenticatedRequest, 
     const result = evaluateBadgesEarned(activities as any, points, achievementSnap.docs.map(d => d.id));
     const newBadges = result.newlyUnlockedBadges || [];
     const now = new Date().toISOString();
-    for (const badge of newBadges as any[]) await userRef.collection('achievements').doc(badge.badgeId).set({ userId, badgeId: badge.badgeId, unlockedAt: now });
+    for (const badge of newBadges as any[]) {
+      const bId = String(badge.id || badge.badgeId || '');
+      if (bId) {
+        await userRef.collection('achievements').doc(bId).set({ userId, badgeId: bId, unlockedAt: now });
+      }
+    }
     return res.json({ success: true, newlyUnlockedBadges: newBadges, totalBonusPoints: Number(result.totalBonusPoints || 0) });
   } catch (error) { console.error(error); return res.status(500).json({ error: 'Erro na avaliação das conquistas.' }); }
 });
