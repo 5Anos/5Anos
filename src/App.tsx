@@ -177,7 +177,7 @@ export default function App() {
     };
   }, []);
 
-  // If active theme is locked and user is a student, automatically return to dashboard
+  // If active theme or active quiz is locked and user is a student, automatically return
   useEffect(() => {
     if (!isAdmin && themeVisibility[currentTheme.id] === false) {
       if (currentView === 'theme' || currentView === 'module' || currentView === 'challenge') {
@@ -185,8 +185,15 @@ export default function App() {
         setActiveModuleId(null);
         setActiveChallengeId(null);
       }
+    } else if (!isAdmin && currentView === 'challenge' && activeChallengeId) {
+      const isFinalQuiz =
+        activeChallengeId.startsWith('quiz-final') ||
+        currentTheme.finalQuiz.some((q) => q.id.includes(activeChallengeId));
+      if (isFinalQuiz && quizVisibility[currentTheme.id] === false) {
+        returnToGames();
+      }
     }
-  }, [isAdmin, currentView, currentTheme.id, themeVisibility]);
+  }, [isAdmin, currentView, currentTheme.id, themeVisibility, quizVisibility, activeChallengeId]);
 
   const handleToggleThemeVisibility = async (themeId: string) => {
     try {
@@ -351,6 +358,32 @@ export default function App() {
       currentTheme.finalQuiz.some((q) => q.id.includes(activeChallengeId));
 
     if (isFinalQuiz) {
+      if (!isAdmin && quizVisibility[currentTheme.id] === false) {
+        return (
+          <div className="max-w-2xl mx-auto my-12 p-8 bg-white rounded-3xl border-2 border-amber-200 text-center space-y-4 shadow-lg animate-in fade-in">
+            <div className="w-16 h-16 rounded-2xl bg-amber-100 text-amber-800 text-3xl mx-auto flex items-center justify-center border border-amber-200">
+              🔒
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+              {language === 'pt' ? 'Quiz de Avaliação Temporariamente Oculto' : 'Evaluation Quiz Temporarily Hidden'}
+            </h2>
+            <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+              {language === 'pt'
+                ? 'Este quiz de aprendizagem está atualmente bloqueado pela professora de TIC e será ativado no momento da aula.'
+                : 'This quiz is currently locked by the teacher and will be activated during class.'}
+            </p>
+            <div className="pt-2">
+              <button
+                onClick={returnToGames}
+                className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm cursor-pointer shadow-md transition-all"
+              >
+                {language === 'pt' ? 'Voltar aos Jogos do Tema' : 'Back to Theme Games'}
+              </button>
+            </div>
+          </div>
+        );
+      }
+
       const existingQuizProgress = progressList.find((p) => p.activityId === activeChallengeId);
       return (
         <FinalQuizView

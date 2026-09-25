@@ -23,12 +23,13 @@ export const THEME_IMAGES: Record<string, string> = {
   'tic-sociedade': ticSocietyHero,
   'ergonomia': ergonomicsGuide,
   'palavras-passe': passwordsSecurity,
+  'seguranca': cyberSafetyShield,
   'correio-eletronico': emailCommunication,
   'navegar-internet': internetBrowsing,
   'direitos-autor': copyrightKidsBanner,
   'referencias-fontes': citationBlocksArt,
   // Backward compatibility alias
-  'seguranca-digital': passwordsSecurity,
+  'seguranca-digital': cyberSafetyShield,
 };
 
 export const THEME_STEP_IMAGES: Record<string, string[]> = {
@@ -52,6 +53,13 @@ export const THEME_STEP_IMAGES: Record<string, string[]> = {
     cyberSafetyShield,
     boyAvatarImg,
     passwordsSecurity,
+    cyberSafetyShield,
+  ],
+  'seguranca': [
+    cyberSafetyShield,
+    passwordsSecurity,
+    boyAvatarImg,
+    girlAvatarImg,
     cyberSafetyShield,
   ],
   'correio-eletronico': [

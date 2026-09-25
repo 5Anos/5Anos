@@ -1010,13 +1010,27 @@ app.post('/api/progress/save', requireAuth, async (req: AuthenticatedRequest, re
     if (!evaluation.valid) return res.status(400).json({ error: evaluation.error || 'Atividade inválida.' });
 
     const userRef = db.collection('users').doc(userId);
+    const userSnap = await userRef.get();
+    const user = userSnap.data() || {};
+    const isTeacher = user.role === 'admin' || user.role === 'teacher' || isTeacherEmail(normalizeEmail(user.email));
+
+    const quiz = isLearningQuizServer(activityId, activityType);
+    if (quiz && !isTeacher) {
+      const qVisSnap = await db.collection('config').doc('quiz_visibility').get();
+      const qVisData = qVisSnap.exists ? qVisSnap.data()?.visibility || {} : {};
+      if (qVisData[themeId] !== true) {
+        return res.status(403).json({
+          error: 'Este quiz de aprendizagem está atualmente bloqueado pela professora de TIC e não aceita submissões.',
+        });
+      }
+    }
+
     const progressRef = userRef.collection('progress').doc(activityId);
     const existingSnap = await progressRef.get();
     const existing = existingSnap.exists ? (existingSnap.data() || {}) : null;
     const now = new Date().toISOString();
     const attemptScore = Math.max(0, Math.min(100, Math.round(Number(evaluation.percentage) || 0)));
     const previousBest = Math.max(0, Math.min(100, Math.round(Number(existing?.bestScore ?? existing?.bestPercentage ?? existing?.score ?? 0))));
-    const quiz = isLearningQuizServer(activityId, activityType);
     const attempts = Number(existing?.attempts || 0) + 1;
     const best = Math.max(previousBest, attemptScore);
 
@@ -1092,15 +1106,13 @@ app.post('/api/progress/save', requireAuth, async (req: AuthenticatedRequest, re
     }
 
     // Carregar dados para avaliação de conquistas e pontos consolidados
-    const [allProgressSnap, achSnap, dailySnap, userSnap] = await Promise.all([
+    const [allProgressSnap, achSnap, dailySnap] = await Promise.all([
       userRef.collection('progress').get(),
       userRef.collection('achievements').get(),
       userRef.collection('dailyTips').get(),
-      userRef.get(),
     ]);
 
-    const user = userSnap.data() || {};
-    const isAdmin = user.role === 'admin' || user.role === 'teacher' || isTeacherEmail(normalizeEmail(user.email));
+    const isAdmin = isTeacher;
 
     // Soma das Dicas do Dia
     let dailyPoints = 0;
