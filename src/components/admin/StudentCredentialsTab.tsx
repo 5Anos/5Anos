@@ -35,7 +35,7 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
   const [selectedTurma, setSelectedTurma] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
-  const [visiblePasswords, setVisiblePasswords] = useState<Record<string, boolean>>({});
+  const [visiblePasswords, setVisiblePasswords] = useState<Record<string, string>>({});
   const [resettingId, setResettingId] = useState<string | null>(null);
   const [actionNotice, setActionNotice] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
 
@@ -56,17 +56,10 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
     setTimeout(() => setCopiedKey(null), 1800);
   };
 
-  const togglePasswordVisibility = (studentId: string) => {
-    setVisiblePasswords((prev) => ({
-      ...prev,
-      [studentId]: !prev[studentId],
-    }));
-  };
-
   const handleResetPassword = async (student: User) => {
     const confirmMsg =
       language === 'pt'
-        ? `Pretendes redefinir a palavra-passe do aluno ${student.name}? Será gerada uma nova palavra-passe simples para a criança.`
+        ? `Pretendes redefinir a palavra-passe do aluno ${student.name}? Será gerada uma nova palavra-passe simples para a criança e as sessões antigas serão invalidadas.`
         : `Reset password for ${student.name}?`;
     if (!window.confirm(confirmMsg)) return;
 
@@ -78,7 +71,7 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
         type: 'success',
         text: `Palavra-passe de ${student.name} redefinida para: ${res.newPassword}`,
       });
-      setVisiblePasswords((prev) => ({ ...prev, [student.id]: true }));
+      setVisiblePasswords((prev) => ({ ...prev, [student.id]: res.newPassword }));
       onStudentUpdated?.();
     } catch (err: any) {
       setActionNotice({
@@ -230,8 +223,8 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 print:grid-cols-2 print:gap-3">
             {filteredStudents.map((student) => {
               const username = student.username || (student.email ? student.email.split('@')[0] : 'aluno');
-              const password = student.initialPassword || (student as any).password || '••••••••';
-              const isPasswordVisible = visiblePasswords[student.id];
+              const resetPassword = visiblePasswords[student.id];
+              const passwordDisplay = resetPassword || '•••••••• (Cifrada)';
 
               return (
                 <div
@@ -294,20 +287,22 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
                         <span className="text-slate-500 font-semibold print:text-slate-700">Palavra-passe:</span>
                         <div className="flex items-center gap-1.5">
                           <span className="font-mono font-bold text-indigo-700 bg-white px-2 py-0.5 rounded border border-indigo-200 text-xs print:border-black print:text-black print:text-sm">
-                            {isPasswordVisible || true ? password : '••••••••'}
+                            {passwordDisplay}
                           </span>
-                          <button
-                            type="button"
-                            onClick={() => handleCopy(password, `pass-${student.id}`)}
-                            className="p-1 text-slate-400 hover:text-indigo-600 cursor-pointer print:hidden"
-                            title="Copiar palavra-passe"
-                          >
-                            {copiedKey === `pass-${student.id}` ? (
-                              <Check className="w-3.5 h-3.5 text-emerald-600" />
-                            ) : (
-                              <Copy className="w-3.5 h-3.5" />
-                            )}
-                          </button>
+                          {resetPassword && (
+                            <button
+                              type="button"
+                              onClick={() => handleCopy(resetPassword, `pass-${student.id}`)}
+                              className="p-1 text-slate-400 hover:text-indigo-600 cursor-pointer print:hidden"
+                              title="Copiar palavra-passe"
+                            >
+                              {copiedKey === `pass-${student.id}` ? (
+                                <Check className="w-3.5 h-3.5 text-emerald-600" />
+                              ) : (
+                                <Copy className="w-3.5 h-3.5" />
+                              )}
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>

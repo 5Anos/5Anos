@@ -268,9 +268,8 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
             activityId: 'challenge-apa7-simulator-detective',
             activityType: 'challenge',
             themeId: 'direitos-autor',
-            score: 25,
-            maxScore: 25,
-            percentage: 100,
+            puzzleOrder: newOrder,
+            submissionData: { puzzleOrder: newOrder },
             activityTitle: 'Desafio do Detetive APA 7',
           })
           .then((res) => {

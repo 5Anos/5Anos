@@ -1,13 +1,9 @@
 import {
   doc,
   getDoc,
-  collection,
-  getDocs,
-  query,
-  limit,
   onSnapshot,
 } from 'firebase/firestore';
-import { db, OperationType, handleFirestoreError } from '../firebase';
+import { db } from '../firebase';
 import {
   User,
   ActivityProgress,
@@ -22,15 +18,9 @@ import {
 } from '../types';
 import { BADGES } from '../data/badgesData';
 import { generateSecurePublicId } from '../utils/publicIdGenerator';
-import { getTurmasList, addTurma, removeTurmas } from '../data/turmasData';
+import { getTurmasList } from '../data/turmasData';
 import { getDefaultAvatar } from '../utils/avatarUtils';
-import { isValidActivityId, evaluateQuizSubmission, evaluateDailyTipSubmission } from '../data/activityCatalog';
-import {
-  generateKidUsername,
-  generateKidPassword,
-  parseStudentName,
-  normalizeTurmaName,
-} from '../utils/studentCredentials';
+import { isValidActivityId } from '../data/activityCatalog';
 
 const TOKEN_KEY = 'tic_5ano_auth_token';
 const CURRENT_USER_KEY = 'tic_5ano_current_user';
@@ -40,11 +30,16 @@ const POINTS_STORAGE_KEY = 'tic_5ano_points_';
 const THEME_VISIBILITY_KEY = 'tic_5ano_theme_visibility';
 const QUIZ_VISIBILITY_KEY = 'tic_5ano_quiz_visibility';
 
-const DEV_BACKEND_URL = 'https://ais-dev-kjaqxx5aijnf7yk2ybqnmq-275430484727.europe-west2.run.app';
-
 function resolveApiBaseUrl(): string {
   const envUrl = (import.meta as any).env?.VITE_API_URL;
-  if (envUrl) return envUrl.replace(/\/$/, '');
+  if (envUrl && typeof envUrl === 'string' && envUrl.trim().length > 0) {
+    return envUrl.trim().replace(/\/$/, '');
+  }
+  // In browser development or web hosting on same domain, relative URL is used
+  if (typeof window !== 'undefined' && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+    return '';
+  }
+  // In native Android APK / Capacitor (file:// protocol) where VITE_API_URL was not injected
   return '';
 }
 
@@ -56,32 +51,18 @@ async function serverApi<T>(path: string, init: RequestInit = {}, retryCount = 1
   headers.set('Content-Type', 'application/json');
   if (token) headers.set('Authorization', `Bearer ${token}`);
 
-  let activeBase = API_BASE_URL;
-  // If we are currently on ais-pre or an external browser that failed previously, prefer direct dev backend
-  let url = `${activeBase}${path}`;
+  let url = `${API_BASE_URL}${path}`;
+
+  // If in mobile environment or file:// protocol and base URL is missing
+  if (typeof window !== 'undefined' && window.location.protocol === 'file:' && !API_BASE_URL) {
+    throw new Error('O URL do backend de produção não está configurado. Por favor define a variável de ambiente VITE_API_URL no build da aplicação.');
+  }
 
   try {
-    let response: Response;
-    try {
-      response = await fetch(url, {
-        ...init,
-        headers,
-      });
-    } catch (netErr) {
-      // If fetching relative URL failed, try dev backend URL directly
-      if (!url.startsWith('http') && DEV_BACKEND_URL) {
-        url = `${DEV_BACKEND_URL}${path}`;
-        response = await fetch(url, { ...init, headers });
-      } else {
-        throw netErr;
-      }
-    }
-
-    // If the response is 405 Method Not Allowed or 404 and we did not use DEV_BACKEND_URL yet, retry with DEV_BACKEND_URL
-    if ((response.status === 405 || response.status === 404) && !url.startsWith(DEV_BACKEND_URL)) {
-      url = `${DEV_BACKEND_URL}${path}`;
-      response = await fetch(url, { ...init, headers });
-    }
+    let response = await fetch(url, {
+      ...init,
+      headers,
+    });
 
     let body: any = null;
     const contentType = response.headers.get('content-type') || '';
@@ -92,53 +73,32 @@ async function serverApi<T>(path: string, init: RequestInit = {}, retryCount = 1
         /* invalid json body */
       }
     } else if ((response.status >= 500 || response.status === 404 || response.status === 405 || response.status === 0) && retryCount > 0) {
-      // Proxy/Container cold-start returning non-JSON: wait 1.5s and retry once
+      // Server cold-start returning non-JSON: wait 1.5s and retry once
       await new Promise((resolve) => setTimeout(resolve, 1500));
       return serverApi<T>(path, init, retryCount - 1);
     }
 
     if (!response.ok) {
-      if (body?.error) {
-        throw new Error(body.error);
-      }
-      if (response.status === 502 || response.status === 503 || response.status === 504) {
-        throw new Error('O servidor está a iniciar na nuvem. Por favor, aguarda 5 segundos e tenta novamente.');
-      }
+      const errorMsg = body?.error || `Erro de servidor (${response.status})`;
       if (response.status === 401) {
-        throw new Error('Credenciais inválidas ou sessão expirada.');
+        localStorage.removeItem(TOKEN_KEY);
+        localStorage.removeItem(CURRENT_USER_KEY);
+        window.dispatchEvent(new CustomEvent('tic_session_expired'));
       }
-      if (response.status === 403) {
-        throw new Error('Acesso não autorizado pelo servidor.');
-      }
-      throw new Error(`Erro de resposta do servidor (${response.status}). Por favor tenta novamente.`);
+      throw new Error(errorMsg);
     }
 
     return body as T;
   } catch (err: any) {
-    if (retryCount > 0 && (err?.name === 'TypeError' || err?.message?.includes('fetch'))) {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      return serverApi<T>(path, init, retryCount - 1);
-    }
-    if (err instanceof Error) {
-      if (err.message.includes('Failed to fetch') || err.name === 'TypeError') {
-        throw new Error('Não foi possível contactar o servidor. Verifica a ligação à internet ou tenta novamente dentro de instantes.');
+    if (err?.message?.includes('Failed to fetch') || err?.message?.includes('NetworkError')) {
+      if (retryCount > 0) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        return serverApi<T>(path, init, retryCount - 1);
       }
-      throw err;
+      throw new Error('Não foi possível comunicar com o servidor. Verifica a tua ligação à Internet.');
     }
-    throw new Error('Erro de comunicação com o servidor.');
+    throw err;
   }
-}
-
-
-// Safe storage fallback for SSR and preview environments
-if (typeof globalThis.localStorage === 'undefined') {
-  const memoryStore = new Map<string, string>();
-  (globalThis as any).localStorage = {
-    getItem: (k: string) => memoryStore.get(k) ?? null,
-    setItem: (k: string, v: string) => memoryStore.set(k, String(v)),
-    removeItem: (k: string) => memoryStore.delete(k),
-    clear: () => memoryStore.clear(),
-  };
 }
 
 export const DEFAULT_THEME_VISIBILITY: ThemeVisibilityMap = {
@@ -152,154 +112,28 @@ export const DEFAULT_THEME_VISIBILITY: ThemeVisibilityMap = {
 };
 
 export const DEFAULT_QUIZ_VISIBILITY: QuizVisibilityMap = {
-  'correio-eletronico': false,
-  'tic-sociedade': false,
-  'ergonomia': false,
-  'seguranca': false,
-  'palavras-passe': false,
-  'navegar-internet': false,
-  'direitos-autor': false,
-  // Backward compatibility aliases
-  'seguranca-digital': false,
-  'pesquisa-informacao': false,
-  'ergonomia-saude': false,
-  'modelagem-3d': false,
-  'algoritmos-programacao': false,
+  'correio-eletronico': true,
+  'tic-sociedade': true,
+  'ergonomia': true,
+  'seguranca': true,
+  'palavras-passe': true,
+  'navegar-internet': true,
+  'direitos-autor': true,
 };
 
-// Designated Teacher / Administrator accounts (Carla Oliveira)
-export const ADMIN_EMAILS = [
-  'imaginebycarla2023@gmail.com',
-  'imaginebacarla2023@gmail.com',
-  'prof.carla@escola.pt',
-  'carla.oliveira@escola.pt',
-];
-
-export function isUserAdmin(email?: string, role?: string): boolean {
+export function isUserAdmin(email?: string | null, role?: string): boolean {
   if (role === 'admin' || role === 'teacher') return true;
   if (!email) return false;
-  const norm = email.toLowerCase().trim();
-  return ADMIN_EMAILS.includes(norm);
+  const normalized = email.toLowerCase().trim();
+  const adminEmails = [
+    'imaginebycarla2023@gmail.com',
+    'imaginebacarla2023@gmail.com',
+    'prof.carla@escola.pt',
+    'carla.oliveira@escola.pt',
+  ];
+  return adminEmails.includes(normalized);
 }
 
-/**
- * Identifies if an activity is a "Quiz de Aprendizagem" (Final Comprehensive Quiz for each theme)
- * which follows the strict rule:
- * - Unlimited attempts allowed for practice and learning.
- * - The official registered score is ALWAYS and permanently the score from the FIRST attempt.
- */
-export function isLearningQuiz(activityId: string, activityType?: string): boolean {
-  if (activityType === 'quiz') return true;
-  const idLower = (activityId || '').toLowerCase();
-  return idLower.startsWith('quiz-final') || idLower.includes('final_quiz') || idLower.includes('quiz-final-tema');
-}
-
-/**
- * Evaluates which badges from BADGES should be unlocked based on progress and points.
- * Returns array of badges that should be unlocked.
- */
-export function evaluateEligibleBadges(
-  progressList: ActivityProgress[],
-  userPoints: number,
-  existingAchievementIds: Set<string>
-): { badgeId: string; bonus: number; name: string }[] {
-  const toUnlock: { badgeId: string; bonus: number; name: string }[] = [];
-  const completedList = progressList.filter((p) => p.status === 'completed');
-
-  // 1. Primeiros Passos: completed at least 1 activity
-  if (!existingAchievementIds.has('primeiros-passos') && completedList.length >= 1) {
-    toUnlock.push({ badgeId: 'primeiros-passos', bonus: 0, name: 'Primeiros Passos' });
-  }
-
-  // 2. Guardião Digital: completed digital safety/security activities (Theme 3 or Theme 1/4)
-  const safetyActivitiesDone = completedList.filter(
-    (p) =>
-      p.themeId === 'seguranca' ||
-      p.themeId === 'seguranca-digital' ||
-      p.themeId === 'palavras-passe' ||
-      p.activityId.startsWith('seg-') ||
-      p.activityId.startsWith('pass-') ||
-      p.activityId.startsWith('desafio-tic-seguranca') ||
-      p.activityId.startsWith('desafio-tic-pegada')
-  );
-  if (!existingAchievementIds.has('guardiao-digital') && safetyActivitiesDone.length >= 4) {
-    toUnlock.push({ badgeId: 'guardiao-digital', bonus: 0, name: 'Guardião Digital' });
-  }
-
-  // 3. Especialista em Segurança: scored >= 90% in any security/safety quiz or challenge
-  const safetyQuiz90 = progressList.some(
-    (p) =>
-      (p.themeId === 'seguranca' || p.themeId === 'seguranca-digital' || p.themeId === 'palavras-passe' || p.activityId.includes('seguranca') || p.activityId.includes('pass')) &&
-      (p.activityType === 'quiz' || p.activityId.includes('quiz') || p.activityType === 'challenge') &&
-      (p.bestPercentage ?? p.percentage ?? p.score ?? 0) >= 90
-  );
-  if (!existingAchievementIds.has('especialista-seguranca') && safetyQuiz90) {
-    toUnlock.push({ badgeId: 'especialista-seguranca', bonus: 0, name: 'Especialista em Segurança' });
-  }
-
-  // 4. Detetive Cibernético: completed phishing or cyber danger challenge
-  const phishingDone = completedList.some(
-    (p) =>
-      p.activityId === 'desafio-detetive-phishing' ||
-      p.activityId === 'desafio-seguro-perigoso' ||
-      p.activityId === 'jogo-seguranca-tf' ||
-      p.activityId === 'jogo-seguranca-mc'
-  );
-  if (!existingAchievementIds.has('detetive-cibernetico') && phishingDone) {
-    toUnlock.push({ badgeId: 'detetive-cibernetico', bonus: 0, name: 'Detetive Cibernético' });
-  }
-
-  // 5. Mestre do Email: completed Theme 5 (Correio Eletrónico) challenges/modules
-  const emailActivitiesDone = completedList.filter(
-    (p) => p.themeId === 'correio-eletronico' || p.activityId.startsWith('email-') || p.activityId.startsWith('jogo-email')
-  );
-  if (!existingAchievementIds.has('mestre-email') && emailActivitiesDone.length >= 3) {
-    toUnlock.push({ badgeId: 'mestre-email', bonus: 0, name: 'Mestre do Email' });
-  }
-
-  // 6. Detetive da Informação: completed Theme 6 (Navegar na Internet) or Theme 7 (Direitos de Autor) activities
-  const searchActivitiesDone = completedList.filter(
-    (p) =>
-      p.themeId === 'navegar-internet' ||
-      p.themeId === 'direitos-autor' ||
-      p.activityId.startsWith('net-') ||
-      p.activityId.startsWith('copy-')
-  );
-  if (!existingAchievementIds.has('detetive-informacao') && searchActivitiesDone.length >= 4) {
-    toUnlock.push({ badgeId: 'detetive-informacao', bonus: 0, name: 'Detetive da Informação' });
-  }
-
-  // 7. Mestre da Pesquisa: scored >= 90% in Internet Navigation or Research quiz
-  const searchQuiz90 = progressList.some(
-    (p) =>
-      (p.themeId === 'navegar-internet' || p.themeId === 'direitos-autor' || p.activityId.includes('net') || p.activityId.includes('copy')) &&
-      (p.activityType === 'quiz' || p.activityId.includes('quiz')) &&
-      (p.bestPercentage ?? p.percentage ?? p.score ?? 0) >= 90
-  );
-  if (!existingAchievementIds.has('mestre-pesquisa') && searchQuiz90) {
-    toUnlock.push({ badgeId: 'mestre-pesquisa', bonus: 0, name: 'Mestre da Pesquisa' });
-  }
-
-  // 8. TIC Explorer: completed activities across at least 4 different themes
-  const distinctThemesDone = new Set(completedList.map((p) => p.themeId).filter(Boolean));
-  if (!existingAchievementIds.has('tic-explorer') && distinctThemesDone.size >= 4) {
-    toUnlock.push({ badgeId: 'tic-explorer', bonus: 0, name: 'TIC Explorer' });
-  }
-
-  // 9. Centurião de Pontos: reached 500+ total points
-  if (!existingAchievementIds.has('centuriao-pontos') && userPoints >= 500) {
-    toUnlock.push({ badgeId: 'centuriao-pontos', bonus: 0, name: 'Centurião Digital' });
-  }
-
-  return toUnlock;
-}
-
-let isRegisteringInProgress = false;
-
-/**
- * Computa de forma autoritativa e segura todos os pontos ganhos através de Dicas Diárias / da Semana,
- * agregando os registos multi-dispositivo da coleção dailyTips e da pointsHistory.
- */
 export function calculateAuthoritativeDailyTipPoints(
   dailyTipsList: Array<{ pointsEarned?: number; readPoints?: number; answerPoints?: number; date?: string; id?: string }>,
   pointsHistoryList: PointTransaction[]
@@ -349,9 +183,45 @@ export const api = {
     localStorage.removeItem(CURRENT_USER_KEY);
   },
 
-  /**
-   * Check if current client has a valid active student or admin session
-   */
+  async logout(): Promise<void> {
+    try {
+      await serverApi('/api/auth/logout', { method: 'POST' });
+    } catch {
+      // ignore network errors on logout
+    } finally {
+      this.removeToken();
+      window.dispatchEvent(new CustomEvent('tic_user_logged_out'));
+    }
+  },
+
+  async login(identifier: string, password: string): Promise<{ success: boolean; user: User; token: string }> {
+    const res = await serverApi<{ success: boolean; user: User; token: string }>('/api/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ identifier, password }),
+    });
+    if (res.token) {
+      this.setToken(res.token);
+    }
+    if (res.user) {
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(res.user));
+    }
+    return res;
+  },
+
+  async setupPassword(identifier: string, initialPassword: string, newPassword: string): Promise<{ success: boolean; user: User; token: string; message: string }> {
+    const res = await serverApi<{ success: boolean; user: User; token: string; message: string }>('/api/auth/setup-password', {
+      method: 'POST',
+      body: JSON.stringify({ identifier, initialPassword, newPassword }),
+    });
+    if (res.token) {
+      this.setToken(res.token);
+    }
+    if (res.user) {
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(res.user));
+    }
+    return res;
+  },
+
   hasValidSession(userId?: string): boolean {
     const token = this.getToken();
     const rawUser = typeof localStorage !== 'undefined' ? localStorage.getItem(CURRENT_USER_KEY) : null;
@@ -378,213 +248,168 @@ export const api = {
     }
   },
 
-  /**
-   * Protected user document creation/update
-   */
-  async createUserDoc(userId: string, data: any): Promise<void> {
-    const current = this.getCurrentSessionUser();
-    if (!current || current.id !== userId) throw new Error('Sessão inválida.');
-    await serverApi('/api/me/profile', { method: 'PATCH', body: JSON.stringify(data) });
-  },
-  async createPublicProfileDoc(userId: string, data: any): Promise<void> {
-    const current = this.getCurrentSessionUser();
-    if (!current || current.id !== userId) throw new Error('Sessão inválida.');
-    await serverApi('/api/me/profile', { method: 'PATCH', body: JSON.stringify(data) });
-  },
-  getAllTakenPublicIds(): string[] {
-    return [];
-  },
-
-  getAllRegisteredEmails(): string[] {
-    return [];
-  },
-
-  /**
-   * Fetch all taken Nicknames from Firestore to guarantee no duplicate publicId
-   */
   async fetchTakenPublicIds(): Promise<string[]> {
-    const takenSet = new Set<string>();
-
     try {
-      const q = query(collection(db, 'publicProfiles'), limit(500));
-      const snap = await getDocs(q);
-      snap.forEach((docSnap) => {
-        const d = docSnap.data();
-        if (d?.publicId) {
-          takenSet.add(String(d.publicId).trim());
-        }
-      });
-    } catch (err) {
-      console.warn('Could not query publicProfiles from Firestore:', err);
+      const res = await serverApi<{ taken: string[] }>('/api/public-ids/taken');
+      return res?.taken || [];
+    } catch {
+      return [];
     }
-
-    return Array.from(takenSet);
   },
 
-  /**
-   * Generate a unique Nickname
-   */
   async generateUniquePublicId(): Promise<string> {
     const taken = await this.fetchTakenPublicIds();
     return generateSecurePublicId(taken);
   },
 
-  /**
-   * Listen to Firebase Auth state changes
-   */
   onAuthChange(callback: (user: User | null) => void) {
     const token = this.getToken();
     if (!token) { callback(null); return () => {}; }
     serverApi<{ user: User }>('/api/auth/me')
-      .then(({ user }) => { localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user)); callback(user); })
-      .catch(() => { this.removeToken(); callback(null); });
+      .then(({ user }) => {
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+        callback(user);
+      })
+      .catch(() => {
+        this.removeToken();
+        callback(null);
+      });
     return () => {};
   },
 
-  /**
-   * Directly save user profile to Cloud Firestore (NEVER storing passwords)
-   */
-  async syncUserToFirestore(user: User): Promise<boolean> {
+  async getMe(): Promise<{
+    user: User;
+    progress: ActivityProgress[];
+    achievements: UserAchievement[];
+    pointsHistory: PointTransaction[];
+    dailyTipsCount: number;
+  }> {
     const current = this.getCurrentSessionUser();
-    if (!current || current.id !== user.id) throw new Error('Sessão inválida.');
     try {
-      const result = await serverApi<{ user: User }>('/api/me/profile', {
-        method: 'PATCH',
-        body: JSON.stringify({ name: user.name, publicId: user.publicId, turma: user.turma, language: user.language, avatar: user.avatar }),
-      });
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(result.user));
-      return true;
-    } catch (err) { console.warn('Server profile sync notice:', err); return false; }
-  },
-  async register(
-    name: string, email: string, password: string, turma: string, publicId: string,
-    language: Language = 'pt', avatar?: AvatarConfig
-  ): Promise<{ user: User; token: string }> {
-    const normalizedEmail = email.trim().toLowerCase();
-    const cleanPassword = password.trim();
-    if (cleanPassword.length < 8) throw new Error('A palavra-passe deve ter pelo menos 8 caracteres.');
-    const takenPublicIds = await this.fetchTakenPublicIds();
-    let finalPublicId = (publicId || '').trim();
-    if (!finalPublicId || takenPublicIds.some((id) => id.toLowerCase() === finalPublicId.toLowerCase())) {
-      finalPublicId = generateSecurePublicId(takenPublicIds);
-    }
+      const res = await serverApi<{
+        user: User;
+        progress: ActivityProgress[];
+        achievements: UserAchievement[];
+        pointsHistory: PointTransaction[];
+        dailyTipsCount: number;
+      }>('/api/auth/me');
 
-    const result = await serverApi<{ user: User; token: string }>('/api/auth/register', {
-      method: 'POST',
-      body: JSON.stringify({ name: name.trim(), email: normalizedEmail, password: cleanPassword, turma: turma || '5.º A', publicId: finalPublicId, language, avatar }),
-    });
-    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(result.user));
-    this.setToken(result.token);
-    return result;
-  },
-
-  async login(identifierOrEmail: string, password: string): Promise<{ user: User; token: string }> {
-    const rawInput = (identifierOrEmail || '').trim();
-    const cleanPassword = password.trim();
-    if (!rawInput || !cleanPassword) throw new Error('Por favor, preenche todos os campos.');
-
-    const normalizedIdentifier = rawInput.toLowerCase();
-
-    const result = await serverApi<{ user: User; token: string }>('/api/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        identifier: normalizedIdentifier,
-        username: normalizedIdentifier,
-        email: normalizedIdentifier,
-        password: cleanPassword,
-      }),
-    });
-    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(result.user));
-    this.setToken(result.token);
-    return result;
-  },
-
-  async resetPassword(_email: string, _password: string): Promise<{ user: User; token: string }> {
-    throw new Error('A recuperação autónoma de palavra-passe foi desativada por segurança. Contacta a professora de TIC para redefinir a tua palavra-passe.');
-  },
-
-  async logout(): Promise<void> {
-    try { await serverApi('/api/auth/logout', { method: 'POST' }); } catch { /* local logout */ }
-    this.removeToken();
-  },
-
-  /**
-   * Get current user details and progress directly from Cloud Firestore or server
-   */
-  async getMe(): Promise<{ user: User; progress: ActivityProgress[]; achievements: UserAchievement[]; pointsHistory: PointTransaction[]; dailyTips?: any[] }> {
-    const token = this.getToken();
-    if (!token) throw new Error('Sessão não encontrada.');
-    try {
-      const result = await serverApi<{ user: User; progress: ActivityProgress[]; achievements: UserAchievement[]; pointsHistory: PointTransaction[]; dailyTips?: any[] }>('/api/me/data');
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(result.user));
-      localStorage.setItem(PROGRESS_STORAGE_KEY + result.user.id, JSON.stringify(result.progress || []));
-      localStorage.setItem(ACHIEVEMENTS_STORAGE_KEY + result.user.id, JSON.stringify(result.achievements || []));
-      return result;
-    } catch (serverErr: any) {
-      if (serverErr?.message?.includes('Sessão') || serverErr?.message?.includes('expirada') || serverErr?.message?.includes('Credenciais') || serverErr?.message?.includes('401')) {
-        this.removeToken();
-        throw serverErr;
+      if (res?.user) {
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(res.user));
+        if (res.progress) localStorage.setItem(PROGRESS_STORAGE_KEY + res.user.id, JSON.stringify(res.progress));
+        if (res.achievements) localStorage.setItem(ACHIEVEMENTS_STORAGE_KEY + res.user.id, JSON.stringify(res.achievements));
+        if (res.pointsHistory) localStorage.setItem(POINTS_STORAGE_KEY + res.user.id, JSON.stringify(res.pointsHistory));
       }
-      const current = this.getCurrentSessionUser();
-      if (!current) throw serverErr;
-      const cachedProgress = JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY + current.id) || '[]');
-      const cachedAch = JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + current.id) || '[]');
-      return { user: current, progress: cachedProgress, achievements: cachedAch, pointsHistory: [] };
+      return res;
+    } catch (err) {
+      if (current) {
+        const cachedProgress = JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY + current.id) || '[]');
+        const cachedAchievements = JSON.parse(localStorage.getItem(ACHIEVEMENTS_STORAGE_KEY + current.id) || '[]');
+        const cachedPoints = JSON.parse(localStorage.getItem(POINTS_STORAGE_KEY + current.id) || '[]');
+        return {
+          user: current,
+          progress: cachedProgress,
+          achievements: cachedAchievements,
+          pointsHistory: cachedPoints,
+          dailyTipsCount: 0,
+        };
+      }
+      throw err;
     }
   },
-  async updateUserAvatar(userId: string, newAvatar: AvatarConfig): Promise<void> {
+
+  async updateAvatar(newAvatar: AvatarConfig): Promise<void> {
     const current = this.getCurrentSessionUser();
-    if (!current || current.id !== userId) throw new Error('Sessão inválida.');
-    const result = await serverApi<{ user: User }>('/api/me/profile', { method: 'PATCH', body: JSON.stringify({ avatar: newAvatar }) });
+    if (!current) return;
+    const result = await serverApi<{ user: User }>('/api/user/profile', {
+      method: 'POST',
+      body: JSON.stringify({ avatar: newAvatar }),
+    });
     if (result?.user) {
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(result.user));
     }
   },
+
+  async updateUserAvatar(userIdOrAvatar: any, maybeAvatar?: any): Promise<void> {
+    const avatar = maybeAvatar || userIdOrAvatar;
+    return this.updateAvatar(avatar);
+  },
+
   async updateLanguage(newLang: Language): Promise<void> {
     const current = this.getCurrentSessionUser();
     if (!current) return;
-    const result = await serverApi<{ user: User }>('/api/me/profile', {
-      method: 'PATCH',
+    const result = await serverApi<{ user: User }>('/api/user/profile', {
+      method: 'POST',
       body: JSON.stringify({ language: newLang }),
     });
     if (result?.user) {
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(result.user));
     }
   },
+
+  async changePassword(currentPassword: string, newPassword: string): Promise<{ success: boolean; message: string }> {
+    return await serverApi('/api/user/change-password', {
+      method: 'POST',
+      body: JSON.stringify({ currentPassword, newPassword }),
+    });
+  },
+
   async saveProgress(payload: {
-    activityId: string; activityType: 'module' | 'quiz' | 'challenge'; themeId: string; status?: 'completed' | 'in_progress'; score?: number; maxScore?: number; percentage?: number; activityTitle?: string; quizAnswers?: Record<string, string | number> | (string | number)[];
-  }): Promise<{ success: boolean; record: ActivityProgress; userPoints: number; lastActivity: User['lastActivity']; achievements: UserAchievement[]; earnedPoints?: number; prevBestScore?: number; newBestScore?: number; awardedXp?: number; attemptScore?: number }> {
+    activityId: string;
+    activityType: 'module' | 'quiz' | 'challenge';
+    themeId: string;
+    status?: 'completed' | 'in_progress';
+    score?: number;
+    maxScore?: number;
+    percentage?: number;
+    activityTitle?: string;
+    quizAnswers?: Record<string, string | number> | (string | number)[];
+    submissionData?: any;
+    answers?: any;
+    puzzleOrder?: number[];
+    completedSteps?: number[];
+  }): Promise<{
+    success: boolean;
+    record: ActivityProgress;
+    userPoints: number;
+    lastActivity: User['lastActivity'];
+    achievements: UserAchievement[];
+    earnedPoints?: number;
+  }> {
     const current = this.getCurrentSessionUser();
     if (!current) throw new Error('Inicia sessão para guardar o progresso.');
     if (!payload.activityId || !payload.themeId) throw new Error('Identificador da atividade em falta.');
     if (!isValidActivityId(payload.activityId)) throw new Error(`Atividade inválida ou não reconhecida no currículo: ${payload.activityId}`);
 
-    // Authoritative server-side save
-    const result = await serverApi<any>('/api/progress/save', { method: 'POST', body: JSON.stringify(payload) });
+    const result = await serverApi<any>('/api/progress/save', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+
     if (result.user) localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(result.user));
     if (result.record) {
       const cached = JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY + current.id) || '[]') as ActivityProgress[];
       localStorage.setItem(PROGRESS_STORAGE_KEY + current.id, JSON.stringify([...cached.filter(p => p.activityId !== payload.activityId), result.record]));
     }
     if (result.achievements) localStorage.setItem(ACHIEVEMENTS_STORAGE_KEY + current.id, JSON.stringify(result.achievements));
+
     return {
       success: true,
       record: result.record,
       userPoints: Number(result.userPoints ?? result.user?.points ?? current.points ?? 0),
       lastActivity: result.lastActivity ?? result.user?.lastActivity,
       achievements: result.achievements || [],
-      earnedPoints: result.earnedPoints ?? result.pointsEarned ?? 0,
-      prevBestScore: result.prevBestScore,
-      newBestScore: result.newBestScore,
-      awardedXp: result.awardedXp,
-      attemptScore: result.attemptScore,
+      earnedPoints: result.earnedXp ?? result.earnedPoints ?? 0,
     };
   },
-  async recordDailyTipRead(tipTitle: string, dateStr?: string): Promise<{ success: boolean; user: User | null; userPoints: number; earnedPoints: number; achievements: UserAchievement[] }> {
+
+  async recordDailyTipRead(tipTitle?: string, dateStr?: string): Promise<{ success: boolean; user: User | null; userPoints: number; earnedPoints: number; achievements: UserAchievement[] }> {
     const current = this.getCurrentSessionUser();
     if (!current) return { success: true, user: null, userPoints: 0, earnedPoints: 0, achievements: [] };
-    const targetDate = dateStr || new Date().toISOString().split('T')[0];
-    const result = await serverApi<any>('/api/daily-tip/read', { method: 'POST', body: JSON.stringify({ tipTitle, dateStr: targetDate }) });
+    const result = await serverApi<any>('/api/daily-tip/read', {
+      method: 'POST',
+      body: JSON.stringify({ tipTitle, dateStr }),
+    });
     if (result.user) localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(result.user));
     if (result.achievements) localStorage.setItem(ACHIEVEMENTS_STORAGE_KEY + current.id, JSON.stringify(result.achievements));
     return {
@@ -595,12 +420,15 @@ export const api = {
       achievements: result.achievements || [],
     };
   },
+
   async recordDailyTipBonus(tipTitle: string, bonusPoints = 30, dateStr?: string, answerDetails?: { selectedOptionId: string; isCorrect: boolean }): Promise<{ success: boolean; user: User | null; userPoints: number; earnedPoints: number; readingPoints: number; answerPoints: number; achievements: UserAchievement[] }> {
     const current = this.getCurrentSessionUser();
     if (!current) return { success: true, user: null, userPoints: 0, earnedPoints: 0, readingPoints: 0, answerPoints: 0, achievements: [] };
     if (!answerDetails?.selectedOptionId) throw new Error('Resposta da Dica do Dia não fornecida.');
-    const targetDate = dateStr || new Date().toISOString().split('T')[0];
-    const result = await serverApi<any>('/api/daily-tip/answer', { method: 'POST', body: JSON.stringify({ tipTitle, bonusPoints, dateStr: targetDate, selectedOptionId: answerDetails.selectedOptionId }) });
+    const result = await serverApi<any>('/api/daily-tip/answer', {
+      method: 'POST',
+      body: JSON.stringify({ tipTitle, bonusPoints, dateStr, selectedOptionId: answerDetails.selectedOptionId }),
+    });
     if (result.user) localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(result.user));
     if (result.achievements) localStorage.setItem(ACHIEVEMENTS_STORAGE_KEY + current.id, JSON.stringify(result.achievements));
     return {
@@ -613,199 +441,57 @@ export const api = {
       achievements: result.achievements || [],
     };
   },
+
   async getDailyTipStatus(userId: string, dateStr: string): Promise<{ read: boolean; answered: boolean; selectedOptionId: string; isCorrect: boolean; pointsEarned: number; readPoints: number; answerPoints: number; timestamp: string } | null> {
     const current = this.getCurrentSessionUser();
     if (!current || current.id !== userId || !dateStr) return null;
     try {
-      return await serverApi<any>(`/api/daily-tip/status?date=${encodeURIComponent(dateStr)}`);
+      const res = await serverApi<any>(`/api/daily-tip/status?date=${encodeURIComponent(dateStr)}`);
+      return res?.status || null;
     } catch {
       return null;
     }
   },
-  async getTurmaRankings(userTurma?: string, isAdminUser = false): Promise<TurmaRanking[]> {
-    const defaultTurmas = getTurmasList();
-    const studentMap = new Map<string, { id: string; publicId: string; turma: string; points: number; activitiesCount: number; badgeCount: number; avatar?: AvatarConfig }>();
 
+  async getTurmaRankings(_userTurma?: string, _isAdminUser = false): Promise<TurmaRanking[]> {
     try {
-      const q = query(collection(db, 'publicProfiles'), limit(500));
-      const snap = await getDocs(q);
-
-      const rawUser = typeof localStorage !== 'undefined' ? localStorage.getItem(CURRENT_USER_KEY) : null;
-      let currentUserId: string | null = null;
-      let currentUserPoints: number | null = null;
-      if (rawUser) {
-        try {
-          const parsed = JSON.parse(rawUser);
-          currentUserId = parsed.id;
-          currentUserPoints = typeof parsed.points === 'number' ? parsed.points : null;
-        } catch {}
+      const res = await serverApi<{ rankings: TurmaRanking[] }>('/api/rankings/turmas');
+      if (res?.rankings && Array.isArray(res.rankings)) {
+        return res.rankings;
       }
-
-      snap.forEach((docSnap) => {
-        const d = docSnap.data();
-        if (d.role === 'admin' || d.role === 'teacher') return;
-        const studentTurma = d.turma ? String(d.turma).trim() : '';
-        if (studentTurma) {
-          // Strictly enforce official points: clamp points to pedagogical curriculum ceiling (3200 XP)
-          // and use authoritatively verified points for current active student session
-          let finalPoints = typeof d.points === 'number' ? d.points : (Number(d.points) || 0);
-          finalPoints = Math.min(3200, Math.max(0, finalPoints));
-
-          if (docSnap.id === currentUserId && currentUserPoints !== null) {
-            finalPoints = currentUserPoints;
-          }
-
-          studentMap.set(docSnap.id, {
-            id: docSnap.id,
-            publicId: d.publicId || 'Estudante_TIC',
-            turma: studentTurma,
-            points: finalPoints,
-            activitiesCount: typeof d.completedActivities === 'number' ? d.completedActivities : (typeof d.activitiesCount === 'number' ? d.activitiesCount : 0),
-            badgeCount: typeof d.badgeCount === 'number' ? d.badgeCount : 0,
-            avatar: d.avatar,
-          });
-        }
-      });
     } catch (err) {
-      console.warn('Firestore notice in getTurmaRankings:', err);
+      console.warn('Could not fetch turma rankings from server:', err);
     }
-
-    const allStudents = Array.from(studentMap.values());
-    const turmaSet = new Set<string>(defaultTurmas);
-    allStudents.forEach((u) => {
-      if (u.turma) {
-        turmaSet.add(u.turma.trim());
-      }
-    });
-
-    const allTurmaNames = Array.from(turmaSet);
-
-    const result: TurmaRanking[] = allTurmaNames.map((turmaName) => {
-      const turmaStudents = allStudents.filter(
-        (u) => u.turma.toLowerCase().trim() === turmaName.toLowerCase().trim()
-      );
-      const totalPoints = turmaStudents.reduce((sum, u) => sum + (u.points || 0), 0);
-      const studentCount = turmaStudents.length;
-      const avgPoints = studentCount > 0 ? Math.round(totalPoints / studentCount) : 0;
-      const totalCompletedActivities = turmaStudents.reduce((sum, u) => sum + (u.activitiesCount || 0), 0);
-
-      const allStudentsInTurma = [...turmaStudents]
-        .sort((a, b) => (b.points || 0) - (a.points || 0))
-        .map((s) => ({
-          publicId: s.publicId || 'Estudante_TIC',
-          points: s.points || 0,
-          activitiesCount: s.activitiesCount || 0,
-          badgeCount: s.badgeCount || 0,
-          avatar: s.avatar,
-        }));
-
-      const topStudents = allStudentsInTurma.slice(0, 3).map((s) => ({
-        publicId: s.publicId,
-        points: s.points,
-        avatar: s.avatar,
-      }));
-
-      // Privacy: Only show individual student breakdowns if user is admin or it is their own turma
-      const isAllowedToSeeStudents = isAdminUser || (!!userTurma && turmaName.toLowerCase().trim() === userTurma.toLowerCase().trim());
-
-      return {
-        turma: turmaName,
-        totalPoints,
-        avgPoints,
-        studentCount,
-        completedActivities: totalCompletedActivities,
-        topBadge:
-          studentCount === 0
-            ? '⭐ Sem Alunos'
-            : avgPoints >= 100
-            ? '🥇 Turma Ouro'
-            : avgPoints >= 50
-            ? '🥈 Turma Prata'
-            : avgPoints > 0
-            ? '🥉 Turma Bronze'
-            : '⭐ Estreante',
-        topStudents: isAllowedToSeeStudents ? topStudents : [],
-        allStudents: isAllowedToSeeStudents ? allStudentsInTurma : [],
-      };
-    });
-
-    result.sort((a, b) => b.totalPoints - a.totalPoints || b.avgPoints - a.avgPoints || a.turma.localeCompare(b.turma));
-    return result;
+    return [];
   },
 
-  /**
-   * Get Individual Student Rankings (using safe public Nicknames)
-   * Excludes all Admin / Teacher accounts.
-   * For students: strictly limits results to students of their own class (userTurma).
-   */
   async getStudentRankings(
     currentUserId?: string,
     userTurma?: string,
-    isAdminUser = false
+    _isAdminUser = false
   ): Promise<StudentRanking[]> {
-    const studentList: { id: string; publicId: string; turma: string; points: number; activitiesCount: number; badgeCount: number; avatar?: AvatarConfig }[] = [];
-
     try {
-      const q = query(collection(db, 'publicProfiles'), limit(500));
-      const snap = await getDocs(q);
-
-      snap.forEach((docSnap) => {
-        const d = docSnap.data();
-        if (d.role === 'admin' || d.role === 'teacher') return;
-        const studentTurma = d.turma ? String(d.turma).trim() : '5.º A';
-
-        // Non-admin students only receive rankings of students in their own class
-        if (!isAdminUser && userTurma) {
-          if (studentTurma.toLowerCase().trim() !== userTurma.toLowerCase().trim()) {
-            return;
-          }
-        }
-
-        studentList.push({
-          id: docSnap.id,
-          publicId: d.publicId || 'Estudante_TIC',
-          turma: studentTurma,
-          points: typeof d.points === 'number' ? d.points : (Number(d.points) || 0),
-          activitiesCount: typeof d.completedActivities === 'number' ? d.completedActivities : (typeof d.activitiesCount === 'number' ? d.activitiesCount : 0),
-          badgeCount: typeof d.badgeCount === 'number' ? d.badgeCount : 0,
-          avatar: d.avatar,
-        });
-      });
+      const queryParam = userTurma ? `?turma=${encodeURIComponent(userTurma)}` : '';
+      const res = await serverApi<{ rankings: StudentRanking[] }>(`/api/rankings/students${queryParam}`);
+      if (res?.rankings && Array.isArray(res.rankings)) {
+        return res.rankings.map((r, idx) => ({
+          ...r,
+          position: idx + 1,
+          isCurrentUser: r.id === currentUserId,
+        }));
+      }
     } catch (err) {
-      console.warn('Firestore student rankings query notice:', err);
+      console.warn('Could not fetch student rankings from server:', err);
     }
-
-    studentList.sort((a, b) => (b.points || 0) - (a.points || 0));
-
-    return studentList.map((u, index) => ({
-      position: index + 1,
-      id: u.id,
-      publicId: u.publicId || 'Estudante_TIC',
-      turma: u.turma || '5.º A',
-      points: u.points || 0,
-      activitiesCount: u.activitiesCount || 0,
-      badgeCount: u.badgeCount || 0,
-      isCurrentUser: u.id === currentUserId,
-      avatar: u.avatar,
-    }));
+    return [];
   },
 
-  /**
-   * Fetch progress records for a single student from Server (Admin/Teacher only)
-   */
   async getStudentProgress(studentId: string): Promise<ActivityProgress[]> {
     if (!studentId) return [];
     try {
       const result = await serverApi<{ progress: ActivityProgress[] }>(`/api/teacher/students/${encodeURIComponent(studentId)}/progress`);
-      if (result && Array.isArray(result.progress)) {
-        return result.progress;
-      }
-      return [];
-    } catch (err: any) {
-      if (err?.message?.includes('Sessão') || err?.message?.includes('autorizado') || err?.message?.includes('professora')) {
-        throw err;
-      }
-      console.warn('Could not fetch student progress from server:', err);
+      return result?.progress || [];
+    } catch {
       return [];
     }
   },
@@ -813,43 +499,22 @@ export const api = {
   async getStudentsProgressBatch(studentIds: string[]): Promise<Record<string, ActivityProgress[]>> {
     const result: Record<string, ActivityProgress[]> = {};
     if (!studentIds || studentIds.length === 0) return result;
-
-    // First attempt server-side batch endpoint
     try {
       const serverRes = await serverApi<{ progressMap: Record<string, ActivityProgress[]> }>('/api/teacher/students/progress-batch', {
         method: 'POST',
         body: JSON.stringify({ studentIds }),
       });
-      if (serverRes && serverRes.progressMap && Object.keys(serverRes.progressMap).length > 0) {
-        return serverRes.progressMap;
-      }
-    } catch (err) {
-      console.warn('Batch progress endpoint notice, attempting individual progress fetch:', err);
+      return serverRes?.progressMap || {};
+    } catch {
+      return {};
     }
-
-    // Parallel fetch with authenticated teacher endpoint
-    await Promise.allSettled(
-      studentIds.map(async (id) => {
-        try {
-          const list = await this.getStudentProgress(id);
-          result[id] = list;
-        } catch {
-          result[id] = [];
-        }
-      })
-    );
-
-    return result;
   },
 
-  /**
-   * Fetch all registered students from Server (Teacher Area only)
-   */
   async getAllStudentsForAdmin(): Promise<User[]> {
     try {
       const result = await serverApi<{ students: User[] }>('/api/teacher/students');
       if (result?.students && Array.isArray(result.students)) {
-        return result.students.sort((a,b) => (a.turma || '5.º A').localeCompare(b.turma || '5.º A') || (b.points || 0) - (a.points || 0));
+        return result.students.sort((a, b) => (a.turma || '5.º A').localeCompare(b.turma || '5.º A') || (b.points || 0) - (a.points || 0));
       }
       return [];
     } catch (err: any) {
@@ -857,10 +522,21 @@ export const api = {
       throw err;
     }
   },
-  async adminUpdateStudent(studentId: string, studentEmail: string, updates: { newPassword?: string; newTurma?: string; newName?: string }): Promise<{ success: boolean; message: string }> {
+
+  async adminUpdateStudent(
+    studentId: string,
+    emailOrUpdates: any,
+    maybeUpdates?: any
+  ): Promise<{ success: boolean; message: string }> {
     if (!studentId) throw new Error('Identificador do aluno não fornecido.');
-    if (updates.newPassword && updates.newPassword.length < 8) throw new Error('A palavra-passe deve ter pelo menos 8 caracteres.');
-    return await serverApi(`/api/teacher/students/${encodeURIComponent(studentId)}`, { method: 'PATCH', body: JSON.stringify({ email: studentEmail, ...updates }) });
+    const updates = maybeUpdates !== undefined ? maybeUpdates : emailOrUpdates;
+    if (updates?.newPassword && updates.newPassword.length < 8) {
+      throw new Error('A palavra-passe deve ter pelo menos 8 caracteres.');
+    }
+    return await serverApi(`/api/teacher/students/${encodeURIComponent(studentId)}`, {
+      method: 'PATCH',
+      body: JSON.stringify(updates),
+    });
   },
 
   async parseStudentsFile(
@@ -869,35 +545,66 @@ export const api = {
     defaultTurma?: string
   ): Promise<{
     success: boolean;
-    fileName: string;
-    filesProcessed: string[];
-    totalFound: number;
-    students: Array<{ number: number; name: string; turma: string; sourceFile?: string }>;
+    count: number;
+    rawData: Array<{ name: string; turma: string }>;
+    students: Array<{ number?: number; name: string; turma?: string; sourceFile?: string }>;
+    filesProcessed?: string[];
   }> {
-    return await serverApi('/api/teacher/students/parse-file', {
+    const res = await serverApi<any>('/api/teacher/parse-file', {
       method: 'POST',
-      body: JSON.stringify({ fileBase64, fileName, defaultTurma }),
+      body: JSON.stringify({ base64: fileBase64, filename: fileName, defaultTurma }),
     });
+    const rawData = res.rawData || res.students || [];
+    return {
+      success: true,
+      count: res.count || rawData.length,
+      rawData: rawData,
+      students: (res.students || rawData).map((s: any, idx: number) => ({
+        number: s.number || idx + 1,
+        name: (s.name || '').trim(),
+        turma: s.turma || defaultTurma || '5.º A',
+        sourceFile: s.sourceFile || fileName,
+      })),
+      filesProcessed: res.filesProcessed || [fileName],
+    };
   },
 
   async importStudentsBatch(
-    students: Array<{ name: string; turma?: string; number?: number; username?: string; password?: string }>,
+    students: Array<{ name: string; turma?: string }>,
     defaultTurma = '5.º A',
-    wipeAllStudentsFirst = false
+    wipeFirst = false
   ): Promise<{
     success: boolean;
-    wipedBefore?: boolean;
-    wipedStats?: { deletedCount: number; purgedResidualsCount: number };
-    summary: { totalInFile: number; createdCount: number; updatedCount?: number; existedCount: number; errorsCount: number };
+    createdCount: number;
+    existedCount: number;
     created: Array<{ id: string; name: string; turma: string; username: string; password: string }>;
-    updated?: Array<{ id: string; oldName?: string; name: string; turma: string; username: string }>;
-    existed: Array<{ name: string; turma: string; username: string; initialPassword?: string }>;
+    existed: Array<{ id: string; name: string; turma: string; username: string }>;
+    updated?: Array<any>;
     errors: Array<{ name?: string; turma?: string; error: string }>;
+    summary?: { created: number; existed: number; errors: number };
+    wipedBefore?: boolean;
+    wipedStats?: any;
   }> {
-    return await serverApi('/api/teacher/students/import-batch', {
+    const res = await serverApi<any>('/api/teacher/import-students', {
       method: 'POST',
-      body: JSON.stringify({ students, defaultTurma, wipeAllStudentsFirst }),
+      body: JSON.stringify({ students, defaultTurma, wipeFirst }),
     });
+    return {
+      success: true,
+      createdCount: res.createdCount ?? (res.created?.length || 0),
+      existedCount: res.existedCount ?? (res.existed?.length || 0),
+      created: res.created || [],
+      existed: res.existed || [],
+      updated: res.updated || [],
+      errors: res.errors || [],
+      summary: res.summary || {
+        created: res.created?.length || 0,
+        existed: res.existed?.length || 0,
+        errors: res.errors?.length || 0,
+      },
+      wipedBefore: res.wipedBefore,
+      wipedStats: res.wipedStats,
+    };
   },
 
   async resetStudentPassword(userId: string): Promise<{ success: boolean; newPassword: string; message: string }> {
@@ -905,260 +612,165 @@ export const api = {
       method: 'POST',
     });
   },
-  async adminDeleteStudent(studentId: string, studentEmail: string): Promise<{ success: boolean; message: string }> {
+
+  async adminDeleteStudent(studentId: string, _email?: string): Promise<{ success: boolean; message: string }> {
     if (!studentId) throw new Error('Identificador do aluno não fornecido.');
-    if (isUserAdmin(studentEmail)) throw new Error('Não é permitido eliminar a conta da Professora / Administrador.');
-    const result = await serverApi<{ success: boolean; message: string }>(`/api/teacher/students/${encodeURIComponent(studentId)}`, { method: 'DELETE' });
+    const result = await serverApi<{ success: boolean; message: string }>(`/api/teacher/students/${encodeURIComponent(studentId)}`, {
+      method: 'DELETE',
+    });
     localStorage.removeItem(PROGRESS_STORAGE_KEY + studentId);
     localStorage.removeItem(ACHIEVEMENTS_STORAGE_KEY + studentId);
     localStorage.removeItem(POINTS_STORAGE_KEY + studentId);
     return result;
   },
-  async adminDeleteStudents(studentIdsOrEmails: string[]): Promise<{ success: boolean; deletedCount: number; message: string }> {
-    if (!studentIdsOrEmails?.length) return { success: true, deletedCount: 0, message: 'Nenhum aluno selecionado.' };
-    return await serverApi('/api/teacher/students/bulk-delete', { method: 'POST', body: JSON.stringify({ students: studentIdsOrEmails }) });
+
+  async adminDeleteStudents(studentIds: string[]): Promise<{ success: boolean; message: string }> {
+    if (!studentIds?.length) return { success: true, message: 'Nenhum aluno selecionado.' };
+    return await serverApi('/api/teacher/students-bulk', {
+      method: 'DELETE',
+      body: JSON.stringify({ studentIds }),
+    });
   },
-  async adminDeleteStudentsByTurmas(turmaNames: string[]): Promise<{ success: boolean; deletedCount: number; message: string }> {
-    if (!turmaNames?.length) return { success: true, deletedCount: 0, message: 'Nenhuma turma selecionada.' };
-    return await serverApi('/api/teacher/students/delete-by-turmas', { method: 'POST', body: JSON.stringify({ turmas: turmaNames }) });
+
+  async adminCreateTurma(turmaName: string): Promise<{ success: boolean; message: string; turmas: string[] }> {
+    return await serverApi('/api/teacher/turmas', {
+      method: 'POST',
+      body: JSON.stringify({ name: turmaName }),
+    });
   },
-  async adminDeleteAllStudents(): Promise<{ success: boolean; deletedCount: number; message: string }> {
-    return await serverApi('/api/teacher/students/delete-all', { method: 'POST' });
+
+  async adminDeleteStudentsByTurmas(turmas: string[]): Promise<{ success: boolean; message: string }> {
+    return await serverApi('/api/teacher/students-by-turmas', {
+      method: 'DELETE',
+      body: JSON.stringify({ turmas }),
+    });
   },
-  async adminPurgeResiduals(): Promise<{ success: boolean; deletedCount: number; purgedResidualsCount: number; message: string }> {
-    return await serverApi('/api/teacher/students/purge-residuals', { method: 'POST' });
+
+  async adminDeleteTurmas(turmas: string[], deleteStudents = true): Promise<{ success: boolean; message: string; turmas: string[] }> {
+    return await serverApi('/api/teacher/turmas', {
+      method: 'DELETE',
+      body: JSON.stringify({ turmas, deleteStudents }),
+    });
   },
-  async adminCreateTurma(turmaName: string): Promise<{ success: boolean; turmas: string[]; message: string }> {
-    const trimmed = (turmaName || '').trim(); if (!trimmed) throw new Error('Nome da turma inválido.');
-    return await serverApi('/api/teacher/turmas', { method: 'POST', body: JSON.stringify({ turmaName: trimmed }) });
+
+  async adminDeleteAllStudents(): Promise<{ success: boolean; message: string }> {
+    return this.adminPurgeAllData();
   },
-  async adminDeleteTurmas(turmaNames: string[], deleteStudentsToo = false): Promise<{ success: boolean; turmas: string[]; deletedStudentsCount: number; message: string }> {
-    if (!turmaNames?.length) throw new Error('Nenhuma turma selecionada para eliminar.');
-    return await serverApi('/api/teacher/turmas/delete', { method: 'POST', body: JSON.stringify({ turmas: turmaNames, deleteStudentsToo }) });
+
+  async adminPurgeAllData(): Promise<{ success: boolean; message: string }> {
+    return await serverApi('/api/teacher/purge-all-data', {
+      method: 'DELETE',
+    });
   },
+
   async getThemeVisibility(): Promise<ThemeVisibilityMap> {
-    let currentMap: ThemeVisibilityMap = { ...DEFAULT_THEME_VISIBILITY };
     try {
-      const local = localStorage.getItem(THEME_VISIBILITY_KEY);
-      if (local) {
-        const parsed = JSON.parse(local);
-        if (typeof parsed === 'object' && parsed !== null) {
-          currentMap = { ...DEFAULT_THEME_VISIBILITY, ...parsed };
-        }
+      const res = await serverApi<{ visibility: ThemeVisibilityMap }>('/api/config/theme-visibility');
+      if (res?.visibility) {
+        localStorage.setItem(THEME_VISIBILITY_KEY, JSON.stringify(res.visibility));
+        return { ...DEFAULT_THEME_VISIBILITY, ...res.visibility };
       }
-    } catch {
-      // ignore
+    } catch {}
+    const local = localStorage.getItem(THEME_VISIBILITY_KEY);
+    if (local) {
+      try { return { ...DEFAULT_THEME_VISIBILITY, ...JSON.parse(local) }; } catch {}
     }
-
-    try {
-      const snap = await getDoc(doc(db, 'config', 'theme_visibility'));
-      if (snap.exists()) {
-        const data = snap.data();
-        if (data?.visibility && typeof data.visibility === 'object') {
-          currentMap = { ...DEFAULT_THEME_VISIBILITY, ...data.visibility };
-          localStorage.setItem(THEME_VISIBILITY_KEY, JSON.stringify(currentMap));
-        }
-      }
-    } catch (err) {
-      console.warn('Could not fetch theme_visibility from Firestore:', err);
-    }
-
-    return currentMap;
+    return { ...DEFAULT_THEME_VISIBILITY };
   },
 
-  /**
-   * Save theme visibility map (Admins/Teachers only)
-   */
-  async saveThemeVisibility(newVisibility: ThemeVisibilityMap): Promise<{ success: boolean; visibility: ThemeVisibilityMap; message: string }> {
-    const merged: ThemeVisibilityMap = { ...DEFAULT_THEME_VISIBILITY, ...newVisibility };
+  async saveThemeVisibility(newVisibility: ThemeVisibilityMap): Promise<{ success: boolean; visibility: ThemeVisibilityMap }> {
+    const merged = { ...DEFAULT_THEME_VISIBILITY, ...newVisibility };
     localStorage.setItem(THEME_VISIBILITY_KEY, JSON.stringify(merged));
     window.dispatchEvent(new CustomEvent('tic_theme_visibility_updated', { detail: merged }));
-    return await serverApi('/api/teacher/config/theme-visibility', { method: 'PUT', body: JSON.stringify({ visibility: merged }) });
+    return await serverApi('/api/config/theme-visibility', {
+      method: 'POST',
+      body: JSON.stringify({ visibility: merged }),
+    });
   },
-  async toggleThemeVisibility(
-    themeId: string,
-    forcedState?: boolean
-  ): Promise<{ success: boolean; visibility: ThemeVisibilityMap }> {
+
+  async toggleThemeVisibility(themeId: string, forcedState?: boolean): Promise<{ success: boolean; visibility: ThemeVisibilityMap }> {
     const current = await this.getThemeVisibility();
-    const isCurrentlyVisible = current[themeId] !== false;
-    const nextState = forcedState !== undefined ? forcedState : !isCurrentlyVisible;
-    const updated: ThemeVisibilityMap = {
-      ...current,
-      [themeId]: nextState,
-    };
+    const nextState = forcedState !== undefined ? forcedState : !(current[themeId] !== false);
+    const updated = { ...current, [themeId]: nextState };
     await this.saveThemeVisibility(updated);
     return { success: true, visibility: updated };
   },
 
-  /**
-   * Subscribe to real-time theme visibility changes from Firestore
-   */
   onThemeVisibilityChange(callback: (visibility: ThemeVisibilityMap) => void): () => void {
-    try {
-      const local = localStorage.getItem(THEME_VISIBILITY_KEY);
-      if (local) {
-        callback({ ...DEFAULT_THEME_VISIBILITY, ...JSON.parse(local) });
-      } else {
-        callback({ ...DEFAULT_THEME_VISIBILITY });
-      }
-    } catch {
-      callback({ ...DEFAULT_THEME_VISIBILITY });
-    }
-
-    const handleLocalUpdate = (e: any) => {
-      if (e?.detail) {
-        callback(e.detail);
-      }
-    };
+    const handleLocalUpdate = (e: any) => { if (e?.detail) callback(e.detail); };
     window.addEventListener('tic_theme_visibility_updated', handleLocalUpdate);
-
     let unsubscribeFirestore = () => {};
     try {
-      unsubscribeFirestore = onSnapshot(
-        doc(db, 'config', 'theme_visibility'),
-        (snapshot) => {
-          if (snapshot.exists()) {
-            const data = snapshot.data();
-            if (data?.visibility) {
-              const merged = { ...DEFAULT_THEME_VISIBILITY, ...data.visibility };
-              try {
-                localStorage.setItem(THEME_VISIBILITY_KEY, JSON.stringify(merged));
-              } catch {}
-              callback(merged);
-            }
-          }
-        },
-        (error) => {
-          console.warn('Firestore theme_visibility snapshot notice:', error);
+      unsubscribeFirestore = onSnapshot(doc(db, 'config', 'theme_visibility'), (snapshot) => {
+        if (snapshot.exists() && snapshot.data()?.visibility) {
+          const merged = { ...DEFAULT_THEME_VISIBILITY, ...snapshot.data()?.visibility };
+          localStorage.setItem(THEME_VISIBILITY_KEY, JSON.stringify(merged));
+          callback(merged);
         }
-      );
-    } catch (err) {
-      console.warn('Failed to attach theme_visibility snapshot listener:', err);
-    }
-
+      }, () => {});
+    } catch {}
     return () => {
       window.removeEventListener('tic_theme_visibility_updated', handleLocalUpdate);
       unsubscribeFirestore();
     };
   },
 
-  /**
-   * Get current quiz visibility map (Firestore + LocalStorage cache)
-   */
   async getQuizVisibility(): Promise<QuizVisibilityMap> {
-    let currentMap: QuizVisibilityMap = { ...DEFAULT_QUIZ_VISIBILITY };
     try {
-      const local = localStorage.getItem(QUIZ_VISIBILITY_KEY);
-      if (local) {
-        const parsed = JSON.parse(local);
-        if (typeof parsed === 'object' && parsed !== null) {
-          currentMap = { ...DEFAULT_QUIZ_VISIBILITY, ...parsed };
-        }
+      const res = await serverApi<{ visibility: QuizVisibilityMap }>('/api/config/quiz-visibility');
+      if (res?.visibility) {
+        localStorage.setItem(QUIZ_VISIBILITY_KEY, JSON.stringify(res.visibility));
+        return { ...DEFAULT_QUIZ_VISIBILITY, ...res.visibility };
       }
-    } catch {
-      // ignore
+    } catch {}
+    const local = localStorage.getItem(QUIZ_VISIBILITY_KEY);
+    if (local) {
+      try { return { ...DEFAULT_QUIZ_VISIBILITY, ...JSON.parse(local) }; } catch {}
     }
-
-    try {
-      const snap = await getDoc(doc(db, 'config', 'quiz_visibility'));
-      if (snap.exists()) {
-        const data = snap.data();
-        if (data?.visibility && typeof data.visibility === 'object') {
-          currentMap = { ...DEFAULT_QUIZ_VISIBILITY, ...data.visibility };
-          localStorage.setItem(QUIZ_VISIBILITY_KEY, JSON.stringify(currentMap));
-        }
-      }
-    } catch (err) {
-      console.warn('Could not fetch quiz_visibility from Firestore:', err);
-    }
-
-    return currentMap;
+    return { ...DEFAULT_QUIZ_VISIBILITY };
   },
 
-  /**
-   * Save quiz visibility map (Admins/Teachers only)
-   */
-  async saveQuizVisibility(newVisibility: QuizVisibilityMap): Promise<{ success: boolean; visibility: QuizVisibilityMap; message: string }> {
-    const merged: QuizVisibilityMap = { ...DEFAULT_QUIZ_VISIBILITY, ...newVisibility };
+  async saveQuizVisibility(newVisibility: QuizVisibilityMap): Promise<{ success: boolean; visibility: QuizVisibilityMap }> {
+    const merged = { ...DEFAULT_QUIZ_VISIBILITY, ...newVisibility };
     localStorage.setItem(QUIZ_VISIBILITY_KEY, JSON.stringify(merged));
     window.dispatchEvent(new CustomEvent('tic_quiz_visibility_updated', { detail: merged }));
-    return await serverApi('/api/teacher/config/quiz-visibility', { method: 'PUT', body: JSON.stringify({ visibility: merged }) });
+    return await serverApi('/api/config/quiz-visibility', {
+      method: 'POST',
+      body: JSON.stringify({ visibility: merged }),
+    });
   },
-  async toggleQuizVisibility(
-    themeId: string,
-    forcedState?: boolean
-  ): Promise<{ success: boolean; visibility: QuizVisibilityMap }> {
+
+  async toggleQuizVisibility(themeId: string, forcedState?: boolean): Promise<{ success: boolean; visibility: QuizVisibilityMap }> {
     const current = await this.getQuizVisibility();
-    const isCurrentlyVisible = current[themeId] === true;
-    const nextState = forcedState !== undefined ? forcedState : !isCurrentlyVisible;
-    const updated: QuizVisibilityMap = {
-      ...current,
-      [themeId]: nextState,
-    };
+    const nextState = forcedState !== undefined ? forcedState : !(current[themeId] === true);
+    const updated = { ...current, [themeId]: nextState };
     await this.saveQuizVisibility(updated);
     return { success: true, visibility: updated };
   },
 
-  /**
-   * Subscribe to real-time quiz visibility changes from Firestore
-   */
   onQuizVisibilityChange(callback: (visibility: QuizVisibilityMap) => void): () => void {
-    try {
-      const local = localStorage.getItem(QUIZ_VISIBILITY_KEY);
-      if (local) {
-        callback({ ...DEFAULT_QUIZ_VISIBILITY, ...JSON.parse(local) });
-      } else {
-        callback({ ...DEFAULT_QUIZ_VISIBILITY });
-      }
-    } catch {
-      callback({ ...DEFAULT_QUIZ_VISIBILITY });
-    }
-
-    const handleLocalUpdate = (e: any) => {
-      if (e?.detail) {
-        callback(e.detail);
-      }
-    };
+    const handleLocalUpdate = (e: any) => { if (e?.detail) callback(e.detail); };
     window.addEventListener('tic_quiz_visibility_updated', handleLocalUpdate);
-
     let unsubscribeFirestore = () => {};
     try {
-      unsubscribeFirestore = onSnapshot(
-        doc(db, 'config', 'quiz_visibility'),
-        (snapshot) => {
-          if (snapshot.exists()) {
-            const data = snapshot.data();
-            if (data?.visibility) {
-              const merged = { ...DEFAULT_QUIZ_VISIBILITY, ...data.visibility };
-              try {
-                localStorage.setItem(QUIZ_VISIBILITY_KEY, JSON.stringify(merged));
-              } catch {}
-              callback(merged);
-            }
-          }
-        },
-        (error) => {
-          console.warn('Firestore quiz_visibility snapshot notice:', error);
+      unsubscribeFirestore = onSnapshot(doc(db, 'config', 'quiz_visibility'), (snapshot) => {
+        if (snapshot.exists() && snapshot.data()?.visibility) {
+          const merged = { ...DEFAULT_QUIZ_VISIBILITY, ...snapshot.data()?.visibility };
+          localStorage.setItem(QUIZ_VISIBILITY_KEY, JSON.stringify(merged));
+          callback(merged);
         }
-      );
-    } catch (err) {
-      console.warn('Failed to attach quiz_visibility snapshot listener:', err);
-    }
-
+      }, () => {});
+    } catch {}
     return () => {
       window.removeEventListener('tic_quiz_visibility_updated', handleLocalUpdate);
       unsubscribeFirestore();
     };
   },
-  async recalibratePoints(): Promise<{ success: boolean; message: string; updatedCount: number }> {
-    try {
-      return await serverApi<{ success: boolean; message: string; updatedCount: number }>(
-        '/api/teacher/students/recalibrate-points',
-        { method: 'POST' }
-      );
-    } catch (err: any) {
-      console.error('Recalibrate points error:', err);
-      throw new Error(err?.message || 'Falha ao sincronizar pontuações.');
-    }
+
+  async recalibratePoints(): Promise<{ success: boolean; message: string; count: number }> {
+    return await serverApi<{ success: boolean; message: string; count: number }>(
+      '/api/teacher/students/recalibrate-points',
+      { method: 'POST' }
+    );
   },
 };

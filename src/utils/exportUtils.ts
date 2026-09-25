@@ -434,7 +434,7 @@ export function exportStudentsToExcel(students: User[], selectedTurma?: string):
     'Nome Completo': getStudentFullName(s) || 'Sem Nome',
     'Primeiro e Último Nome': getStudentFirstAndLastName(s),
     'Nome de Utilizador': s.username || (s.email ? s.email.split('@')[0] : ''),
-    'Palavra-passe': s.initialPassword || (s as any).password || '',
+    'Palavra-passe': '[Cifrada / Protegida]',
     'Email Institucional': s.email || '',
     'ID Público (Nickname)': s.publicId || '',
     'Pontuação Total (XP)': s.points ?? 0,
@@ -514,7 +514,7 @@ export function exportStudentsToCSV(students: User[], selectedTurma?: string): v
     sanitizeCsvCell(getStudentFullName(s) || 'Sem Nome'),
     sanitizeCsvCell(getStudentFirstAndLastName(s)),
     sanitizeCsvCell(s.username || (s.email ? s.email.split('@')[0] : '')),
-    sanitizeCsvCell(s.initialPassword || (s as any).password || ''),
+    sanitizeCsvCell('[Cifrada / Protegida]'),
     sanitizeCsvCell(s.email || ''),
     sanitizeCsvCell(s.publicId || ''),
     s.points ?? 0,
@@ -622,7 +622,7 @@ export function exportStudentCredentialsToExcel(students: User[], selectedTurma?
     'Nome Completo': getStudentFullName(s) || 'Sem Nome',
     'Primeiro e Último Nome (Cartão)': getStudentFirstAndLastName(s),
     'Nome de Utilizador': s.username || (s.email ? s.email.split('@')[0] : ''),
-    'Palavra-passe': s.initialPassword || (s as any).password || '',
+    'Palavra-passe': '[Cifrada / Protegida]',
     'ID Público': s.publicId || '',
     'Pontuação (XP)': s.points ?? 0,
     'Data Criação': s.createdAt ? new Date(s.createdAt).toLocaleDateString('pt-PT') : '',
@@ -636,7 +636,7 @@ export function exportStudentCredentialsToExcel(students: User[], selectedTurma?
     { wch: 32 }, // Nome Completo
     { wch: 26 }, // Primeiro e Último Nome
     { wch: 20 }, // Nome de Utilizador
-    { wch: 18 }, // Palavra-passe
+    { wch: 22 }, // Palavra-passe
     { wch: 20 }, // ID Público
     { wch: 16 }, // Pontos (XP)
     { wch: 16 }, // Data Criação
@@ -654,5 +654,37 @@ export function exportStudentCredentialsToExcel(students: User[], selectedTurma?
     : 'Todas_Turmas';
   const fileName = `TIC5_Credenciais_Alunos_${turmaSlug}_${todayStr}.xlsx`;
 
+  XLSX.writeFile(workbook, fileName);
+}
+
+/**
+ * Dedicated export for freshly created student accounts (containing passwords for immediate printing/handover)
+ */
+export function exportCreatedCredentialsToExcel(
+  createdList: Array<{ id?: string; name: string; turma: string; username: string; password?: string }>,
+  turmaName = 'Geral'
+): void {
+  const rows = createdList.map((s, idx) => ({
+    'N.º': idx + 1,
+    'Turma': s.turma || '5.º A',
+    'Nome Completo': s.name || 'Sem Nome',
+    'Nome de Utilizador': s.username || '',
+    'Palavra-passe Inicial': s.password || '••••••••',
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(rows);
+  worksheet['!cols'] = [
+    { wch: 6 },
+    { wch: 12 },
+    { wch: 32 },
+    { wch: 22 },
+    { wch: 22 },
+  ];
+
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Credenciais Criadas');
+
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const fileName = `TIC5_Novas_Credenciais_${turmaName.replace(/[^a-zA-Z0-9]/g, '_')}_${todayStr}.xlsx`;
   XLSX.writeFile(workbook, fileName);
 }

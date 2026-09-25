@@ -95,11 +95,9 @@ export async function runStudentSeeding() {
   const existingPasswords = new Set<string>();
   const existingStudentsMap = new Map<string, any>(); // key: `${turma}__${name.toLowerCase()}`
 
-  for (const doc of existingUsersSnap.docs) {
+    for (const doc of existingUsersSnap.docs) {
     const data = doc.data();
     if (data.username) existingUsernames.add(String(data.username).toLowerCase());
-    if (data.initialPassword) existingPasswords.add(String(data.initialPassword));
-    if (data.password) existingPasswords.add(String(data.password));
     if (data.turma && data.name) {
       const key = `${normalizeTurmaName(data.turma)}__${String(data.name).trim().toLowerCase()}`;
       existingStudentsMap.set(key, { id: doc.id, ...data });
@@ -138,7 +136,6 @@ export async function runStudentSeeding() {
       const userRef = db.collection('users').doc(userId);
       const credRef = db.collection('credentials').doc(userId);
       const publicRef = db.collection('publicProfiles').doc(userId);
-      const pointsTxRef = userRef.collection('pointsHistory').doc(`pt-welcome-${Date.now()}-${Math.floor(Math.random()*1000)}`);
 
       // Safe public ID for leaderboard (avoids showing real surname to peers)
       const publicId = username.toUpperCase();
@@ -151,14 +148,13 @@ export async function runStudentSeeding() {
         lastName: lastName,
         greetingName: greetingName,
         username: username,
-        initialPassword: password, // For teacher credential sheet printout
         turma: normalizedTurma,
         email: `${username}@aluno.tic`,
         publicId: publicId,
         role: 'student',
         language: 'pt',
-        points: 100,
-        xp: 100,
+        points: 0,
+        xp: 0,
         avatar: getDefaultAvatar(username),
         createdAt: now,
         updatedAt: now,
@@ -177,22 +173,13 @@ export async function runStudentSeeding() {
         publicId: publicId,
         turma: normalizedTurma,
         avatar: getDefaultAvatar(username),
-        points: 100,
+        points: 0,
         role: 'student',
-      };
-
-      const welcomeTx = {
-        id: pointsTxRef.id,
-        userId: userId,
-        amount: 100,
-        reason: 'Bónus de Boas-vindas (+100 XP)',
-        timestamp: now,
       };
 
       batch.set(userRef, userData);
       batch.set(credRef, credData);
       batch.set(publicRef, publicData);
-      batch.set(pointsTxRef, welcomeTx);
 
       batchHasOperations = true;
       createdCount++;

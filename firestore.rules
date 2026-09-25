@@ -24,12 +24,12 @@ service cloud.firestore {
 
     /*
      * Perfis Públicos e Classificações (Rankings):
-     * Leitura pública permitida para exibir a tabela de classificação e cartões de turma.
+     * Leitura direta pelo cliente bloqueada para proteção de privacidade de menores (5.º ano).
+     * Os rankings são servidos exclusivamente através de endpoints autenticados no backend (/api/rankings/*).
      * Escrita direta bloqueada: o servidor calcula e sincroniza autoritariamente os perfis.
      */
-    match /publicProfiles/{userId} {
-      allow read: if true;
-      allow write: if false;
+    match /publicProfiles/{document=**} {
+      allow read, write: if false;
     }
 
     /*

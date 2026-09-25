@@ -23,7 +23,7 @@ import {
 import * as XLSX from 'xlsx';
 import { User, Language } from '../../types';
 import { api } from '../../services/api';
-import { exportStudentCredentialsToExcel } from '../../utils/exportUtils';
+import { exportStudentCredentialsToExcel, exportCreatedCredentialsToExcel } from '../../utils/exportUtils';
 
 interface StudentImportTabProps {
   turmasList: string[];
@@ -489,7 +489,13 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
         success: true,
         wipedBefore: res.wipedBefore,
         wipedStats: res.wipedStats,
-        summary: res.summary,
+        summary: {
+          totalInFile: parsedRows.length,
+          createdCount: res.createdCount ?? (res.created?.length || 0),
+          existedCount: res.existedCount ?? (res.existed?.length || 0),
+          updatedCount: res.updated?.length || 0,
+          errorsCount: res.errors?.length || 0,
+        },
         created: res.created || [],
         updated: res.updated || [],
         errors: res.errors || [],
@@ -622,15 +628,7 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
                 type="button"
                 onClick={() => {
                   if (importResult.created.length > 0) {
-                    exportStudentCredentialsToExcel(
-                      importResult.created.map((c) => ({
-                        ...c,
-                        fullName: c.name,
-                        initialPassword: c.password,
-                        email: `${c.username}@aluno.tic`,
-                      } as any)),
-                      'all'
-                    );
+                    exportCreatedCredentialsToExcel(importResult.created, 'Recentes');
                   }
                 }}
                 className="p-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"

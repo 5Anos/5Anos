@@ -1178,30 +1178,9 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                   {student.username || student.email?.split('@')[0] || '—'}
                                 </td>
                                 <td className="py-2.5 px-3">
-                                  <div className="flex items-center gap-1.5">
-                                    <span className="font-mono text-xs font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
-                                      {isPasswordVisible
-                                        ? student.initialPassword || '******'
-                                        : '••••••••'}
-                                    </span>
-                                    <button
-                                      type="button"
-                                      onClick={() =>
-                                        setVisiblePasswords((prev) => ({
-                                          ...prev,
-                                          [student.id]: !prev[student.id],
-                                        }))
-                                      }
-                                      className="p-1 rounded-md text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 cursor-pointer"
-                                      title={isPasswordVisible ? 'Ocultar' : 'Mostrar'}
-                                    >
-                                      {isPasswordVisible ? (
-                                        <EyeOff className="w-3.5 h-3.5" />
-                                      ) : (
-                                        <Eye className="w-3.5 h-3.5" />
-                                      )}
-                                    </button>
-                                  </div>
+                                  <span className="font-mono text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
+                                    •••••••• (Cifrada)
+                                  </span>
                                 </td>
                                 <td className="py-2.5 px-3 text-right font-black text-indigo-700 text-xs">
                                   {student.points || 0} XP
