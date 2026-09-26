@@ -228,11 +228,15 @@ export const api = {
         }
       }
 
-      // Check teacher-carla document explicitly if identifier belongs to teacher
+      // Check teacher document explicitly if identifier belongs to teacher
       if (!foundDoc && isTeacherIdentifier(lowerId)) {
-        const teacherDocSnap = await getDoc(doc(db, 'users', 'teacher-carla'));
-        if (teacherDocSnap.exists()) {
-          foundDoc = teacherDocSnap;
+        const teacherCandidateIds = ['admin_carla_oliveira_by', 'teacher-carla'];
+        for (const tid of teacherCandidateIds) {
+          const teacherDocSnap = await getDoc(doc(db, 'users', tid));
+          if (teacherDocSnap.exists()) {
+            foundDoc = teacherDocSnap;
+            break;
+          }
         }
       }
 
@@ -270,6 +274,16 @@ export const api = {
       console.error('Firestore login error:', err);
       throw new Error('Erro ao iniciar sessão na base de dados. Verifica os teus dados.');
     }
+  },
+
+  async loginWithGoogle(email: string, idToken?: string): Promise<{ success: boolean; user: User; token: string }> {
+    const res = await serverApi<{ success: boolean; user: User; token: string }>('/api/auth/google-login', {
+      method: 'POST',
+      body: JSON.stringify({ email, idToken }),
+    });
+    if (res?.token) this.setToken(res.token);
+    if (res?.user) localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(res.user));
+    return res;
   },
 
   async setupPassword(identifier: string, initialPassword: string, newPassword: string): Promise<{ success: boolean; user: User; token: string; message: string }> {
@@ -1238,7 +1252,6 @@ export const api = {
             greetingName,
             username,
             turma: cleanTurma,
-            email: `${username}@aluno.tic`,
             publicId,
             role: 'student',
             language: 'pt',
