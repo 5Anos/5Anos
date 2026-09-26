@@ -271,19 +271,9 @@ export const api = {
       return { success: true, user: userData, token };
     } catch (err: any) {
       if (err.message?.includes('incorretos') || err.message?.includes('inválidas') || err.message?.includes('não encontrado')) throw err;
-      console.error('Firestore login error:', err);
-      throw new Error('Erro ao iniciar sessão na base de dados. Verifica os teus dados.');
+      console.error('Login error:', err);
+      throw new Error('Email/utilizador ou palavra-passe incorretos.');
     }
-  },
-
-  async loginWithGoogle(email: string, idToken?: string): Promise<{ success: boolean; user: User; token: string }> {
-    const res = await serverApi<{ success: boolean; user: User; token: string }>('/api/auth/google-login', {
-      method: 'POST',
-      body: JSON.stringify({ email, idToken }),
-    });
-    if (res?.token) this.setToken(res.token);
-    if (res?.user) localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(res.user));
-    return res;
   },
 
   async setupPassword(identifier: string, initialPassword: string, newPassword: string): Promise<{ success: boolean; user: User; token: string; message: string }> {

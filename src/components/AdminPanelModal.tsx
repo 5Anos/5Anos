@@ -617,7 +617,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
         ? `Esta ação irá eliminar permanentemente todas as contas de alunos (${totalCount} registados) e limpar registos residuais na base de dados para um novo ano letivo.`
         : `This action will permanently delete all student accounts (${totalCount} registered).`,
       warningText: language === 'pt'
-        ? '⚠️ ATENÇÃO: Todas as contas de alunos, pontuações XP, atividades e histórico de quizzes serão 100% eliminados. A conta de professora (imaginebycarla2023@gmail.com) e as turmas serão 100% PRESERVADAS.'
+        ? '⚠️ ATENÇÃO: Todas as contas de alunos, pontuações XP, atividades e histórico de quizzes serão 100% eliminados. A conta de professora e as turmas serão 100% PRESERVADAS.'
         : '⚠️ WARNING: All student accounts and XP scores will be completely wiped. Teacher account and classes are preserved.',
       confirmLabel: language === 'pt' ? 'CONFIRMAR LIMPEZA TOTAL DA BD' : 'CONFIRM PURGE',
       isDanger: true,
@@ -1892,7 +1892,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                     <div>
                       <strong className="font-bold">Zona de Segurança Pedagógica</strong>
                       <p className="mt-0.5 text-amber-800">
-                        Estas operações servem para transição de ano letivo ou reiniciar as pautas escolares. A conta da professora Carla Oliveira (imaginebycarla2023@gmail.com) está permanentemente protegida contra eliminação.
+                        Estas operações servem para transição de ano letivo ou reiniciar as pautas escolares. A conta da professora Carla Oliveira está permanentemente protegida contra eliminação.
                       </p>
                     </div>
                   </div>
