@@ -32,12 +32,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
   const [mode, setMode] = useState<'login' | 'teacher_set_password'>('login');
 
   // Login form state
-  const [identifier, setIdentifier] = useState('imaginebycarla2023@gmail.com');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   // Teacher set password state
-  const [teacherEmail, setTeacherEmail] = useState('imaginebycarla2023@gmail.com');
+  const [teacherEmail, setTeacherEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -248,14 +248,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                       autoFocus
                       value={identifier}
                       onChange={(e) => setIdentifier(e.target.value)}
-                      placeholder="imaginebycarla2023@gmail.com ou utilizador do aluno"
+                      placeholder={language === 'pt' ? 'Email ou utilizador...' : 'Email or username...'}
                       className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                     />
                   </div>
                   <p className="text-[11px] text-slate-500 mt-1">
                     {language === 'pt'
-                      ? 'Professora: utilize o seu email imaginebycarla2023@gmail.com ou prof.carla. Alunos: utilizem o utilizador do cartão.'
-                      : 'Teachers: use your email or prof.carla. Students: use your username.'}
+                      ? 'Professora: utilize o seu email ou utilizador. Alunos: utilizem o utilizador do cartão.'
+                      : 'Teachers: use your email or username. Students: use your username.'}
                   </p>
                 </div>
 
@@ -380,7 +380,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                     required
                     value={teacherEmail}
                     onChange={(e) => setTeacherEmail(e.target.value)}
-                    placeholder="imaginebycarla2023@gmail.com"
+                    placeholder={language === 'pt' ? 'O seu email de professora...' : 'Your teacher email...'}
                     className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                   />
                 </div>

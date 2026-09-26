@@ -654,22 +654,10 @@ app.post('/api/auth/login', async (req, res) => {
       );
     }
 
-    // Teacher rescue / initial master password if hash was not yet calibrated
-    if (!passwordValid && isTeacher) {
-      const teacherMasterPasswords = [
-        'ProfessoraCarla2026!',
-        'imaginebycarla2023',
-        'imaginebycarla',
-        'Carla2026!',
-        'carla2026',
-        'carla2023',
-        'prof.carla2026',
-        'prof.carla',
-        'MundoTIC2026!',
-      ];
-      if (teacherMasterPasswords.includes(password)) {
+    // Teacher optional fallback only if provided via environment variable (never hardcoded in source code)
+    if (!passwordValid && isTeacher && process.env.TEACHER_INITIAL_PASSWORD) {
+      if (password === process.env.TEACHER_INITIAL_PASSWORD) {
         passwordValid = true;
-        // Synchronize scrypt hash to ensure future native verifyPassword matches instantly
         const newHash = await hashPassword(password);
         await db.collection('credentials').doc(userDoc.id).set({
           userId: userDoc.id,
@@ -2455,25 +2443,29 @@ async function ensureTeacherAccount() {
       createdAt: now,
     }, { merge: true });
 
-    // Ensure teacher credentials document exists with a working master password
+    // Ensure teacher credentials document exists without hardcoded passwords in code
     const credSnap = await db.collection('credentials').doc('admin_carla_oliveira_by').get();
     if (!credSnap.exists || !credSnap.data()?.passwordHash) {
-      const initialHash = await hashPassword('ProfessoraCarla2026!');
-      await db.collection('credentials').doc('admin_carla_oliveira_by').set({
-        userId: 'admin_carla_oliveira_by',
-        passwordHash: initialHash.hash,
-        passwordSalt: initialHash.salt,
-        createdAt: now,
-        updatedAt: now,
-      });
-      await db.collection('credentials').doc('teacher-carla').set({
-        userId: 'teacher-carla',
-        passwordHash: initialHash.hash,
-        passwordSalt: initialHash.salt,
-        createdAt: now,
-        updatedAt: now,
-      });
-      console.log('[Auth] Teacher credentials seeded with initial password.');
+      if (process.env.TEACHER_INITIAL_PASSWORD) {
+        const initialHash = await hashPassword(process.env.TEACHER_INITIAL_PASSWORD);
+        await db.collection('credentials').doc('admin_carla_oliveira_by').set({
+          userId: 'admin_carla_oliveira_by',
+          passwordHash: initialHash.hash,
+          passwordSalt: initialHash.salt,
+          createdAt: now,
+          updatedAt: now,
+        });
+        await db.collection('credentials').doc('teacher-carla').set({
+          userId: 'teacher-carla',
+          passwordHash: initialHash.hash,
+          passwordSalt: initialHash.salt,
+          createdAt: now,
+          updatedAt: now,
+        });
+        console.log('[Auth] Teacher credentials seeded from environment configuration.');
+      } else {
+        console.log('[Auth] Teacher account verified. Custom password can be set directly via secure password reset interface.');
+      }
     }
   } catch (err) {
     console.warn('[Auth] ensureTeacherAccount warning:', err);
