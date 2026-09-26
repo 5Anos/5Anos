@@ -265,7 +265,6 @@ export async function ensureDatabaseBootstrapped(): Promise<void> {
               greetingName,
               username,
               turma: cleanTurma,
-              email: `${username}@aluno.tic`,
               publicId,
               role: 'student',
               language: 'pt',
@@ -1420,7 +1419,7 @@ export const api = {
 
           const hashed = await hashPasswordClient(password);
 
-          // 1. users document (STRICT: NO PASSWORDS)
+          // 1. users document (STRICT: NO PASSWORDS, NO SYNTHETIC EMAILS)
           const userData: User = {
             id: userId,
             name: fullName,
@@ -1430,7 +1429,6 @@ export const api = {
             greetingName,
             username,
             turma: cleanTurma,
-            email: `${username}@aluno.tic`,
             publicId,
             role: 'student',
             language: 'pt',

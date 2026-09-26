@@ -16,7 +16,7 @@
         "createdAt": { "type": "string" },
         "updatedAt": { "type": "string" }
       },
-      "required": ["id", "name", "email", "publicId", "points", "language", "createdAt"]
+      "required": ["id", "name", "publicId", "points", "language", "createdAt"]
     },
     "TurmasConfig": {
       "title": "TurmasConfig",

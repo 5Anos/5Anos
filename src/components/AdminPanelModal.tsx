@@ -414,7 +414,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       const nameChanged = editName.trim() !== currentFullName;
       const turmaChanged = editTurma !== editingStudent.turma;
 
-      await api.adminUpdateStudent(editingStudent.id, editingStudent.email, {
+      await api.adminUpdateStudent(editingStudent.id, {
         newName: nameChanged ? editName.trim() : undefined,
         newTurma: turmaChanged ? editTurma : undefined,
         newPassword: trimmedPass || undefined,
@@ -446,7 +446,6 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
         !query ||
         (s.name || '').toLowerCase().includes(query) ||
         (s.fullName || '').toLowerCase().includes(query) ||
-        (s.email || '').toLowerCase().includes(query) ||
         (s.username || '').toLowerCase().includes(query) ||
         (s.publicId || '').toLowerCase().includes(query) ||
         (s.turma || '').toLowerCase().includes(query);
@@ -457,25 +456,25 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
 
   const allFilteredSelected = useMemo(() => {
     if (filteredStudents.length === 0) return false;
-    return filteredStudents.every((s) => selectedStudentIds.has(s.id || s.email));
+    return filteredStudents.every((s) => selectedStudentIds.has(s.id));
   }, [filteredStudents, selectedStudentIds]);
 
   const toggleSelectAllFiltered = () => {
     const next = new Set(selectedStudentIds);
     if (allFilteredSelected) {
-      filteredStudents.forEach((s) => next.delete(s.id || s.email));
+      filteredStudents.forEach((s) => next.delete(s.id));
     } else {
-      filteredStudents.forEach((s) => next.add(s.id || s.email));
+      filteredStudents.forEach((s) => next.add(s.id));
     }
     setSelectedStudentIds(next);
   };
 
-  const toggleSelectStudent = (idOrEmail: string) => {
+  const toggleSelectStudent = (studentId: string) => {
     const next = new Set(selectedStudentIds);
-    if (next.has(idOrEmail)) {
-      next.delete(idOrEmail);
+    if (next.has(studentId)) {
+      next.delete(studentId);
     } else {
-      next.add(idOrEmail);
+      next.add(studentId);
     }
     setSelectedStudentIds(next);
   };
@@ -513,11 +512,10 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       confirmLabel: language === 'pt' ? 'Eliminar Aluno' : 'Delete Student',
       isDanger: true,
       action: async () => {
-        const res = await api.adminDeleteStudent(student.id, student.email);
+        const res = await api.adminDeleteStudent(student.id);
         setSelectedStudentIds((prev) => {
           const next = new Set(prev);
           next.delete(student.id);
-          next.delete(student.email);
           return next;
         });
         await loadStudents();
@@ -543,10 +541,8 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       confirmLabel: language === 'pt' ? `Eliminar (${count}) Alunos` : `Delete (${count}) Students`,
       isDanger: true,
       action: async () => {
-        const studentsToDelete = students.filter((s) => selectedStudentIds.has(s.id || s.email));
-        const res = await api.adminDeleteStudents(
-          studentsToDelete.map((s) => s.id || s.email)
-        );
+        const idsToDelete = Array.from(selectedStudentIds);
+        const res = await api.adminDeleteStudents(idsToDelete);
         setSelectedStudentIds(new Set());
         await loadStudents();
         showToast('success', res.message);
@@ -617,7 +613,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
         ? `Esta ação irá eliminar permanentemente todas as contas de alunos (${totalCount} registados) e limpar registos residuais na base de dados para um novo ano letivo.`
         : `This action will permanently delete all student accounts (${totalCount} registered).`,
       warningText: language === 'pt'
-        ? '⚠️ ATENÇÃO: Todas as contas de alunos, pontuações XP, atividades e histórico de quizzes serão 100% eliminados. A conta de professora e as turmas serão 100% PRESERVADAS.'
+        ? '⚠️ ATENÇÃO: Todas as contas de alunos, pontuações XP, atividades e histórico de quizzes serão 100% eliminados. A conta de professora (imaginebycarla2023@gmail.com) e as turmas serão 100% PRESERVADAS.'
         : '⚠️ WARNING: All student accounts and XP scores will be completely wiped. Teacher account and classes are preserved.',
       confirmLabel: language === 'pt' ? 'CONFIRMAR LIMPEZA TOTAL DA BD' : 'CONFIRM PURGE',
       isDanger: true,
@@ -1156,7 +1152,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                         </thead>
                         <tbody className="divide-y divide-slate-100">
                           {filteredStudents.map((student, idx) => {
-                            const isSelected = selectedStudentIds.has(student.id || student.email);
+                            const isSelected = selectedStudentIds.has(student.id);
                             const isPasswordVisible = !!visiblePasswords[student.id];
 
                             return (
@@ -1168,7 +1164,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                               >
                                 <td className="py-2.5 px-3 text-center">
                                   <button
-                                    onClick={() => toggleSelectStudent(student.id || student.email)}
+                                    onClick={() => toggleSelectStudent(student.id)}
                                     className="cursor-pointer text-slate-400 hover:text-indigo-600"
                                   >
                                     {isSelected ? (
@@ -1194,7 +1190,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                         {student.fullName || student.name}
                                       </div>
                                       <div className="text-[10px] text-slate-400 font-mono">
-                                        {student.publicId || student.email}
+                                        ID: {student.publicId || student.username}
                                       </div>
                                     </div>
                                   </div>
@@ -1205,7 +1201,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                   </span>
                                 </td>
                                 <td className="py-2.5 px-3 font-mono text-slate-600 text-xs">
-                                  {student.username || student.email?.split('@')[0] || '—'}
+                                  {student.username || '—'}
                                 </td>
                                 <td className="py-2.5 px-3">
                                   {(() => {
@@ -1892,7 +1888,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                     <div>
                       <strong className="font-bold">Zona de Segurança Pedagógica</strong>
                       <p className="mt-0.5 text-amber-800">
-                        Estas operações servem para transição de ano letivo ou reiniciar as pautas escolares. A conta da professora Carla Oliveira está permanentemente protegida contra eliminação.
+                        Estas operações servem para transição de ano letivo ou reiniciar as pautas escolares. A conta da professora Carla Oliveira (imaginebycarla2023@gmail.com) está permanentemente protegida contra eliminação.
                       </p>
                     </div>
                   </div>
