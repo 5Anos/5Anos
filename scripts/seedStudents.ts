@@ -149,6 +149,7 @@ export async function runStudentSeeding() {
         greetingName: greetingName,
         username: username,
         turma: normalizedTurma,
+        email: `${username}@aluno.tic`,
         publicId: publicId,
         role: 'student',
         language: 'pt',

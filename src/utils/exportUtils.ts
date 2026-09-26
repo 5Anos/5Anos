@@ -163,6 +163,9 @@ export function exportThemeScoresToExcel(
         'N.º': idx + 1,
         'Turma': student.turma || '5.º A',
         'Nome Completo': getStudentFullName(student) || 'Sem Nome',
+        'Primeiro e Último Nome': getStudentFirstAndLastName(student),
+        'Email': student.email || '',
+        'ID Público': student.publicId || '',
       };
 
       // Challenge columns (0-100 pts)
@@ -188,7 +191,9 @@ export function exportThemeScoresToExcel(
     worksheet['!cols'] = [
       { wch: 6 },  // N.º
       { wch: 10 }, // Turma
-      { wch: 32 }, // Nome Completo
+      { wch: 28 }, // Nome
+      { wch: 32 }, // Email
+      { wch: 18 }, // ID Público
       ...regularChallenges.map(() => ({ wch: 24 })), // Challenges
       { wch: 34 }, // Quiz
       { wch: 24 }, // Quiz Menção
@@ -221,6 +226,9 @@ export function exportThemeScoresToExcel(
       'N.º': idx + 1,
       'Turma': student.turma || '5.º A',
       'Nome Completo': getStudentFullName(student) || 'Sem Nome',
+      'Primeiro e Último Nome': getStudentFirstAndLastName(student),
+      'Email': student.email || '',
+      'ID Público': student.publicId || '',
       'Pontuação Global (XP)': student.points ?? 0,
     };
 
@@ -243,7 +251,9 @@ export function exportThemeScoresToExcel(
   summarySheet['!cols'] = [
     { wch: 6 },  // N.º
     { wch: 10 }, // Turma
-    { wch: 32 }, // Nome Completo
+    { wch: 28 }, // Nome
+    { wch: 32 }, // Email
+    { wch: 18 }, // ID Público
     { wch: 20 }, // Pontos Globais
     ...ALL_THEMES.map(() => ({ wch: 22 })),
     { wch: 26 }, // Pontos Curriculares
@@ -269,6 +279,8 @@ export function exportThemeScoresToExcel(
         'N.º': idx + 1,
         'Turma': student.turma || '5.º A',
         'Nome Completo': getStudentFullName(student) || 'Sem Nome',
+        'Primeiro e Último Nome': getStudentFirstAndLastName(student),
+        'Email': student.email || '',
       };
 
       breakdown.challenges.forEach((ch, chIdx) => {
@@ -289,6 +301,7 @@ export function exportThemeScoresToExcel(
     themeSheet['!cols'] = [
       { wch: 6 },
       { wch: 10 },
+      { wch: 28 },
       { wch: 32 },
       ...regularChallenges.map(() => ({ wch: 24 })),
       { wch: 34 },
@@ -315,6 +328,9 @@ export function exportThemeScoresToExcel(
       'N.º': idx + 1,
       'Turma': student.turma || '5.º A',
       'Nome Completo': getStudentFullName(student) || 'Sem Nome',
+      'Primeiro e Último Nome': getStudentFirstAndLastName(student),
+      'Email': student.email || '',
+      'ID Público': student.publicId || '',
       'Pontos Ganhos em Dicas Diárias & Bónus (XP)': tipsAndBonusXP,
       'Estimativa de Dicas Respondidas': estimatedTipsCount > 0 ? `~${estimatedTipsCount} dicas` : '0 dicas',
       [`Pontos Temas Curriculares (0-${stats.globalMaxPoints} XP)`]: stats.totalCurricularPoints,
@@ -328,7 +344,9 @@ export function exportThemeScoresToExcel(
   tipsSheet['!cols'] = [
     { wch: 6 },
     { wch: 10 },
+    { wch: 28 },
     { wch: 32 },
+    { wch: 18 },
     { wch: 38 },
     { wch: 30 },
     { wch: 32 },
@@ -366,6 +384,9 @@ export function exportDailyTipsScoresToExcel(
       'N.º': idx + 1,
       'Turma': student.turma || '5.º A',
       'Nome Completo': getStudentFullName(student) || 'Sem Nome',
+      'Primeiro e Último Nome': getStudentFirstAndLastName(student),
+      'Email Institucional': student.email || '',
+      'ID Público (Nickname)': student.publicId || '',
       'Pontos Dicas Diárias & Bónus (XP)': tipsAndBonusXP,
       'Dicas Realizadas (Estimativa)': estimatedTipsCount > 0 ? `~${estimatedTipsCount} dicas` : '0',
       [`Pontos Temas Curriculares (0-${stats.globalMaxPoints} XP)`]: stats.totalCurricularPoints,
@@ -382,7 +403,9 @@ export function exportDailyTipsScoresToExcel(
   worksheet['!cols'] = [
     { wch: 6 },  // N.º
     { wch: 10 }, // Turma
-    { wch: 32 }, // Nome Completo
+    { wch: 28 }, // Nome
+    { wch: 32 }, // Email
+    { wch: 20 }, // ID
     { wch: 32 }, // Dicas XP
     { wch: 28 }, // Estimativa
     { wch: 34 }, // Temas
@@ -409,8 +432,11 @@ export function exportStudentsToExcel(students: User[], selectedTurma?: string):
     'N.º': idx + 1,
     'Turma': s.turma || '5.º A',
     'Nome Completo': getStudentFullName(s) || 'Sem Nome',
-    'Nome de Utilizador': s.username || '',
+    'Primeiro e Último Nome': getStudentFirstAndLastName(s),
+    'Nome de Utilizador': s.username || (s.email ? s.email.split('@')[0] : ''),
     'Palavra-passe': getStudentCardPassword(s),
+    'Email Institucional': s.email || '',
+    'ID Público (Nickname)': s.publicId || '',
     'Pontuação Total (XP)': s.points ?? 0,
     'Data de Registo': s.createdAt ? new Date(s.createdAt).toLocaleDateString('pt-PT') : '',
     'Última Atividade Realizada': s.lastActivity?.title || 'Sem registo',
@@ -422,10 +448,13 @@ export function exportStudentsToExcel(students: User[], selectedTurma?: string):
   worksheet['!cols'] = [
     { wch: 6 },  // N.º
     { wch: 10 }, // Turma
-    { wch: 32 }, // Nome Completo
-    { wch: 20 }, // Nome de Utilizador
-    { wch: 18 }, // Palavra-passe
-    { wch: 20 }, // Pontuação Total
+    { wch: 30 }, // Nome Completo
+    { wch: 22 }, // Primeiro e Último Nome
+    { wch: 18 }, // Nome de Utilizador
+    { wch: 16 }, // Palavra-passe
+    { wch: 32 }, // Email
+    { wch: 22 }, // ID Público
+    { wch: 18 }, // Pontuação Total
     { wch: 16 }, // Data Registo
     { wch: 32 }, // Última Atividade
     { wch: 22 }, // Data Atividade
@@ -469,8 +498,11 @@ export function exportStudentsToCSV(students: User[], selectedTurma?: string): v
     'N.º',
     'Turma',
     'Nome Completo',
+    'Primeiro e Último Nome',
     'Nome de Utilizador',
     'Palavra-passe',
+    'Email',
+    'ID Público',
     'Pontuação (XP)',
     'Data de Registo',
     'Última Atividade',
@@ -480,8 +512,11 @@ export function exportStudentsToCSV(students: User[], selectedTurma?: string): v
     idx + 1,
     sanitizeCsvCell(s.turma || '5.º A'),
     sanitizeCsvCell(getStudentFullName(s) || 'Sem Nome'),
-    sanitizeCsvCell(s.username || ''),
+    sanitizeCsvCell(getStudentFirstAndLastName(s)),
+    sanitizeCsvCell(s.username || (s.email ? s.email.split('@')[0] : '')),
     sanitizeCsvCell('[Cifrada / Protegida]'),
+    sanitizeCsvCell(s.email || ''),
+    sanitizeCsvCell(s.publicId || ''),
     s.points ?? 0,
     sanitizeCsvCell(s.createdAt ? new Date(s.createdAt).toLocaleDateString('pt-PT') : ''),
     sanitizeCsvCell(s.lastActivity?.title || 'Sem registo'),
@@ -525,6 +560,8 @@ export function exportThemeScoresToCSV(
     'N.º',
     'Turma',
     'Nome Completo',
+    'Email',
+    'ID Público',
     ...regularChallenges.map((c, i) => `Desafio ${i + 1}: ${c.title.pt}`),
     'Quiz Final (1.ª Tentativa Oficial)',
     'Tentativas Quiz',
@@ -541,6 +578,8 @@ export function exportThemeScoresToCSV(
       idx + 1,
       sanitizeCsvCell(student.turma || '5.º A'),
       sanitizeCsvCell(getStudentFullName(student) || 'Sem Nome'),
+      sanitizeCsvCell(student.email || ''),
+      sanitizeCsvCell(student.publicId || ''),
       ...breakdown.challenges.map((c) => c.score),
       breakdown.quiz.officialScore,
       breakdown.quiz.attempts,
@@ -581,8 +620,10 @@ export function exportStudentCredentialsToExcel(students: User[], selectedTurma?
     'N.º': idx + 1,
     'Turma': s.turma || '5.º A',
     'Nome Completo': getStudentFullName(s) || 'Sem Nome',
-    'Nome de Utilizador': s.username || '',
+    'Primeiro e Último Nome (Cartão)': getStudentFirstAndLastName(s),
+    'Nome de Utilizador': s.username || (s.email ? s.email.split('@')[0] : ''),
     'Palavra-passe': getStudentCardPassword(s),
+    'ID Público': s.publicId || '',
     'Pontuação (XP)': s.points ?? 0,
     'Data Criação': s.createdAt ? new Date(s.createdAt).toLocaleDateString('pt-PT') : '',
   }));
@@ -592,9 +633,11 @@ export function exportStudentCredentialsToExcel(students: User[], selectedTurma?
   worksheet['!cols'] = [
     { wch: 6 },  // N.º
     { wch: 12 }, // Turma
-    { wch: 34 }, // Nome Completo
-    { wch: 22 }, // Nome de Utilizador
+    { wch: 32 }, // Nome Completo
+    { wch: 26 }, // Primeiro e Último Nome
+    { wch: 20 }, // Nome de Utilizador
     { wch: 22 }, // Palavra-passe
+    { wch: 20 }, // ID Público
     { wch: 16 }, // Pontos (XP)
     { wch: 16 }, // Data Criação
   ];

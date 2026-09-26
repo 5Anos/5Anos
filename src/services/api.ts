@@ -35,6 +35,7 @@ import {
   generateKidPassword,
   parseStudentName,
   normalizeTurmaName,
+  getStudentCardPassword,
 } from '../utils/studentCredentials';
 import {
   isTeacherEmail,
@@ -228,15 +229,11 @@ export const api = {
         }
       }
 
-      // Check teacher document explicitly if identifier belongs to teacher
+      // Check teacher-carla document explicitly if identifier belongs to teacher
       if (!foundDoc && isTeacherIdentifier(lowerId)) {
-        const teacherCandidateIds = ['admin_carla_oliveira_by', 'teacher-carla'];
-        for (const tid of teacherCandidateIds) {
-          const teacherDocSnap = await getDoc(doc(db, 'users', tid));
-          if (teacherDocSnap.exists()) {
-            foundDoc = teacherDocSnap;
-            break;
-          }
+        const teacherDocSnap = await getDoc(doc(db, 'users', 'teacher-carla'));
+        if (teacherDocSnap.exists()) {
+          foundDoc = teacherDocSnap;
         }
       }
 
@@ -258,11 +255,45 @@ export const api = {
         }
       }
 
+      // Student transitional migration (only for non-teacher students)
+      const isTeacher = isUserAdmin(userData.email, userData.role, userData.username, userData.publicId);
+      if (!isTeacher) {
+        // Legacy fallback support for transitional students if not yet hashed
+        if (!isPasswordValid && (userData as any).initialPassword) {
+          if ((userData as any).initialPassword === cleanPass) {
+            isPasswordValid = true;
+            const hashed = await hashPasswordClient(cleanPass);
+            await setDoc(doc(db, 'credentials', foundDoc.id), {
+              userId: foundDoc.id,
+              passwordHash: hashed.hash,
+              passwordSalt: hashed.salt,
+              passwordChangedAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            }, { merge: true }).catch((e) => console.warn('[Auth] Migração de credencial falhou:', e));
+          }
+        }
+
+        // Card password fallback support (deterministic password from card)
+        if (!isPasswordValid) {
+          const cardPass = getStudentCardPassword(userData);
+          if (cardPass === cleanPass) {
+            isPasswordValid = true;
+            const hashed = await hashPasswordClient(cleanPass);
+            await setDoc(doc(db, 'credentials', foundDoc.id), {
+              userId: foundDoc.id,
+              passwordHash: hashed.hash,
+              passwordSalt: hashed.salt,
+              passwordChangedAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            }, { merge: true }).catch((e) => console.warn('[Auth] Registo de palavra-passe do cartão falhou:', e));
+          }
+        }
+      }
+
       if (!isPasswordValid) {
         throw new Error('Utilizador ou palavra-passe incorretos.');
       }
 
-      const isTeacher = isUserAdmin(userData.email, userData.role, userData.username, userData.publicId);
       const token = isTeacher
         ? `teacher_${foundDoc.id}_${Date.now()}`
         : `std_${foundDoc.id}_${Date.now()}`;
@@ -271,8 +302,8 @@ export const api = {
       return { success: true, user: userData, token };
     } catch (err: any) {
       if (err.message?.includes('incorretos') || err.message?.includes('inválidas') || err.message?.includes('não encontrado')) throw err;
-      console.error('Login error:', err);
-      throw new Error('Email/utilizador ou palavra-passe incorretos.');
+      console.error('Firestore login error:', err);
+      throw new Error('Erro ao iniciar sessão na base de dados. Verifica os teus dados.');
     }
   },
 
@@ -311,80 +342,6 @@ export const api = {
       success: true,
       user: loginRes.user,
       token: loginRes.token,
-      message: 'Palavra-passe definida com sucesso!',
-    };
-  },
-
-  async teacherSetPassword(email: string, newPassword: string): Promise<{ success: boolean; user: User; token: string; message: string }> {
-    const cleanEmail = String(email || '').trim().toLowerCase();
-    const cleanNew = String(newPassword || '').trim();
-
-    if (!cleanEmail || !cleanEmail.includes('@')) {
-      throw new Error('Por favor, introduz um endereço de email válido.');
-    }
-    if (cleanNew.length < 6 || cleanNew.length > 128) {
-      throw new Error('A palavra-passe deve ter entre 6 e 128 caracteres.');
-    }
-
-    try {
-      const res = await serverApi<{ success: boolean; user: User; token: string; message: string }>('/api/auth/teacher-set-password', {
-        method: 'POST',
-        body: JSON.stringify({ email: cleanEmail, newPassword: cleanNew }),
-      });
-      if (res.token) this.setToken(res.token);
-      if (res.user) localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(res.user));
-      return res;
-    } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) throw err;
-    }
-
-    // Direct Firestore fallback
-    const qTeacher = query(collection(db, 'users'), where('email', '==', cleanEmail));
-    const snapTeacher = await getDocs(qTeacher);
-    let targetDoc: any = null;
-
-    if (!snapTeacher.empty) {
-      targetDoc = snapTeacher.docs[0];
-    } else {
-      const directDoc = await getDoc(doc(db, 'users', 'admin_carla_oliveira_by'));
-      if (directDoc.exists()) targetDoc = directDoc;
-    }
-
-    if (!targetDoc) {
-      throw new Error('Conta de professora não encontrada na base de dados.');
-    }
-
-    const hashed = await hashPasswordClient(cleanNew);
-    const now = new Date().toISOString();
-
-    await setDoc(doc(db, 'credentials', targetDoc.id), {
-      userId: targetDoc.id,
-      passwordHash: hashed.hash,
-      passwordSalt: hashed.salt,
-      passwordChangedAt: now,
-      updatedAt: now,
-    }, { merge: true });
-
-    await setDoc(doc(db, 'users', targetDoc.id), {
-      username: 'prof.carla',
-      email: cleanEmail,
-      role: 'admin',
-      updatedAt: now,
-    }, { merge: true });
-
-    const teacherData = targetDoc.data() as User;
-    teacherData.id = targetDoc.id;
-    teacherData.role = 'admin';
-    teacherData.username = 'prof.carla';
-
-    const token = `teacher_${targetDoc.id}_${Date.now()}`;
-    this.setToken(token);
-    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(teacherData));
-
-    return {
-      success: true,
-      user: teacherData,
-      token,
       message: 'Palavra-passe definida com sucesso!',
     };
   },
@@ -1095,40 +1052,10 @@ export const api = {
     students: Array<{ number?: number; name: string; turma?: string; sourceFile?: string }>;
     filesProcessed?: string[];
   }> {
-    const commaIdx = fileBase64.indexOf(',');
-    const cleanBase64 = commaIdx >= 0 ? fileBase64.substring(commaIdx + 1) : fileBase64;
-    const lowerName = fileName.toLowerCase();
-    const isPdfOrZip = lowerName.endsWith('.pdf') || lowerName.endsWith('.zip');
-
-    // 1. PDF and ZIP files must be parsed by the authoritative server engine
-    if (isPdfOrZip) {
-      try {
-        const sRes = await serverApi<any>('/api/teacher/parse-file', {
-          method: 'POST',
-          body: JSON.stringify({ base64: cleanBase64, filename: fileName, defaultTurma }),
-        });
-        if (sRes && Array.isArray(sRes.students)) {
-          return {
-            success: true,
-            count: sRes.count ?? sRes.students.length,
-            rawData: sRes.rawData ?? sRes.students,
-            students: sRes.students.map((s: any, idx: number) => ({
-              number: s.number ?? idx + 1,
-              name: String(s.name || '').trim(),
-              turma: normalizeTurmaName(s.turma) || defaultTurma,
-              sourceFile: s.sourceFile || fileName,
-            })),
-            filesProcessed: sRes.filesProcessed || [fileName],
-          };
-        }
-      } catch (srvErr) {
-        console.warn('Server parse-file error for PDF/ZIP:', srvErr);
-        throw srvErr;
-      }
-    }
-
-    // 2. Client-side Excel / CSV parser with SheetJS
+    // Client-side Excel / CSV parser with SheetJS
     try {
+      const commaIdx = fileBase64.indexOf(',');
+      const cleanBase64 = commaIdx >= 0 ? fileBase64.substring(commaIdx + 1) : fileBase64;
       const binaryString = atob(cleanBase64);
       const bytes = new Uint8Array(binaryString.length);
       for (let i = 0; i < binaryString.length; i++) {
@@ -1157,50 +1084,23 @@ export const api = {
         });
       });
 
-      if (extracted.length > 0) {
-        return {
-          success: true,
-          count: extracted.length,
-          rawData: extracted.map(e => ({ name: e.name, turma: e.turma })),
-          students: extracted,
-          filesProcessed: [fileName],
-        };
-      }
+      return {
+        success: true,
+        count: extracted.length,
+        rawData: extracted.map(e => ({ name: e.name, turma: e.turma })),
+        students: extracted,
+        filesProcessed: [fileName],
+      };
     } catch (err: any) {
-      console.warn('Direct client parse warning, falling back to server:', err);
+      console.warn('Direct client parse warning:', err);
+      return {
+        success: true,
+        count: 0,
+        rawData: [],
+        students: [],
+        filesProcessed: [fileName],
+      };
     }
-
-    // 3. Fallback to server engine if client parsing returned no rows
-    try {
-      const sRes = await serverApi<any>('/api/teacher/parse-file', {
-        method: 'POST',
-        body: JSON.stringify({ base64: cleanBase64, filename: fileName, defaultTurma }),
-      });
-      if (sRes && Array.isArray(sRes.students)) {
-        return {
-          success: true,
-          count: sRes.count ?? sRes.students.length,
-          rawData: sRes.rawData ?? sRes.students,
-          students: sRes.students.map((s: any, idx: number) => ({
-            number: s.number ?? idx + 1,
-            name: String(s.name || '').trim(),
-            turma: normalizeTurmaName(s.turma) || defaultTurma,
-            sourceFile: s.sourceFile || fileName,
-          })),
-          filesProcessed: sRes.filesProcessed || [fileName],
-        };
-      }
-    } catch (fallbackErr) {
-      console.warn('Server fallback parse error:', fallbackErr);
-    }
-
-    return {
-      success: true,
-      count: 0,
-      rawData: [],
-      students: [],
-      filesProcessed: [fileName],
-    };
   },
 
   async importStudentsBatch(
@@ -1316,6 +1216,7 @@ export const api = {
             greetingName,
             username,
             turma: cleanTurma,
+            email: `${username}@aluno.tic`,
             publicId,
             role: 'student',
             language: 'pt',
