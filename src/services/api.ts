@@ -325,6 +325,80 @@ export const api = {
     };
   },
 
+  async teacherSetPassword(email: string, newPassword: string): Promise<{ success: boolean; user: User; token: string; message: string }> {
+    const cleanEmail = String(email || '').trim().toLowerCase();
+    const cleanNew = String(newPassword || '').trim();
+
+    if (!cleanEmail || !cleanEmail.includes('@')) {
+      throw new Error('Por favor, introduz um endereço de email válido.');
+    }
+    if (cleanNew.length < 6 || cleanNew.length > 128) {
+      throw new Error('A palavra-passe deve ter entre 6 e 128 caracteres.');
+    }
+
+    try {
+      const res = await serverApi<{ success: boolean; user: User; token: string; message: string }>('/api/auth/teacher-set-password', {
+        method: 'POST',
+        body: JSON.stringify({ email: cleanEmail, newPassword: cleanNew }),
+      });
+      if (res.token) this.setToken(res.token);
+      if (res.user) localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(res.user));
+      return res;
+    } catch (err: any) {
+      if (!(err instanceof ServerUnavailableError)) throw err;
+    }
+
+    // Direct Firestore fallback
+    const qTeacher = query(collection(db, 'users'), where('email', '==', cleanEmail));
+    const snapTeacher = await getDocs(qTeacher);
+    let targetDoc: any = null;
+
+    if (!snapTeacher.empty) {
+      targetDoc = snapTeacher.docs[0];
+    } else {
+      const directDoc = await getDoc(doc(db, 'users', 'admin_carla_oliveira_by'));
+      if (directDoc.exists()) targetDoc = directDoc;
+    }
+
+    if (!targetDoc) {
+      throw new Error('Conta de professora não encontrada na base de dados.');
+    }
+
+    const hashed = await hashPasswordClient(cleanNew);
+    const now = new Date().toISOString();
+
+    await setDoc(doc(db, 'credentials', targetDoc.id), {
+      userId: targetDoc.id,
+      passwordHash: hashed.hash,
+      passwordSalt: hashed.salt,
+      passwordChangedAt: now,
+      updatedAt: now,
+    }, { merge: true });
+
+    await setDoc(doc(db, 'users', targetDoc.id), {
+      username: 'prof.carla',
+      email: cleanEmail,
+      role: 'admin',
+      updatedAt: now,
+    }, { merge: true });
+
+    const teacherData = targetDoc.data() as User;
+    teacherData.id = targetDoc.id;
+    teacherData.role = 'admin';
+    teacherData.username = 'prof.carla';
+
+    const token = `teacher_${targetDoc.id}_${Date.now()}`;
+    this.setToken(token);
+    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(teacherData));
+
+    return {
+      success: true,
+      user: teacherData,
+      token,
+      message: 'Palavra-passe definida com sucesso!',
+    };
+  },
+
   hasValidSession(userId?: string): boolean {
     const token = this.getToken();
     const rawUser = typeof localStorage !== 'undefined' ? localStorage.getItem(CURRENT_USER_KEY) : null;

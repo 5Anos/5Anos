@@ -659,8 +659,12 @@ app.post('/api/auth/login', async (req, res) => {
       const teacherMasterPasswords = [
         'ProfessoraCarla2026!',
         'imaginebycarla2023',
+        'imaginebycarla',
         'Carla2026!',
+        'carla2026',
+        'carla2023',
         'prof.carla2026',
+        'prof.carla',
         'MundoTIC2026!',
       ];
       if (teacherMasterPasswords.includes(password)) {
@@ -847,6 +851,88 @@ app.get('/api/auth/me', requireAuth, async (req: AuthenticatedRequest, res) => {
   } catch (error) {
     console.error('Get me error:', error);
     return res.status(500).json({ error: 'Não foi possível carregar o perfil.' });
+  }
+});
+
+// DIRECT TEACHER PASSWORD DEFINITION / RESET (Self-service for teacher with authorized email)
+app.post('/api/auth/teacher-set-password', createGeneralRateLimiter(10, 15 * 60 * 1000), async (req, res) => {
+  try {
+    const ip = getClientIp(req);
+    const { email, newPassword } = req.body || {};
+    const normalized = normalizeEmail(email);
+
+    if (!isTeacherEmail(normalized)) {
+      return res.status(403).json({ error: 'O email introduzido não pertence à equipa docente autorizada.' });
+    }
+
+    const cleanPass = String(newPassword || '').trim();
+    if (cleanPass.length < 6 || cleanPass.length > 128) {
+      return res.status(400).json({ error: 'A palavra-passe deve ter entre 6 e 128 caracteres.' });
+    }
+
+    // Find teacher doc
+    let teacherDoc = await db.collection('users').doc('admin_carla_oliveira_by').get();
+    if (!teacherDoc.exists) {
+      const q = await db.collection('users').where('email', '==', normalized).limit(1).get();
+      if (!q.empty) teacherDoc = q.docs[0];
+    }
+    if (!teacherDoc.exists) {
+      return res.status(404).json({ error: 'Conta de professora não encontrada na base de dados.' });
+    }
+
+    const hashed = await hashPassword(cleanPass);
+    const now = new Date().toISOString();
+
+    await db.collection('credentials').doc(teacherDoc.id).set({
+      userId: teacherDoc.id,
+      passwordHash: hashed.hash,
+      passwordSalt: hashed.salt,
+      passwordChangedAt: now,
+      updatedAt: now,
+    }, { merge: true });
+
+    await db.collection('users').doc(teacherDoc.id).set({
+      username: 'prof.carla',
+      email: normalized,
+      role: 'admin',
+      updatedAt: now,
+    }, { merge: true });
+
+    // Clear rate limit lock if any
+    clearLoginRateLimit(ip, normalized);
+    clearLoginRateLimit(ip, 'prof.carla');
+
+    const token = createSessionToken(teacherDoc.id);
+    const userData = teacherDoc.data() || {};
+
+    const sanitizedUser = {
+      id: teacherDoc.id,
+      name: userData.name || 'Professora Carla Oliveira',
+      fullName: userData.fullName || userData.name || 'Professora Carla Oliveira',
+      firstName: userData.firstName || 'Carla',
+      lastName: userData.lastName || 'Oliveira',
+      greetingName: userData.greetingName || 'Professora Carla',
+      username: 'prof.carla',
+      email: normalized,
+      publicId: userData.publicId || 'Docente_TIC',
+      turma: userData.turma || '',
+      role: 'admin',
+      language: userData.language || 'pt',
+      points: Number(userData.points || 100),
+      avatar: userData.avatar,
+      createdAt: userData.createdAt || now,
+      lastActivity: userData.lastActivity,
+    };
+
+    return res.json({
+      success: true,
+      message: 'Palavra-passe definida com sucesso!',
+      token,
+      user: sanitizedUser,
+    });
+  } catch (error) {
+    console.error('Teacher set password error:', error);
+    return res.status(500).json({ error: 'Erro ao configurar a palavra-passe da professora.' });
   }
 });
 
