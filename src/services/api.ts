@@ -35,7 +35,6 @@ import {
   generateKidPassword,
   parseStudentName,
   normalizeTurmaName,
-  getStudentCardPassword,
 } from '../utils/studentCredentials';
 import {
   isTeacherEmail,
@@ -255,45 +254,11 @@ export const api = {
         }
       }
 
-      // Student transitional migration (only for non-teacher students)
-      const isTeacher = isUserAdmin(userData.email, userData.role, userData.username, userData.publicId);
-      if (!isTeacher) {
-        // Legacy fallback support for transitional students if not yet hashed
-        if (!isPasswordValid && (userData as any).initialPassword) {
-          if ((userData as any).initialPassword === cleanPass) {
-            isPasswordValid = true;
-            const hashed = await hashPasswordClient(cleanPass);
-            await setDoc(doc(db, 'credentials', foundDoc.id), {
-              userId: foundDoc.id,
-              passwordHash: hashed.hash,
-              passwordSalt: hashed.salt,
-              passwordChangedAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-            }, { merge: true }).catch((e) => console.warn('[Auth] Migração de credencial falhou:', e));
-          }
-        }
-
-        // Card password fallback support (deterministic password from card)
-        if (!isPasswordValid) {
-          const cardPass = getStudentCardPassword(userData);
-          if (cardPass === cleanPass) {
-            isPasswordValid = true;
-            const hashed = await hashPasswordClient(cleanPass);
-            await setDoc(doc(db, 'credentials', foundDoc.id), {
-              userId: foundDoc.id,
-              passwordHash: hashed.hash,
-              passwordSalt: hashed.salt,
-              passwordChangedAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-            }, { merge: true }).catch((e) => console.warn('[Auth] Registo de palavra-passe do cartão falhou:', e));
-          }
-        }
-      }
-
       if (!isPasswordValid) {
         throw new Error('Utilizador ou palavra-passe incorretos.');
       }
 
+      const isTeacher = isUserAdmin(userData.email, userData.role, userData.username, userData.publicId);
       const token = isTeacher
         ? `teacher_${foundDoc.id}_${Date.now()}`
         : `std_${foundDoc.id}_${Date.now()}`;

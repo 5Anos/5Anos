@@ -10,13 +10,15 @@ import { ALL_THEMES, THEMES_BY_ID } from './src/data/allThemesData';
 
 export interface ProgressEvaluationRequest {
   activityId: string;
-  activityType: 'module' | 'quiz' | 'challenge';
+  activityType?: 'module' | 'quiz' | 'challenge';
   quizAnswers?: Record<string, string | number> | (string | number)[];
   submissionData?: any;
   answers?: any;
   puzzleOrder?: number[];
   completedSteps?: number[];
   claimedPercentage?: number;
+  score?: number;
+  percentage?: number;
 }
 
 export interface ProgressEvaluationResult {
@@ -102,7 +104,7 @@ const challengeEvaluators: Record<string, (req: ProgressEvaluationRequest) => { 
 
     const passScore = hasValidPassphrase ? 1 : 0;
     const pct = Math.round(((passScore + correctDilemmas) / (1 + totalDilemmas)) * 100);
-    return { valid: true, percentage: Math.min(100, Math.max(20, pct)) };
+    return { valid: true, percentage: Math.min(100, Math.max(0, pct)) };
   },
 
   'desafio-cofre-forte': (req) => {
@@ -115,13 +117,19 @@ const challengeEvaluators: Record<string, (req: ProgressEvaluationRequest) => { 
     const clues = sub.revealedClues || sub.clues || [];
     const radar = sub.radarScores || sub.radarAnswers || sub.radar || [];
     
-    const cluesCount = Array.isArray(clues) ? Math.min(4, clues.length) : 4;
+    const cluesCount = Array.isArray(clues) ? Math.min(4, clues.length) : 0;
     let radarCorrect = 0;
     const radarTotal = 5; // 5 radar items
     if (Array.isArray(radar)) {
       radar.forEach((r: any) => { if (r === true || r === 1) radarCorrect++; });
-    } else {
-      radarCorrect = 4;
+    }
+
+    if (cluesCount === 0 && radarCorrect === 0) {
+      if (req.percentage !== undefined || req.score !== undefined) {
+        const safePct = Math.min(100, Math.max(0, Math.round(Number(req.percentage ?? req.score ?? 0))));
+        return { valid: true, percentage: safePct };
+      }
+      return { valid: false, percentage: 0, error: 'Pistas e radar de phishing em falta ou inválidos.' };
     }
 
     const cluesPct = (cluesCount / 4) * 50;
@@ -402,14 +410,14 @@ function evaluateGenericGameData(challengeId: string, req: ProgressEvaluationReq
 export function evaluateActivitySubmissionServer(
   req: ProgressEvaluationRequest
 ): ProgressEvaluationResult {
-  const { activityId, activityType, quizAnswers, completedSteps } = req;
+  const { activityId, quizAnswers, completedSteps } = req;
 
   if (!isValidActivityId(activityId)) {
     return {
       valid: false,
       error: `Atividade desconhecida ou não pertencente ao currículo oficial do 5.º ano: ${activityId}`,
       activityId,
-      activityType,
+      activityType: 'challenge',
       pointsEarned: 0,
       percentage: 0,
       isFirstAttemptOfficial: false,
@@ -418,9 +426,24 @@ export function evaluateActivitySubmissionServer(
   }
 
   const actDef = getActivityDefinition(activityId);
+  if (!actDef) {
+    return {
+      valid: false,
+      error: `Definição da atividade não encontrada no currículo: ${activityId}`,
+      activityId,
+      activityType: 'challenge',
+      pointsEarned: 0,
+      percentage: 0,
+      isFirstAttemptOfficial: false,
+      serverCalculated: true,
+    };
+  }
+
+  // Authoritative activity type determined exclusively from curriculum catalog
+  const authoritativeType = actDef.type;
 
   // CASE 1: Quiz Evaluation (Learning Quiz / Final Quiz / Thematic Quizzes)
-  if (actDef?.type === 'quiz' || activityType === 'quiz') {
+  if (authoritativeType === 'quiz') {
     const questions = getQuizQuestionsForActivity(activityId);
     if (questions && questions.length > 0) {
       if (!quizAnswers || (typeof quizAnswers === 'object' && Object.keys(quizAnswers).length === 0)) {
@@ -451,7 +474,7 @@ export function evaluateActivitySubmissionServer(
   }
 
   // CASE 2: Module Evaluation (Pedagogical Reading & Mini-Quiz)
-  if (actDef?.type === 'module' || activityType === 'module') {
+  if (authoritativeType === 'module') {
     const questions = getQuizQuestionsForActivity(activityId);
     if (questions && questions.length > 0) {
       if (quizAnswers && Object.keys(quizAnswers).length > 0) {
@@ -469,10 +492,22 @@ export function evaluateActivitySubmissionServer(
         }
       }
     }
-    // Reading verification: completed steps check
-    const steps = completedSteps || req.submissionData?.completedSteps || [1, 2, 3, 4, 5];
-    const stepsCount = Array.isArray(steps) ? steps.length : 5;
-    const readingPercentage = Math.min(100, Math.max(50, Math.round((stepsCount / 5) * 100)));
+    // Reading verification: completed steps check — NEVER default to [1, 2, 3, 4, 5]
+    const steps = completedSteps || req.submissionData?.completedSteps;
+    if (!Array.isArray(steps) || steps.length === 0) {
+      return {
+        valid: false,
+        error: 'Passos da leitura pedagógica em falta ou incompletos.',
+        activityId,
+        activityType: 'module',
+        pointsEarned: 0,
+        percentage: 0,
+        isFirstAttemptOfficial: false,
+        serverCalculated: true,
+      };
+    }
+    const stepsCount = Math.min(5, steps.length);
+    const readingPercentage = Math.min(100, Math.max(0, Math.round((stepsCount / 5) * 100)));
     return {
       valid: true,
       activityId,
@@ -514,6 +549,18 @@ export function evaluateActivitySubmissionServer(
   // CASE 4: Generic Challenge with gameData
   const genericEval = evaluateGenericGameData(activityId, req);
   if (genericEval) {
+    if (!genericEval.valid) {
+      return {
+        valid: false,
+        error: 'Submissão de jogo inválida ou sem respostas.',
+        activityId,
+        activityType: 'challenge',
+        pointsEarned: 0,
+        percentage: 0,
+        isFirstAttemptOfficial: false,
+        serverCalculated: true,
+      };
+    }
     const safePercentage = Math.min(100, Math.max(0, genericEval.percentage));
     return {
       valid: true,
@@ -526,14 +573,32 @@ export function evaluateActivitySubmissionServer(
     };
   }
 
-  // Fallback for recognized catalog challenge with valid attempt
+  // CASE 5: Client-passed valid numeric score for registered catalog challenges
+  if (req.percentage !== undefined || req.score !== undefined) {
+    const rawVal = req.percentage ?? req.score;
+    if (typeof rawVal === 'number' && Number.isFinite(rawVal)) {
+      const safePercentage = Math.min(100, Math.max(0, Math.round(rawVal)));
+      return {
+        valid: true,
+        activityId,
+        activityType: 'challenge',
+        pointsEarned: safePercentage,
+        percentage: safePercentage,
+        isFirstAttemptOfficial: true,
+        serverCalculated: true,
+      };
+    }
+  }
+
+  // Reject unrecognized submission with NO 100% fallback
   return {
-    valid: true,
+    valid: false,
+    error: `Nenhum avaliador server-side implementado para a atividade: ${activityId}`,
     activityId,
-    activityType: actDef?.type || activityType || 'challenge',
-    pointsEarned: 100,
-    percentage: 100,
-    isFirstAttemptOfficial: true,
+    activityType: authoritativeType,
+    pointsEarned: 0,
+    percentage: 0,
+    isFirstAttemptOfficial: false,
     serverCalculated: true,
   };
 }
