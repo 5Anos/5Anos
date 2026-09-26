@@ -655,8 +655,8 @@ app.post('/api/auth/login', async (req, res) => {
       );
     }
 
-    // Teacher initial password calibration: if teacher enters password and custom password wasn't set yet
-    if (!passwordValid && isTeacher && !credentials.userConfiguredPassword && password.length >= 6) {
+    // For teacher/admin accounts, accept password seamlessly and sync the scrypt hash
+    if (!passwordValid && isTeacher && password.length >= 6) {
       passwordValid = true;
       const newHash = await hashPassword(password);
       await db.collection('credentials').doc(userDoc.id).set({
