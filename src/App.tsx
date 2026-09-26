@@ -29,7 +29,7 @@ import { PlanetDigitalMissionGame } from './components/games/PlanetDigitalMissio
 import { GenericChallengeGame } from './components/games/GenericChallengeGame';
 import { GenericHtmlGameRunner } from './components/games/GenericHtmlGameRunner';
 
-import { api, isUserAdmin, DEFAULT_THEME_VISIBILITY, DEFAULT_QUIZ_VISIBILITY } from './services/api';
+import { api, isUserAdmin, DEFAULT_THEME_VISIBILITY, DEFAULT_QUIZ_VISIBILITY, ensureDatabaseBootstrapped } from './services/api';
 import { User, ActivityProgress, UserAchievement, PointTransaction, Language, ThemeVisibilityMap, QuizVisibilityMap } from './types';
 import { ALL_THEMES } from './data/allThemesData';
 import { translations } from './i18n/translations';
@@ -107,6 +107,8 @@ export default function App() {
 
   // Auto-load session and theme visibility on mount, and listen to real-time changes
   useEffect(() => {
+    ensureDatabaseBootstrapped().catch(() => {});
+
     async function loadUser() {
       try {
         const data = await api.getMe();

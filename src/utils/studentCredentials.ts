@@ -191,16 +191,30 @@ export function generateKidUsername(
 }
 
 /**
+ * Generates a cryptographically secure random integer in [min, max)
+ */
+function secureRandomInt(min: number, max: number): number {
+  const range = max - min;
+  if (typeof globalThis.crypto?.getRandomValues === 'function') {
+    const array = new Uint32Array(1);
+    globalThis.crypto.getRandomValues(array);
+    return min + (array[0] % range);
+  }
+  return min + Math.floor(Math.random() * range);
+}
+
+/**
  * Generates a simple, unique and secure password for 10-year-olds
  * Format: palavra-amigavel + 3 dígitos (ex: azul123, gato456, estrela789, sol412, leao635)
+ * Uses cryptographically secure random selection.
  * Guaranteed to be unique across all students.
  */
 export function generateKidPassword(existingPasswords: Set<string>): string {
-  // Try up to 1000 combinations
   for (let attempt = 0; attempt < 2000; attempt++) {
-    const word = KID_FRIENDLY_WORDS[Math.floor(Math.random() * KID_FRIENDLY_WORDS.length)];
-    // Random 3 digit number (100 - 999) avoiding repetitive digits like 000
-    const num = Math.floor(100 + Math.random() * 900);
+    const wordIdx = secureRandomInt(0, KID_FRIENDLY_WORDS.length);
+    const word = KID_FRIENDLY_WORDS[wordIdx];
+    // Cryptographically secure 3 digit number (100 - 999)
+    const num = secureRandomInt(100, 1000);
     const candidate = `${word}${num}`;
 
     if (!existingPasswords.has(candidate)) {
@@ -209,15 +223,16 @@ export function generateKidPassword(existingPasswords: Set<string>): string {
     }
   }
 
-  // Fallback with timestamp suffix if words exhausted
-  const fallback = `tic${Math.floor(1000 + Math.random() * 9000)}`;
+  // Fallback with secure random 4 digits if words exhausted
+  const fallback = `tic${secureRandomInt(1000, 10000)}`;
   existingPasswords.add(fallback);
   return fallback;
 }
 
 /**
  * Returns the plain-text password for student cards, printing, and teacher management.
- * If password or initialPassword is present and not a masked string, returns it. Otherwise generates a friendly, stable password.
+ * Only returns the real password if present from the safe creation/reset handover response.
+ * NEVER reconstructs or synthesizes a fake deterministic password.
  */
 export function getStudentCardPassword(student: {
   username?: string;
@@ -249,15 +264,6 @@ export function getStudentCardPassword(student: {
     return student.plainPassword;
   }
 
-  // Deterministic friendly password for 10-year-olds: Word*2026 (ex: Estrela*2026, Sol*2026, Lua*2026)
-  const seedStr = (student.username || student.fullName || student.name || student.id || 'aluno').toLowerCase();
-  let hash = 0;
-  for (let i = 0; i < seedStr.length; i++) {
-    hash = ((hash << 5) - hash) + seedStr.charCodeAt(i);
-    hash |= 0;
-  }
-  const wordIdx = Math.abs(hash) % KID_FRIENDLY_WORDS.length;
-  const word = KID_FRIENDLY_WORDS[wordIdx];
-  const capWord = word.charAt(0).toUpperCase() + word.slice(1);
-  return `${capWord}*2026`;
+  // Password is not held in plaintext; return standard masked representation
+  return '••••••••';
 }

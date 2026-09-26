@@ -27522,14 +27522,32 @@ export const ALL_366_DAILY_TIPS: DailyTicTip[] = [
 export const TOTAL_366_TIPS_COUNT = ALL_366_DAILY_TIPS.length;
 
 /**
- * Returns the exact Daily Tip for today's calendar date (Month & Day).
+ * Fuso horário oficial da plataforma educativa (Portugal continental)
+ */
+export const PORTUGAL_TIMEZONE = 'Europe/Lisbon';
+
+/**
+ * Returns the exact Daily Tip for today's calendar date (Month & Day) in Portugal continental timezone.
  */
 export function getTodayDailyTip(date: Date = new Date()): DailyTicTip {
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
+  try {
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: PORTUGAL_TIMEZONE,
+      month: 'numeric',
+      day: 'numeric',
+    }).formatToParts(date);
+    const month = Number(parts.find((p) => p.type === 'month')?.value || (date.getMonth() + 1));
+    const day = Number(parts.find((p) => p.type === 'day')?.value || date.getDate());
 
-  const match = ALL_366_DAILY_TIPS.find((t) => t.month === month && t.day === day);
-  if (match) return match;
+    const match = ALL_366_DAILY_TIPS.find((t) => t.month === month && t.day === day);
+    if (match) return match;
+  } catch {
+    // Fallback to local date if Intl fails
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const match = ALL_366_DAILY_TIPS.find((t) => t.month === month && t.day === day);
+    if (match) return match;
+  }
 
   const start = new Date(date.getFullYear(), 0, 0);
   const diff = date.getTime() - start.getTime();
@@ -27548,11 +27566,21 @@ export function getDailyTipByDayOfYear(dayOfYear: number): DailyTicTip {
 }
 
 /**
- * Get today's formatted string YYYY-MM-DD
+ * Get today's formatted string YYYY-MM-DD in Portugal continental timezone
  */
 export function getTodayDateString(date: Date = new Date()): string {
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, '0');
-  const d = String(date.getDate()).padStart(2, '0');
-  return `${y}-${m}-${d}`;
+  try {
+    const formatter = new Intl.DateTimeFormat('en-CA', {
+      timeZone: PORTUGAL_TIMEZONE,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    return formatter.format(date);
+  } catch {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
 }

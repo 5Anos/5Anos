@@ -3,38 +3,53 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Configurações globais (Turmas, Visibilidade de Temas e Quizzes)
-    match /config/{configDoc} {
-      allow read, write: if true;
+    // Regra global de segurança por defeito: nega qualquer acesso não expressamente autorizado
+    match /{document=**} {
+      allow read, write: if false;
     }
 
-    // Coleção de Utilizadores e Subcoleções (Progresso, Dicas Diárias, Conquistas)
+    // Configurações globais (turmas, visibilidade de temas e quizzes)
+    // Leitura pública permitida para o frontend carregar configurações pedagógicas;
+    // Escrita estritamente proibida a clientes diretos (gestão exclusiva da professora via backend Admin SDK).
+    match /config/{configDoc} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Perfis Públicos e Rankings (apenas dados não-sensíveis, pseudónimos de alunos e pontuações para o leaderboard)
+    // Leitura permitida para exibição do quadro de honra e rankings de turmas;
+    // Escrita estritamente proibida ao cliente (sincronizada atomicamente pelo backend Admin SDK).
+    match /publicProfiles/{userId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Coleção de Utilizadores e Subcoleções (Dados privados, progresso, histórico de pontos e conquistas)
+    // O cliente acede a estas operações exclusivamente através dos endpoints seguros da API do servidor.
+    // Acesso direto do cliente proibido para proteger privacidade e integridade das pontuações.
     match /users/{userId} {
-      allow read, write: if true;
+      allow read, write: if false;
 
       match /{subcollection=**} {
-        allow read, write: if true;
+        allow read, write: if false;
       }
     }
 
-    // Perfis Públicos e Rankings
-    match /publicProfiles/{userId} {
-      allow read, write: if true;
-    }
-
-    // Credenciais de Acesso (Hashes PBKDF2 e Salts)
+    // Credenciais de Acesso (Hashes PBKDF2 e Salts criptográficos)
+    // NUNCA podem ser lidos nem escritos diretamente por clientes.
+    // Validação e alteração realizadas exclusivamente pelo servidor através do Firebase Admin SDK.
     match /credentials/{userId} {
-      allow read, write: if true;
+      allow read, write: if false;
     }
 
-    // Sessões e Tokens Revogados
+    // Sessões e Tokens Revogados (Gestão e validação estritamente do servidor)
+    match /revoked_sessions/{sessionId} {
+      allow read, write: if false;
+    }
+
     match /revokedTokens/{tokenId} {
-      allow read, write: if true;
-    }
-
-    // Regra padrão de fallback
-    match /{document=**} {
-      allow read, write: if true;
+      allow read, write: if false;
     }
   }
 }
+

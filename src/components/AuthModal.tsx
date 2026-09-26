@@ -12,7 +12,7 @@ import {
   ShieldCheck,
   HelpCircle,
 } from 'lucide-react';
-import { api } from '../services/api';
+import { api, isTeacherIdentifier } from '../services/api';
 import { User, Language } from '../types';
 
 interface AuthModalProps {
@@ -34,8 +34,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
 
   if (!isOpen) return null;
 
+  const isTeacherLogin = isTeacherIdentifier(identifier.trim());
+
   const getFriendlyErrorMessage = (err: unknown, defaultMsg: string): string => {
     if (err instanceof Error) {
+      if (isTeacherLogin) {
+        if (err.message.includes('incorret') || err.message.includes('inválid') || err.message.includes('não encontrado')) {
+          return language === 'pt'
+            ? 'Credenciais da professora incorretas. Verifica a palavra-passe introduzida.'
+            : 'Incorrect teacher credentials. Please check your password.';
+        }
+        return err.message;
+      }
+
       if (err.message.includes('incorret') || err.message.includes('inválid') || err.message.includes('não encontrado')) {
         return language === 'pt'
           ? 'Nome de utilizador ou palavra-passe incorretos. Verifica as tuas credenciais com a professora.'
