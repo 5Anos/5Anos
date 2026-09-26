@@ -44,6 +44,16 @@ import {
   TEACHER_ADMIN_EMAILS,
 } from '../utils/teacherAuth';
 
+export function isFallbackToken(token?: string | null): boolean {
+  if (!token) return false;
+  return token.startsWith('teacher_') || token.startsWith('std_') || token.startsWith('fallback_');
+}
+
+export function isServerSessionToken(token?: string | null): boolean {
+  if (!token) return false;
+  return !isFallbackToken(token) && token.length > 20;
+}
+
 export { isTeacherEmail, isTeacherIdentifier, isUserAdmin, TEACHER_ADMIN_EMAILS };
 
 const TOKEN_KEY = 'tic_5ano_auth_token';
@@ -100,7 +110,11 @@ async function serverApi<T>(path: string, init: RequestInit = {}): Promise<T> {
   const token = localStorage.getItem(TOKEN_KEY);
   const headers = new Headers(init.headers || {});
   headers.set('Content-Type', 'application/json');
-  if (token) headers.set('Authorization', `Bearer ${token}`);
+
+  // Only attach Authorization header if the client holds a cryptographically signed server HMAC session token
+  if (token && isServerSessionToken(token)) {
+    headers.set('Authorization', `Bearer ${token}`);
+  }
 
   const url = `${API_BASE_URL}${path}`;
 
@@ -120,7 +134,8 @@ async function serverApi<T>(path: string, init: RequestInit = {}): Promise<T> {
 
     if (!response.ok) {
       const errorMsg = body?.error || `Erro de servidor (${response.status})`;
-      if (response.status === 401) {
+      // Only trigger session expiration if a real server HMAC session was rejected by the backend
+      if (response.status === 401 && token && isServerSessionToken(token)) {
         localStorage.removeItem(TOKEN_KEY);
         localStorage.removeItem(CURRENT_USER_KEY);
         window.dispatchEvent(new CustomEvent('tic_session_expired'));
@@ -392,18 +407,24 @@ export const api = {
     const current = this.getCurrentSessionUser();
     if (!current) throw new Error('Utilizador não autenticado.');
 
-    try {
-      const res = await serverApi<any>('/api/auth/me');
-      if (res?.user) {
-        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(res.user));
-        return res;
-      }
-    } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) {
-        // use cached/local
+    const token = this.getToken();
+
+    // 1. If an active HMAC server session token is present, sync with the server API
+    if (token && isServerSessionToken(token)) {
+      try {
+        const res = await serverApi<any>('/api/auth/me');
+        if (res?.user) {
+          localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(res.user));
+          return res;
+        }
+      } catch (err: any) {
+        if (!(err instanceof ServerUnavailableError)) {
+          // If transient error, fall through to direct Firestore fetch
+        }
       }
     }
 
+    // 2. Direct Firestore fallback (for standalone/offline fallback sessions)
     try {
       const userDoc = await getDoc(doc(db, 'users', current.id));
       const freshUser = userDoc.exists() ? ({ id: userDoc.id, ...userDoc.data() } as User) : current;
@@ -1031,10 +1052,40 @@ export const api = {
     students: Array<{ number?: number; name: string; turma?: string; sourceFile?: string }>;
     filesProcessed?: string[];
   }> {
-    // Client-side Excel / CSV parser with SheetJS
+    const commaIdx = fileBase64.indexOf(',');
+    const cleanBase64 = commaIdx >= 0 ? fileBase64.substring(commaIdx + 1) : fileBase64;
+    const lowerName = fileName.toLowerCase();
+    const isPdfOrZip = lowerName.endsWith('.pdf') || lowerName.endsWith('.zip');
+
+    // 1. PDF and ZIP files must be parsed by the authoritative server engine
+    if (isPdfOrZip) {
+      try {
+        const sRes = await serverApi<any>('/api/teacher/parse-file', {
+          method: 'POST',
+          body: JSON.stringify({ base64: cleanBase64, filename: fileName, defaultTurma }),
+        });
+        if (sRes && Array.isArray(sRes.students)) {
+          return {
+            success: true,
+            count: sRes.count ?? sRes.students.length,
+            rawData: sRes.rawData ?? sRes.students,
+            students: sRes.students.map((s: any, idx: number) => ({
+              number: s.number ?? idx + 1,
+              name: String(s.name || '').trim(),
+              turma: normalizeTurmaName(s.turma) || defaultTurma,
+              sourceFile: s.sourceFile || fileName,
+            })),
+            filesProcessed: sRes.filesProcessed || [fileName],
+          };
+        }
+      } catch (srvErr) {
+        console.warn('Server parse-file error for PDF/ZIP:', srvErr);
+        throw srvErr;
+      }
+    }
+
+    // 2. Client-side Excel / CSV parser with SheetJS
     try {
-      const commaIdx = fileBase64.indexOf(',');
-      const cleanBase64 = commaIdx >= 0 ? fileBase64.substring(commaIdx + 1) : fileBase64;
       const binaryString = atob(cleanBase64);
       const bytes = new Uint8Array(binaryString.length);
       for (let i = 0; i < binaryString.length; i++) {
@@ -1063,23 +1114,50 @@ export const api = {
         });
       });
 
-      return {
-        success: true,
-        count: extracted.length,
-        rawData: extracted.map(e => ({ name: e.name, turma: e.turma })),
-        students: extracted,
-        filesProcessed: [fileName],
-      };
+      if (extracted.length > 0) {
+        return {
+          success: true,
+          count: extracted.length,
+          rawData: extracted.map(e => ({ name: e.name, turma: e.turma })),
+          students: extracted,
+          filesProcessed: [fileName],
+        };
+      }
     } catch (err: any) {
-      console.warn('Direct client parse warning:', err);
-      return {
-        success: true,
-        count: 0,
-        rawData: [],
-        students: [],
-        filesProcessed: [fileName],
-      };
+      console.warn('Direct client parse warning, falling back to server:', err);
     }
+
+    // 3. Fallback to server engine if client parsing returned no rows
+    try {
+      const sRes = await serverApi<any>('/api/teacher/parse-file', {
+        method: 'POST',
+        body: JSON.stringify({ base64: cleanBase64, filename: fileName, defaultTurma }),
+      });
+      if (sRes && Array.isArray(sRes.students)) {
+        return {
+          success: true,
+          count: sRes.count ?? sRes.students.length,
+          rawData: sRes.rawData ?? sRes.students,
+          students: sRes.students.map((s: any, idx: number) => ({
+            number: s.number ?? idx + 1,
+            name: String(s.name || '').trim(),
+            turma: normalizeTurmaName(s.turma) || defaultTurma,
+            sourceFile: s.sourceFile || fileName,
+          })),
+          filesProcessed: sRes.filesProcessed || [fileName],
+        };
+      }
+    } catch (fallbackErr) {
+      console.warn('Server fallback parse error:', fallbackErr);
+    }
+
+    return {
+      success: true,
+      count: 0,
+      rawData: [],
+      students: [],
+      filesProcessed: [fileName],
+    };
   },
 
   async importStudentsBatch(

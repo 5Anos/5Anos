@@ -393,48 +393,27 @@ function verifySessionToken(token: string): SessionPayload | null {
   try {
     if (!SESSION_SECRET || !token) return null;
 
-    // 1. Signed server session token: base64url(userId.timestamp.sessionId.signature)
-    try {
-      const decoded = Buffer.from(token, 'base64url').toString('utf8');
-      const parts = decoded.split('.');
-      if (parts.length === 4) {
-        const [userId, timestampStr, sessionId, signature] = parts;
-        if (userId && timestampStr && sessionId && signature) {
-          const payload = `${userId}.${timestampStr}.${sessionId}`;
-          const expectedSignature = crypto.createHmac('sha256', SESSION_SECRET).update(payload).digest('hex');
-          if (safeEqual(signature, expectedSignature)) {
-            const issuedAt = Number(timestampStr);
-            if (Number.isFinite(issuedAt)) {
-              if (Date.now() - issuedAt <= MAX_SESSION_AGE && issuedAt <= Date.now() + 60_000) {
-                if (!revokedSessionIds.has(sessionId) && !revokedSessionIds.has(token)) {
-                  return { userId, issuedAt, sessionId };
-                }
-              }
-            }
-          }
-        }
-      }
-    } catch {}
+    const decoded = Buffer.from(token, 'base64url').toString('utf8');
+    const parts = decoded.split('.');
+    if (parts.length !== 4) return null;
 
-    // 2. Direct Firestore fallback session token: teacher_<userId>_<timestamp> or std_<userId>_<timestamp>
-    if (token.startsWith('teacher_') || token.startsWith('std_')) {
-      const parts = token.split('_');
-      if (parts.length >= 3) {
-        const timestampStr = parts[parts.length - 1];
-        const userId = parts.slice(1, parts.length - 1).join('_');
-        const issuedAt = Number(timestampStr);
+    const [userId, timestampStr, sessionId, signature] = parts;
+    if (!userId || !timestampStr || !sessionId || !signature) return null;
 
-        if (userId && Number.isFinite(issuedAt)) {
-          if (Date.now() - issuedAt <= MAX_SESSION_AGE && issuedAt <= Date.now() + 60_000) {
-            if (!revokedSessionIds.has(token) && !revokedSessionIds.has(userId)) {
-              return { userId, issuedAt, sessionId: token };
-            }
-          }
-        }
-      }
-    }
+    const payload = `${userId}.${timestampStr}.${sessionId}`;
+    const expectedSignature = crypto.createHmac('sha256', SESSION_SECRET).update(payload).digest('hex');
+    if (!safeEqual(signature, expectedSignature)) return null;
 
-    return null;
+    const issuedAt = Number(timestampStr);
+    if (!Number.isFinite(issuedAt)) return null;
+
+    if (Date.now() - issuedAt > MAX_SESSION_AGE) return null;
+    if (issuedAt > Date.now() + 60_000) return null;
+
+    // Fast in-memory check
+    if (revokedSessionIds.has(sessionId)) return null;
+
+    return { userId, issuedAt, sessionId };
   } catch {
     return null;
   }
@@ -996,212 +975,238 @@ app.get('/api/public-ids/taken', requireAuth, async (_req, res) => {
 });
 
 /* ============================================================
+   CONCURRENCY CONTROL — PER-USER MUTEX LOCK (Point 9)
+   ============================================================ */
+const userOperationLocks = new Map<string, Promise<unknown>>();
+
+async function withUserLock<T>(userId: string, fn: () => Promise<T>): Promise<T> {
+  const currentLock = userOperationLocks.get(userId) || Promise.resolve();
+  let resolveNext: () => void;
+  const nextLock = new Promise<void>((resolve) => {
+    resolveNext = resolve;
+  });
+  userOperationLocks.set(userId, currentLock.then(() => nextLock, () => nextLock));
+
+  try {
+    await currentLock;
+    return await fn();
+  } finally {
+    resolveNext!();
+    if (userOperationLocks.get(userId) === nextLock) {
+      userOperationLocks.delete(userId);
+    }
+  }
+}
+
+/* ============================================================
    PROGRESS SAVING — STRICT SERVER AUTHORITATIVE (Point 2)
    ============================================================ */
 
 app.post('/api/progress/save', requireAuth, async (req: AuthenticatedRequest, res) => {
-  try {
-    const userId = req.userId!;
-    const body = req.body || {};
-    const activityId = String(body.activityId || '');
-    const activityType = String(body.activityType || 'challenge') as 'module' | 'quiz' | 'challenge';
-    const themeId = String(body.themeId || '').slice(0, 100);
+  const userId = req.userId!;
+  return withUserLock(userId, async () => {
+    try {
+      const body = req.body || {};
+      const activityId = String(body.activityId || '');
+      const activityType = String(body.activityType || 'challenge') as 'module' | 'quiz' | 'challenge';
+      const themeId = String(body.themeId || '').slice(0, 100);
 
-    if (!activityId || !themeId) return res.status(400).json({ error: 'Identificador da atividade em falta.' });
-    if (!isValidActivityId(activityId)) return res.status(400).json({ error: 'Atividade inválida ou não reconhecida no currículo.' });
+      if (!activityId || !themeId) return res.status(400).json({ error: 'Identificador da atividade em falta.' });
+      if (!isValidActivityId(activityId)) return res.status(400).json({ error: 'Atividade inválida ou não reconhecida no currículo.' });
 
-    // Authoritative Server Evaluation
-    const evaluation = evaluateActivitySubmissionServer({
-      activityId,
-      activityType,
-      quizAnswers: body.quizAnswers,
-      submissionData: body.submissionData,
-      answers: body.answers,
-      puzzleOrder: body.puzzleOrder,
-      completedSteps: body.completedSteps,
-    });
-
-    if (!evaluation.valid) {
-      return res.status(400).json({ error: evaluation.error || 'Atividade não pôde ser avaliada pelo servidor.' });
-    }
-
-    const userRef = db.collection('users').doc(userId);
-    const userSnap = await userRef.get();
-    const user = userSnap.data() || {};
-    const isTeacher = user.role === 'admin' || user.role === 'teacher' || isTeacherEmail(normalizeEmail(user.email));
-
-    const quiz = isLearningQuizServer(activityId, activityType);
-
-    if (!isTeacher) {
-      const thVisSnap = await db.collection('config').doc('theme_visibility').get();
-      const thVisData = thVisSnap.exists ? thVisSnap.data()?.visibility || {} : {};
-      if (thVisData[themeId] === false) {
-        return res.status(403).json({ error: 'Este tema pedagógico está atualmente oculto pela professora de TIC.' });
-      }
-    }
-
-    if (quiz && !isTeacher) {
-      const qVisSnap = await db.collection('config').doc('quiz_visibility').get();
-      const qVisData = qVisSnap.exists ? qVisSnap.data()?.visibility || {} : {};
-      if (qVisData[themeId] !== true) {
-        return res.status(403).json({ error: 'Este quiz de aprendizagem está atualmente bloqueado pela professora de TIC.' });
-      }
-    }
-
-    const progressRef = userRef.collection('progress').doc(activityId);
-    const existingSnap = await progressRef.get();
-    const existing = existingSnap.exists ? (existingSnap.data() || {}) : null;
-    const now = new Date().toISOString();
-
-    const attemptScore = Math.max(0, Math.min(100, Math.round(Number(evaluation.percentage) || 0)));
-    const previousBest = Math.max(0, Math.min(100, Math.round(Number(existing?.bestScore ?? existing?.bestPercentage ?? existing?.score ?? 0))));
-    const attempts = Number(existing?.attempts || 0) + 1;
-    const best = Math.max(previousBest, attemptScore);
-
-    let xpGain = 0;
-    const record: Record<string, unknown> = {
-      userId,
-      activityId,
-      activityType: quiz ? 'quiz' : evaluation.activityType,
-      themeId,
-      status: quiz ? 'completed' : (best >= 50 ? 'completed' : 'in_progress'),
-      score: attemptScore,
-      maxScore: 100,
-      percentage: attemptScore,
-      attempts,
-      bestScore: best,
-      bestPercentage: best,
-      latestScore: attemptScore,
-      latestPercentage: attemptScore,
-      lastUpdated: now,
-      serverCalculated: true,
-    };
-
-    if (quiz) {
-      // Learning Quizzes are diagnostic (0 XP)
-      xpGain = 0;
-      record.awardedXp = 0;
-      if (existing?.firstAttemptScore === undefined) {
-        record.firstAttemptScore = attemptScore;
-        record.firstAttemptPercentage = attemptScore;
-        record.firstAttemptDate = now;
-      } else {
-        record.firstAttemptScore = existing.firstAttemptScore;
-        record.firstAttemptPercentage = existing.firstAttemptPercentage;
-        record.firstAttemptDate = existing.firstAttemptDate || now;
-      }
-    } else {
-      // Challenges award up to 100 XP based on performance
-      xpGain = Math.max(0, best - previousBest);
-      record.awardedXp = best;
-      if (existing?.firstAttemptScore === undefined) {
-        record.firstAttemptScore = attemptScore;
-        record.firstAttemptPercentage = attemptScore;
-        record.firstAttemptDate = now;
-      } else {
-        record.firstAttemptScore = existing.firstAttemptScore;
-        record.firstAttemptDate = existing.firstAttemptDate || now;
-      }
-    }
-
-    await progressRef.set(record, { merge: true });
-
-    if (xpGain > 0) {
-      const txId = `pt-act-${activityId}-${Date.now()}`;
-      await userRef.collection('pointsHistory').doc(txId).set({
-        id: txId,
-        userId,
-        amount: xpGain,
-        reason: `🎮 Desafio TIC (+${xpGain} XP): ${body.activityTitle || activityId}`,
-        timestamp: now,
+      // Authoritative Server Evaluation
+      const evaluation = evaluateActivitySubmissionServer({
+        activityId,
+        activityType,
+        quizAnswers: body.quizAnswers,
+        submissionData: body.submissionData,
+        answers: body.answers,
+        puzzleOrder: body.puzzleOrder,
+        completedSteps: body.completedSteps,
       });
-    }
 
-    // Consolidated total points & badge evaluation
-    const [allProgressSnap, achSnap, dailySnap] = await Promise.all([
-      userRef.collection('progress').get(),
-      userRef.collection('achievements').get(),
-      userRef.collection('dailyTips').get(),
-    ]);
-
-    let dailyPoints = 0;
-    dailySnap.docs.forEach((d) => {
-      dailyPoints += Math.max(0, Math.min(1000, Math.round(Number(d.data()?.pointsEarned || 0))));
-    });
-
-    let challengesPointsSum = 0;
-    const completedForBadges: { activityId: string; points: number; percentage?: number }[] = [];
-    allProgressSnap.docs.forEach((d) => {
-      const pData = d.data();
-      const pId = String(pData.activityId || d.id);
-      const isQ = isLearningQuizServer(pId, pData.activityType);
-      const pBest = Math.max(0, Math.min(100, Math.round(Number(pData.bestScore ?? pData.bestPercentage ?? pData.score ?? 0))));
-      if (!isQ) {
-        challengesPointsSum += pBest;
+      if (!evaluation.valid) {
+        return res.status(400).json({ error: evaluation.error || 'Atividade não pôde ser avaliada pelo servidor.' });
       }
-      if (pBest >= 50 || pData.status === 'completed' || isQ) {
-        completedForBadges.push({ activityId: pId, points: pBest, percentage: pBest });
+
+      const userRef = db.collection('users').doc(userId);
+      const userSnap = await userRef.get();
+      const user = userSnap.data() || {};
+      const isTeacher = user.role === 'admin' || user.role === 'teacher' || isTeacherEmail(normalizeEmail(user.email));
+
+      const quiz = isLearningQuizServer(activityId, activityType);
+
+      if (!isTeacher) {
+        const thVisSnap = await db.collection('config').doc('theme_visibility').get();
+        const thVisData = thVisSnap.exists ? thVisSnap.data()?.visibility || {} : {};
+        if (thVisData[themeId] === false) {
+          return res.status(403).json({ error: 'Este tema pedagógico está atualmente oculto pela professora de TIC.' });
+        }
       }
-    });
 
-    const currentBaseXp = isTeacher ? 0 : dailyPoints + challengesPointsSum;
-    const existingBadgeIds = achSnap.docs.map((d) => d.id);
-    const badgeEval = evaluateBadgesEarned(completedForBadges, currentBaseXp, existingBadgeIds);
-    let newlyEarnedBonus = 0;
+      if (quiz && !isTeacher) {
+        const qVisSnap = await db.collection('config').doc('quiz_visibility').get();
+        const qVisData = qVisSnap.exists ? qVisSnap.data()?.visibility || {} : {};
+        if (qVisData[themeId] !== true) {
+          return res.status(403).json({ error: 'Este quiz de aprendizagem está atualmente bloqueado pela professora de TIC.' });
+        }
+      }
 
-    for (const b of badgeEval.newlyUnlockedBadges || []) {
-      await userRef.collection('achievements').doc(b.id).set({
-        id: b.id,
+      const progressRef = userRef.collection('progress').doc(activityId);
+      const existingSnap = await progressRef.get();
+      const existing = existingSnap.exists ? (existingSnap.data() || {}) : null;
+      const now = new Date().toISOString();
+
+      const attemptScore = Math.max(0, Math.min(100, Math.round(Number(evaluation.percentage) || 0)));
+      const previousBest = Math.max(0, Math.min(100, Math.round(Number(existing?.bestScore ?? existing?.bestPercentage ?? existing?.score ?? 0))));
+      const attempts = Number(existing?.attempts || 0) + 1;
+      const best = Math.max(previousBest, attemptScore);
+
+      let xpGain = 0;
+      const record: Record<string, unknown> = {
         userId,
-        badgeId: b.id,
-        unlockedAt: now,
-      });
-      newlyEarnedBonus += b.pointsBonus || 0;
-      if (b.pointsBonus > 0) {
-        const txId = `pt-badge-${b.id}-${Date.now()}`;
+        activityId,
+        activityType: quiz ? 'quiz' : evaluation.activityType,
+        themeId,
+        status: quiz ? 'completed' : (best >= 50 ? 'completed' : 'in_progress'),
+        score: attemptScore,
+        maxScore: 100,
+        percentage: attemptScore,
+        attempts,
+        bestScore: best,
+        bestPercentage: best,
+        latestScore: attemptScore,
+        latestPercentage: attemptScore,
+        lastUpdated: now,
+        serverCalculated: true,
+      };
+
+      if (quiz) {
+        // Learning Quizzes are diagnostic (0 XP)
+        xpGain = 0;
+        record.awardedXp = 0;
+        if (existing?.firstAttemptScore === undefined) {
+          record.firstAttemptScore = attemptScore;
+          record.firstAttemptPercentage = attemptScore;
+          record.firstAttemptDate = now;
+        } else {
+          record.firstAttemptScore = existing.firstAttemptScore;
+          record.firstAttemptPercentage = existing.firstAttemptPercentage;
+          record.firstAttemptDate = existing.firstAttemptDate || now;
+        }
+      } else {
+        // Challenges award up to 100 XP based on performance
+        xpGain = Math.max(0, best - previousBest);
+        record.awardedXp = best;
+        if (existing?.firstAttemptScore === undefined) {
+          record.firstAttemptScore = attemptScore;
+          record.firstAttemptPercentage = attemptScore;
+          record.firstAttemptDate = now;
+        } else {
+          record.firstAttemptScore = existing.firstAttemptScore;
+          record.firstAttemptDate = existing.firstAttemptDate || now;
+        }
+      }
+
+      await progressRef.set(record, { merge: true });
+
+      if (xpGain > 0) {
+        const txId = `pt-act-${activityId}-${Date.now()}`;
         await userRef.collection('pointsHistory').doc(txId).set({
           id: txId,
           userId,
-          amount: b.pointsBonus,
-          reason: `🏆 Conquista Desbloqueada (+${b.pointsBonus} XP): ${b.namePt || b.id}`,
+          amount: xpGain,
+          reason: `🎮 Desafio TIC (+${xpGain} XP): ${body.activityTitle || activityId}`,
           timestamp: now,
         });
       }
+
+      // Consolidated total points & badge evaluation
+      const [allProgressSnap, achSnap, dailySnap] = await Promise.all([
+        userRef.collection('progress').get(),
+        userRef.collection('achievements').get(),
+        userRef.collection('dailyTips').get(),
+      ]);
+
+      let dailyPoints = 0;
+      dailySnap.docs.forEach((d) => {
+        dailyPoints += Math.max(0, Math.min(1000, Math.round(Number(d.data()?.pointsEarned || 0))));
+      });
+
+      let challengesPointsSum = 0;
+      const completedForBadges: { activityId: string; points: number; percentage?: number }[] = [];
+      allProgressSnap.docs.forEach((d) => {
+        const pData = d.data();
+        const pId = String(pData.activityId || d.id);
+        const isQ = isLearningQuizServer(pId, pData.activityType);
+        const pBest = Math.max(0, Math.min(100, Math.round(Number(pData.bestScore ?? pData.bestPercentage ?? pData.score ?? 0))));
+        if (!isQ) {
+          challengesPointsSum += pBest;
+        }
+        if (pBest >= 50 || pData.status === 'completed' || isQ) {
+          completedForBadges.push({ activityId: pId, points: pBest, percentage: pBest });
+        }
+      });
+
+      const currentBaseXp = isTeacher ? 0 : dailyPoints + challengesPointsSum;
+      const existingBadgeIds = achSnap.docs.map((d) => d.id);
+      const badgeEval = evaluateBadgesEarned(completedForBadges, currentBaseXp, existingBadgeIds);
+      let newlyEarnedBonus = 0;
+
+      for (const b of badgeEval.newlyUnlockedBadges || []) {
+        await userRef.collection('achievements').doc(b.id).set({
+          id: b.id,
+          userId,
+          badgeId: b.id,
+          unlockedAt: now,
+        });
+        newlyEarnedBonus += b.pointsBonus || 0;
+        if (b.pointsBonus > 0) {
+          const txId = `pt-badge-${b.id}-${Date.now()}`;
+          await userRef.collection('pointsHistory').doc(txId).set({
+            id: txId,
+            userId,
+            amount: b.pointsBonus,
+            reason: `🏆 Conquista Desbloqueada (+${b.pointsBonus} XP): ${b.namePt || b.id}`,
+            timestamp: now,
+          });
+        }
+      }
+
+      const totalPoints = isTeacher ? 0 : currentBaseXp + newlyEarnedBonus;
+      const lastActivity = {
+        activityId,
+        activityTitle: body.activityTitle || activityId,
+        themeId,
+        score: attemptScore,
+        percentage: attemptScore,
+        timestamp: now,
+      };
+
+      await userRef.set({
+        points: totalPoints,
+        xp: totalPoints,
+        lastActivity,
+        updatedAt: now,
+      }, { merge: true });
+
+      await syncPublicProfile(userId);
+
+      const updatedAchievements = (await userRef.collection('achievements').get()).docs.map(d => ({ id: d.id, ...d.data() }));
+
+      return res.json({
+        success: true,
+        record,
+        userPoints: totalPoints,
+        earnedXp: xpGain,
+        lastActivity,
+        achievements: updatedAchievements,
+      });
+    } catch (error) {
+      console.error('Save progress error:', error);
+      return res.status(500).json({ error: 'Erro ao registar o progresso no servidor.' });
     }
-
-    const totalPoints = isTeacher ? 0 : currentBaseXp + newlyEarnedBonus;
-    const lastActivity = {
-      activityId,
-      activityTitle: body.activityTitle || activityId,
-      themeId,
-      score: attemptScore,
-      percentage: attemptScore,
-      timestamp: now,
-    };
-
-    await userRef.set({
-      points: totalPoints,
-      xp: totalPoints,
-      lastActivity,
-      updatedAt: now,
-    }, { merge: true });
-
-    await syncPublicProfile(userId);
-
-    const updatedAchievements = (await userRef.collection('achievements').get()).docs.map(d => ({ id: d.id, ...d.data() }));
-
-    return res.json({
-      success: true,
-      record,
-      userPoints: totalPoints,
-      earnedXp: xpGain,
-      lastActivity,
-      achievements: updatedAchievements,
-    });
-  } catch (error) {
-    console.error('Save progress error:', error);
-    return res.status(500).json({ error: 'Erro ao registar o progresso no servidor.' });
-  }
+  });
 });
 
 /* ============================================================
@@ -1217,156 +1222,160 @@ function isAllowedDailyTipDate(dateStr: string): boolean {
 }
 
 app.post('/api/daily-tip/read', requireAuth, async (req: AuthenticatedRequest, res) => {
-  try {
-    const userId = req.userId!;
-    const serverToday = getTodayUtcString();
+  const userId = req.userId!;
+  return withUserLock(userId, async () => {
+    try {
+      const serverToday = getTodayUtcString();
 
-    const ref = db.collection('users').doc(userId).collection('dailyTips').doc(serverToday);
-    const snap = await ref.get();
-    if (snap.exists && (snap.data()?.read || snap.data()?.answered)) {
-      const userSnap = await db.collection('users').doc(userId).get();
-      return res.json({
-        success: true,
-        user: userSnap.data(),
-        userPoints: Number(userSnap.data()?.points || 0),
-        earnedPoints: 0,
-        achievements: [],
-      });
-    }
+      const ref = db.collection('users').doc(userId).collection('dailyTips').doc(serverToday);
+      const snap = await ref.get();
+      if (snap.exists && (snap.data()?.read || snap.data()?.answered)) {
+        const userSnap = await db.collection('users').doc(userId).get();
+        return res.json({
+          success: true,
+          user: userSnap.data(),
+          userPoints: Number(userSnap.data()?.points || 0),
+          earnedPoints: 0,
+          achievements: [],
+        });
+      }
 
-    const now = new Date().toISOString();
-    const evaluation = evaluateDailyTipSubmission(serverToday, '');
-    const tipTitle = evaluation.tipTitle;
+      const now = new Date().toISOString();
+      const evaluation = evaluateDailyTipSubmission(serverToday, '');
+      const tipTitle = evaluation.tipTitle;
 
-    await ref.set({
-      userId,
-      date: serverToday,
-      tipTitle,
-      read: true,
-      readPoints: 20,
-      pointsEarned: 20,
-      timestamp: now,
-    }, { merge: true });
+      await ref.set({
+        userId,
+        date: serverToday,
+        tipTitle,
+        read: true,
+        readPoints: 20,
+        pointsEarned: 20,
+        timestamp: now,
+      }, { merge: true });
 
-    const userRef = db.collection('users').doc(userId);
-    const userSnap = await userRef.get();
-    const user = userSnap.data() || {};
-    const points = Number(user.points || 0) + 20;
-    const lastActivity = { themeId: 'daily_tip', title: `📖 Leitura da Dica: ${tipTitle}`, timestamp: now };
+      const userRef = db.collection('users').doc(userId);
+      const userSnap = await userRef.get();
+      const user = userSnap.data() || {};
+      const points = Number(user.points || 0) + 20;
+      const lastActivity = { themeId: 'daily_tip', title: `📖 Leitura da Dica: ${tipTitle}`, timestamp: now };
 
-    await userRef.set({ points, xp: points, lastActivity, updatedAt: now }, { merge: true });
+      await userRef.set({ points, xp: points, lastActivity, updatedAt: now }, { merge: true });
 
-    const txId = `pt-daily-read-${serverToday}-${Date.now()}`;
-    await userRef.collection('pointsHistory').doc(txId).set({
-      id: txId,
-      userId,
-      amount: 20,
-      reason: `📖 Leitura da Dica TIC (+20 XP): ${tipTitle}`,
-      timestamp: now,
-    });
-
-    await syncPublicProfile(userId);
-
-    return res.json({
-      success: true,
-      user: { ...user, points, lastActivity },
-      userPoints: points,
-      earnedPoints: 20,
-      achievements: [],
-    });
-  } catch (error) {
-    console.error('Daily tip read error:', error);
-    return res.status(500).json({ error: 'Não foi possível registar a leitura da Dica do Dia.' });
-  }
-});
-
-app.post('/api/daily-tip/answer', requireAuth, async (req: AuthenticatedRequest, res) => {
-  try {
-    const userId = req.userId!;
-    const serverToday = getTodayUtcString();
-    const selectedOptionId = String(req.body?.selectedOptionId || '').slice(0, 100);
-
-    if (!selectedOptionId) return res.status(400).json({ error: 'Resposta da Dica do Dia não fornecida.' });
-
-    const ref = db.collection('users').doc(userId).collection('dailyTips').doc(serverToday);
-    const snap = await ref.get();
-    const existing = snap.exists ? (snap.data() || {}) : {};
-
-    if (existing.answered) {
-      const userSnap = await db.collection('users').doc(userId).get();
-      return res.json({
-        success: true,
-        user: userSnap.data(),
-        userPoints: Number(userSnap.data()?.points || 0),
-        earnedPoints: 0,
-        readingPoints: Number(existing.readPoints || 0),
-        answerPoints: Number(existing.answerPoints || 0),
-        achievements: [],
-      });
-    }
-
-    const evaluation = evaluateDailyTipSubmission(serverToday, selectedOptionId);
-    const correct = Boolean(evaluation.isCorrect);
-    const readingPoints = existing.read ? 0 : 20;
-    const answerPoints = correct ? 30 : 0;
-    const earned = readingPoints + answerPoints;
-    const now = new Date().toISOString();
-
-    await ref.set({
-      userId,
-      date: serverToday,
-      tipTitle: evaluation.tipTitle,
-      read: true,
-      answered: true,
-      selectedOptionId,
-      isCorrect: correct,
-      readPoints: 20,
-      answerPoints,
-      pointsEarned: (Number(existing.pointsEarned || 0)) + earned,
-      timestamp: now,
-    }, { merge: true });
-
-    const userRef = db.collection('users').doc(userId);
-    const userSnap = await userRef.get();
-    const user = userSnap.data() || {};
-    const points = Number(user.points || 0) + earned;
-    const lastActivity = {
-      themeId: 'daily_tip',
-      title: `⚡ Resposta à Dica TIC (${correct ? 'Correta' : 'Tentada'}): ${evaluation.tipTitle}`,
-      timestamp: now,
-    };
-
-    await userRef.set({ points, xp: points, lastActivity, updatedAt: now }, { merge: true });
-
-    if (earned > 0) {
-      const txId = `pt-daily-ans-${serverToday}-${Date.now()}`;
+      const txId = `pt-daily-read-${serverToday}-${Date.now()}`;
       await userRef.collection('pointsHistory').doc(txId).set({
         id: txId,
         userId,
-        amount: earned,
-        reason: correct
-          ? `⚡ Acerto na Dica do Dia (+${earned} XP): ${evaluation.tipTitle}`
-          : `⚡ Participação na Dica do Dia (+${earned} XP): ${evaluation.tipTitle}`,
+        amount: 20,
+        reason: `📖 Leitura da Dica TIC (+20 XP): ${tipTitle}`,
         timestamp: now,
       });
+
+      await syncPublicProfile(userId);
+
+      return res.json({
+        success: true,
+        user: { ...user, points, lastActivity },
+        userPoints: points,
+        earnedPoints: 20,
+        achievements: [],
+      });
+    } catch (error) {
+      console.error('Daily tip read error:', error);
+      return res.status(500).json({ error: 'Não foi possível registar a leitura da Dica do Dia.' });
     }
+  });
+});
 
-    await syncPublicProfile(userId);
+app.post('/api/daily-tip/answer', requireAuth, async (req: AuthenticatedRequest, res) => {
+  const userId = req.userId!;
+  return withUserLock(userId, async () => {
+    try {
+      const serverToday = getTodayUtcString();
+      const selectedOptionId = String(req.body?.selectedOptionId || '').slice(0, 100);
 
-    return res.json({
-      success: true,
-      correct,
-      earnedPoints: earned,
-      readingPoints: 20,
-      answerPoints,
-      userPoints: points,
-      user: { ...user, points, lastActivity },
-      achievements: [],
-    });
-  } catch (error) {
-    console.error('Daily tip answer error:', error);
-    return res.status(500).json({ error: 'Não foi possível registar a resposta à Dica do Dia.' });
-  }
+      if (!selectedOptionId) return res.status(400).json({ error: 'Resposta da Dica do Dia não fornecida.' });
+
+      const ref = db.collection('users').doc(userId).collection('dailyTips').doc(serverToday);
+      const snap = await ref.get();
+      const existing = snap.exists ? (snap.data() || {}) : {};
+
+      if (existing.answered) {
+        const userSnap = await db.collection('users').doc(userId).get();
+        return res.json({
+          success: true,
+          user: userSnap.data(),
+          userPoints: Number(userSnap.data()?.points || 0),
+          earnedPoints: 0,
+          readingPoints: Number(existing.readPoints || 0),
+          answerPoints: Number(existing.answerPoints || 0),
+          achievements: [],
+        });
+      }
+
+      const evaluation = evaluateDailyTipSubmission(serverToday, selectedOptionId);
+      const correct = Boolean(evaluation.isCorrect);
+      const readingPoints = existing.read ? 0 : 20;
+      const answerPoints = correct ? 30 : 0;
+      const earned = readingPoints + answerPoints;
+      const now = new Date().toISOString();
+
+      await ref.set({
+        userId,
+        date: serverToday,
+        tipTitle: evaluation.tipTitle,
+        read: true,
+        answered: true,
+        selectedOptionId,
+        isCorrect: correct,
+        readPoints: 20,
+        answerPoints,
+        pointsEarned: (Number(existing.pointsEarned || 0)) + earned,
+        timestamp: now,
+      }, { merge: true });
+
+      const userRef = db.collection('users').doc(userId);
+      const userSnap = await userRef.get();
+      const user = userSnap.data() || {};
+      const points = Number(user.points || 0) + earned;
+      const lastActivity = {
+        themeId: 'daily_tip',
+        title: `⚡ Resposta à Dica TIC (${correct ? 'Correta' : 'Tentada'}): ${evaluation.tipTitle}`,
+        timestamp: now,
+      };
+
+      await userRef.set({ points, xp: points, lastActivity, updatedAt: now }, { merge: true });
+
+      if (earned > 0) {
+        const txId = `pt-daily-ans-${serverToday}-${Date.now()}`;
+        await userRef.collection('pointsHistory').doc(txId).set({
+          id: txId,
+          userId,
+          amount: earned,
+          reason: correct
+            ? `⚡ Acerto na Dica do Dia (+${earned} XP): ${evaluation.tipTitle}`
+            : `⚡ Participação na Dica do Dia (+${earned} XP): ${evaluation.tipTitle}`,
+          timestamp: now,
+        });
+      }
+
+      await syncPublicProfile(userId);
+
+      return res.json({
+        success: true,
+        correct,
+        earnedPoints: earned,
+        readingPoints: 20,
+        answerPoints,
+        userPoints: points,
+        user: { ...user, points, lastActivity },
+        achievements: [],
+      });
+    } catch (error) {
+      console.error('Daily tip answer error:', error);
+      return res.status(500).json({ error: 'Não foi possível registar a resposta à Dica do Dia.' });
+    }
+  });
 });
 
 app.get('/api/daily-tip/status', requireAuth, async (req: AuthenticatedRequest, res) => {
@@ -1505,14 +1514,49 @@ async function extractTextFromPdfBuffer(buffer: Buffer): Promise<string> {
   try {
     const mod: any = await import('pdf-parse');
     const PDFParse = mod.PDFParse || mod.default?.PDFParse || mod.default;
+
     if (typeof PDFParse === 'function') {
-      const data = await PDFParse(buffer);
-      return data.text || '';
+      // 1. Check if it's a class constructor (pdf-parse v2)
+      try {
+        const parser = new PDFParse({ data: buffer });
+        if (typeof parser.getText === 'function') {
+          const res = await parser.getText();
+          if (res && typeof res.text === 'string' && res.text.trim().length > 0) {
+            return res.text;
+          }
+        }
+      } catch (errClass) {
+        // 2. Fallback to function call (pdf-parse v1)
+        try {
+          const data = await PDFParse(buffer);
+          if (data && typeof data.text === 'string') {
+            return data.text;
+          }
+        } catch {
+          console.warn('PDF parse class and function attempts both failed:', errClass);
+        }
+      }
     }
   } catch (err) {
     console.warn('PDF parse fallback warning:', err);
   }
   return buffer.toString('utf-8');
+}
+
+function cleanStudentCandidateName(line: string): string | null {
+  const trimmed = line.trim();
+  if (trimmed.length < 3) return null;
+  // Ignore pagination or page count lines
+  if (/^--\s*\d+\s+of\s+\d+\s*--$/i.test(trimmed)) return null;
+  if (/^p[aá]g(ina)?\.?\s*\d+/i.test(trimmed)) return null;
+  // Ignore typical academic table headers
+  if (/^(ano letivo|ano de escolaridade|turma|escola|agrupamento|disciplina|professor|docente|data|lista|n[úu]mero|nome do aluno|n[ºo]\.?\s*aluno|aluno|avaliação|período)/i.test(trimmed)) return null;
+  // Strip leading numbering: "1.", "1 -", "01 ", "1) "
+  const cleaned = trimmed.replace(/^\d+[\s\.\-\)]+/, '').trim();
+  if (cleaned.length >= 3 && /[a-zA-ZáéíóúâêôãõçÁÉÍÓÚÂÊÔÃÕÇ]/.test(cleaned)) {
+    return cleaned;
+  }
+  return null;
 }
 
 app.post('/api/teacher/parse-file', requireAuth, requireTeacher, async (req, res) => {
@@ -1532,26 +1576,26 @@ app.post('/api/teacher/parse-file', requireAuth, requireTeacher, async (req, res
         for (const row of rows) {
           if (!row || row.length === 0) continue;
           const lineStr = row.map(c => String(c || '').trim()).join(' ');
-          if (lineStr.length < 3) continue;
-          extracted.push({ name: lineStr, turma: defaultTurma || sheetName });
+          const name = cleanStudentCandidateName(lineStr);
+          if (name) extracted.push({ name, turma: defaultTurma || sheetName });
         }
       }
     } else if (ext === '.csv' || ext === '.txt') {
       const text = buffer.toString('utf-8');
       const lines = text.split(/\r?\n/);
       for (const line of lines) {
-        const trimmed = line.trim();
-        if (trimmed.length >= 3) {
-          extracted.push({ name: trimmed, turma: defaultTurma || '5.º A' });
+        const name = cleanStudentCandidateName(line);
+        if (name) {
+          extracted.push({ name, turma: defaultTurma || '5.º A' });
         }
       }
     } else if (ext === '.pdf') {
       const text = await extractTextFromPdfBuffer(buffer);
       const lines = text.split(/\r?\n/);
       for (const line of lines) {
-        const trimmed = line.trim();
-        if (trimmed.length >= 3) {
-          extracted.push({ name: trimmed, turma: defaultTurma || '5.º A' });
+        const name = cleanStudentCandidateName(line);
+        if (name) {
+          extracted.push({ name, turma: defaultTurma || '5.º A' });
         }
       }
     } else if (ext === '.zip') {
@@ -1567,7 +1611,26 @@ app.post('/api/teacher/parse-file', requireAuth, requireTeacher, async (req, res
             const rows: any[][] = XLSX.utils.sheet_to_json(ws, { header: 1 });
             for (const row of rows) {
               const lineStr = row.map(c => String(c || '').trim()).join(' ');
-              if (lineStr.length >= 3) extracted.push({ name: lineStr, turma: defaultTurma || sheetName });
+              const name = cleanStudentCandidateName(lineStr);
+              if (name) extracted.push({ name, turma: defaultTurma || sheetName });
+            }
+          }
+        } else if (entryExt === '.pdf') {
+          const text = await extractTextFromPdfBuffer(entryBuf);
+          const lines = text.split(/\r?\n/);
+          for (const line of lines) {
+            const name = cleanStudentCandidateName(line);
+            if (name) {
+              extracted.push({ name, turma: defaultTurma || path.basename(entryName, entryExt) });
+            }
+          }
+        } else if (entryExt === '.csv' || entryExt === '.txt') {
+          const text = entryBuf.toString('utf-8');
+          const lines = text.split(/\r?\n/);
+          for (const line of lines) {
+            const name = cleanStudentCandidateName(line);
+            if (name) {
+              extracted.push({ name, turma: defaultTurma || path.basename(entryName, entryExt) });
             }
           }
         }
