@@ -766,13 +766,13 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-900/60 backdrop-blur-xs overflow-y-auto print:static print:p-0 print:bg-white print:overflow-visible print:block">
       <div
         id="admin-panel-modal-card"
-        className="relative w-full max-w-6xl h-[92vh] max-h-[95vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+        className="relative w-full max-w-6xl h-[92vh] max-h-[95vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200 print:h-auto print:max-h-none print:shadow-none print:border-none print:rounded-none print:w-full print:max-w-none print:overflow-visible print:block"
       >
-        {/* Modal Header */}
-        <div className="p-4 sm:p-5 bg-linear-to-r from-indigo-900 via-indigo-850 to-slate-900 text-white flex items-center justify-between border-b border-indigo-800/60 shrink-0">
+        {/* Modal Header - Hidden when printing */}
+        <div className="p-4 sm:p-5 bg-linear-to-r from-indigo-900 via-indigo-850 to-slate-900 text-white flex items-center justify-between border-b border-indigo-800/60 shrink-0 print:hidden">
           <div className="flex items-center gap-3">
             <div className="w-11 h-11 rounded-2xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center shadow-inner text-amber-400 shrink-0">
               <ShieldCheck className="w-6 h-6" />
@@ -801,8 +801,8 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
           </button>
         </div>
 
-        {/* 4 PRIMARY NAVIGATION TABS */}
-        <div className="bg-slate-100/90 border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between gap-2 overflow-x-auto shrink-0">
+        {/* 4 PRIMARY NAVIGATION TABS - Hidden when printing */}
+        <div className="bg-slate-100/90 border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between gap-2 overflow-x-auto shrink-0 print:hidden">
           <div className="flex items-center gap-1.5 py-2">
             {/* Tab 1: Alunos & Pautas */}
             <button

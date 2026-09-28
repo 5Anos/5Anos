@@ -109,7 +109,24 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
   };
 
   return (
-    <div className="flex-1 flex flex-col min-h-0 bg-slate-50">
+    <div className="flex-1 flex flex-col min-h-0 bg-slate-50 print:bg-white print:p-0">
+      <style>{`
+        @media print {
+          @page {
+            size: A4 portrait;
+            margin: 8mm;
+          }
+          body {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+          }
+          .student-card-print {
+            page-break-inside: avoid;
+            break-inside: avoid;
+          }
+        }
+      `}</style>
+
       {/* Top Filter and Actions Bar - hidden in print */}
       <div className="p-4 sm:p-5 bg-white border-b border-slate-200 space-y-3 shrink-0 print:hidden">
         <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
@@ -251,7 +268,7 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 print:grid-cols-2 print:gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 print:grid-cols-2 print:gap-4 print:w-full print:p-0">
             {filteredStudents.map((student) => {
               const username = student.username || (student.email ? student.email.split('@')[0] : 'aluno');
               const cardPassword = student.plainPass || getStudentCardPassword(student);
@@ -260,153 +277,155 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
               return (
                 <div
                   key={student.id}
-                  className="relative bg-white rounded-2xl border-2 border-dashed border-slate-300 p-4 shadow-xs hover:border-indigo-400 hover:shadow-md transition-all flex flex-col justify-between print:border-slate-800 print:shadow-none print:break-inside-avoid print:p-4 print:my-2"
+                  className="student-card-print relative bg-white rounded-2xl border-2 border-dashed border-slate-300 p-3.5 shadow-xs hover:border-indigo-400 hover:shadow-md transition-all flex flex-col justify-between overflow-hidden box-border print:border-2 print:border-dashed print:border-black print:shadow-none print:break-inside-avoid print:p-3 print:my-1.5 print:bg-white"
                 >
                   {/* Scissors cut badge - Top Right */}
-                  <div className="absolute -top-2.5 right-4 bg-white px-2 py-0.5 rounded-full border border-slate-300 text-[10px] font-black text-slate-500 flex items-center gap-1 print:border-slate-700 print:text-slate-800">
-                    <Scissors className="w-3 h-3 text-slate-600 rotate-90" />
+                  <div className="absolute -top-2.5 right-4 bg-white px-2 py-0.5 rounded-full border border-slate-300 text-[10px] font-black text-slate-500 flex items-center gap-1 print:border-black print:text-black">
+                    <Scissors className="w-3 h-3 text-slate-600 rotate-90 print:text-black" />
                     <span>Recortar</span>
                   </div>
 
                   {/* Header info */}
                   <div>
-                    <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-2.5 mb-3 print:border-slate-300">
-                      <div>
-                        <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 print:text-black">
+                    <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-2 mb-2.5 print:border-slate-300">
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-indigo-600 print:text-black block">
                           TIC 5 — Descomplica!
                         </span>
-                        <h4 className="text-base font-black text-slate-900 leading-tight print:text-lg">
+                        <h4 className="text-sm sm:text-base font-black text-slate-900 leading-tight truncate print:text-base">
                           {getStudentFirstAndLastName(student)}
                         </h4>
                         {student.fullName && student.fullName.trim() !== getStudentFirstAndLastName(student).trim() && (
-                          <p className="text-[10px] text-slate-400 font-medium truncate max-w-[200px] mt-0.5 print:text-slate-600 print:text-[9px]">
+                          <p className="text-[9px] sm:text-[10px] text-slate-400 font-medium truncate mt-0.5 print:text-slate-600 print:text-[9px]">
                             {student.fullName}
                           </p>
                         )}
                       </div>
-                      <div className="flex items-center gap-1.5 shrink-0">
+                      <div className="flex items-center gap-1 shrink-0">
                         {student.number !== undefined && student.number > 0 && (
-                          <span className="px-2 py-0.5 rounded-md text-xs font-black bg-slate-100 text-slate-700 border border-slate-300 print:border-black print:text-black print:bg-transparent">
+                          <span className="px-2 py-0.5 rounded-md text-[11px] font-black bg-slate-100 text-slate-700 border border-slate-300 print:border-black print:text-black print:bg-transparent">
                             N.º {student.number}
                           </span>
                         )}
-                        <span className="px-2 py-0.5 rounded-md text-xs font-black bg-indigo-50 text-indigo-700 border border-indigo-200 print:border-black print:text-black print:bg-transparent shrink-0">
+                        <span className="px-2 py-0.5 rounded-md text-[11px] font-black bg-indigo-50 text-indigo-700 border border-indigo-200 print:border-black print:text-black print:bg-transparent shrink-0">
                           {student.turma || '5.º Ano'}
                         </span>
                       </div>
                     </div>
 
                     {/* Credentials & QR Code Row */}
-                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200/80 print:bg-transparent print:border-slate-800 print:p-2.5">
-                      {/* Left: Credentials details */}
-                      <div className="flex-1 space-y-2">
-                        {/* Website / Hiperligação da Plataforma */}
-                        <div className="flex items-center justify-between text-xs border-b border-slate-200/80 pb-1.5 print:border-slate-300">
-                          <span className="text-slate-600 font-bold print:text-slate-900 print:text-xs flex items-center gap-1">
-                            <Globe className="w-3.5 h-3.5 text-indigo-600 print:text-black shrink-0" />
-                            <span>Website:</span>
-                          </span>
-                          <div className="flex items-center gap-1.5">
-                            <a
-                              href={PLATFORM_WEBSITE_URL}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="font-mono font-bold text-indigo-600 hover:text-indigo-800 hover:underline bg-white px-2 py-0.5 rounded-md border border-indigo-200 text-[11px] sm:text-xs tracking-tight flex items-center gap-1 print:border-black print:text-black print:bg-transparent print:no-underline"
-                              title="Abrir website da plataforma TIC"
-                            >
-                              <span>5anos.github.io/5Anos</span>
-                              <ExternalLink className="w-3 h-3 text-indigo-500 shrink-0 print:hidden" />
-                            </a>
-                            <button
-                              type="button"
-                              onClick={() => handleCopy(PLATFORM_WEBSITE_URL, `url-${student.id}`)}
-                              className="p-1 text-slate-400 hover:text-indigo-600 cursor-pointer print:hidden"
-                              title="Copiar hiperligação do website"
-                            >
-                              {copiedKey === `url-${student.id}` ? (
-                                <Check className="w-3.5 h-3.5 text-emerald-600" />
-                              ) : (
-                                <Copy className="w-3.5 h-3.5" />
-                              )}
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Username */}
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="text-slate-600 font-bold print:text-slate-900 print:text-xs">Utilizador:</span>
-                          <div className="flex items-center gap-1.5">
-                            <span className="font-mono font-bold text-slate-900 bg-white px-2.5 py-1 rounded-md border border-slate-300 text-xs sm:text-sm print:border-black print:text-sm print:bg-transparent">
-                              {username}
-                            </span>
-                            <button
-                              type="button"
-                              onClick={() => handleCopy(username, `user-${student.id}`)}
-                              className="p-1 text-slate-400 hover:text-indigo-600 cursor-pointer print:hidden"
-                              title="Copiar utilizador"
-                            >
-                              {copiedKey === `user-${student.id}` ? (
-                                <Check className="w-3.5 h-3.5 text-emerald-600" />
-                              ) : (
-                                <Copy className="w-3.5 h-3.5" />
-                              )}
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Password */}
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="text-slate-600 font-bold print:text-slate-900 print:text-xs">Palavra-passe:</span>
-                          <div className="flex items-center gap-1.5">
-                            {/* Screen presentation: respect hide toggle; Print presentation: ALWAYS clearly visible in print */}
-                            <span className="font-mono font-black text-indigo-900 bg-indigo-50/90 px-2.5 py-1 rounded-md border border-indigo-200 text-xs sm:text-sm tracking-wide print:hidden">
-                              {isMaskedOnScreen ? '••••••••' : cardPassword}
-                            </span>
-                            {/* Always visible on print */}
-                            <span className="hidden print:inline-block font-mono font-black text-black text-sm px-2 py-0.5 border border-black rounded-md tracking-wider">
-                              {cardPassword}
-                            </span>
-
-                            <button
-                              type="button"
-                              onClick={() => handleCopy(cardPassword, `pass-${student.id}`)}
-                              className="p-1 text-slate-400 hover:text-indigo-600 cursor-pointer print:hidden"
-                              title="Copiar palavra-passe"
-                            >
-                              {copiedKey === `pass-${student.id}` ? (
-                                <Check className="w-3.5 h-3.5 text-emerald-600" />
-                              ) : (
-                                <Copy className="w-3.5 h-3.5" />
-                              )}
-                            </button>
-                          </div>
+                    <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-200/80 print:bg-transparent print:border-slate-800 print:p-2 space-y-2">
+                      {/* Website / Hiperligação da Plataforma */}
+                      <div className="flex items-center justify-between gap-1 text-xs border-b border-slate-200/80 pb-1.5 print:border-slate-300">
+                        <span className="text-slate-600 font-bold print:text-slate-900 text-[11px] flex items-center gap-1 shrink-0">
+                          <Globe className="w-3 h-3 text-indigo-600 print:text-black shrink-0" />
+                          <span>Website:</span>
+                        </span>
+                        <div className="flex items-center gap-1 min-w-0">
+                          <a
+                            href={PLATFORM_WEBSITE_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-mono font-bold text-indigo-700 hover:text-indigo-900 hover:underline bg-white px-2 py-0.5 rounded-md border border-indigo-200 text-[10px] sm:text-[11px] tracking-tight truncate print:border-black print:text-black print:bg-transparent print:no-underline"
+                            title="Abrir website da plataforma TIC"
+                          >
+                            5anos.github.io/5Anos
+                          </a>
+                          <button
+                            type="button"
+                            onClick={() => handleCopy(PLATFORM_WEBSITE_URL, `url-${student.id}`)}
+                            className="p-0.5 text-slate-400 hover:text-indigo-600 cursor-pointer print:hidden shrink-0"
+                            title="Copiar hiperligação do website"
+                          >
+                            {copiedKey === `url-${student.id}` ? (
+                              <Check className="w-3 h-3 text-emerald-600" />
+                            ) : (
+                              <Copy className="w-3 h-3" />
+                            )}
+                          </button>
                         </div>
                       </div>
 
-                      {/* Right: Automatic QR Code */}
-                      <div className="flex flex-row sm:flex-col items-center justify-center gap-1 bg-white p-2 rounded-xl border border-slate-200/90 print:border-slate-800 print:p-1.5 shrink-0 shadow-2xs">
-                        <QRCodeSVG
-                          value={PLATFORM_WEBSITE_URL}
-                          size={64}
-                          level="M"
-                          includeMargin={false}
-                          className="shrink-0"
-                        />
-                        <span className="text-[9px] font-extrabold text-slate-500 uppercase tracking-tighter text-center print:text-black mt-0.5">
-                          QR Plataforma
-                        </span>
+                      {/* Credentials + QR Code */}
+                      <div className="flex items-center justify-between gap-2">
+                        {/* Left: Username + Password */}
+                        <div className="flex-1 space-y-1.5 min-w-0">
+                          {/* Username */}
+                          <div className="flex items-center justify-between gap-1 text-[11px]">
+                            <span className="text-slate-600 font-bold print:text-slate-900 shrink-0">Utilizador:</span>
+                            <div className="flex items-center gap-1 min-w-0">
+                              <span className="font-mono font-bold text-slate-900 bg-white px-2 py-0.5 rounded-md border border-slate-300 text-[11px] sm:text-xs truncate print:border-black print:text-black print:bg-transparent">
+                                {username}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => handleCopy(username, `user-${student.id}`)}
+                                className="p-0.5 text-slate-400 hover:text-indigo-600 cursor-pointer print:hidden shrink-0"
+                                title="Copiar utilizador"
+                              >
+                                {copiedKey === `user-${student.id}` ? (
+                                  <Check className="w-3 h-3 text-emerald-600" />
+                                ) : (
+                                  <Copy className="w-3 h-3" />
+                                )}
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Password */}
+                          <div className="flex items-center justify-between gap-1 text-[11px]">
+                            <span className="text-slate-600 font-bold print:text-slate-900 shrink-0">Palavra-passe:</span>
+                            <div className="flex items-center gap-1 min-w-0">
+                              {/* Screen presentation */}
+                              <span className="font-mono font-black text-indigo-900 bg-indigo-50/90 px-2 py-0.5 rounded-md border border-indigo-200 text-[11px] sm:text-xs tracking-wide truncate print:hidden">
+                                {isMaskedOnScreen ? '••••••••' : cardPassword}
+                              </span>
+                              {/* Print presentation */}
+                              <span className="hidden print:inline-block font-mono font-black text-black text-xs px-1.5 py-0.5 border border-black rounded-md tracking-wider">
+                                {cardPassword}
+                              </span>
+
+                              <button
+                                type="button"
+                                onClick={() => handleCopy(cardPassword, `pass-${student.id}`)}
+                                className="p-0.5 text-slate-400 hover:text-indigo-600 cursor-pointer print:hidden shrink-0"
+                                title="Copiar palavra-passe"
+                              >
+                                {copiedKey === `pass-${student.id}` ? (
+                                  <Check className="w-3 h-3 text-emerald-600" />
+                                ) : (
+                                  <Copy className="w-3.5 h-3.5" />
+                                )}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Right: QR Code */}
+                        <div className="flex flex-col items-center justify-center p-1 bg-white rounded-lg border border-slate-200 print:border-black shrink-0 shadow-2xs">
+                          <QRCodeSVG
+                            value={PLATFORM_WEBSITE_URL}
+                            size={48}
+                            level="M"
+                            includeMargin={false}
+                            className="shrink-0"
+                          />
+                          <span className="text-[7.5px] font-black text-slate-500 uppercase tracking-tighter text-center print:text-black mt-0.5 leading-none">
+                            QR Código
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
 
                   {/* Card Footer: Instructions for Kid + Reset Button for Teacher */}
-                  <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400 print:border-slate-300">
-                    <span className="italic font-medium print:text-slate-700 print:text-[10px]">Guarda este cartão com cuidado!</span>
+                  <div className="mt-2.5 pt-1.5 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-400 print:border-slate-300">
+                    <span className="italic font-medium print:text-slate-700 print:text-[9px]">Guarda este cartão com cuidado!</span>
                     <button
                       type="button"
                       onClick={() => handleResetPassword(student)}
                       disabled={resettingId === student.id}
-                      className="text-[11px] font-bold text-amber-600 hover:text-amber-700 flex items-center gap-1 cursor-pointer print:hidden disabled:opacity-50"
+                      className="text-[10px] font-bold text-amber-600 hover:text-amber-700 flex items-center gap-1 cursor-pointer print:hidden disabled:opacity-50"
                       title="Gerar nova palavra-passe aleatória se a criança perdeu"
                     >
                       <RefreshCw className={`w-3 h-3 ${resettingId === student.id ? 'animate-spin' : ''}`} />
