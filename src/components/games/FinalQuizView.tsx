@@ -232,57 +232,94 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                 </div>
               </div>
 
-              <div className="text-sm sm:text-base max-w-xl mx-auto text-slate-700 font-medium leading-relaxed space-y-2">
+              <div className="text-sm sm:text-base max-w-xl mx-auto text-slate-700 font-medium leading-relaxed space-y-3">
                 {wasFirstAttemptOnStart ? (
-                  language === 'pt' ? (
-                    <>
-                      <p>
-                        📝 A tua 1.ª tentativa foi registada como o teu resultado de avaliação com a menção:{' '}
-                        <strong className="text-indigo-900 font-bold">{currentMention}</strong>.
-                      </p>
-                      <p className="text-xs sm:text-sm text-slate-500 font-normal">
-                        Podes voltar a fazer o quiz para rever o que aprendeste e treinar. As novas tentativas servem apenas para praticar.
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <p>
-                        📝 Your 1st attempt has been recorded as your evaluation result with the mention:{' '}
-                        <strong className="text-indigo-900 font-bold">{currentMention}</strong>.
-                      </p>
-                      <p className="text-xs sm:text-sm text-slate-500 font-normal">
-                        You can retake the quiz to review what you learned and practice. New attempts serve purely for practice.
-                      </p>
-                    </>
-                  )
+                  <div className="p-4 rounded-2xl bg-indigo-50 border border-indigo-200 text-indigo-950 space-y-1.5 text-left">
+                    <div className="flex items-center gap-2 font-black text-indigo-900 text-sm sm:text-base">
+                      <ShieldCheck className="w-5 h-5 text-indigo-600 shrink-0" />
+                      <span>
+                        {language === 'pt'
+                          ? '1.ª Tentativa Registada como Avaliação Oficial'
+                          : '1st Attempt Recorded as Official Grade'}
+                      </span>
+                    </div>
+                    <p className="text-xs sm:text-sm text-indigo-950 leading-relaxed font-medium">
+                      {language === 'pt' ? (
+                        <>
+                          A tua primeira tentativa foi gravada como a tua nota oficial de avaliação com a menção:{' '}
+                          <strong className="font-black text-indigo-900 text-base">{currentMention} ({result.percentage}%)</strong>.
+                        </>
+                      ) : (
+                        <>
+                          Your first attempt was recorded as your official assessment grade with mention:{' '}
+                          <strong className="font-black text-indigo-900 text-base">{currentMention} ({result.percentage}%)</strong>.
+                        </>
+                      )}
+                    </p>
+                    <p className="text-[11px] sm:text-xs text-slate-600 font-normal pt-1 border-t border-indigo-100/80 mt-1">
+                      {language === 'pt'
+                        ? '💡 Podes repetir o quiz as vezes que quiseres para treinar e rever a matéria. Podes melhorar o teu resultado de treino, mas a tua nota oficial para a professora será sempre esta 1.ª tentativa.'
+                        : '💡 You can retake the quiz as many times as you like to practice and review. You can improve your practice score, but your official grade for the teacher will always be this 1st attempt.'}
+                    </p>
+                  </div>
                 ) : (
-                  language === 'pt' ? (
-                    <>
-                      <p>
-                        Obtiveste a menção <strong className="text-indigo-900 font-bold">{currentMention}</strong> nesta tentativa de treino.
+                  <div className="space-y-3 text-left">
+                    {result.percentage > officialScoreToDisplay ? (
+                      <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-950 space-y-1.5">
+                        <div className="flex items-center gap-2 font-black text-emerald-900 text-sm sm:text-base">
+                          <span className="text-xl">🎉</span>
+                          <span>
+                            {language === 'pt'
+                              ? 'Parabéns! Melhoraste o teu resultado de treino!'
+                              : 'Well done! You improved your practice score!'}
+                          </span>
+                        </div>
+                        <p className="text-xs sm:text-sm text-emerald-900 leading-relaxed font-medium">
+                          {language === 'pt'
+                            ? `Alcançaste ${result.percentage}% (${currentMention}) nesta tentativa de treino! Excelente esforço e dedicação.`
+                            : `You achieved ${result.percentage}% (${currentMention}) in this practice attempt! Great effort and dedication.`}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800">
+                        <p className="text-xs sm:text-sm font-semibold text-slate-700">
+                          {language === 'pt'
+                            ? `Obtiveste ${result.percentage}% (${currentMention}) nesta tentativa de treino.`
+                            : `You scored ${result.percentage}% (${currentMention}) in this practice attempt.`}
+                        </p>
+                      </div>
+                    )}
+
+                    <div className="p-3.5 rounded-2xl bg-indigo-50/90 border border-indigo-200 text-indigo-950 space-y-1">
+                      <div className="flex items-center gap-1.5 font-extrabold text-indigo-900 text-xs sm:text-sm">
+                        <ShieldCheck className="w-4 h-4 text-indigo-600 shrink-0" />
+                        <span>
+                          {language === 'pt'
+                            ? 'Nota Oficial Registada (1.ª Tentativa)'
+                            : 'Official Recorded Grade (1st Attempt)'}
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                        {language === 'pt' ? (
+                          <>
+                            A tua nota oficial de avaliação para a professora é a da 1.ª tentativa:{' '}
+                            <strong className="text-indigo-950 font-black">{officialMention} ({officialScoreToDisplay}%)</strong>.
+                          </>
+                        ) : (
+                          <>
+                            Your official evaluation grade for the teacher is that of the 1st attempt:{' '}
+                            <strong className="text-indigo-950 font-black">{officialMention} ({officialScoreToDisplay}%)</strong>.
+                          </>
+                        )}
                       </p>
-                      <p className="text-xs sm:text-sm text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">
-                        A tua avaliação registada para a professora mantém-se com a menção:{' '}
-                        <strong>{officialMention}</strong>.
-                      </p>
-                      <p className="text-xs sm:text-sm text-slate-500 font-normal">
-                        Podes voltar a fazer o quiz para rever o que aprendeste e treinar. As novas tentativas servem apenas para praticar.
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <p>
-                        You obtained <strong className="text-indigo-900 font-bold">{currentMention}</strong> on this practice attempt.
-                      </p>
-                      <p className="text-xs sm:text-sm text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">
-                        Your recorded evaluation mention for the teacher remains:{' '}
-                        <strong>{officialMention}</strong>.
-                      </p>
-                      <p className="text-xs sm:text-sm text-slate-500 font-normal">
-                        You can retake the quiz to review what you learned and practice. New attempts serve purely for practice.
-                      </p>
-                    </>
-                  )
+                    </div>
+
+                    <p className="text-[11px] sm:text-xs text-slate-500 font-normal text-center">
+                      {language === 'pt'
+                        ? 'Podes continuar a treinar para consolidar os teus conhecimentos em TIC.'
+                        : 'You can continue practicing to reinforce your ICT knowledge.'}
+                    </p>
+                  </div>
                 )}
               </div>
             </div>
