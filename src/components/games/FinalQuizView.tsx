@@ -247,12 +247,12 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                       {language === 'pt' ? (
                         <>
                           A tua primeira tentativa foi gravada como a tua nota oficial de avaliação com a menção:{' '}
-                          <strong className="font-black text-indigo-900 text-base">{currentMention} ({result.percentage}%)</strong>.
+                          <strong className="font-black text-indigo-900 text-base">{currentMention}</strong>.
                         </>
                       ) : (
                         <>
                           Your first attempt was recorded as your official assessment grade with mention:{' '}
-                          <strong className="font-black text-indigo-900 text-base">{currentMention} ({result.percentage}%)</strong>.
+                          <strong className="font-black text-indigo-900 text-base">{currentMention}</strong>.
                         </>
                       )}
                     </p>
@@ -271,21 +271,21 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                           <span>
                             {language === 'pt'
                               ? 'Parabéns! Melhoraste o teu resultado de treino!'
-                              : 'Well done! You improved your practice score!'}
+                              : 'Well done! You improved your practice performance!'}
                           </span>
                         </div>
                         <p className="text-xs sm:text-sm text-emerald-900 leading-relaxed font-medium">
                           {language === 'pt'
-                            ? `Alcançaste ${result.percentage}% (${currentMention}) nesta tentativa de treino! Excelente esforço e dedicação.`
-                            : `You achieved ${result.percentage}% (${currentMention}) in this practice attempt! Great effort and dedication.`}
+                            ? `Alcançaste a menção «${currentMention}» nesta tentativa de treino! Excelente esforço e dedicação.`
+                            : `You achieved the mention "${currentMention}" in this practice attempt! Great effort and dedication.`}
                         </p>
                       </div>
                     ) : (
                       <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800">
                         <p className="text-xs sm:text-sm font-semibold text-slate-700">
                           {language === 'pt'
-                            ? `Obtiveste ${result.percentage}% (${currentMention}) nesta tentativa de treino.`
-                            : `You scored ${result.percentage}% (${currentMention}) in this practice attempt.`}
+                            ? `Obtiveste a menção «${currentMention}» nesta tentativa de treino.`
+                            : `You obtained the mention "${currentMention}" in this practice attempt.`}
                         </p>
                       </div>
                     )}
@@ -303,12 +303,12 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                         {language === 'pt' ? (
                           <>
                             A tua nota oficial de avaliação para a professora é a da 1.ª tentativa:{' '}
-                            <strong className="text-indigo-950 font-black">{officialMention} ({officialScoreToDisplay}%)</strong>.
+                            <strong className="text-indigo-950 font-black">{officialMention}</strong>.
                           </>
                         ) : (
                           <>
                             Your official evaluation grade for the teacher is that of the 1st attempt:{' '}
-                            <strong className="text-indigo-950 font-black">{officialMention} ({officialScoreToDisplay}%)</strong>.
+                            <strong className="text-indigo-950 font-black">{officialMention}</strong>.
                           </>
                         )}
                       </p>

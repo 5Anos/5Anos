@@ -237,11 +237,13 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
         </div>
 
         <div className="p-6 rounded-[2rem] bg-white border border-slate-200 shadow-xs">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{language === 'pt' ? 'Média Quizzes' : 'Average Quiz'}</span>
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{language === 'pt' ? 'Quizzes Concluídos' : 'Quizzes Completed'}</span>
           <div className="mt-2 text-2xl sm:text-3xl font-black text-emerald-600">
-            {avgQuiz > 0 ? `${avgQuiz}%` : '—'}
+            {quizRecords.length}
           </div>
-          <p className="mt-1 text-xs text-slate-500 font-medium">{quizRecords.length} testes realizados</p>
+          <p className="mt-1 text-xs text-slate-500 font-medium">
+            {avgQuiz > 0 ? getQuizMention(avgQuiz, language) : (language === 'pt' ? 'Avaliação por Menções' : 'Qualitative Assessment')}
+          </p>
         </div>
       </div>
 
