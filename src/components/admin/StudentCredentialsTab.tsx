@@ -36,13 +36,17 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [visiblePasswords, setVisiblePasswords] = useState<Record<string, string>>({});
+  const [hidePasswordsOnScreen, setHidePasswordsOnScreen] = useState<boolean>(false);
   const [resettingId, setResettingId] = useState<string | null>(null);
   const [actionNotice, setActionNotice] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
 
-  const filteredStudents = students.map((s) => ({
-    ...s,
-    password: visiblePasswords[s.id] || getStudentCardPassword(s),
-  })).filter((s) => {
+  const filteredStudents = students.map((s) => {
+    const plainPass = visiblePasswords[s.id] || getStudentCardPassword(s);
+    return {
+      ...s,
+      plainPass,
+    };
+  }).filter((s) => {
     const matchTurma = selectedTurma === 'all' || (s.turma || '').trim() === selectedTurma.trim();
     if (!matchTurma) return false;
     if (!searchQuery.trim()) return true;
@@ -141,17 +145,31 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
           </div>
 
           {/* Search & Print Controls */}
-          <div className="flex items-center gap-2">
-            <div className="relative flex-1 sm:w-64">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="relative flex-1 sm:w-56">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={language === 'pt' ? 'Pesquisar por nome ou utilizador...' : 'Search student...'}
+                placeholder={language === 'pt' ? 'Pesquisar por aluno...' : 'Search student...'}
                 className="w-full pl-9 pr-3 py-1.5 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
               />
             </div>
+
+            <button
+              type="button"
+              onClick={() => setHidePasswordsOnScreen(!hidePasswordsOnScreen)}
+              className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shrink-0 ${
+                hidePasswordsOnScreen
+                  ? 'bg-amber-50 border-amber-300 text-amber-800'
+                  : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+              }`}
+              title={hidePasswordsOnScreen ? 'Mostrar palavras-passe no ecrã' : 'Ocultar palavras-passe no ecrã (ex: se projetado)'}
+            >
+              {hidePasswordsOnScreen ? <Eye className="w-3.5 h-3.5 text-amber-600" /> : <EyeOff className="w-3.5 h-3.5 text-slate-500" />}
+              <span>{hidePasswordsOnScreen ? 'Palavras-passe: Ocultas no ecrã' : 'Palavras-passe: Visíveis'}</span>
+            </button>
 
             <button
               onClick={handleDownloadExcel}
@@ -167,7 +185,7 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
               onClick={handlePrint}
               disabled={filteredStudents.length === 0}
               className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50 shrink-0"
-              title="Imprimir folha de credenciais com linhas para recortar"
+              title="Imprimir folha de credenciais com linhas para recortar e palavras-passe legíveis"
             >
               <Printer className="w-4 h-4" />
               <span>{language === 'pt' ? 'Imprimir Folha de Cartões' : 'Print Cards'}</span>
@@ -199,11 +217,11 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
           <p className="leading-relaxed">
             {language === 'pt' ? (
               <>
-                <strong>Dica de Impressão e Recorte:</strong> Podes filtrar pela turma pretendida (ex: 5.º A) e clicar em <strong>Imprimir Folha de Cartões</strong>. Os cartões são formatados com linhas tracejadas prontas para recortar com a tesoura e entregar a cada aluno. As palavras-passe foram desenhadas para serem fáceis de digitar por crianças de 10 anos.
+                <strong>Cartões Individuais de Acesso:</strong> Cada cartão contém o <strong>Nome</strong>, <strong>Turma</strong>, <strong>Nome de Utilizador</strong> e a <strong>Palavra-passe</strong> legível para o aluno. Clica em <strong>Imprimir Folha de Cartões</strong> para imprimir a grelha com linhas tracejadas prontas para recortar e entregar a cada aluno.
               </>
             ) : (
               <>
-                <strong>Print & Cut:</strong> Filter by class and click <strong>Print Cards</strong> to generate cuttable cards for your students.
+                <strong>Student Access Cards:</strong> Each card displays the student's <strong>Username</strong> and readable <strong>Password</strong>. Click <strong>Print Cards</strong> to print them with cuttable dashed borders.
               </>
             )}
           </p>
@@ -226,7 +244,8 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 print:grid-cols-2 print:gap-3">
             {filteredStudents.map((student) => {
               const username = student.username || (student.email ? student.email.split('@')[0] : 'aluno');
-              const cardPassword = visiblePasswords[student.id] || getStudentCardPassword(student);
+              const cardPassword = student.plainPass || getStudentCardPassword(student);
+              const isMaskedOnScreen = hidePasswordsOnScreen;
 
               return (
                 <div
@@ -261,12 +280,12 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
                     </div>
 
                     {/* Credentials Box */}
-                    <div className="space-y-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200/80 print:bg-transparent print:border-slate-400">
+                    <div className="space-y-2.5 bg-slate-50 p-3 rounded-xl border border-slate-200/80 print:bg-transparent print:border-slate-800 print:p-2.5">
                       {/* Username */}
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-slate-500 font-semibold print:text-slate-700">Utilizador:</span>
+                        <span className="text-slate-600 font-bold print:text-slate-900 print:text-xs">Utilizador:</span>
                         <div className="flex items-center gap-1.5">
-                          <span className="font-mono font-bold text-slate-900 bg-white px-2 py-0.5 rounded border border-slate-200 text-xs print:border-black print:text-sm">
+                          <span className="font-mono font-bold text-slate-900 bg-white px-2.5 py-1 rounded-md border border-slate-300 text-xs sm:text-sm print:border-black print:text-sm print:bg-transparent">
                             {username}
                           </span>
                           <button
@@ -286,11 +305,17 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
 
                       {/* Password */}
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-slate-500 font-semibold print:text-slate-700">Palavra-passe:</span>
+                        <span className="text-slate-600 font-bold print:text-slate-900 print:text-xs">Palavra-passe:</span>
                         <div className="flex items-center gap-1.5">
-                          <span className="font-mono font-bold text-indigo-700 bg-white px-2 py-0.5 rounded border border-indigo-200 text-xs print:border-black print:text-black print:text-sm">
+                          {/* Screen presentation: respect hide toggle; Print presentation: ALWAYS clearly visible in print */}
+                          <span className="font-mono font-black text-indigo-900 bg-indigo-50/90 px-2.5 py-1 rounded-md border border-indigo-200 text-xs sm:text-sm tracking-wide print:hidden">
+                            {isMaskedOnScreen ? '••••••••' : cardPassword}
+                          </span>
+                          {/* Always visible on print */}
+                          <span className="hidden print:inline-block font-mono font-black text-black text-sm px-2 py-0.5 border border-black rounded-md tracking-wider">
                             {cardPassword}
                           </span>
+
                           <button
                             type="button"
                             onClick={() => handleCopy(cardPassword, `pass-${student.id}`)}
@@ -310,7 +335,7 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
 
                   {/* Card Footer: Instructions for Kid + Reset Button for Teacher */}
                   <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400 print:border-slate-300">
-                    <span className="italic print:text-slate-600">Guarda este cartão com cuidado!</span>
+                    <span className="italic font-medium print:text-slate-700 print:text-[10px]">Guarda este cartão com cuidado!</span>
                     <button
                       type="button"
                       onClick={() => handleResetPassword(student)}

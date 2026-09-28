@@ -1365,6 +1365,8 @@ export const api = {
             lastName,
             greetingName,
             username,
+            initialPassword: password,
+            password: password,
             turma: cleanTurma,
             publicId,
             role: 'student',
@@ -1374,9 +1376,10 @@ export const api = {
             createdAt: now,
           };
 
-          // 2. credentials document (Hash & Salt only)
+          // 2. credentials document
           const credData = {
             userId,
+            initialPassword: password,
             passwordHash: hashed.hash,
             passwordSalt: hashed.salt,
             passwordChangedAt: now,
@@ -1449,11 +1452,18 @@ export const api = {
 
     await setDoc(doc(db, 'credentials', userId), {
       userId,
+      initialPassword: newPassword,
       passwordHash: hashed.hash,
       passwordSalt: hashed.salt,
       passwordChangedAt: now,
       updatedAt: now,
     }, { merge: true });
+
+    await setDoc(doc(db, 'users', userId), {
+      initialPassword: newPassword,
+      password: newPassword,
+      updatedAt: now,
+    }, { merge: true }).catch(() => {});
 
     return {
       success: true,
