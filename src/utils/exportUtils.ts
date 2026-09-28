@@ -620,6 +620,7 @@ export function exportStudentCredentialsToExcel(students: User[], selectedTurma?
     'Nome Completo': getStudentFullName(s) || 'Sem Nome',
     'Nome de Utilizador': s.username || '',
     'Palavra-passe': getStudentCardPassword(s),
+    'Website da Plataforma': 'https://5anos.github.io/5Anos/',
     'Pontuação (XP)': s.points ?? 0,
     'Data Criação': s.createdAt ? new Date(s.createdAt).toLocaleDateString('pt-PT') : '',
   }));
@@ -632,6 +633,7 @@ export function exportStudentCredentialsToExcel(students: User[], selectedTurma?
     { wch: 34 }, // Nome Completo
     { wch: 22 }, // Nome de Utilizador
     { wch: 22 }, // Palavra-passe
+    { wch: 36 }, // Website
     { wch: 16 }, // Pontos (XP)
     { wch: 16 }, // Data Criação
   ];
@@ -671,6 +673,7 @@ export function exportCreatedCredentialsToExcel(
     'Nome Completo': s.name || 'Sem Nome',
     'Nome de Utilizador': s.username || '',
     'Palavra-passe Inicial': s.password || '••••••••',
+    'Website da Plataforma': 'https://5anos.github.io/5Anos/',
   }));
 
   const worksheet = XLSX.utils.json_to_sheet(rows);
@@ -680,6 +683,7 @@ export function exportCreatedCredentialsToExcel(
     { wch: 32 },
     { wch: 22 },
     { wch: 22 },
+    { wch: 36 },
   ];
 
   const workbook = XLSX.utils.book_new();
