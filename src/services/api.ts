@@ -751,21 +751,22 @@ export const api = {
       console.warn('[Progress] Aviso ao ler progresso existente:', e);
     }
 
+    const isQuiz = payload.activityType === 'quiz' || payload.activityId.includes('quiz');
     const prevBest = Number(existingData?.bestPercentage || existingData?.bestScore || existingData?.score || 0);
     const newBest = Math.max(prevBest, calcPercentage);
-    const earnedXp = Math.max(0, newBest - prevBest);
+    const earnedXp = isQuiz ? 0 : Math.max(0, newBest - prevBest);
 
     const record: ActivityProgress = {
       userId: current.id,
       activityId: payload.activityId,
       activityType: payload.activityType,
       themeId: payload.themeId,
-      status: calcPercentage >= 50 ? 'completed' : 'in_progress',
+      status: isQuiz ? 'completed' : (calcPercentage >= 50 ? 'completed' : 'in_progress'),
       score: calcPercentage,
       bestScore: newBest,
       bestPercentage: newBest,
       percentage: calcPercentage,
-      awardedXp: newBest,
+      awardedXp: isQuiz ? 0 : newBest,
       attempts: (Number(existingData?.attempts) || 0) + 1,
       lastUpdated: now,
     };
@@ -1844,8 +1845,12 @@ export const api = {
         let total = 0;
         progSnap.docs.forEach((pDoc) => {
           const p = pDoc.data();
-          const best = Number(p.bestPercentage || p.bestScore || p.score || 0);
-          total += Math.min(100, Math.max(0, best));
+          const pId = String(p.activityId || pDoc.id).toLowerCase();
+          const isQuiz = p.activityType === 'quiz' || pId.startsWith('quiz-final') || pId.includes('final_quiz');
+          if (!isQuiz) {
+            const best = Number(p.bestPercentage || p.bestScore || p.score || 0);
+            total += Math.min(100, Math.max(0, best));
+          }
         });
         const dailySnap = await getDocs(collection(db, 'users', d.id, 'dailyTips'));
         dailySnap.docs.forEach((dtDoc) => {

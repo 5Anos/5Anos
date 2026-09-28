@@ -229,11 +229,6 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                   <span>{result.score} de {result.maxScore} Respostas Corretas</span>
                   <span>•</span>
                   <span>Menção: {currentMention}</span>
-                  <span>•</span>
-                  <span className="text-amber-700 font-extrabold flex items-center gap-1">
-                    <Zap className="w-3.5 h-3.5 fill-current text-amber-500" />
-                    +{result.percentage} XP Acumulados
-                  </span>
                 </div>
               </div>
 

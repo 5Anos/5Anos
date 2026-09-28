@@ -619,21 +619,15 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                         hasAttempted ? (() => {
                           const officialScore = record?.firstAttemptScore ?? record?.firstAttemptPercentage ?? record?.score ?? record?.bestScore ?? 0;
                           return (
-                            <div className="flex items-center gap-1.5 flex-wrap justify-end">
-                              <span className="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full border text-amber-900 bg-amber-100 border-amber-300">
-                                <Zap className="w-3 h-3 fill-current text-amber-600" />
-                                <span>{bestScore} XP</span>
-                              </span>
-                              <span className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-0.5 rounded-full border ${getQuizMentionBadgeStyle(officialScore).pillClass}`}>
-                                <CheckCircle2 className="w-3.5 h-3.5" />
-                                <span>{getQuizMention(officialScore, language)}</span>
-                              </span>
-                            </div>
+                            <span className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border ${getQuizMentionBadgeStyle(officialScore).pillClass}`}>
+                              <CheckCircle2 className="w-3.5 h-3.5" />
+                              <span>{getQuizMention(officialScore, language)}</span>
+                            </span>
                           );
                         })() : (
-                          <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-800 bg-amber-100/90 border border-amber-300 px-2.5 py-1 rounded-full">
-                            <Zap className="w-3.5 h-3.5 fill-current text-amber-600" />
-                            <span>Até 100 XP</span>
+                          <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full">
+                            <Circle className="w-3.5 h-3.5" />
+                            <span>{t.notStartedStatus}</span>
                           </span>
                         )
                       ) : isDone ? (
@@ -684,7 +678,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                           })() : (
                             <span className="text-[11px] font-bold text-amber-700 flex items-center gap-1 mt-0.5">
                               <ShieldCheck className="w-3.5 h-3.5 text-amber-500" />
-                              <span>{language === 'pt' ? 'Até 100 XP • Avaliação (1.ª tentativa conta para a nota)' : 'Up to 100 XP • Assessment (1st attempt counts for grade)'}</span>
+                              <span>{language === 'pt' ? 'Atividade de Avaliação • A 1.ª tentativa conta' : 'Assessment Activity • 1st attempt counts'}</span>
                             </span>
                           )
                         ) : hasAttempted ? (

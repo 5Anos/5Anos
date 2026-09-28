@@ -90,10 +90,10 @@ export function getThemeActivityCount(theme: ThemeDefinition): number {
 }
 
 /**
- * Pontuação máxima de XP curricular de um tema (cada desafio e o quiz de aprendizagem valem até 100 XP cada)
+ * Pontuação máxima de XP curricular de um tema (cada desafio regular vale até 100 XP; o quiz de aprendizagem não atribui XP)
  */
 export function getThemeMaxPoints(theme: ThemeDefinition): number {
-  return getThemeActivityCount(theme) * 100;
+  return getThemeRegularChallenges(theme).length * 100;
 }
 
 /**
@@ -118,10 +118,10 @@ export function getTotalActivitiesCount(themes: ThemeDefinition[] = ALL_THEMES):
 }
 
 /**
- * Pontuação máxima curricular global dinâmica de XP (total de atividades * 100 XP, incluindo desafios e quizzes)
+ * Pontuação máxima curricular global dinâmica de XP (total de desafios * 100 XP, quizzes não atribuem XP)
  */
 export function getGlobalCurricularMaxPoints(themes: ThemeDefinition[] = ALL_THEMES): number {
-  return getTotalActivitiesCount(themes) * 100;
+  return getTotalChallengesCount(themes) * 100;
 }
 
 /**
@@ -341,10 +341,8 @@ export function getStudentThemeBreakdown(
     quizCompleted = bestScore >= 50 || quizRecord.status === 'completed';
   }
 
-  // Quiz de Aprendizagem atribui até 100 XP (conforme a melhor pontuação obtida)
-  const quizAwardedXp = typeof quizRecord?.awardedXp === 'number'
-    ? Math.max(0, Math.min(100, Math.round(quizRecord.awardedXp)))
-    : bestScore;
+  // Quiz de Aprendizagem é uma atividade de avaliação e NÃO acumula XP (0 XP)
+  const quizAwardedXp = 0;
 
   const quiz: QuizScoreDetail = {
     id: expectedQuizId,
@@ -352,7 +350,7 @@ export function getStudentThemeBreakdown(
     officialScore, // 1.ª tentativa oficial inalterável
     bestScore, // melhor tentativa em treino
     latestScore,
-    awardedXp: quizAwardedXp,
+    awardedXp: 0,
     attempts: quizAttempts,
     completed: quizCompleted,
   };
@@ -370,10 +368,10 @@ export function getStudentThemeBreakdown(
     ? Math.max(0, Math.min(100, Math.round((completedActivitiesCount / totalActivitiesCount) * 100)))
     : 0;
 
-  // CÁLCULO DE XP CURRICULAR: Os desafios e o quiz atribuem até 100 XP cada
+  // CÁLCULO DE XP CURRICULAR: Os desafios regulares atribuem até 100 XP cada; os quizzes são de avaliação (0 XP)
   const challengePointsSum = challenges.reduce((acc, curr) => acc + curr.awardedXp, 0);
-  const totalPoints = challengePointsSum + quiz.awardedXp;
-  const maxPoints = totalActivitiesCount * 100;
+  const totalPoints = challengePointsSum;
+  const maxPoints = regularChallenges.length * 100;
   const isFullyCompleted = totalActivitiesCount > 0 && completedActivitiesCount >= totalActivitiesCount;
 
   return {

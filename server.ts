@@ -1283,9 +1283,13 @@ app.post('/api/progress/save', requireAuth, async (req: AuthenticatedRequest, re
           serverCalculated: true,
         };
 
-        // All activities (challenges & quizzes) award XP up to 100 points based on best score
-        xpGain = Math.max(0, best - previousBest);
-        record.awardedXp = best;
+        if (quiz) {
+          xpGain = 0;
+          record.awardedXp = 0;
+        } else {
+          xpGain = Math.max(0, best - previousBest);
+          record.awardedXp = best;
+        }
 
         if (existing?.firstAttemptScore === undefined) {
           record.firstAttemptScore = attemptScore;
@@ -2391,11 +2395,15 @@ async function recalibrateStudentsPoints() {
       dailyPoints += Math.max(0, Math.min(1000, Math.round(Number(d.data()?.pointsEarned || 0))));
     });
 
-    let activitiesSum = 0;
+    let challengesSum = 0;
     progSnap.docs.forEach((d) => {
       const p = d.data();
-      const best = Math.max(0, Math.min(100, Math.round(Number(p.bestScore ?? p.bestPercentage ?? p.score ?? 0))));
-      activitiesSum += best;
+      const pId = String(p.activityId || d.id);
+      const isQuiz = isLearningQuizServer(pId, p.activityType);
+      if (!isQuiz) {
+        const best = Math.max(0, Math.min(100, Math.round(Number(p.bestScore ?? p.bestPercentage ?? p.score ?? 0))));
+        challengesSum += best;
+      }
     });
 
     let badgeBonus = 0;
@@ -2404,7 +2412,7 @@ async function recalibrateStudentsPoints() {
       if (badge && badge.pointsBonus) badgeBonus += badge.pointsBonus;
     });
 
-    const officialTotal = dailyPoints + activitiesSum + badgeBonus;
+    const officialTotal = dailyPoints + challengesSum + badgeBonus;
     await doc.ref.set({
       points: officialTotal,
       xp: officialTotal,
