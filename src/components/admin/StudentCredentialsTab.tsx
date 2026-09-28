@@ -114,15 +114,53 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
         @media print {
           @page {
             size: A4 portrait;
-            margin: 8mm;
+            margin: 6mm 8mm;
           }
-          body {
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
+          html, body {
+            background: #ffffff !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: visible !important;
+          }
+          /* Hide EVERYTHING on the entire page */
+          body * {
+            visibility: hidden !important;
+          }
+          /* Show ONLY the student cards grid and its descendants */
+          #printable-student-cards,
+          #printable-student-cards * {
+            visibility: visible !important;
+          }
+          #printable-student-cards {
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: #ffffff !important;
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 14px !important;
+            z-index: 999999 !important;
           }
           .student-card-print {
-            page-break-inside: avoid;
-            break-inside: avoid;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+            border: 2px dashed #000000 !important;
+            border-radius: 12px !important;
+            padding: 10px 12px !important;
+            margin: 0 !important;
+            background: #ffffff !important;
+            box-shadow: none !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+          }
+          .print\\:hidden,
+          [class*="print:hidden"] {
+            display: none !important;
+            visibility: hidden !important;
           }
         }
       `}</style>
@@ -268,7 +306,7 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 print:grid-cols-2 print:gap-4 print:w-full print:p-0">
+          <div id="printable-student-cards" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 print:grid-cols-2 print:gap-4 print:w-full print:p-0">
             {filteredStudents.map((student) => {
               const username = student.username || (student.email ? student.email.split('@')[0] : 'aluno');
               const cardPassword = student.plainPass || getStudentCardPassword(student);
