@@ -231,76 +231,13 @@ export async function ensureDatabaseBootstrapped(): Promise<void> {
         }, { merge: true });
       }
 
-      // 4. Ensure Students are seeded if database is fresh
-      const usersQuery = query(collection(db, 'users'), limit(5));
-      const usersSnap = await getDocs(usersQuery);
-      
-      // If we only have teacher or very few students, seed all official 5.º Ano students
-      const nonTeacherDocs = usersSnap.docs.filter(d => d.id !== 'teacher-carla');
-      if (nonTeacherDocs.length === 0) {
-        console.log('[Bootstrap] Base de dados inicial a ser configurada com os 153 alunos do 5.º Ano...');
-        const existingUsernames = new Set<string>(['prof.carla', 'carla.oliveira', 'professora.carla']);
-        const batchSize = 25;
-
-        for (let i = 0; i < INITIAL_STUDENTS_LIST.length; i += batchSize) {
-          const chunk = INITIAL_STUDENTS_LIST.slice(i, i + batchSize);
-          const batch = writeBatch(db);
-
-          for (const s of chunk) {
-            const { fullName, firstName, lastName, greetingName } = parseStudentName(s.name);
-            const cleanTurma = normalizeTurmaName(s.turma);
-            const username = generateKidUsername(fullName, cleanTurma, existingUsernames);
-            const cardPassword = getStudentCardPassword({ username, fullName, name: s.name });
-            const hashed = await hashPasswordClient(cardPassword);
-            const turmaSlug = slugifyText(cleanTurma);
-            const userId = `std_${turmaSlug}_${slugifyText(username)}`;
-            const publicId = username.toUpperCase();
-
-            const studentUserData: User = {
-              id: userId,
-              name: fullName,
-              fullName,
-              firstName,
-              lastName,
-              greetingName,
-              username,
-              turma: cleanTurma,
-              publicId,
-              role: 'student',
-              language: 'pt',
-              points: 0,
-              avatar: getDefaultAvatar(username),
-              createdAt: now,
-            };
-
-            const studentCredData = {
-              userId,
-              passwordHash: hashed.hash,
-              passwordSalt: hashed.salt,
-              createdAt: now,
-              updatedAt: now,
-            };
-
-            const studentPublicData = {
-              id: userId,
-              publicId,
-              turma: cleanTurma,
-              avatar: getDefaultAvatar(username),
-              points: 0,
-              role: 'student',
-            };
-
-            batch.set(doc(db, 'users', userId), studentUserData);
-            batch.set(doc(db, 'credentials', userId), studentCredData);
-            batch.set(doc(db, 'publicProfiles', userId), studentPublicData);
-          }
-
-          await batch.commit();
-        }
-        console.log('[Bootstrap] Configuração da base de dados concluída com sucesso!');
-      }
+      // 4. Ensure Essential Configuration is recorded
+      await setDoc(doc(db, 'config', 'app_state'), {
+        initialized: true,
+        lastBootstrapAt: now,
+      }, { merge: true });
     } catch (bootstrapErr) {
-      console.warn('[Bootstrap] Aviso durante configuração automática da base de dados:', bootstrapErr);
+      console.warn('[Bootstrap] Aviso durante verificação de configuração:', bootstrapErr);
     }
   })();
 
