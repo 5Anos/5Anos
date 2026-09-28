@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Sparkles,
   Shuffle,
@@ -9,6 +9,11 @@ import {
   Eye,
   Shirt,
   Headphones,
+  Tag,
+  AlertCircle,
+  CheckCircle2,
+  Loader2,
+  ShieldCheck,
 } from 'lucide-react';
 import { AvatarConfig, Language } from '../../types';
 import { CartoonAvatar } from './CartoonAvatar';
@@ -26,35 +31,91 @@ import {
   generateRandomAvatar,
   getDefaultAvatar,
 } from '../../utils/avatarUtils';
+import { validateNickname } from '../../utils/nicknameValidator';
+import { api } from '../../services/api';
 
 interface AvatarCreatorModalProps {
   isOpen: boolean;
   initialAvatar?: AvatarConfig;
-  onSave: (avatar: AvatarConfig) => void;
+  initialNickname?: string;
+  onSave: (avatar: AvatarConfig, nickname?: string) => void | Promise<void>;
   onClose: () => void;
   language?: Language;
   title?: string;
 }
 
-type TabType = 'face' | 'hair' | 'glasses' | 'hat' | 'clothing' | 'background';
+type TabType = 'nickname' | 'face' | 'hair' | 'glasses' | 'hat' | 'clothing' | 'background';
 
 export const AvatarCreatorModal: React.FC<AvatarCreatorModalProps> = ({
   isOpen,
   initialAvatar,
+  initialNickname = '',
   onSave,
   onClose,
   language = 'pt',
   title,
 }) => {
   const [avatar, setAvatar] = useState<AvatarConfig>(() => initialAvatar || getDefaultAvatar());
-  const [activeTab, setActiveTab] = useState<TabType>('face');
+  const [nickname, setNickname] = useState<string>(() => initialNickname);
+  const [nicknameStatus, setNicknameStatus] = useState<'idle' | 'checking' | 'valid' | 'invalid'>('idle');
+  const [nicknameFeedback, setNicknameFeedback] = useState<string>('');
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<TabType>('nickname');
   const [justRandomized, setJustRandomized] = useState(false);
 
-  React.useEffect(() => {
-    if (isOpen && initialAvatar) {
-      setAvatar(initialAvatar);
+  useEffect(() => {
+    if (isOpen) {
+      if (initialAvatar) setAvatar(initialAvatar);
+      if (initialNickname) setNickname(initialNickname);
+      setSaveError(null);
     }
-  }, [isOpen, initialAvatar]);
+  }, [isOpen, initialAvatar, initialNickname]);
+
+  // Live Debounced Nickname Check
+  useEffect(() => {
+    if (!isOpen) return;
+    const trimmed = (nickname || '').trim();
+    if (!trimmed) {
+      setNicknameStatus('idle');
+      setNicknameFeedback('');
+      return;
+    }
+
+    if (trimmed.toLowerCase() === (initialNickname || '').toLowerCase().trim()) {
+      setNicknameStatus('valid');
+      setNicknameFeedback(language === 'pt' ? '✅ O teu nickname atual está ativo e válido.' : '✅ Your current nickname is active.');
+      return;
+    }
+
+    const val = validateNickname(trimmed);
+    if (!val.isValid) {
+      setNicknameStatus('invalid');
+      setNicknameFeedback(val.errorPt || 'Nickname inválido.');
+      return;
+    }
+
+    setNicknameStatus('checking');
+    setNicknameFeedback(language === 'pt' ? 'A verificar disponibilidade...' : 'Checking availability...');
+
+    const timer = setTimeout(async () => {
+      try {
+        const check = await api.checkNickname(trimmed);
+        if (check.available) {
+          setNicknameStatus('valid');
+          setNicknameFeedback(language === 'pt' ? '✅ Nickname disponível e seguro para a escola!' : '✅ Nickname is safe and available!');
+        } else {
+          setNicknameStatus('invalid');
+          setNicknameFeedback(check.reason || (language === 'pt' ? 'Este nickname já está a ser utilizado por outro aluno.' : 'This nickname is already taken.'));
+        }
+      } catch {
+        setNicknameStatus('valid');
+        setNicknameFeedback(language === 'pt' ? 'Formato de nickname válido.' : 'Valid nickname format.');
+      }
+    }, 450);
+
+    return () => clearTimeout(timer);
+  }, [nickname, initialNickname, isOpen, language]);
 
   if (!isOpen) return null;
 
@@ -68,12 +129,36 @@ export const AvatarCreatorModal: React.FC<AvatarCreatorModalProps> = ({
     setAvatar({ ...presetConfig });
   };
 
-  const handleSave = () => {
-    onSave(avatar);
-    onClose();
+  const handleSave = async () => {
+    const trimmed = (nickname || '').trim();
+    if (trimmed && trimmed.toLowerCase() !== (initialNickname || '').toLowerCase().trim()) {
+      const val = validateNickname(trimmed);
+      if (!val.isValid) {
+        setActiveTab('nickname');
+        setSaveError(val.errorPt || 'Por favor, corrige o nickname.');
+        return;
+      }
+      if (nicknameStatus === 'invalid') {
+        setActiveTab('nickname');
+        setSaveError(nicknameFeedback || 'Por favor, escolhe um nickname válido e único.');
+        return;
+      }
+    }
+
+    setIsSaving(true);
+    setSaveError(null);
+    try {
+      await onSave(avatar, trimmed || undefined);
+      onClose();
+    } catch (err: any) {
+      setSaveError(err.message || 'Erro ao guardar as alterações.');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const tabs: { id: TabType; labelPt: string; labelEn: string; icon: React.ReactNode }[] = [
+    { id: 'nickname', labelPt: '🏷️ Nickname', labelEn: '🏷️ Nickname', icon: <Tag className="w-4 h-4" /> },
     { id: 'face', labelPt: 'Rosto & Pele', labelEn: 'Face & Skin', icon: <Smile className="w-4 h-4" /> },
     { id: 'hair', labelPt: 'Cabelo', labelEn: 'Hair', icon: <Eye className="w-4 h-4" /> },
     { id: 'glasses', labelPt: 'Óculos', labelEn: 'Glasses', icon: <span className="text-sm">👓</span> },
@@ -201,6 +286,91 @@ export const AvatarCreatorModal: React.FC<AvatarCreatorModalProps> = ({
 
             {/* Tab Panels */}
             <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-6">
+              {/* TAB 0: NICKNAME & IDENTITY */}
+              {activeTab === 'nickname' && (
+                <div className="space-y-5 animate-in fade-in duration-150">
+                  <div className="p-4 bg-indigo-50/80 rounded-2xl border border-indigo-100 flex items-start gap-3">
+                    <ShieldCheck className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="text-sm font-black text-indigo-950">
+                        {language === 'pt' ? 'O Teu Nickname Único no Ranking' : 'Your Unique Leaderboard Nickname'}
+                      </h4>
+                      <p className="text-xs text-indigo-800/80 mt-0.5 leading-relaxed">
+                        {language === 'pt'
+                          ? 'Este é o nome com que os teus colegas te vão ver no Ranking da turma. É 100% único, anónimo e seguro para a escola.'
+                          : 'This is the name your classmates see on the class leaderboard. It is 100% unique, anonymous and safe.'}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-xs font-black uppercase tracking-wider text-slate-700 mb-1.5 flex items-center justify-between">
+                      <span>{language === 'pt' ? 'Escreve o teu Nickname:' : 'Enter your Nickname:'}</span>
+                      <span className="text-[10px] text-slate-400 font-mono">
+                        {nickname.trim().length}/18 {language === 'pt' ? 'caracteres' : 'chars'}
+                      </span>
+                    </label>
+
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={nickname}
+                        maxLength={18}
+                        onChange={(e) => setNickname(e.target.value.replace(/[^a-zA-Z0-9_-]/g, ''))}
+                        placeholder={language === 'pt' ? 'Ex: CyberMartim, AstroAna, Ninja5A...' : 'Ex: CyberMartim, AstroAna...'}
+                        className={`w-full px-4 py-3 text-sm font-mono font-bold rounded-2xl border-2 transition-all outline-hidden ${
+                          nicknameStatus === 'valid'
+                            ? 'border-emerald-500 bg-emerald-50/30 text-emerald-950 focus:ring-2 focus:ring-emerald-300'
+                            : nicknameStatus === 'invalid'
+                            ? 'border-rose-500 bg-rose-50/30 text-rose-950 focus:ring-2 focus:ring-rose-300'
+                            : 'border-slate-200 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 bg-white text-slate-900'
+                        }`}
+                      />
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center">
+                        {nicknameStatus === 'checking' && (
+                          <Loader2 className="w-5 h-5 text-indigo-600 animate-spin" />
+                        )}
+                        {nicknameStatus === 'valid' && (
+                          <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                        )}
+                        {nicknameStatus === 'invalid' && (
+                          <AlertCircle className="w-5 h-5 text-rose-600" />
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Feedback message */}
+                    {nicknameFeedback && (
+                      <p
+                        className={`text-xs font-semibold mt-2 flex items-center gap-1.5 ${
+                          nicknameStatus === 'valid'
+                            ? 'text-emerald-700'
+                            : nicknameStatus === 'invalid'
+                            ? 'text-rose-700'
+                            : 'text-indigo-600'
+                        }`}
+                      >
+                        {nicknameStatus === 'valid' && <Check className="w-3.5 h-3.5" />}
+                        {nicknameStatus === 'invalid' && <AlertCircle className="w-3.5 h-3.5" />}
+                        <span>{nicknameFeedback}</span>
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Rules Pill Box */}
+                  <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-[11px] text-slate-600 space-y-1.5">
+                    <p className="font-bold text-slate-800">
+                      {language === 'pt' ? '📌 Regras para o Nickname:' : '📌 Nickname Rules:'}
+                    </p>
+                    <ul className="list-disc list-inside space-y-1 text-slate-600">
+                      <li>{language === 'pt' ? 'Deve ser único em toda a escola.' : 'Must be unique across the school.'}</li>
+                      <li>{language === 'pt' ? 'Entre 3 e 18 letras ou números (podes usar - ou _).' : 'Between 3 and 18 letters or numbers.'}</li>
+                      <li>{language === 'pt' ? 'Sem palavras obscenas, ofensivas ou racistas (filtro escolar ativo).' : 'No obscene, offensive or racist words (school filter active).'}</li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+
               {/* TAB 1: FACE & SKIN */}
               {activeTab === 'face' && (
                 <div className="space-y-6 animate-in fade-in duration-150">
@@ -526,22 +696,45 @@ export const AvatarCreatorModal: React.FC<AvatarCreatorModalProps> = ({
             </div>
 
             {/* Modal Footer */}
-            <div className="shrink-0 p-3 sm:p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-end gap-2.5">
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-200/60 transition-colors cursor-pointer"
-              >
-                {language === 'pt' ? 'Cancelar' : 'Cancel'}
-              </button>
-              <button
-                type="button"
-                onClick={handleSave}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-extrabold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer active:scale-98"
-              >
-                <Check className="w-4 h-4" />
-                <span>{language === 'pt' ? 'Guardar Este Avatar ✨' : 'Save This Avatar ✨'}</span>
-              </button>
+            <div className="shrink-0 p-3 sm:p-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
+              {saveError ? (
+                <p className="text-xs font-bold text-rose-600 flex items-center gap-1.5">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  <span>{saveError}</span>
+                </p>
+              ) : (
+                <span className="text-[11px] text-slate-400 font-medium">
+                  {language === 'pt' ? 'As tuas alterações ficam gravadas de imediato.' : 'Your changes are saved immediately.'}
+                </span>
+              )}
+
+              <div className="flex items-center justify-end gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  disabled={isSaving}
+                  className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-200/60 transition-colors cursor-pointer disabled:opacity-50"
+                >
+                  {language === 'pt' ? 'Cancelar' : 'Cancel'}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSave}
+                  disabled={isSaving || (activeTab === 'nickname' && nicknameStatus === 'invalid')}
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-extrabold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer active:scale-98 disabled:opacity-50"
+                >
+                  {isSaving ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Check className="w-4 h-4" />
+                  )}
+                  <span>
+                    {isSaving
+                      ? (language === 'pt' ? 'A Gravar...' : 'Saving...')
+                      : (language === 'pt' ? 'Guardar Cartoon & Nickname ✨' : 'Save Cartoon & Nickname ✨')}
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -21,6 +21,7 @@ import {
   parseStudentName,
   normalizeTurmaName,
 } from './src/utils/studentCredentials';
+import { validateNickname, isProfaneOrInappropriate } from './src/utils/nicknameValidator';
 import { getDefaultAvatar } from './src/utils/avatarUtils';
 import { getTodayDateString } from './src/data/dailyTipsData';
 import {
@@ -1116,7 +1117,7 @@ app.get('/api/rankings/turmas', requireAuth, async (req: AuthenticatedRequest, r
   }
 });
 
-// 2. Student Rankings (Authenticated & Minimal Non-PII Data)
+// 2. Student Rankings (Authenticated & Minimal Non-PII Data with Nickname)
 app.get('/api/rankings/students', requireAuth, async (req: AuthenticatedRequest, res) => {
   try {
     const currentUser = req.user!;
@@ -1134,10 +1135,13 @@ app.get('/api/rankings/students', requireAuth, async (req: AuthenticatedRequest,
       // Non-teachers only see rankings for their own class
       if (!isTeacher && userTurma && studentTurma !== userTurma) return;
 
-      // Expose minimal pseudonymous data only (no real name, no email, no username)
+      const studentNickname = data.nickname || data.publicId || 'Aluno_TIC';
+
+      // Expose minimal pseudonymous data only (Nickname, Avatar, XP, Turma)
       list.push({
         id: d.id,
-        publicId: data.publicId || 'Aluno_TIC',
+        publicId: studentNickname,
+        nickname: studentNickname,
         turma: studentTurma,
         points: Number(data.points || 0),
         avatar: data.avatar,
@@ -1155,11 +1159,101 @@ app.get('/api/rankings/students', requireAuth, async (req: AuthenticatedRequest,
   }
 });
 
-// 3. Taken Public IDs (Authenticated, for generating unique pseudonyms)
+// 3. Update Student Nickname (Authenticated, Profanity/Hate-Speech Filtered & Globally Unique)
+app.post('/api/user/nickname', requireAuth, async (req: AuthenticatedRequest, res) => {
+  try {
+    const currentUser = req.user!;
+    const rawNickname = req.body?.nickname;
+
+    const validation = validateNickname(rawNickname);
+    if (!validation.isValid) {
+      return res.status(400).json({ error: validation.errorPt || 'Nickname inválido.' });
+    }
+
+    const newNickname = validation.sanitized;
+    const lowerNick = newNickname.toLowerCase();
+
+    // Check uniqueness across all users / publicProfiles (excluding currentUser)
+    const publicProfilesSnap = await db.collection('publicProfiles').get();
+    let isTaken = false;
+
+    publicProfilesSnap.docs.forEach((docSnap) => {
+      if (docSnap.id === currentUser.id) return;
+      const data = docSnap.data();
+      const existingNick = (data.nickname || data.publicId || '').toLowerCase().trim();
+      if (existingNick === lowerNick) {
+        isTaken = true;
+      }
+    });
+
+    if (isTaken) {
+      return res.status(409).json({
+        error: 'Este nickname já está a ser utilizado por outro aluno. Por favor, escolhe outro!',
+      });
+    }
+
+    // Update in Firestore: users and publicProfiles atomically
+    const now = new Date().toISOString();
+    const batch = db.batch();
+
+    const userRef = db.collection('users').doc(currentUser.id);
+    batch.set(userRef, { nickname: newNickname, publicId: newNickname, updatedAt: now }, { merge: true });
+
+    const publicRef = db.collection('publicProfiles').doc(currentUser.id);
+    batch.set(publicRef, { nickname: newNickname, publicId: newNickname }, { merge: true });
+
+    await batch.commit();
+
+    return res.json({
+      success: true,
+      nickname: newNickname,
+      message: 'Nickname atualizado com sucesso!',
+    });
+  } catch (error: any) {
+    console.error('Update nickname error:', error);
+    return res.status(500).json({ error: 'Erro ao atualizar o nickname.' });
+  }
+});
+
+// 4. Check Nickname Availability & Safety Live Check
+app.get('/api/user/check-nickname', requireAuth, async (req: AuthenticatedRequest, res) => {
+  try {
+    const currentUser = req.user!;
+    const rawNickname = String(req.query.nickname || '');
+
+    const validation = validateNickname(rawNickname);
+    if (!validation.isValid) {
+      return res.json({ available: false, reason: validation.errorPt });
+    }
+
+    const lowerNick = validation.sanitized.toLowerCase();
+    const publicProfilesSnap = await db.collection('publicProfiles').get();
+    let isTaken = false;
+
+    publicProfilesSnap.docs.forEach((docSnap) => {
+      if (docSnap.id === currentUser.id) return;
+      const data = docSnap.data();
+      const existingNick = (data.nickname || data.publicId || '').toLowerCase().trim();
+      if (existingNick === lowerNick) {
+        isTaken = true;
+      }
+    });
+
+    if (isTaken) {
+      return res.json({ available: false, reason: 'Este nickname já está a ser utilizado por outro colega.' });
+    }
+
+    return res.json({ available: true, nickname: validation.sanitized });
+  } catch (error: any) {
+    return res.status(500).json({ error: 'Erro ao verificar disponibilidade.' });
+  }
+});
+
+// 5. Taken Public IDs / Nicknames (Authenticated, for generating unique pseudonyms)
 app.get('/api/public-ids/taken', requireAuth, async (_req, res) => {
   try {
     const snap = await db.collection('publicProfiles').limit(500).get();
-    const taken = snap.docs.map(d => d.data()?.publicId).filter(Boolean);
+    const taken = snap.docs.map(d => d.data()?.nickname || d.data()?.publicId).filter(Boolean);
     return res.json({ success: true, taken });
   } catch {
     return res.json({ success: true, taken: [] });

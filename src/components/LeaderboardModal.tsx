@@ -99,7 +99,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
       s.turma.toLowerCase().trim() === selectedTurmaFilter.toLowerCase().trim();
     const matchesSearch =
       !searchNickname.trim() ||
-      s.publicId.toLowerCase().includes(searchNickname.toLowerCase().trim());
+      (s.nickname || s.publicId || '').toLowerCase().includes(searchNickname.toLowerCase().trim());
     return matchesTurma && matchesSearch;
   });
 
@@ -474,11 +474,11 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                                               #{sIdx + 1}
                                             </span>
                                             <div className="w-7 h-7 rounded-lg overflow-hidden shadow-2xs shrink-0 ring-1 ring-slate-200">
-                                              <CartoonAvatar config={stu.avatar || getDefaultAvatar(stu.publicId)} size={28} />
+                                              <CartoonAvatar config={stu.avatar || getDefaultAvatar(stu.nickname || stu.publicId)} size={28} />
                                             </div>
                                             <div>
                                               <p className="text-xs font-extrabold text-slate-800 font-mono">
-                                                {stu.publicId}
+                                                {stu.nickname || stu.publicId}
                                               </p>
                                               <p className="text-[10px] text-slate-400">
                                                 {stu.activitiesCount} {language === 'pt' ? 'atividades' : 'activities'}
@@ -659,13 +659,13 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                         </span>
 
                         <div className="w-11 h-11 rounded-2xl overflow-hidden shadow-xs ring-2 ring-slate-100 shrink-0">
-                          <CartoonAvatar config={student.avatar || getDefaultAvatar(student.publicId)} size={44} />
+                          <CartoonAvatar config={student.avatar || getDefaultAvatar(student.nickname || student.publicId)} size={44} />
                         </div>
 
                         <div>
                           <div className="flex items-center gap-2 flex-wrap">
                             <p className="text-sm font-extrabold text-slate-900 font-mono">
-                              {student.publicId}
+                              {student.nickname || student.publicId}
                             </p>
                             <span className="text-[10px] font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
                               {student.turma}

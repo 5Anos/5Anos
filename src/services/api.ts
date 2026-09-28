@@ -41,6 +41,11 @@ import {
   slugifyText,
 } from '../utils/studentCredentials';
 import {
+  validateNickname,
+  generateUniqueKidNickname,
+  isProfaneOrInappropriate,
+} from '../utils/nicknameValidator';
+import {
   isTeacherEmail,
   isTeacherIdentifier,
   isUserAdmin,
@@ -663,6 +668,122 @@ export const api = {
     }
   },
 
+  /**
+   * Updates student's safe unique nickname with strict profanity & uniqueness validation
+   */
+  async updateNickname(newNickname: string): Promise<{ success: boolean; nickname: string }> {
+    const current = this.getCurrentSessionUser();
+    if (!current) throw new Error('Precisas de ter sessão iniciada para alterar o teu nickname.');
+
+    // 1. Client-side profanity and format validation
+    const validation = validateNickname(newNickname);
+    if (!validation.isValid) {
+      throw new Error(validation.errorPt || 'Nickname inválido.');
+    }
+    const cleanNick = validation.sanitized;
+
+    // 2. Try updating via secure backend API
+    try {
+      const res = await serverApi<{ success: boolean; nickname: string }>('/api/user/nickname', {
+        method: 'POST',
+        body: JSON.stringify({ nickname: cleanNick }),
+      });
+      if (res?.success) {
+        const updatedUser: User = {
+          ...current,
+          nickname: res.nickname || cleanNick,
+          publicId: res.nickname || cleanNick,
+        };
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
+        return { success: true, nickname: res.nickname || cleanNick };
+      }
+    } catch (err: any) {
+      if (err?.message && !err.message.includes('servidor') && !err.message.includes('fetch')) {
+        throw err;
+      }
+    }
+
+    // 3. Fallback: Direct Firestore uniqueness check & batch update
+    try {
+      const lowerNick = cleanNick.toLowerCase();
+      const profilesSnap = await getDocs(collection(db, 'publicProfiles'));
+      let isTaken = false;
+
+      profilesSnap.docs.forEach((docSnap) => {
+        if (docSnap.id === current.id) return;
+        const data = docSnap.data();
+        const existingNick = (data.nickname || data.publicId || '').toLowerCase().trim();
+        if (existingNick === lowerNick) {
+          isTaken = true;
+        }
+      });
+
+      if (isTaken) {
+        throw new Error('Este nickname já está a ser utilizado por outro colega. Escolhe outro!');
+      }
+
+      const now = new Date().toISOString();
+      const batch = writeBatch(db);
+      batch.set(doc(db, 'users', current.id), { nickname: cleanNick, publicId: cleanNick, updatedAt: now }, { merge: true });
+      batch.set(doc(db, 'publicProfiles', current.id), { nickname: cleanNick, publicId: cleanNick }, { merge: true });
+      await batch.commit();
+
+      const updatedUser: User = {
+        ...current,
+        nickname: cleanNick,
+        publicId: cleanNick,
+      };
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
+
+      return { success: true, nickname: cleanNick };
+    } catch (err: any) {
+      console.error('[Nickname] Erro ao gravar nickname no Firestore:', err);
+      throw new Error(err.message || 'Erro ao atualizar o nickname.');
+    }
+  },
+
+  /**
+   * Checks if a nickname is available (unique) and safe
+   */
+  async checkNickname(nickname: string): Promise<{ available: boolean; reason?: string }> {
+    const current = this.getCurrentSessionUser();
+    const validation = validateNickname(nickname);
+    if (!validation.isValid) {
+      return { available: false, reason: validation.errorPt };
+    }
+
+    try {
+      const res = await serverApi<{ available: boolean; reason?: string }>(
+        `/api/user/check-nickname?nickname=${encodeURIComponent(validation.sanitized)}`
+      );
+      if (res) return res;
+    } catch {}
+
+    // Fallback: check Firestore publicProfiles
+    try {
+      const lowerNick = validation.sanitized.toLowerCase();
+      const profilesSnap = await getDocs(collection(db, 'publicProfiles'));
+      let isTaken = false;
+
+      profilesSnap.docs.forEach((docSnap) => {
+        if (current && docSnap.id === current.id) return;
+        const data = docSnap.data();
+        const existingNick = (data.nickname || data.publicId || '').toLowerCase().trim();
+        if (existingNick === lowerNick) {
+          isTaken = true;
+        }
+      });
+
+      if (isTaken) {
+        return { available: false, reason: 'Este nickname já está a ser utilizado por outro colega.' };
+      }
+
+      return { available: true };
+    } catch {
+      return { available: true };
+    }
+  },
+
   async changePassword(currentPassword: string, newPassword: string): Promise<{ success: boolean; message: string }> {
     const current = this.getCurrentSessionUser();
     if (!current) throw new Error('Inicia sessão primeiro.');
@@ -1045,9 +1166,11 @@ export const api = {
         const data = d.data();
         if (data.role === 'student') {
           if (!userTurma || normalizeTurmaName(data.turma) === normalizeTurmaName(userTurma)) {
+            const studentNickname = data.nickname || data.publicId || 'ALUNO';
             list.push({
               id: d.id,
-              publicId: data.publicId || 'ALUNO',
+              publicId: studentNickname,
+              nickname: studentNickname,
               turma: data.turma || '',
               avatar: data.avatar || getDefaultAvatar(data.publicId || 'aluno'),
               points: Number(data.points) || 0,
@@ -1335,11 +1458,14 @@ export const api = {
 
       const existingUsersSnap = await getDocs(collection(db, 'users'));
       const existingUsernames = new Set<string>();
+      const existingNicknames = new Set<string>();
       const existingList: any[] = [];
 
       existingUsersSnap.docs.forEach((d) => {
         const data = d.data();
         if (data.username) existingUsernames.add(String(data.username).toLowerCase());
+        if (data.nickname) existingNicknames.add(String(data.nickname).toLowerCase());
+        if (data.publicId) existingNicknames.add(String(data.publicId).toLowerCase());
         existingList.push({ id: d.id, ...data });
       });
 
@@ -1375,10 +1501,11 @@ export const api = {
         try {
           const { fullName, firstName, lastName, greetingName } = parseStudentName(cleanName);
           const username = generateKidUsername(fullName, cleanTurma, existingUsernames);
+          const nickname = generateUniqueKidNickname(firstName || fullName, cleanTurma, existingNicknames);
           const password = generateKidPassword(new Set());
           const userId = `std_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
           const now = new Date().toISOString();
-          const publicId = username.toUpperCase();
+          const publicId = nickname;
 
           const hashed = await hashPasswordClient(password);
 
@@ -1391,6 +1518,7 @@ export const api = {
             lastName,
             greetingName,
             username,
+            nickname,
             number: studentNumber,
             initialPassword: password,
             password: password,
@@ -1418,6 +1546,7 @@ export const api = {
           const publicData = {
             id: userId,
             publicId,
+            nickname,
             turma: cleanTurma,
             number: studentNumber,
             avatar: getDefaultAvatar(username),
@@ -1430,6 +1559,7 @@ export const api = {
           await setDoc(doc(db, 'publicProfiles', userId), publicData);
 
           existingUsernames.add(username.toLowerCase());
+          existingNicknames.add(nickname.toLowerCase());
           existingList.push(userData);
 
           created.push({

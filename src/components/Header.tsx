@@ -41,14 +41,27 @@ export const Header: React.FC<HeaderProps> = ({
 
   const isAdmin = user ? isUserAdmin(user.email, user.role) : false;
 
-  const handleSaveAvatar = async (newAvatar: AvatarConfig) => {
+  const handleSaveAvatar = async (newAvatar: AvatarConfig, newNickname?: string) => {
     if (!user) return;
     try {
+      let updatedUser = { ...user, avatar: newAvatar };
       await api.updateUserAvatar(user.id, newAvatar);
-      const updatedUser = { ...user, avatar: newAvatar };
+
+      if (newNickname && newNickname.trim() && newNickname.trim() !== user.nickname) {
+        const res = await api.updateNickname(newNickname.trim());
+        if (res?.success) {
+          updatedUser = {
+            ...updatedUser,
+            nickname: res.nickname,
+            publicId: res.nickname,
+          };
+        }
+      }
+
       onUpdateUser?.(updatedUser);
-    } catch (e) {
-      console.error('Failed to update avatar:', e);
+    } catch (e: any) {
+      console.error('Failed to update avatar or nickname:', e);
+      throw e;
     }
   };
 
@@ -231,10 +244,10 @@ export const Header: React.FC<HeaderProps> = ({
                       </div>
                       <p className="text-sm font-bold text-slate-900 truncate">{isAdmin ? user.name : getStudentFirstAndLastName(user)}</p>
                       {isAdmin && <p className="text-xs text-slate-500 truncate">{user.email}</p>}
-                      {user.publicId && (
-                        <div className="mt-2 p-2 rounded-xl bg-slate-50 border border-slate-200">
-                          <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">{language === 'pt' ? 'ID Público Anónimo' : 'Public ID'}</p>
-                          <p className="text-xs font-bold text-indigo-900 font-mono">{user.publicId}</p>
+                      {(user.nickname || user.publicId) && (
+                        <div className="mt-2 p-2 rounded-xl bg-indigo-50/70 border border-indigo-200/80">
+                          <p className="text-[10px] text-indigo-600 font-bold uppercase tracking-wider">{language === 'pt' ? '🏷️ Nickname no Ranking' : '🏷️ Ranking Nickname'}</p>
+                          <p className="text-xs font-black text-indigo-950 font-mono">{user.nickname || user.publicId}</p>
                         </div>
                       )}
                     </div>
@@ -250,7 +263,7 @@ export const Header: React.FC<HeaderProps> = ({
                           className="w-full py-2 px-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer active:scale-98"
                         >
                           <Palette className="w-3.5 h-3.5" />
-                          <span>{language === 'pt' ? '🎨 Editar o Meu Cartoon' : '🎨 Edit My Cartoon'}</span>
+                          <span>{language === 'pt' ? '🎨 Cartoon & Nickname' : '🎨 Cartoon & Nickname'}</span>
                         </button>
                       </div>
                     )}
@@ -394,10 +407,11 @@ export const Header: React.FC<HeaderProps> = ({
         <AvatarCreatorModal
           isOpen={isAvatarModalOpen}
           initialAvatar={user.avatar || getDefaultAvatar(user.publicId || user.name)}
+          initialNickname={user.nickname || user.publicId}
           onSave={handleSaveAvatar}
           onClose={() => setIsAvatarModalOpen(false)}
           language={language}
-          title={language === 'pt' ? 'O Teu Avatar Cartoon TIC 5' : 'Your TIC 5 Cartoon Avatar'}
+          title={language === 'pt' ? 'O Teu Avatar Cartoon & Nickname TIC 5' : 'Your TIC 5 Cartoon Avatar & Nickname'}
         />
       )}
     </header>

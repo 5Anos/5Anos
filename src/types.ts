@@ -22,12 +22,13 @@ export interface User {
   lastName?: string;
   greetingName?: string;
   username?: string;
+  nickname?: string; // Safe, unique public nickname for rankings & classroom leaderboard
   password?: string;
   initialPassword?: string;
   plainPassword?: string;
   number?: number; // Official student number in class (N.º na pauta da turma)
   email?: string; // Optional: Present for teachers/admins only
-  publicId: string; // Safe Public Identifier (e.g. ANDERSON.O)
+  publicId: string; // Safe Public Identifier (e.g. ANDERSON.O or Nickname)
   turma?: string; // Class (e.g. 5.º A) - optional for teachers
   role?: 'student' | 'teacher' | 'admin';
   language: Language;
@@ -199,11 +200,13 @@ export interface TurmaRanking {
   topBadge: string;
   topStudents: {
     publicId: string;
+    nickname?: string;
     points: number;
     avatar?: AvatarConfig;
   }[];
   allStudents?: {
     publicId: string;
+    nickname?: string;
     points: number;
     activitiesCount: number;
     badgeCount: number;
@@ -215,6 +218,7 @@ export interface StudentRanking {
   position: number;
   id: string;
   publicId: string;
+  nickname?: string;
   turma: string;
   points: number;
   activitiesCount: number;
