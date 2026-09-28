@@ -57,6 +57,8 @@ import {
   getQualitativeLevel,
   getGlobalActivityStats,
   exportStudentCredentialsToExcel,
+  sortStudentsByClassAndNumber,
+  getStudentDisplayNumber,
 } from '../utils/exportUtils';
 import { ALL_THEMES, THEMES_BY_ID } from '../data/allThemesData';
 import { CartoonAvatar } from './avatar/CartoonAvatar';
@@ -136,6 +138,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   const [editingStudent, setEditingStudent] = useState<User | null>(null);
   const [editName, setEditName] = useState('');
   const [editTurma, setEditTurma] = useState('');
+  const [editNumber, setEditNumber] = useState<number | string>('');
   const [editPassword, setEditPassword] = useState('');
   const [showEditPassword, setShowEditPassword] = useState(false);
   const [customPasswords, setCustomPasswords] = useState<Record<string, string>>({});
@@ -381,6 +384,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
     setEditingStudent(student);
     setEditName(student.fullName || student.name || '');
     setEditTurma(student.turma || turmasList[0] || '5.º A');
+    setEditNumber(student.number !== undefined && student.number > 0 ? student.number : '');
     const curPass = customPasswords[student.id] || student.password || student.initialPassword || getStudentCardPassword(student);
     setEditPassword(curPass);
     setShowEditPassword(false);
@@ -390,6 +394,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
 
   const closeEditModal = () => {
     setEditingStudent(null);
+    setEditNumber('');
     setEditPassword('');
     setShowEditPassword(false);
     setEditError('');
@@ -408,15 +413,20 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
       return;
     }
 
+    const parsedNum = parseInt(String(editNumber).trim(), 10);
+    const validNum = !isNaN(parsedNum) && parsedNum > 0 ? parsedNum : undefined;
+
     setEditLoading(true);
     try {
       const currentFullName = (editingStudent.fullName || editingStudent.name || '').trim();
       const nameChanged = editName.trim() !== currentFullName;
       const turmaChanged = editTurma !== editingStudent.turma;
+      const numberChanged = validNum !== editingStudent.number;
 
       await api.adminUpdateStudent(editingStudent.id, {
         newName: nameChanged ? editName.trim() : undefined,
         newTurma: turmaChanged ? editTurma : undefined,
+        newNumber: numberChanged ? validNum : undefined,
         newPassword: trimmedPass || undefined,
       });
 
@@ -439,7 +449,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
 
   // Filter students
   const filteredStudents = useMemo(() => {
-    return students.filter((s) => {
+    const list = students.filter((s) => {
       const matchesTurma = selectedTurma === 'all' || (s.turma || '').trim() === selectedTurma.trim();
       const query = searchQuery.toLowerCase().trim();
       const matchesSearch =
@@ -448,10 +458,13 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
         (s.fullName || '').toLowerCase().includes(query) ||
         (s.username || '').toLowerCase().includes(query) ||
         (s.publicId || '').toLowerCase().includes(query) ||
-        (s.turma || '').toLowerCase().includes(query);
+        (s.turma || '').toLowerCase().includes(query) ||
+        (s.number !== undefined && String(s.number).includes(query));
 
       return matchesTurma && matchesSearch;
     });
+
+    return sortStudentsByClassAndNumber(list);
   }, [students, selectedTurma, searchQuery]);
 
   const allFilteredSelected = useMemo(() => {
@@ -1174,8 +1187,14 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                     )}
                                   </button>
                                 </td>
-                                <td className="py-2.5 px-2 text-center font-bold text-slate-400">
-                                  {idx + 1}
+                                <td className="py-2.5 px-2 text-center font-bold">
+                                  {student.number !== undefined && student.number > 0 ? (
+                                    <span className="inline-block px-1.5 py-0.5 rounded-md bg-slate-100 text-slate-800 font-mono text-xs font-bold border border-slate-200">
+                                      {student.number}
+                                    </span>
+                                  ) : (
+                                    <span className="text-slate-400 font-mono text-xs">{idx + 1}</span>
+                                  )}
                                 </td>
                                 <td className="py-2.5 px-4">
                                   <div className="flex items-center gap-2.5">
@@ -2027,21 +2046,38 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
-                    Mudar Turma
-                  </label>
-                  <select
-                    value={editTurma}
-                    onChange={(e) => setEditTurma(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-indigo-500 bg-white"
-                  >
-                    {turmasList.map((t) => (
-                      <option key={t} value={t}>
-                        {t}
-                      </option>
-                    ))}
-                  </select>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="sm:col-span-1">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+                      N.º na Turma
+                    </label>
+                    <input
+                      type="number"
+                      min="1"
+                      max="60"
+                      placeholder="ex: 30"
+                      value={editNumber}
+                      onChange={(e) => setEditNumber(e.target.value)}
+                      className="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
+                    />
+                  </div>
+
+                  <div className="sm:col-span-2">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+                      Mudar Turma
+                    </label>
+                    <select
+                      value={editTurma}
+                      onChange={(e) => setEditTurma(e.target.value)}
+                      className="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-indigo-500 bg-white"
+                    >
+                      {turmasList.map((t) => (
+                        <option key={t} value={t}>
+                          {t}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
                 <div>

@@ -1171,21 +1171,39 @@ export const api = {
       userUpdates.turma = normalizeTurmaName(updates.newTurma);
     }
 
+    if (updates?.newNumber !== undefined || updates?.number !== undefined) {
+      const rawNum = updates?.newNumber !== undefined ? updates.newNumber : updates.number;
+      const numVal = parseInt(String(rawNum), 10);
+      if (!isNaN(numVal) && numVal > 0) {
+        userUpdates.number = numVal;
+      }
+    }
+
     await setDoc(doc(db, 'users', studentId), userUpdates, { merge: true });
 
     if (updates?.newPassword) {
       const hashed = await hashPasswordClient(updates.newPassword);
       await setDoc(doc(db, 'credentials', studentId), {
         userId: studentId,
+        initialPassword: updates.newPassword,
         passwordHash: hashed.hash,
         passwordSalt: hashed.salt,
         passwordChangedAt: now,
         updatedAt: now,
       }, { merge: true });
+
+      await setDoc(doc(db, 'users', studentId), {
+        initialPassword: updates.newPassword,
+        password: updates.newPassword,
+        updatedAt: now,
+      }, { merge: true }).catch(() => {});
     }
 
-    if (userUpdates.turma) {
-      await setDoc(doc(db, 'publicProfiles', studentId), { turma: userUpdates.turma }, { merge: true }).catch(() => {});
+    if (userUpdates.turma || userUpdates.number !== undefined) {
+      const profUpdate: any = {};
+      if (userUpdates.turma) profUpdate.turma = userUpdates.turma;
+      if (userUpdates.number !== undefined) profUpdate.number = userUpdates.number;
+      await setDoc(doc(db, 'publicProfiles', studentId), profUpdate, { merge: true }).catch(() => {});
     }
 
     return { success: true, message: 'Dados do aluno atualizados com sucesso.' };
@@ -1198,7 +1216,7 @@ export const api = {
   ): Promise<{
     success: boolean;
     count: number;
-    rawData: Array<{ name: string; turma: string }>;
+    rawData: Array<{ name: string; turma: string; number?: number }>;
     students: Array<{ number?: number; name: string; turma?: string; sourceFile?: string }>;
     filesProcessed?: string[];
   }> {
@@ -1237,7 +1255,7 @@ export const api = {
       return {
         success: true,
         count: extracted.length,
-        rawData: extracted.map(e => ({ name: e.name, turma: e.turma })),
+        rawData: extracted.map(e => ({ name: e.name, turma: e.turma, number: e.number })),
         students: extracted,
         filesProcessed: [fileName],
       };
@@ -1254,15 +1272,15 @@ export const api = {
   },
 
   async importStudentsBatch(
-    students: Array<{ name: string; turma?: string }>,
+    students: Array<{ name: string; turma?: string; number?: number }>,
     defaultTurma = '5.º A',
     wipeFirst = false
   ): Promise<{
     success: boolean;
     createdCount: number;
     existedCount: number;
-    created: Array<{ id: string; name: string; turma: string; username: string; password: string }>;
-    existed: Array<{ id: string; name: string; turma: string; username: string }>;
+    created: Array<{ id: string; name: string; turma: string; username: string; password: string; number?: number }>;
+    existed: Array<{ id: string; name: string; turma: string; username: string; number?: number }>;
     updated?: Array<any>;
     errors: Array<{ name?: string; turma?: string; error: string }>;
     summary?: { created: number; existed: number; errors: number };
@@ -1297,8 +1315,8 @@ export const api = {
     }
 
     // Direct Firestore Batch Creation (No plain text passwords stored in DB!)
-    const created: Array<{ id: string; name: string; turma: string; username: string; password: string }> = [];
-    const existed: Array<{ id: string; name: string; turma: string; username: string }> = [];
+    const created: Array<{ id: string; name: string; turma: string; username: string; password: string; number?: number }> = [];
+    const existed: Array<{ id: string; name: string; turma: string; username: string; number?: number }> = [];
     const errors: Array<{ name?: string; turma?: string; error: string }> = [];
 
     try {
@@ -1327,6 +1345,8 @@ export const api = {
       for (const item of students) {
         const cleanName = (item.name || '').trim();
         const cleanTurma = normalizeTurmaName(item.turma || defaultTurma);
+        const studentNumber = typeof item.number === 'number' && item.number > 0 ? item.number : undefined;
+
         if (!cleanName || cleanName.length < 2) continue;
 
         const matched = existingList.find(s => {
@@ -1337,11 +1357,16 @@ export const api = {
         });
 
         if (matched) {
+          // If number was missing, update it
+          if (studentNumber && !matched.number) {
+            await setDoc(doc(db, 'users', matched.id), { number: studentNumber }, { merge: true }).catch(() => {});
+          }
           existed.push({
             id: matched.id,
             name: cleanName,
             turma: cleanTurma,
             username: matched.username || '',
+            number: matched.number || studentNumber,
           });
           continue;
         }
@@ -1365,6 +1390,7 @@ export const api = {
             lastName,
             greetingName,
             username,
+            number: studentNumber,
             initialPassword: password,
             password: password,
             turma: cleanTurma,
@@ -1392,6 +1418,7 @@ export const api = {
             id: userId,
             publicId,
             turma: cleanTurma,
+            number: studentNumber,
             avatar: getDefaultAvatar(username),
             points: 0,
             role: 'student',
@@ -1409,6 +1436,7 @@ export const api = {
             name: fullName,
             turma: cleanTurma,
             username,
+            number: studentNumber,
             password, // Delivered once to the teacher for printing
           });
         } catch (subErr: any) {

@@ -225,10 +225,15 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                 <div className={`inline-block px-6 py-2.5 rounded-2xl text-2xl sm:text-3xl font-black border shadow-2xs mb-2 ${badgeStyle.pillClass}`}>
                   {currentMention}
                 </div>
-                <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full text-xs sm:text-sm font-bold bg-indigo-50 border border-indigo-200 text-indigo-900 mx-auto">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-indigo-50 border border-indigo-200 text-indigo-900 mx-auto flex-wrap justify-center">
                   <span>{result.score} de {result.maxScore} Respostas Corretas</span>
                   <span>•</span>
                   <span>Menção: {currentMention}</span>
+                  <span>•</span>
+                  <span className="text-amber-700 font-extrabold flex items-center gap-1">
+                    <Zap className="w-3.5 h-3.5 fill-current text-amber-500" />
+                    +{result.percentage} XP Acumulados
+                  </span>
                 </div>
               </div>
 

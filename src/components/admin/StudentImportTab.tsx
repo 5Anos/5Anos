@@ -278,6 +278,7 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
   const [editingRowIndex, setEditingRowIndex] = useState<number | null>(null);
   const [editRowName, setEditRowName] = useState('');
   const [editRowTurma, setEditRowTurma] = useState('');
+  const [editRowNumber, setEditRowNumber] = useState<number | string>('');
 
   // Wipe database before creating: disabled by default to keep all classes cumulative
   const [wipeFirst, setWipeFirst] = useState<boolean>(false);
@@ -482,7 +483,7 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
 
     try {
       const res = await api.importStudentsBatch(
-        parsedRows.map((r) => ({ name: r.name, turma: r.turma })),
+        parsedRows.map((r) => ({ name: r.name, turma: r.turma, number: r.number })),
         defaultTurma,
         wipeFirst
       );
@@ -530,13 +531,23 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
     setEditingRowIndex(index);
     setEditRowName(row.name);
     setEditRowTurma(row.turma);
+    setEditRowNumber(row.number);
   };
 
   const saveEditRow = (index: number) => {
     if (!editRowName.trim()) return;
+    const parsedN = parseInt(String(editRowNumber).trim(), 10);
+    const validN = !isNaN(parsedN) && parsedN > 0 ? parsedN : undefined;
     setParsedRows((prev) =>
       prev.map((r, idx) =>
-        idx === index ? { ...r, name: editRowName.trim(), turma: editRowTurma.trim() || r.turma } : r
+        idx === index
+          ? {
+              ...r,
+              name: editRowName.trim(),
+              turma: editRowTurma.trim() || r.turma,
+              number: validN !== undefined ? validN : r.number,
+            }
+          : r
       )
     );
     setEditingRowIndex(null);
@@ -999,7 +1010,18 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
                         return (
                           <tr key={idx} className="hover:bg-slate-50 transition-colors">
                             <td className="py-2 px-3 text-center font-bold text-slate-400">
-                              {row.number}
+                              {isEditing ? (
+                                <input
+                                  type="number"
+                                  min={1}
+                                  max={60}
+                                  value={editRowNumber}
+                                  onChange={(e) => setEditRowNumber(e.target.value)}
+                                  className="w-12 px-1 py-1 rounded-md border border-indigo-400 bg-white text-xs font-bold text-center text-slate-850"
+                                />
+                              ) : (
+                                <span>{row.number}</span>
+                              )}
                             </td>
                             <td className="py-2 px-4">
                               {isEditing ? (

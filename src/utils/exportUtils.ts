@@ -126,6 +126,27 @@ export function getQuizMentionBadgeStyle(percentageOrScore: number): {
   };
 }
 
+export function sortStudentsByClassAndNumber<T extends User>(students: T[]): T[] {
+  return [...students].sort((a, b) => {
+    const turmaA = (a.turma || '').trim();
+    const turmaB = (b.turma || '').trim();
+    if (turmaA !== turmaB) return turmaA.localeCompare(turmaB, 'pt');
+    const numA = typeof a.number === 'number' && a.number > 0 ? a.number : 999999;
+    const numB = typeof b.number === 'number' && b.number > 0 ? b.number : 999999;
+    if (numA !== numB) return numA - numB;
+    const nameA = (a.fullName || a.name || '').trim();
+    const nameB = (b.fullName || b.name || '').trim();
+    return nameA.localeCompare(nameB, 'pt');
+  });
+}
+
+export function getStudentDisplayNumber(student: { number?: number }, fallbackIndex: number): number {
+  if (typeof student.number === 'number' && !isNaN(student.number) && student.number > 0) {
+    return student.number;
+  }
+  return fallbackIndex + 1;
+}
+
 /**
  * Exports detailed challenges and quizzes scores by theme to an Excel (.xlsx) spreadsheet
  */
@@ -135,9 +156,11 @@ export function exportThemeScoresToExcel(
   selectedThemeId: string = 'all',
   selectedTurma: string = 'all'
 ): void {
-  const filteredStudents = selectedTurma && selectedTurma !== 'all'
+  const filtered = selectedTurma && selectedTurma !== 'all'
     ? students.filter((s) => (s.turma || '').trim() === selectedTurma.trim())
     : students;
+
+  const filteredStudents = sortStudentsByClassAndNumber(filtered);
 
   if (filteredStudents.length === 0) return;
 
@@ -160,7 +183,7 @@ export function exportThemeScoresToExcel(
       const breakdown = getStudentThemeBreakdown(student, studentProgress, theme);
 
       const rowObj: Record<string, any> = {
-        'N.º': idx + 1,
+        'N.º': getStudentDisplayNumber(student, idx),
         'Turma': student.turma || '5.º A',
         'Nome Completo': getStudentFullName(student) || 'Sem Nome',
       };
@@ -218,7 +241,7 @@ export function exportThemeScoresToExcel(
     const stats = getGlobalActivityStats(student, studentProgress, ALL_THEMES);
 
     const rowObj: Record<string, any> = {
-      'N.º': idx + 1,
+      'N.º': getStudentDisplayNumber(student, idx),
       'Turma': student.turma || '5.º A',
       'Nome Completo': getStudentFullName(student) || 'Sem Nome',
       'Pontuação Global (XP)': student.points ?? 0,
@@ -266,7 +289,7 @@ export function exportThemeScoresToExcel(
       const breakdown = getStudentThemeBreakdown(student, studentProgress, theme);
 
       const rowObj: Record<string, any> = {
-        'N.º': idx + 1,
+        'N.º': getStudentDisplayNumber(student, idx),
         'Turma': student.turma || '5.º A',
         'Nome Completo': getStudentFullName(student) || 'Sem Nome',
       };
@@ -312,7 +335,7 @@ export function exportThemeScoresToExcel(
     const estimatedTipsCount = tipsAndBonusXP > 0 ? Math.round(tipsAndBonusXP / 40) : 0;
 
     return {
-      'N.º': idx + 1,
+      'N.º': getStudentDisplayNumber(student, idx),
       'Turma': student.turma || '5.º A',
       'Nome Completo': getStudentFullName(student) || 'Sem Nome',
       'Pontos Ganhos em Dicas Diárias & Bónus (XP)': tipsAndBonusXP,
@@ -346,7 +369,7 @@ export function exportThemeScoresToExcel(
  * Dedicated export for Dicas Diárias (Daily Tips) and bonus points per student
  */
 export function exportDailyTipsScoresToExcel(
-  filteredStudents: User[],
+  students: User[],
   progressMap: Record<string, any[]>,
   selectedTurma?: string
 ): void {
@@ -354,6 +377,12 @@ export function exportDailyTipsScoresToExcel(
   const turmaSlug = selectedTurma && selectedTurma !== 'all'
     ? selectedTurma.replace(/[^a-zA-Z0-9]/g, '_')
     : 'Todas_Turmas';
+
+  const filtered = selectedTurma && selectedTurma !== 'all'
+    ? students.filter((s) => (s.turma || '').trim() === selectedTurma.trim())
+    : students;
+
+  const filteredStudents = sortStudentsByClassAndNumber(filtered);
 
   const rows = filteredStudents.map((student, idx) => {
     const studentProgress = progressMap[student.id] || progressMap[student.email] || [];
@@ -363,7 +392,7 @@ export function exportDailyTipsScoresToExcel(
     const estimatedTipsCount = tipsAndBonusXP > 0 ? Math.round(tipsAndBonusXP / 40) : 0;
 
     return {
-      'N.º': idx + 1,
+      'N.º': getStudentDisplayNumber(student, idx),
       'Turma': student.turma || '5.º A',
       'Nome Completo': getStudentFullName(student) || 'Sem Nome',
       'Pontos Dicas Diárias & Bónus (XP)': tipsAndBonusXP,
@@ -405,8 +434,10 @@ export function exportStudentsToExcel(students: User[], selectedTurma?: string):
     ? students.filter((s) => (s.turma || '').trim() === selectedTurma.trim())
     : students;
 
-  const rows = filtered.map((s, idx) => ({
-    'N.º': idx + 1,
+  const sorted = sortStudentsByClassAndNumber(filtered);
+
+  const rows = sorted.map((s, idx) => ({
+    'N.º': getStudentDisplayNumber(s, idx),
     'Turma': s.turma || '5.º A',
     'Nome Completo': getStudentFullName(s) || 'Sem Nome',
     'Nome de Utilizador': s.username || '',
@@ -465,6 +496,8 @@ export function exportStudentsToCSV(students: User[], selectedTurma?: string): v
     ? students.filter((s) => (s.turma || '').trim() === selectedTurma.trim())
     : students;
 
+  const sorted = sortStudentsByClassAndNumber(filtered);
+
   const headers = [
     'N.º',
     'Turma',
@@ -476,12 +509,12 @@ export function exportStudentsToCSV(students: User[], selectedTurma?: string): v
     'Última Atividade',
   ];
 
-  const csvRows = filtered.map((s, idx) => [
-    idx + 1,
+  const csvRows = sorted.map((s, idx) => [
+    getStudentDisplayNumber(s, idx),
     sanitizeCsvCell(s.turma || '5.º A'),
     sanitizeCsvCell(getStudentFullName(s) || 'Sem Nome'),
     sanitizeCsvCell(s.username || ''),
-    sanitizeCsvCell('[Cifrada / Protegida]'),
+    sanitizeCsvCell(getStudentCardPassword(s)),
     s.points ?? 0,
     sanitizeCsvCell(s.createdAt ? new Date(s.createdAt).toLocaleDateString('pt-PT') : ''),
     sanitizeCsvCell(s.lastActivity?.title || 'Sem registo'),
@@ -518,6 +551,8 @@ export function exportThemeScoresToCSV(
     ? students.filter((s) => (s.turma || '').trim() === selectedTurma.trim())
     : students;
 
+  const sorted = sortStudentsByClassAndNumber(filtered);
+
   const regularChallenges = theme.challenges.filter((c) => c.type !== 'final_quiz');
   const maxThemePoints = getThemeMaxPoints(theme);
 
@@ -533,12 +568,12 @@ export function exportThemeScoresToCSV(
     'Classificação',
   ];
 
-  const csvRows = filtered.map((student, idx) => {
+  const csvRows = sorted.map((student, idx) => {
     const studentProgress = progressMap[student.id] || progressMap[student.email] || [];
     const breakdown = getStudentThemeBreakdown(student, studentProgress, theme);
 
     return [
-      idx + 1,
+      getStudentDisplayNumber(student, idx),
       sanitizeCsvCell(student.turma || '5.º A'),
       sanitizeCsvCell(getStudentFullName(student) || 'Sem Nome'),
       ...breakdown.challenges.map((c) => c.score),
@@ -577,8 +612,10 @@ export function exportStudentCredentialsToExcel(students: User[], selectedTurma?
     ? students.filter((s) => (s.turma || '').trim() === selectedTurma.trim())
     : students;
 
-  const rows = filtered.map((s, idx) => ({
-    'N.º': idx + 1,
+  const sorted = sortStudentsByClassAndNumber(filtered);
+
+  const rows = sorted.map((s, idx) => ({
+    'N.º': getStudentDisplayNumber(s, idx),
     'Turma': s.turma || '5.º A',
     'Nome Completo': getStudentFullName(s) || 'Sem Nome',
     'Nome de Utilizador': s.username || '',
@@ -618,11 +655,18 @@ export function exportStudentCredentialsToExcel(students: User[], selectedTurma?
  * Dedicated export for freshly created student accounts (containing passwords for immediate printing/handover)
  */
 export function exportCreatedCredentialsToExcel(
-  createdList: Array<{ id?: string; name: string; turma: string; username: string; password?: string }>,
+  createdList: Array<{ id?: string; name: string; turma: string; username: string; password?: string; number?: number }>,
   turmaName = 'Geral'
 ): void {
-  const rows = createdList.map((s, idx) => ({
-    'N.º': idx + 1,
+  const sorted = [...createdList].sort((a, b) => {
+    const numA = typeof a.number === 'number' && a.number > 0 ? a.number : 999999;
+    const numB = typeof b.number === 'number' && b.number > 0 ? b.number : 999999;
+    if (numA !== numB) return numA - numB;
+    return (a.name || '').localeCompare(b.name || '', 'pt');
+  });
+
+  const rows = sorted.map((s, idx) => ({
+    'N.º': getStudentDisplayNumber(s, idx),
     'Turma': s.turma || '5.º A',
     'Nome Completo': s.name || 'Sem Nome',
     'Nome de Utilizador': s.username || '',

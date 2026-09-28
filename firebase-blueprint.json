@@ -8,6 +8,7 @@
         "id": { "type": "string" },
         "name": { "type": "string" },
         "email": { "type": "string" },
+        "number": { "type": "number", "description": "Official class roll number (N.º) of the student" },
         "publicId": { "type": "string" },
         "turma": { "type": "string" },
         "role": { "type": "string", "enum": ["student", "teacher", "admin"] },

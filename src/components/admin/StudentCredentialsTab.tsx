@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Printer,
   Search,
@@ -17,7 +17,7 @@ import {
 import { User, Language } from '../../types';
 import { api } from '../../services/api';
 import { getStudentFirstAndLastName, getStudentFullName, getStudentCardPassword } from '../../utils/studentCredentials';
-import { exportStudentCredentialsToExcel } from '../../utils/exportUtils';
+import { exportStudentCredentialsToExcel, sortStudentsByClassAndNumber } from '../../utils/exportUtils';
 
 interface StudentCredentialsTabProps {
   students: User[];
@@ -40,22 +40,26 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
   const [resettingId, setResettingId] = useState<string | null>(null);
   const [actionNotice, setActionNotice] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
 
-  const filteredStudents = students.map((s) => {
-    const plainPass = visiblePasswords[s.id] || getStudentCardPassword(s);
-    return {
-      ...s,
-      plainPass,
-    };
-  }).filter((s) => {
-    const matchTurma = selectedTurma === 'all' || (s.turma || '').trim() === selectedTurma.trim();
-    if (!matchTurma) return false;
-    if (!searchQuery.trim()) return true;
-    const q = searchQuery.toLowerCase();
-    const nameMatch = (s.name || '').toLowerCase().includes(q) || (s.fullName || '').toLowerCase().includes(q);
-    const userMatch = (s.username || '').toLowerCase().includes(q);
-    const emailMatch = (s.email || '').toLowerCase().includes(q);
-    return nameMatch || userMatch || emailMatch;
-  });
+  const filteredStudents = useMemo(() => {
+    const list = students.map((s) => {
+      const plainPass = visiblePasswords[s.id] || getStudentCardPassword(s);
+      return {
+        ...s,
+        plainPass,
+      };
+    }).filter((s) => {
+      const matchTurma = selectedTurma === 'all' || (s.turma || '').trim() === selectedTurma.trim();
+      if (!matchTurma) return false;
+      if (!searchQuery.trim()) return true;
+      const q = searchQuery.toLowerCase().trim();
+      const nameMatch = (s.name || '').toLowerCase().includes(q) || (s.fullName || '').toLowerCase().includes(q);
+      const userMatch = (s.username || '').toLowerCase().includes(q);
+      const numMatch = s.number !== undefined && String(s.number).includes(q);
+      return nameMatch || userMatch || numMatch;
+    });
+
+    return sortStudentsByClassAndNumber(list);
+  }, [students, visiblePasswords, selectedTurma, searchQuery]);
 
   const handleCopy = (text: string, keyId: string) => {
     navigator.clipboard.writeText(text);
@@ -274,9 +278,16 @@ export const StudentCredentialsTab: React.FC<StudentCredentialsTabProps> = ({
                           </p>
                         )}
                       </div>
-                      <span className="px-2 py-0.5 rounded-md text-xs font-black bg-indigo-50 text-indigo-700 border border-indigo-200 print:border-black print:text-black print:bg-transparent shrink-0">
-                        {student.turma || '5.º Ano'}
-                      </span>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {student.number !== undefined && student.number > 0 && (
+                          <span className="px-2 py-0.5 rounded-md text-xs font-black bg-slate-100 text-slate-700 border border-slate-300 print:border-black print:text-black print:bg-transparent">
+                            N.º {student.number}
+                          </span>
+                        )}
+                        <span className="px-2 py-0.5 rounded-md text-xs font-black bg-indigo-50 text-indigo-700 border border-indigo-200 print:border-black print:text-black print:bg-transparent shrink-0">
+                          {student.turma || '5.º Ano'}
+                        </span>
+                      </div>
                     </div>
 
                     {/* Credentials Box */}

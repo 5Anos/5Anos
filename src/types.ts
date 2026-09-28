@@ -25,6 +25,7 @@ export interface User {
   password?: string;
   initialPassword?: string;
   plainPassword?: string;
+  number?: number; // Official student number in class (N.º na pauta da turma)
   email?: string; // Optional: Present for teachers/admins only
   publicId: string; // Safe Public Identifier (e.g. ANDERSON.O)
   turma?: string; // Class (e.g. 5.º A) - optional for teachers

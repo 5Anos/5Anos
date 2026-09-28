@@ -1283,29 +1283,18 @@ app.post('/api/progress/save', requireAuth, async (req: AuthenticatedRequest, re
           serverCalculated: true,
         };
 
-        if (quiz) {
-          xpGain = 0;
-          record.awardedXp = 0;
-          if (existing?.firstAttemptScore === undefined) {
-            record.firstAttemptScore = attemptScore;
-            record.firstAttemptPercentage = attemptScore;
-            record.firstAttemptDate = now;
-          } else {
-            record.firstAttemptScore = existing.firstAttemptScore;
-            record.firstAttemptPercentage = existing.firstAttemptPercentage;
-            record.firstAttemptDate = existing.firstAttemptDate || now;
-          }
+        // All activities (challenges & quizzes) award XP up to 100 points based on best score
+        xpGain = Math.max(0, best - previousBest);
+        record.awardedXp = best;
+
+        if (existing?.firstAttemptScore === undefined) {
+          record.firstAttemptScore = attemptScore;
+          record.firstAttemptPercentage = attemptScore;
+          record.firstAttemptDate = now;
         } else {
-          xpGain = Math.max(0, best - previousBest);
-          record.awardedXp = best;
-          if (existing?.firstAttemptScore === undefined) {
-            record.firstAttemptScore = attemptScore;
-            record.firstAttemptPercentage = attemptScore;
-            record.firstAttemptDate = now;
-          } else {
-            record.firstAttemptScore = existing.firstAttemptScore;
-            record.firstAttemptDate = existing.firstAttemptDate || now;
-          }
+          record.firstAttemptScore = existing.firstAttemptScore;
+          record.firstAttemptPercentage = existing.firstAttemptPercentage;
+          record.firstAttemptDate = existing.firstAttemptDate || now;
         }
 
         transaction.set(progressRef, record, { merge: true });
@@ -1740,6 +1729,7 @@ app.get('/api/teacher/students', requireAuth, requireTeacher, async (_req, res) 
           lastName: u.lastName,
           greetingName: u.greetingName,
           username: u.username || (u.email ? u.email.split('@')[0] : ''),
+          number: typeof u.number === 'number' ? u.number : undefined,
           email: u.email,
           publicId: u.publicId,
           turma: u.turma,
@@ -1903,7 +1893,7 @@ app.post('/api/teacher/parse-file', requireAuth, requireTeacher, async (req, res
 // 3. BATCH IMPORT STUDENTS (Password returned ONCE in HTTP response only)
 app.post('/api/teacher/import-students', requireAuth, requireTeacher, async (req, res) => {
   try {
-    const rawStudents: { name: string; turma?: string }[] = Array.isArray(req.body?.students) ? req.body.students : [];
+    const rawStudents: { name: string; turma?: string; number?: number }[] = Array.isArray(req.body?.students) ? req.body.students : [];
     if (rawStudents.length === 0) return res.status(400).json({ error: 'Nenhum aluno para importar.' });
 
     const wipeFirst = Boolean(req.body?.wipeFirst);
@@ -1935,6 +1925,7 @@ app.post('/api/teacher/import-students', requireAuth, requireTeacher, async (req
       const cleanRawName = String(raw.name || '').trim();
       const rawTurma = String(raw.turma || req.body?.defaultTurma || '5.º A').trim();
       const normalizedTurma = normalizeTurmaName(rawTurma);
+      const studentNumber = typeof raw.number === 'number' && raw.number > 0 ? raw.number : undefined;
 
       if (!cleanRawName || cleanRawName.length < 2) continue;
 
@@ -1946,11 +1937,15 @@ app.post('/api/teacher/import-students', requireAuth, requireTeacher, async (req
       });
 
       if (matched) {
+        if (studentNumber && !matched.number) {
+          await db.collection('users').doc(matched.id).set({ number: studentNumber }, { merge: true }).catch(() => {});
+        }
         existed.push({
           id: matched.id,
           name: cleanRawName,
           turma: normalizedTurma,
           username: matched.username || '',
+          number: matched.number || studentNumber,
         });
         continue;
       }
@@ -1966,7 +1961,7 @@ app.post('/api/teacher/import-students', requireAuth, requireTeacher, async (req
         const publicId = username.toUpperCase();
 
         // 1. users document (STRICT: NO PASSWORDS)
-        const userData = {
+        const userData: Record<string, unknown> = {
           id: userId,
           name: fullName,
           fullName: fullName,
@@ -1974,6 +1969,9 @@ app.post('/api/teacher/import-students', requireAuth, requireTeacher, async (req
           lastName: lastName,
           greetingName: greetingName,
           username: username,
+          number: studentNumber,
+          initialPassword: password,
+          password: password,
           turma: normalizedTurma,
           publicId: publicId,
           role: 'student',
@@ -1984,10 +1982,12 @@ app.post('/api/teacher/import-students', requireAuth, requireTeacher, async (req
           createdAt: now,
           updatedAt: now,
         };
+        if (studentNumber) userData.number = studentNumber;
 
         // 2. credentials document (Hash & Salt only)
-        const credData = {
+        const credData: Record<string, unknown> = {
           userId,
+          initialPassword: password,
           passwordHash: hashed.hash,
           passwordSalt: hashed.salt,
           passwordChangedAt: now,
@@ -1996,10 +1996,11 @@ app.post('/api/teacher/import-students', requireAuth, requireTeacher, async (req
         };
 
         // 3. publicProfiles document (Non-PII only)
-        const publicData = {
+        const publicData: Record<string, unknown> = {
           id: userId,
           publicId: publicId,
           turma: normalizedTurma,
+          number: studentNumber,
           avatar: getDefaultAvatar(username),
           points: 0,
           role: 'student',
@@ -2013,6 +2014,7 @@ app.post('/api/teacher/import-students', requireAuth, requireTeacher, async (req
           fullName,
           normalizedTurma,
           username,
+          number: studentNumber,
           password, // Returned ONCE to teacher for handover
           userData,
           credData,
@@ -2040,6 +2042,7 @@ app.post('/api/teacher/import-students', requireAuth, requireTeacher, async (req
           name: s.fullName,
           turma: s.normalizedTurma,
           username: s.username,
+          number: s.number,
           password: s.password, // Delivered once to teacher
         });
       }
@@ -2179,6 +2182,14 @@ app.patch('/api/teacher/students/:userId', requireAuth, requireTeacher, async (r
       updates.turma = turma;
     }
 
+    if (body.newNumber !== undefined || body.number !== undefined) {
+      const rawNum = body.newNumber !== undefined ? body.newNumber : body.number;
+      const numVal = parseInt(String(rawNum), 10);
+      if (!isNaN(numVal) && numVal > 0) {
+        updates.number = numVal;
+      }
+    }
+
     if (Object.keys(updates).length > 1) await userRef.set(updates, { merge: true });
 
     if (body.newPassword !== undefined) {
@@ -2188,11 +2199,18 @@ app.patch('/api/teacher/students/:userId', requireAuth, requireTeacher, async (r
       const now = new Date().toISOString();
       await db.collection('credentials').doc(userId).set({
         userId,
+        initialPassword: password,
         passwordHash: h.hash,
         passwordSalt: h.salt,
         passwordChangedAt: now,
         updatedAt: now,
       }, { merge: true });
+
+      await userRef.set({
+        initialPassword: password,
+        password: password,
+        updatedAt: now,
+      }, { merge: true }).catch(() => {});
     }
 
     await syncPublicProfile(userId);
@@ -2373,15 +2391,11 @@ async function recalibrateStudentsPoints() {
       dailyPoints += Math.max(0, Math.min(1000, Math.round(Number(d.data()?.pointsEarned || 0))));
     });
 
-    let challengesSum = 0;
+    let activitiesSum = 0;
     progSnap.docs.forEach((d) => {
       const p = d.data();
-      const pId = String(p.activityId || d.id);
-      const isQuiz = isLearningQuizServer(pId, p.activityType);
-      if (!isQuiz) {
-        const best = Math.max(0, Math.min(100, Math.round(Number(p.bestScore ?? p.bestPercentage ?? p.score ?? 0))));
-        challengesSum += best;
-      }
+      const best = Math.max(0, Math.min(100, Math.round(Number(p.bestScore ?? p.bestPercentage ?? p.score ?? 0))));
+      activitiesSum += best;
     });
 
     let badgeBonus = 0;
@@ -2390,7 +2404,7 @@ async function recalibrateStudentsPoints() {
       if (badge && badge.pointsBonus) badgeBonus += badge.pointsBonus;
     });
 
-    const officialTotal = dailyPoints + challengesSum + badgeBonus;
+    const officialTotal = dailyPoints + activitiesSum + badgeBonus;
     await doc.ref.set({
       points: officialTotal,
       xp: officialTotal,
