@@ -98,7 +98,6 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
   const lessons = theme.lessons || [];
   const currentLesson = lessons[currentStepIndex] || lessons[0];
   const themeImg = getThemeImage(theme.id);
-  const currentStepImg = getThemeStepImage(theme.id, currentStepIndex);
 
   // Accent gradient based on theme
   const getBannerGradient = (themeNumber: number) => {
@@ -243,58 +242,24 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
         </div>
       </div>
 
-      {/* Theme Learning Roadmap & Stats Strip */}
+      {/* Theme Learning Roadmap & Progress Bar Strip */}
       {(() => {
         const breakdown = getStudentThemeBreakdown({}, progressList, theme);
         return (
-          <div className="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-2xs flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-4 flex-wrap">
-              <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
-                <span className="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center font-black">
-                  📖
-                </span>
-                <span>
-                  {lessons.length} {language === 'pt' ? 'Lições Curriculares' : 'Lessons'}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
-                <span className="w-7 h-7 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center font-black">
-                  🎮
-                </span>
-                <span>
-                  {theme.challenges.length} {language === 'pt' ? 'Jogos & Desafios' : 'Challenges'}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
-                <span className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-black">
-                  🏆
-                </span>
-                <span>
-                  {language === 'pt' ? 'Quiz:' : 'Quiz:'}{' '}
-                  {quizVisibility[theme.id] ? (
-                    <span className="text-emerald-700 font-bold">{language === 'pt' ? 'Disponível' : 'Available'}</span>
-                  ) : (
-                    <span className="text-slate-500 font-normal">{language === 'pt' ? 'Oculto' : 'Hidden'}</span>
-                  )}
-                </span>
-              </div>
+          <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-6">
+            <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-800">
+              <span className="text-base">🚀</span>
+              <span>{language === 'pt' ? 'Progresso do Tema' : 'Topic Progress'}</span>
             </div>
 
-            {/* Theme Progress Pill */}
-            <div className="flex items-center gap-3">
-              <div className="text-right">
-                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">
-                  {language === 'pt' ? 'Progresso do Tema' : 'Topic Progress'}
-                </span>
-                <span className="text-xs font-black text-slate-800">
-                  {breakdown.percentage}% ({breakdown.completedActivitiesCount}/{breakdown.totalActivitiesCount})
-                </span>
-              </div>
-              <div className="w-20 sm:w-28 h-2.5 bg-slate-100 rounded-full overflow-hidden shrink-0">
+            {/* Theme Progress Bar */}
+            <div className="flex items-center gap-3 w-full sm:w-auto sm:min-w-[320px] justify-between sm:justify-end">
+              <span className="text-xs font-black text-slate-800 whitespace-nowrap">
+                {breakdown.percentage}% <span className="text-slate-400 font-normal">({breakdown.completedActivitiesCount}/{breakdown.totalActivitiesCount})</span>
+              </span>
+              <div className="flex-1 sm:w-56 h-3 bg-slate-100 rounded-full overflow-hidden shadow-inner">
                 <div
-                  className="h-full bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full transition-all duration-300"
+                  className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 rounded-full transition-all duration-500"
                   style={{ width: `${breakdown.percentage}%` }}
                 />
               </div>
@@ -407,33 +372,6 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                     </div>
                   </div>
                 </div>
-
-                {/* Step Visual 3D Illustration Banner */}
-                {currentStepImg && (
-                  <div className="relative w-full h-52 sm:h-64 md:h-72 rounded-3xl overflow-hidden shadow-lg border-2 border-slate-100 group animate-in fade-in duration-300">
-                    <img
-                      src={currentStepImg}
-                      alt={currentLesson.h[language]}
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent flex items-end p-4 sm:p-6">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center text-xl sm:text-2xl shadow-lg">
-                          {currentLesson.icon || '🚀'}
-                        </div>
-                        <div>
-                          <span className="text-[11px] font-black uppercase tracking-wider text-amber-300 block">
-                            {currentLesson.eyebrow[language]}
-                          </span>
-                          <p className="text-white font-extrabold text-sm sm:text-base md:text-lg leading-tight drop-shadow-md">
-                            {currentLesson.h[language]}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
 
                 {/* Main Heading */}
                 <h2 className="text-xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
