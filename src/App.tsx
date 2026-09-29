@@ -637,14 +637,14 @@ export default function App() {
       );
     }
 
-    if (activeChallengeId === 'desafio-palavras-chave') {
+    if (activeChallengeId === 'desafio-palavras-chave' || activeChallengeId === 'jogo-net-mc') {
       return (
         <KeywordMasterGame
           language={language}
           onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
-              activityId: 'desafio-palavras-chave',
+              activityId: activeChallengeId,
               activityType: 'challenge',
               themeId: currentTheme.id,
               status: 'completed',
@@ -679,14 +679,14 @@ export default function App() {
       );
     }
 
-    if (activeChallengeId === 'desafio-misterio-aspas') {
+    if (activeChallengeId === 'desafio-misterio-aspas' || activeChallengeId === 'jogo-net-tf') {
       return (
         <SearchOperatorsGame
           language={language}
           onBack={returnToGames}
           onFinish={(score, maxScore, percentage) => {
             handleSaveProgress({
-              activityId: 'desafio-misterio-aspas',
+              activityId: activeChallengeId,
               activityType: 'challenge',
               themeId: currentTheme.id,
               status: 'completed',

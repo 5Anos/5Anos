@@ -443,6 +443,27 @@ const KNOWN_ACTIVITY_MAPPINGS: Record<
     icon: '📦',
     type: 'challenge',
   },
+  'jogo-net-match': {
+    themeId: 'navegar-internet',
+    title: { pt: 'Sinais de Segurança e Navegação', en: 'Web Safety & Browsing Signs' },
+    shortDesc: { pt: 'Associa cada conceito digital ao seu significado correto', en: 'Match digital concepts to their meanings' },
+    icon: '🔗',
+    type: 'challenge',
+  },
+  'jogo-net-tf': {
+    themeId: 'navegar-internet',
+    title: { pt: 'Navegar e Pesquisar: Verdadeiro ou Falso?', en: 'Browsing & Searching: True or False?' },
+    shortDesc: { pt: 'Avalia afirmações sobre palavras-chave, aspas e segurança', en: 'Evaluate facts on keywords, quotes and safety' },
+    icon: '🧭',
+    type: 'challenge',
+  },
+  'jogo-net-mc': {
+    themeId: 'navegar-internet',
+    title: { pt: 'O Mestre das Palavras-Chave', en: 'Keyword Master' },
+    shortDesc: { pt: 'Transforma perguntas em termos de busca precisos', en: 'Turn questions into sharp search terms' },
+    icon: '🔎',
+    type: 'challenge',
+  },
   'quiz-final-tema6': {
     themeId: 'navegar-internet',
     title: { pt: 'Quiz Final: Navegação e Pesquisa na Web', en: 'Final Quiz: Web Browsing & Search' },

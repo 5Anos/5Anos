@@ -15,6 +15,8 @@ import { PasswordSharingDilemmas } from './PasswordSharingDilemmas';
 import { PersonalDataClassifier } from './PersonalDataClassifier';
 import { SocialMediaPrivacyLab } from './SocialMediaPrivacyLab';
 import { UrlAnatomyExplorer } from './UrlAnatomyExplorer';
+import { SearchKeywordsLab } from './SearchKeywordsLab';
+import { SearchOperatorsLab } from './SearchOperatorsLab';
 import { FakeNewsDetectorLab } from './FakeNewsDetectorLab';
 import { DownloadTrapsExplorer } from './DownloadTrapsExplorer';
 import { EmailAddressAnatomy } from './EmailAddressAnatomy';
@@ -448,14 +450,20 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                       <DigitalFootprintSimulator />
                     )}
 
-                    {/* TEMA 5: Navegar e Pesquisar na Internet */}
+                    {/* TEMA 6: Navegar e Pesquisar na Internet */}
                     {theme.id === 'navegar-internet' && currentStepIndex === 0 && (
                       <UrlAnatomyExplorer language={language} />
                     )}
                     {theme.id === 'navegar-internet' && currentStepIndex === 1 && (
-                      <FakeNewsDetectorLab language={language} />
+                      <SearchKeywordsLab language={language} />
                     )}
                     {theme.id === 'navegar-internet' && currentStepIndex === 2 && (
+                      <SearchOperatorsLab language={language} />
+                    )}
+                    {theme.id === 'navegar-internet' && currentStepIndex === 3 && (
+                      <FakeNewsDetectorLab language={language} />
+                    )}
+                    {theme.id === 'navegar-internet' && currentStepIndex === 4 && (
                       <DownloadTrapsExplorer language={language} />
                     )}
 

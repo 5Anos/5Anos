@@ -4,16 +4,16 @@ export const themeNavegarInternetData: ThemeDefinition = {
   id: 'navegar-internet',
   number: 6,
   title: {
-    pt: 'Navegar na Internet',
-    en: 'Internet Browsing',
+    pt: 'Navegar e Pesquisar na Internet',
+    en: 'Browsing and Searching the Web',
   },
   tagline: {
-    pt: 'Aprende a explorar a Web, a fazer boas pesquisas e a evitar armadilhas.',
-    en: 'Learn how to explore the Web, conduct great searches, and avoid traps.',
+    pt: 'Aprende os segredos dos motores de busca, as palavras-chave ninja e como pesquisar como um detetive digital!',
+    en: 'Master search engine secrets, ninja keywords, and research like a digital detective!',
   },
   intro: {
-    pt: 'A Internet é como uma biblioteca mundial com milhões de páginas! Mas tal como numa cidade, é preciso saber andar pelas ruas certas, reconhecer moradas seguras e evitar armadilhas online.',
-    en: 'The Internet is like a global library with millions of pages! But just like in a city, you need to know the right paths, recognize safe addresses, and avoid online traps.',
+    pt: 'A Internet é como a maior biblioteca do planeta! Mas para encontrares a informação certa para os teus trabalhos escolares, precisas de saber guiar o navegador, escolher palavras-chave precisas, usar operadores secretos como as aspas e o sinal menos, e reconhecer o que é verdadeiro ou falso.',
+    en: 'The Internet is the biggest library on Earth! But to find accurate school project facts, you need to steer your browser, pick precise keywords, use secret operators like quotes and minus signs, and verify what is genuine or fake.',
   },
   icon: '🌐',
   illustrationKey: 'navegar-internet',
@@ -21,38 +21,47 @@ export const themeNavegarInternetData: ThemeDefinition = {
   badgeCount: 2,
   lessons: [
     {
-      eyebrow: { pt: 'Navegador & URL', en: 'Browser & URL' },
-      h: { pt: 'A Internet, a Web e o Navegador', en: 'Internet, Web and Browser' },
+      eyebrow: { pt: '1. Navegador & URL', en: '1. Browser & URL' },
+      h: { pt: 'A Web, o Navegador e os Endereços URL', en: 'The Web, Browsers, and URL Addresses' },
       body: {
-        pt: 'A Internet é uma rede que liga computadores no mundo inteiro. A Web é o conjunto de páginas que visitamos. O Navegador (ou Browser) é o programa que usamos para viajar na Web (como o Google Chrome, Mozilla Firefox, Microsoft Edge ou Safari). Cada site tem uma morada única chamada URL (como https://www.seguranet.pt). O domínio de topo .pt está associado a Portugal. Quando tem "https://" e o símbolo do Cadeado 🔒, indica que a ligação ao site está protegida por cifragem.',
-        en: 'The Internet is a global network connecting computers. The Web is the collection of pages we visit. The Web Browser is the app we use to explore the Web (like Chrome, Firefox, Edge, or Safari). Each website has a unique address called a URL (such as https://www.seguranet.pt). The top-level domain .pt is associated with Portugal. When it has "https://" and a Padlock 🔒, it indicates that the connection to the site is protected by encryption.',
-      },
-      icon: '🌐',
-    },
-    {
-      eyebrow: { pt: 'Endereços & Favoritos', en: 'Address & Bookmarks' },
-      h: { pt: 'Barra de Endereços, Marcadores e Histórico', en: 'Address Bar, Bookmarks and History' },
-      body: {
-        pt: 'Se já sabes a morada de um site, escreve-a na Barra de Endereços no topo do navegador para ir direto. Se quiseres procurar informação, escreves palavras na Caixa de Pesquisa. Podes usar os Marcadores (ou Favoritos ⭐️) para guardar os teus sites preferidos (como a página da escola) e abri-los com um só clique! E se precisares de rever um site que viste antes, podes encontrá-lo no Histórico 🕒 de navegação.',
-        en: 'If you already know the web address, type it in the top Address Bar to go directly there. If you want to search for info, type keywords in the Search Box. You can use Bookmarks (or Favorites ⭐️) to save your favorite school sites with one click! And if you want to find a page you visited earlier, look inside the browser History 🕒.',
+        pt: 'A <strong>Internet</strong> é a rede mundial de cabos e antenas que liga todos os computadores. A <strong>Web</strong> é a coleção de páginas com texto, fotos e vídeos que podemos visitar.<br><br>Para viajar na Web precisas de uma "nave": o <strong>Navegador (Browser)</strong>, como o Google Chrome, Microsoft Edge, Mozilla Firefox ou Safari.<br><br><strong>Elementos essenciais do navegador:</strong><ul><li><strong>Barra de Endereços vs. Caixa de Pesquisa:</strong> Na barra de endereços escreves a morada exata (URL) para ir logo ao site (ex.: <em>https://area.escola.pt</em>). Na caixa de pesquisa escreves dúvidas e palavras quando queres procurar.</li><li><strong>O que é o URL:</strong> É a morada única de cada página na Internet. A terminação <strong>.pt</strong> indica que o site está registado em <strong>Portugal</strong> (outros exemplos: .org para organizações, .gov.pt para o governo, .edu para educação).</li><li><strong>Cadeado HTTPS 🔒:</strong> Indica que a ligação entre o teu computador e o site é cifrada e segura. <em>Atenção: o cadeado protege os dados, mas não garante por si só que as notícias do site sejam verdadeiras!</em></li><li><strong>Marcadores (Favoritos ⭐️) e Histórico 🕒:</strong> Os marcadores guardam atalhos para os teus sites favoritos num clique; o histórico lista as páginas que visitaste antes.</li></ul>',
+        en: 'The <strong>Internet</strong> is the global network connecting computers. The <strong>Web</strong> is the collection of pages with text, images, and videos we explore.<br><br>To travel the Web you need a vehicle: a <strong>Web Browser</strong>, such as Google Chrome, Microsoft Edge, Mozilla Firefox, or Safari.<br><br><strong>Key browser components:</strong><ul><li><strong>Address Bar vs. Search Box:</strong> In the address bar you type the exact URL (e.g. <em>https://area.escola.pt</em>). In the search box you type queries when you want to search.</li><li><strong>What is a URL:</strong> The unique address of a webpage. The <strong>.pt</strong> top-level domain represents <strong>Portugal</strong> (.org for non-profits, .gov for government, .edu for education).</li><li><strong>HTTPS Padlock 🔒:</strong> Indicates encrypted data transmission. <em>Note: encryption protects transmission, but does not guarantee the content is accurate!</em></li><li><strong>Bookmarks (⭐️) and History 🕒:</strong> Bookmarks save single-click shortcuts; history logs past pages.</li></ul>',
       },
       icon: '🧭',
     },
     {
-      eyebrow: { pt: 'Pesquisas & Fontes', en: 'Searches & Sources' },
-      h: { pt: 'Como Fazer Boas Pesquisas e Avaliar a Informação', en: 'Smart Searches and Evaluating Information' },
+      eyebrow: { pt: '2. Palavras-Chave', en: '2. Keywords' },
+      h: { pt: 'O Segredo das Palavras-Chave: Pesquisar como um Pro', en: 'Keyword Secrets: Search Like a Pro' },
       body: {
-        pt: 'Para fazer um bom trabalho da escola: 1. Escolhe o tema; 2. Escolhe palavras-chave específicas e relacionadas com aquilo que procuras (ex.: vulcões Portugal); 3. As aspas podem ajudar a procurar uma expressão exata (ex.: "D. Afonso Henriques"); 4. Compara a informação em mais do que um site de confiança e anota as fontes. Lembra-te: nem tudo na Internet é verdade! A posição nos resultados de pesquisa (como estar em primeiro lugar) não significa por si só que a informação seja mais verdadeira ou de confiança. Confirma sempre quem é o autor, a data do artigo e se os dados batem certo com livros escolares.',
-        en: 'For great school research: 1. Choose your topic; 2. Choose specific keywords related to what you are looking for (e.g. volcanoes Portugal); 3. Quotation marks can help search for an exact expression (e.g. "D. Afonso Henriques"); 4. Compare facts across multiple trusted sources and write down references. Remember: not everything online is true! The ranking in search results (like being in first place) does not by itself mean the information is more truthful or trustworthy. Always check the author, publishing date, and verify with school books.',
+        pt: 'Um <strong>Motor de Busca</strong> (como o Google, Kiddle ou Bing) usa robôs automáticos que leem milhões de páginas e organizam um índice gigantesco.<br><br><strong>O Grande Erro dos Principiantes:</strong> Escrever frases longas como se estivessem a falar com uma pessoa (ex.: <em>"olá senhor google podes dizer-me por favor o que come o animal lince e quanto pesa ele obrigado"</em>). O computador não precisa de palavras como "olá", "por favor" ou "obrigado".<br><br><strong>A Regra das Palavras-Chave Ninja:</strong><ul><li><strong>Escolhe 3 a 5 palavras essenciais:</strong> Seleciona apenas os nomes próprios, termos científicos e o assunto exato.</li><li><strong>Exemplo Prático:</strong> Em vez de escrever uma frase enorme, escreve apenas: <em>lince iberico alimentacao peso portugal</em>.</li><li><strong>Cuidado com os Resultados:</strong> O primeiro resultado no topo da página de pesquisa muitas vezes é um <strong>Anúncio Patrocinado (Sponsored / Ad)</strong>! Lê sempre o título do site e o pequeno resumo (snippet) antes de clicar.</li></ul>',
+        en: 'A <strong>Search Engine</strong> (Google, Kiddle, Bing) uses crawlers to catalog millions of pages into an index.<br><br><strong>Common Beginner Mistake:</strong> Typing long conversational queries (e.g. <em>"hello mr google can you please tell me what lynxes eat and weigh thanks"</em>). Filler words only confuse indexing algorithms.<br><br><strong>Ninja Keyword Rules:</strong><ul><li><strong>Pick 3 to 5 key terms:</strong> Focus strictly on subject nouns and specific descriptors.</li><li><strong>Practical Example:</strong> Instead of a long paragraph, search: <em>iberian lynx diet weight portugal</em>.</li><li><strong>Mind the Results:</strong> The top result is frequently a <strong>Sponsored Ad</strong>! Always scan the title, URL, and snippet before clicking.</li></ul>',
       },
       icon: '🔎',
     },
     {
-      eyebrow: { pt: 'Armadilhas & Segurança', en: 'Traps & Safety' },
-      h: { pt: 'Cuidado com Armadilhas, Anúncios e Falsos Prémios', en: 'Beware of Traps, Ads and Fake Prizes' },
+      eyebrow: { pt: '3. Filtros & Aspas', en: '3. Search Operators' },
+      h: { pt: 'Superpoderes da Pesquisa: Aspas " " e Sinal Menos -', en: 'Search Superpowers: Quotes " " and Minus -' },
       body: {
-        pt: 'Cuidado com janelas a piscar a dizer "Ganhaste um telemóvel!" ou "Ganhaste um prémio!" — desconfia de mensagens que prometem prémios inesperados e pedem dados pessoais! Antes de clicares num link, passa o cursor do rato por cima para ver o endereço verdadeiro no fundo do ecrã. Um ficheiro .exe pode executar um programa: nunca abras ficheiros executáveis recebidos de fontes desconhecidas sem a ajuda de um adulto, nem forneças palavras-passe. E se vires algo feio ou desconfortável, fecha logo a janela e conta de imediato a um adulto (pais ou professor)!',
-        en: 'Be careful with flashing pop-ups saying "You won a phone!" or "You won a prize!" — be suspicious of messages promising unexpected prizes! Before clicking a link, hover your mouse over it to preview the real URL. An .exe file can execute a program: never open executable files from unknown sources without help from an adult, or give away passwords. If you see something upsetting, close the page and tell a trusted adult right away!',
+        pt: 'Os detetives digitais usam <strong>operadores de pesquisa</strong> para encontrar agulhas num palheiro e eliminar resultados inúteis!<br><br><strong>Os 3 Superpoderes Mais Importantes:</strong><ul><li><strong>1. Aspas " " (Frase Exata):</strong> Quando colocas termos entre aspas, o motor procura <strong>exatamente aquela sequência de palavras na mesma ordem</strong>.<br>👉 Exemplo: <em>"D. Afonso Henriques"</em> ou <em>"A Cavaleira da Dinamarca"</em>. Sem aspas, ele mostrava páginas com Afonso e páginas com Henriques separadas!</li><li><strong>2. Sinal de Menos - (Excluir Palavras):</strong> Colocar um sinal de menos colado a uma palavra elimina todos os resultados sobre esse tema indesejado.<br>👉 Exemplo: <em>jaguar animal -carro</em> (encontra o felino selvagem e apaga todos os automóveis!).<br>👉 Exemplo: <em>morcego -batman</em> (mostra o mamífero voador sem filmes de super-heróis).</li><li><strong>3. Operador site:.pt (Apenas Sites Nacionais):</strong> Mostra apenas páginas oficiais de Portugal.<br>👉 Exemplo: <em>golfinhos sado site:.pt</em> (mostra reservas e centros de ciência portugueses).</li></ul>',
+        en: 'Digital detectives use <strong>search operators</strong> to pinpoint exact facts and filter irrelevant clutter!<br><br><strong>The 3 Most Vital Superpowers:</strong><ul><li><strong>1. Quotes " " (Exact Match):</strong> Finds the <strong>exact sequence of words in order</strong>.<br>👉 Example: <em>"D. Afonso Henriques"</em> or <em>"A Cavaleira da Dinamarca"</em>. Without quotes, words appear scattered!</li><li><strong>2. Minus Sign - (Exclude Terms):</strong> Excludes unwanted concepts.<br>👉 Example: <em>jaguar animal -car</em> (targets the wild feline and drops automobile brands!).<br>👉 Example: <em>bat mammal -batman</em> (shows the winged animal without comics).</li><li><strong>3. Operator site:.pt (Local Domains):</strong> Restricts results to Portuguese domains.<br>👉 Example: <em>dolphins sado site:.pt</em>.</li></ul>',
+      },
+      icon: '⚡',
+    },
+    {
+      eyebrow: { pt: '4. Detetive de Fontes', en: '4. Source Detective' },
+      h: { pt: 'Nem Tudo é Verdade: Como Avaliar Sites e Notícias', en: 'Not Everything is True: Evaluating Online Facts' },
+      body: {
+        pt: 'Na Internet qualquer pessoa pode criar uma página e escrever mentiras, brincadeiras ou notícias falsas (Fake News). Nunca copies informação para um trabalho escolar sem a verificar!<br><br><strong>A Regra dos 3 C\'s do Detetive:</strong><ul><li><strong>1. Criador / Autor:</strong> Quem escreveu o artigo? É um cientista, museu, enciclopédia escolar reconhecida (.edu, .gov, Ciência Viva, RTP Ensina) ou é um utilizador anónimo num fórum?</li><li><strong>2. Calma com a Data:</strong> O artigo foi publicado recentemente ou tem 15 anos? Em Ciência e Tecnologia as informações desatualizadas podem já estar erradas.</li><li><strong>3. Confirmar em 2 ou 3 Fontes:</strong> Nunca confies na primeira página que abres! Cruza sempre os dados com outro site de confiança e confirma no teu manual escolar antes de entregar o trabalho ao professor.</li></ul>',
+        en: 'Anyone can build a website and publish hoaxes, jokes, or fake news. Never paste information into school homework without verifying!<br><br><strong>The 3-C Detective Rule:</strong><ul><li><strong>1. Creator / Author:</strong> Who wrote this? A museum, university, verified science portal, or an anonymous user on an internet forum?</li><li><strong>2. Check Date:</strong> Was it published recently? Outdated science facts might be inaccurate.</li><li><strong>3. Cross-Check 2-3 Sources:</strong> Never trust the first link alone! Compare facts across reliable sources and textbooks before submitting homework.</li></ul>',
+      },
+      icon: '🕵️',
+    },
+    {
+      eyebrow: { pt: '5. Falsos Downloads', en: '5. Download Traps' },
+      h: { pt: 'Cuidado com Falsos Botões de Download e Pop-ups', en: 'Beware of Fake Download Buttons and Pop-ups' },
+      body: {
+        pt: 'Ao navegar na Web para fazer trabalhos ou jogar, vais encontrar armadilhas que tentam enganar os utilizadores.<br><br><strong>Como Proteger o Teu Computador:</strong><ul><li><strong>A Armadilha do Botão Falso:</strong> Em páginas de transferências ou jogos gratuitos, aparecem botões verdes gigantes a dizer "DOWNLOAD AQUI". Quase sempre são anúncios fraudulentos! O botão de transferência verdadeiro costuma ser mais discreto.</li><li><strong>Pop-ups de Falsos Prémios:</strong> Janelas a piscar com "PARABÉNS! Ganhaste um telemóvel!" são sempre burlas. Nunca cliques nem coloques o teu nome ou telefone. Fecha a janela de imediato!</li><li><strong>Ficheiros Perigosos (.exe):</strong> Ficheiros com extensão <em>.exe</em> executam programas no computador e podem conter vírus. Nunca descarregues nem abras ficheiros executáveis sem a autorização expressa de um adulto.</li><li><strong>Se vires algo assustador ou impróprio:</strong> Fecha o separador imediatamente e avisa os teus pais ou o professor. Não tens culpa nenhuma de abrir um link errado por acidente!</li></ul>',
+        en: 'While browsing for research or games, you will encounter misleading traps.<br><br><strong>Defend Your Computer:</strong><ul><li><strong>Fake Download Buttons:</strong> Massive green buttons flashing "DOWNLOAD HERE" are usually third-party ads. The real download link is modest and authentic.</li><li><strong>Fake Prize Pop-ups:</strong> "CONGRATULATIONS! You won a phone!" is always a scam. Never enter phone numbers or home addresses. Close the tab immediately!</li><li><strong>Risky Files (.exe):</strong> Executable files (.exe) run software and might spread malware. Never execute unknown downloads without adult supervision.</li><li><strong>If You Encounter Inappropriate Content:</strong> Close the tab right away and inform a parent or teacher. You are never at fault for stumbling upon bad links!</li></ul>',
       },
       icon: '🛡️',
     },
@@ -67,26 +76,26 @@ export const themeNavegarInternetData: ThemeDefinition = {
         en: 'The Web, Browsers, and URL Web Addresses',
       },
       shortDesc: {
-        pt: 'Como funcionam o Chrome, Firefox, Edge, o cadeado HTTPS e o domínio .pt.',
-        en: 'How Chrome, Firefox, Edge, HTTPS padlocks, and .pt domains work.',
+        pt: 'Como funcionam o Chrome, Edge, Firefox, o cadeado HTTPS e o domínio nacional .pt.',
+        en: 'How Chrome, Edge, Firefox, the HTTPS padlock, and national .pt domains work.',
       },
       icon: '🧭',
       explanation: {
         pt: [
-          'A Internet é a rede mundial que liga computadores. A Web é a coleção de páginas que podemos visitar.',
-          'Navegador Web (Browser): é o programa que usas para abrir páginas na Internet (Google Chrome, Mozilla Firefox, Microsoft Edge, Safari).',
-          'Barra de Endereços vs. Caixa de Pesquisa: na barra de endereços escreves a morada exata (URL) para ir direto ao site. Na caixa de pesquisa escreves palavras quando queres procurar.',
-          'Endereço URL e terminação .pt: o URL é a morada de uma página (ex.: https://www.seguranet.pt). .pt é o domínio de topo associado a Portugal.',
-          'HTTPS e o Cadeado 🔒: indicam que a ligação ao site está protegida por cifragem. Isso não significa que o site seja verdadeiro ou de confiança.',
-          'Marcadores (Favoritos ⭐️) e Histórico 🕒: os marcadores guardam atalhos para os teus sites favoritos num clique; o histórico lista as páginas que visitaste.',
+          'A Internet é a rede que liga computadores; a Web é a coleção de páginas que visitamos.',
+          'Navegador (Browser): aplicação usada para abrir sites (Google Chrome, Microsoft Edge, Safari, Firefox).',
+          'Barra de Endereços: morada exata (URL) para ir direto ao site. Caixa de Pesquisa: escrever dúvidas para o motor procurar.',
+          'URL e Domínio .pt: endereço único de uma página. O .pt identifica sites associados a Portugal.',
+          'Cadeado HTTPS 🔒: ligação cifrada e segura. Não garante que as notícias sejam verdadeiras.',
+          'Marcadores ⭐️ e Histórico 🕒: guardar atalhos para páginas favoritas num clique e consultar o que visitaste.',
         ],
         en: [
-          'The Internet is the global network of computers. The Web is the collection of pages we explore.',
-          'Web Browser: the app you use to view websites (Google Chrome, Mozilla Firefox, Microsoft Edge, Safari).',
-          'Address Bar vs. Search Box: type the exact address (URL) in the address bar to go straight there. Type keywords in the search box to search.',
-          'URL Address and .pt domain: URL is the web address (e.g. https://www.seguranet.pt). The ".pt" indicates a website from Portugal!',
-          'HTTPS and the Padlock 🔒: indicates an encrypted, secure connection keeping your data protected.',
-          'Bookmarks (Favorites ⭐️) and History 🕒: bookmarks save shortcuts to your favorite sites with one click; history logs previously visited pages.',
+          'The Internet is the hardware network; the Web is the collection of pages.',
+          'Web Browser: app used to open pages (Chrome, Edge, Safari, Firefox).',
+          'Address Bar: direct URL address. Search Box: keywords for search engines.',
+          'URL and .pt Domain: unique web address. The .pt represents Portugal.',
+          'HTTPS Padlock 🔒: encrypted connection. Does not prove information accuracy.',
+          'Bookmarks ⭐️ and History 🕒: one-click favorite shortcuts and visited logs.',
         ],
       },
       example: {
@@ -99,8 +108,8 @@ export const themeNavegarInternetData: ThemeDefinition = {
           en: 'The teacher asked students to open "https://area.escola.pt". Diogo typed the URL straight into the top Address Bar and saved it to Bookmarks with a star to access it with a single click.',
         },
         tip: {
-          pt: 'Escrever diretamente um endereço que conheces pode ser mais rápido e pode ajudar-te a evitar resultados de pesquisa falsos ou enganadores.',
-          en: 'Typing the direct address into the browser bar is faster and avoids misleading search links.',
+          pt: 'Escrever diretamente um endereço que conheces é muito mais rápido e evita resultados enganadores de pesquisa.',
+          en: 'Typing known addresses directly is faster and bypasses misleading search links.',
         },
       },
       funFact: {
@@ -151,181 +160,361 @@ export const themeNavegarInternetData: ThemeDefinition = {
       ],
     },
     {
-      id: 'net-pesquisa-eficaz',
+      id: 'net-palavras-chave-ninja',
       themeId: 'navegar-internet',
       number: 2,
       title: {
-        pt: 'Como Fazer Boas Pesquisas e Avaliar a Informação',
-        en: 'Smart Searches and Evaluating Information',
+        pt: 'Palavras-Chave Ninja e Motores de Busca',
+        en: 'Ninja Keywords and Search Engines',
       },
       shortDesc: {
-        pt: 'Palavras-chave, o truque das aspas (" ") e como detetar notícias falsas.',
-        en: 'Keywords, quotation marks (" "), and spotting fake news.',
+        pt: 'Aprende a transformar perguntas longas em 3 ou 4 termos precisos para trabalhos escolares.',
+        en: 'Turn wordy questions into 3-4 precise keywords for school homework.',
       },
       icon: '🔎',
       explanation: {
         pt: [
-          'Os motores de pesquisa (como o Google) ajudam a encontrar páginas na Web através de palavras-chave.',
-          'Escolhe palavras-chave específicas e relacionadas com aquilo que procuras (ex.: "vulcões Portugal características").',
-          'O truque das aspas (" "): as aspas podem ajudar a procurar uma expressão exata (ex.: "D. Afonso Henriques").',
-          'Passos para uma boa pesquisa escolar: 1. Definir o tema; 2. Escolher palavras-chave específicas; 3. Comparar em mais do que um site de confiança; 4. Anotar as fontes utilizadas.',
-          'Nem tudo na Internet é verdade: notícias falsas (fake news) espalham boatos. A posição nos resultados de pesquisa (como estar em primeiro lugar) não significa por si só que a informação seja mais verdadeira ou de confiança. Confirma sempre quem é o autor, a data do artigo e se os dados batem certo com livros escolares ou sites oficiais.',
+          'Os motores de busca não são seres humanos; funcionam por correspondência de palavras-chave no seu índice.',
+          'Elimina palavras inúteis: saudações (olá, obrigado), pronomes e perguntas informais compridas.',
+          'Escolhe termos específicos: junta o nome da espécie/monumento com o tema (ex.: lince iberico alimentacao).',
+          'Atenção aos Anúncios: as primeiras posições da página de resultados muitas vezes são anúncios pagos (Patrocinado / Ad).',
+          'Lê sempre o resumo (snippet): confirma se o artigo responde ao teu trabalho antes de abrir.',
         ],
         en: [
-          'Search engines (like Google) help locate web pages using keywords.',
-          'Use short and specific keywords instead of long phrases (e.g. "volcanoes Portugal features").',
-          'Quotation marks (" ") trick: wrap exact phrases in quotes ("D. Afonso Henriques") to find words together in that exact order!',
-          'Steps for great school research: 1. Define topic; 2. Pick keywords; 3. Compare multiple trusted sources; 4. Record references used.',
-          'Not everything on the Internet is true: fake news spreads hoaxes. Always verify the author, publishing date, and confirm with school books or official portals.',
+          'Search engines match keywords against an indexed catalog.',
+          'Drop filler words: greetings, conversational phrases, and informal questions.',
+          'Use specific terminology: pair proper nouns with scientific or historical topics.',
+          'Watch out for Ads: top search spots are frequently paid sponsored listings.',
+          'Read snippets: inspect preview text to verify relevance before clicking.',
         ],
       },
       example: {
         title: {
-          pt: 'A pesquisa de História da Leonor',
-          en: 'Leonor’s History research',
+          pt: 'Trabalho sobre o Lince-Ibérico',
+          en: 'Iberian lynx school project',
         },
         scenario: {
-          pt: 'A Leonor queria pesquisar sobre o primeiro rei de Portugal. Em vez de escrever uma frase longa, escreveu no motor de busca: "D. Afonso Henriques" nascimento. Encontrou rapidamente a página oficial de um museu e confirmou a data noutro livro da biblioteca.',
-          en: 'Leonor wanted to research the first king of Portugal. Instead of typing a long sentence, she searched: "D. Afonso Henriques" nascimento. She quickly found an official museum page and verified it in a library book.',
+          pt: 'A Inês escreveu "lince iberico alimentacao peso portugal" no motor de busca e encontrou logo no topo a página oficial do ICNF com todos os dados biológicos de que precisava.',
+          en: 'Inês typed "iberian lynx diet weight portugal" and instantly found the official national biodiversity institute page with verified biological facts.',
         },
         tip: {
-          pt: 'Usar aspas (" ") em nomes próprios ajuda a encontrar exatamente a pessoa ou assunto certo!',
-          en: 'Using quotes (" ") on proper names helps find exactly the right person or topic!',
+          pt: 'Palavras precisas trazem respostas precisas! Poupa tempo evitando frases conversacionais longas.',
+          en: 'Precise keywords yield precise facts! Avoid conversational paragraphs.',
         },
       },
       funFact: {
-        pt: 'Sabias que são feitas mais de 8 mil milhões de pesquisas todos os dias nos motores de busca de todo o mundo?',
-        en: 'Did you know over 8 billion searches are made every day on search engines worldwide?',
+        pt: 'Sabias que o Google processa mais de 8,5 mil milhões de pesquisas todos os dias em todo o mundo?',
+        en: 'Did you know Google processes over 8.5 billion searches every single day worldwide?',
       },
       thinkAboutIt: {
         question: {
-          pt: 'O que deves fazer se encontrares uma notícia na Internet a dizer que amanhã não há aulas em todo o país?',
-          en: 'What should you do if you read an online article claiming school is cancelled nationwide tomorrow?',
+          pt: 'Por que razão escrever "olá google podes dizer-me por favor" é uma má técnica de pesquisa?',
+          en: 'Why is typing "hello google can you please tell me" a poor search strategy?',
         },
         clue: {
-          pt: 'Lembra-te de verificar a fonte e perguntar a um adulto.',
-          en: 'Remember to check the source and ask an adult.',
+          pt: 'Pensa no tempo que o robô perde a comparar palavras que não têm nada a ver com o tema do trabalho.',
+          en: 'Think about irrelevant words cluttering the algorithmic query.',
         },
         reflection: {
-          pt: 'Nunca deves acreditar logo! Deves confirmar no site oficial da escola ou perguntar aos teus pais ou professores para ver se é uma notícia verdadeira ou um boato.',
-          en: 'Never trust it right away! Verify on the school official website or ask parents/teachers to see if it is real or a hoax.',
+          pt: 'O motor de busca procura todas as palavras escritas. Adicionar saudações e pedidos de favor só baralha os resultados com páginas irrelevantes.',
+          en: 'Search engines index every term. Adding pleasantries clutters results with irrelevant forum discussions.',
         },
       },
       quizQuestions: [
         {
           id: 'q-net-2',
           question: {
-            pt: 'Para que serve colocar uma expressão entre aspas (" ") numa pesquisa no motor de busca?',
-            en: 'What is the purpose of placing a phrase in quotes (" ") in a search engine query?',
+            pt: 'Qual destas pesquisas é a mais eficiente para um trabalho de Ciências sobre vulcões nos Açores?',
+            en: 'Which query is the most effective for a Science report about Azores volcanoes?',
           },
           options: {
             pt: [
-              'Para ajudar a procurar uma expressão exata',
-              'Para apagar o histórico do navegador',
-              'Para traduzir as palavras para francês',
-              'Para desligar o motor de busca',
+              'olá motor de busca diz-me tudo sobre vulcões que deitam fumo nas ilhas bonitas dos Açores',
+              'vulcoes acores caracteristicas geologia',
+              'coisas da terra',
+              'quero saber vulcão por favor',
             ],
             en: [
-              'To help search for an exact expression',
-              'To delete browser history',
-              'To translate terms into French',
-              'To turn off the search engine',
+              'hello search engine tell me all about smoking volcanoes in the pretty Azores islands',
+              'azores volcanoes geology characteristics',
+              'earth stuff',
+              'i want to know volcano please',
             ],
           },
-          correctIndex: 0,
+          correctIndex: 1,
           explanation: {
-            pt: 'As aspas podem ajudar a procurar uma expressão exata.',
-            en: 'Well done! Quotation marks can help search for an exact expression.',
+            pt: 'Palavras-chave diretas, científicas e geográficas conduzem diretamente a artigos escolares fiáveis.',
+            en: 'Direct geographical and scientific keywords guide engines to verified educational articles.',
           },
         },
       ],
     },
     {
-      id: 'net-seguranca-links',
+      id: 'net-operadores-aspas-menos',
       themeId: 'navegar-internet',
       number: 3,
       title: {
-        pt: 'Reconhecer Links Falsos, Anúncios e Perigos Online',
-        en: 'Spotting Fake Links, Malicious Ads, and Online Threats',
+        pt: 'Superpoderes: Aspas "" e o Sinal Menos -',
+        en: 'Superpowers: Quotes "" and the Minus - Sign',
       },
       shortDesc: {
-        pt: 'Anúncios de falsos prémios, passar o rato nos links e ficheiros executáveis perigosos.',
-        en: 'Fake prize pop-ups, link hovering, and dangerous executable files.',
+        pt: 'Descobre os operadores secretos para encontrar expressões exatas e excluir resultados indesejados.',
+        en: 'Discover secret search operators to match exact phrases and exclude irrelevant noise.',
       },
-      icon: '🚦',
+      icon: '⚡',
       explanation: {
         pt: [
-          'Anúncios de Falsos Prémios: janelas a dizer "Ganhaste um telemóvel!" ou "Ganhaste 1000 euros!" são armadilhas fraudulentas (scams). Fecha logo a janela e nunca dês dados.',
-          'Passar o rato por cima do link: antes de clicares num link, passa o cursor por cima sem carregar. No canto inferior do ecrã podes ver a morada verdadeira para onde ele vai!',
-          'Ficheiros Executáveis (.exe): não descarregues nem abras ficheiros executáveis (.exe) recebidos de fontes desconhecidas, porque podem conter software malicioso.',
-          'Phishing: mensagens ou páginas falsas que tentam enganar-te para roubar palavras-passe ou informações pessoais.',
-          'Se vires algo desagradável ou assustador: fecha a página imediatamente e conta logo a um adulto de confiança (pais ou professor).',
+          'Aspas " " (Frase Exata): prende as palavras juntas na mesma sequência. Indispensável para nomes de reis, poemas e títulos.',
+          'Sinal Menos - (Exclusão): elimina resultados que contenham o termo colado ao sinal (ex.: jaguar animal -carro).',
+          'Operador site:.pt: restringe os resultados a domínios de Portugal, útil para dados estatísticos e fontes nacionais.',
+          'Operador filetype:pdf: encontra apresentações, relatórios e manuais em formato PDF.',
+          'Combinar operadores: podes usar "D. Afonso Henriques" -lenda site:.pt para encontrar história pura!',
         ],
         en: [
-          'Fake Prize Ads: banners screaming "You won a smartphone!" or "You won money!" are deceptive traps (scams). Close them immediately and never enter details.',
-          'Hover over links: before clicking, hover your cursor over the link to preview the real destination address at the bottom of the screen!',
-          'Downloads and Executables (.exe): never download executable files from untrusted sources as they may carry malware.',
-          'Phishing: fake websites trying to trick you into revealing passwords or personal data.',
-          'If you see upsetting content: close the tab immediately and tell a trusted adult (parents or teacher) right away.',
+          'Quotes " ": locks words together in exact sequence. Crucial for book titles, poems, and historical monarchs.',
+          'Minus Sign -: strips results containing the attached term (e.g. jaguar mammal -car).',
+          'Operator site:.pt: filters results to Portuguese domains for national statistics.',
+          'Operator filetype:pdf: retrieves school guides and PDF documents.',
+          'Combining operators: you can use "D. Afonso Henriques" -myth site:.pt for pure historical sources!',
         ],
       },
       example: {
         title: {
-          pt: 'O falso prémio do Martim',
-          en: 'Martim’s fake prize',
+          pt: 'Pesquisa do poema de Fernando Pessoa',
+          en: 'Searching a Fernando Pessoa poem',
         },
         scenario: {
-          pt: 'Ao abrir um site de jogos, apareceu uma janela vermelha a piscar a dizer: "Parabéns! Foste o visitante n.º 1 000 000 e ganhaste um telemóvel novo! Insere a tua morada e o cartão dos teus pais." O Martim reconheceu que era uma armadilha, não clicou em nada e fechou logo a janela.',
-          en: 'While visiting a gaming site, a red flashing pop-up popped up: "Congratulations! You are visitor #1,000,000 and won a phone! Enter your address and credit card." Martim recognized it was a scam, clicked nothing, and closed the window right away.',
+          pt: 'O Tiago precisava de encontrar a estrofe que diz "O poeta é um fingidor". Ao colocar entre aspas `"O poeta é um fingidor"`, o motor de busca encontrou imediatamente o poema Autopsicografia na primeira tentativa.',
+          en: 'Tiago needed to find the verse "O poeta é um fingidor". Enclosing the quote in quotation marks targeted Fernando Pessoa’s Autopsicografia on the very first try.',
         },
         tip: {
-          pt: 'Ninguém oferece telemóveis ou dinheiro de graça na Internet! Fecha sempre essas janelas.',
-          en: 'No one gives away free phones or cash online! Always close these pop-ups.',
+          pt: 'Se procurares títulos de livros escolares, usa sempre aspas para não receberes páginas com as palavras todas dispersas.',
+          en: 'When searching book titles or exact quotes, always wrap them in quotation marks.',
         },
       },
       funFact: {
-        pt: 'Sabias que a palavra "Phishing" vem da palavra inglesa "pesca" (fishing), porque os burlões lançam um isco falso à espera que alguém morda o anzol?',
-        en: 'Did you know "Phishing" comes from the word "fishing", because scammers cast a fake lure hoping someone bites?',
+        pt: 'Sabias que o sinal de menos tem de estar colado à palavra (ex: -carro) sem espaço para o motor entender que é uma exclusão?',
+        en: 'Did you know the minus sign must touch the word without spaces (-car) for the search engine to recognize it as an exclusion operator?',
       },
       thinkAboutIt: {
         question: {
-          pt: 'O que deves fazer se um amigo te enviar um link estranho com um ficheiro chamado "jogo-secreto.exe"?',
-          en: 'What should you do if a friend sends a weird link with a file called "secret-game.exe"?',
+          pt: 'Se pesquisares "morcego -batman", o que esperas que o motor de busca te mostre?',
+          en: 'If you search "bat -batman", what do you expect the search engine to display?',
         },
         clue: {
-          pt: 'Lembra-te do perigo dos ficheiros com extensão .exe e pergunta ao teu amigo se foi mesmo ele quem enviou.',
-          en: 'Remember the danger of .exe files and ask your friend if they really sent it.',
+          pt: 'O sinal de menos apaga o super-herói dos quadradinhos.',
+          en: 'The minus sign removes the comic book superhero.',
         },
         reflection: {
-          pt: 'Nunca deves abrir ficheiros .exe sem autorização de um adulto, porque a conta do teu amigo pode ter sido pirateada ou ter um vírus.',
-          en: 'Never open .exe files without adult approval, as your friend’s account could be hacked or infected.',
+          pt: 'O motor de busca vai mostrar informações biológicas sobre o mamífero voador morcego, excluindo todos os filmes, jogos e brinquedos do Batman.',
+          en: 'The engine will display biological facts about the flying mammal, stripping out Batman movies, games, and merchandise.',
         },
       },
       quizQuestions: [
         {
           id: 'q-net-3',
           question: {
-            pt: 'O que deves fazer se surgir uma janela a dizer que ganhaste um prémio e a pedir a tua morada?',
-            en: 'What should you do if a pop-up claims you won a prize and asks for your address?',
+            pt: 'Para que serve colocar uma expressão entre aspas numa pesquisa na Web (ex.: "A Cavaleira da Dinamarca")?',
+            en: 'What is the purpose of enclosing a phrase in quotation marks in a Web search (e.g. "A Cavaleira da Dinamarca")?',
           },
           options: {
             pt: [
-              'Fechar imediatamente a janela sem clicar em botões nem fornecer qualquer dado',
-              'Preencher logo todos os teus dados e o número de telefone dos pais',
-              'Enviar o link para todos os teus colegas de turma',
+              'Para obrigar o motor de busca a encontrar exatamente aquelas palavras juntas e pela mesma ordem',
+              'Para apagar o histórico de navegação do computador',
+              'Para aumentar o tamanho das letras no ecrã',
+              'Para traduzir automaticamente a página para inglês',
+            ],
+            en: [
+              'To force the search engine to match those exact words together in that order',
+              'To delete the browser navigation history',
+              'To increase screen font size',
+              'To automatically translate the page to English',
+            ],
+          },
+          correctIndex: 0,
+          explanation: {
+            pt: 'As aspas forçam o motor a respeitar a sequência exata de palavras, evitando resultados soltos e dispersos.',
+            en: 'Quotes enforce exact phrase matching, eliminating scattered word matches.',
+          },
+        },
+      ],
+    },
+    {
+      id: 'net-avaliar-fontes-detetive',
+      themeId: 'navegar-internet',
+      number: 4,
+      title: {
+        pt: 'Detetive da Web: Avaliar Fontes e Fact-Checking',
+        en: 'Web Detective: Source Evaluation and Fact-Checking',
+      },
+      shortDesc: {
+        pt: 'Aprende a detetar boatos e notícias falsas aplicando a regra dos 3 C\'s.',
+        en: 'Learn how to detect fake news and rumors applying the 3-C evaluation rule.',
+      },
+      icon: '🕵️',
+      explanation: {
+        pt: [
+          'Nem tudo na Internet é verdade: qualquer pessoa pode criar uma página sem supervisão.',
+          'Estar em 1.º lugar no Google não é garantia de verdade; depende de algoritmos e técnicas de posicionamento.',
+          'Regra dos 3 C\'s: Criador (quem escreveu?), Calma com a data (está atualizado?), Confirmar (cruzar em 2 ou 3 fontes).',
+          'Domínios de confiança: museus, bibliotecas, enciclopédias oficiais, portais governamentais (.gov.pt) e universitários (.edu).',
+          'Desconfia de títulos bombásticos ou milagrosos (ex.: "Comer terra cura constipações!").',
+        ],
+        en: [
+          'Not everything online is true: anyone can publish unverified content.',
+          'Ranking #1 on Google does not prove factual truth; it depends on indexing algorithms.',
+          '3-C Rule: Creator (who wrote it?), Check Date (is it up to date?), Cross-check (verify across 2-3 independent sources).',
+          'Trusted domains: museums, verified encyclopedias, government portals (.gov.pt), and university research (.edu).',
+          'Distrust sensationalist headlines promising miracles.',
+        ],
+      },
+      example: {
+        title: {
+          pt: 'A notícia do tubarão no Rio Tejo',
+          en: 'The River Tagus shark hoax',
+        },
+        scenario: {
+          pt: 'O Diogo viu num blogue que um tubarão gigante tinha sido avistado na praia de Belém. Antes de contar aos colegas, foi verificar a jornais nacionais e ao site da Polícia Marítima e descobriu que era uma montagem antiga de fotografia!',
+          en: 'Diogo read a blog claiming a giant shark was swimming at Belém beach in Lisbon. Before telling classmates, he checked national news and maritime police portals, discovering it was an old photo hoax!',
+        },
+        tip: {
+          pt: 'Pensar antes de partilhar é o superpoder do cidadão digital responsável!',
+          en: 'Think before sharing is the superpower of responsible digital citizens!',
+        },
+      },
+      funFact: {
+        pt: 'Sabias que notícias falsas e boatos espalham-se 6 vezes mais depressa na Internet do que a verdade, porque apelam ao choque e à surpresa?',
+        en: 'Did you know false rumors spread 6 times faster online than truth because they exploit emotional shock and surprise?',
+      },
+      thinkAboutIt: {
+        question: {
+          pt: 'Se uma notícia não tiver nome de autor nem data de publicação, o que deves fazer?',
+          en: 'If a news article has no author name and no publication date, what should you do?',
+        },
+        clue: {
+          pt: 'Pensa se confiarias num bilhete sem assinatura deixado na rua.',
+          en: 'Would you trust an unsigned note found on the street?',
+        },
+        reflection: {
+          pt: 'Sem autor nem data, é impossível saber quem se responsabiliza pelo texto. Deves desconfiar de imediato e procurar fontes com autores reconhecidos.',
+          en: 'Without an author or date, nobody takes responsibility for the text. Distrust it and look for verified sources.',
+        },
+      },
+      quizQuestions: [
+        {
+          id: 'q-net-4',
+          question: {
+            pt: 'Estar em primeiro lugar nos resultados do Google significa obrigatoriamente que a informação é verdadeira?',
+            en: 'Does ranking first in Google search results mean the information is guaranteed to be true?',
+          },
+          options: {
+            pt: [
+              'Não, a ordem depende de algoritmos e anúncios; devemos sempre avaliar a fonte e comparar com outros sites',
+              'Sim, porque os computadores do Google só mostram verdades absolutas',
+              'Sim, porque todas as mentiras da Internet são apagadas automaticamente',
+              'Não, porque o primeiro lugar é sempre uma página de ficção científica',
+            ],
+            en: [
+              'No, ranking depends on algorithms and ads; we must always evaluate the source and compare facts',
+              'Yes, because Google computers only display absolute truths',
+              'Yes, because all online lies are automatically deleted',
+              'No, because the top spot is always science fiction',
+            ],
+          },
+          correctIndex: 0,
+          explanation: {
+            pt: 'A posição nos resultados depende de relevância algorítmica e otimização. Pensamento crítico e comparação de fontes são indispensáveis!',
+            en: 'Search rankings depend on algorithms and SEO. Critical evaluation and cross-referencing are mandatory!',
+          },
+        },
+      ],
+    },
+    {
+      id: 'net-armadilhas-downloads',
+      themeId: 'navegar-internet',
+      number: 5,
+      title: {
+        pt: 'Escudo Digital: Falsos Downloads e Anúncios',
+        en: 'Digital Shield: Fake Downloads and Scams',
+      },
+      shortDesc: {
+        pt: 'Aprende a reconhecer botões falsos de download, pop-ups de prémios e ficheiros perigosos.',
+        en: 'Spot misleading download buttons, prize pop-ups, and hazardous executable files.',
+      },
+      icon: '🛡️',
+      explanation: {
+        pt: [
+          'Falsos botões de download: anúncios disfarçados de botões verdes grandes em sites de jogos para te fazer clicar em publicidade.',
+          'Pop-ups de prémios ("Ganhaste um telemóvel!"): esquemas de burla para roubar números de telefone e dados bancários.',
+          'Ficheiros com extensão .exe: executam programas e podem infetar o computador com vírus se vierem de fontes desconhecidas.',
+          'Prever o link (Hover): passar o rato por cima de um link mostra o destino real no canto inferior da janela antes de clicares.',
+          'Se vires algo desconfortável ou assustador: fecha logo a janela e pede apoio a um adulto de confiança.',
+        ],
+        en: [
+          'Fake download buttons: ads masquerading as giant green buttons on gaming sites to trick clicks.',
+          'Prize pop-ups ("You won a phone!"): scams designed to extract phone numbers and financial data.',
+          'Files ending in .exe: executable code that can install malware from untrusted origins.',
+          'Link Hover preview: hovering reveals the genuine destination URL in the browser corner before clicking.',
+          'If you encounter disturbing content: close the tab immediately and notify a trusted adult.',
+        ],
+      },
+      example: {
+        title: {
+          pt: 'A janela de prémio no jogo online',
+          en: 'The gaming website prize pop-up',
+        },
+        scenario: {
+          pt: 'Enquanto o Afonso jogava, apareceu uma janela vermelha a piscar: "Clica para receber 10.000 moedas grátis!". O Afonso lembrou-se da aula de TIC, não clicou no anúncio e fechou logo o separador, mantendo o computador seguro.',
+          en: 'While Afonso was gaming, a flashing banner popped up: "Click here for 10,000 free coins!". Remembering his ICT class, Afonso didn’t click and closed the tab, keeping his computer safe.',
+        },
+        tip: {
+          pt: 'Nenhum site oficial dá prémios fabulosos a quem não participou em passatempos reais com autorização dos pais!',
+          en: 'No legitimate portal gives free prizes without real parental-approved contests!',
+        },
+      },
+      funFact: {
+        pt: 'Sabias que passar o rato por cima de um link sem clicar (hover) é a melhor técnica de segurança para ver a verdadeira morada do site?',
+        en: 'Did you know hovering over a link without clicking is the top safety technique to reveal the actual destination address?',
+      },
+      thinkAboutIt: {
+        question: {
+          pt: 'Porque é que nunca deves descarregar um ficheiro com extensão .exe de um site de jogos desconhecido?',
+          en: 'Why should you never download an .exe file from an unknown gaming site?',
+        },
+        clue: {
+          pt: 'A extensão .exe significa "executável" (executa instruções no sistema operativo).',
+          en: 'The .exe extension stands for executable code.',
+        },
+        reflection: {
+          pt: 'Ficheiros .exe podem instalar cavalos de Troia, vírus ou programas espiões que roubam palavras-passe e danificam o computador.',
+          en: 'Files with .exe extensions can install trojans, viruses, or spyware that capture passwords and damage the operating system.',
+        },
+      },
+      quizQuestions: [
+        {
+          id: 'q-net-5',
+          question: {
+            pt: 'O que deves fazer se surgir uma janela pop-up a dizer "Parabéns! Ganhaste um telemóvel novo, clica aqui para receber"?',
+            en: 'What should you do if a pop-up window claims "Congratulations! You won a new phone, click here to receive"?',
+          },
+          options: {
+            pt: [
+              'Fechar imediatamente a janela sem clicar em botões nem preencher qualquer dado pessoal',
+              'Preencher a morada de casa e o número de telefone dos pais',
+              'Enviar o link a todos os colegas de turma para também ganharem',
               'Ligar para o número que aparece no ecrã a pedir o prémio',
             ],
             en: [
-              'Close the window immediately without clicking buttons or entering personal data',
-              'Fill in all your details and parents’ phone number right away',
-              'Send the link to all your classmates',
+              'Close the window immediately without clicking buttons or entering personal information',
+              'Type your home address and your parents\' phone number',
+              'Share the link with all classmates so they win too',
               'Call the phone number on screen to claim the prize',
             ],
           },
           correctIndex: 0,
           explanation: {
-            pt: 'É um anúncio falso e perigoso. Fechar logo é a atitude mais segura.',
-            en: 'Spot on! It is a fake and dangerous pop-up. Closing it right away is the safest choice.',
+            pt: 'É uma burla clássica da Internet para roubar dados. A melhor defesa é fechar a janela de imediato sem interagir.',
+            en: 'It is a classic internet scam to steal personal data. The safest action is closing the tab without clicking.',
           },
         },
       ],
@@ -333,71 +522,95 @@ export const themeNavegarInternetData: ThemeDefinition = {
   ],
   challenges: [
     {
-      id: 'jogo-net-mc',
+      id: 'desafio-palavras-chave',
       themeId: 'navegar-internet',
       number: 1,
-      title: { pt: '🔎 Escolhe as Melhores Palavras-chave', en: '🔎 Choose the Best Keywords' },
-      shortDesc: { pt: 'Seleciona os termos ideais e o uso de aspas para pesquisar na Web.', en: 'Select ideal terms and quotes to search the Web.' },
+      title: { pt: '🔎 O Mestre das Palavras-Chave', en: '🔎 Keyword Master' },
+      shortDesc: {
+        pt: 'Transforma dúvidas escolares em palavras-chave ninja e descobre os melhores resultados!',
+        en: 'Turn school homework questions into ninja keywords and discover the best results!',
+      },
       icon: '🔎',
       durationMinutes: 4,
       points: 100,
       type: 'keywords_master',
       gameData: {
         type: 'mc',
-        title: 'Escolhe as melhores palavras-chave',
+        title: 'O Mestre das Palavras-Chave',
         icon: '🔎',
         xp: 100,
         desc: 'Identifica a melhor estratégia de pesquisa na Internet para trabalhos escolares.',
         data: {
           questions: [
             {
-              q: 'Se precisas de pesquisar sobre os vulcões em Portugal para um trabalho de Ciências, qual é a melhor pesquisa?',
+              q: 'Se precisas de pesquisar sobre a alimentação e peso do lince-ibérico para Ciências, qual é a melhor pesquisa?',
               opts: [
                 'olá computador mostra-me coisas bonitas da terra',
-                'vulcões Portugal características',
-                'vulcão',
-                'quero saber tudo sobre vulcões quentes perto de mim por favor'
+                'lince iberico alimentacao peso portugal',
+                'lince',
+                'quero saber tudo sobre animais comilões por favor'
               ],
               c: 1,
               e: 'Escolhe palavras-chave específicas e relacionadas com aquilo que procuras para ajudar o motor de busca a encontrar exatamente o que precisas.'
             },
             {
-              q: 'Se quiseres procurar a expressão exata "D. Afonso Henriques", o que deves usar?',
+              q: 'O que deves evitar ao escrever uma pesquisa no motor de busca?',
               opts: [
-                'D. Afonso Henriques!!! (com pontos de exclamação)',
-                'Escrever tudo em letras maiúsculas',
-                '"D. Afonso Henriques" (entre aspas)',
-                'Apagar o espaço entre as palavras'
+                'Escrever termos científicos e nomes próprios específicos',
+                'Escrever frases conversacionais longas com saudações como "olá" e "por favor"',
+                'Usar palavras em português correto',
+                'Procurar por factos históricos'
               ],
-              c: 2,
-              e: 'As aspas podem ajudar a procurar uma expressão exata!'
+              c: 1,
+              e: 'Palavras conversacionais como "olá" e "por favor" não ajudam o motor de busca e baralham os resultados.'
             }
           ]
         }
       }
     },
     {
-      id: 'jogo-net-tf',
+      id: 'desafio-misterio-aspas',
       themeId: 'navegar-internet',
       number: 2,
-      title: { pt: '⚡ Verdadeiro ou Falso: Navegar na Internet', en: '⚡ True or False: Browsing the Web' },
-      shortDesc: { pt: 'Testa os teus conhecimentos sobre segurança e navegação na Web.', en: 'Test your knowledge on web security and browsing.' },
+      title: { pt: '⚡ O Mistério das Aspas e Operadores', en: '⚡ The Search Operators Mystery' },
+      shortDesc: {
+        pt: 'Usa aspas "" e o sinal menos - para resolver enigmas e filtrar resultados indesejados!',
+        en: 'Use quotes "" and minus signs - to solve riddles and filter unwanted results!',
+      },
       icon: '⚡',
-      durationMinutes: 3,
+      durationMinutes: 4,
       points: 100,
-      type: 'true_false',
+      type: 'search_operators',
       gameData: {
-        type: 'tf',
-        title: 'Verdadeiro ou Falso: Navegar na Internet',
+        type: 'mc',
+        title: 'O Mistério das Aspas e Operadores',
         icon: '⚡',
         xp: 100,
-        desc: 'Classifica cada afirmação sobre a navegação e segurança online.',
+        desc: 'Domina os superpoderes dos motores de busca: aspas, sinal menos e filtros.',
         data: {
-          items: [
-            { s: 'Tudo o que está publicado na Internet é sempre 100% verdadeiro.', a: false, e: 'Falso! Na Internet existem muitas notícias falsas e boatos. Devemos sempre confirmar em fontes confiáveis.' },
-            { s: 'O ".pt" no final de um endereço web é o domínio de topo associado a Portugal.', a: true, e: 'Verdadeiro! .pt é o domínio de topo associado a Portugal.' },
-            { s: 'Se aparecer uma janela a dizer que ganhaste um prémio, deves preencher logo com a tua morada.', a: false, e: 'Falso! Janelas de falsos prémios são burlas (scams). Deves fechar a janela imediatamente.' },
-            { s: 'Os Marcadores (Favoritos) servem para guardar as tuas páginas preferidas e abri-las com um só clique.', a: true, e: 'Verdadeiro! Os marcadores guardam atalhos úteis como o site da escola.' }
+          questions: [
+            {
+              q: 'Se quiseres procurar a expressão exata "D. Afonso Henriques", o que deves usar?',
+              opts: [
+                'D. Afonso Henriques!!! (com pontos de exclamação)',
+                'Escrever tudo em maiúsculas',
+                '"D. Afonso Henriques" (entre aspas)',
+                'Apagar o espaço entre as palavras'
+              ],
+              c: 2,
+              e: 'As aspas forçam o motor de busca a procurar a expressão exata com as palavras todas juntas pela mesma ordem!'
+            },
+            {
+              q: 'Queres pesquisar sobre o felino jaguar sem ver anúncios de automóveis da marca Jaguar. O que escreves?',
+              opts: [
+                'jaguar animal -carro',
+                'jaguar +carro +automóvel',
+                'jaguar sem ver carros por favor',
+                'carro jaguar não quero'
+              ],
+              c: 0,
+              e: 'O operador sinal menos colado à palavra (-carro) exclui todas as páginas que contenham esse termo indesejado!'
+            }
           ]
         }
       }
@@ -407,7 +620,10 @@ export const themeNavegarInternetData: ThemeDefinition = {
       themeId: 'navegar-internet',
       number: 3,
       title: { pt: '🔗 Sinais de Segurança e Navegação', en: '🔗 Web Safety & Browsing Signs' },
-      shortDesc: { pt: 'Liga cada elemento da navegação à sua função ou significado.', en: 'Match each browsing element to its role or meaning.' },
+      shortDesc: {
+        pt: 'Associa cada conceito digital (HTTPS, aspas, sinal menos, domínio .pt) ao seu significado correto.',
+        en: 'Match each digital concept (HTTPS, quotes, minus sign, .pt domain) to its correct meaning.',
+      },
       icon: '🔗',
       durationMinutes: 4,
       points: 100,
@@ -420,10 +636,67 @@ export const themeNavegarInternetData: ThemeDefinition = {
         desc: 'Associa cada conceito digital ao seu significado correto.',
         data: {
           pairs: [
-            { left: 'HTTPS e o Cadeado 🔒', right: 'Ligação protegida por cifragem (não garante que o site seja verdadeiro)' },
-            { left: 'Janela a dizer "Ganhaste um telemóvel!"', right: 'Anúncio falso e perigoso (burla)' },
-            { left: 'Ficheiro executável com extensão .exe', right: 'Pode executar um programa (nunca abrir sem um adulto se for de origem desconhecida)' },
-            { left: 'Histórico de navegação 🕒', right: 'Lista das páginas visitadas' }
+            { left: 'Aspas " "', right: 'Procura a frase exata sem separar as palavras' },
+            { left: 'Sinal de Menos -', right: 'Exclui palavras e temas indesejados da pesquisa' },
+            { left: 'Cadeado HTTPS 🔒', right: 'Ligação cifrada (não garante que o conteúdo seja verdadeiro)' },
+            { left: 'Domínio .pt', right: 'Domínio de topo associado a Portugal' },
+            { left: 'Marcadores ⭐️', right: 'Guardam atalhos para páginas favoritas num só clique' },
+            { left: 'Falso botão "DOWNLOAD"', right: 'Publicidade enganosa em sites de jogos' }
+          ]
+        }
+      }
+    },
+    {
+      id: 'jogo-net-tf',
+      themeId: 'navegar-internet',
+      number: 4,
+      title: { pt: '🧭 Navegar e Pesquisar: Verdadeiro ou Falso?', en: '🧭 Browsing & Searching: True or False?' },
+      shortDesc: {
+        pt: 'Avalia se cada afirmação sobre pesquisas, palavras-chave e armadilhas é verdadeira ou falsa.',
+        en: 'Evaluate whether statements about searches, keywords, and traps are true or false.',
+      },
+      icon: '🧭',
+      durationMinutes: 4,
+      points: 100,
+      type: 'true_false',
+      gameData: {
+        type: 'tf',
+        title: 'Navegar e Pesquisar: Verdadeiro ou Falso?',
+        icon: '🧭',
+        xp: 100,
+        desc: 'Classifica cada afirmação sobre a navegação, pesquisa e segurança online.',
+        data: {
+          items: [
+            {
+              s: 'Escrever "olá senhor google podes dizer-me por favor" é a forma mais eficaz de pesquisar para um trabalho escolar.',
+              a: false,
+              e: 'Falso! Deves usar 3 a 5 palavras-chave precisas e diretas, sem saudações nem conversas longas.'
+            },
+            {
+              s: 'Colocar uma expressão entre aspas (ex.: "Batalha de São Mamede") faz o motor procurar a frase exata na mesma ordem.',
+              a: true,
+              e: 'Verdadeiro! As aspas trancam as palavras juntas na mesma sequência.'
+            },
+            {
+              s: 'Se pesquisares "morcego -batman", o motor de busca elimina os resultados que falem sobre o Batman.',
+              a: true,
+              e: 'Verdadeiro! O sinal de menos (-) exclui temas que não queres ver nos resultados.'
+            },
+            {
+              s: 'O primeiro resultado no topo da página do Google é sempre e obrigatoriamente a verdade absoluta.',
+              a: false,
+              e: 'Falso! Muitas vezes o topo tem anúncios patrocinados e a ordem depende de algoritmos, não de verificação de factos.'
+            },
+            {
+              s: 'O cadeado HTTPS 🔒 no navegador garante que o site nunca mente nem publica notícias falsas.',
+              a: false,
+              e: 'Falso! O cadeado apenas cifra o transporte dos dados, não garante a verdade do que está escrito.'
+            },
+            {
+              s: 'Os Marcadores ou Favoritos (⭐️) servem para guardar atalhos para páginas úteis para as abrir com um clique.',
+              a: true,
+              e: 'Verdadeiro! Os marcadores poupam tempo ao guardar atalhos como a página da escola.'
+            }
           ]
         }
       }
@@ -431,9 +704,9 @@ export const themeNavegarInternetData: ThemeDefinition = {
     {
       id: 'quiz-final-tema6',
       themeId: 'navegar-internet',
-      number: 4,
+      number: 5,
       title: { pt: '🏆 Quiz de Aprendizagem: Navegar na Internet (10 Questões)', en: '🏆 Learning Quiz: Internet Browsing (10 Questions)' },
-      shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas claras sobre o Tema 6.', en: 'Comprehensive final assessment with 10 clear questions on Topic 6.' },
+      shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas claras e práticas sobre o Tema 6.', en: 'Comprehensive final assessment with 10 clear questions on Topic 6.' },
       icon: '🏆',
       durationMinutes: 10,
       points: 100,
@@ -484,40 +757,40 @@ export const themeNavegarInternetData: ThemeDefinition = {
     {
       id: 'net-q2',
       question: {
-        pt: 'A Leonor encontrou um artigo excelente no site do Museu de História e quer enviar o link ao seu grupo de trabalho. O que é o endereço URL que ela vai copiar da barra do navegador?',
-        en: 'Leonor found a great article on the History Museum website and wants to send the link to her study group. What is the URL address she will copy from the browser bar?',
+        pt: 'Qual é a diferença principal entre a Barra de Endereços do navegador e a Caixa de Pesquisa de um motor de busca?',
+        en: 'What is the main difference between the browser Address Bar and a search engine Search Box?',
       },
       options: {
         pt: [
-          'A chave secreta de encriptação do router Wi-Fi da escola',
-          'A velocidade da ligação de fibra ótica da biblioteca',
-          'A morada única que identifica exatamente onde fica essa página na Internet (ex.: https://www.museu.pt/historia)',
-          'O número de série do monitor do computador',
+          'A barra de endereços só funciona se o monitor estiver desligado',
+          'Na barra de endereços escreves a morada exata (URL) para ir direto ao site; na caixa de pesquisa escreves palavras-chave para o motor procurar páginas',
+          'Não existe qualquer diferença, ambas servem apenas para mudar a cor de fundo do computador',
+          'A caixa de pesquisa serve apenas para jogar jogos de computador',
         ],
         en: [
-          'The secret Wi-Fi router encryption key at school',
-          'The fiber optic connection speed in the library',
-          'The unique address that identifies exactly where that page is located on the Internet (e.g. https://www.museu.pt/historia)',
-          'The serial number of the computer monitor',
+          'The address bar only works if the monitor is powered off',
+          'In the address bar you type the exact URL to go straight to a site; in the search box you type keywords to search pages',
+          'There is no difference, both only change desktop wallpaper',
+          'The search box is exclusively for playing computer games',
         ],
       },
-      correctIndex: 2,
+      correctIndex: 1,
       explanation: {
-        pt: 'O URL é a morada única e exata que permite a qualquer pessoa encontrar a página específica na Web.',
-        en: 'A URL is the unique, exact web address allowing anyone to locate a specific page on the Internet.',
+        pt: 'Se já sabes a morada (ex: https://area.escola.pt), escreves na barra de endereços para ir logo lá. Se queres pesquisar sobre um tema, usas palavras-chave na caixa de pesquisa.',
+        en: 'If you know the URL, type it directly in the address bar. If you want to search a topic, type keywords in the search box.',
       },
       optionExplanations: {
         pt: [
-          'Esta opção está errada. A chave Wi-Fi é a palavra-passe da rede e não o endereço de um site.',
-          'Esta opção está errada. A velocidade da ligação é medida em Mbps e não tem nada a ver com o link do site.',
-          'Esta é a resposta correta! O URL é o endereço único que nos leva diretamente a uma página da Web.',
-          'Esta opção está errada. O número de série é um código físico do equipamento e não um endereço da Internet.',
+          'Esta opção está errada. O monitor tem de estar ligado para veres a barra de endereços.',
+          'Esta é a resposta correta! A barra de endereços recebe o URL exato e a caixa de pesquisa processa termos de pesquisa.',
+          'Esta opção está errada. Ambas têm funções distintas e fundamentais na navegação.',
+          'Esta opção está errada. A caixa de pesquisa procura informação em toda a Web.',
         ],
         en: [
-          'Incorrect. The Wi-Fi key is the network password, not a web address.',
-          'Incorrect. Connection speed is measured in Mbps and is unrelated to a web link.',
-          'Correct answer! The URL is the unique web address leading directly to a page.',
-          'Incorrect. A serial number is physical hardware identification, not a web address.',
+          'Incorrect. The screen must be on to use the browser.',
+          'Correct answer! The address bar accepts exact URLs while the search box indexes keywords.',
+          'Incorrect. Both tools have distinct, vital purposes.',
+          'Incorrect. The search box searches across the global Web.',
         ],
       },
     },
@@ -529,315 +802,315 @@ export const themeNavegarInternetData: ThemeDefinition = {
       },
       options: {
         pt: [
-          'Que o site está bloqueado e a Maria não pode escrever dados',
-          'Que o computador foi infetado por um vírus que bloqueou a navegação',
+          'Que o site está avariado e ninguém pode escrever palavras',
+          'Que o computador apanhou um vírus que bloqueou a janela',
           'Que a ligação entre o computador da Maria e o site é encriptada e protegida, mas a Maria deve continuar a avaliar se a informação do site é confiável',
-          'Que a página é 100% verdadeira e impossível de ter notícias falsas',
+          'Que todas as notícias e opiniões escritas no site são garantidamente 100% verdadeiras',
         ],
         en: [
-          'That the site is locked and Maria cannot type any data',
-          'That the computer has been infected by a virus blocking browsing',
+          'That the site is broken and nobody can type words',
+          'That the computer caught a virus locking the window',
           'That the connection between Maria’s computer and the site is encrypted and protected, but Maria must still evaluate if the site content is trustworthy',
-          'That the page is 100% genuine and impossible to contain fake news',
+          'That all news and opinions on the site are guaranteed to be 100% true',
         ],
       },
       correctIndex: 2,
       explanation: {
-        pt: 'HTTPS e o cadeado garantem a segurança do transporte dos dados (encriptação), mas não garantem por si só que o conteúdo do site seja verdadeiro.',
-        en: 'HTTPS and the padlock ensure data transport security (encryption), but do not guarantee by themselves that the content is genuine.',
+        pt: 'O HTTPS e o cadeado protegem o canal de comunicação contra espiões (cifragem), mas não garantem que o conteúdo ou as notícias do site sejam verdadeiras.',
+        en: 'HTTPS and the padlock encrypt data in transit, but do not guarantee that the articles or facts on the site are true.',
       },
       optionExplanations: {
         pt: [
-          'Esta opção está errada. O cadeado não significa bloqueio do utilizador, mas sim encriptação dos dados.',
-          'Esta opção está errada. O cadeado 🔒 é um indicador de segurança de ligação e não um vírus.',
-          'Esta é a resposta correta! O HTTPS encripta a transmissão, mas o utilizador deve continuar crítico em relação ao conteúdo.',
-          'Esta opção está errada. Um site com HTTPS pode perfeitamente conter informações falsas ou ser uma burla.',
+          'Esta opção está errada. O cadeado não bloqueia o utilizador, apenas protege a transmissão.',
+          'Esta opção está errada. O cadeado é um indicador de segurança técnica, não um vírus.',
+          'Esta é a resposta correta! O HTTPS cifra os dados transmitidos, mas o utilizador deve manter o espírito crítico.',
+          'Esta opção está errada. Um site com cadeado pode ter notícias falsas ou ser uma burla.',
         ],
         en: [
-          'Incorrect. The padlock does not mean user lockout, but data transport encryption.',
-          'Incorrect. The 🔒 padlock is a connection security indicator, not a virus.',
-          'Correct answer! HTTPS encrypts transmission, but users must still critically evaluate content.',
-          'Incorrect. A site with HTTPS can still contain fake news or scams.',
+          'Incorrect. The padlock does not lock users out; it secures transmission.',
+          'Incorrect. The padlock is a technical security indicator, not malware.',
+          'Correct answer! HTTPS encrypts traffic, but users must evaluate content critically.',
+          'Incorrect. A secure connection site can still host misinformation or scams.',
         ],
       },
     },
     {
       id: 'net-q4',
       question: {
-        pt: 'O Rodrigo está a pesquisar sobre monumentos nacionais e repara no site `www.monumentos.pt`. O que indica a terminação `.pt` no final do endereço?',
-        en: 'Rodrigo is researching national monuments and notices the website `www.monumentos.pt`. What does the `.pt` ending at the end of the address indicate?',
+        pt: 'O Rodrigo está a preparar um trabalho de Estudo do Meio sobre o lince-ibérico. Qual destas pesquisas utiliza a melhor técnica de "Palavras-Chave Ninja"?',
+        en: 'Rodrigo is preparing a project on the Iberian lynx. Which search query applies the best "Ninja Keyword" strategy?',
       },
       options: {
         pt: [
-          'Que o site só pode ser aberto em telemóveis',
-          'Que é o domínio de topo geográfico associado a Portugal',
-          'Que a página é de acesso pago obrigatoriamente',
-          'Que o site está em fase de testes e vai ser apagado',
+          'olá senhor google podes dizer-me por favor o que come o animal selvagem lince e onde vive ele obrigado',
+          'lince iberico alimentacao habitat portugal',
+          'coisas da floresta',
+          'quero saber animais fofos com orelhas pontiagudas',
         ],
         en: [
-          'That the website can only be opened on mobile phones',
-          'That it is the geographic top-level domain associated with Portugal',
-          'That the page requires mandatory paid access',
-          'That the website is under testing and will be deleted',
+          'hello mr google can you please tell me what the wild animal lynx eats and where it lives thanks',
+          'iberian lynx diet habitat portugal',
+          'forest things',
+          'i want to know cute animals with pointy ears',
         ],
       },
       correctIndex: 1,
       explanation: {
-        pt: 'O sufixo .pt é o domínio de topo de código de país (ccTLD) reservado para entidades e sites associados a Portugal.',
-        en: 'The .pt suffix is the country code top-level domain (ccTLD) assigned to entities and websites associated with Portugal.',
+        pt: 'A pesquisa ideal usa 3 a 5 palavras-chave precisas, específicas e sem saudações desnecessárias, indo direto ao assunto biológico.',
+        en: 'The ideal query uses 3 to 5 precise keywords without conversational clutter, targeting biological facts.',
       },
       optionExplanations: {
         pt: [
-          'Esta opção está errada. O sufixo .pt não restringe o tipo de dispositivo utilizado.',
-          'Esta é a resposta correta! .pt identifica o domínio de topo nacional de Portugal.',
-          'Esta opção está errada. A terminação do domínio não tem relação com pagamentos.',
-          'Esta opção está errada. Sites em testes não usam .pt por essa razão.',
+          'Esta opção está errada. Frases longas conversacionais baralham o algoritmo do motor de busca.',
+          'Esta é a resposta correta! Inclui o nome da espécie, o tema exato e a localização geográfica de forma limpa.',
+          'Esta opção está errada. "Coisas da floresta" é demasiado vago e trará milhões de páginas aleatórias.',
+          'Esta opção está errada. Procurar por opiniões subjetivas como "fofos" não traz informação científica.',
         ],
         en: [
-          'Incorrect. The .pt suffix does not limit the device used.',
-          'Correct answer! .pt identifies Portugal’s national top-level domain.',
-          'Incorrect. Domain suffixes do not determine payment requirements.',
-          'Incorrect. Test sites do not use .pt for that reason.',
+          'Incorrect. Chatty paragraphs confuse search engine indexing.',
+          'Correct answer! Features exact species, biological topics, and geographic focus cleanly.',
+          'Incorrect. "Forest things" is far too vague.',
+          'Incorrect. Subjective terms like "cute" do not yield scientific results.',
         ],
       },
     },
     {
       id: 'net-q5',
       question: {
-        pt: 'A Matilde usa o portal da sua escola todos os dias para ver os trabalhos de casa. Como pode guardar a página no navegador para voltar a abri-la com um único clique?',
-        en: 'Matilde uses her school portal every day to check homework. How can she save the page in her browser to reopen it with a single click?',
+        pt: 'O Martim precisa de pesquisar no motor de busca o livro de leitura orientada "A Cavaleira da Dinamarca". O que acontece se ele colocar o título entre ASPAS `"A Cavaleira da Dinamarca"`?',
+        en: 'Martim is searching for the assigned reading book "A Cavaleira da Dinamarca". What happens if he encloses the title in QUOTES `"A Cavaleira da Dinamarca"`?',
       },
       options: {
         pt: [
-          'Gravar uma fotografia da televisão com o telemóvel',
-          'Adicionar a página aos Marcadores ou Favoritos (Bookmarks ⭐️) do navegador',
-          'Desligar o computador sem fechar a janela para nunca sair da página',
-          'Escrever o endereço num papel e colar no teclado',
+          'O computador bloqueia e fecha a janela do navegador',
+          'O motor de busca procura obrigatoriamente aquela sequência exata de palavras juntas e pela mesma ordem',
+          'O motor de busca traduz o título para dinamarquês',
+          'O navegador apaga todos os livros guardados no computador',
         ],
         en: [
-          'Take a photo of the TV with a mobile phone',
-          'Add the page to the browser Bookmarks or Favorites (⭐️)',
-          'Leave the computer running without closing the window forever',
-          'Write the address on a paper and tape it to the keyboard',
+          'The computer freezes and closes the browser window',
+          'The search engine strictly searches for that exact sequence of words together in order',
+          'The search engine translates the title to Danish',
+          'The browser deletes all books saved on the computer',
         ],
       },
       correctIndex: 1,
       explanation: {
-        pt: 'Os Marcadores (Favoritos) criam atalhos práticos na barra do navegador para acederes rapidamente aos teus sites frequentes.',
-        en: 'Bookmarks create convenient shortcuts in the browser bar for quick access to frequent sites.',
+        pt: 'As aspas forçam o motor de busca a encontrar a frase exata contínua, evitando que apareçam páginas soltas sobre cavaleiros ou sobre o país Dinamarca.',
+        en: 'Quotes force the search engine to match the exact continuous phrase, preventing scattered pages about knights or Denmark.',
       },
       optionExplanations: {
         pt: [
-          'Esta opção está errada. Uma foto não permite clicar para navegar na Internet.',
-          'Esta é a resposta correta! Guardar nos Marcadores cria um atalho de um clique na barra de ferramentas.',
-          'Esta opção está errada. Deixar o computador sempre ligado gasta energia e não é prático.',
-          'Esta opção está errada. Ter de reescrever a morada manualmente no papel faz perder tempo.',
+          'Esta opção está errada. As aspas são um comando padrão de pesquisa e não causam bloqueios.',
+          'Esta é a resposta correta! As aspas (" ") trancam a expressão exata na mesma ordem.',
+          'Esta opção está errada. As aspas não traduzem idiomas.',
+          'Esta opção está errada. Os operadores de pesquisa não apagam ficheiros.',
         ],
         en: [
-          'Incorrect. A photo is not clickable for web navigation.',
-          'Correct answer! Saving to Bookmarks creates a quick one-click shortcut.',
-          'Incorrect. Leaving the computer on constantly wastes electricity.',
-          'Incorrect. Retyping addresses from paper wastes time.',
+          'Incorrect. Quotes are standard search commands and do not crash systems.',
+          'Correct answer! Quotes (" ") enforce exact sequential phrase matching.',
+          'Incorrect. Quotes do not translate languages.',
+          'Incorrect. Search operators never delete local files.',
         ],
       },
     },
     {
       id: 'net-q6',
       question: {
-        pt: 'O Martim precisa de pesquisar no Google o livro de leitura orientada "A Cavaleira da Dinamarca". Como deve escrever no motor de busca para procurar essa sequência exata de palavras?',
-        en: 'Martim needs to search Google for his assigned reading book "A Cavaleira da Dinamarca". How should he type it into the search engine to look for that exact phrase?',
+        pt: 'A Joana quer pesquisar sobre o animal jaguar na selva amazónica, mas não quer ver resultados de automóveis da marca Jaguar. Como deve escrever a pesquisa usando o superpoder do SINAL DE MENOS?',
+        en: 'Joana wants to research the wild jaguar animal in the rainforest, but wants to avoid Jaguar luxury car ads. How should she write the query using the MINUS SIGN superpower?',
       },
       options: {
         pt: [
-          'Escrever as palavras separadas por vírgulas e pontos finais',
-          'Colocar a expressão exata entre aspas: `"A Cavaleira da Dinamarca"`',
-          'Escrever apenas a primeira e a última letra do título',
-          'Escrever o título seguido da palavra "pesquisa" em maiúsculas',
+          'jaguar animal -carro',
+          'jaguar +carro +veiculo',
+          'jaguar por favor não mostres carros',
+          'carro -animal jaguar',
         ],
         en: [
-          'Type the words separated by commas and periods',
-          'Place the exact phrase in quotation marks: `"A Cavaleira da Dinamarca"`',
-          'Type only the first and last letters of the title',
-          'Type the title followed by the word "search" in uppercase',
+          'jaguar mammal -car',
+          'jaguar +car +vehicle',
+          'jaguar please do not show cars',
+          'car -animal jaguar',
         ],
       },
-      correctIndex: 1,
+      correctIndex: 0,
       explanation: {
-        pt: 'Utilizar aspas Numa pesquisa força o motor de busca a procurar aquelas palavras exatamente naquela ordem.',
-        en: 'Using quotation marks in a search forces the search engine to look for those words in that exact sequence.',
+        pt: 'O sinal de menos colado a uma palavra (-carro) manda o motor de busca apagar e ignorar todos os resultados que falem sobre esse assunto indesejado.',
+        en: 'Attaching a minus sign to a word (-car) commands the search engine to omit any results containing that unwanted topic.',
       },
       optionExplanations: {
         pt: [
-          'Esta opção está errada. Pontuação solta não ajuda o motor de busca a agrupar a frase.',
-          'Esta é a resposta correta! As aspas (" ") pesquisam a frase exata na ordem em que foi escrita.',
-          'Esta opção está errada. Abreviações não devolvem os resultados pretendidos.',
-          'Esta opção está errada. Adicionar palavras soltas não ativa a pesquisa exata.',
+          'Esta é a resposta correta! O sinal de menos colado à palavra (-carro) exclui os automóveis da pesquisa.',
+          'Esta opção está errada. O sinal de mais ou colocar carro iria aumentar os resultados de automóveis.',
+          'Esta opção está errada. O motor de busca não entende pedidos de conversa como "por favor não mostres".',
+          'Esta opção está errada. Essa ordem excluiria a palavra animal.',
         ],
         en: [
-          'Incorrect. Stray punctuation does not help group the phrase.',
-          'Correct answer! Quotation marks (" ") search for the exact phrase sequence.',
-          'Incorrect. Abbreviations will not return the intended results.',
-          'Incorrect. Adding extra words does not trigger exact matching.',
+          'Correct answer! The minus sign attached to the term (-car) excludes vehicles.',
+          'Incorrect. Adding car terms would increase automobile results.',
+          'Incorrect. Search algorithms do not understand conversational pleas.',
+          'Incorrect. That syntax would exclude the word animal.',
         ],
       },
     },
     {
       id: 'net-q7',
       question: {
-        pt: 'A Sofia pesquisou no Google e o primeiro site no topo dos resultados afirma que "os crocodilos voam". Estar em 1.º lugar nos resultados do Google garante que a informação é verdadeira?',
-        en: 'Sofia searched Google and the top result claims "crocodiles fly". Does being ranked #1 on Google results guarantee the information is true?',
+        pt: 'A Sofia pesquisou no Google e o primeiro site no topo dos resultados afirma que "os coelhos vivem debaixo de água". Estar em 1.º lugar nos resultados do Google garante que a informação é verdadeira?',
+        en: 'Sofia searched Google and the top result claims "rabbits live underwater". Does being ranked #1 on Google results guarantee the information is true?',
       },
       options: {
         pt: [
-          'Sim, porque os motores de busca validam a verdade de todas as páginas',
-          'Não, pois a ordem depende de algoritmos e a Sofia deve avaliar a fonte',
-          'Sim, porque os conteúdos com erros são apagados dos resultados',
-          'Não, porque as primeiras posições contêm apenas conteúdos de ficção',
+          'Sim, porque os computadores do Google analisam e aprovam cientificamente todas as páginas do mundo',
+          'Não, pois a ordem dos resultados depende de algoritmos e anúncios; a Sofia deve avaliar a fonte e cruzar com outros sites fiáveis',
+          'Sim, porque os conteúdos falsos são proibidos de aparecer nos motores de busca',
+          'Não, porque as primeiras posições mostram sempre piadas de comédia',
         ],
         en: [
-          'Yes, because search engines verify the truth of all web pages',
-          'No, because ranking depends on algorithms and Sofia should evaluate the source',
-          'Yes, because contents with errors are automatically deleted from results',
-          'No, because top positions only contain fictional content',
+          'Yes, because Google computers scientifically verify and approve every webpage on Earth',
+          'No, because ranking depends on algorithms and ads; Sofia must evaluate the source and compare facts',
+          'Yes, because fake news is banned from appearing in search engines',
+          'No, because top spots only display comedy jokes',
         ],
       },
       correctIndex: 1,
       explanation: {
-        pt: 'A ordem dos resultados no Google depende de algoritmos e otimização. Estar no topo não significa que a afirmação seja verdadeira; é preciso pensamento crítico!',
-        en: 'Search rankings depend on algorithms and SEO. Being at the top does not prove factuality; critical thinking is required!',
+        pt: 'A ordem dos resultados depende de algoritmos e por vezes de anúncios patrocinados. Estar em primeiro lugar não é garantia de verdade: é preciso comparar com livros e fontes fidedignas!',
+        en: 'Search rankings depend on algorithms and sponsored ads. Being #1 does not guarantee truth: always verify across trusted encyclopedias!',
       },
       optionExplanations: {
         pt: [
-          'Esta opção está errada. O Google organiza resultados por algoritmos e não valida a verdade de cada afirmação.',
-          'Esta é a resposta correta! A posição na pesquisa não garante veracidade; devemos comparar várias fontes.',
-          'Esta opção está errada. Os motores de busca não corrigem o conteúdo dos sites.',
-          'Esta opção está errada. As primeiras posições contêm páginas relevantes, mas requerem avaliação crítica.',
+          'Esta opção está errada. O Google não valida cientificamente as afirmações de cada página.',
+          'Esta é a resposta correta! A posição resulta de algoritmos e SEO; é indispensável pensamento crítico e confirmação.',
+          'Esta opção está errada. Existem milhões de boatos e páginas falsas na Web.',
+          'Esta opção está errada. O topo contém páginas populares, mas requer sempre avaliação.',
         ],
         en: [
-          'Incorrect. Google ranks results via algorithms and does not verify the truth of every statement.',
-          'Correct answer! Search position does not equal truth; cross-referencing multiple sources is essential.',
-          'Incorrect. Search engines do not edit or correct external website content.',
-          'Incorrect. Top positions contain relevant pages, but critical evaluation is always needed.',
+          'Incorrect. Google does not scientifically fact-check every webpage.',
+          'Correct answer! Rankings reflect algorithms and SEO; critical evaluation is vital.',
+          'Incorrect. Millions of unverified claims exist across the Web.',
+          'Incorrect. Top spots reflect relevance algorithms, not comedy exclusively.',
         ],
       },
     },
     {
       id: 'net-q8',
       question: {
-        pt: 'O Afonso recebeu uma mensagem com um link azul que diz "Ver fotos da visita de estudo". Como pode o Afonso confirmar a morada exata para onde o link o vai levar ANTES de clicar?',
-        en: 'Afonso received a message with a blue link saying "See field trip photos". How can Afonso check the exact destination address BEFORE clicking?',
+        pt: 'Para fazer um trabalho rigoroso para a escola, como podes aplicar a regra dos "3 C\'s do Detetive" para saber se um site é de confiança?',
+        en: 'To write an accurate school report, how do you apply the "3-C Detective Rule" to determine if a website is trustworthy?',
       },
       options: {
         pt: [
-          'Clicar várias vezes seguidas para abrir num novo separador',
-          'Copiar o link para uma conversa de grupo com os colegas',
-          'Passar o rato por cima do link e ler o endereço real na barra de estado',
-          'Descarregar o conteúdo diretamente para a pasta de transferências',
+          'Verificar apenas se o site tem cores bonitas e muitos vídeos',
+          'Avaliar o Criador/Autor (quem escreveu?), a Calma com a Data (está atualizado?) e Confirmar em 2 ou 3 fontes fiáveis',
+          'Copiar tudo imediatamente sem ler para acabar o trabalho mais depressa',
+          'Perguntar a um colega no jogo se ele gosta da imagem do site',
         ],
         en: [
-          'Click repeatedly to open in a new browser tab',
-          'Copy the link into a group chat with classmates',
-          'Hover the mouse over the link and read the real address in the status bar',
-          'Download the content directly to the downloads folder',
+          'Only check if the website has pretty colors and lots of videos',
+          'Assess the Creator/Author (who wrote it?), Check the Date (is it recent?), and Cross-check across 2-3 reliable sources',
+          'Copy everything without reading to finish homework faster',
+          'Ask an online gamer if they like the website picture',
         ],
       },
-      correctIndex: 2,
+      correctIndex: 1,
       explanation: {
-        pt: 'Passar o cursor sobre um link mostra o destino real (URL) no canto inferior da janela, revelando se o link é legítimo ou suspeito.',
-        en: 'Hovering the cursor over a link reveals its real destination URL in the lower browser corner, exposing suspicious links.',
+        pt: 'A regra dos 3 C\'s (Criador, Calma com a Data e Confirmar com outras fontes) é a melhor técnica de fact-checking para jovens estudantes.',
+        en: 'The 3-C rule (Creator, Check date, Cross-check sources) is the best fact-checking method for young students.',
       },
       optionExplanations: {
         pt: [
-          'Esta opção está errada. Clicar repetidamente pode abrir páginas sem verificação.',
-          'Esta opção está errada. Reencaminhar o link pode expor outros colegas ao perigo.',
-          'Esta é a resposta correta! Passar o rato por cima (hover) revela o URL verdadeiro antes de qualquer clique.',
-          'Esta opção está errada. Descarregar sem verificar coloca o equipamento em risco.',
+          'Esta opção está errada. Cores bonitas não tornam uma mentira verdadeira.',
+          'Esta é a resposta correta! Verificar autor reconhecido, data recente e cruzar com outras fontes garante trabalhos de qualidade.',
+          'Esta opção está errada. Copiar sem verificar espalha erros graves no trabalho escolar.',
+          'Esta opção está errada. Opiniões de jogos não avaliam rigor científico.',
         ],
         en: [
-          'Incorrect. Repeated clicking opens pages without inspection.',
-          'Incorrect. Forwarding links might expose peers to threats.',
-          'Correct answer! Hovering reveals the destination URL before clicking.',
-          'Incorrect. Downloading unverified files puts devices at risk.',
+          'Incorrect. Attractive styling does not validate falsehoods.',
+          'Correct answer! Verifying authors, recent dates, and cross-referencing ensures academic quality.',
+          'Incorrect. Copying without checking leads to inaccurate homework.',
+          'Incorrect. Gamer opinions do not assess scientific validity.',
         ],
       },
     },
     {
       id: 'net-q9',
       question: {
-        pt: 'Enquanto a Beatriz navegava na Web, surgiu uma janela pop-up a piscar: "PARABÉNS! Foste o visitante 1000 e ganhaste um telemóvel! Clica aqui para receber!". Como deve reagir?',
-        en: 'While Beatriz was browsing the Web, a flashing pop-up window appeared: "CONGRATULATIONS! You are visitor 1000 and won a phone! Click here to claim!". How should she react?',
+        pt: 'Enquanto o Diogo navegava num site de jogos, apareceu um botão verde gigante a dizer "DOWNLOAD AQUI!". Mais abaixo havia outro botão pequeno e cinzento a dizer "Descarregar ficheiro do jogo". Qual é a atitude prudente?',
+        en: 'While Diogo was on a gaming site, a giant flashing green button appeared saying "DOWNLOAD HERE!". Below it was a smaller grey button saying "Download game file". What is the prudent action?',
       },
       options: {
         pt: [
-          'Preencher os seus dados pessoais para receber o prémio em casa',
-          'Pedir autorização para pagar os custos de transporte do produto',
-          'Reencaminhar a mensagem para todos os colegas da turma',
-          'Fechar a janela sem clicar no anúncio suspeito nem facultar dados',
+          'Clicar logo no botão verde gigante porque o que é grande é sempre melhor',
+          'Desconfiar do botão gigante verde porque costuma ser um anúncio falso disfarçado, verificar bem antes de clicar e pedir ajuda a um adulto se tiver dúvidas',
+          'Descarregar ambos os botões e abrir todos os ficheiros com extensão .exe',
+          'Desligar o monitor e nunca mais voltar à escola',
         ],
         en: [
-          'Fill in her personal details to receive the prize at home',
-          'Ask permission to pay for shipping fees of the item',
-          'Forward the message to all classmates in school',
-          'Close the window without clicking the suspicious ad or entering data',
+          'Click the massive green button because bigger is always better',
+          'Distrust the giant green button as it is typically a disguised third-party ad, inspect carefully, and ask an adult if unsure',
+          'Download both and run all .exe files',
+          'Turn off the monitor and never return to school',
         ],
       },
-      correctIndex: 3,
+      correctIndex: 1,
       explanation: {
-        pt: 'Janelas de prémios fáceis e urgentes são armadilhas para roubar dados ou dinheiro. Deve-se fechar a janela de imediato.',
-        en: 'Pop-ups offering easy or urgent prizes are scams to steal data or money. Close the window immediately.',
+        pt: 'Muitos sites colocam anúncios publicitários disfarçados de falsos botões de download. É preciso muita atenção aos detalhes para não instalar vírus.',
+        en: 'Many sites place advertising banners designed to look like fake download buttons. Careful attention prevents malware downloads.',
       },
       optionExplanations: {
         pt: [
-          'Esta opção está errada. Dar dados pessoais a anúncios falsos expõe a família a riscos de segurança e privacidade.',
-          'Esta opção está errada. Inserir dados bancários em janelas suspeitas resulta em perdas de dinheiro.',
-          'Esta opção está errada. Partilhar o link espalha a burla pelos colegas da escola.',
-          'Esta é a resposta correta! Fechar a janela sem clicar protege o teu computador e os teus dados.',
+          'Esta opção está errada. Botões gigantes chamativos em sites de jogos são quase sempre armadilhas publicitárias.',
+          'Esta é a resposta correta! Botões gigantes disfarçados são uma das armadilhas mais comuns da Web.',
+          'Esta opção está errada. Abrir ficheiros .exe desconhecidos infeta o computador com vírus.',
+          'Esta opção está errada. Ter cuidado digital resolve a questão sem exageros.',
         ],
         en: [
-          'Incorrect. Providing personal info to fake ads compromises family privacy and security.',
-          'Incorrect. Entering payment details on suspicious pop-ups leads to financial loss.',
-          'Incorrect. Sharing the link spreads the scam to classmates.',
-          'Correct answer! Closing the window without clicking protects your device and data.',
+          'Incorrect. Flashy giant buttons are usually advertising traps.',
+          'Correct answer! Disguised download buttons are among the most common web traps.',
+          'Incorrect. Running unknown .exe files installs malware.',
+          'Incorrect. Practicing basic digital caution solves the issue.',
         ],
       },
     },
     {
       id: 'net-q10',
       question: {
-        pt: 'O Tomás estava a pesquisar imagens para um trabalho da escola e abriu sem querer uma página com imagens assustadoras e impróprias. Qual é o comportamento correto?',
-        en: 'Tomás was searching for images for a school report and accidentally opened a page with scary, inappropriate images. What is the correct action?',
+        pt: 'A Matilde usa a página da biblioteca escolar todos os dias para consultar livros e requisitar leituras. Como pode ela guardar essa página no navegador para voltar a abri-la num só clique sem ter de pesquisar sempre?',
+        en: 'Matilde uses her school library website every day to browse books. How can she save this page in her browser to reopen it in a single click without searching every time?',
       },
       options: {
         pt: [
-          'Guardar segredo por vergonha e continuar a olhar sozinho',
-          'Fechar imediatamente o site e pedir ajuda a um adulto de confiança (pais ou professor)',
-          'Partilhar o link com os colegas nas redes sociais para os assustar',
-          'Escrever comentários com insultos na página',
+          'Escrever o endereço num papel e colar com fita-cola no ecrã do computador',
+          'Adicionar a página aos Marcadores ou Favoritos (Bookmarks ⭐️) do navegador',
+          'Deixar o computador ligado a noite toda sem fechar a tampa',
+          'Tirar uma fotografia com o telemóvel ao teclado do computador',
         ],
         en: [
-          'Keep it a secret out of shame and keep looking alone',
-          'Close the site immediately and ask a trusted adult (parents or teacher) for help',
-          'Share the link with classmates on social media to scare them',
-          'Write insulting comments on the page',
+          'Write the address on paper and tape it to the screen',
+          'Add the page to the browser Bookmarks or Favorites (⭐️)',
+          'Leave the computer running overnight without closing the lid',
+          'Take a photo of the keyboard with a mobile phone',
         ],
       },
       correctIndex: 1,
       explanation: {
-        pt: 'Encontrar conteúdos inadequados não é culpa do aluno. Fechar a página e avisar um adulto garante apoio e ajuda a reportar a situação.',
-        en: 'Encountering inappropriate content is not the student’s fault. Closing the page and telling an adult ensures safety and support.',
+        pt: 'Os Marcadores (Favoritos ⭐️) criam atalhos diretos e organizados na barra do navegador, poupando tempo todos os dias.',
+        en: 'Bookmarks (Favorites ⭐️) create organized one-click shortcuts in the browser bar, saving time every day.',
       },
       optionExplanations: {
         pt: [
-          'Esta opção está errada. Guardar segredo causa ansiedade desnecessária.',
-          'Esta é a resposta correta! Fechar o site e falar com um adulto garante proteção e tranquilidade.',
-          'Esta opção está errada. Partilhar conteúdos perturbadores magoa e assusta os colegas.',
-          'Esta opção está errada. Interagir com o site pode expor o computador a riscos.',
+          'Esta opção está errada. Papéis colados no ecrã estragam o monitor e não criam atalhos clicáveis.',
+          'Esta é a resposta correta! Os Marcadores (Favoritos) servem exatamente para abrir páginas frequentes num único clique.',
+          'Esta opção está errada. Deixar o computador sempre ligado gasta eletricidade e desgasta a bateria.',
+          'Esta opção está errada. Fotografar o teclado não ajuda a abrir páginas na Web.',
         ],
         en: [
-          'Incorrect. Keeping secrets causes unnecessary anxiety.',
-          'Correct answer! Closing the site and speaking with an adult ensures protection.',
-          'Incorrect. Sharing disturbing content upsets and scares peers.',
-          'Incorrect. Interacting with bad sites can expose your computer to risks.',
+          'Incorrect. Paper taped to screens damages monitors and is not clickable.',
+          'Correct answer! Bookmarks (Favorites) create single-click shortcuts for frequent pages.',
+          'Incorrect. Leaving computers on overnight wastes electricity.',
+          'Incorrect. Photos of keyboards do not open web links.',
         ],
       },
     },
