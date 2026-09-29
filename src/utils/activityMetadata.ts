@@ -266,6 +266,13 @@ const KNOWN_ACTIVITY_MAPPINGS: Record<
     icon: '🔑',
     type: 'challenge',
   },
+  'jogo-pass-builder-interactive': {
+    themeId: 'palavras-passe',
+    title: { pt: 'Constrói uma Palavra-passe Segura', en: 'Build a Secure Password' },
+    shortDesc: { pt: 'Atividade prática de construção de palavras-passe', en: 'Hands-on password building activity' },
+    icon: '🧩',
+    type: 'challenge',
+  },
   'jogo-passe-tf': {
     themeId: 'palavras-passe',
     title: { pt: 'Boas Práticas de Palavras-passe (V/F)', en: 'Password Good Practices (T/F)' },

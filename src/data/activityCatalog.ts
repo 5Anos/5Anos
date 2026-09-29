@@ -69,6 +69,7 @@ const challengeAliases: { id: string; themeId: string; title: string; type: 'cha
   { id: 'jogo-ergo-seguro-incorreto', themeId: 'ergonomia', title: 'Ergonomia: Seguro ou Incorreto?', type: 'challenge' },
   { id: 'desafio-palavra-passe', themeId: 'palavras-passe', title: 'Laboratório da Palavra-passe', type: 'challenge' },
   { id: 'desafio-cofre-forte', themeId: 'palavras-passe', title: 'O Cofre-Forte Digital', type: 'challenge' },
+  { id: 'jogo-pass-builder-interactive', themeId: 'palavras-passe', title: 'Constrói uma Palavra-passe Segura', type: 'challenge' },
   { id: 'desafio-detetive-phishing', themeId: 'seguranca', title: 'O Detetive de Phishing', type: 'challenge' },
   { id: 'desafio-o-que-farias', themeId: 'seguranca', title: 'O que farias?', type: 'challenge' },
   { id: 'desafio-escrever-email', themeId: 'correio-eletronico', title: 'Constrói um Email', type: 'challenge' },

@@ -221,6 +221,7 @@ const CHALLENGE_ALIASES_MAP: Record<string, string[]> = {
   'jogo-seguranca-tf': ['jogo-seguranca-tf', 'desafio-seguro-perigoso'],
   'jogo-seguranca-mc2': ['jogo-seguranca-mc2', 'desafio-o-que-farias'],
   'desafio-tic-seguranca-cyberbullying': ['desafio-tic-seguranca-cyberbullying'],
+  'desafio-tic-pegada-ecra-lixo': ['desafio-tic-pegada-ecra-lixo'],
   'desafio-tic-o-que-e': ['desafio-tic-o-que-e'],
   'desafio-detetives-digitais': ['desafio-detetives-digitais'],
   'desafio-missao-planeta-digital': ['desafio-missao-planeta-digital'],

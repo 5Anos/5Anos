@@ -413,9 +413,26 @@ export const themeSegurancaData: ThemeDefinition = {
       icon: '🛡️',
     },
     {
-      id: 'quiz-final-seguranca',
+      id: 'desafio-tic-pegada-ecra-lixo',
       themeId: 'seguranca',
       number: 5,
+      title: {
+        pt: '🌱 Desafio: Pegada Digital & Tempo de Ecrã Consciente',
+        en: '🌱 Challenge: Digital Footprint & Conscious Screen Time',
+      },
+      shortDesc: {
+        pt: 'Classifica atitudes corretas sobre pegada digital, tempo de ecrã e hábitos tecnológicos saudáveis.',
+        en: 'Rate correct attitudes regarding digital footprint, screen time, and healthy tech habits.',
+      },
+      icon: '🌱',
+      durationMinutes: 5,
+      points: 100,
+      type: 'interactive',
+    },
+    {
+      id: 'quiz-final-seguranca',
+      themeId: 'seguranca',
+      number: 6,
       title: { pt: '🏆 Quiz de Aprendizagem: Segurança e Respeito (10 Questões)', en: '🏆 Learning Quiz: Security and Respect (10 Questions)' },
       shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas sobre o Tema de Segurança.', en: 'Comprehensive final assessment with 10 questions on Security.' },
       icon: '🏆',

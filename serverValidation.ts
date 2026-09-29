@@ -111,6 +111,12 @@ const challengeEvaluators: Record<string, (req: ProgressEvaluationRequest) => { 
     return challengeEvaluators['desafio-palavra-passe'](req);
   },
 
+  'jogo-pass-builder-interactive': (req) => {
+    const sub = req.submissionData || req.answers || {};
+    const pct = Math.min(100, Math.max(0, Math.round(Number(sub.percentage ?? sub.score ?? 100))));
+    return { valid: true, percentage: pct };
+  },
+
   // 4. Phishing Detective (Tema 4)
   'desafio-detetive-phishing': (req) => {
     const sub = req.submissionData || req.answers || {};

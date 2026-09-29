@@ -394,33 +394,9 @@ export const themePalavrasPasseData: ThemeDefinition = {
       }
     },
     {
-      id: 'jogo-pass-builder-interactive',
-      themeId: 'palavras-passe',
-      number: 3,
-      title: { pt: '🧩 Constrói uma Palavra-passe Segura', en: '🧩 Build a Secure Password' },
-      shortDesc: { pt: 'Escolhe carateres e experimenta criar uma palavra-passe que cumpra todas as regras de segurança.', en: 'Choose characters and build a password meeting all safety rules through experimentation.' },
-      icon: '🧩',
-      durationMinutes: 4,
-      points: 100,
-      type: 'password_builder',
-      gameData: {
-        type: 'password_builder',
-        title: 'Constrói uma Palavra-passe Segura',
-        icon: '🧩',
-        xp: 100,
-        desc: 'Seleciona os carateres para construir uma palavra-passe segura que cumpra todas as regras de proteção.',
-        data: {
-          lowercase: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
-          uppercase: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
-          numbers: ['1', '2', '3', '4', '5', '6', '7', '8'],
-          symbols: ['@', '#', '$', '%', '&', '*', '!']
-        }
-      }
-    },
-    {
       id: 'jogo-pass-match',
       themeId: 'palavras-passe',
-      number: 4,
+      number: 3,
       title: { pt: '🔗 Segura ou Insegura?', en: '🔗 Safe or Insecure Match' },
       shortDesc: { pt: 'Associa cada exemplo de palavra-passe à sua avaliação correta.', en: 'Match each password example to its security rating.' },
       icon: '🔗',
@@ -446,7 +422,7 @@ export const themePalavrasPasseData: ThemeDefinition = {
     {
       id: 'quiz-final-tema3',
       themeId: 'palavras-passe',
-      number: 5,
+      number: 4,
       title: { pt: '🏆 Quiz de Aprendizagem: Palavras-passe (10 Questões)', en: '🏆 Learning Quiz: Passwords (10 Questions)' },
       shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas sobre o Tema 5 (Palavras-passe).', en: 'Comprehensive final assessment with 10 questions on Topic 5 (Passwords).' },
       icon: '🏆',
