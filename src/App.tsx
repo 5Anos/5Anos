@@ -23,7 +23,6 @@ import { ErgonomicsPostureGame } from './components/games/ErgonomicsPostureGame'
 import { ErgonomicsTrueFalseGame } from './components/games/ErgonomicsTrueFalseGame';
 import { TicWhatIsTechGame } from './components/games/TicWhatIsTechGame';
 import { TicCyberbullyingGame } from './components/games/TicCyberbullyingGame';
-import { TicDigitalFootprintGame } from './components/games/TicDigitalFootprintGame';
 import { DigitalDetectivesGame } from './components/games/DigitalDetectivesGame';
 import { PlanetDigitalMissionGame } from './components/games/PlanetDigitalMissionGame';
 import { GenericChallengeGame } from './components/games/GenericChallengeGame';
@@ -801,27 +800,6 @@ export default function App() {
               maxScore,
               percentage,
               activityTitle: language === 'pt' ? 'Guardião Digital: Cyberbullying (5 Passos)' : 'Digital Guardian: Cyberbullying (5 Steps)',
-            });
-          }}
-        />
-      );
-    }
-
-    if (activeChallengeId === 'desafio-tic-pegada-ecra-lixo') {
-      return (
-        <TicDigitalFootprintGame
-          language={language}
-          onBack={returnToGames}
-          onFinish={(score, maxScore, percentage) => {
-            handleSaveProgress({
-              activityId: 'desafio-tic-pegada-ecra-lixo',
-              activityType: 'challenge',
-              themeId: currentTheme?.id || 'seguranca',
-              status: 'completed',
-              score,
-              maxScore,
-              percentage,
-              activityTitle: language === 'pt' ? 'Publicarias Isto?' : 'Would You Post This?',
             });
           }}
         />

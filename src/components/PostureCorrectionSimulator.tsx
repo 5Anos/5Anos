@@ -221,7 +221,34 @@ export const PostureCorrectionSimulator: React.FC<Props> = ({ language = 'pt', o
 
       {/* TAB 1: Main Interactive Grid */}
       {activeTab === 'interactive' && (
-      <div className="p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div className="p-4 sm:p-6 space-y-4">
+        {/* Prominent Student Instruction Banner */}
+        <div className="w-full bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 text-white p-3.5 sm:p-4 rounded-2xl shadow-md border border-emerald-400/30 flex items-center justify-between gap-3 animate-in fade-in">
+          <div className="flex items-center gap-3">
+            <span className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-2xl shadow-inner shrink-0 animate-bounce">
+              👆
+            </span>
+            <div>
+              <h3 className="text-xs sm:text-sm font-black tracking-tight uppercase flex items-center gap-1.5">
+                <span>{language === 'pt' ? 'Instrução: Clica para Corrigir a Postura!' : 'Instruction: Click to Correct the Posture!'}</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-white text-emerald-800 font-extrabold normal-case">
+                  {language === 'pt' ? 'Simulador Ativo' : 'Active Simulator'}
+                </span>
+              </h3>
+              <p className="text-[11px] sm:text-xs text-emerald-100 font-medium mt-0.5">
+                {language === 'pt'
+                  ? 'Clica diretamente no boneco (cabeça, costas, braços, pés) ou no ecrã para corrigir os ângulos até atingires os 100%!'
+                  : 'Click directly on the character (head, back, arms, feet) or screen to adjust posture until 100%!'}
+              </p>
+            </div>
+          </div>
+          <div className="hidden sm:flex items-center gap-1.5 text-xs font-bold bg-white/15 px-3 py-1.5 rounded-xl shrink-0">
+            <span>🎯</span>
+            <span>{score}% {language === 'pt' ? 'Correto' : 'Correct'}</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: Interactive Visual SVG Canvas */}
         <div className="lg:col-span-7 flex flex-col items-center">
           {/* Visual Container Card */}
@@ -821,6 +848,7 @@ export const PostureCorrectionSimulator: React.FC<Props> = ({ language = 'pt', o
             )}
           </div>
         </div>
+      </div>
       </div>
       )}
     </div>

@@ -381,6 +381,8 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                 {/* Pedagogical Step Renderer: Complete natural text */}
                 <div className="space-y-6 w-full">
                   {!(theme.id === 'tic-sociedade' && currentStepIndex === 1) &&
+                   !(theme.id === 'ergonomia' && currentStepIndex === 1) &&
+                   !((theme.id === 'seguranca' || theme.id === 'seguranca-digital') && currentStepIndex === 2) &&
                    !((theme.id === 'seguranca' || theme.id === 'seguranca-digital') && currentStepIndex === 3) && (
                     <div
                       className="text-base sm:text-lg text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"

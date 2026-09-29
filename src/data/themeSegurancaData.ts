@@ -413,26 +413,9 @@ export const themeSegurancaData: ThemeDefinition = {
       icon: '🛡️',
     },
     {
-      id: 'desafio-tic-pegada-ecra-lixo',
-      themeId: 'seguranca',
-      number: 5,
-      title: {
-        pt: '🌍 Publicarias Isto?',
-        en: '🌍 Would You Post This?',
-      },
-      shortDesc: {
-        pt: 'Avalia o que é seguro publicar ou partilhar online: fotos, trabalhos escolares, dados pessoais e palavras-passe.',
-        en: 'Evaluate what is safe to post or share online: photos, schoolwork, personal details, and passwords.',
-      },
-      durationMinutes: 4,
-      points: 100,
-      type: 'safe_dangerous',
-      icon: '🌍',
-    },
-    {
       id: 'quiz-final-seguranca',
       themeId: 'seguranca',
-      number: 6,
+      number: 5,
       title: { pt: '🏆 Quiz de Aprendizagem: Segurança e Respeito (10 Questões)', en: '🏆 Learning Quiz: Security and Respect (10 Questions)' },
       shortDesc: { pt: 'Avaliação final abrangente com 10 perguntas sobre o Tema de Segurança.', en: 'Comprehensive final assessment with 10 questions on Security.' },
       icon: '🏆',

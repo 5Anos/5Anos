@@ -183,6 +183,66 @@ export const SocialMediaPrivacyLab: React.FC<SocialMediaPrivacyLabProps> = ({ la
         },
       },
     },
+    {
+      id: 'torneio_escroque',
+      username: 'Torneio_Gamer_2026',
+      displayName: 'Torneio Gaming PT 🏆',
+      badge: { pt: '⚠️ Link Suspeito / Vírus', en: '⚠️ Suspicious Link / Virus' },
+      badgeColor: 'bg-rose-100 text-rose-900 border-rose-300',
+      avatarIcon: '🎮☣️',
+      avatarBg: 'bg-rose-100 border-rose-300',
+      createdTime: { pt: 'Criado há 3 horas', en: 'Created 3 hours ago' },
+      mutualFriends: { pt: '0 amigos em comum', en: '0 mutual friends' },
+      message: {
+        pt: 'Entra no torneio escolar de Brawl Stars com prémio de 500€! Para te inscreveres descarrega e abre o ficheiro "inscricao_torneio.exe" no teu computador.',
+        en: 'Join the school tourney for a 500€ prize! Download and run "inscricao_torneio.exe" on your PC to register.',
+      },
+      clues: {
+        pt: ['Pede para descarregar ficheiro .exe desconhecido', 'Conta criada há poucas horas', 'Zero amigos em comum', 'Promessa exagerada de dinheiro fácil'],
+        en: ['Requests downloading unknown .exe file', 'Brand new account created hours ago', 'Zero mutual friends', 'Unrealistic easy money lure'],
+      },
+      correctAction: 'report',
+      explanation: {
+        correct: {
+          pt: 'Excelente! Descarregar ficheiros executáveis (.exe) de desconhecidos instala vírus ou cavalos de Troia. Denunciar e bloquear é a defesa perfeita!',
+          en: 'Superb! Downloading .exe files from strangers installs malware. Reporting and blocking is the right call!',
+        },
+        incorrect: {
+          pt: 'Perigo extremo! Executar um ficheiro .exe de desconhecidos infeta o computador com vírus ou software espião.',
+          en: 'Extreme danger! Running an unknown .exe infects your computer with viruses or spyware.',
+        },
+      },
+    },
+    {
+      id: 'prima_mariana',
+      username: 'Mariana_Costa_Prima',
+      displayName: 'Mariana Costa (Prima)',
+      badge: { pt: '💚 Familiar Conhecido', en: '💚 Known Family' },
+      badgeColor: 'bg-emerald-100 text-emerald-900 border-emerald-300',
+      avatarIcon: '👧🎒',
+      avatarBg: 'bg-emerald-100 border-emerald-300',
+      createdTime: { pt: 'Criado há 2 anos', en: 'Created 2 years ago' },
+      mutualFriends: { pt: '11 amigos em comum (família e tios)', en: '11 mutual friends (family & uncles)' },
+      message: {
+        pt: 'Olá primo/a! Estou a combinar com os tios o almoço de aniversário de família no próximo domingo. Pede aos teus pais para confirmarem no grupo!',
+        en: 'Hi cousin! Organizing Sunday family birthday lunch with our uncles. Ask your parents to confirm in our family chat!',
+      },
+      clues: {
+        pt: ['Prima real que conheces bem', '11 amigos em comum na família', 'Conta autêntica com fotos de família', 'Não pede palavras-passe nem dados privados'],
+        en: ['Real cousin you know well', '11 mutual family contacts', 'Authentic account with family history', 'Does not request passwords or secrets'],
+      },
+      correctAction: 'accept',
+      explanation: {
+        correct: {
+          pt: 'Muito bem! Primos e familiares diretos que conheces no mundo real são contactos seguros para aceitares nas tuas redes!',
+          en: 'Great job! Cousins and close family members you know in real life are safe to accept!',
+        },
+        incorrect: {
+          pt: 'A Mariana é a tua prima com vários familiares em comum. Não precisas de rejeitar nem denunciar familiares reais.',
+          en: 'Mariana is your cousin with verified family connections. No need to reject real relatives.',
+        },
+      },
+    },
   ];
 
   const currentProfile = profiles[activeProfileIndex];
@@ -261,13 +321,13 @@ export const SocialMediaPrivacyLab: React.FC<SocialMediaPrivacyLabProps> = ({ la
                 {language === 'pt' ? 'Laboratório de Redes Sociais: Pedidos de Amizade Suspeitos' : 'Social Media Lab: Suspicious Friend Requests'}
               </h3>
               <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800 border border-indigo-200">
-                {language === 'pt' ? '5 Casos Reais' : '5 Cases'}
+                {language === 'pt' ? `${profiles.length} Casos Práticos` : `${profiles.length} Cases`}
               </span>
             </div>
             <p className="text-xs text-slate-600 font-medium">
               {language === 'pt'
-                ? 'Analisa os perfis abaixo, investiga as pistas e decide a melhor atitude para proteger a tua privacidade!'
-                : 'Inspect the profiles below, examine the clues, and pick the safest response!'}
+                ? 'Analisa os vários pedidos de amizade abaixo, investiga as pistas e escolhe a atitude mais segura!'
+                : 'Inspect the friend requests below, examine the clues, and pick the safest response!'}
             </p>
           </div>
         </div>
@@ -283,7 +343,7 @@ export const SocialMediaPrivacyLab: React.FC<SocialMediaPrivacyLabProps> = ({ la
         </div>
       </div>
 
-      {/* 5 Profile Selection Tabs */}
+      {/* Varied Profile Selection Tabs */}
       <div className="space-y-1.5">
         <div className="flex items-center justify-between text-xs text-slate-500 px-1 font-bold">
           <span>{language === 'pt' ? 'Escolhe o pedido de amizade para analisar:' : 'Select a friend request to analyze:'}</span>
@@ -297,7 +357,7 @@ export const SocialMediaPrivacyLab: React.FC<SocialMediaPrivacyLabProps> = ({ la
           </button>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
           {profiles.map((p, idx) => {
             const isCurrent = idx === activeProfileIndex;
             const hasAns = decisions[p.id] !== undefined;
