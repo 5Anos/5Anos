@@ -24,12 +24,15 @@ import { PlagiarismVsEthicsLab } from './PlagiarismVsEthicsLab';
 import { DigitalFootprintSimulator } from './DigitalFootprintSimulator';
 import { CitationSimulator } from './CitationSimulator';
 import { LicensesVisualCard } from './LicensesVisualCard';
+import { DigitalDilemmasGame } from './DigitalDilemmasGame';
+import { PassphraseVaultLab } from './PassphraseVaultLab';
 import { TicApplicationsExplorer } from './TicApplicationsExplorer';
 import { TicEvolutionExplorer } from './TicEvolutionExplorer';
 import { TicProsConsExplorer } from './TicProsConsExplorer';
 import { TicGreenTechExplorer } from './TicGreenTechExplorer';
 import { CyberbullyingActionCard } from './CyberbullyingActionCard';
 import { getQuizMention, getQuizMentionBadgeStyle } from '../utils/exportUtils';
+import { getStudentThemeBreakdown } from '../utils/progressCalculator';
 import { AudioSpeakButton } from './AudioSpeakButton';
 
 interface ThemeViewProps {
@@ -45,6 +48,7 @@ interface ThemeViewProps {
   onOpenModule: (moduleId: string) => void;
   onOpenChallenge: (challengeId: string) => void;
   initialTab?: 'content' | 'games';
+  activeChallengeId?: string | null;
 }
 
 export const ThemeView: React.FC<ThemeViewProps> = ({
@@ -60,9 +64,35 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
   onOpenModule,
   onOpenChallenge,
   initialTab = 'content',
+  activeChallengeId,
 }) => {
   const [activeTab, setActiveTab] = useState<'content' | 'games'>(initialTab);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+
+  // Jump to simulator step if navigated via simulator launch
+  React.useEffect(() => {
+    if (activeChallengeId) {
+      if (activeChallengeId === 'sim-posture') {
+        setActiveTab('content');
+        setCurrentStepIndex(1);
+      } else if (activeChallengeId === 'sim-phishing') {
+        setActiveTab('content');
+        setCurrentStepIndex(1);
+      } else if (activeChallengeId === 'sim-passwords') {
+        setActiveTab('content');
+        setCurrentStepIndex(3);
+      } else if (activeChallengeId === 'sim-fakenews') {
+        setActiveTab('content');
+        setCurrentStepIndex(2);
+      } else if (activeChallengeId === 'sim-email') {
+        setActiveTab('content');
+        setCurrentStepIndex(0);
+      } else if (activeChallengeId === 'sim-breaks') {
+        setActiveTab('content');
+        setCurrentStepIndex(4);
+      }
+    }
+  }, [activeChallengeId]);
   const t = translations[language];
 
   const lessons = theme.lessons || [];
@@ -198,12 +228,12 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
           </div>
 
           {/* Theme custom 3D illustration graphic */}
-          <div className="relative z-10 w-full md:w-80 max-w-xs shrink-0 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/30 bg-white/10 p-1.5 group hover:scale-[1.02] transition-transform duration-300">
+          <div className="relative z-10 w-full md:w-80 max-w-xs shrink-0 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/30 bg-white/10 p-1.5 group hover:scale-[1.03] transition-transform duration-300 animate-float">
             <img
               src={themeImg}
               alt={theme.title[language]}
               referrerPolicy="no-referrer"
-              className="w-full h-48 sm:h-56 object-cover rounded-2xl shadow-inner"
+              className="w-full h-48 sm:h-56 object-cover rounded-2xl shadow-inner transition-transform duration-500 group-hover:scale-105"
             />
           </div>
 
@@ -212,6 +242,66 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
           <div className="absolute left-[-20px] bottom-[-20px] w-48 h-48 bg-amber-400/10 rounded-full blur-2xl pointer-events-none" />
         </div>
       </div>
+
+      {/* Theme Learning Roadmap & Stats Strip */}
+      {(() => {
+        const breakdown = getStudentThemeBreakdown({}, progressList, theme);
+        return (
+          <div className="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-2xs flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-4 flex-wrap">
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
+                <span className="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center font-black">
+                  📖
+                </span>
+                <span>
+                  {lessons.length} {language === 'pt' ? 'Lições Curriculares' : 'Lessons'}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
+                <span className="w-7 h-7 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center font-black">
+                  🎮
+                </span>
+                <span>
+                  {theme.challenges.length} {language === 'pt' ? 'Jogos & Desafios' : 'Challenges'}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
+                <span className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-black">
+                  🏆
+                </span>
+                <span>
+                  {language === 'pt' ? 'Quiz:' : 'Quiz:'}{' '}
+                  {quizVisibility[theme.id] ? (
+                    <span className="text-emerald-700 font-bold">{language === 'pt' ? 'Disponível' : 'Available'}</span>
+                  ) : (
+                    <span className="text-slate-500 font-normal">{language === 'pt' ? 'Oculto' : 'Hidden'}</span>
+                  )}
+                </span>
+              </div>
+            </div>
+
+            {/* Theme Progress Pill */}
+            <div className="flex items-center gap-3">
+              <div className="text-right">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">
+                  {language === 'pt' ? 'Progresso do Tema' : 'Topic Progress'}
+                </span>
+                <span className="text-xs font-black text-slate-800">
+                  {breakdown.percentage}% ({breakdown.completedActivitiesCount}/{breakdown.totalActivitiesCount})
+                </span>
+              </div>
+              <div className="w-20 sm:w-28 h-2.5 bg-slate-100 rounded-full overflow-hidden shrink-0">
+                <div
+                  className="h-full bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full transition-all duration-300"
+                  style={{ width: `${breakdown.percentage}%` }}
+                />
+              </div>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Tabs Selector: Conteúdos vs Jogos e Desafios */}
       <div className="flex border-b border-slate-200 gap-2">
@@ -225,6 +315,9 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
         >
           <BookOpen className="w-5 h-5" />
           <span>{t.tabContent}</span>
+          <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100 font-bold ml-1">
+            {lessons.length}
+          </span>
         </button>
 
         <button
@@ -237,6 +330,9 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
         >
           <Gamepad2 className="w-5 h-5" />
           <span>{t.tabGames}</span>
+          <span className="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-bold ml-1">
+            {theme.challenges.length}
+          </span>
         </button>
       </div>
 
@@ -312,6 +408,33 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                   </div>
                 </div>
 
+                {/* Step Visual 3D Illustration Banner */}
+                {currentStepImg && (
+                  <div className="relative w-full h-52 sm:h-64 md:h-72 rounded-3xl overflow-hidden shadow-lg border-2 border-slate-100 group animate-in fade-in duration-300">
+                    <img
+                      src={currentStepImg}
+                      alt={currentLesson.h[language]}
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent flex items-end p-4 sm:p-6">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center text-xl sm:text-2xl shadow-lg">
+                          {currentLesson.icon || '🚀'}
+                        </div>
+                        <div>
+                          <span className="text-[11px] font-black uppercase tracking-wider text-amber-300 block">
+                            {currentLesson.eyebrow[language]}
+                          </span>
+                          <p className="text-white font-extrabold text-sm sm:text-base md:text-lg leading-tight drop-shadow-md">
+                            {currentLesson.h[language]}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {/* Main Heading */}
                 <h2 className="text-xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
                   {currentLesson.h[language]}
@@ -325,7 +448,25 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                   />
 
                   {/* Interactive Pedagogical Widget matching the current step */}
-                  <div className="w-full pt-2">
+                  <div className="w-full pt-4">
+                    <div className="mb-4 p-4 rounded-2xl bg-gradient-to-r from-indigo-900 via-purple-900 to-indigo-950 text-white shadow-md flex items-center justify-between gap-3 border border-indigo-400/30">
+                      <div className="flex items-center gap-3">
+                        <span className="text-3xl animate-bounce">🧪</span>
+                        <div>
+                          <span className="text-xs font-black uppercase tracking-wider text-amber-300 block">
+                            {language === 'pt' ? 'Simulador & Laboratório Prático' : 'Interactive Lab & Simulator'}
+                          </span>
+                          <span className="text-xs text-indigo-100 font-medium">
+                            {language === 'pt'
+                              ? 'Mexe nos controlos, experimenta diferentes opções e observa o resultado em tempo real!'
+                              : 'Interact with controls, test different options, and see the live outcome!'}
+                          </span>
+                        </div>
+                      </div>
+                      <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-black uppercase px-3 py-1 rounded-full bg-white/20 text-white border border-white/30 shrink-0">
+                        ⭐ {language === 'pt' ? 'Prática Interativa' : 'Hands-on Practice'}
+                      </span>
+                    </div>
                     {/* TEMA 1: As TIC e a Sociedade */}
                     {theme.id === 'tic-sociedade' && currentStepIndex === 1 && (
                       <TicApplicationsExplorer language={language} />
@@ -503,6 +644,118 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
             </div>
           </div>
 
+          {/* Featured Theme Interactive Simulator Banner */}
+          {(() => {
+            const getSimulatorInfo = (themeId: string) => {
+              switch (themeId) {
+                case 'ergonomia':
+                  return {
+                    title: language === 'pt' ? '🪑 Simulador Interativo de Postura & Estação de Trabalho' : '🪑 Interactive Ergonomic Posture Simulator',
+                    desc: language === 'pt' ? 'Mexe na cabeça, costas, monitor e pés no modelo 3D para atingires 100% de postura perfeita!' : 'Adjust head, back, screen and feet in the 3D model to reach 100% posture!',
+                    stepIndex: 1,
+                    xp: 50,
+                  };
+                case 'seguranca':
+                case 'seguranca-digital':
+                  return {
+                    title: language === 'pt' ? '🛡️ Simulador de Phishing & Mensagens Perigosas' : '🛡️ Phishing & Scam Simulator',
+                    desc: language === 'pt' ? 'Usa a lupa de segurança para detetar mensagens falsas, armadilhas e links fraudulentos!' : 'Use the security lens to detect fake messages and phishing links!',
+                    stepIndex: 1,
+                    xp: 50,
+                  };
+                case 'palavras-passe':
+                  return {
+                    title: language === 'pt' ? '🔐 Testador de Força de Palavras-passe & Cofre' : '🔐 Password Strength Tester & Vault',
+                    desc: language === 'pt' ? 'Digita e testa palavras-passe secretas, vê quanto tempo demorariam a ser quebradas!' : 'Type and test passwords to see how long they take to crack!',
+                    stepIndex: 3,
+                    xp: 50,
+                  };
+                case 'navegar-internet':
+                  return {
+                    title: language === 'pt' ? '📰 Laboratório Detetor de Fake News & URLs' : '📰 Fake News & URL Anatomy Lab',
+                    desc: language === 'pt' ? 'Inspeciona links, títulos sensacionalistas e aprende a reconhecer fontes fidedignas!' : 'Inspect links, sensational headlines and spot reliable sources!',
+                    stepIndex: 2,
+                    xp: 50,
+                  };
+                case 'correio-eletronico':
+                  return {
+                    title: language === 'pt' ? '✉️ Explorador Interativo de Email & Scanner de Anexos' : '✉️ Interactive Email Explorer & Attachment Scanner',
+                    desc: language === 'pt' ? 'Redige emails, analisa remetentes e verifica ficheiros anexados em segurança!' : 'Draft emails, check senders, and scan safe attachments!',
+                    stepIndex: 0,
+                    xp: 50,
+                  };
+                case 'direitos-autor':
+                  return {
+                    title: language === 'pt' ? '⚖️ Laboratório de Citações & Licenças Digitais' : '⚖️ Citation & Digital License Lab',
+                    desc: language === 'pt' ? 'Aprende a criar citações perfeitas e a respeitar o trabalho dos criadores!' : 'Create proper citations and respect digital creators!',
+                    stepIndex: 3,
+                    xp: 50,
+                  };
+                default:
+                  return {
+                    title: language === 'pt' ? '💻 Explorador de Evolução e Aplicações das TIC' : '💻 ICT Evolution & Applications Explorer',
+                    desc: language === 'pt' ? 'Descobre a história da tecnologia e os computadores que mudaram a sociedade!' : 'Discover tech history and how computers changed the world!',
+                    stepIndex: 2,
+                    xp: 50,
+                  };
+              }
+            };
+            const sim = getSimulatorInfo(theme.id);
+            return (
+              <div
+                onClick={() => {
+                  setCurrentStepIndex(sim.stepIndex);
+                  setActiveTab('content');
+                  window.scrollTo({ top: 380, behavior: 'smooth' });
+                }}
+                className="p-5 sm:p-6 rounded-[2.2rem] bg-gradient-to-r from-indigo-950 via-slate-900 to-purple-950 text-white shadow-xl border-2 border-indigo-400/40 hover:border-amber-300 transition-all duration-300 hover:-translate-y-1 cursor-pointer flex flex-col md:flex-row items-center justify-between gap-5 group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-2xl bg-indigo-500/20 border border-indigo-300/40 flex items-center justify-center text-3xl shadow-inner shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-transform">
+                    🧪
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="px-2.5 py-0.5 rounded-full bg-amber-400 text-amber-950 font-black text-[11px] uppercase tracking-wider animate-pulse">
+                        ⭐ {language === 'pt' ? 'Simulador em Destaque' : 'Featured Simulator'}
+                      </span>
+                      <span className="text-xs text-indigo-300 font-bold">
+                        +{sim.xp} XP
+                      </span>
+                    </div>
+                    <h3 className="text-base sm:text-lg font-black text-white group-hover:text-amber-300 transition-colors mt-1">
+                      {sim.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-300 font-normal leading-relaxed mt-0.5 max-w-xl">
+                      {sim.desc}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-black text-xs sm:text-sm shadow-md transition-all shrink-0 flex items-center gap-2 group-hover:scale-105 pointer-events-none"
+                >
+                  <span>{language === 'pt' ? 'Experimentar Simulador' : 'Launch Simulator'}</span>
+                  <span>🚀</span>
+                </button>
+              </div>
+            );
+          })()}
+
+          {/* Featured Educational Dilemma / Passphrase Lab if in Theme 4 or Theme 2 */}
+          {(theme.id === 'seguranca' || theme.id === 'seguranca-digital') && (
+            <div className="mb-6">
+              <DigitalDilemmasGame language={language} />
+            </div>
+          )}
+
+          {theme.id === 'palavras-passe' && (
+            <div className="mb-6">
+              <PassphraseVaultLab language={language} />
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {theme.challenges.map((chal) => {
               const record = progressList.find((p) => p.activityId === chal.id);
@@ -511,7 +764,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
               const hasAttempted = !!record && (record.attempts ?? 0) > 0;
               const isDone = isFinalQuiz ? (record?.status === 'completed' || hasAttempted) : (bestScore >= 50);
               const isQuizVisible = quizVisibility[theme.id] === true;
-              const chalImg = getChallengeImage(chal.type);
+              const chalImg = getChallengeImage(chal.id, theme.id, chal.type);
 
               // If it's a final quiz and hidden for students, show a locked notification card to students
               if (isFinalQuiz && !isAdmin && !isQuizVisible) {
@@ -648,9 +901,25 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                       )}
                     </div>
 
+                    {/* Challenge Illustration Banner */}
+                    {chalImg && (
+                      <div className="w-full h-36 rounded-2xl overflow-hidden mb-4 bg-slate-100 border border-slate-200/80 relative shadow-inner group-hover:scale-[1.02] transition-transform duration-300">
+                        <img
+                          src={chalImg}
+                          alt={chal.title[language]}
+                          referrerPolicy="no-referrer"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                        <div className="absolute bottom-2.5 left-2.5 z-10 w-8 h-8 rounded-xl bg-white/90 backdrop-blur-md shadow-md border border-white/50 flex items-center justify-center text-lg transform group-hover:scale-110 group-hover:rotate-6 transition-transform">
+                          {chal.icon || (isFinalQuiz ? '🏆' : '🕹️')}
+                        </div>
+                      </div>
+                    )}
+
                     {/* Fun icon header */}
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="w-12 h-12 rounded-2xl bg-indigo-50 group-hover:bg-indigo-600 group-hover:text-white text-indigo-600 flex items-center justify-center text-2xl transition-colors shadow-inner border border-indigo-100">
+                      <div className="w-12 h-12 rounded-2xl bg-indigo-50 group-hover:bg-indigo-600 group-hover:text-white text-indigo-600 flex items-center justify-center text-2xl transition-colors shadow-inner border border-indigo-100 shrink-0">
                         {chal.icon || (isFinalQuiz ? '🏆' : '🕹️')}
                       </div>
                       <div>

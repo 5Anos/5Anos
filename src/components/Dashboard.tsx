@@ -1,11 +1,17 @@
 import React from 'react';
-import { ArrowRight, ShieldCheck, FileSpreadsheet, Lock, Eye, BookOpen } from 'lucide-react';
+import { ArrowRight, ShieldCheck, FileSpreadsheet, Lock, Eye, BookOpen, Sparkles, Play, Zap } from 'lucide-react';
 import { User, ActivityProgress, UserAchievement, Language, ThemeVisibilityMap } from '../types';
 import { translations } from '../i18n/translations';
 import { ALL_THEMES } from '../data/allThemesData';
 import { BADGES } from '../data/badgesData';
 import { ThemeIllustration } from './illustrations/ThemeIllustrations';
 import { getThemeImage } from '../data/themeImages';
+import correctPostureGuide from '../assets/images/correct_posture_guide_1788640792425.jpg';
+import cyberSafetyShield from '../assets/images/cyber_safety_shield_3d_1788539960280.jpg';
+import passwordsSecurity from '../assets/images/passwords_security_1788476556370.jpg';
+import internetBrowsing from '../assets/images/internet_browsing_1788476543602.jpg';
+import emailCommunication from '../assets/images/email_communication_1788476921823.jpg';
+import activeBreaksPosture from '../assets/images/active_breaks_posture_3d_1788539976910.jpg';
 import { isUserAdmin, DEFAULT_THEME_VISIBILITY } from '../services/api';
 import { HeroTICBanner } from './HeroTICBanner';
 import { DailyTipWidget } from './DailyTipWidget';
@@ -19,6 +25,8 @@ interface DashboardProps {
   achievements: UserAchievement[];
   language: Language;
   themeVisibility?: ThemeVisibilityMap;
+  forceOpenDailyTip?: boolean;
+  onCloseDailyTip?: () => void;
   onNavigateTheme: (themeId: string, moduleId?: string, challengeId?: string) => void;
   onNavigateProgress: () => void;
   onOpenAuth: () => void;
@@ -35,6 +43,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
   achievements,
   language,
   themeVisibility = DEFAULT_THEME_VISIBILITY,
+  forceOpenDailyTip,
+  onCloseDailyTip,
   onNavigateTheme,
   onNavigateProgress,
   onOpenAuth,
@@ -157,6 +167,264 @@ export const Dashboard: React.FC<DashboardProps> = ({
         onOpenAuth={onOpenAuth}
       />
 
+      {/* Interactive Simulators & Practical Labs Showcase */}
+      <div className="bg-gradient-to-br from-slate-950 via-indigo-950 to-purple-950 rounded-[2.5rem] p-6 sm:p-8 md:p-10 border-2 border-indigo-400/40 text-white shadow-2xl relative overflow-hidden">
+        {/* Glow Spheres */}
+        <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/15 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div className="flex items-center gap-3.5">
+            <div className="w-14 h-14 rounded-2xl bg-amber-400 text-amber-950 flex items-center justify-center text-3xl font-black shadow-lg shadow-amber-400/20 shrink-0 animate-bounce">
+              🧪
+            </div>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-white">
+                  {language === 'pt' ? 'Simuladores & Laboratórios TIC' : 'ICT Simulators & Labs'}
+                </h2>
+                <span className="px-3 py-1 rounded-full bg-indigo-500/30 text-indigo-200 text-xs font-black uppercase tracking-wider border border-indigo-400/30">
+                  {language === 'pt' ? 'Mexe & Experimenta!' : 'Hands-on!'}
+                </span>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-300 font-normal mt-1 max-w-2xl leading-relaxed">
+                {language === 'pt'
+                  ? 'Aprende praticando em simuladores interativos com modelos 3D, feedback imediato e desafios práticos:'
+                  : 'Learn by practicing in interactive simulators with 3D models, instant feedback, and practical challenges:'}
+              </p>
+            </div>
+          </div>
+          <div className="hidden lg:flex items-center gap-2 text-xs font-black text-amber-300 bg-amber-400/10 border border-amber-400/30 px-4 py-2 rounded-2xl">
+            <span>✨ 6 Simuladores Interativos</span>
+          </div>
+        </div>
+
+        {/* 6 Simulators Cards Grid */}
+        <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {/* 1. Posture Simulator */}
+          <div
+            onClick={() => onNavigateTheme('ergonomia', undefined, 'sim-posture')}
+            className="group bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-3xl p-4 border border-white/20 hover:border-amber-300 transition-all duration-300 hover:-translate-y-1.5 cursor-pointer flex flex-col justify-between shadow-lg"
+          >
+            <div>
+              <div className="w-full h-36 rounded-2xl overflow-hidden mb-3 relative bg-slate-900 border border-white/10">
+                <img
+                  src={correctPostureGuide}
+                  alt="Simulador de Postura"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <span className="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-emerald-500/90 text-white font-extrabold text-[10px] shadow-sm flex items-center gap-1">
+                  <span>🪑</span>
+                  <span>Tema 3</span>
+                </span>
+                <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-amber-400 text-amber-950 font-black text-[10px] shadow-sm">
+                  +50 XP
+                </span>
+              </div>
+              <h3 className="font-black text-sm sm:text-base text-white group-hover:text-amber-300 transition-colors leading-snug">
+                {language === 'pt' ? 'Simulador de Postura Ergonómica' : 'Ergonomic Posture Simulator'}
+              </h3>
+              <p className="text-xs text-slate-300 mt-1 font-normal line-clamp-2 leading-relaxed">
+                {language === 'pt'
+                  ? 'Ajusta a cadeira, ecrã ao nível dos olhos e apoio de pés no modelo interativo.'
+                  : 'Adjust chair, screen eye-level, and footrest in the interactive model.'}
+              </p>
+            </div>
+            <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-xs font-bold text-amber-300">
+              <span>{language === 'pt' ? 'Mover & Ajustar 🚀' : 'Adjust Now 🚀'}</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
+          {/* 2. Phishing Simulator */}
+          <div
+            onClick={() => onNavigateTheme('seguranca', undefined, 'sim-phishing')}
+            className="group bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-3xl p-4 border border-white/20 hover:border-amber-300 transition-all duration-300 hover:-translate-y-1.5 cursor-pointer flex flex-col justify-between shadow-lg"
+          >
+            <div>
+              <div className="w-full h-36 rounded-2xl overflow-hidden mb-3 relative bg-slate-900 border border-white/10">
+                <img
+                  src={cyberSafetyShield}
+                  alt="Simulador de Phishing"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <span className="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-purple-500/90 text-white font-extrabold text-[10px] shadow-sm flex items-center gap-1">
+                  <span>🛡️</span>
+                  <span>Tema 4</span>
+                </span>
+                <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-amber-400 text-amber-950 font-black text-[10px] shadow-sm">
+                  +50 XP
+                </span>
+              </div>
+              <h3 className="font-black text-sm sm:text-base text-white group-hover:text-amber-300 transition-colors leading-snug">
+                {language === 'pt' ? 'Detetor de Phishing & Armadilhas' : 'Phishing & Scam Detector'}
+              </h3>
+              <p className="text-xs text-slate-300 mt-1 font-normal line-clamp-2 leading-relaxed">
+                {language === 'pt'
+                  ? 'Inspeciona SMS e emails suspeitos com a lupa de cibersegurança e descobre fraudes.'
+                  : 'Inspect suspicious SMS and emails with the cybersecurity lens to spot scams.'}
+              </p>
+            </div>
+            <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-xs font-bold text-amber-300">
+              <span>{language === 'pt' ? 'Inspecionar Mensagens 🔍' : 'Inspect Messages 🔍'}</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
+          {/* 3. Password Strength Tester */}
+          <div
+            onClick={() => onNavigateTheme('palavras-passe', undefined, 'sim-passwords')}
+            className="group bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-3xl p-4 border border-white/20 hover:border-amber-300 transition-all duration-300 hover:-translate-y-1.5 cursor-pointer flex flex-col justify-between shadow-lg"
+          >
+            <div>
+              <div className="w-full h-36 rounded-2xl overflow-hidden mb-3 relative bg-slate-900 border border-white/10">
+                <img
+                  src={passwordsSecurity}
+                  alt="Testador de Senhas"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <span className="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-blue-500/90 text-white font-extrabold text-[10px] shadow-sm flex items-center gap-1">
+                  <span>🔐</span>
+                  <span>Tema 2</span>
+                </span>
+                <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-amber-400 text-amber-950 font-black text-[10px] shadow-sm">
+                  +50 XP
+                </span>
+              </div>
+              <h3 className="font-black text-sm sm:text-base text-white group-hover:text-amber-300 transition-colors leading-snug">
+                {language === 'pt' ? 'Testador de Força de Palavras-passe' : 'Password Strength Tester'}
+              </h3>
+              <p className="text-xs text-slate-300 mt-1 font-normal line-clamp-2 leading-relaxed">
+                {language === 'pt'
+                  ? 'Digita palavras-passe em segurança, descobre o tempo de quebra e ativa o escudo forte!'
+                  : 'Type passwords safely, discover cracking time and activate strong protection!'}
+              </p>
+            </div>
+            <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-xs font-bold text-amber-300">
+              <span>{language === 'pt' ? 'Testar Palavra-passe 🔑' : 'Test Password 🔑'}</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
+          {/* 4. Fake News & Sources Lab */}
+          <div
+            onClick={() => onNavigateTheme('navegar-internet', undefined, 'sim-fakenews')}
+            className="group bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-3xl p-4 border border-white/20 hover:border-amber-300 transition-all duration-300 hover:-translate-y-1.5 cursor-pointer flex flex-col justify-between shadow-lg"
+          >
+            <div>
+              <div className="w-full h-36 rounded-2xl overflow-hidden mb-3 relative bg-slate-900 border border-white/10">
+                <img
+                  src={internetBrowsing}
+                  alt="Laboratório de Fake News"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <span className="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-sky-500/90 text-white font-extrabold text-[10px] shadow-sm flex items-center gap-1">
+                  <span>📰</span>
+                  <span>Tema 6</span>
+                </span>
+                <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-amber-400 text-amber-950 font-black text-[10px] shadow-sm">
+                  +60 XP
+                </span>
+              </div>
+              <h3 className="font-black text-sm sm:text-base text-white group-hover:text-amber-300 transition-colors leading-snug">
+                {language === 'pt' ? 'Laboratório de Fake News & URLs' : 'Fake News & URL Lab'}
+              </h3>
+              <p className="text-xs text-slate-300 mt-1 font-normal line-clamp-2 leading-relaxed">
+                {language === 'pt'
+                  ? 'Analisa notícias reais e falsas, desmascara títulos enganadores e verifica fontes.'
+                  : 'Analyze real and fake stories, debunk misleading headlines and check sources.'}
+              </p>
+            </div>
+            <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-xs font-bold text-amber-300">
+              <span>{language === 'pt' ? 'Investigar Notícias 🕵️' : 'Investigate News 🕵️'}</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
+          {/* 5. Email Simulator & Attachment Scanner */}
+          <div
+            onClick={() => onNavigateTheme('correio-eletronico', undefined, 'sim-email')}
+            className="group bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-3xl p-4 border border-white/20 hover:border-amber-300 transition-all duration-300 hover:-translate-y-1.5 cursor-pointer flex flex-col justify-between shadow-lg"
+          >
+            <div>
+              <div className="w-full h-36 rounded-2xl overflow-hidden mb-3 relative bg-slate-900 border border-white/10">
+                <img
+                  src={emailCommunication}
+                  alt="Simulador de Email"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <span className="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-blue-600/90 text-white font-extrabold text-[10px] shadow-sm flex items-center gap-1">
+                  <span>✉️</span>
+                  <span>Tema 5</span>
+                </span>
+                <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-amber-400 text-amber-950 font-black text-[10px] shadow-sm">
+                  +50 XP
+                </span>
+              </div>
+              <h3 className="font-black text-sm sm:text-base text-white group-hover:text-amber-300 transition-colors leading-snug">
+                {language === 'pt' ? 'Explorador & Scanner de Email' : 'Email Explorer & Scanner'}
+              </h3>
+              <p className="text-xs text-slate-300 mt-1 font-normal line-clamp-2 leading-relaxed">
+                {language === 'pt'
+                  ? 'Aprende a escrever emails para a escola, inspeciona anexos e descobre perigos.'
+                  : 'Learn how to write school emails, inspect attachments and spot dangers.'}
+              </p>
+            </div>
+            <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-xs font-bold text-amber-300">
+              <span>{language === 'pt' ? 'Abrir Correio 📨' : 'Open Email 📨'}</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
+          {/* 6. Active Breaks & 20-20-20 Rule */}
+          <div
+            onClick={() => onNavigateTheme('ergonomia', undefined, 'sim-breaks')}
+            className="group bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-3xl p-4 border border-white/20 hover:border-amber-300 transition-all duration-300 hover:-translate-y-1.5 cursor-pointer flex flex-col justify-between shadow-lg"
+          >
+            <div>
+              <div className="w-full h-36 rounded-2xl overflow-hidden mb-3 relative bg-slate-900 border border-white/10">
+                <img
+                  src={activeBreaksPosture}
+                  alt="Pausas Ativas"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <span className="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-emerald-600/90 text-white font-extrabold text-[10px] shadow-sm flex items-center gap-1">
+                  <span>🏃</span>
+                  <span>Tema 3</span>
+                </span>
+                <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-amber-400 text-amber-950 font-black text-[10px] shadow-sm">
+                  +40 XP
+                </span>
+              </div>
+              <h3 className="font-black text-sm sm:text-base text-white group-hover:text-amber-300 transition-colors leading-snug">
+                {language === 'pt' ? 'Pausas Ativas & Regra 20-20-20' : 'Active Breaks & 20-20-20 Rule'}
+              </h3>
+              <p className="text-xs text-slate-300 mt-1 font-normal line-clamp-2 leading-relaxed">
+                {language === 'pt'
+                  ? 'Experimenta alongamentos divertidos, relaxa a visão e aprende a estudar com saúde.'
+                  : 'Try fun stretching exercises, rest your eyesight, and study with health.'}
+              </p>
+            </div>
+            <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-xs font-bold text-amber-300">
+              <span>{language === 'pt' ? 'Fazer Alongamentos 🤸' : 'Stretch Now 🤸'}</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Main 12-Column Grid for Themes & Sidebar */}
       <div id="curriculum-themes-section" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start scroll-mt-6">
         {/* Left Column (Span 8): 7 Main Theme Cards */}
@@ -196,10 +464,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <div
                   key={theme.id}
                   onClick={() => onNavigateTheme(theme.id)}
-                  className={`bg-white rounded-[2rem] border transition-all duration-200 flex flex-col justify-between cursor-pointer group relative overflow-hidden ${
+                  className={`bg-white rounded-[2rem] border transition-all duration-300 flex flex-col justify-between cursor-pointer group relative overflow-hidden transform hover:-translate-y-1.5 hover:shadow-xl ${
                     isAdmin && !isVisibleForStudents
                       ? 'border-amber-300 bg-amber-50/20 shadow-xs hover:border-amber-400'
-                      : `border-slate-200 shadow-xs hover:shadow-md ${colorInfo.hoverBorder}`
+                      : `border-slate-200 shadow-xs ${colorInfo.hoverBorder}`
                   } p-5 sm:p-6`}
                 >
                   <div>
@@ -209,9 +477,27 @@ export const Dashboard: React.FC<DashboardProps> = ({
                         src={getThemeImage(theme.id)}
                         alt={theme.title[language]}
                         referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent opacity-70 group-hover:opacity-50 transition-opacity" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent opacity-70 group-hover:opacity-40 transition-opacity" />
+
+                      {/* Theme Floating Icon Badge */}
+                      <div className="absolute bottom-2.5 left-2.5 z-10 w-9 h-9 rounded-xl bg-white/90 backdrop-blur-md shadow-md border border-white/50 flex items-center justify-center text-lg transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
+                        {theme.icon}
+                      </div>
+
+                      {/* Celebration Pill if 100% completed or in progress */}
+                      {themePct === 100 ? (
+                        <div className="absolute top-2.5 left-2.5 z-10 px-2.5 py-1 rounded-full bg-gradient-to-r from-amber-400 to-yellow-400 text-amber-950 font-black text-[11px] shadow-lg flex items-center gap-1 border border-white/60 animate-bounce">
+                          <span>⭐</span>
+                          <span>{language === 'pt' ? 'Tema Dominado!' : 'Completed!'}</span>
+                        </div>
+                      ) : themePct > 0 ? (
+                        <div className="absolute top-2.5 left-2.5 z-10 px-2.5 py-0.5 rounded-full bg-indigo-600/90 backdrop-blur-xs text-white font-extrabold text-[10px] shadow-md flex items-center gap-1 border border-white/30">
+                          <span>🚀</span>
+                          <span>{themePct}%</span>
+                        </div>
+                      ) : null}
 
                       {/* Admin Theme Toggle Ribbon */}
                       {isAdmin && (
@@ -310,19 +596,23 @@ export const Dashboard: React.FC<DashboardProps> = ({
                         </span>
                       </span>
                     </div>
-                    <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                    <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden relative shadow-inner">
                       <div
-                        className={`h-full rounded-full transition-all duration-500 ${colorInfo.bar}`}
+                        className={`h-full rounded-full transition-all duration-500 relative overflow-hidden ${colorInfo.bar}`}
                         style={{ width: `${themePct}%` }}
-                      />
+                      >
+                        {themePct > 0 && themePct < 100 && (
+                          <div className="absolute inset-0 animate-shimmer" />
+                        )}
+                      </div>
                     </div>
-                    <div className="mt-3 flex items-center justify-between text-xs font-bold text-indigo-600 group-hover:text-indigo-700">
-                      <span>
+                    <div className="mt-3 flex items-center justify-between text-xs font-black text-indigo-600 group-hover:text-indigo-700 transition-colors">
+                      <span className="group-hover:translate-x-0.5 transition-transform">
                         {isAdmin && !isVisibleForStudents
                           ? (language === 'pt' ? 'Pré-visualizar Tema (Professora)' : 'Preview Topic')
                           : (language === 'pt' ? 'Explorar o Tema' : 'Explore Topic')}
                       </span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
                     </div>
                   </div>
                 </div>
@@ -357,36 +647,55 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <DailyTipWidget
             user={user}
             language={language}
+            forceOpen={forceOpenDailyTip}
+            onClose={onCloseDailyTip}
             onPointsAwarded={onPointsAwarded}
             onOpenAuth={onOpenAuth}
             onNavigateTheme={onNavigateTheme}
           />
 
-          {/* Achievements Card */}
-          <div className="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-xs flex flex-col">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex justify-between items-center">
-              <span>{language === 'pt' ? 'Conquistas' : 'Achievements'}</span>
-              <span className="text-indigo-600 normal-case font-bold">
-                {achievements.length}/{BADGES.length}
+          {/* Achievements Card with Joyful Child-Friendly Styling */}
+          <div className="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-xs flex flex-col hover:border-amber-300 transition-all duration-300">
+            <div className="flex items-center justify-between gap-2 mb-4">
+              <div className="flex items-center gap-2">
+                <span className="text-xl animate-bounce">🏆</span>
+                <div>
+                  <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider">
+                    {language === 'pt' ? 'Mural de Medalhas' : 'Badge Wall'}
+                  </h3>
+                  <span className="text-[10px] text-slate-400 font-medium">
+                    {language === 'pt' ? 'Conquistas Curriculares' : 'Curriculum Badges'}
+                  </span>
+                </div>
+              </div>
+              <span className="text-xs font-black text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full">
+                {achievements.length} / {BADGES.length}
               </span>
-            </h3>
-            <div className="flex flex-col gap-3">
+            </div>
+
+            <div className="flex flex-col gap-2.5">
               {BADGES.slice(0, 4).map((badge) => {
                 const isUnlocked = achievements.some((a) => a.badgeId === badge.id);
                 return (
                   <div
                     key={badge.id}
-                    className={`flex items-center gap-3 p-3 rounded-2xl border transition-all ${
+                    className={`flex items-center gap-3 p-3 rounded-2xl border transition-all duration-200 ${
                       isUnlocked
-                        ? 'bg-slate-50/80 border-slate-200/80'
-                        : 'bg-white border-slate-100 opacity-60'
+                        ? 'bg-amber-50/40 border-amber-200/90 shadow-2xs hover:scale-[1.02]'
+                        : 'bg-slate-50/50 border-slate-100 opacity-65 hover:opacity-85'
                     }`}
                   >
-                    <div className="w-10 h-10 bg-white rounded-xl shadow-xs border border-slate-100 flex items-center justify-center text-2xl shrink-0">
+                    <div
+                      className={`w-10 h-10 rounded-xl flex items-center justify-center text-2xl shrink-0 transition-transform ${
+                        isUnlocked
+                          ? 'bg-white shadow-xs border border-amber-200 animate-float'
+                          : 'bg-slate-100 text-slate-400'
+                      }`}
+                    >
                       {badge.icon}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-bold text-slate-900 truncate">
+                      <p className="text-xs font-black text-slate-900 truncate">
                         {language === 'pt' ? badge.namePt : badge.nameEn}
                       </p>
                       <p className="text-[11px] text-slate-500 truncate">
@@ -394,11 +703,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       </p>
                     </div>
                     <span
-                      className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${
-                        isUnlocked ? 'bg-indigo-50 text-indigo-700' : 'bg-slate-100 text-slate-500'
+                      className={`text-[10px] font-black px-2 py-0.5 rounded-full ${
+                        isUnlocked
+                          ? 'bg-amber-100 text-amber-900 border border-amber-300'
+                          : 'bg-slate-100 text-slate-400 border border-slate-200'
                       }`}
                     >
-                      {isUnlocked ? (language === 'pt' ? 'Ganho' : 'Earned') : (language === 'pt' ? 'Pendente' : 'Locked')}
+                      {isUnlocked
+                        ? (language === 'pt' ? '✓ Ganha!' : '✓ Earned!')
+                        : (language === 'pt' ? '🔒 Desafio' : '🔒 Locked')}
                     </span>
                   </div>
                 );
@@ -406,9 +719,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </div>
             <button
               onClick={onNavigateProgress}
-              className="mt-4 text-xs font-bold text-indigo-600 hover:text-indigo-700 text-center cursor-pointer transition-colors"
+              className="mt-4 text-xs font-black text-indigo-600 hover:text-indigo-800 text-center cursor-pointer transition-colors flex items-center justify-center gap-1.5 py-1"
             >
-              {language === 'pt' ? 'Ver todas as medalhas →' : 'View all badges →'}
+              <span>{language === 'pt' ? 'Ver todas as medalhas e troféus' : 'View all badges & trophies'}</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>

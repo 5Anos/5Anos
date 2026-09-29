@@ -94,9 +94,9 @@ export const HeroTICBanner: React.FC<HeroTICBannerProps> = ({
 
         {/* Right Col: 3D Boy Avatar + Speech Bubble + Hand note */}
         <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
-          {/* Golden Speech Bubble */}
-          <div className="relative mb-2 self-end sm:mr-4 bg-gradient-to-r from-amber-200 via-amber-300 to-amber-200 text-amber-950 font-black text-xs sm:text-sm px-4 py-2.5 rounded-2xl shadow-md border border-amber-300 flex items-center gap-1.5 transform hover:scale-105 transition-transform">
-            <span>✨</span>
+          {/* Golden Speech Bubble with subtle float */}
+          <div className="relative mb-2 self-end sm:mr-4 bg-gradient-to-r from-amber-200 via-amber-300 to-amber-200 text-amber-950 font-black text-xs sm:text-sm px-4 py-2.5 rounded-2xl shadow-md border border-amber-300 flex items-center gap-1.5 transform hover:scale-105 transition-transform animate-float">
+            <span className="text-base animate-bounce">✨</span>
             <span>
               {isPt
                 ? 'Aprender hoje, um mundo melhor amanhã!'
@@ -106,19 +106,30 @@ export const HeroTICBanner: React.FC<HeroTICBannerProps> = ({
             <div className="absolute -bottom-2 right-8 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-amber-300" />
           </div>
 
-          {/* 3D Boy Avatar Card */}
-          <div className="relative group">
-            <div className="w-56 sm:w-64 md:w-72 h-56 sm:h-64 md:h-72 rounded-[2.5rem] p-2 bg-gradient-to-tr from-indigo-300 via-sky-200 to-amber-100 shadow-xl border-4 border-white overflow-hidden transition-transform duration-300 group-hover:scale-[1.02]">
+          {/* 3D Boy Avatar Card with gentle floating animation */}
+          <div className="relative group animate-float">
+            {/* Playful Floating Tech Badges */}
+            <div className="absolute -top-3 -left-3 z-20 w-9 h-9 rounded-xl bg-white shadow-md border border-indigo-100 flex items-center justify-center text-lg animate-float-reverse">
+              💻
+            </div>
+            <div className="absolute -top-2 -right-2 z-20 w-8 h-8 rounded-full bg-amber-100 shadow-md border border-amber-200 flex items-center justify-center text-sm animate-twinkle">
+              ⭐
+            </div>
+            <div className="absolute top-1/2 -left-4 z-20 w-8 h-8 rounded-full bg-sky-100 shadow-md border border-sky-200 flex items-center justify-center text-sm animate-float">
+              🚀
+            </div>
+
+            <div className="w-56 sm:w-64 md:w-72 h-56 sm:h-64 md:h-72 rounded-[2.5rem] p-2 bg-gradient-to-tr from-indigo-300 via-sky-200 to-amber-100 shadow-xl border-4 border-white overflow-hidden transition-transform duration-300 group-hover:scale-[1.03] group-hover:rotate-1">
               <img
                 src={boyAvatarImg}
                 alt="Estudante de TIC"
-                className="w-full h-full object-cover rounded-[2rem]"
+                className="w-full h-full object-cover rounded-[2rem] transition-transform duration-500 group-hover:scale-105"
                 referrerPolicy="no-referrer"
               />
             </div>
 
             {/* Handwritten script with arrow */}
-            <div className="absolute -bottom-5 -right-3 sm:-right-6 bg-white/95 backdrop-blur-xs px-3.5 py-1.5 rounded-xl border border-sky-200 shadow-md text-sky-700 font-extrabold text-[11px] sm:text-xs flex items-center gap-1.5 transform rotate-2">
+            <div className="absolute -bottom-5 -right-3 sm:-right-6 bg-white/95 backdrop-blur-xs px-3.5 py-1.5 rounded-xl border border-sky-200 shadow-md text-sky-700 font-extrabold text-[11px] sm:text-xs flex items-center gap-1.5 transform rotate-2 hover:rotate-0 transition-transform">
               <span>{isPt ? 'Tecnologia para grandes ideias!' : 'Tech for big ideas!'}</span>
               <span className="text-sm font-black">↗</span>
             </div>
@@ -127,8 +138,8 @@ export const HeroTICBanner: React.FC<HeroTICBannerProps> = ({
       </div>
 
       {/* ================= MIDDLE TRANSITION STATEMENT ================= */}
-      <div className="relative z-10 mt-8 mb-2 p-4 sm:p-5 rounded-2xl bg-white/80 backdrop-blur-xs border border-indigo-100/90 shadow-2xs flex items-start sm:items-center gap-3.5">
-        <div className="w-8 h-8 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-600 shrink-0">
+      <div className="relative z-10 mt-8 mb-2 p-4 sm:p-5 rounded-2xl bg-white/80 backdrop-blur-xs border border-indigo-100/90 shadow-2xs flex items-start sm:items-center gap-3.5 hover:border-indigo-200 transition-colors">
+        <div className="w-8 h-8 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-600 shrink-0 animate-pulse">
           <Sparkles className="w-4 h-4" />
         </div>
         <p className="text-slate-700 text-xs sm:text-sm md:text-base font-semibold leading-relaxed">
@@ -142,14 +153,18 @@ export const HeroTICBanner: React.FC<HeroTICBannerProps> = ({
       <div className="relative z-10 mt-8 pt-6 border-t border-sky-200/60 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
         {/* Left: 3D Girl Student Avatar */}
         <div className="md:col-span-3 flex justify-center md:justify-start">
-          <div className="relative group">
-            <div className="w-36 h-36 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-[2rem] p-1.5 bg-gradient-to-tr from-amber-200 via-pink-200 to-indigo-200 shadow-lg border-4 border-white overflow-hidden transition-transform duration-300 group-hover:scale-105">
+          <div className="relative group animate-float-reverse">
+            <div className="w-36 h-36 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-[2rem] p-1.5 bg-gradient-to-tr from-amber-200 via-pink-200 to-indigo-200 shadow-lg border-4 border-white overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:-rotate-1">
               <img
                 src={girlAvatarImg}
                 alt="Estudante inspirada"
-                className="w-full h-full object-cover rounded-[1.7rem]"
+                className="w-full h-full object-cover rounded-[1.7rem] transition-transform duration-500 group-hover:scale-105"
                 referrerPolicy="no-referrer"
               />
+            </div>
+            {/* Friendly mini sticker badge */}
+            <div className="absolute -bottom-2 -left-2 w-7 h-7 rounded-full bg-emerald-100 shadow border border-emerald-200 flex items-center justify-center text-xs animate-bounce">
+              💡
             </div>
           </div>
         </div>

@@ -19,6 +19,8 @@ interface ProgressViewProps {
   themeVisibility?: ThemeVisibilityMap;
   isAdmin?: boolean;
   onOpenAuth: () => void;
+  onOpenCertificate?: () => void;
+  onOpenShop?: () => void;
 }
 
 export const ProgressView: React.FC<ProgressViewProps> = ({
@@ -30,6 +32,8 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
   themeVisibility,
   isAdmin = false,
   onOpenAuth,
+  onOpenCertificate,
+  onOpenShop,
 }) => {
   const t = translations[language];
 
@@ -127,13 +131,33 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+          {onOpenShop && user && (
+            <button
+              onClick={onOpenShop}
+              className="px-4 py-2.5 rounded-xl border border-indigo-200 bg-linear-to-r from-indigo-50 to-purple-50 hover:from-indigo-100 hover:to-purple-100 text-indigo-900 font-bold text-xs sm:text-sm flex items-center gap-2 shadow-2xs transition-colors cursor-pointer"
+            >
+              <span>🛍️</span>
+              <span>{language === 'pt' ? 'Loja de Acessórios XP' : 'XP Accessories Shop'}</span>
+            </button>
+          )}
+
+          {onOpenCertificate && user && (
+            <button
+              onClick={onOpenCertificate}
+              className="px-4 py-2.5 rounded-xl border border-amber-300 bg-linear-to-r from-amber-50 to-yellow-50 hover:from-amber-100 hover:to-yellow-100 text-amber-950 font-black text-xs sm:text-sm flex items-center gap-2 shadow-md transition-colors cursor-pointer"
+            >
+              <span>📜</span>
+              <span>{language === 'pt' ? 'Diploma Ciber-Herói Digital' : 'Official Cyber-Hero Diploma'}</span>
+            </button>
+          )}
+
           <button
             onClick={handlePrint}
             className="px-4 py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm flex items-center gap-2 shadow-2xs transition-colors cursor-pointer"
           >
             <Printer className="w-4 h-4 text-slate-500" />
-            <span>{language === 'pt' ? 'Imprimir Certificado' : 'Print Certificate'}</span>
+            <span>{language === 'pt' ? 'Imprimir Ficha' : 'Print Summary'}</span>
           </button>
         </div>
       </div>

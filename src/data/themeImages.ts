@@ -103,9 +103,37 @@ export function getThemeStepImage(themeId: string, stepIndex: number): string {
   return getThemeImage(themeId);
 }
 
-export function getChallengeImage(type?: string): string {
-  if (type === 'final_quiz') {
+export function getChallengeImage(challengeId?: string, themeId?: string, type?: string): string {
+  if (type === 'final_quiz' || (challengeId && challengeId.includes('quiz-final'))) {
     return quizGameTrophy;
+  }
+  const cid = challengeId || '';
+  const tid = themeId || '';
+
+  if (cid.includes('ergo') || tid === 'ergonomia') {
+    if (cid.includes('posture') || cid.includes('tf')) return correctPostureGuide;
+    if (cid.includes('detective') || cid.includes('mc')) return sitPostureGuide;
+    return activeBreaksPosture;
+  }
+  if (cid.includes('pass') || tid === 'palavras-passe') {
+    return passwordsSecurity;
+  }
+  if (cid.includes('cyber') || cid.includes('phish') || cid.includes('footprint') || tid === 'seguranca' || tid === 'seguranca-digital') {
+    return cyberSafetyShield;
+  }
+  if (cid.includes('email') || cid.includes('inbox') || cid.includes('bcc') || tid === 'correio-eletronico') {
+    return emailCommunication;
+  }
+  if (cid.includes('search') || cid.includes('keyword') || cid.includes('source') || tid === 'navegar-internet') {
+    return internetBrowsing;
+  }
+  if (cid.includes('copy') || cid.includes('credit') || cid.includes('cite') || tid === 'direitos-autor') {
+    if (cid.includes('copy')) return plagiarismKidsArt;
+    if (cid.includes('credit') || cid.includes('cite')) return citationBlocksArt;
+    return ccLicensingArt;
+  }
+  if (tid === 'tic-sociedade') {
+    return hardwarePeripherals;
   }
   return quizGameTrophy;
 }

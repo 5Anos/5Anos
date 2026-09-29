@@ -1,5 +1,22 @@
 import React, { useState } from 'react';
-import { BarChart3, User as UserIcon, LogOut, Menu, X, Sparkles, Compass, Trophy, ShieldCheck, FileSpreadsheet, Palette, Smile } from 'lucide-react';
+import {
+  BarChart3,
+  User as UserIcon,
+  LogOut,
+  Menu,
+  X,
+  Sparkles,
+  Compass,
+  Trophy,
+  ShieldCheck,
+  FileSpreadsheet,
+  Palette,
+  Smile,
+  Moon,
+  Sun,
+  ShoppingBag,
+  Award
+} from 'lucide-react';
 import { User, Language, AvatarConfig } from '../types';
 import { translations } from '../i18n/translations';
 import { isUserAdmin, api } from '../services/api';
@@ -20,6 +37,10 @@ interface HeaderProps {
   onOpenAdmin?: () => void;
   onLogout: () => void;
   onUpdateUser?: (user: User) => void;
+  isNightMode?: boolean;
+  onToggleNightMode?: () => void;
+  onOpenShop?: () => void;
+  onOpenCertificate?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -33,6 +54,10 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAdmin,
   onLogout,
   onUpdateUser,
+  isNightMode = false,
+  onToggleNightMode,
+  onOpenShop,
+  onOpenCertificate,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
@@ -152,6 +177,37 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             )}
 
+            {/* Modo Noite de Estudo (Ergonomia Visual) */}
+            <button
+              type="button"
+              onClick={onToggleNightMode}
+              className={`p-2 rounded-full border text-xs sm:text-sm font-semibold cursor-pointer transition-colors flex items-center justify-center ${
+                isNightMode
+                  ? 'bg-amber-400/20 border-amber-400 text-amber-300 hover:bg-amber-400/30'
+                  : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700'
+              }`}
+              title={
+                isNightMode
+                  ? (language === 'pt' ? 'Modo Normal (Luz de Dia)' : 'Day Light Mode')
+                  : (language === 'pt' ? 'Modo Noite de Estudo (Protege a tua visão)' : 'Night Study Mode')
+              }
+            >
+              {isNightMode ? <Sun className="w-4 h-4 text-amber-300" /> : <Moon className="w-4 h-4 text-indigo-600" />}
+            </button>
+
+            {/* XP Shop Button (Quick Access for Students) */}
+            {user && !isAdmin && onOpenShop && (
+              <button
+                type="button"
+                onClick={onOpenShop}
+                className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-linear-to-r from-indigo-50 to-purple-50 hover:from-indigo-100 hover:to-purple-100 border border-indigo-200/80 text-indigo-900 text-xs font-bold cursor-pointer transition-colors shadow-2xs"
+                title={language === 'pt' ? 'Loja de Acessórios XP' : 'XP Accessories Shop'}
+              >
+                <span>🛍️</span>
+                <span>{language === 'pt' ? 'Loja XP' : 'Shop'}</span>
+              </button>
+            )}
+
             {/* Language Selector Dropdown */}
             <div className="relative">
               <button
@@ -253,7 +309,7 @@ export const Header: React.FC<HeaderProps> = ({
                     </div>
 
                     {!isAdmin && (
-                      <div className="p-2 border-b border-slate-100 bg-purple-50/60">
+                      <div className="p-2 border-b border-slate-100 bg-purple-50/60 space-y-1.5">
                         <button
                           type="button"
                           onClick={() => {
@@ -265,6 +321,20 @@ export const Header: React.FC<HeaderProps> = ({
                           <Palette className="w-3.5 h-3.5" />
                           <span>{language === 'pt' ? '🎨 Cartoon & Nickname' : '🎨 Cartoon & Nickname'}</span>
                         </button>
+
+                        {onOpenShop && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setUserDropdownOpen(false);
+                              onOpenShop();
+                            }}
+                            className="w-full py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                          >
+                            <ShoppingBag className="w-3.5 h-3.5" />
+                            <span>{language === 'pt' ? '🛍️ Loja de Acessórios XP' : '🛍️ XP Accessories Shop'}</span>
+                          </button>
+                        )}
                       </div>
                     )}
 
@@ -278,6 +348,19 @@ export const Header: React.FC<HeaderProps> = ({
                       >
                         <ShieldCheck className="w-4 h-4 text-indigo-800" />
                         <span>{language === 'pt' ? 'Área do Professor' : 'Teacher Portal'}</span>
+                      </button>
+                    )}
+
+                    {!isAdmin && onOpenCertificate && (
+                      <button
+                        onClick={() => {
+                          setUserDropdownOpen(false);
+                          onOpenCertificate();
+                        }}
+                        className="w-full text-left px-4 py-2 text-xs sm:text-sm text-amber-900 bg-amber-50/80 hover:bg-amber-100/90 flex items-center gap-2 font-bold cursor-pointer border-b border-amber-200/80"
+                      >
+                        <Award className="w-4 h-4 text-amber-600" />
+                        <span>{language === 'pt' ? '📜 Diploma Ciber-Herói' : '📜 Cyber-Hero Diploma'}</span>
                       </button>
                     )}
 
@@ -397,6 +480,51 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <Palette className="w-5 h-5 text-purple-600" />
               <span>{language === 'pt' ? '🎨 Personalizar Meu Cartoon' : '🎨 Customize My Cartoon'}</span>
+            </button>
+          )}
+
+          {user && !isAdmin && onOpenShop && (
+            <button
+              onClick={() => {
+                onOpenShop();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-bold text-indigo-900 bg-indigo-50 border border-indigo-200 flex items-center gap-3"
+            >
+              <ShoppingBag className="w-5 h-5 text-indigo-600" />
+              <span>{language === 'pt' ? '🛍️ Loja de Acessórios XP' : '🛍️ XP Accessories Shop'}</span>
+            </button>
+          )}
+
+          {user && !isAdmin && onOpenCertificate && (
+            <button
+              onClick={() => {
+                onOpenCertificate();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-bold text-amber-900 bg-amber-50 border border-amber-200 flex items-center gap-3"
+            >
+              <Award className="w-5 h-5 text-amber-600" />
+              <span>{language === 'pt' ? '📜 Diploma Ciber-Herói Digital' : '📜 Cyber-Hero Diploma'}</span>
+            </button>
+          )}
+
+          {/* Night Mode Toggle in Mobile */}
+          {onToggleNightMode && (
+            <button
+              onClick={() => {
+                onToggleNightMode();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-bold text-slate-800 bg-slate-100 hover:bg-slate-200 flex items-center justify-between"
+            >
+              <div className="flex items-center gap-3">
+                {isNightMode ? <Sun className="w-5 h-5 text-amber-500" /> : <Moon className="w-5 h-5 text-indigo-600" />}
+                <span>{language === 'pt' ? 'Modo Noite de Estudo' : 'Study Night Mode'}</span>
+              </div>
+              <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${isNightMode ? 'bg-amber-400 text-amber-950' : 'bg-slate-300 text-slate-700'}`}>
+                {isNightMode ? 'LIGADO' : 'DESLIGADO'}
+              </span>
             </button>
           )}
         </div>

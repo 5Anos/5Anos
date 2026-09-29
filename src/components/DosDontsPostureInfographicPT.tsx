@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { ZoomIn, ZoomOut, Maximize2, X } from 'lucide-react';
+import dosDontsPosture from '../assets/images/dos_donts_posture_1788646816497.jpg';
+import correctPostureGuide from '../assets/images/correct_posture_guide_1788640792425.jpg';
 
 export const DosDontsPostureInfographicPT: React.FC = () => {
   const [zoomLevel, setZoomLevel] = useState<number>(1);
@@ -23,52 +25,19 @@ export const DosDontsPostureInfographicPT: React.FC = () => {
           </span>
         </div>
 
-        {/* Character Illustration SVG */}
-        <div className="w-full aspect-[4/3] bg-white rounded-xl border border-red-200 p-2 shadow-inner mb-3 flex items-center justify-center">
-          <svg viewBox="0 0 240 180" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <line x1="10" y1="160" x2="230" y2="160" stroke="#fca5a5" strokeWidth="2" strokeDasharray="4 3" />
-            
-            {/* Desk */}
-            <rect x="10" y="70" width="80" height="8" rx="2" fill="#991b1b" />
-            <rect x="20" y="78" width="6" height="82" fill="#7f1d1d" />
-            {/* Screen */}
-            <rect x="30" y="25" width="8" height="45" rx="2" fill="#1e293b" />
-            <rect x="32" y="28" width="5" height="40" fill="#93c5fd" />
-            <rect x="25" y="66" width="18" height="4" rx="1" fill="#475569" />
-            <rect x="45" y="66" width="22" height="3" rx="1" fill="#475569" />
-
-            {/* Chair */}
-            <rect x="160" y="100" width="8" height="45" rx="2" fill="#334155" />
-            <rect x="135" y="145" width="55" height="4" rx="2" fill="#1e293b" />
-            <circle cx="140" cy="155" r="4" fill="#0f172a" />
-            <circle cx="185" cy="155" r="4" fill="#0f172a" />
-            <rect x="110" y="90" width="60" height="10" rx="4" fill="#334155" />
-            <rect x="165" y="55" width="8" height="45" rx="3" fill="#334155" />
-
-            {/* Boy Slouching (Hunched Red Line) */}
-            {/* Legs & dangling feet */}
-            <path d="M 125 90 L 80 90 L 70 145 L 55 145" stroke="#2563eb" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-            <rect x="45" y="140" width="18" height="8" rx="3" fill="#dc2626" />
-
-            {/* Slouched Hunched Back */}
-            <path d="M 120 90 C 150 70, 140 35, 95 38" stroke="#ef4444" strokeWidth="16" strokeLinecap="round" fill="none" />
-            {/* Spine strain curve dash */}
-            <path d="M 130 85 C 152 68, 142 42, 105 42" stroke="#dc2626" strokeWidth="2.5" strokeDasharray="3 2" fill="none" />
-
-            {/* Arms reaching awkwardly */}
-            <path d="M 98 44 L 80 66 L 50 67" stroke="#fca5a5" strokeWidth="6.5" strokeLinecap="round" fill="none" />
-
-            {/* Slumped Head leaning forward */}
-            <circle cx="85" cy="28" r="13" fill="#fed7aa" />
-            <path d="M 75 22 C 75 14, 92 12, 97 22 C 95 26, 80 28, 75 22 Z" fill="#78350f" />
-            <circle cx="80" cy="28" r="1.3" fill="#1e293b" />
-            <path d="M 78 33 Q 82 31 84 34" stroke="#991b1b" strokeWidth="1" fill="none" />
-
-            {/* Pain / Tension marks on neck & back */}
-            <path d="M 140 40 L 148 35" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" />
-            <path d="M 144 48 L 153 47" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" />
-            <path d="M 136 56 L 145 59" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" />
-          </svg>
+        {/* Character Illustration Photo Poster */}
+        <div className="w-full h-48 sm:h-56 bg-slate-900 rounded-xl border border-red-200 overflow-hidden shadow-inner mb-3 relative group">
+          <img
+            src={dosDontsPosture}
+            alt="O que não deves fazer"
+            referrerPolicy="no-referrer"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-red-950/70 via-transparent to-transparent flex items-end p-2.5">
+            <span className="text-[11px] font-bold text-red-200">
+              ⚠️ Postura incorreta: coluna curva e pescoço em esforço
+            </span>
+          </div>
         </div>
 
         {/* Bullet Points with Large Crisp Text */}
@@ -112,56 +81,19 @@ export const DosDontsPostureInfographicPT: React.FC = () => {
           </span>
         </div>
 
-        {/* Character Illustration SVG */}
-        <div className="w-full aspect-[4/3] bg-white rounded-xl border border-emerald-200 p-2 shadow-inner mb-3 flex items-center justify-center">
-          <svg viewBox="0 0 240 180" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <line x1="10" y1="160" x2="230" y2="160" stroke="#86efac" strokeWidth="2" strokeDasharray="4 3" />
-
-            {/* Straight spine guideline */}
-            <line x1="180" y1="20" x2="180" y2="145" stroke="#16a34a" strokeWidth="2" strokeDasharray="4 3" />
-
-            {/* Desk */}
-            <rect x="10" y="70" width="85" height="8" rx="2" fill="#15803d" />
-            <rect x="20" y="78" width="6" height="82" fill="#166534" />
-            {/* Screen at eye level */}
-            <rect x="30" y="18" width="8" height="52" rx="2" fill="#1e293b" />
-            <rect x="32" y="21" width="5" height="46" fill="#6ee7b7" />
-            <rect x="25" y="66" width="18" height="4" rx="1" fill="#475569" />
-            <rect x="50" y="66" width="22" height="3" rx="1" fill="#475569" />
-
-            {/* Chair with backrest */}
-            <rect x="150" y="100" width="8" height="45" rx="2" fill="#334155" />
-            <rect x="125" y="145" width="55" height="4" rx="2" fill="#1e293b" />
-            <circle cx="130" cy="155" r="4" fill="#0f172a" />
-            <circle cx="175" cy="155" r="4" fill="#0f172a" />
-            <rect x="105" y="90" width="55" height="10" rx="4" fill="#334155" />
-            <rect x="150" y="35" width="8" height="65" rx="3" fill="#334155" />
-
-            {/* Footrest with firmly planted feet */}
-            <polygon points="60,160 95,160 95,145 60,154" fill="#1e293b" />
-            <path d="M 68,150 L 90,143 L 88,154 Z" fill="#16a34a" />
-
-            {/* Student Sitting Upright (Green Torso) */}
-            {/* Legs 90 degrees */}
-            <path d="M 125 90 L 80 90 L 78 145" stroke="#2563eb" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-
-            {/* Straight Back against chair */}
-            <path d="M 125 90 L 128 38" stroke="#16a34a" strokeWidth="16" strokeLinecap="round" fill="none" />
-
-            {/* Arms at 90 degrees */}
-            <path d="M 128 42 L 105 68 L 55 68" stroke="#fed7aa" strokeWidth="6.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-            <path d="M 128 42 L 118 56" stroke="#16a34a" strokeWidth="9" strokeLinecap="round" fill="none" />
-
-            {/* Upright Head at Eye Level with Screen */}
-            <circle cx="130" cy="24" r="13" fill="#fed7aa" />
-            <path d="M 120 18 C 120 10, 137 8, 142 18 C 140 22, 125 24, 120 18 Z" fill="#78350f" />
-            <circle cx="125" cy="24" r="1.3" fill="#1e293b" />
-            <path d="M 123 29 Q 126 32 129 29" stroke="#15803d" strokeWidth="1" fill="none" />
-
-            {/* Sightline to top of screen */}
-            <line x1="124" y1="24" x2="38" y2="24" stroke="#059669" strokeWidth="1.5" strokeDasharray="3 2" />
-            <circle cx="38" cy="24" r="2.5" fill="#059669" />
-          </svg>
+        {/* Character Illustration Photo Poster */}
+        <div className="w-full h-48 sm:h-56 bg-slate-900 rounded-xl border border-emerald-200 overflow-hidden shadow-inner mb-3 relative group">
+          <img
+            src={correctPostureGuide}
+            alt="O que deves fazer"
+            referrerPolicy="no-referrer"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/70 via-transparent to-transparent flex items-end p-2.5">
+            <span className="text-[11px] font-bold text-emerald-200">
+              ✓ Postura correta: ângulos de 90° e ecrã à altura dos olhos
+            </span>
+          </div>
         </div>
 
         {/* Bullet Points with Large Crisp Text */}

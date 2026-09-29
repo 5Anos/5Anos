@@ -28,9 +28,14 @@ import { DigitalDetectivesGame } from './components/games/DigitalDetectivesGame'
 import { PlanetDigitalMissionGame } from './components/games/PlanetDigitalMissionGame';
 import { GenericChallengeGame } from './components/games/GenericChallengeGame';
 import { GenericHtmlGameRunner } from './components/games/GenericHtmlGameRunner';
+import { TICoRobotAssistant } from './components/TICoRobotAssistant';
+import { DigitalDilemmasGame } from './components/DigitalDilemmasGame';
+import { PassphraseVaultLab } from './components/PassphraseVaultLab';
+import { CyberHeroCertificateModal } from './components/CyberHeroCertificateModal';
+import { AvatarShopModal } from './components/avatar/AvatarShopModal';
 
 import { api, isUserAdmin, DEFAULT_THEME_VISIBILITY, DEFAULT_QUIZ_VISIBILITY, ensureDatabaseBootstrapped } from './services/api';
-import { User, ActivityProgress, UserAchievement, PointTransaction, Language, ThemeVisibilityMap, QuizVisibilityMap } from './types';
+import { User, ActivityProgress, UserAchievement, PointTransaction, Language, ThemeVisibilityMap, QuizVisibilityMap, AvatarConfig } from './types';
 import { ALL_THEMES } from './data/allThemesData';
 import { translations } from './i18n/translations';
 import { getQuizMention } from './utils/exportUtils';
@@ -44,6 +49,19 @@ export default function App() {
   const [achievements, setAchievements] = useState<UserAchievement[]>([]);
   const [pointsHistory, setPointsHistory] = useState<PointTransaction[]>([]);
   const [language, setLanguage] = useState<Language>('pt');
+
+  // Modo Noite de Estudo (Ergonomia Visual)
+  const [isNightMode, setIsNightMode] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('study_night_mode') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  // Gamification & Certificate Modals
+  const [shopModalOpen, setShopModalOpen] = useState(false);
+  const [certificateModalOpen, setCertificateModalOpen] = useState(false);
 
   // Theme & Quiz Visibility State
   const [themeVisibility, setThemeVisibility] = useState<ThemeVisibilityMap>(DEFAULT_THEME_VISIBILITY);
@@ -66,6 +84,7 @@ export default function App() {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [leaderboardModalOpen, setLeaderboardModalOpen] = useState(false);
   const [adminModalOpen, setAdminModalOpen] = useState(false);
+  const [dailyTipModalOpen, setDailyTipModalOpen] = useState(false);
   const [adminInitialTab, setAdminInitialTab] = useState<'students' | 'scores' | 'turmas' | 'themes' | 'danger'>('students');
   const [toastMessage, setToastMessage] = useState<{ title: string; subtitle?: string } | null>(null);
 
@@ -109,6 +128,17 @@ export default function App() {
   useEffect(() => {
     ensureDatabaseBootstrapped().catch(() => {});
 
+    const checkAndRevealDailyTip = (userId: string) => {
+      const today = new Date().toISOString().slice(0, 10);
+      const sessionKey = `tic_daily_tip_welcome_shown_${today}_${userId}`;
+      if (!sessionStorage.getItem(sessionKey)) {
+        sessionStorage.setItem(sessionKey, 'true');
+        setTimeout(() => {
+          setDailyTipModalOpen(true);
+        }, 700);
+      }
+    };
+
     async function loadUser() {
       try {
         const data = await api.getMe();
@@ -118,6 +148,9 @@ export default function App() {
         setPointsHistory(data.pointsHistory);
         if (data.user.language) {
           setLanguage(data.user.language);
+        }
+        if (data.user) {
+          checkAndRevealDailyTip(data.user.id);
         }
       } catch {
         // If not logged in, guest mode
@@ -302,9 +335,13 @@ export default function App() {
     } catch {
       // session fresh
     }
+    // Automatically reveal today's curious ICT fact on login
+    const today = new Date().toISOString().slice(0, 10);
+    sessionStorage.setItem(`tic_daily_tip_welcome_shown_${today}_${loggedUser.id}`, 'true');
+    setDailyTipModalOpen(true);
     showToast(
       language === 'pt' ? `Olá, ${loggedUser.name}! 👋` : `Hello, ${loggedUser.name}! 👋`,
-      language === 'pt' ? 'O teu progresso está sincronizado.' : 'Your progress is synced.'
+      language === 'pt' ? 'Bem-vindo(a) à tua aula de TIC!' : 'Welcome to your ICT class!'
     );
   };
 
@@ -372,9 +409,16 @@ export default function App() {
       setActiveModuleId(moduleId);
       setCurrentView('module');
     } else if (challengeId) {
-      setActiveChallengeId(challengeId);
-      setCurrentView('challenge');
+      if (challengeId.startsWith('sim-')) {
+        setActiveChallengeId(challengeId);
+        setActiveThemeTab('content');
+        setCurrentView('theme');
+      } else {
+        setActiveChallengeId(challengeId);
+        setCurrentView('challenge');
+      }
     } else {
+      setActiveChallengeId(null);
       setCurrentView('theme');
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -784,6 +828,72 @@ export default function App() {
       );
     }
 
+    // Specific Ethical Digital Dilemmas Simulator
+    if (activeChallengeId === 'dilemmas-digitais' || activeChallengeId === 'dilemmas' || activeChallengeId === 'sim-phishing') {
+      return (
+        <div className="max-w-4xl mx-auto px-4 py-8">
+          <div className="mb-4">
+            <button
+              onClick={returnToGames}
+              className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-indigo-600 hover:text-indigo-800 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-2xs cursor-pointer transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>{language === 'pt' ? 'Voltar aos Desafios' : 'Back to Challenges'}</span>
+            </button>
+          </div>
+          <DigitalDilemmasGame
+            language={language}
+            currentUser={user}
+            onFinish={(score) => {
+              handleSaveProgress({
+                activityId: activeChallengeId,
+                activityType: 'challenge',
+                themeId: currentTheme.id,
+                status: 'completed',
+                score,
+                maxScore: 80,
+                percentage: 100,
+                activityTitle: language === 'pt' ? 'Dilemas Digitais do Dia a Dia' : 'Everyday Digital Dilemmas',
+              });
+            }}
+          />
+        </div>
+      );
+    }
+
+    // Specific Passphrase Vault Simulator
+    if (activeChallengeId === 'cofre-passphrase' || activeChallengeId === 'passphrase-vault' || activeChallengeId === 'sim-passwords') {
+      return (
+        <div className="max-w-4xl mx-auto px-4 py-8">
+          <div className="mb-4">
+            <button
+              onClick={returnToGames}
+              className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-indigo-600 hover:text-indigo-800 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-2xs cursor-pointer transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>{language === 'pt' ? 'Voltar aos Desafios' : 'Back to Challenges'}</span>
+            </button>
+          </div>
+          <PassphraseVaultLab
+            language={language}
+            currentUser={user}
+            onFinish={(score) => {
+              handleSaveProgress({
+                activityId: activeChallengeId,
+                activityType: 'challenge',
+                themeId: currentTheme.id,
+                status: 'completed',
+                score,
+                maxScore: 50,
+                percentage: 100,
+                activityTitle: language === 'pt' ? 'O Cofre Seguro & Passphrase' : 'The Secure Vault & Passphrase',
+              });
+            }}
+          />
+        </div>
+      );
+    }
+
     // If challenge has structured gameData (TF, MC, Match, Order, etc.)
     const activeChallengeItem = currentTheme.challenges.find((c) => c.id === activeChallengeId);
     if (activeChallengeItem?.gameData) {
@@ -841,8 +951,20 @@ export default function App() {
     }
   };
 
+  const handleToggleNightMode = () => {
+    setIsNightMode((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem('study_night_mode', String(next));
+      } catch (err) {
+        console.error('Failed to save night mode preference:', err);
+      }
+      return next;
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-indigo-200 selection:text-indigo-900">
+    <div className={`min-h-screen flex flex-col font-sans selection:bg-indigo-200 selection:text-indigo-900 transition-colors duration-300 ${isNightMode ? 'study-night-mode bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
       {/* Top Navigation Bar */}
       <Header
         user={user}
@@ -873,6 +995,10 @@ export default function App() {
         onOpenAdmin={() => setAdminModalOpen(true)}
         onLogout={handleLogout}
         onUpdateUser={(updatedUser) => setUser(updatedUser)}
+        isNightMode={isNightMode}
+        onToggleNightMode={handleToggleNightMode}
+        onOpenShop={() => setShopModalOpen(true)}
+        onOpenCertificate={() => setCertificateModalOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -885,6 +1011,8 @@ export default function App() {
             achievements={achievements}
             language={language}
             themeVisibility={themeVisibility}
+            forceOpenDailyTip={dailyTipModalOpen}
+            onCloseDailyTip={() => setDailyTipModalOpen(false)}
             onNavigateTheme={navigateToTheme}
             onNavigateProgress={() => {
               if (!user) {
@@ -926,6 +1054,7 @@ export default function App() {
               progressList={progressList}
               language={language}
               initialTab={activeThemeTab}
+              activeChallengeId={activeChallengeId}
               isAdmin={isAdmin}
               isLockedForStudents={themeVisibility[currentTheme.id] === false}
               quizVisibility={quizVisibility}
@@ -999,6 +1128,8 @@ export default function App() {
             themeVisibility={themeVisibility}
             isAdmin={isAdmin}
             onOpenAuth={() => setAuthModalOpen(true)}
+            onOpenShop={() => setShopModalOpen(true)}
+            onOpenCertificate={() => setCertificateModalOpen(true)}
           />
         )}
       </main>
@@ -1028,9 +1159,20 @@ export default function App() {
         </div>
       </footer>
 
+      {/* TICo Robot Assistant (Página Inicial, Telas de Módulos & Temas) */}
+      {(currentView === 'dashboard' || currentView === 'module' || currentView === 'theme') && (
+        <TICoRobotAssistant
+          language={language}
+          context={currentView === 'dashboard' ? 'dashboard' : currentView === 'module' ? 'module' : 'theme'}
+          user={user}
+          moduleTitle={currentModule ? currentModule.title[language] : undefined}
+          themeTitle={currentTheme ? currentTheme.title[language] : undefined}
+        />
+      )}
+
       {/* Floating Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 rounded-2xl bg-indigo-950 text-white p-4 shadow-2xl border border-indigo-800/80 flex items-start gap-3.5 max-w-sm animate-in slide-in-from-bottom-5">
+        <div className="fixed bottom-24 right-6 z-50 rounded-2xl bg-indigo-950 text-white p-4 shadow-2xl border border-indigo-800/80 flex items-start gap-3.5 max-w-sm animate-in slide-in-from-bottom-5">
           <Sparkles className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
           <div>
             <p className="font-bold text-sm text-white">{toastMessage.title}</p>
@@ -1066,6 +1208,39 @@ export default function App() {
         currentUser={user}
         language={language}
         initialTab={adminInitialTab}
+      />
+
+      {/* Customização do Avatar / Mascote com Pontos XP */}
+      <AvatarShopModal
+        isOpen={shopModalOpen}
+        onClose={() => setShopModalOpen(false)}
+        user={user}
+        language={language}
+        onSaveAvatar={async (newAvatar: AvatarConfig) => {
+          if (!user) return;
+          try {
+            setUser({ ...user, avatar: newAvatar });
+            await api.updateUserAvatar(user.id, newAvatar);
+            setToastMessage({
+              title: language === 'pt' ? '🎉 Visual Atualizado!' : '🎉 Avatar Updated!',
+              subtitle:
+                language === 'pt'
+                  ? 'O teu novo acessório da Loja XP foi equipado com sucesso!'
+                  : 'Your new item was equipped successfully!',
+            });
+            setTimeout(() => setToastMessage(null), 3500);
+          } catch (err) {
+            console.error('Failed to save avatar:', err);
+          }
+        }}
+      />
+
+      {/* Certificado de Ciber-Herói Digital Descarregável */}
+      <CyberHeroCertificateModal
+        isOpen={certificateModalOpen}
+        onClose={() => setCertificateModalOpen(false)}
+        user={user}
+        language={language}
       />
     </div>
   );

@@ -1,8 +1,25 @@
-import React, { useState } from 'react';
-import { ArrowLeft, CheckCircle2, ChevronRight, HelpCircle, Lightbulb, Sparkles, BookOpen, AlertCircle, RefreshCw } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import {
+  ArrowLeft,
+  CheckCircle2,
+  ChevronRight,
+  ChevronLeft,
+  HelpCircle,
+  Lightbulb,
+  Sparkles,
+  BookOpen,
+  AlertCircle,
+  RefreshCw,
+  Type,
+  Eye,
+  Check,
+  Zap,
+} from 'lucide-react';
 import { PedagogicalModule, Language } from '../types';
 import { translations } from '../i18n/translations';
 import { AudioSpeakButton } from './AudioSpeakButton';
+import { ticoFeedback } from '../utils/ticoEvents';
+import { soundEffects } from '../utils/soundEffects';
 
 interface ModuleReaderProps {
   module: PedagogicalModule;
@@ -19,20 +36,80 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
 }) => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [showReflection, setShowReflection] = useState(false);
+  const [studentHypothesis, setStudentHypothesis] = useState<string | null>(null);
 
-  // Quiz state for step 6
+  // Micro-steps & Cognitive Load State
+  const [interactiveMode, setInteractiveMode] = useState<'cards' | 'text'>('cards');
+  const [revealedCards, setRevealedCards] = useState<Record<number, boolean>>({ 0: true });
+
+  // Accessibility & Reading Comfort State
+  const [fontScale, setFontScale] = useState<'normal' | 'large' | 'xlarge'>('normal');
+  const [readingFocus, setReadingFocus] = useState<boolean>(false);
+
+  // Quiz state for step 5
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
   const [submittedQuiz, setSubmittedQuiz] = useState(false);
 
   const t = translations[language];
 
-  const steps = [
-    { num: 1, title: t.step1Title },
-    { num: 2, title: t.step2Title },
-    { num: 3, title: t.step3Title },
-    { num: 4, title: t.step4Title },
-    { num: 5, title: t.step5Title },
+  // Pedagogical step definitions with visual dual-coding
+  const stepConfigs = [
+    {
+      num: 1,
+      shortLabelPt: 'Conceito',
+      shortLabelEn: 'Concept',
+      fullTitle: t.step1Title,
+      icon: <Lightbulb className="w-4 h-4" />,
+      color: 'indigo',
+    },
+    {
+      num: 2,
+      shortLabelPt: 'Exemplo Real',
+      shortLabelEn: 'Real Example',
+      fullTitle: t.step2Title,
+      icon: <Sparkles className="w-4 h-4" />,
+      color: 'amber',
+    },
+    {
+      num: 3,
+      shortLabelPt: 'Sabias Que?',
+      shortLabelEn: 'Fun Fact',
+      fullTitle: t.step3Title,
+      icon: <Sparkles className="w-4 h-4" />,
+      color: 'purple',
+    },
+    {
+      num: 4,
+      shortLabelPt: 'Vamos Pensar',
+      shortLabelEn: 'Reflect',
+      fullTitle: t.step4Title,
+      icon: <HelpCircle className="w-4 h-4" />,
+      color: 'indigo',
+    },
+    {
+      num: 5,
+      shortLabelPt: 'Mini-Quiz',
+      shortLabelEn: 'Mini-Quiz',
+      fullTitle: t.step5Title,
+      icon: <CheckCircle2 className="w-4 h-4" />,
+      color: 'emerald',
+    },
   ];
+
+  // Keyboard navigation support for accessibility (ArrowLeft, ArrowRight)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger if user is typing in an input
+      if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) return;
+      if (e.key === 'ArrowRight' && currentStep < 5) {
+        setCurrentStep((prev) => prev + 1);
+      } else if (e.key === 'ArrowLeft' && currentStep > 1) {
+        setCurrentStep((prev) => prev - 1);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentStep]);
 
   const handleSelectOption = (questionId: string, optionIndex: number) => {
     if (submittedQuiz) return;
@@ -59,6 +136,19 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
   const handleSubmitQuiz = () => {
     setSubmittedQuiz(true);
     const { score, maxScore, percentage } = calculateQuizScore();
+    
+    if (percentage === 100) {
+      ticoFeedback.triggerQuizPerfect();
+    } else if (score >= 3 || percentage >= 75) {
+      ticoFeedback.triggerStreak3();
+    } else {
+      ticoFeedback.triggerWrong(
+        language === 'pt'
+          ? 'Quase lá! Não desanimes. Vamos analisar as pistas de cada pergunta juntos! 🔍'
+          : 'Almost there! Let us analyze each clue together! 🔍'
+      );
+    }
+    
     onFinishModule(score, maxScore, percentage);
   };
 
@@ -67,22 +157,84 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
     setSubmittedQuiz(false);
   };
 
-  return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 animate-in fade-in duration-200">
-      {/* Back button */}
-      <button
-        onClick={onBack}
-        className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 mb-6 px-3.5 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        <span>{t.backToTheme}</span>
-      </button>
+  // Font size class mapper
+  const getTextSizeClass = () => {
+    if (fontScale === 'large') return 'text-base sm:text-lg leading-relaxed';
+    if (fontScale === 'xlarge') return 'text-lg sm:text-xl leading-loose';
+    return 'text-sm sm:text-base leading-relaxed';
+  };
 
-      {/* Module Title Header */}
-      <div className="mb-6">
+  return (
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 animate-in fade-in duration-200">
+      {/* Top Bar: Back button & Reading Comfort Toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <button
+          onClick={onBack}
+          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 px-3.5 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>{t.backToTheme}</span>
+        </button>
+
+        {/* Reading Accessibility & Comfort Tools (Universal Design for Learning) */}
+        <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-2xs text-xs font-semibold text-slate-700">
+          <span className="text-[11px] font-bold text-slate-400 hidden sm:inline mr-1">
+            {language === 'pt' ? 'Leitura:' : 'Reading:'}
+          </span>
+
+          {/* Font Size Toggle */}
+          <div className="flex items-center gap-1 bg-slate-100 p-0.5 rounded-lg" title={language === 'pt' ? 'Ajustar tamanho da letra' : 'Adjust font size'}>
+            <button
+              type="button"
+              onClick={() => setFontScale('normal')}
+              className={`px-2 py-0.5 rounded text-[11px] font-bold transition-colors cursor-pointer ${
+                fontScale === 'normal' ? 'bg-white text-indigo-700 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              A
+            </button>
+            <button
+              type="button"
+              onClick={() => setFontScale('large')}
+              className={`px-2 py-0.5 rounded text-xs font-bold transition-colors cursor-pointer ${
+                fontScale === 'large' ? 'bg-white text-indigo-700 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              A+
+            </button>
+            <button
+              type="button"
+              onClick={() => setFontScale('xlarge')}
+              className={`px-2 py-0.5 rounded text-sm font-bold transition-colors cursor-pointer ${
+                fontScale === 'xlarge' ? 'bg-white text-indigo-700 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              A++
+            </button>
+          </div>
+
+          {/* Reading Focus Highlighter Toggle */}
+          <button
+            type="button"
+            onClick={() => setReadingFocus(!readingFocus)}
+            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
+              readingFocus
+                ? 'bg-indigo-50 text-indigo-700 border border-indigo-200'
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70'
+            }`}
+            title={language === 'pt' ? 'Ativar guia de foco na leitura' : 'Toggle reading focus line'}
+          >
+            <Eye className="w-3.5 h-3.5" />
+            <span className="hidden md:inline">{language === 'pt' ? 'Guia de Foco' : 'Focus Guide'}</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Module Title Header Card */}
+      <div className="mb-6 bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/90 shadow-2xs">
         <div className="flex items-center justify-between gap-3">
-          <span className="text-xs font-bold uppercase tracking-widest text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200/60">
-            {language === 'pt' ? 'Conteúdo' : 'Topic'} {module.number}
+          <span className="text-xs font-extrabold uppercase tracking-widest text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200/70">
+            {language === 'pt' ? 'Tópico Curricular' : 'Topic'} {module.number}
           </span>
           <AudioSpeakButton
             id={`module-${module.id}-intro`}
@@ -93,68 +245,215 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
             size="xs"
           />
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-3 tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 mt-2.5 tracking-tight">
           {module.title[language]}
         </h1>
-        <p className="text-sm text-slate-600 mt-1.5 leading-relaxed">
+        <p className="text-sm sm:text-base text-slate-600 mt-1.5 leading-relaxed font-medium">
           {module.shortDesc[language]}
         </p>
+
+        {/* Visual Reading Progress Bar */}
+        <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-4">
+          <div className="flex-1">
+            <div className="flex items-center justify-between text-xs font-bold text-slate-500 mb-1">
+              <span>{language === 'pt' ? 'Passo a Passo da Aprendizagem' : 'Learning Steps'}</span>
+              <span className="text-indigo-600">
+                {language === 'pt' ? `Passo ${currentStep} de 5` : `Step ${currentStep} of 5`} ({currentStep * 20}%)
+              </span>
+            </div>
+            <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 rounded-full transition-all duration-300"
+                style={{ width: `${currentStep * 20}%` }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Progress Step Pills */}
-      <div className="grid grid-cols-5 gap-1.5 sm:gap-2 mb-8">
-        {steps.map((s) => (
-          <button
-            key={s.num}
-            onClick={() => setCurrentStep(s.num)}
-            className={`py-2 px-1 rounded-xl text-center text-xs font-bold transition-all border cursor-pointer ${
-              currentStep === s.num
-                ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                : currentStep > s.num
-                ? 'bg-indigo-50 text-indigo-800 border-indigo-200'
-                : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            <span className="block sm:hidden">{s.num}</span>
-            <span className="hidden sm:block truncate">Passo {s.num}</span>
-          </button>
-        ))}
+      {/* Pedagogical Step Tabs with Dual Coding (Icon + Text) */}
+      <div className="grid grid-cols-5 gap-1.5 sm:gap-2.5 mb-6">
+        {stepConfigs.map((s) => {
+          const isActive = currentStep === s.num;
+          const isCompleted = currentStep > s.num;
+
+          return (
+            <button
+              key={s.num}
+              onClick={() => setCurrentStep(s.num)}
+              className={`p-2 sm:p-2.5 rounded-2xl text-center text-xs font-bold transition-all border cursor-pointer flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 ${
+                isActive
+                  ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
+                  : isCompleted
+                  ? 'bg-indigo-50/80 text-indigo-900 border-indigo-200/80 hover:bg-indigo-100/60'
+                  : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+              }`}
+            >
+              <div
+                className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-black shrink-0 ${
+                  isActive
+                    ? 'bg-white/20 text-white'
+                    : isCompleted
+                    ? 'bg-indigo-200 text-indigo-900'
+                    : 'bg-slate-100 text-slate-600'
+                }`}
+              >
+                {isCompleted ? <Check className="w-3 h-3 text-indigo-900 stroke-[3]" /> : s.num}
+              </div>
+              <span className="truncate text-[11px] sm:text-xs">
+                {language === 'pt' ? s.shortLabelPt : s.shortLabelEn}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
-      {/* Content Container */}
-      <div className="rounded-[2rem] bg-white border border-slate-200 shadow-xs p-6 sm:p-8 min-h-[380px] flex flex-col justify-between">
+      {/* Main Reading Container */}
+      <div className="rounded-[2rem] bg-white border border-slate-200/90 shadow-sm p-6 sm:p-8 min-h-[400px] flex flex-col justify-between">
         {/* STEP 1: Explicação direta */}
         {currentStep === 1 && (
-          <div className="space-y-4 animate-in fade-in">
-            <div className="flex items-center justify-between gap-3">
+          <div className="space-y-5 animate-in fade-in">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-2 border-b border-slate-100">
               <div className="flex items-center gap-2 text-indigo-700">
                 <Lightbulb className="w-6 h-6" />
                 <h2 className="text-xl font-bold">{t.step1Title}</h2>
               </div>
-              <AudioSpeakButton
-                id={`module-${module.id}-step1-all`}
-                text={(module.explanation?.[language] || []).join(' ')}
-                language={language}
-                label={language === 'pt' ? 'Ouvir Tudo' : 'Listen All'}
-                variant="pill"
-                size="xs"
-              />
+
+              <div className="flex items-center gap-2">
+                {/* Cognitive Load Mode Toggle */}
+                <div className="flex items-center bg-slate-100 p-1 rounded-xl text-xs font-bold">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      soundEffects.playClick();
+                      setInteractiveMode('cards');
+                    }}
+                    className={`px-2.5 py-1 rounded-lg cursor-pointer transition-colors ${
+                      interactiveMode === 'cards'
+                        ? 'bg-white text-indigo-700 shadow-2xs'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    🃏 {language === 'pt' ? 'Cartas' : 'Cards'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      soundEffects.playClick();
+                      setInteractiveMode('text');
+                    }}
+                    className={`px-2.5 py-1 rounded-lg cursor-pointer transition-colors ${
+                      interactiveMode === 'text'
+                        ? 'bg-white text-indigo-700 shadow-2xs'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    📄 {language === 'pt' ? 'Texto' : 'Text'}
+                  </button>
+                </div>
+
+                <AudioSpeakButton
+                  id={`module-${module.id}-step1-all`}
+                  text={(module.explanation?.[language] || []).join(' ')}
+                  language={language}
+                  label={language === 'pt' ? 'Ouvir Tudo' : 'Listen All'}
+                  variant="pill"
+                  size="xs"
+                />
+              </div>
             </div>
 
-            <div className="space-y-3.5 text-sm sm:text-base text-slate-700 leading-relaxed">
-              {(module.explanation?.[language] || []).map((paragraph, idx) => (
-                <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-200/70 flex items-start justify-between gap-3">
-                  <p className="flex-1">{paragraph}</p>
-                  <AudioSpeakButton
-                    id={`module-${module.id}-step1-p-${idx}`}
-                    text={paragraph}
-                    language={language}
-                    variant="icon"
-                    size="xs"
-                  />
+            {interactiveMode === 'cards' ? (
+              /* Interactive Micro-Steps / Discover Cards Format (Reduced Cognitive Load) */
+              <div className="space-y-4">
+                <div className="flex items-center justify-between text-xs text-slate-500 font-semibold px-1">
+                  <span>{language === 'pt' ? 'Clica nas cartas para desbloquear os conceitos-chave:' : 'Click cards to reveal key concepts:'}</span>
+                  <span className="text-indigo-600 font-bold">
+                    {Object.keys(revealedCards).length} / {(module.explanation?.[language] || []).length} {language === 'pt' ? 'reveladas' : 'revealed'}
+                  </span>
                 </div>
-              ))}
-            </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {(module.explanation?.[language] || []).map((paragraph, idx) => {
+                    const isRevealed = revealedCards[idx];
+                    const cardIcons = ['💡', '🔍', '⚙️', '🚀', '⭐'];
+                    const cardIcon = cardIcons[idx % cardIcons.length];
+
+                    return (
+                      <div
+                        key={idx}
+                        onClick={() => {
+                          if (!isRevealed) {
+                            soundEffects.playSuccess();
+                            setRevealedCards((prev) => ({ ...prev, [idx]: true }));
+                            ticoFeedback.triggerCorrect();
+                          }
+                        }}
+                        className={`rounded-2xl p-5 border-2 transition-all cursor-pointer flex flex-col justify-between ${
+                          isRevealed
+                            ? 'bg-gradient-to-br from-indigo-50/70 via-white to-purple-50/40 border-indigo-200 shadow-sm'
+                            : 'bg-slate-50 hover:bg-slate-100/90 border-dashed border-slate-300 hover:border-indigo-400 group text-center py-8'
+                        }`}
+                      >
+                        {isRevealed ? (
+                          <div className="space-y-3">
+                            <div className="flex items-center justify-between">
+                              <span className="px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-800 font-extrabold text-[11px] flex items-center gap-1.5">
+                                <span>{cardIcon}</span>
+                                <span>{language === 'pt' ? `Conceito ${idx + 1}` : `Concept ${idx + 1}`}</span>
+                              </span>
+                              <AudioSpeakButton
+                                id={`module-${module.id}-step1-card-${idx}`}
+                                text={paragraph}
+                                language={language}
+                                variant="icon"
+                                size="xs"
+                              />
+                            </div>
+                            <p className={`text-slate-800 leading-relaxed font-medium ${getTextSizeClass()}`}>
+                              {paragraph}
+                            </p>
+                          </div>
+                        ) : (
+                          <div className="space-y-2 group-hover:scale-105 transition-transform">
+                            <span className="text-3xl block">{cardIcon}</span>
+                            <p className="font-extrabold text-sm text-indigo-950">
+                              {language === 'pt' ? `Carta ${idx + 1} — Clica para Virar!` : `Card ${idx + 1} — Click to Reveal!`}
+                            </p>
+                            <p className="text-xs text-slate-500">
+                              {language === 'pt' ? 'Descobre este conceito essencial' : 'Discover this key concept'}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              /* Traditional continuous text */
+              <div className={`space-y-3.5 text-slate-700 ${getTextSizeClass()}`}>
+                {(module.explanation?.[language] || []).map((paragraph, idx) => (
+                  <div
+                    key={idx}
+                    className={`p-4 rounded-2xl transition-all flex items-start justify-between gap-3 ${
+                      readingFocus
+                        ? 'bg-slate-50 hover:bg-indigo-50/70 hover:border-indigo-300 border border-slate-200/70 shadow-2xs'
+                        : 'bg-slate-50/80 border border-slate-200/70'
+                    }`}
+                  >
+                    <p className="flex-1 leading-relaxed">{paragraph}</p>
+                    <AudioSpeakButton
+                      id={`module-${module.id}-step1-p-${idx}`}
+                      text={paragraph}
+                      language={language}
+                      variant="icon"
+                      size="xs"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
@@ -237,39 +536,83 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
               />
             </div>
 
-            <div className="p-6 rounded-2xl bg-indigo-50/60 border border-indigo-200/80 space-y-4">
-              <p className="text-base sm:text-lg font-bold text-indigo-950">
+            <div className="p-6 sm:p-7 rounded-2xl bg-indigo-50/70 border border-indigo-200/90 space-y-4">
+              <p className="text-base sm:text-lg font-black text-indigo-950 leading-snug">
                 {module.thinkAboutIt?.question?.[language]}
               </p>
 
               {module.thinkAboutIt?.clue?.[language] && (
-                <div className="p-3 rounded-xl bg-white border border-indigo-100 text-xs sm:text-sm text-slate-600 font-medium">
+                <div className="p-3.5 rounded-xl bg-white border border-indigo-100 text-xs sm:text-sm text-slate-700 font-medium shadow-2xs flex items-start gap-2">
+                  <span className="text-base shrink-0">🔍</span>
                   <div>
-                    🔍 <strong>{language === 'pt' ? 'Pista:' : 'Clue:'}</strong> {module.thinkAboutIt.clue[language]}
+                    <strong className="text-indigo-900">{language === 'pt' ? 'Pista do Professor:' : 'Teacher Clue:'}</strong>{' '}
+                    <span>{module.thinkAboutIt.clue[language]}</span>
                   </div>
                 </div>
               )}
 
-              <div className="pt-2">
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setShowReflection(!showReflection)}
-                    className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm transition-colors cursor-pointer"
-                  >
-                    {showReflection ? t.hideReflection : t.showReflection}
-                  </button>
+              {/* Active Thinking / Metacognition Prompt */}
+              {!showReflection && (
+                <div className="p-4 rounded-xl bg-white/80 border border-indigo-200/80 space-y-2.5">
+                  <p className="text-xs font-bold uppercase tracking-wider text-indigo-800 flex items-center gap-1.5">
+                    <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                    <span>{language === 'pt' ? 'Antes de veres a resposta, pensa um segundo:' : 'Before revealing, think for a second:'}</span>
+                  </p>
+                  <p className="text-xs sm:text-sm text-slate-600 font-medium">
+                    {language === 'pt'
+                      ? 'O que farias tu nesta situação? Ter uma hipótese em mente ajuda a fixar melhor a matéria!'
+                      : 'What would you do? Having a hypothesis in mind helps your brain learn better!'}
+                  </p>
+                  <div className="flex flex-wrap items-center gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setStudentHypothesis('ready');
+                        setShowReflection(true);
+                      }}
+                      className="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs transition-all shadow-2xs hover:scale-102 cursor-pointer flex items-center gap-1.5"
+                    >
+                      <span>💡 {language === 'pt' ? 'Já pensei numa solução! Ver reflexão' : 'I have an idea! Reveal'}</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setStudentHypothesis('curious');
+                        setShowReflection(true);
+                      }}
+                      className="px-3.5 py-2 rounded-xl bg-white hover:bg-indigo-50 text-indigo-700 border border-indigo-200 font-bold text-xs transition-colors cursor-pointer flex items-center gap-1.5"
+                    >
+                      <span>🤔 {language === 'pt' ? 'Estou curioso: Revelar reflexão' : 'Curious: Reveal reflection'}</span>
+                    </button>
+                  </div>
                 </div>
+              )}
 
-                {showReflection && (
-                  <div className="mt-3 p-4 rounded-xl bg-white border border-indigo-200 text-slate-800 text-sm leading-relaxed animate-in fade-in">
-                    <p className="font-bold text-indigo-900 mb-1">
-                      {language === 'pt' ? 'Reflexão Pedagógica:' : 'Educational Insight:'}
+              {showReflection && (
+                <div className="space-y-3 pt-1 animate-in fade-in duration-200">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-emerald-800 bg-emerald-100/80 border border-emerald-200 px-3 py-1 rounded-full flex items-center gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-700 stroke-[3]" />
+                      <span>{language === 'pt' ? 'Excelente reflexão!' : 'Great thinking!'}</span>
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setShowReflection(false)}
+                      className="text-xs font-semibold text-slate-500 hover:text-slate-800 cursor-pointer underline"
+                    >
+                      {t.hideReflection}
+                    </button>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-white border border-indigo-200 text-slate-800 text-sm sm:text-base leading-relaxed shadow-2xs">
+                    <p className="font-extrabold text-indigo-950 mb-1.5 flex items-center gap-1.5">
+                      <span>🎓</span>
+                      <span>{language === 'pt' ? 'Reflexão Pedagógica:' : 'Educational Insight:'}</span>
                     </p>
                     <p>{module.thinkAboutIt?.reflection?.[language]}</p>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -497,22 +840,36 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
 
         {/* Step Navigation Footer (Steps 1 to 4) */}
         {currentStep < 5 && (
-          <div className="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between">
-            <button
-              disabled={currentStep === 1}
-              onClick={() => setCurrentStep((prev) => Math.max(1, prev - 1))}
-              className="px-4 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold text-slate-600 hover:bg-slate-50 disabled:opacity-30 cursor-pointer"
-            >
-              {t.previousStep}
-            </button>
+          <div className="mt-8 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-start">
+              <button
+                disabled={currentStep === 1}
+                onClick={() => setCurrentStep((prev) => Math.max(1, prev - 1))}
+                className="px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-30 cursor-pointer flex items-center gap-1.5 transition-colors"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                <span>{t.previousStep}</span>
+              </button>
 
-            <button
-              onClick={() => setCurrentStep((prev) => Math.min(5, prev + 1))}
-              className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
-            >
-              <span>{t.nextStep}</span>
-              <ChevronRight className="w-4 h-4" />
-            </button>
+              <span className="text-xs text-slate-400 font-medium sm:hidden">
+                {currentStep} / 5
+              </span>
+
+              <button
+                onClick={() => setCurrentStep((prev) => Math.min(5, prev + 1))}
+                className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+              >
+                <span>{t.nextStep}</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="hidden sm:flex items-center gap-1 text-[11px] text-slate-400 font-medium">
+              <span>{language === 'pt' ? 'Navegação rápida: usa as teclas' : 'Quick navigation: use keys'}</span>
+              <kbd className="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 font-mono text-[10px] text-slate-600">←</kbd>
+              <span>{language === 'pt' ? 'e' : 'and'}</span>
+              <kbd className="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 font-mono text-[10px] text-slate-600">→</kbd>
+            </div>
           </div>
         )}
       </div>

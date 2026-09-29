@@ -9,6 +9,9 @@ import {
   AlertCircle,
   ArrowRight,
   Clock,
+  Sparkles,
+  Lightbulb,
+  Zap,
 } from 'lucide-react';
 import { User, Language, UserAchievement } from '../types';
 import {
@@ -19,6 +22,7 @@ import {
 import { api } from '../services/api';
 import { AudioSpeakButton } from './AudioSpeakButton';
 import { SabiasQueBadge } from './SabiasQueBadge';
+import { getStudentFirstAndLastName } from '../utils/studentCredentials';
 
 interface DailyTipWidgetProps {
   user: User | null;
@@ -264,13 +268,75 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
 
   return (
     <>
-      {/* Dashboard Sticker Entrance (Sabias Que? - Clica e Ganha Pontos) */}
+      {/* Dashboard Card Presentation: Reveals today's curious tech fact */}
       {!hideCard && (
-        <SabiasQueBadge
-          language={language}
-          hasAnswered={hasAnsweredToday}
-          onClick={() => setInternalModalOpen(true)}
-        />
+        <div className="bg-white p-5 sm:p-6 rounded-[2rem] border border-slate-200/90 shadow-sm space-y-4 hover:border-indigo-300 transition-all group">
+          {/* Card Header */}
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2.5">
+              <span className="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-lg font-black shrink-0 shadow-2xs">
+                💡
+              </span>
+              <div>
+                <span className="text-xs font-black uppercase tracking-wider text-amber-800 block">
+                  {language === 'pt' ? 'Dica do Dia · Facto Curioso' : 'Daily Tip · Curious Fact'}
+                </span>
+                <span className="text-[11px] text-slate-400 font-medium">
+                  {todayTip.dateLabel[language]}
+                </span>
+              </div>
+            </div>
+
+            <span className="text-xs px-2.5 py-1 rounded-full font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 flex items-center gap-1">
+              <span>{todayTip.themeIcon}</span>
+              <span className="hidden sm:inline">Tema {todayTip.themeNumber}</span>
+            </span>
+          </div>
+
+          {/* Curious ICT Fact Highlight Box */}
+          <div className="p-4 rounded-2xl bg-gradient-to-br from-amber-50/90 via-orange-50/50 to-indigo-50/40 border border-amber-200/80 space-y-2">
+            <h4 className="text-sm sm:text-base font-extrabold text-slate-900 leading-snug">
+              {todayTip.title[language]}
+            </h4>
+
+            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal">
+              {todayTip.funFact ? todayTip.funFact[language] : (todayTip.teaser ? todayTip.teaser[language] : todayTip.description[language])}
+            </p>
+
+            <div className="pt-2 flex items-center justify-between gap-2 border-t border-amber-200/60">
+              <AudioSpeakButton
+                id={`dashboard_daily_fact_${todayTip.id}`}
+                text={`${todayTip.title[language]}. ${todayTip.funFact ? todayTip.funFact[language] : todayTip.description[language]}`}
+                language={language}
+                size="xs"
+                variant="inline"
+                label={language === 'pt' ? 'Ouvir Facto' : 'Listen Fact'}
+              />
+
+              <button
+                type="button"
+                onClick={() => setInternalModalOpen(true)}
+                className="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:text-indigo-800 transition-colors cursor-pointer"
+              >
+                <span>
+                  {hasAnsweredToday
+                    ? (language === 'pt' ? 'Rever Dica' : 'Review Tip')
+                    : (language === 'pt' ? 'Descobrir Mais (+50 XP)' : 'Discover More (+50 XP)')}
+                </span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Interactive Sticker Entrance */}
+          <div className="pt-1">
+            <SabiasQueBadge
+              language={language}
+              hasAnswered={hasAnsweredToday}
+              onClick={() => setInternalModalOpen(true)}
+            />
+          </div>
+        </div>
       )}
 
       {/* Modal: Today's Tip */}
@@ -288,7 +354,7 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                   <div className="flex items-center gap-2">
                     <div className="flex items-center gap-1.5 bg-white/15 text-white px-3 py-1.5 rounded-full border border-white/20 shadow-xs">
                       <span className="text-xs font-black tracking-wide flex items-center gap-1 text-white uppercase">
-                        💡 {language === 'pt' ? 'Sabias que?' : 'Did you know?'}
+                        💡 {language === 'pt' ? 'Dica do Dia · Sabias que?' : 'Daily Tip · Did you know?'}
                       </span>
                     </div>
                   </div>
@@ -306,6 +372,23 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
 
             {/* Modal Body */}
             <div className="p-5 sm:p-6 space-y-4 overflow-y-auto flex-1">
+              
+              {/* Motivational Welcome Greeting upon session start */}
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-indigo-700 via-purple-700 to-indigo-900 text-white shadow-md flex items-center gap-3 animate-in fade-in">
+                <span className="text-3xl animate-bounce shrink-0">🚀</span>
+                <div className="flex-1 min-w-0">
+                  <p className="font-extrabold text-sm sm:text-base leading-tight text-white truncate">
+                    {user
+                      ? (language === 'pt' ? `Olá, ${getStudentFirstAndLastName(user)}!` : `Hello, ${user.name}!`)
+                      : (language === 'pt' ? 'Olá, Estudante!' : 'Hello, Student!')}
+                  </p>
+                  <p className="text-xs text-indigo-100 font-medium mt-0.5 leading-snug">
+                    {language === 'pt'
+                      ? 'Começa a tua sessão com energia e motivação máxima! Descobre o facto curioso de hoje sobre TIC:'
+                      : 'Start your session energized and motivated! Discover today\'s curious ICT fact:'}
+                  </p>
+                </div>
+              </div>
               
               {/* Theme Badges */}
               <div className="flex items-center gap-2 flex-wrap">
