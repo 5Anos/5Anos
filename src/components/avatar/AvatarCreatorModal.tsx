@@ -31,13 +31,19 @@ import {
   generateRandomAvatar,
   getDefaultAvatar,
 } from '../../utils/avatarUtils';
-import { validateNickname } from '../../utils/nicknameValidator';
+import {
+  validateNickname,
+  generateUniqueKidNickname,
+  getSafeDisplayNickname,
+  isLegacyRealNameNickname,
+} from '../../utils/nicknameValidator';
 import { api } from '../../services/api';
 
 interface AvatarCreatorModalProps {
   isOpen: boolean;
   initialAvatar?: AvatarConfig;
   initialNickname?: string;
+  studentRealName?: string;
   onSave: (avatar: AvatarConfig, nickname?: string) => void | Promise<void>;
   onClose: () => void;
   language?: Language;
@@ -50,13 +56,21 @@ export const AvatarCreatorModal: React.FC<AvatarCreatorModalProps> = ({
   isOpen,
   initialAvatar,
   initialNickname = '',
+  studentRealName = '',
   onSave,
   onClose,
   language = 'pt',
   title,
 }) => {
+  const getInitialSafeNick = (raw: string) => {
+    if (!raw || isLegacyRealNameNickname(raw)) {
+      return getSafeDisplayNickname(raw, undefined, 'student');
+    }
+    return raw;
+  };
+
   const [avatar, setAvatar] = useState<AvatarConfig>(() => initialAvatar || getDefaultAvatar());
-  const [nickname, setNickname] = useState<string>(() => initialNickname);
+  const [nickname, setNickname] = useState<string>(() => getInitialSafeNick(initialNickname));
   const [nicknameStatus, setNicknameStatus] = useState<'idle' | 'checking' | 'valid' | 'invalid'>('idle');
   const [nicknameFeedback, setNicknameFeedback] = useState<string>('');
   const [isSaving, setIsSaving] = useState(false);
@@ -67,7 +81,7 @@ export const AvatarCreatorModal: React.FC<AvatarCreatorModalProps> = ({
   useEffect(() => {
     if (isOpen) {
       if (initialAvatar) setAvatar(initialAvatar);
-      if (initialNickname) setNickname(initialNickname);
+      if (initialNickname) setNickname(getInitialSafeNick(initialNickname));
       setSaveError(null);
     }
   }, [isOpen, initialAvatar, initialNickname]);
@@ -82,13 +96,7 @@ export const AvatarCreatorModal: React.FC<AvatarCreatorModalProps> = ({
       return;
     }
 
-    if (trimmed.toLowerCase() === (initialNickname || '').toLowerCase().trim()) {
-      setNicknameStatus('valid');
-      setNicknameFeedback(language === 'pt' ? '✅ O teu nickname atual está ativo e válido.' : '✅ Your current nickname is active.');
-      return;
-    }
-
-    const val = validateNickname(trimmed);
+    const val = validateNickname(trimmed, studentRealName);
     if (!val.isValid) {
       setNicknameStatus('invalid');
       setNicknameFeedback(val.errorPt || 'Nickname inválido.');
@@ -103,19 +111,24 @@ export const AvatarCreatorModal: React.FC<AvatarCreatorModalProps> = ({
         const check = await api.checkNickname(trimmed);
         if (check.available) {
           setNicknameStatus('valid');
-          setNicknameFeedback(language === 'pt' ? '✅ Nickname disponível e seguro para a escola!' : '✅ Nickname is safe and available!');
+          setNicknameFeedback(language === 'pt' ? '✅ Nickname disponível, anónimo e seguro para a escola!' : '✅ Nickname is safe, anonymous and available!');
         } else {
           setNicknameStatus('invalid');
           setNicknameFeedback(check.reason || (language === 'pt' ? 'Este nickname já está a ser utilizado por outro aluno.' : 'This nickname is already taken.'));
         }
       } catch {
         setNicknameStatus('valid');
-        setNicknameFeedback(language === 'pt' ? 'Formato de nickname válido.' : 'Valid nickname format.');
+        setNicknameFeedback(language === 'pt' ? 'Formato de nickname válido e anónimo.' : 'Valid anonymous nickname format.');
       }
     }, 450);
 
     return () => clearTimeout(timer);
-  }, [nickname, initialNickname, isOpen, language]);
+  }, [nickname, initialNickname, isOpen, language, studentRealName]);
+
+  const handleGenerateRandomNickname = () => {
+    const randomNick = generateUniqueKidNickname();
+    setNickname(randomNick);
+  };
 
   if (!isOpen) return null;
 
@@ -317,7 +330,7 @@ export const AvatarCreatorModal: React.FC<AvatarCreatorModalProps> = ({
                         value={nickname}
                         maxLength={18}
                         onChange={(e) => setNickname(e.target.value.replace(/[^a-zA-Z0-9_-]/g, ''))}
-                        placeholder={language === 'pt' ? 'Ex: CyberMartim, AstroAna, Ninja5A...' : 'Ex: CyberMartim, AstroAna...'}
+                        placeholder={language === 'pt' ? 'Ex: CiberNinja_24, AstroPanda, PixelHero...' : 'Ex: CyberNinja_24, AstroPanda...'}
                         className={`w-full px-4 py-3 text-sm font-mono font-bold rounded-2xl border-2 transition-all outline-hidden ${
                           nicknameStatus === 'valid'
                             ? 'border-emerald-500 bg-emerald-50/30 text-emerald-950 focus:ring-2 focus:ring-emerald-300'
@@ -339,22 +352,34 @@ export const AvatarCreatorModal: React.FC<AvatarCreatorModalProps> = ({
                       </div>
                     </div>
 
-                    {/* Feedback message */}
-                    {nicknameFeedback && (
-                      <p
-                        className={`text-xs font-semibold mt-2 flex items-center gap-1.5 ${
-                          nicknameStatus === 'valid'
-                            ? 'text-emerald-700'
-                            : nicknameStatus === 'invalid'
-                            ? 'text-rose-700'
-                            : 'text-indigo-600'
-                        }`}
+                    {/* Quick Random Nickname Button */}
+                    <div className="flex items-center justify-between gap-2 mt-2">
+                      <button
+                        type="button"
+                        onClick={handleGenerateRandomNickname}
+                        className="px-3 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-700 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs hover:scale-102"
                       >
-                        {nicknameStatus === 'valid' && <Check className="w-3.5 h-3.5" />}
-                        {nicknameStatus === 'invalid' && <AlertCircle className="w-3.5 h-3.5" />}
-                        <span>{nicknameFeedback}</span>
-                      </p>
-                    )}
+                        <Shuffle className="w-3.5 h-3.5" />
+                        <span>{language === 'pt' ? '🎲 Sugerir Nickname Anónimo' : '🎲 Suggest Anonymous Nickname'}</span>
+                      </button>
+
+                      {/* Feedback message */}
+                      {nicknameFeedback && (
+                        <p
+                          className={`text-xs font-semibold flex items-center gap-1.5 ${
+                            nicknameStatus === 'valid'
+                              ? 'text-emerald-700'
+                              : nicknameStatus === 'invalid'
+                              ? 'text-rose-700'
+                              : 'text-indigo-600'
+                          }`}
+                        >
+                          {nicknameStatus === 'valid' && <Check className="w-3.5 h-3.5" />}
+                          {nicknameStatus === 'invalid' && <AlertCircle className="w-3.5 h-3.5" />}
+                          <span>{nicknameFeedback}</span>
+                        </p>
+                      )}
+                    </div>
                   </div>
 
                   {/* Rules Pill Box */}
@@ -363,9 +388,9 @@ export const AvatarCreatorModal: React.FC<AvatarCreatorModalProps> = ({
                       {language === 'pt' ? '📌 Regras para o Nickname:' : '📌 Nickname Rules:'}
                     </p>
                     <ul className="list-disc list-inside space-y-1 text-slate-600">
-                      <li>{language === 'pt' ? 'Deve ser único em toda a escola.' : 'Must be unique across the school.'}</li>
-                      <li>{language === 'pt' ? 'Entre 3 e 18 letras ou números (podes usar - ou _).' : 'Between 3 and 18 letters or numbers.'}</li>
-                      <li>{language === 'pt' ? 'Sem palavras obscenas, ofensivas ou racistas (filtro escolar ativo).' : 'No obscene, offensive or racist words (school filter active).'}</li>
+                      <li>{language === 'pt' ? '100% Anónimo: Não uses o teu nome real para proteger a tua privacidade.' : '100% Anonymous: Do not use your real name to protect privacy.'}</li>
+                      <li>{language === 'pt' ? 'Deve ser único em toda a escola (entre 3 e 18 letras, números, - ou _).' : 'Must be unique across the school (3-18 chars).'}</li>
+                      <li>{language === 'pt' ? 'Proibida linguagem obscena, ofensiva, discriminatória ou racista (filtro ativo).' : 'No obscene, offensive or racist words (active safety filter).'}</li>
                     </ul>
                   </div>
                 </div>

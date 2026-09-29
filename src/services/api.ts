@@ -44,6 +44,7 @@ import {
   validateNickname,
   generateUniqueKidNickname,
   isProfaneOrInappropriate,
+  getSafeDisplayNickname,
 } from '../utils/nicknameValidator';
 import {
   isTeacherEmail,
@@ -1166,7 +1167,7 @@ export const api = {
         const data = d.data();
         if (data.role === 'student') {
           if (!userTurma || normalizeTurmaName(data.turma) === normalizeTurmaName(userTurma)) {
-            const studentNickname = data.nickname || data.publicId || 'ALUNO';
+            const studentNickname = getSafeDisplayNickname(data.nickname || data.publicId, d.id, data.role);
             list.push({
               id: d.id,
               publicId: studentNickname,

@@ -536,6 +536,7 @@ export const Header: React.FC<HeaderProps> = ({
           isOpen={isAvatarModalOpen}
           initialAvatar={user.avatar || getDefaultAvatar(user.publicId || user.name)}
           initialNickname={user.nickname || user.publicId}
+          studentRealName={user.name || user.fullName}
           onSave={handleSaveAvatar}
           onClose={() => setIsAvatarModalOpen(false)}
           language={language}

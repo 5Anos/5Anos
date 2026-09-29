@@ -1,28 +1,39 @@
 /**
- * Nickname Validation, Profanity/Hate-Speech Filter & Unique Generator
- * Ensures all student nicknames are respectful, safe for school, and globally unique.
+ * Nickname Validation, Profanity/Hate-Speech Filter & Anonymous Unique Generator
+ * Ensures all student nicknames are respectful, safe for school, 100% anonymous, and globally unique.
+ * Strictly prevents real names and obscene, offensive, or racist language.
  */
 
-// Comprehensive dictionary of banned terms: vulgarities, obscenities, slurs, racist terms, insults
+// Comprehensive dictionary of banned roots: vulgarities, obscenities, slurs, racist terms, hate speech, insults
 const BANNED_ROOTS = [
-  // Portuguese profanity & obscenities
-  'puta', 'puto', 'caralho', 'foda', 'foder', 'fode', 'fodasse', 'fodase', 'merda', 'cabrao',
-  'cabrão', 'paneleiro', 'maricas', 'bicha', 'cona', 'pila', 'pissa', 'piroca', 'caralhe',
-  'fudilhao', 'fodeu', 'fudido', 'fudida', 'fodedor', 'putaria', 'porra', 'esporra', 'caralha',
-  'chupa', 'mamar', 'boiola', 'bostinha', 'bosta', 'cagalhao', 'cagar', 'caguei', 'facho',
-  // Racist, xenophobic & hate speech terms
-  'preto', 'preta', 'negro', 'negra', 'macaco', 'macaca', 'crioulo', 'crioula', 'monhes',
-  'monhe', 'monhé', 'cigano', 'cigana', 'chunga', 'retornado', 'nazi', 'nazista', 'hitler',
-  'fascista', 'ku-klux', 'kkk', 'ariano', 'supremacista', 'judeu', 'espanholada', 'escravo',
-  // Offensive slurs & harassment
-  'otario', 'otário', 'estupido', 'estúpido', 'idiota', 'parvo', 'parva', 'burro', 'burra',
-  'retardado', 'retardada', 'debil', 'débil', 'deficiente', 'aleijado', 'autista', 'suicida',
-  'morre', 'mata-te', 'matate', 'assassino', 'terrorista', 'bomba', 'pedofilo', 'pedófilo',
-  'estupro', 'violador', 'violacao', 'violação', 'tarado', 'prostituta', 'vadia', 'vagabunda',
-  // English common profanity & slurs
+  // Portuguese profanities & obscenities
+  'puta', 'puto', 'putedo', 'putaria', 'caralho', 'caralhe', 'caralha', 'foda', 'foder', 'fode',
+  'fodeu', 'fudido', 'fudida', 'fudilhao', 'fodedor', 'fodasse', 'fodase', 'merda', 'merdoso',
+  'cabrao', 'cabrão', 'cabra', 'paneleiro', 'paneleirice', 'maricas', 'bicha', 'bichona', 'cona',
+  'conas', 'pila', 'pissa', 'picha', 'piroca', 'paspalho', 'chupa', 'chupista', 'mamar', 'mamona',
+  'boiola', 'bostinha', 'bosta', 'cagalhao', 'cagar', 'caguei', 'facho', 'fascio', 'porra', 'esporra',
+  'patego', 'cretino', 'cretina', 'panilas', 'panasga', 'rabeta', 'rabo', 'peido', 'punheta', 'esporro',
+
+  // Racist, xenophobic & hate speech terms (strictly blocked)
+  'preto', 'preta', 'pretaiada', 'negro', 'negra', 'negrada', 'macaco', 'macaca', 'macaquinho',
+  'crioulo', 'crioula', 'monhes', 'monhe', 'monhé', 'cigano', 'cigana', 'ciganada', 'chunga',
+  'retornado', 'nazi', 'nazista', 'nazismo', 'hitler', 'fascista', 'fascismo', 'ku-klux', 'kkk',
+  'ariano', 'supremacista', 'espanholada', 'escravo', 'escrava', 'escravatura', 'antissemita',
+  'judeu', 'muculmano', 'islamico', 'terrorista', 'jihad', 'homofobico', 'transfobico',
+
+  // Offensive slurs, harassment, bullying & violence
+  'otario', 'otário', 'otaria', 'otária', 'estupido', 'estúpido', 'estupida', 'estúpida',
+  'idiota', 'parvo', 'parva', 'parvalhao', 'burro', 'burra', 'burrice', 'retardado', 'retardada',
+  'debil', 'débil', 'deficiente', 'aleijado', 'aleijada', 'autista', 'suicida', 'suicidio',
+  'morre', 'mata-te', 'matate', 'assassino', 'bomba', 'pedofilo', 'pedófilo', 'estupro',
+  'violador', 'violacao', 'violação', 'tarado', 'tarada', 'prostituta', 'vadia', 'vagabunda',
+  'gordo', 'gorda', 'baleia', 'feio', 'feia', 'nojento', 'nojenta', 'lixo', 'aborto',
+
+  // English profanities, slurs & inappropriate words
   'fuck', 'fucker', 'fucking', 'shit', 'bitch', 'asshole', 'bastard', 'cunt', 'dick', 'cock',
-  'pussy', 'nigger', 'nigga', 'faggot', 'whore', 'slut', 'penis', 'vagina', 'porn', 'sex',
-  'sexy', 'boobs', 'tits', 'anal', 'dildo', 'killer', 'murder', 'die', 'kill',
+  'pussy', 'nigger', 'nigga', 'faggot', 'whore', 'slut', 'penis', 'vagina', 'porn', 'porno',
+  'sex', 'sexy', 'boobs', 'tits', 'anal', 'dildo', 'killer', 'murder', 'die', 'kill', 'hate',
+  'pedophile', 'rape', 'rapist', 'racist', 'nazi', 'crap', 'bastard', 'loser'
 ];
 
 /**
@@ -47,7 +58,7 @@ export function normalizeForProfanityCheck(str: string): string {
     .replace(/7/g, 't')
     .replace(/8/g, 'b')
     .replace(/9/g, 'g')
-    .replace(/[._\-+*#]/g, '');
+    .replace(/[._\-+*#\s]/g, '');
 
   // Collapse 3+ consecutive duplicate letters (e.g., "puuuuta" -> "puta")
   clean = clean.replace(/(.)\1{2,}/g, '$1$1');
@@ -62,13 +73,61 @@ export function isProfaneOrInappropriate(rawNickname: string): boolean {
   if (!rawNickname || typeof rawNickname !== 'string') return false;
 
   const normalized = normalizeForProfanityCheck(rawNickname);
-  const plainLower = rawNickname.toLowerCase();
+  const plainLower = rawNickname.toLowerCase().replace(/[^a-z0-9]/g, '');
 
   for (const root of BANNED_ROOTS) {
     const normRoot = normalizeForProfanityCheck(root);
-    if (normalized.includes(normRoot) || plainLower.includes(root)) {
+    if (normalized.includes(normRoot) || plainLower.includes(normRoot)) {
       return true;
     }
+  }
+
+  return false;
+}
+
+/**
+ * Checks if a nickname appears to contain a student's real name (first, last or full name)
+ */
+export function containsRealName(nickname: string, studentRealName?: string): boolean {
+  if (!nickname || !studentRealName) return false;
+
+  const cleanNick = normalizeForProfanityCheck(nickname);
+
+  // Split student's real name into individual words
+  const nameParts = studentRealName
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .split(/[\s._-]+/)
+    .filter((part) => part.length >= 3); // check significant name parts (e.g. "antonio", "lopes", "alvaro", "beja", "dinis")
+
+  for (const part of nameParts) {
+    // Ignore very generic Portuguese words that could collide with cool words
+    if (['dos', 'das', 'com', 'sem', 'mar', 'rio', 'sol'].includes(part)) continue;
+    if (cleanNick.includes(part)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Detects if a legacy string is formatted like "FIRSTNAME . LASTNAME" or contains full real names
+ */
+export function isLegacyRealNameNickname(nickname?: string): boolean {
+  if (!nickname || typeof nickname !== 'string') return true;
+  const clean = nickname.trim();
+  if (!clean) return true;
+
+  // Pattern like "ANTONIO . LOPES" or "ALVARO . BEJA" or "ALUNA . EXPERIEINCIA"
+  if (/\s*\.\s*/.test(clean) || /\s+/.test(clean)) {
+    return true;
+  }
+
+  // All uppercase with dots or underlines matching names
+  if (/^[A-Z\s\._]{4,}$/.test(clean) && clean.includes('.')) {
+    return true;
   }
 
   return false;
@@ -83,9 +142,9 @@ export interface NicknameValidationResult {
 }
 
 /**
- * Comprehensive Nickname Validator (Length, Character whitelist, Profanity check)
+ * Comprehensive Nickname Validator (Length, Character whitelist, Profanity check & Real-name protection)
  */
-export function validateNickname(nickname: string): NicknameValidationResult {
+export function validateNickname(nickname: string, studentRealName?: string): NicknameValidationResult {
   const sanitized = (nickname || '').trim();
 
   // 1. Check Length
@@ -121,14 +180,25 @@ export function validateNickname(nickname: string): NicknameValidationResult {
     };
   }
 
-  // 3. Check Profanity / Hate Speech / Obscenities
+  // 3. Check Profanity / Hate Speech / Obscenities / Racism
   if (isProfaneOrInappropriate(sanitized)) {
     return {
       isValid: false,
       sanitized,
       error: 'INAPPROPRIATE_LANGUAGE',
-      errorPt: '⚠️ Este nickname contém termos inapropriados ou não permitidos na escola. Escolhe outro!',
-      errorEn: '⚠️ This nickname contains inappropriate words not allowed at school. Choose another!',
+      errorPt: '⚠️ Este nickname contém termos inapropriados ou não permitidos na escola. Escolhe uma alcunha respeitosa!',
+      errorEn: '⚠️ This nickname contains inappropriate words not allowed at school. Choose a respectful nickname!',
+    };
+  }
+
+  // 4. Check if student is trying to put their real name
+  if (studentRealName && containsRealName(sanitized, studentRealName)) {
+    return {
+      isValid: false,
+      sanitized,
+      error: 'REAL_NAME_DETECTED',
+      errorPt: '🔒 Para tua segurança e privacidade escolar, o teu nickname não deve conter o teu nome real. Escolhe uma alcunha criativa e anónima!',
+      errorEn: '🔒 For your privacy and school safety, your nickname should not contain your real name. Choose an anonymous creative nickname!',
     };
   }
 
@@ -138,30 +208,82 @@ export function validateNickname(nickname: string): NicknameValidationResult {
   };
 }
 
-const NICK_PREFIXES = [
-  'Cyber',
+// Child-friendly, cool tech and nature mascots for 100% anonymous nickname generation
+const COOL_PREFIXES = [
+  'Ciber',
   'Astro',
   'Tecno',
+  'Pixel',
+  'Ninja',
   'Gamer',
   'Byte',
-  'Pixel',
-  'Code',
   'Super',
   'Mega',
+  'Robo',
+  'Fenix',
+  'Lince',
+  'Panda',
+  'Raposa',
+  'Falcao',
+  'Coruja',
+  'Cometa',
+  'Laser',
+  'Quantum',
+  'Cristal',
+  'Cosmo',
+  'Titan',
+  'Turbo',
+  'Sonic',
+  'Delta',
+  'Nexus',
+  'Vortex',
+  'Vetor',
+  'Heroi',
+  'Estelar',
+  'Alfa',
+  'Zeta',
+  'Code',
+  'Spark',
+  'Flash',
+  'Matrix',
+];
+
+const COOL_SUFFIXES = [
   'Ninja',
+  'Panda',
+  'Raposa',
   'Hero',
   'Star',
-  'Rocket',
-  'Robot',
+  'Gamer',
+  'Bot',
+  'Master',
+  'Explorer',
+  'Pilot',
+  'Falcon',
+  'Wolf',
+  'Tiger',
+  'Dragon',
+  'Wizard',
+  'Champion',
+  'Runner',
+  'Maker',
+  'Spark',
+  'Tech',
+  'Pro',
+  'Flash',
+  'Cosmo',
+  'Cyber',
+  'Sonic',
 ];
 
 /**
- * Generates an initial unique, kid-friendly nickname for a student based on their name & class
+ * Generates an initial unique, 100% ANONYMOUS kid-friendly nickname for a student.
+ * STRICT: NEVER USES OR EXPOSES THE STUDENT'S REAL NAME OR SURNAME.
  */
 export function generateUniqueKidNickname(
-  baseName: string,
-  turma: string,
-  existingNicknames: Set<string> | string[]
+  _ignoredBaseName?: string,
+  _ignoredTurma?: string,
+  existingNicknames: Set<string> | string[] = []
 ): string {
   const existingSet = new Set(
     Array.isArray(existingNicknames)
@@ -169,46 +291,66 @@ export function generateUniqueKidNickname(
       : Array.from(existingNicknames).map((n) => (n || '').toLowerCase().trim())
   );
 
-  // Clean name and take first name
-  const cleanName = (baseName || 'Aluno')
-    .trim()
-    .split(/\s+/)[0]
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-zA-Z0-9]/g, '');
+  // Generate 100% anonymous combinations: [Prefix][Suffix]_[Number]
+  for (let attempt = 0; attempt < 200; attempt++) {
+    const prefix = COOL_PREFIXES[Math.floor(Math.random() * COOL_PREFIXES.length)];
+    const suffix = COOL_SUFFIXES[Math.floor(Math.random() * COOL_SUFFIXES.length)];
+    const num = Math.floor(10 + Math.random() * 90); // 2-digit number (10-99)
 
-  const capitalizedName = cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase();
-  const cleanTurma = (turma || '5A').replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+    let candidate = `${prefix}${suffix}_${num}`;
+    if (prefix === suffix) {
+      candidate = `${prefix}TIC_${num}`;
+    }
 
-  // Try different attractive candidates
-  const candidates: string[] = [
-    `Cyber${capitalizedName}`,
-    `Astro${capitalizedName}`,
-    `Tecno${capitalizedName}`,
-    `${capitalizedName}${cleanTurma}`,
-    `Gamer${capitalizedName}`,
-    `Pixel${capitalizedName}`,
-    `Ninja${capitalizedName}`,
-    `Byte${capitalizedName}`,
-    `Super${capitalizedName}`,
-    `${capitalizedName}TIC`,
-  ];
-
-  for (const candidate of candidates) {
     if (!existingSet.has(candidate.toLowerCase()) && !isProfaneOrInappropriate(candidate)) {
       return candidate;
     }
   }
 
-  // If all are taken, append random numbers
-  const prefix = NICK_PREFIXES[Math.floor(Math.random() * NICK_PREFIXES.length)];
-  for (let i = 1; i <= 999; i++) {
-    const randomSuffix = Math.floor(10 + Math.random() * 90);
-    const candidate = `${prefix}${capitalizedName}${randomSuffix}`;
+  // 3-digit fallback
+  for (let attempt = 0; attempt < 100; attempt++) {
+    const prefix = COOL_PREFIXES[Math.floor(Math.random() * COOL_PREFIXES.length)];
+    const num = Math.floor(100 + Math.random() * 900);
+    const candidate = `${prefix}_TIC_${num}`;
     if (!existingSet.has(candidate.toLowerCase()) && !isProfaneOrInappropriate(candidate)) {
       return candidate;
     }
   }
 
-  return `Heroi${Date.now().toString().slice(-4)}`;
+  return `CiberHero_${Math.floor(100 + Math.random() * 900)}`;
+}
+
+/**
+ * Returns a clean, safe, guaranteed anonymous display nickname for any student.
+ * If the student has a legacy name (like "ANTONIO . LOPES" or real name), returns an anonymous pseudonym.
+ */
+export function getSafeDisplayNickname(
+  storedNickname?: string | null,
+  studentId?: string,
+  userRole?: string
+): string {
+  if (userRole === 'admin' || userRole === 'teacher') {
+    return 'Professora Carla';
+  }
+
+  const clean = (storedNickname || '').trim();
+
+  // If valid and not a legacy real-name pattern
+  if (clean && !isLegacyRealNameNickname(clean) && !isProfaneOrInappropriate(clean)) {
+    return clean;
+  }
+
+  // Deterministic anonymous nickname based on ID seed so student sees consistent pseudonym
+  const seed = (studentId || clean || 'aluno').toLowerCase();
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    hash = (hash << 5) - hash + seed.charCodeAt(i);
+    hash |= 0;
+  }
+  const absHash = Math.abs(hash);
+  const prefix = COOL_PREFIXES[absHash % COOL_PREFIXES.length];
+  const suffix = COOL_SUFFIXES[(absHash >> 3) % COOL_SUFFIXES.length];
+  const num = 10 + (absHash % 90);
+
+  return `${prefix}${suffix === prefix ? 'TIC' : suffix}_${num}`;
 }

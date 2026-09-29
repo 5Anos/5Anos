@@ -21,7 +21,12 @@ import {
   parseStudentName,
   normalizeTurmaName,
 } from './src/utils/studentCredentials';
-import { validateNickname, isProfaneOrInappropriate } from './src/utils/nicknameValidator';
+import {
+  validateNickname,
+  isProfaneOrInappropriate,
+  getSafeDisplayNickname,
+  isLegacyRealNameNickname,
+} from './src/utils/nicknameValidator';
 import { getDefaultAvatar } from './src/utils/avatarUtils';
 import { getTodayDateString } from './src/data/dailyTipsData';
 import {
@@ -1135,7 +1140,8 @@ app.get('/api/rankings/students', requireAuth, async (req: AuthenticatedRequest,
       // Non-teachers only see rankings for their own class
       if (!isTeacher && userTurma && studentTurma !== userTurma) return;
 
-      const studentNickname = data.nickname || data.publicId || 'Aluno_TIC';
+      const rawNick = data.nickname || data.publicId;
+      const studentNickname = getSafeDisplayNickname(rawNick, d.id, data.role);
 
       // Expose minimal pseudonymous data only (Nickname, Avatar, XP, Turma)
       list.push({
@@ -1165,7 +1171,7 @@ app.post('/api/user/nickname', requireAuth, async (req: AuthenticatedRequest, re
     const currentUser = req.user!;
     const rawNickname = req.body?.nickname;
 
-    const validation = validateNickname(rawNickname);
+    const validation = validateNickname(rawNickname, currentUser.name || currentUser.fullName);
     if (!validation.isValid) {
       return res.status(400).json({ error: validation.errorPt || 'Nickname inválido.' });
     }
@@ -1221,7 +1227,7 @@ app.get('/api/user/check-nickname', requireAuth, async (req: AuthenticatedReques
     const currentUser = req.user!;
     const rawNickname = String(req.query.nickname || '');
 
-    const validation = validateNickname(rawNickname);
+    const validation = validateNickname(rawNickname, currentUser.name || currentUser.fullName);
     if (!validation.isValid) {
       return res.json({ available: false, reason: validation.errorPt });
     }
