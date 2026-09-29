@@ -158,14 +158,6 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
           </div>
         )}
       </div>
-
-      {/* Ponto Eletrão Quick Info */}
-      <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-950 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5 text-xs font-semibold">
-          <span className="text-xl">♻️</span>
-          <span>{language === 'pt' ? 'Equipamentos e pilhas velhas vão para o Ponto Eletrão, nunca para o lixo comum!' : 'E-waste goes to recycling points, never ordinary bins!'}</span>
-        </div>
-      </div>
     </div>
   );
 };
