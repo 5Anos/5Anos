@@ -54,6 +54,12 @@ import {
   TEACHER_ADMIN_EMAILS,
 } from '../utils/teacherAuth';
 
+export function isStaticHost(): boolean {
+  if (typeof window === 'undefined') return false;
+  // If running on GitHub Pages (*.github.io) without external API URL configured, it's a static client
+  return window.location.hostname.includes('github.io') && !API_BASE_URL;
+}
+
 export function isFallbackToken(token?: string | null): boolean {
   if (!token) return false;
   return token.startsWith('teacher_') || token.startsWith('std_') || token.startsWith('fallback_');
@@ -104,17 +110,41 @@ function resolveApiBaseUrl(): string {
 
 const API_BASE_URL = resolveApiBaseUrl();
 
-class ServerUnavailableError extends Error {
-  constructor(message = 'Server unavailable') {
+export class ServerUnavailableError extends Error {
+  constructor(message = 'Alojamento estático: cliente direto Firestore') {
     super(message);
     this.name = 'ServerUnavailableError';
+    Object.setPrototypeOf(this, ServerUnavailableError.prototype);
   }
+}
+
+export function isServerUnavailable(err: any): boolean {
+  if (!err) return false;
+  if (err instanceof ServerUnavailableError) return true;
+  if (err?.name === 'ServerUnavailableError') return true;
+  const msg = typeof err === 'string' ? err : String(err?.message || '');
+  return (
+    msg.includes('ServerUnavailableError') ||
+    msg.includes('Alojamento estático') ||
+    msg.includes('Static host') ||
+    msg.includes('Firestore client') ||
+    msg.includes('cliente direto') ||
+    msg.includes('HTTP 404') ||
+    msg.includes('HTTP 405') ||
+    msg.includes('HTTP 500') ||
+    msg.includes('HTTP 502') ||
+    msg.includes('Failed to fetch') ||
+    msg.includes('Network') ||
+    msg.includes('servidor') ||
+    msg.includes('fetch') ||
+    msg.includes('Load failed')
+  );
 }
 
 async function serverApi<T>(path: string, init: RequestInit = {}): Promise<T> {
   // If running on static host like GitHub Pages without external backend, fall back immediately
-  if (typeof window !== 'undefined' && window.location.hostname.includes('github.io') && !API_BASE_URL) {
-    throw new ServerUnavailableError('Static host GitHub Pages: direct Firestore client');
+  if (isStaticHost()) {
+    throw new ServerUnavailableError('Alojamento estático: cliente direto Firestore');
   }
 
   const token = localStorage.getItem(TOKEN_KEY);
@@ -293,7 +323,7 @@ export const api = {
       if (res?.user) localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(res.user));
       return res;
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError) && !err?.message?.includes('405') && !err?.message?.includes('404') && !err?.message?.includes('500') && !err?.message?.includes('502')) {
+      if (!isServerUnavailable(err)) {
         throw err;
       }
     }
@@ -479,7 +509,7 @@ export const api = {
       if (res.user) localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(res.user));
       return res;
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) throw err;
+      if (!isServerUnavailable(err)) throw err;
     }
 
     // Direct Firestore password setup
@@ -575,7 +605,7 @@ export const api = {
           return res;
         }
       } catch (err: any) {
-        if (!(err instanceof ServerUnavailableError)) {
+        if (!isServerUnavailable(err)) {
           // If transient error, fall through to direct Firestore fetch
         }
       }
@@ -648,7 +678,7 @@ export const api = {
       });
       return;
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) {
+      if (!isServerUnavailable(err)) {
         console.warn('[Avatar] Servidor indisponível, a gravar diretamente no Firestore:', err?.message);
       }
     }
@@ -681,7 +711,7 @@ export const api = {
       });
       return;
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) {
+      if (!isServerUnavailable(err)) {
         console.warn('[Language] Servidor indisponível, a gravar diretamente no Firestore:', err?.message);
       }
     }
@@ -708,24 +738,26 @@ export const api = {
     }
     const cleanNick = validation.sanitized;
 
-    // 2. Try updating via secure backend API
-    try {
-      const res = await serverApi<{ success: boolean; nickname: string }>('/api/user/nickname', {
-        method: 'POST',
-        body: JSON.stringify({ nickname: cleanNick }),
-      });
-      if (res?.success) {
-        const updatedUser: User = {
-          ...current,
-          nickname: res.nickname || cleanNick,
-          publicId: res.nickname || cleanNick,
-        };
-        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
-        return { success: true, nickname: res.nickname || cleanNick };
-      }
-    } catch (err: any) {
-      if (err?.message && !err.message.includes('servidor') && !err.message.includes('fetch')) {
-        throw err;
+    // 2. Try updating via secure backend API (only when running with backend server)
+    if (!isStaticHost()) {
+      try {
+        const res = await serverApi<{ success: boolean; nickname: string }>('/api/user/nickname', {
+          method: 'POST',
+          body: JSON.stringify({ nickname: cleanNick }),
+        });
+        if (res?.success) {
+          const updatedUser: User = {
+            ...current,
+            nickname: res.nickname || cleanNick,
+            publicId: res.nickname || cleanNick,
+          };
+          localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
+          return { success: true, nickname: res.nickname || cleanNick };
+        }
+      } catch (err: any) {
+        if (!isServerUnavailable(err)) {
+          throw err;
+        }
       }
     }
 
@@ -825,7 +857,7 @@ export const api = {
         body: JSON.stringify({ currentPassword, newPassword: cleanNew }),
       });
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) throw err;
+      if (!isServerUnavailable(err)) throw err;
     }
 
     const hashed = await hashPasswordClient(cleanNew);
@@ -882,7 +914,7 @@ export const api = {
         earnedPoints: result.earnedXp ?? result.earnedPoints ?? 0,
       };
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) throw err;
+      if (!isServerUnavailable(err)) throw err;
     }
 
     // Direct Firestore progress persistence
@@ -1012,7 +1044,7 @@ export const api = {
         achievements: result.achievements || [],
       };
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) throw err;
+      if (!isServerUnavailable(err)) throw err;
     }
 
     const todayStr = dateStr || new Date().toISOString().split('T')[0];
@@ -1071,7 +1103,7 @@ export const api = {
         achievements: result.achievements || [],
       };
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) throw err;
+      if (!isServerUnavailable(err)) throw err;
     }
 
     const todayStr = dateStr || new Date().toISOString().split('T')[0];
@@ -1295,7 +1327,7 @@ export const api = {
         return result.students.sort((a, b) => (a.turma || '5.º A').localeCompare(b.turma || '5.º A') || (b.points || 0) - (a.points || 0));
       }
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) {
+      if (!isServerUnavailable(err)) {
         // Continue to fallback
       }
     }
@@ -1331,7 +1363,7 @@ export const api = {
         body: JSON.stringify(updates),
       });
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) throw err;
+      if (!isServerUnavailable(err)) throw err;
     }
 
     const now = new Date().toISOString();
@@ -1488,7 +1520,7 @@ export const api = {
         wipedStats: res.wipedStats,
       };
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) {
+      if (!isServerUnavailable(err)) {
         // Fallback to client
       }
     }
@@ -1657,7 +1689,7 @@ export const api = {
         method: 'POST',
       });
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) throw err;
+      if (!isServerUnavailable(err)) throw err;
     }
 
     const newPassword = generateKidPassword(new Set());
@@ -1698,7 +1730,7 @@ export const api = {
       localStorage.removeItem(POINTS_STORAGE_KEY + studentId);
       return result;
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) {
+      if (!isServerUnavailable(err)) {
         console.warn('[Admin] Servidor indisponível, a eliminar diretamente no Firestore:', err?.message);
       }
     }
@@ -1727,7 +1759,7 @@ export const api = {
         body: JSON.stringify({ studentIds }),
       });
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) {
+      if (!isServerUnavailable(err)) {
         console.warn('[Admin] Servidor indisponível, a eliminar lote no Firestore:', err?.message);
       }
     }
@@ -1765,7 +1797,7 @@ export const api = {
         body: JSON.stringify({ name: clean }),
       });
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) {
+      if (!isServerUnavailable(err)) {
         console.warn('[Admin] Erro ao sincronizar nova turma com o servidor:', err?.message);
       }
     }
@@ -1796,7 +1828,7 @@ export const api = {
         body: JSON.stringify({ turmas }),
       });
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) {
+      if (!isServerUnavailable(err)) {
         console.warn('[Admin] Erro ao contactar endpoint de eliminação por turmas:', err?.message);
       }
     }
@@ -1826,7 +1858,7 @@ export const api = {
         body: JSON.stringify({ turmas, deleteStudents }),
       });
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) {
+      if (!isServerUnavailable(err)) {
         console.warn('[Admin] Erro ao contactar endpoint de remoção de turmas:', err?.message);
       }
     }
@@ -1856,7 +1888,7 @@ export const api = {
     try {
       await serverApi('/api/teacher/purge-all-data', { method: 'DELETE' });
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) {
+      if (!isServerUnavailable(err)) {
         console.warn('[Purge] Erro no endpoint purge-all-data:', err?.message);
       }
     }
@@ -1872,7 +1904,7 @@ export const api = {
         return { ...DEFAULT_THEME_VISIBILITY, ...res.visibility };
       }
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) {
+      if (!isServerUnavailable(err)) {
         console.warn('[ThemeVisibility] Erro ao consultar servidor:', err?.message);
       }
     }
@@ -1908,7 +1940,7 @@ export const api = {
         body: JSON.stringify({ visibility: merged }),
       });
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) {
+      if (!isServerUnavailable(err)) {
         console.warn('[ThemeVisibility] Erro ao sincronizar com servidor:', err?.message);
       }
     }
@@ -1950,7 +1982,7 @@ export const api = {
         return { ...DEFAULT_QUIZ_VISIBILITY, ...res.visibility };
       }
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) {
+      if (!isServerUnavailable(err)) {
         console.warn('[QuizVisibility] Erro ao consultar servidor:', err?.message);
       }
     }
@@ -1986,7 +2018,7 @@ export const api = {
         body: JSON.stringify({ visibility: merged }),
       });
     } catch (err: any) {
-      if (!(err instanceof ServerUnavailableError)) {
+      if (!isServerUnavailable(err)) {
         console.warn('[QuizVisibility] Erro ao sincronizar com servidor:', err?.message);
       }
     }

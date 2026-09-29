@@ -164,7 +164,12 @@ export const AvatarCreatorModal: React.FC<AvatarCreatorModalProps> = ({
       await onSave(avatar, trimmed || undefined);
       onClose();
     } catch (err: any) {
-      setSaveError(err.message || 'Erro ao guardar as alterações.');
+      const msg = String(err?.message || '');
+      if (msg.includes('Static host') || msg.includes('Firestore client') || msg.includes('ServerUnavailableError') || msg.includes('alojamento')) {
+        setSaveError('Erro de ligação ao gravar os dados. Por favor tenta novamente.');
+      } else {
+        setSaveError(err.message || 'Erro ao guardar as alterações.');
+      }
     } finally {
       setIsSaving(false);
     }
