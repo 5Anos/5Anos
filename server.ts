@@ -831,6 +831,42 @@ app.get('/api/auth/me', requireAuth, async (req: AuthenticatedRequest, res) => {
       db.collection('users').doc(userId).collection('dailyTips').get(),
     ]);
 
+    const totalPoints = Number(user.points || 0);
+    const existingBadgeIds = achSnap.docs.map((d) => d.id);
+
+    const completedForBadges: { activityId: string; points: number; percentage?: number }[] = [];
+    progSnap.docs.forEach((d) => {
+      const pData = d.data();
+      const pId = String(pData.activityId || d.id);
+      const pBest = Math.max(0, Math.min(100, Math.round(Number(pData.bestScore ?? pData.bestPercentage ?? pData.score ?? 0))));
+      if (pBest >= 50 || pData.status === 'completed' || isLearningQuizServer(pId)) {
+        completedForBadges.push({ activityId: pId, points: pBest, percentage: pBest });
+      }
+    });
+
+    const badgeEval = evaluateBadgesEarned(completedForBadges, totalPoints, existingBadgeIds);
+    const updatedAchievements: any[] = achSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+    if (badgeEval.newlyUnlockedBadges && badgeEval.newlyUnlockedBadges.length > 0) {
+      const now = new Date().toISOString();
+      const userRef = db.collection('users').doc(userId);
+      for (const b of badgeEval.newlyUnlockedBadges) {
+        await userRef.collection('achievements').doc(b.id).set({
+          id: b.id,
+          userId,
+          badgeId: b.id,
+          unlockedAt: now,
+        });
+        updatedAchievements.push({
+          id: b.id,
+          userId,
+          badgeId: b.id,
+          unlockedAt: now,
+        });
+      }
+      await syncPublicProfile(userId);
+    }
+
     const sanitizedUser = {
       id: user.id || userId,
       name: user.name,
@@ -854,7 +890,7 @@ app.get('/api/auth/me', requireAuth, async (req: AuthenticatedRequest, res) => {
       success: true,
       user: sanitizedUser,
       progress: progSnap.docs.map(d => ({ id: d.id, ...d.data() })),
-      achievements: achSnap.docs.map(d => ({ id: d.id, ...d.data() })),
+      achievements: updatedAchievements,
       pointsHistory: ptsSnap.docs.map(d => ({ id: d.id, ...d.data() })),
       dailyTipsCount: dailySnap.docs.length,
     });

@@ -236,54 +236,107 @@ export function evaluateBadgesEarned(
     let eligible = false;
     switch (badge.id) {
       case 'primeiros-passos':
-        eligible = completedActivities.length >= 1;
+        // Unlocked upon completing at least 1 activity or having any points
+        eligible = completedActivities.length >= 1 || totalPoints > 0;
         break;
+
       case 'guardiao-digital': {
-        const segurancaTheme = THEMES_BY_ID['seguranca'];
-        if (segurancaTheme) {
-          const segChals = (segurancaTheme.challenges || []).map((c) => c.id);
-          eligible = segChals.length > 0 && segChals.every((id) => completedSet.has(id));
-        }
+        // Completed security modules, cyberbullying, or security quiz
+        const hasSecurityActivity = completedActivities.some(
+          (a) =>
+            a.activityId.includes('seg') ||
+            a.activityId.includes('perigoso') ||
+            a.activityId.includes('phishing') ||
+            a.activityId.includes('cyberbullying') ||
+            a.activityId.includes('dilema')
+        );
+        const hasSecurityQuiz = completedSet.has('quiz-final-seguranca') || completedSet.has('quiz-final-tema4');
+        eligible = hasSecurityQuiz || (hasSecurityActivity && completedActivities.length >= 2);
         break;
       }
+
       case 'especialista-seguranca': {
+        // High score on any security or privacy quiz/challenge
         eligible = completedActivities.some(
-          (a) => (a.activityId.includes('seguranca') || a.activityId.includes('tema4')) && (a.percentage || a.points) >= 90
+          (a) =>
+            (a.activityId.includes('seguranca') ||
+              a.activityId.includes('seg-') ||
+              a.activityId.includes('tema4') ||
+              a.activityId.includes('phishing') ||
+              a.activityId.includes('perigoso') ||
+              a.activityId.includes('palavra-passe') ||
+              a.activityId.includes('pass-')) &&
+            (a.percentage ?? a.points ?? 0) >= 80
         );
         break;
       }
+
       case 'detetive-cibernetico': {
-        eligible = completedSet.has('desafio-phishing') || completedSet.has('desafio-detetives-digitais') || completedSet.has('phishing-detector');
+        // Discovered phishing, safe/dangerous, cyberbullying or ethical dilemmas
+        eligible =
+          completedSet.has('desafio-phishing') ||
+          completedSet.has('desafio-detetives-digitais') ||
+          completedSet.has('phishing-detector') ||
+          completedSet.has('desafio-seguro-perigoso') ||
+          completedSet.has('jogo-seguranca-tf') ||
+          completedSet.has('jogo-seguranca-mc') ||
+          completedSet.has('desafio-tic-seguranca-cyberbullying') ||
+          completedSet.has('dilemas-digitais-game') ||
+          completedActivities.some((a) => a.activityId.includes('detetive') || a.activityId.includes('phishing'));
         break;
       }
+
       case 'mestre-email': {
-        const emailTheme = THEMES_BY_ID['correio-eletronico'];
-        if (emailTheme) {
-          const emailChals = (emailTheme.challenges || []).map((c) => c.id);
-          eligible = emailChals.length > 0 && emailChals.every((id) => completedSet.has(id));
-        }
+        // Completed email challenges or email quiz
+        eligible =
+          completedSet.has('quiz-final-tema1') ||
+          completedSet.has('quiz-final-correio-eletronico') ||
+          completedSet.has('desafio-email-lab') ||
+          completedSet.has('desafio-inbox-sorting') ||
+          completedSet.has('desafio-cc-bcc') ||
+          completedActivities.some((a) => a.activityId.includes('email') || a.activityId.includes('correio'));
         break;
       }
+
       case 'detetive-informacao': {
-        const navTheme = THEMES_BY_ID['navegar-internet'];
-        if (navTheme) {
-          const navChals = (navTheme.challenges || []).map((c) => c.id);
-          eligible = navChals.length > 0 && navChals.every((id) => completedSet.has(id));
-        }
+        // Completed web navigation / search / source verification activities
+        eligible =
+          completedSet.has('quiz-final-tema6') ||
+          completedSet.has('quiz-final-navegar-internet') ||
+          completedSet.has('desafio-keyword-master') ||
+          completedSet.has('desafio-reliable-sources') ||
+          completedSet.has('desafio-search-operators') ||
+          completedActivities.some((a) => a.activityId.includes('net-') || a.activityId.includes('pesquisa') || a.activityId.includes('navegar'));
         break;
       }
+
       case 'mestre-pesquisa': {
+        // Scored 80% or more on internet search / sources
         eligible = completedActivities.some(
-          (a) => (a.activityId.includes('navegar') || a.activityId.includes('pesquisa') || a.activityId.includes('tema6')) && (a.percentage || a.points) >= 90
+          (a) =>
+            (a.activityId.includes('navegar') ||
+              a.activityId.includes('net-') ||
+              a.activityId.includes('pesquisa') ||
+              a.activityId.includes('keyword') ||
+              a.activityId.includes('fontes') ||
+              a.activityId.includes('tema6') ||
+              a.activityId.includes('tema7') ||
+              a.activityId.includes('direitos')) &&
+            (a.percentage ?? a.points ?? 0) >= 80
         );
         break;
       }
+
       case 'centuriao-pontos':
-        eligible = totalPoints >= 500;
+        // Accumulated 100+ points or 500+ points
+        eligible = totalPoints >= 100;
         break;
+
       case 'tic-explorer':
-        eligible = completedActivities.length >= 25;
+        // Explored 3 or more activities/modules
+        eligible = completedActivities.length >= 3;
         break;
+
       default:
         eligible = false;
         break;

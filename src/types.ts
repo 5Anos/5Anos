@@ -66,6 +66,7 @@ export interface ActivityProgress {
 }
 
 export interface UserAchievement {
+  id?: string;
   userId: string;
   badgeId: string;
   unlockedAt: string;

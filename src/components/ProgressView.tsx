@@ -1,6 +1,22 @@
 import React, { useState, useMemo } from 'react';
-import { Award, Sparkles, CheckCircle2, Clock, Printer, TrendingUp, Trophy, Layers, Filter, LayoutGrid, List } from 'lucide-react';
-import { User, ActivityProgress, UserAchievement, PointTransaction, Language, ThemeVisibilityMap } from '../types';
+import {
+  Award,
+  Sparkles,
+  CheckCircle2,
+  Clock,
+  Printer,
+  TrendingUp,
+  Trophy,
+  Layers,
+  Filter,
+  LayoutGrid,
+  List,
+  X,
+  Lock,
+  Zap,
+  Info
+} from 'lucide-react';
+import { User, ActivityProgress, UserAchievement, PointTransaction, Language, ThemeVisibilityMap, BadgeDefinition } from '../types';
 import { translations } from '../i18n/translations';
 import { BADGES } from '../data/badgesData';
 import { ALL_THEMES } from '../data/allThemesData';
@@ -45,6 +61,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
 
   const [selectedThemeFilter, setSelectedThemeFilter] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grouped' | 'list'>('grouped');
+  const [selectedBadge, setSelectedBadge] = useState<BadgeDefinition | null>(null);
 
   const stats = useMemo(() => {
     return getGlobalActivityStats(user, progressList, visibleThemes);
@@ -58,6 +75,11 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
   const avgQuiz = quizRecords.length > 0
     ? Math.round(quizRecords.reduce((acc, curr) => acc + (curr.bestPercentage || 0), 0) / quizRecords.length)
     : 0;
+
+  // Unlocked badges count
+  const unlockedBadgesCount = useMemo(() => {
+    return BADGES.filter((b) => achievements.some((a) => a.badgeId === b.id || a.id === b.id)).length;
+  }, [achievements]);
 
   // Enrich each activity record with clean human-readable name, icon, and theme metadata
   const enrichedProgress = useMemo(() => {
@@ -255,7 +277,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
           <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{t.unlockedBadges}</span>
           <div className="mt-2 text-2xl sm:text-3xl font-black text-purple-600 flex items-center gap-1">
             <Award className="w-6 h-6" />
-            <span>{achievements.length}</span>
+            <span>{unlockedBadgesCount}</span>
           </div>
           <p className="mt-1 text-xs text-slate-500 font-medium">de {BADGES.length} medalhas totais</p>
         </div>
@@ -273,61 +295,81 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
 
       {/* Badges Gallery */}
       <div className="rounded-[2rem] bg-white border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h2 className="text-lg sm:text-xl font-bold text-slate-900">{t.unlockedBadges}</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
+              <span>🏆</span>
+              <span>{t.unlockedBadges}</span>
+            </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
               {language === 'pt'
-                ? 'Conquistas pedagógicas desbloqueadas com o teu esforço e acertos.'
-                : 'Pedagogical achievements unlocked by your effort and achievements.'}
+                ? 'Conquistas pedagógicas desbloqueadas com o teu esforço, aprendizagem e acertos nos desafios.'
+                : 'Pedagogical achievements unlocked by your effort, learning and success in challenges.'}
             </p>
           </div>
-          <span className="text-xs font-bold px-3 py-1 rounded-full bg-indigo-50 text-indigo-700">
-            {achievements.length} / {BADGES.length}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-black px-3.5 py-1.5 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-xs">
+              {unlockedBadgesCount} / {BADGES.length} {language === 'pt' ? 'Medalhas' : 'Badges'}
+            </span>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {BADGES.map((b) => {
-            const ach = achievements.find((a) => a.badgeId === b.id);
+            const ach = achievements.find((a) => a.badgeId === b.id || a.id === b.id);
             const isUnlocked = !!ach;
 
             return (
               <div
                 key={b.id}
-                className={`p-4 rounded-2xl border transition-all flex flex-col justify-between ${
+                onClick={() => setSelectedBadge(b)}
+                className={`p-4 rounded-2xl border transition-all duration-200 flex flex-col justify-between cursor-pointer group hover:scale-[1.02] hover:shadow-md ${
                   isUnlocked
-                    ? 'bg-amber-50/40 border-amber-200 shadow-xs'
-                    : 'bg-slate-50/60 border-slate-200/70 opacity-60 grayscale'
+                    ? 'bg-gradient-to-b from-amber-50/50 to-white border-amber-300 shadow-2xs'
+                    : 'bg-slate-50/70 border-slate-200/80 opacity-75 hover:opacity-100 hover:border-indigo-200'
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-3xl">{b.icon}</span>
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                      isUnlocked ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-600'
-                    }`}>
-                      {isUnlocked ? (language === 'pt' ? 'Desbloqueado' : 'Unlocked') : (language === 'pt' ? 'Bloqueado' : 'Locked')}
+                    <span className={`text-3xl transition-transform group-hover:scale-110 ${isUnlocked ? 'animate-float' : 'grayscale opacity-70'}`}>
+                      {b.icon}
                     </span>
+                    <div className="flex items-center gap-1.5">
+                      {b.pointsBonus > 0 && (
+                        <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
+                          +{b.pointsBonus} XP
+                        </span>
+                      )}
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        isUnlocked ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-slate-200 text-slate-600'
+                      }`}>
+                        {isUnlocked ? (language === 'pt' ? '✓ Desbloqueado' : '✓ Unlocked') : (language === 'pt' ? '🔒 Bloqueado' : '🔒 Locked')}
+                      </span>
+                    </div>
                   </div>
 
-                  <h4 className="text-sm font-bold text-slate-900 leading-snug">
+                  <h4 className={`text-sm font-bold leading-snug transition-colors ${
+                    isUnlocked ? 'text-slate-900 group-hover:text-indigo-600' : 'text-slate-700'
+                  }`}>
                     {language === 'pt' ? b.namePt : b.nameEn}
                   </h4>
 
-                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                  <p className="text-xs text-slate-600 mt-1 leading-relaxed line-clamp-2">
                     {language === 'pt' ? b.descPt : b.descEn}
                   </p>
                 </div>
 
-                <div className="mt-3 pt-2.5 border-t border-slate-100/80 text-[11px] text-slate-500 font-medium">
+                <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-medium">
                   {isUnlocked && ach ? (
-                    <span className="text-emerald-700 font-semibold flex items-center gap-1">
+                    <span className="text-emerald-700 font-bold flex items-center gap-1">
                       <CheckCircle2 className="w-3.5 h-3.5" />
-                      <span>{new Date(ach.unlockedAt).toLocaleDateString()}</span>
+                      <span>{ach.unlockedAt ? new Date(ach.unlockedAt).toLocaleDateString() : (language === 'pt' ? 'Conquistada' : 'Earned')}</span>
                     </span>
                   ) : (
-                    <span>{language === 'pt' ? `Conquista Especial` : `Special Achievement`}</span>
+                    <span className="text-indigo-600 font-semibold flex items-center gap-1">
+                      <Info className="w-3 h-3" />
+                      <span>{language === 'pt' ? 'Clica para ver como ganhar' : 'Click for requirements'}</span>
+                    </span>
                   )}
                 </div>
               </div>
@@ -842,6 +884,90 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                 </span>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Badge Details Modal */}
+      {selectedBadge && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in">
+          <div className="bg-white rounded-[2.5rem] border-2 border-indigo-100 p-6 sm:p-8 max-w-md w-full shadow-2xl relative space-y-5 animate-in zoom-in-95">
+            <button
+              onClick={() => setSelectedBadge(null)}
+              className="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {(() => {
+              const ach = achievements.find((a) => a.badgeId === selectedBadge.id || a.id === selectedBadge.id);
+              const isUnlocked = !!ach;
+
+              return (
+                <div className="space-y-5">
+                  <div className="flex flex-col items-center text-center space-y-3 pt-2">
+                    <div className={`w-20 h-20 rounded-3xl flex items-center justify-center text-4xl shadow-inner border-2 ${
+                      isUnlocked
+                        ? 'bg-gradient-to-tr from-amber-100 via-amber-200 to-yellow-100 border-amber-300 shadow-amber-200/50'
+                        : 'bg-slate-100 border-slate-200 text-slate-400 grayscale'
+                    }`}>
+                      {selectedBadge.icon}
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-center gap-2 mb-1">
+                        <span className={`text-xs font-extrabold px-3 py-1 rounded-full border ${
+                          isUnlocked
+                            ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                            : 'bg-slate-100 text-slate-600 border-slate-200'
+                        }`}>
+                          {isUnlocked ? (language === 'pt' ? '🏆 Conquista Desbloqueada!' : '🏆 Badge Unlocked!') : (language === 'pt' ? '🔒 Desafio por Conquistar' : '🔒 Locked Achievement')}
+                        </span>
+                        {selectedBadge.pointsBonus > 0 && (
+                          <span className="text-xs font-black px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
+                            +{selectedBadge.pointsBonus} XP
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="text-xl font-black text-slate-900 mt-2">
+                        {language === 'pt' ? selectedBadge.namePt : selectedBadge.nameEn}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2 text-xs sm:text-sm text-slate-700">
+                    <p className="font-semibold text-slate-900 leading-relaxed">
+                      {language === 'pt' ? selectedBadge.descPt : selectedBadge.descEn}
+                    </p>
+                    {isUnlocked && ach && (
+                      <p className="text-[11px] text-emerald-700 font-bold flex items-center gap-1.5 pt-1 border-t border-slate-200">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        <span>{language === 'pt' ? 'Desbloqueado em' : 'Unlocked on'}: {ach.unlockedAt ? new Date(ach.unlockedAt).toLocaleString() : 'Recentemente'}</span>
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="p-3.5 rounded-2xl bg-indigo-50/70 border border-indigo-100 text-xs text-indigo-900 space-y-1">
+                    <p className="font-extrabold flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
+                      <span>{language === 'pt' ? 'Como desbloquear mais medalhas?' : 'How to unlock more badges?'}</span>
+                    </p>
+                    <p className="text-[11px] text-indigo-800/90 leading-relaxed">
+                      {language === 'pt'
+                        ? 'Explora os 7 temas de TIC, completa as lições interativas, vence os minijogos e obtém notas altas nos quizzes curriculares!'
+                        : 'Explore all 7 ICT topics, finish the interactive lessons, complete mini-games and earn high scores on the quizzes!'}
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => setSelectedBadge(null)}
+                    className="w-full py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-colors cursor-pointer"
+                  >
+                    {language === 'pt' ? 'Fechar' : 'Close'}
+                  </button>
+                </div>
+              );
+            })()}
           </div>
         </div>
       )}

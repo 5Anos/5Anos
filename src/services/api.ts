@@ -27,6 +27,7 @@ import {
   AvatarConfig,
 } from '../types';
 import { BADGES } from '../data/badgesData';
+import { evaluateBadgesEarned } from '../data/activityCatalog';
 import { INITIAL_STUDENTS_LIST } from '../data/initialStudentsData';
 import { generateSecurePublicId } from '../utils/publicIdGenerator';
 import { getTurmasList, saveTurmasList } from '../data/turmasData';
@@ -589,7 +590,31 @@ export const api = {
       const dailySnap = await getDocs(collection(db, 'users', current.id, 'dailyTips'));
 
       const progress = progSnap.docs.map(d => ({ id: d.id, ...d.data() })) as unknown as ActivityProgress[];
-      const achievements = achSnap.docs.map(d => ({ id: d.id, ...d.data() })) as unknown as UserAchievement[];
+      let achievements = achSnap.docs.map(d => ({ id: d.id, ...d.data() })) as unknown as UserAchievement[];
+
+      // Dynamically evaluate missing badges based on current progress & points
+      const completedForBadges = progress
+        .filter(p => (p.bestPercentage ?? p.bestScore ?? p.score ?? 0) >= 50 || p.status === 'completed' || p.activityType === 'quiz')
+        .map(p => ({ activityId: p.activityId, points: p.score ?? 100, percentage: p.percentage ?? p.score ?? 100 }));
+
+      const existingBadgeIds = achievements.map(a => a.badgeId || a.id);
+      const badgeEval = evaluateBadgesEarned(completedForBadges, freshUser.points || 0, existingBadgeIds);
+
+      if (badgeEval.newlyUnlockedBadges && badgeEval.newlyUnlockedBadges.length > 0) {
+        const now = new Date().toISOString();
+        for (const b of badgeEval.newlyUnlockedBadges) {
+          const achRecord: UserAchievement = {
+            id: b.id,
+            userId: current.id,
+            badgeId: b.id,
+            unlockedAt: now,
+          };
+          try {
+            await setDoc(doc(db, 'users', current.id, 'achievements', b.id), achRecord);
+          } catch {}
+          achievements.push(achRecord);
+        }
+      }
 
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(freshUser));
       return {
@@ -930,12 +955,41 @@ export const api = {
       console.warn('[Progress] Aviso ao sincronizar perfil público:', syncErr);
     }
 
+    // Evaluate badges in direct Firestore fallback
+    let newlyAwardedAchievements: UserAchievement[] = [];
+    try {
+      const allProgSnap = await getDocs(collection(db, 'users', current.id, 'progress'));
+      const achSnap = await getDocs(collection(db, 'users', current.id, 'achievements'));
+      const allProgress = allProgSnap.docs.map((d) => d.data() as ActivityProgress);
+      const existingBadgeIds = achSnap.docs.map((d) => d.id);
+      
+      const completedForBadges = allProgress
+        .filter((p) => (p.bestPercentage ?? p.bestScore ?? p.score ?? 0) >= 50 || p.status === 'completed' || p.activityType === 'quiz')
+        .map((p) => ({ activityId: p.activityId, points: p.score ?? 100, percentage: p.percentage ?? p.score ?? 100 }));
+      
+      const badgeEval = evaluateBadgesEarned(completedForBadges, newPoints, existingBadgeIds);
+      if (badgeEval.newlyUnlockedBadges && badgeEval.newlyUnlockedBadges.length > 0) {
+        for (const b of badgeEval.newlyUnlockedBadges) {
+          const achRecord: UserAchievement = {
+            id: b.id,
+            userId: current.id,
+            badgeId: b.id,
+            unlockedAt: now,
+          };
+          await setDoc(doc(db, 'users', current.id, 'achievements', b.id), achRecord);
+          newlyAwardedAchievements.push(achRecord);
+        }
+      }
+    } catch (e) {
+      console.warn('[Progress] Aviso ao avaliar medalhas:', e);
+    }
+
     return {
       success: true,
       record,
       userPoints: newPoints,
       lastActivity: updatedUser.lastActivity,
-      achievements: [],
+      achievements: newlyAwardedAchievements,
       earnedPoints: earnedXp,
     };
   },

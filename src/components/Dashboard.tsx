@@ -411,7 +411,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
             <div className="flex flex-col gap-2.5">
               {BADGES.slice(0, 4).map((badge) => {
-                const isUnlocked = achievements.some((a) => a.badgeId === badge.id);
+                const isUnlocked = achievements.some((a) => a.badgeId === badge.id || a.id === badge.id);
                 return (
                   <div
                     key={badge.id}
