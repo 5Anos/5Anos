@@ -24,8 +24,6 @@ import { PlagiarismVsEthicsLab } from './PlagiarismVsEthicsLab';
 import { DigitalFootprintSimulator } from './DigitalFootprintSimulator';
 import { CitationSimulator } from './CitationSimulator';
 import { LicensesVisualCard } from './LicensesVisualCard';
-import { DigitalDilemmasGame } from './DigitalDilemmasGame';
-import { PassphraseVaultLab } from './PassphraseVaultLab';
 import { TicApplicationsExplorer } from './TicApplicationsExplorer';
 import { TicEvolutionExplorer } from './TicEvolutionExplorer';
 import { TicProsConsExplorer } from './TicProsConsExplorer';
@@ -359,13 +357,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                   <div className="flex items-center gap-2.5 flex-wrap">
                     <AudioSpeakButton
                       id={`theme-${theme.id}-step-${currentStepIndex}`}
-                      text={
-                        theme.id === 'tic-sociedade' && currentStepIndex === 1
-                          ? (language === 'pt'
-                              ? 'Simulador das áreas de aplicação das TIC: escola, saúde e transportes, comércio e pagamentos, agricultura e ambiente.'
-                              : 'Simulator of ICT application sectors: school, health and transport, commerce and payments, agriculture and environment.')
-                          : `${currentLesson.h[language]}. ${currentLesson.body[language].replace(/<[^>]*>?/gm, ' ')}`
-                      }
+                      text={`${currentLesson.h[language]}. ${currentLesson.body[language].replace(/<[^>]*>?/gm, ' ')}`}
                       language={language}
                       label={language === 'pt' ? 'Ouvir Conteúdo' : 'Listen Content'}
                       variant="pill"
@@ -380,20 +372,16 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                 </div>
 
                 {/* Main Heading */}
-                {!(theme.id === 'tic-sociedade' && currentStepIndex === 1) && (
-                  <h2 className="text-xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
-                    {currentLesson.h[language]}
-                  </h2>
-                )}
+                <h2 className="text-xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
+                  {currentLesson.h[language]}
+                </h2>
 
                 {/* Pedagogical Step Renderer: Complete natural text */}
                 <div className="space-y-6 w-full">
-                  {!(theme.id === 'tic-sociedade' && currentStepIndex === 1) && (
-                    <div
-                      className="text-base sm:text-lg text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"
-                      dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
-                    />
-                  )}
+                  <div
+                    className="text-base sm:text-lg text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"
+                    dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
+                  />
 
                   {/* Interactive Pedagogical Widget matching the current step */}
                   <div className="w-full">
@@ -573,19 +561,6 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
               <span>{theme.challenges.length} {language === 'pt' ? 'Atividades Disponíveis' : 'Activities Available'}</span>
             </div>
           </div>
-
-          {/* Featured Educational Dilemma / Passphrase Lab if in Theme 4 or Theme 2 */}
-          {(theme.id === 'seguranca' || theme.id === 'seguranca-digital') && (
-            <div className="mb-6">
-              <DigitalDilemmasGame language={language} />
-            </div>
-          )}
-
-          {theme.id === 'palavras-passe' && (
-            <div className="mb-6">
-              <PassphraseVaultLab language={language} />
-            </div>
-          )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {theme.challenges.map((chal) => {
