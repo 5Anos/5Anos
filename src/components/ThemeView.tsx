@@ -15,6 +15,7 @@ import { PasswordSharingDilemmas } from './PasswordSharingDilemmas';
 import { PersonalDataClassifier } from './PersonalDataClassifier';
 import { SocialMediaPrivacyLab } from './SocialMediaPrivacyLab';
 import { UrlAnatomyExplorer } from './UrlAnatomyExplorer';
+import { GoogleChromeSimulator } from './GoogleChromeSimulator';
 import { SearchKeywordsLab } from './SearchKeywordsLab';
 import { SearchOperatorsLab } from './SearchOperatorsLab';
 import { FakeNewsDetectorLab } from './FakeNewsDetectorLab';
@@ -70,6 +71,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<'content' | 'games'>(initialTab);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [showChromeSimulatorModal, setShowChromeSimulatorModal] = useState(false);
 
   // Jump to simulator step if navigated via simulator launch
   React.useEffect(() => {
@@ -452,7 +454,34 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
 
                     {/* TEMA 6: Navegar e Pesquisar na Internet */}
                     {theme.id === 'navegar-internet' && currentStepIndex === 0 && (
-                      <UrlAnatomyExplorer language={language} />
+                      <div className="space-y-6 w-full">
+                        <GoogleChromeSimulator language={language} />
+                        <UrlAnatomyExplorer language={language} />
+                      </div>
+                    )}
+                    {theme.id === 'navegar-internet' && currentStepIndex > 0 && (
+                      <div className="space-y-4 w-full">
+                        <div className="p-3.5 bg-gradient-to-r from-blue-950/60 via-indigo-950/60 to-slate-900/60 rounded-2xl border border-indigo-400/30 flex flex-wrap items-center justify-between gap-3 shadow-xs">
+                          <div className="flex items-center gap-2.5">
+                            <span className="text-2xl">🌐</span>
+                            <div>
+                              <p className="text-xs font-bold text-white">Queres testar na prática?</p>
+                              <p className="text-[11px] text-slate-300">Experimenta pesquisar no simulador do Google Chrome com as tuas palavras-chave e operadores!</p>
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => setShowChromeSimulatorModal((prev) => !prev)}
+                            className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-xs cursor-pointer shrink-0"
+                          >
+                            {showChromeSimulatorModal ? 'Ocultar Navegador' : '🖥️ Abrir Google Chrome'}
+                          </button>
+                        </div>
+                        {showChromeSimulatorModal && (
+                          <div className="animate-fadeIn">
+                            <GoogleChromeSimulator language={language} />
+                          </div>
+                        )}
+                      </div>
                     )}
                     {theme.id === 'navegar-internet' && currentStepIndex === 1 && (
                       <SearchKeywordsLab language={language} />
