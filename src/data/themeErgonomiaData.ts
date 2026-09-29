@@ -60,8 +60,8 @@ export const themeErgonomiaData: ThemeDefinition = {
       eyebrow: { pt: 'Na vida real', en: 'In real life' },
       h: { pt: 'Organizar o espaço de trabalho', en: 'Organizing your workspace' },
       body: {
-        pt: 'Uma mesa arrumada, com espaço suficiente para os braços e o teclado, e uma cadeira ajustada à altura do corpo, tornam o estudo muito mais confortável, focado e seguro.<br><br>Consulta no guia visual ao lado a comparação detalhada entre o que <strong>deves fazer</strong> para proteger a tua coluna e o que <strong>não deves fazer</strong> quando estás ao computador.',
-        en: 'A tidy desk with ample room for your keyboard and arms, paired with a height-adjusted chair, makes study sessions comfortable, focused, and safe.<br><br>Check the visual guide on the side for a detailed comparison of what you <strong>should do</strong> to protect your spine versus what you <strong>should not do</strong> when working at a computer.',
+        pt: 'Uma mesa arrumada, com espaço suficiente para os braços e o teclado, e uma cadeira ajustada à altura do corpo, tornam o estudo muito mais confortável, focado e seguro.<br><br>Verifica no laboratório interativo abaixo os 5 passos essenciais para manter a tua secretária limpa, os cabos elétricos arrumados em segurança e o espaço inferior desimpedido para as pernas.',
+        en: 'A tidy desk with ample room for your arms and keyboard, paired with a height-adjusted chair, makes study sessions comfortable, focused, and safe.<br><br>Check the interactive lab below for the 5 essential steps to keep your desk clear, electrical cables safely organized, and leg space completely open.',
       },
       icon: '🖥️',
     },

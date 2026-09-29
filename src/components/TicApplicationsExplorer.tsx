@@ -312,29 +312,20 @@ export const TicApplicationsExplorer: React.FC<TicApplicationsExplorerProps> = (
   ];
 
   return (
-    <div className="space-y-6 w-full animate-in fade-in">
-      {/* Top Banner / Header as in User Design */}
-      <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-950 text-white shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4 border border-indigo-900/50">
-        <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-2xl shadow-inner shrink-0">
-            🌐
-          </div>
-          <div>
-            <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-amber-400 text-slate-950 mb-1">
-              {language === 'pt' ? 'VISÃO GERAL DAS ÁREAS DE APLICAÇÃO' : 'OVERVIEW OF APPLICATION AREAS'}
-            </span>
-            <h3 className="text-base sm:text-lg font-black text-white leading-tight">
-              {language === 'pt'
-                ? 'As TIC no Mundo Real: Onde e Como são Utilizadas?'
-                : 'ICT in the Real World: Where and How are they used?'}
-            </h3>
-          </div>
+    <div className="space-y-4 w-full animate-in fade-in">
+      {/* Click instruction prompt for the student */}
+      <div className="flex items-center justify-between gap-2 px-1 py-1">
+        <div className="flex items-center gap-2 text-indigo-950 font-black text-xs sm:text-sm">
+          <span className="text-base sm:text-lg animate-bounce">👉</span>
+          <span>
+            {language === 'pt'
+              ? 'Clica numa das áreas abaixo para abrir o simulador prático:'
+              : 'Click on one of the areas below to open the simulator:'}
+          </span>
         </div>
-        <p className="text-xs text-indigo-200/90 max-w-md font-medium leading-relaxed">
-          {language === 'pt'
-            ? 'Clica nas 4 áreas abaixo para explorar como as tecnologias transformam a escola, a saúde, os transportes, as compras e o ambiente!'
-            : 'Click on the 4 areas below to explore how technology impacts school, health, transport, commerce and environment!'}
-        </p>
+        <span className="text-[10px] font-black uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-200 shrink-0">
+          {language === 'pt' ? '4 Áreas Interativas' : '4 Areas'}
+        </span>
       </div>
 
       {/* 4 Interactive Selector Tabs */}

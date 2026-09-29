@@ -6,6 +6,8 @@ import { getThemeImage, getThemeStepImage, getChallengeImage } from '../data/the
 import { DosDontsPostureInfographicPT } from './DosDontsPostureInfographicPT';
 import { PostureCorrectionSimulator } from './PostureCorrectionSimulator';
 import { MonitorLightingLab } from './MonitorLightingLab';
+import { ActiveBreaksLab } from './ActiveBreaksLab';
+import { WorkspaceSetupLab } from './WorkspaceSetupLab';
 import { PhishingMessageSimulator } from './PhishingMessageSimulator';
 import { PasswordStrengthTester } from './PasswordStrengthTester';
 import { PasswordBattleCard } from './PasswordBattleCard';
@@ -378,10 +380,12 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
 
                 {/* Pedagogical Step Renderer: Complete natural text */}
                 <div className="space-y-6 w-full">
-                  <div
-                    className="text-base sm:text-lg text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"
-                    dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
-                  />
+                  {!(theme.id === 'tic-sociedade' && currentStepIndex === 1) && (
+                    <div
+                      className="text-base sm:text-lg text-slate-700 leading-relaxed space-y-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-slate-700 [&_strong]:text-slate-900 [&_em]:text-indigo-900 [&_em]:font-medium [&_em]:not-italic [&_em]:bg-indigo-50/70 [&_em]:px-1.5 [&_em]:py-0.5 [&_em]:rounded-md"
+                      dangerouslySetInnerHTML={{ __html: currentLesson.body[language] }}
+                    />
+                  )}
 
                   {/* Interactive Pedagogical Widget matching the current step */}
                   <div className="w-full">
@@ -399,15 +403,18 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                       <TicGreenTechExplorer language={language} />
                     )}
 
-                    {/* TEMA 2: Ergonomia e Bem-Estar */}
+                    {/* TEMA 3: Ergonomia e Bem-Estar */}
                     {theme.id === 'ergonomia' && currentStepIndex === 1 && (
                       <PostureCorrectionSimulator language={language} />
                     )}
                     {theme.id === 'ergonomia' && currentStepIndex === 2 && (
                       <MonitorLightingLab language={language} />
                     )}
+                    {theme.id === 'ergonomia' && currentStepIndex === 3 && (
+                      <ActiveBreaksLab language={language} />
+                    )}
                     {theme.id === 'ergonomia' && currentStepIndex === 4 && (
-                      <DosDontsPostureInfographicPT />
+                      <WorkspaceSetupLab language={language} />
                     )}
 
                     {/* TEMA 3: Palavras-passe e Autenticação */}

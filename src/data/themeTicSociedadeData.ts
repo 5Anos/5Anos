@@ -33,8 +33,8 @@ export const themeTicSociedadeData: ThemeDefinition = {
       eyebrow: { pt: 'Aplicação das TIC', en: 'ICT Applications' },
       h: { pt: 'As TIC na Escola, Saúde, Transportes, Comércio e Ambiente', en: 'ICT in School, Health, Transport, Commerce & Environment' },
       body: {
-        pt: 'As Tecnologias de Informação e Comunicação estão presentes nas mais diversas áreas da nossa vida quotidiana:<br><br>• <strong>Escola:</strong> Plataformas de aprendizagem, manuais digitais, quadros interativos e bibliotecas online.<br>• <strong>Saúde:</strong> Telemedicina, exames computadorizados, robôs cirúrgicos e registo eletrónico de saúde.<br>• <strong>Transportes:</strong> Sistemas de navegação por GPS, bilheteiras eletrónicas e controlo de tráfego inteligente.<br>• <strong>Comércio:</strong> Pagamentos contactless (NFC), comércio eletrónico (lojas online) e gestão de stocks.<br>• <strong>Ambiente e Indústria:</strong> Sensores agrícolas inteligentes de rega (IoT), robôs de montagem e estações meteorológicas.',
-        en: 'Information and Communication Technologies are present across many areas of our daily lives:<br><br>• <strong>School:</strong> Learning platforms, digital textbooks, interactive boards, and online catalogs.<br>• <strong>Health:</strong> Telemedicine, digital health records, and surgical robots.<br>• <strong>Transport:</strong> GPS navigation, contactless ticketing, and intelligent traffic management.<br>• <strong>Commerce:</strong> Contactless NFC payments, online stores, and inventory tracking.<br>• <strong>Environment & Industry:</strong> Smart IoT irrigation sensors, assembly line robotics, and weather stations.',
+        pt: 'Clica em cada uma das 4 áreas abaixo para descobrires e experimentares como as TIC funcionam na Escola, Saúde, Comércio e Ambiente!',
+        en: 'Click on each of the 4 areas below to discover and test how ICT works in School, Health, Commerce, and Environment!',
       },
       icon: '🌐',
     },

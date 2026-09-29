@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { CheckCircle2, XCircle, RotateCcw, Sparkles, Sliders, ShieldCheck, Image as ImageIcon, Gamepad2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import correctPostureGuide from '../assets/images/correct_posture_guide_1788640792425.jpg';
-import activeBreaksPosture from '../assets/images/active_breaks_posture_3d_1788539976910.jpg';
 import boyAvatarImg from '../assets/images/tic_boy_avatar_1788537870929.jpg';
 import girlAvatarImg from '../assets/images/tic_girl_avatar_1788537889222.jpg';
+import { DosDontsPostureInfographicPT } from './DosDontsPostureInfographicPT';
 
 interface PostureState {
   head: number;      // 0: bent forward, 1: slightly bent, 2: aligned (correct)
@@ -195,89 +195,26 @@ export const PostureCorrectionSimulator: React.FC<Props> = ({ language = 'pt', o
             }`}
           >
             <ImageIcon className="w-4 h-4" />
-            <span>{language === 'pt' ? 'Cartazes & Imagens 3D Reais' : 'Real Posters & 3D Guide'}</span>
+            <span>{language === 'pt' ? 'Guia Comparativo: Fazer vs. Não Fazer' : 'Comparison Guide: Dos & Don\'ts'}</span>
             <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
-              📸 Imagens
+              🔴 Incorreto vs 🟢 Correto
             </span>
           </button>
         </div>
       </div>
 
-      {/* TAB 2: Cartazes & Imagens 3D Reais */}
+      {/* TAB 2: Guia Comparativo: Fazer vs. Não Fazer */}
       {activeTab === 'guide' && (
-        <div className="p-6 sm:p-8 space-y-6 animate-in fade-in duration-200">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-            {/* Poster 1: Postura Correta */}
-            <div className="bg-slate-50 rounded-3xl p-5 border-2 border-emerald-200 shadow-md flex flex-col justify-between space-y-4">
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-black text-xs">
-                    📐 {language === 'pt' ? 'Os Ângulos Perfeitos de 90°' : 'The 90° Angles'}
-                  </span>
-                  <span className="text-xl">🪑</span>
-                </div>
-                <h4 className="text-base sm:text-lg font-black text-slate-900 mb-2">
-                  {language === 'pt' ? 'Cartaz Oficial da Postura Ergonómica' : 'Official Posture Poster'}
-                </h4>
-                <div className="w-full h-64 sm:h-72 rounded-2xl overflow-hidden border border-emerald-200 shadow-inner mb-3 group">
-                  <img
-                    src={correctPostureGuide}
-                    alt="Guia de Postura Correta"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <ul className="text-xs sm:text-sm text-slate-700 space-y-1.5 font-medium list-disc pl-5">
-                  <li><strong>Topo do ecrã:</strong> Alinhado exatamente ao nível dos olhos (~50-70 cm).</li>
-                  <li><strong>Coluna:</strong> Apoiada no encosto com suporte lombar natural.</li>
-                  <li><strong>Cotovelos e pulsos:</strong> Em ângulo reto (90°) sem dobrar as mãos.</li>
-                  <li><strong>Pés:</strong> Firmemente apoiados no chão ou num apoio de pés.</li>
-                </ul>
-              </div>
-              <button
-                type="button"
-                onClick={() => setActiveTab('interactive')}
-                className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm transition-colors shadow-xs"
-              >
-                {language === 'pt' ? 'Testar no Simulador Interativo 🎮' : 'Test in Simulator 🎮'}
-              </button>
-            </div>
-
-            {/* Poster 2: Pausas Ativas e Regra 20-20-20 */}
-            <div className="bg-slate-50 rounded-3xl p-5 border-2 border-indigo-200 shadow-md flex flex-col justify-between space-y-4">
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 font-black text-xs">
-                    ⏱️ {language === 'pt' ? 'Descanso Visual & Físico' : 'Visual & Physical Rest'}
-                  </span>
-                  <span className="text-xl">🏃</span>
-                </div>
-                <h4 className="text-base sm:text-lg font-black text-slate-900 mb-2">
-                  {language === 'pt' ? 'Pausas Ativas e a Regra 20-20-20' : 'Active Breaks & 20-20-20 Rule'}
-                </h4>
-                <div className="w-full h-64 sm:h-72 rounded-2xl overflow-hidden border border-indigo-200 shadow-inner mb-3 group">
-                  <img
-                    src={activeBreaksPosture}
-                    alt="Pausas Ativas 3D"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <ul className="text-xs sm:text-sm text-slate-700 space-y-1.5 font-medium list-disc pl-5">
-                  <li><strong>A cada 50 minutos:</strong> Levantar durante 5 minutos e esticar o corpo.</li>
-                  <li><strong>Regra 20-20-20:</strong> A cada 20 min, olhar para 6 metros durante 20 segundos.</li>
-                  <li><strong>Alongamentos:</strong> Rodar os ombros, esticar os braços e beber água fresca.</li>
-                  <li><strong>Saúde ocular:</strong> Piscar os olhos para evitar secura e fadiga.</li>
-                </ul>
-              </div>
-              <button
-                type="button"
-                onClick={() => setActiveTab('interactive')}
-                className="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs sm:text-sm transition-colors shadow-xs"
-              >
-                {language === 'pt' ? 'Ajustar o Aluno 🚀' : 'Adjust Student 🚀'}
-              </button>
-            </div>
+        <div className="p-4 sm:p-6 space-y-4 animate-in fade-in duration-200">
+          <DosDontsPostureInfographicPT />
+          <div className="text-center pt-2">
+            <button
+              type="button"
+              onClick={() => setActiveTab('interactive')}
+              className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm transition-colors shadow-xs"
+            >
+              {language === 'pt' ? '← Voltar ao Simulador Interativo 3D 🎮' : '← Back to 3D Simulator 🎮'}
+            </button>
           </div>
         </div>
       )}
