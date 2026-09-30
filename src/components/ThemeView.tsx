@@ -15,6 +15,7 @@ import { PasswordSharingDilemmas } from './PasswordSharingDilemmas';
 import { PersonalDataClassifier } from './PersonalDataClassifier';
 import { SocialMediaPrivacyLab } from './SocialMediaPrivacyLab';
 import { UrlAnatomyExplorer } from './UrlAnatomyExplorer';
+import { BrowserSimulator } from './BrowserSimulator';
 import { GoogleChromeSimulator } from './GoogleChromeSimulator';
 import { SearchKeywordsLab } from './SearchKeywordsLab';
 import { SearchOperatorsLab } from './SearchOperatorsLab';
@@ -455,7 +456,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                     {/* TEMA 6: Navegar e Pesquisar na Internet */}
                     {theme.id === 'navegar-internet' && currentStepIndex === 0 && (
                       <div className="space-y-6 w-full">
-                        <GoogleChromeSimulator language={language} />
+                        <BrowserSimulator language={language} />
                         <UrlAnatomyExplorer language={language} />
                       </div>
                     )}
@@ -466,19 +467,19 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                             <span className="text-2xl">🌐</span>
                             <div>
                               <p className="text-xs font-bold text-white">Queres testar na prática?</p>
-                              <p className="text-[11px] text-slate-300">Experimenta pesquisar no simulador do Google Chrome com as tuas palavras-chave e operadores!</p>
+                              <p className="text-[11px] text-slate-300">Experimenta navegar em sites educativos fictícios e seguros no simulador de navegador!</p>
                             </div>
                           </div>
                           <button
                             onClick={() => setShowChromeSimulatorModal((prev) => !prev)}
                             className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-xs cursor-pointer shrink-0"
                           >
-                            {showChromeSimulatorModal ? 'Ocultar Navegador' : '🖥️ Abrir Google Chrome'}
+                            {showChromeSimulatorModal ? 'Ocultar Navegador' : '🖥️ Abrir Navegador Web'}
                           </button>
                         </div>
                         {showChromeSimulatorModal && (
                           <div className="animate-fadeIn">
-                            <GoogleChromeSimulator language={language} />
+                            <BrowserSimulator language={language} />
                           </div>
                         )}
                       </div>
