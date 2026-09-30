@@ -432,7 +432,8 @@ export const BrowserSimulator: React.FC<BrowserSimulatorProps> = ({ language = '
             }`}
           >
             <span>⭐</span>
-            <span className="font-extrabold">{language === 'pt' ? 'Como Guardar nos Favoritos?' : 'How to Bookmark?'}</span>
+            <span className="font-extrabold sm:hidden">{language === 'pt' ? 'Favoritos' : 'Bookmarks'}</span>
+            <span className="font-extrabold hidden sm:inline">{language === 'pt' ? 'Como Guardar nos Favoritos?' : 'How to Bookmark?'}</span>
           </button>
 
           <button
@@ -913,11 +914,11 @@ export const BrowserSimulator: React.FC<BrowserSimulatorProps> = ({ language = '
                   setShowHistoryModal(true);
                   checkMission('m_history');
                 }}
-                className="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 hover:border-indigo-300 transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs group shrink-0"
+                className="px-2 sm:px-2.5 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 hover:border-indigo-300 transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs group shrink-0 min-h-[36px]"
                 title={language === 'pt' ? 'Histórico de Navegação e Rastreio (Ver últimos 5 URLs)' : 'Browser History & Tracking (View last 5 URLs)'}
               >
                 <History className="w-4 h-4 text-indigo-600 group-hover:rotate-[-20deg] transition-transform" />
-                <span className="text-xs font-bold">{language === 'pt' ? 'Histórico' : 'History'}</span>
+                <span className="hidden sm:inline text-xs font-bold">{language === 'pt' ? 'Histórico' : 'History'}</span>
                 <span className="w-4 h-4 rounded-full bg-indigo-200 text-indigo-900 text-[10px] font-black flex items-center justify-center">
                   {Math.min(5, visitedHistory.length)}
                 </span>
@@ -1656,11 +1657,11 @@ export const BrowserSimulator: React.FC<BrowserSimulatorProps> = ({ language = '
             </div>
 
             {/* Modal Footer Controls */}
-            <div className="pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3">
+            <div className="pt-3 border-t border-slate-200 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
               <button
                 onClick={handleClearHistory}
                 disabled={visitedHistory.length === 0}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer ${
+                className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer min-h-[44px] ${
                   visitedHistory.length > 0
                     ? 'bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200'
                     : 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed'
@@ -1673,7 +1674,7 @@ export const BrowserSimulator: React.FC<BrowserSimulatorProps> = ({ language = '
 
               <button
                 onClick={() => setShowHistoryModal(false)}
-                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition-colors cursor-pointer"
+                className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition-colors cursor-pointer min-h-[44px] flex items-center justify-center"
               >
                 {language === 'pt' ? 'Fechar' : 'Close'}
               </button>

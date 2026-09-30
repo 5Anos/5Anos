@@ -234,7 +234,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
               src={themeImg}
               alt={theme.title[language]}
               referrerPolicy="no-referrer"
-              className="w-full h-48 sm:h-56 object-cover rounded-2xl shadow-inner transition-transform duration-500 group-hover:scale-105"
+              className="w-full h-40 sm:h-48 md:h-56 object-cover rounded-2xl shadow-inner transition-transform duration-500 group-hover:scale-105"
             />
           </div>
 
@@ -503,7 +503,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                   <button
                     onClick={handlePrevStep}
                     disabled={currentStepIndex === 0}
-                    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all w-full sm:w-auto justify-center ${
+                    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all w-full sm:w-auto justify-center min-h-[44px] ${
                       currentStepIndex === 0
                         ? 'opacity-40 cursor-not-allowed bg-slate-100 text-slate-400'
                         : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer shadow-2xs'
@@ -514,15 +514,15 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                   </button>
 
                   {/* Step dots */}
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-2 py-2">
                     {lessons.map((_, idx) => (
                       <button
                         key={idx}
                         onClick={() => setCurrentStepIndex(idx)}
-                        className={`h-2 rounded-full transition-all cursor-pointer ${
+                        className={`h-2.5 rounded-full transition-all cursor-pointer ${
                           idx === currentStepIndex
-                            ? 'w-6 bg-indigo-600'
-                            : 'w-2 bg-slate-200 hover:bg-slate-300'
+                            ? 'w-7 bg-indigo-600'
+                            : 'w-2.5 bg-slate-200 hover:bg-slate-300'
                         }`}
                         title={language === 'pt' ? `Passo ${idx + 1}` : `Step ${idx + 1}`}
                       />
@@ -531,7 +531,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
 
                   <button
                     onClick={handleNextStep}
-                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-indigo-600 hover:bg-indigo-700 text-white shadow-md transition-all hover:scale-102 cursor-pointer w-full sm:w-auto justify-center"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-indigo-600 hover:bg-indigo-700 text-white shadow-md transition-all hover:scale-102 cursor-pointer w-full sm:w-auto justify-center min-h-[44px]"
                   >
                     <span>
                       {currentStepIndex === lessons.length - 1
