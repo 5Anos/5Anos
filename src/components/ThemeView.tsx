@@ -387,6 +387,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                 <div className="space-y-6 w-full">
                   {!(theme.id === 'tic-sociedade' && currentStepIndex === 1) &&
                    !(theme.id === 'ergonomia' && currentStepIndex === 1) &&
+                   !(theme.id === 'navegar-internet' && currentStepIndex === 0) &&
                    !((theme.id === 'seguranca' || theme.id === 'seguranca-digital') && currentStepIndex === 2) &&
                    !((theme.id === 'seguranca' || theme.id === 'seguranca-digital') && currentStepIndex === 3) && (
                     <div
@@ -455,10 +456,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
 
                     {/* TEMA 6: Navegar e Pesquisar na Internet */}
                     {theme.id === 'navegar-internet' && currentStepIndex === 0 && (
-                      <div className="space-y-6 w-full">
-                        <BrowserSimulator language={language} />
-                        <UrlAnatomyExplorer language={language} />
-                      </div>
+                      <BrowserSimulator language={language} />
                     )}
                     {theme.id === 'navegar-internet' && currentStepIndex > 0 && (
                       <div className="space-y-4 w-full">
