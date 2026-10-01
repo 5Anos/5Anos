@@ -265,9 +265,7 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                   {currentMention}
                 </div>
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-indigo-50 border border-indigo-200 text-indigo-900 mx-auto flex-wrap justify-center">
-                  <span>{result.score} de {result.maxScore} Respostas Corretas</span>
-                  <span>•</span>
-                  <span>{result.percentage}%</span>
+                  <span>{result.score} de {result.maxScore} {language === 'pt' ? 'Respostas Corretas' : 'Correct Answers'}</span>
                 </div>
               </div>
 
@@ -365,9 +363,7 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                   {currentMention}
                 </div>
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-indigo-50 border border-indigo-200 text-indigo-900 mx-auto flex-wrap justify-center">
-                  <span>{result.score} de {result.maxScore} Respostas Corretas</span>
-                  <span>•</span>
-                  <span>Menção: {currentMention}</span>
+                  <span>{result.score} de {result.maxScore} {language === 'pt' ? 'Respostas Corretas' : 'Correct Answers'}</span>
                 </div>
               </div>
 

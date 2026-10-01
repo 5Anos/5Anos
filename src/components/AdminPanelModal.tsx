@@ -55,6 +55,7 @@ import {
   exportDailyTipsScoresToExcel,
   getStudentThemeBreakdown,
   getQualitativeLevel,
+  getQuizMentionBadgeStyle,
   getGlobalActivityStats,
   exportStudentCredentialsToExcel,
   sortStudentsByClassAndNumber,
@@ -1389,8 +1390,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                               <th className="py-2.5 px-3 text-center">Desafio 2</th>
                               <th className="py-2.5 px-3 text-center">Desafio 3</th>
                               <th className="py-2.5 px-3 text-center">Desafio 4</th>
-                              <th className="py-2.5 px-3 text-center">Quiz (Oficial)</th>
-                              <th className="py-2.5 px-3 text-center">Nível</th>
+                              <th className="py-2.5 px-3 text-center">Quiz Oficial (Menção)</th>
                               <th className="py-2.5 px-3 text-right">XP Tema</th>
                             </tr>
                           </thead>
@@ -1429,13 +1429,8 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                                       —
                                     </td>
                                   ))}
-                                  <td className="py-2 px-3 text-center">
-                                    <span className="px-2 py-0.5 rounded-lg bg-indigo-50 text-indigo-700 font-bold">
-                                      {breakdown.quiz.officialScore}%
-                                    </span>
-                                  </td>
                                   <td className="py-2 px-3 text-center font-bold">
-                                    <span className="text-emerald-700">
+                                    <span className={`inline-block px-2.5 py-0.5 rounded-lg text-xs font-black border ${getQuizMentionBadgeStyle(breakdown.quiz.officialScore).pillClass}`}>
                                       {getQualitativeLevel(breakdown.quiz.officialScore)}
                                     </span>
                                   </td>
@@ -2293,7 +2288,9 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
 
                       <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-xs flex items-center justify-between">
                         <span className="font-bold text-slate-700">Quiz Oficial (1.ª Tentativa):</span>
-                        <span className="font-black text-indigo-700">{breakdown.quiz.officialScore}% ({getQualitativeLevel(breakdown.quiz.officialScore)})</span>
+                        <span className={`px-2.5 py-0.5 rounded-lg text-xs font-black border ${getQuizMentionBadgeStyle(breakdown.quiz.officialScore).pillClass}`}>
+                          {getQualitativeLevel(breakdown.quiz.officialScore)}
+                        </span>
                       </div>
                     </div>
                   );
