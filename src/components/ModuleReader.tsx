@@ -14,12 +14,17 @@ import {
   Eye,
   Check,
   Zap,
+  RotateCcw,
+  Trophy,
+  Star,
+  Award,
 } from 'lucide-react';
 import { PedagogicalModule, Language } from '../types';
 import { translations } from '../i18n/translations';
 import { AudioSpeakButton } from './AudioSpeakButton';
 import { ticoFeedback } from '../utils/ticoEvents';
 import { soundEffects } from '../utils/soundEffects';
+import { cleanPedagogicalExplanation } from '../utils/exportUtils';
 
 interface ModuleReaderProps {
   module: PedagogicalModule;
@@ -49,6 +54,7 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
   // Quiz state for step 5
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
   const [submittedQuiz, setSubmittedQuiz] = useState(false);
+  const [showResultModal, setShowResultModal] = useState(false);
 
   const t = translations[language];
 
@@ -135,17 +141,21 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
 
   const handleSubmitQuiz = () => {
     setSubmittedQuiz(true);
-    const { score, maxScore, percentage } = calculateQuizScore();
+    setShowResultModal(true);
+    const { score, maxScore, percentage, hasQuestions } = calculateQuizScore();
     
-    if (percentage === 100) {
+    if (!hasQuestions || percentage === 100) {
+      soundEffects.playVictory();
       ticoFeedback.triggerQuizPerfect();
-    } else if (score >= 3 || percentage >= 75) {
-      ticoFeedback.triggerStreak3();
+    } else if (percentage >= 70) {
+      soundEffects.playSuccess();
+      ticoFeedback.triggerCorrect();
     } else {
+      soundEffects.playAlert();
       ticoFeedback.triggerWrong(
         language === 'pt'
-          ? 'Quase lá! Não desanimes. Vamos analisar as pistas de cada pergunta juntos! 🔍'
-          : 'Almost there! Let us analyze each clue together! 🔍'
+          ? 'Não desanimes! Dá uma vista de olhos às pistas pedagógicas de cada pergunta para aprenderes! 🔍'
+          : 'Keep going! Review each clue below to reinforce your understanding! 🔍'
       );
     }
     
@@ -155,6 +165,7 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
   const handleResetQuiz = () => {
     setSelectedAnswers({});
     setSubmittedQuiz(false);
+    setShowResultModal(false);
   };
 
   // Font size class mapper
@@ -627,15 +638,6 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
                     <CheckCircle2 className="w-6 h-6" />
                     <h2 className="text-xl font-bold">{t.step5Title}</h2>
                   </div>
-                  {submittedQuiz && (
-                    <button
-                      onClick={handleResetQuiz}
-                      className="text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1 cursor-pointer"
-                    >
-                      <RefreshCw className="w-3.5 h-3.5" />
-                      <span>{t.tryAgain}</span>
-                    </button>
-                  )}
                 </div>
 
                 <p className="text-sm text-slate-600">{t.miniQuizPrompt}</p>
@@ -701,45 +703,62 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
                         </div>
 
                         {submittedQuiz && (
-                          <div className={`mt-3 p-4 rounded-xl text-xs sm:text-sm space-y-2 ${
-                            isCorrect ? 'bg-emerald-100/70 text-emerald-950 border border-emerald-200' : 'bg-rose-50 text-rose-950 border border-rose-200'
+                          <div className={`mt-3 p-4 sm:p-5 rounded-2xl text-xs sm:text-sm space-y-3 ${
+                            isCorrect
+                              ? 'bg-emerald-100/70 text-emerald-950 border-2 border-emerald-300'
+                              : 'bg-gradient-to-br from-amber-50 to-orange-50/80 text-amber-950 border-2 border-amber-300 shadow-xs'
                           }`}>
                             <div className="flex items-start justify-between gap-3">
-                              <div className="space-y-2 flex-1">
-                                <p className="font-extrabold text-sm flex items-center gap-1.5">
-                                  <span>{isCorrect ? '✅' : '❌'}</span>
-                                  <span>{isCorrect ? t.correctAnswer : t.wrongAnswer}</span>
-                                </p>
+                              <div className="space-y-2.5 flex-1">
+                                {isCorrect ? (
+                                  <p className="font-extrabold text-sm sm:text-base flex items-center gap-2 text-emerald-900">
+                                    <span>✅</span>
+                                    <span>{t.correctAnswer}</span>
+                                  </p>
+                                ) : (
+                                  <div className="flex items-center gap-2 text-rose-800 font-black text-sm sm:text-base">
+                                    <span className="text-xl">❌</span>
+                                    <span>{language === 'pt' ? 'Resposta Incorreta' : 'Incorrect Answer'}</span>
+                                  </div>
+                                )}
 
                                 {!isCorrect && userChoice !== undefined && (
-                                  <div className="p-3 rounded-lg bg-rose-100/80 border border-rose-300 text-rose-950 font-medium space-y-1">
-                                    <p className="font-bold text-xs uppercase tracking-wide text-rose-900">
-                                      {language === 'pt' ? `A tua escolha: «${q.options[language][userChoice]}»` : `Your choice: "${q.options[language][userChoice]}"`}
+                                  <div className="p-3.5 rounded-xl bg-amber-100/90 border border-amber-300 text-amber-950 font-medium space-y-1">
+                                    <p className="font-bold text-xs uppercase tracking-wide text-amber-900 flex items-center gap-1.5">
+                                      <span>🔍</span>
+                                      <span>{language === 'pt' ? `A tua seleção: «${q.options[language][userChoice]}»` : `Your selection: "${q.options[language][userChoice]}"`}</span>
                                     </p>
-                                    <p className="text-xs sm:text-sm">
+                                    <p className="text-xs sm:text-sm leading-relaxed">
                                       {q.optionExplanations?.[language]?.[userChoice] ||
                                         (language === 'pt'
-                                          ? `Esta opção está incorreta porque não responde adequadamente ao problema. A opção correta é «${q.options[language][q.correctIndex]}».`
-                                          : `This option is incorrect as it does not address the question properly. The correct choice is "${q.options[language][q.correctIndex]}".`)}
+                                          ? `Atenção: esta opção não resolve adequadamente a questão. A resposta correta é «${q.options[language][q.correctIndex]}».`
+                                          : `Note: this choice does not solve the scenario properly. The correct answer is "${q.options[language][q.correctIndex]}".`)}
                                     </p>
                                   </div>
                                 )}
 
-                                <div className="pt-1">
-                                  <p className="font-bold text-xs text-slate-700 mb-0.5">
-                                    {language === 'pt' ? '💡 Explicação do Conceito:' : '💡 Concept Explanation:'}
+                                <div className={`p-3.5 rounded-xl ${isCorrect ? 'bg-white/60 border border-emerald-200' : 'bg-white/80 border border-amber-200'}`}>
+                                  <p className="font-black text-xs text-slate-800 mb-1 flex items-center gap-1.5">
+                                    <span>💡</span>
+                                    <span>{language === 'pt' ? 'Micro-Pista do Robô TICo & Conceito-Chave:' : 'TICo Robot Clue & Key Concept:'}</span>
                                   </p>
-                                  <p className="leading-relaxed">{q.explanation?.[language]}</p>
+                                  <p className="leading-relaxed text-xs sm:text-sm text-slate-700 font-medium">
+                                    {cleanPedagogicalExplanation(q.explanation?.[language] || '', isCorrect)}
+                                  </p>
                                 </div>
                               </div>
 
                               <AudioSpeakButton
                                 id={`module-${module.id}-q-${q.id}-expl`}
-                                text={`${isCorrect ? t.correctAnswer : t.wrongAnswer}. ${
+                                text={`${
+                                  isCorrect
+                                    ? t.correctAnswer
+                                    : (language === 'pt' ? 'Resposta incorreta. Atenção à reflexão:' : 'Incorrect answer. Note:')
+                                }. ${
                                   !isCorrect && userChoice !== undefined && q.optionExplanations?.[language]?.[userChoice]
                                     ? q.optionExplanations[language][userChoice] + '. '
                                     : ''
-                                } ${q.explanation?.[language] || ''}`}
+                                } ${cleanPedagogicalExplanation(q.explanation?.[language] || '', isCorrect)}`}
                                 language={language}
                                 variant="icon"
                                 size="xs"
@@ -763,22 +782,50 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
                   </button>
                 )}
 
-                {/* Quiz Result Card */}
+                {/* Quiz Result Review Card */}
                 {submittedQuiz && (
-                  <div className="p-8 rounded-2xl bg-indigo-950 text-white text-center space-y-3">
-                    <p className="text-xs uppercase tracking-wider font-semibold text-indigo-200">{t.quizResults}</p>
-                    <div className="text-3xl sm:text-4xl font-black text-white">
-                      {calculateQuizScore().score} / {calculateQuizScore().maxScore} ({calculateQuizScore().percentage}%)
+                  <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 text-white text-center space-y-4 shadow-xl border border-slate-800">
+                    <div className="text-3xl sm:text-4xl animate-bounce">
+                      {calculateQuizScore().percentage === 100 ? '🏆' : calculateQuizScore().percentage >= 70 ? '🎉' : '💡'}
                     </div>
-                    <p className="text-sm text-indigo-200 font-medium">
-                      {calculateQuizScore().percentage >= 80 ? t.perfectScore : t.keepGoing}
-                    </p>
-                    <button
-                      onClick={onBack}
-                      className="mt-3 px-5 py-2.5 rounded-xl bg-white text-indigo-950 font-bold text-xs sm:text-sm hover:bg-slate-100 transition-colors cursor-pointer"
-                    >
-                      {t.backToTheme}
-                    </button>
+                    <div className="space-y-1">
+                      <p className="text-xs uppercase tracking-wider font-bold text-indigo-300">{t.quizResults}</p>
+                      <div className="text-3xl sm:text-4xl font-black text-white">
+                        {calculateQuizScore().score} / {calculateQuizScore().maxScore} ({calculateQuizScore().percentage}%)
+                      </div>
+                      <p className="text-xs sm:text-sm text-indigo-200 font-medium">
+                        {calculateQuizScore().percentage === 100
+                          ? (language === 'pt' ? 'Pontuação máxima atingida! 100 XP' : 'Maximum score reached! 100 XP')
+                          : calculateQuizScore().percentage >= 70
+                          ? t.perfectScore
+                          : t.keepGoing}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                      <button
+                        onClick={() => setShowResultModal(true)}
+                        className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-md transition-colors"
+                      >
+                        <Trophy className="w-4 h-4 text-amber-300" />
+                        <span>{language === 'pt' ? 'Ver Pop-Up de Resultado 🏆' : 'View Result Modal 🏆'}</span>
+                      </button>
+
+                      <button
+                        onClick={handleResetQuiz}
+                        className="px-5 py-2.5 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-200 font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer transition-colors"
+                      >
+                        <RotateCcw className="w-4 h-4 text-indigo-400" />
+                        <span>{language === 'pt' ? 'Repetir o Desafio' : 'Retry Challenge'}</span>
+                      </button>
+
+                      <button
+                        onClick={onBack}
+                        className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm transition-colors cursor-pointer shadow-md"
+                      >
+                        {t.backToTheme}
+                      </button>
+                    </div>
                   </div>
                 )}
               </>
@@ -813,7 +860,7 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
                     {t.finishModule}
                   </button>
                 ) : (
-                  <div className="p-8 rounded-2xl bg-indigo-950 text-white text-center space-y-3">
+                  <div className="p-8 rounded-2xl bg-indigo-950 text-white text-center space-y-4 shadow-xl">
                     <p className="text-xs uppercase tracking-wider font-semibold text-indigo-200">
                       {language === 'pt' ? 'Estado da Leitura' : 'Reading Status'}
                     </p>
@@ -822,19 +869,169 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
                     </div>
                     <p className="text-sm text-indigo-200 font-medium">
                       {language === 'pt'
-                        ? 'Progresso registado com sucesso. Agora podes praticar nos desafios!'
-                        : 'Progress recorded successfully. You can now practice in the challenges!'}
+                        ? 'Progresso registado com sucesso (100 XP). Agora podes praticar nos desafios!'
+                        : 'Progress recorded successfully (100 XP). You can now practice in the challenges!'}
                     </p>
-                    <button
-                      onClick={onBack}
-                      className="mt-3 px-5 py-2.5 rounded-xl bg-white text-indigo-950 font-bold text-xs sm:text-sm hover:bg-slate-100 transition-colors cursor-pointer"
-                    >
-                      {t.backToTheme}
-                    </button>
+                    <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                      <button
+                        onClick={() => setShowResultModal(true)}
+                        className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-md transition-colors"
+                      >
+                        <Trophy className="w-4 h-4 text-amber-300" />
+                        <span>{language === 'pt' ? 'Ver Pop-Up de Resultado 🏆' : 'View Result Modal 🏆'}</span>
+                      </button>
+                      <button
+                        onClick={onBack}
+                        className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm transition-colors cursor-pointer shadow-md"
+                      >
+                        {t.backToTheme}
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
             )}
+
+            {/* Completion Modal Pop-Up (Equal to other games in the app) */}
+            {showResultModal && submittedQuiz && (() => {
+              const scoreData = calculateQuizScore();
+              return (
+                <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200 overflow-y-auto">
+                  <div className="bg-white rounded-[2.5rem] border-2 border-emerald-200 shadow-2xl max-w-lg w-full p-6 sm:p-8 text-center animate-in zoom-in-95 my-auto space-y-5">
+                    {/* Big celebratory animated icon */}
+                    <div className="text-6xl animate-bounce">
+                      {!scoreData.hasQuestions || scoreData.percentage === 100
+                        ? '🏆'
+                        : scoreData.percentage >= 70
+                        ? '🎉'
+                        : '💡'}
+                    </div>
+
+                    {/* Title */}
+                    <div className="space-y-1.5">
+                      <span className="text-xs font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                        {scoreData.hasQuestions
+                          ? (language === 'pt' ? 'Quiz de Aprendizagem Concluído' : 'Learning Quiz Completed')
+                          : (language === 'pt' ? 'Tópico de Leitura Concluído' : 'Reading Topic Completed')}
+                      </span>
+                      <h2 className="text-2xl sm:text-3xl font-black text-slate-900 pt-1">
+                        {!scoreData.hasQuestions || scoreData.percentage === 100
+                          ? (language === 'pt' ? 'Excelente! 100 XP Ganhos!' : 'Excellent! 100 XP Earned!')
+                          : scoreData.percentage >= 90
+                          ? (language === 'pt' ? 'Muito Bom! Excelente Trabalho!' : 'Very Good! Great Work!')
+                          : scoreData.percentage >= 70
+                          ? (language === 'pt' ? 'Bom Trabalho! Tópico Concluído!' : 'Good Job! Topic Completed!')
+                          : scoreData.percentage >= 50
+                          ? (language === 'pt' ? 'Satisfatório! Tópico Concluído!' : 'Satisfactory! Topic Completed!')
+                          : (language === 'pt' ? 'Tentativa Concluída! Vamos Praticar!' : 'Attempt Completed! Keep Practicing!')}
+                      </h2>
+                    </div>
+
+                    {/* Stars row */}
+                    <div className="flex items-center justify-center gap-1.5 py-1">
+                      {[1, 2, 3].map((starIdx) => {
+                        const isLit =
+                          !scoreData.hasQuestions || scoreData.percentage === 100
+                            ? true
+                            : scoreData.percentage >= 70
+                            ? starIdx <= 2
+                            : starIdx === 1;
+                        return (
+                          <Star
+                            key={starIdx}
+                            className={`w-7 h-7 sm:w-8 sm:h-8 transition-transform ${
+                              isLit
+                                ? 'text-amber-400 fill-amber-400 drop-shadow-sm scale-110'
+                                : 'text-slate-200 fill-slate-100'
+                            }`}
+                          />
+                        );
+                      })}
+                    </div>
+
+                    {/* Badge Score pill */}
+                    <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-5 py-2 rounded-full font-extrabold text-sm sm:text-base border shadow-2xs ${
+                      !scoreData.hasQuestions || scoreData.percentage >= 70
+                        ? 'bg-emerald-100 border-emerald-300 text-emerald-900'
+                        : 'bg-amber-100 border-amber-300 text-amber-900'
+                    }`}>
+                      <span>{scoreData.percentage} XP</span>
+                      {scoreData.hasQuestions && (
+                        <>
+                          <span>•</span>
+                          <span>
+                            {scoreData.score} {language === 'pt' ? 'de' : 'of'} {scoreData.maxScore} {language === 'pt' ? 'Corretas' : 'Correct'}
+                          </span>
+                        </>
+                      )}
+                      <span>•</span>
+                      <span className="font-black">
+                        {scoreData.percentage}%
+                      </span>
+                    </div>
+
+                    {/* Pedagogical text description */}
+                    <p className="text-sm sm:text-base text-slate-600 max-w-md mx-auto leading-relaxed">
+                      {!scoreData.hasQuestions ? (
+                        language === 'pt' ? (
+                          <>Parabéns! Completaste a exploração de todos os passos deste conteúdo curricular. O teu progresso foi gravado com sucesso!</>
+                        ) : (
+                          <>Congratulations! You completed exploring all steps of this curricular topic. Your progress was recorded successfully!</>
+                        )
+                      ) : scoreData.percentage === 100 ? (
+                        language === 'pt' ? (
+                          <>Obtiveste <strong>100 XP</strong>! Parabéns, acertaste em todas as perguntas e dominas os conceitos deste tópico.</>
+                        ) : (
+                          <>You earned <strong>100 XP</strong>! Congratulations, you answered all questions correctly and mastered this topic.</>
+                        )
+                      ) : scoreData.percentage >= 70 ? (
+                        language === 'pt' ? (
+                          <>Muito bom trabalho! Obtiveste <strong>{scoreData.percentage} XP</strong>. Clica em "Rever Respostas com Pistas" para analisares as dicas pedagógicas do Robô TICo!</>
+                        ) : (
+                          <>Great job! You earned <strong>{scoreData.percentage} XP</strong>. Click "Review Answers with Clues" to check TICo Robot's clues!</>
+                        )
+                      ) : (
+                        language === 'pt' ? (
+                          <>Obtiveste <strong>{scoreData.percentage} XP</strong>. Clica em "Rever Respostas com Pistas" para aprenderes com as dicas do Robô TICo ou repete o desafio para alcançar os 100 XP.</>
+                        ) : (
+                          <>You scored <strong>{scoreData.percentage} XP</strong>. Review your answers to learn from TICo Robot's clues or retry to aim for 100 XP.</>
+                        )
+                      )}
+                    </p>
+
+                    {/* Action buttons matching other games */}
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                      {scoreData.hasQuestions && (
+                        <button
+                          onClick={() => setShowResultModal(false)}
+                          className="w-full sm:w-auto px-5 py-3 rounded-2xl border-2 border-indigo-200 bg-indigo-50/80 hover:bg-indigo-100 text-indigo-900 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-colors shadow-2xs"
+                        >
+                          <span>🔍</span>
+                          <span>{language === 'pt' ? 'Rever Respostas com Pistas' : 'Review Answers with Clues'}</span>
+                        </button>
+                      )}
+
+                      {scoreData.hasQuestions && (
+                        <button
+                          onClick={handleResetQuiz}
+                          className="w-full sm:w-auto px-5 py-3 rounded-2xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-2xs transition-colors"
+                        >
+                          <RotateCcw className="w-4 h-4 text-indigo-600" />
+                          <span>{language === 'pt' ? 'Repetir o Desafio' : 'Retry Challenge'}</span>
+                        </button>
+                      )}
+
+                      <button
+                        onClick={onBack}
+                        className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs sm:text-sm cursor-pointer shadow-md transition-all flex items-center justify-center gap-1.5"
+                      >
+                        <span>{t.backToTheme}</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         )}
 

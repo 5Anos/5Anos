@@ -595,7 +595,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
                 'Perigo extremo — o tablet vai avariar e queimar os circuitos de imediato'
               ],
               c: 1,
-              e: 'Muito bem! É essencial fazer pausas regulares e equilibrar o tempo de ecrã com desporto, brincadeiras ao ar livre, convívio com amigos e descanso.'
+              e: 'É essencial fazer pausas regulares e equilibrar o tempo de ecrã com desporto, brincadeiras ao ar livre, convívio com amigos e descanso para proteger a saúde e a visão.'
             },
             {
               q: 'A Leonor recebeu uma mensagem anónima a dizer: "Amanhã não há aulas na escola! Partilha esta mensagem com toda a gente!". O que deve fazer antes de partilhar?',
@@ -605,7 +605,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
                 'Alterar a mensagem para ficar mais assustadora e publicá-la nas redes sociais'
               ],
               c: 1,
-              e: 'Certíssimo! Na Internet encontramos informação não confirmada ou falsa. Devemos sempre verificar a veracidade das notícias com adultos e fontes oficiais.'
+              e: 'Na Internet circula muita informação não confirmada ou falsa. Devemos sempre verificar a veracidade das notícias com adultos e fontes oficiais antes de partilhar.'
             },
             {
               q: 'Um colega enviou ao João uma fotografia embaraçosa de outro aluno a tropeçar e pediu: "Partilha no grupo da turma para nos rirmos!". O que deve o João fazer?',
@@ -615,7 +615,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
                 'Reenviar a foto em segredo para outros colegas durante o intervalo'
               ],
               c: 0,
-              e: 'Super detetive! Respeitar a privacidade e os sentimentos dos outros é essencial. Nunca devemos divulgar fotografias ou conteúdos que possam magoar ou humilhar alguém.'
+              e: 'Respeitar a privacidade e os sentimentos dos outros é essencial. Nunca se deve divulgar fotografias ou conteúdos que possam magoar ou humilhar alguém.'
             }
           ]
         }
@@ -653,7 +653,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
                 'Guardar numa caixa fechada durante anos até ficar esquecido e estragar-se'
               ],
               c: 0,
-              e: 'Fantástico! A reutilização e doação prolongam a vida útil da tecnologia e evitam o desperdício de materiais e a criação de novo lixo.'
+              e: 'A reutilização e doação prolongam a vida útil da tecnologia, evitando o desperdício de materiais preciosos e a criação desnecessária de novo lixo.'
             },
             {
               q: 'O portátil da Matilde tem uma tecla solta e o cabo do carregador com mau contacto, mas o ecrã e o processador estão ótimos. O que é mais ecológico e económico fazer?',
@@ -663,7 +663,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
                 'Guardar o portátil numa gaveta e comprar logo outro sem tentar reparar'
               ],
               c: 0,
-              e: 'Brilhante! Reparar pequenos problemas mecânicos ou elétricos poupa matérias-primas preciosas e evita gastos desnecessários.'
+              e: 'Reparar pequenos problemas mecânicos ou elétricos poupa matérias-primas preciosas, protege o ambiente e evita gastos desnecessários.'
             },
             {
               q: 'Um telemóvel antigo com a placa eletrónica queimada avariou definitivamente e não tem qualquer reparação possível. Qual é o destino correto?',
@@ -673,7 +673,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
                 'Deitar no lixo indiferenciado com os restantes resíduos domésticos'
               ],
               c: 0,
-              e: 'Muito bem! Os equipamentos eletrónicos estragados (REEE) contêm ouro, cobre, lítio e plástico que são recuperados quando entregues no Ponto Eletrão.'
+              e: 'Os equipamentos eletrónicos avariados (REEE) contêm metais preciosos e materiais recicláveis (ouro, cobre, lítio e plástico) que devem ser entregues no Ponto Eletrão ou ecocentro para reciclagem segura.'
             },
             {
               q: 'Como podemos poupar energia elétrica e proteger o ambiente quando utilizamos o computador e o tablet no dia a dia?',
@@ -683,7 +683,7 @@ export const themeTicSociedadeData: ThemeDefinition = {
                 'Manter o ecrã ligado sem temporizador de suspensão mesmo quando não estamos no quarto'
               ],
               c: 0,
-              e: 'Excelente! Desligar equipamentos quando não estão a ser usados e retirar os carregadores das tomadas evita o consumo de energia "fantasma" e poupa o planeta.'
+              e: 'Desligar equipamentos quando não estão a ser utilizados e retirar os carregadores das tomadas evita o consumo de energia "fantasma" e poupa os recursos do planeta.'
             }
           ]
         }

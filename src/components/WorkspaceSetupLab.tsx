@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CheckSquare, Square, Sparkles, CheckCircle2, ShieldAlert, Award } from 'lucide-react';
-import sitPostureImg from '../assets/images/sit_posture_guide_1788646722404.jpg';
+import sitPostureImg from '../assets/images/sit_posture_guide_1788646722404.webp';
 import confetti from 'canvas-confetti';
 
 interface Props {
@@ -135,6 +135,8 @@ export const WorkspaceSetupLab: React.FC<Props> = ({ language = 'pt' }) => {
               <img
                 src={sitPostureImg}
                 alt="Espaço de Trabalho Organizado"
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />

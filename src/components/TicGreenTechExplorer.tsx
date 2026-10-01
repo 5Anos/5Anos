@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Trash2, RefreshCw, HeartHandshake, ArrowRight, RotateCcw } from 'lucide-react';
 import { Language } from '../types';
-import hardwareImg from '../assets/images/hardware_peripherals_3d_1788539942831.jpg';
+import hardwareImg from '../assets/images/hardware_peripherals_3d_1788539942831.webp';
 
 interface TicGreenTechExplorerProps {
   language: Language;
@@ -75,6 +75,8 @@ export const TicGreenTechExplorer: React.FC<TicGreenTechExplorerProps> = ({ lang
         <img
           src={hardwareImg}
           alt="Reciclagem e Tecnologia"
+          loading="lazy"
+          decoding="async"
           className="w-full sm:w-28 h-24 sm:h-20 object-cover rounded-xl border border-emerald-100 shrink-0"
         />
         <div className="space-y-1 text-center sm:text-left">

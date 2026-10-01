@@ -67,6 +67,20 @@ export function getQualitativeLevelWithRange(percentage: number, lang: Language 
 export const getQuizMention = getQualitativeLevel;
 export const getQuizMentionWithRange = getQualitativeLevelWithRange;
 
+/**
+ * Strips praises (e.g. "Muito bem!", "Excelente!", "Well done!") from educational explanations
+ * when an answer is INCORRECT so students are never praised for wrong answers.
+ */
+export function cleanPedagogicalExplanation(text: string, isCorrect: boolean): string {
+  if (!text) return '';
+  if (!isCorrect) {
+    return text
+      .replace(/^(Muito bem|Excelente|Fantástico|Brilhante|Parabéns|Boa escolha|Boa decisão|Certíssimo|Super detetive|Perfeito|Ótimo|Exato|Correto|Well done|Great job|Excellent|Fantastic|Brilliant|Congratulations|Super detective|Perfect|Correct|Spot on)[!.,:\s]+/i, '')
+      .trim();
+  }
+  return text.trim();
+}
+
 export function getQuizMentionBadgeStyle(percentageOrScore: number): {
   bg: string;
   text: string;

@@ -17,6 +17,7 @@ import {
   Award,
   Check,
 } from 'lucide-react';
+import { cleanPedagogicalExplanation } from '../../utils/exportUtils';
 
 interface PlanetDigitalMissionGameProps {
   language: 'pt' | 'en';
@@ -677,14 +678,14 @@ export const PlanetDigitalMissionGame: React.FC<PlanetDigitalMissionGameProps> =
               className={`rounded-2xl p-4 md:p-5 mb-6 animate-fadeIn border-2 ${
                 selectedZone === currentItem.correctZone
                   ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
-                  : 'bg-amber-50 border-amber-200 text-amber-900'
+                  : 'bg-rose-50 border-rose-300 text-rose-950'
               }`}
             >
               <div className="flex items-start gap-3">
                 {selectedZone === currentItem.correctZone ? (
                   <CheckCircle2 className="w-6 h-6 text-emerald-600 shrink-0 mt-0.5" />
                 ) : (
-                  <AlertTriangle className="w-6 h-6 text-amber-600 shrink-0 mt-0.5" />
+                  <AlertTriangle className="w-6 h-6 text-rose-600 shrink-0 mt-0.5" />
                 )}
                 <div>
                   <h4 className="font-black text-base mb-1">
@@ -693,11 +694,11 @@ export const PlanetDigitalMissionGame: React.FC<PlanetDigitalMissionGameProps> =
                         ? '🌱 Boa Decisão (+6 Pontos Planeta)!'
                         : '🌱 Great Decision (+6 Planet Points)!'
                       : language === 'pt'
-                      ? '💡 Quase! Dica Ecológica:'
-                      : '💡 Eco Tip:'}
+                      ? '❌ Destino Incorreto — Dica Ecológica:'
+                      : '❌ Incorrect Destination — Eco Tip:'}
                   </h4>
                   <p className="text-sm md:text-base leading-relaxed">
-                    {currentItem.feedback[language]}
+                    {cleanPedagogicalExplanation(currentItem.feedback[language], selectedZone === currentItem.correctZone)}
                   </p>
                 </div>
               </div>
@@ -917,11 +918,15 @@ export const PlanetDigitalMissionGame: React.FC<PlanetDigitalMissionGameProps> =
               className={`rounded-2xl p-4 md:p-5 mb-6 animate-fadeIn border-2 ${
                 quickSelected === currentQuick.correctIndex
                   ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
-                  : 'bg-amber-50 border-amber-200 text-amber-900'
+                  : 'bg-rose-50 border-rose-300 text-rose-950'
               }`}
             >
               <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-6 h-6 text-emerald-600 shrink-0 mt-0.5" />
+                {quickSelected === currentQuick.correctIndex ? (
+                  <CheckCircle2 className="w-6 h-6 text-emerald-600 shrink-0 mt-0.5" />
+                ) : (
+                  <AlertTriangle className="w-6 h-6 text-rose-600 shrink-0 mt-0.5" />
+                )}
                 <div>
                   <h4 className="font-black text-base mb-1">
                     {quickSelected === currentQuick.correctIndex
@@ -929,11 +934,11 @@ export const PlanetDigitalMissionGame: React.FC<PlanetDigitalMissionGameProps> =
                         ? '🌱 Escolha Sustentável (+10 Pontos)!'
                         : '🌱 Sustainable Choice (+10 Points)!'
                       : language === 'pt'
-                      ? '💡 Dica Ecológica:'
-                      : '💡 Eco Tip:'}
+                      ? '❌ Escolha Incorreta — Análise Ecológica:'
+                      : '❌ Incorrect Choice — Eco Analysis:'}
                   </h4>
                   <p className="text-sm md:text-base leading-relaxed">
-                    {currentQuick.feedback[language]}
+                    {cleanPedagogicalExplanation(currentQuick.feedback[language], quickSelected === currentQuick.correctIndex)}
                   </p>
                 </div>
               </div>

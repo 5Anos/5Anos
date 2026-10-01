@@ -3,6 +3,7 @@ import { ArrowLeft, CheckCircle2, XCircle, AlertTriangle, ShieldCheck, ShieldAle
 import { Language } from '../../types';
 import { translations } from '../../i18n/translations';
 import { AudioSpeakButton } from '../AudioSpeakButton';
+import { ticoFeedback } from '../../utils/ticoEvents';
 
 interface SafeOrDangerousGameProps {
   language: Language;
@@ -341,6 +342,16 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
     setSelectedOptionId(optionId);
     setAnswersRecord((prev) => ({ ...prev, [currentScenario.id]: opt.isCorrect }));
     setShowFeedback(true);
+
+    if (opt.isCorrect) {
+      ticoFeedback.triggerCorrect();
+    } else {
+      ticoFeedback.triggerWrong(
+        language === 'pt'
+          ? 'Boa tentativa! Errar é o início de aprender. Vê o diagnóstico do robô TICo! 💡'
+          : 'Good try! Making mistakes is part of learning. Check TICo’s safety clue! 💡'
+      );
+    }
   };
 
   const handleNext = () => {
@@ -519,37 +530,49 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
           {showFeedback && selectedOpt && (
             <div className="space-y-4 pt-2 animate-in fade-in">
               <div
-                className={`p-4 sm:p-5 rounded-2xl border-2 ${
+                className={`p-4 sm:p-5 rounded-2xl border-2 space-y-3 ${
                   selectedOpt.isCorrect
                     ? 'bg-emerald-50 border-emerald-300 text-emerald-950'
-                    : 'bg-rose-50 border-rose-300 text-rose-950'
+                    : 'bg-gradient-to-br from-amber-50 to-orange-50/80 border-amber-300 text-amber-950 shadow-xs'
                 }`}
               >
                 <div className="flex items-center justify-between gap-2 mb-1">
-                  <div className="flex items-center gap-2 font-black text-sm">
+                  <div className="flex items-center gap-2 font-black text-sm sm:text-base">
                     {selectedOpt.isCorrect ? (
                       <>
                         <CheckCircle2 className="w-5 h-5 text-emerald-600" />
                         <span>{language === 'pt' ? 'Decisão Exemplar!' : 'Exemplary Choice!'}</span>
                       </>
                     ) : (
-                      <>
-                        <AlertTriangle className="w-5 h-5 text-rose-600" />
-                        <span>{language === 'pt' ? 'Atenção ao Risco:' : 'Caution - Potential Risk:'}</span>
-                      </>
+                      <div className="flex items-center gap-2 text-amber-900 font-black">
+                        <span className="text-xl animate-pulse">🤖</span>
+                        <span>{language === 'pt' ? 'Boa tentativa! Errar é o início de aprender!' : 'Good try! Making mistakes is where learning begins!'}</span>
+                      </div>
                     )}
                   </div>
                   <AudioSpeakButton
                     id={`safe-expl-${currentScenario.id}-${selectedOpt.id}`}
-                    text={`${selectedOpt.isCorrect ? (language === 'pt' ? 'Decisão Exemplar!' : 'Exemplary Choice!') : (language === 'pt' ? 'Atenção ao Risco!' : 'Caution!')} ${selectedOpt.explanation[language]}`}
+                    text={`${
+                      selectedOpt.isCorrect
+                        ? (language === 'pt' ? 'Decisão Exemplar!' : 'Exemplary Choice!')
+                        : (language === 'pt' ? 'Boa tentativa! Errar é o início de aprender.' : 'Good try! Making mistakes is where learning begins.')
+                    } ${selectedOpt.explanation[language]}`}
                     language={language}
                     variant="icon"
                     size="xs"
                   />
                 </div>
-                <p className="text-xs sm:text-sm leading-relaxed font-medium">
-                  {selectedOpt.explanation[language]}
-                </p>
+
+                <div className={`p-3.5 rounded-xl ${selectedOpt.isCorrect ? 'bg-white/60 border border-emerald-200' : 'bg-white/80 border border-amber-200'}`}>
+                  <p className="font-black text-xs text-slate-800 mb-0.5 flex items-center gap-1.5">
+                    <span>💡</span>
+                    <span>{language === 'pt' ? 'Micro-Pista do Robô TICo & Diagnóstico:' : 'TICo Robot Clue & Diagnosis:'}</span>
+                  </p>
+                  <p className="text-xs sm:text-sm leading-relaxed font-medium text-slate-700">
+                    {language === 'pt' ? 'Lembra-te: ' : 'Remember: '}
+                    {selectedOpt.explanation[language]}
+                  </p>
+                </div>
               </div>
 
               <button

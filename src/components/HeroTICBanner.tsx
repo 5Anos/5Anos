@@ -2,8 +2,8 @@ import React from 'react';
 import { ArrowRight, Sparkles, Lightbulb } from 'lucide-react';
 import { User, Language } from '../types';
 import { getStudentFirstAndLastName } from '../utils/studentCredentials';
-import boyAvatarImg from '../assets/images/tic_boy_avatar_1788537870929.jpg';
-import girlAvatarImg from '../assets/images/tic_girl_avatar_1788537889222.jpg';
+import boyAvatarImg from '../assets/images/tic_boy_avatar_1788537870929.webp';
+import girlAvatarImg from '../assets/images/tic_girl_avatar_1788537889222.webp';
 
 interface HeroTICBannerProps {
   user: User | null;
@@ -123,6 +123,8 @@ export const HeroTICBanner: React.FC<HeroTICBannerProps> = ({
               <img
                 src={boyAvatarImg}
                 alt="Estudante de TIC"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover rounded-[2rem] transition-transform duration-500 group-hover:scale-105"
                 referrerPolicy="no-referrer"
               />
@@ -158,6 +160,8 @@ export const HeroTICBanner: React.FC<HeroTICBannerProps> = ({
               <img
                 src={girlAvatarImg}
                 alt="Estudante inspirada"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover rounded-[1.7rem] transition-transform duration-500 group-hover:scale-105"
                 referrerPolicy="no-referrer"
               />

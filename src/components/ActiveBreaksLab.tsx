@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Clock, Eye, Activity, Play, RotateCcw, CheckCircle2, Sparkles, Heart } from 'lucide-react';
-import activeBreaksImg from '../assets/images/active_breaks_posture_3d_1788539976910.jpg';
+import activeBreaksImg from '../assets/images/active_breaks_posture_3d_1788539976910.webp';
 import confetti from 'canvas-confetti';
 
 interface Props {
@@ -141,6 +141,8 @@ export const ActiveBreaksLab: React.FC<Props> = ({ language = 'pt' }) => {
               <img
                 src={activeBreaksImg}
                 alt="Pausas Ativas e Alongamentos"
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />

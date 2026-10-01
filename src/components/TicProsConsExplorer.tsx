@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CheckCircle2, AlertTriangle, Sparkles, HelpCircle, ArrowRight, RotateCcw } from 'lucide-react';
 import { Language } from '../types';
-import ticHeroImg from '../assets/images/tic_society_hero_1788476514973.jpg';
+import ticHeroImg from '../assets/images/tic_society_hero_1788476514973.webp';
 
 interface TicProsConsExplorerProps {
   language: Language;
@@ -90,6 +90,8 @@ export const TicProsConsExplorer: React.FC<TicProsConsExplorerProps> = ({ langua
         <img
           src={ticHeroImg}
           alt="TIC: Crianças a aprender"
+          loading="lazy"
+          decoding="async"
           className="w-full sm:w-28 h-24 sm:h-20 object-cover rounded-xl border border-indigo-100 shrink-0"
         />
         <div className="space-y-1 text-center sm:text-left">

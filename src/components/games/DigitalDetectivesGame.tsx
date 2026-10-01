@@ -17,6 +17,7 @@ import {
   ArrowLeft,
   ThumbsUp,
 } from 'lucide-react';
+import { cleanPedagogicalExplanation } from '../../utils/exportUtils';
 
 interface DigitalDetectivesGameProps {
   language: 'pt' | 'en';
@@ -477,14 +478,14 @@ export const DigitalDetectivesGame: React.FC<DigitalDetectivesGameProps> = ({
             className={`rounded-2xl p-4 md:p-5 mb-6 animate-fadeIn border-2 ${
               selectedOption === currentCase.correctIndex
                 ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
-                : 'bg-amber-50 border-amber-200 text-amber-900'
+                : 'bg-rose-50 border-rose-300 text-rose-950'
             }`}
           >
             <div className="flex items-start gap-3">
               {selectedOption === currentCase.correctIndex ? (
                 <CheckCircle2 className="w-6 h-6 text-emerald-600 shrink-0 mt-0.5" />
               ) : (
-                <AlertTriangle className="w-6 h-6 text-amber-600 shrink-0 mt-0.5" />
+                <AlertTriangle className="w-6 h-6 text-rose-600 shrink-0 mt-0.5" />
               )}
               <div>
                 <h4 className="font-black text-base mb-1">
@@ -493,11 +494,11 @@ export const DigitalDetectivesGame: React.FC<DigitalDetectivesGameProps> = ({
                       ? '🎯 Resposta Correta (+10 pontos)!'
                       : '🎯 Correct Choice (+10 points)!'
                     : language === 'pt'
-                    ? '💡 Ponto de Aprendizagem:'
-                    : '💡 Learning Insight:'}
+                    ? '❌ Escolha Incorreta — Análise do Caso:'
+                    : '❌ Incorrect Choice — Case Review:'}
                 </h4>
                 <p className="text-sm md:text-base leading-relaxed">
-                  {currentCase.feedback[language]}
+                  {cleanPedagogicalExplanation(currentCase.feedback[language], selectedOption === currentCase.correctIndex)}
                 </p>
               </div>
             </div>

@@ -225,6 +225,8 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
           <img
             src={quizGameTrophy}
             alt="Troféu TIC 3D"
+            loading="lazy"
+            decoding="async"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover rounded-2xl"
           />

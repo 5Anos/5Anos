@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { ArrowLeft, CheckCircle2, XCircle, Sparkles, Trophy, HelpCircle, ArrowRight, RotateCcw } from 'lucide-react';
 import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language, ActivityProgress } from '../../types';
+import { ticoFeedback } from '../../utils/ticoEvents';
+import { cleanPedagogicalExplanation } from '../../utils/exportUtils';
 
 interface ChallengeQuestion {
   id: string;
@@ -364,6 +366,16 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
     if (showFeedback) return;
     setSelectedAnswers((prev) => ({ ...prev, [currentIndex]: idx }));
     setShowFeedback(true);
+
+    if (idx === currentQ.correctIndex) {
+      ticoFeedback.triggerCorrect();
+    } else {
+      ticoFeedback.triggerWrong(
+        language === 'pt'
+          ? 'Boa tentativa! Errar é o início de aprender. Vê a micro-pista do TICo! 💡'
+          : 'Good try! Making mistakes is part of learning. Check TICo’s clue! 💡'
+      );
+    }
   };
 
   const handleNext = () => {
@@ -508,36 +520,72 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
           {/* Feedback section */}
           {showFeedback && (
             <div
-              className={`p-4 rounded-2xl animate-in fade-in ${
-                isCorrect ? 'bg-emerald-50 text-emerald-900 border border-emerald-200' : 'bg-amber-50 text-amber-900 border border-amber-200'
+              className={`p-4 sm:p-5 rounded-2xl animate-in fade-in space-y-3 ${
+                isCorrect
+                  ? 'bg-emerald-50 text-emerald-950 border-2 border-emerald-300'
+                  : 'bg-rose-50 text-rose-950 border-2 border-rose-300 shadow-xs'
               }`}
             >
               <div className="flex items-center justify-between gap-2 mb-1">
-                <p className="font-bold text-sm">
-                  {isCorrect
-                    ? (language === 'pt' ? '✅ Resposta Exata!' : '✅ Correct Answer!')
-                    : (language === 'pt' ? '💡 Dica Importante:' : '💡 Important Tip:')}
-                </p>
+                {isCorrect ? (
+                  <p className="font-extrabold text-sm sm:text-base text-emerald-900 flex items-center gap-2">
+                    <span>✅</span>
+                    <span>{language === 'pt' ? 'Resposta Exata!' : 'Correct Answer!'}</span>
+                  </p>
+                ) : (
+                  <div className="flex items-center gap-2 text-rose-900 font-black text-sm sm:text-base">
+                    <span>❌</span>
+                    <span>{language === 'pt' ? 'Resposta Incorreta' : 'Incorrect Answer'}</span>
+                  </div>
+                )}
                 <AudioSpeakButton
                   id={`challenge-feedback-${currentIndex}`}
-                  text={`${isCorrect ? (language === 'pt' ? 'Resposta Exata.' : 'Correct answer.') : (language === 'pt' ? 'Dica importante.' : 'Important tip.')} ${currentQ.explanation[language]}`}
+                  text={`${
+                    isCorrect
+                      ? (language === 'pt' ? 'Resposta Exata.' : 'Correct answer.')
+                      : (language === 'pt' ? `Resposta incorreta. A opção correta é ${currentQ.options[language][currentQ.correctIndex]}.` : `Incorrect answer. The correct option is ${currentQ.options[language][currentQ.correctIndex]}.`)
+                  } ${cleanPedagogicalExplanation(currentQ.explanation[language], isCorrect)}`}
                   language={language}
                   variant="icon"
                   size="xs"
                 />
               </div>
-              <p className="text-xs sm:text-sm">{currentQ.explanation[language]}</p>
-              <button
-                onClick={handleNext}
-                className="mt-4 px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-xs"
-              >
-                <span>
-                  {currentIndex + 1 < challenge.questions.length
-                    ? (language === 'pt' ? 'Próxima Pergunta' : 'Next Question')
-                    : (language === 'pt' ? 'Ver Resultados' : 'View Results')}
-                </span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+
+              {!isCorrect && (
+                <div className="p-3 rounded-xl bg-white/95 border border-rose-200 text-rose-950 text-xs sm:text-sm font-semibold shadow-2xs">
+                  <span className="text-rose-800 font-bold block mb-0.5">
+                    {language === 'pt' ? 'A opção correta é:' : 'The correct option is:'}
+                  </span>
+                  <span className="text-emerald-900 font-black">
+                    «{currentQ.options[language][currentQ.correctIndex]}»
+                  </span>
+                </div>
+              )}
+
+              <div className={`p-3.5 rounded-xl ${isCorrect ? 'bg-white/60 border border-emerald-200' : 'bg-white/90 border border-slate-200 text-slate-800'}`}>
+                <p className="font-black text-xs text-slate-900 mb-1 flex items-center gap-1.5">
+                  <span>💡</span>
+                  <span>{language === 'pt' ? 'Explicação Pedagógica:' : 'Educational Explanation:'}</span>
+                </p>
+                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+                  {cleanPedagogicalExplanation(currentQ.explanation[language], isCorrect)}
+                </p>
+              </div>
+
+              <div className="flex justify-end pt-2">
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-xs transition-colors"
+                >
+                  <span>
+                    {currentIndex + 1 < challenge.questions.length
+                      ? (language === 'pt' ? 'Próxima Pergunta' : 'Next Question')
+                      : (language === 'pt' ? 'Ver Resultados' : 'View Results')}
+                  </span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           )}
         </div>

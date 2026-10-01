@@ -233,6 +233,8 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
             <img
               src={themeImg}
               alt={theme.title[language]}
+              loading="lazy"
+              decoding="async"
               referrerPolicy="no-referrer"
               className="w-full h-40 sm:h-48 md:h-56 object-cover rounded-2xl shadow-inner transition-transform duration-500 group-hover:scale-105"
             />
@@ -732,6 +734,8 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                         <img
                           src={chalImg}
                           alt={chal.title[language]}
+                          loading="lazy"
+                          decoding="async"
                           referrerPolicy="no-referrer"
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108"
                         />

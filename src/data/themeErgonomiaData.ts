@@ -361,7 +361,7 @@ export const themeErgonomiaData: ThemeDefinition = {
             {
               s: 'Quando estás a trabalhar ao computador durante muito tempo, fazer pequenas pausas para levantar, esticar o corpo e descansar os olhos ajuda a manter a concentração.',
               a: true,
-              e: 'Boa escolha! Pausas regulares de 3 a 5 minutos relaxam os músculos e previnem o cansaço visual e mental.'
+              e: 'Pausas regulares de 3 a 5 minutos relaxam os músculos e previnem o cansaço visual e mental.'
             },
             {
               s: 'Se o monitor estiver demasiado baixo e tiveres de inclinar o pescoço para baixo, deves elevar o ecrã com um suporte firme até o topo ficar ao nível dos olhos.',
@@ -420,7 +420,7 @@ export const themeErgonomiaData: ThemeDefinition = {
                 'Tocar no ecrã continuamente para medir a temperatura do vidro'
               ],
               c: 1,
-              e: 'Boa escolha! A distância aproximada de um braço esticado protege a vista do cansaço e permite ver todo o conteúdo com nitidez.'
+              e: 'A distância aproximada de um braço esticado protege a vista do cansaço e permite ver todo o conteúdo com nitidez.'
             },
             {
               q: 'Ao escrever no teclado, a Inês apoia a base das palmas no bordo afiado da mesa e dobra os pulsos muito para cima. O que pode fazer para melhorar?',
@@ -431,7 +431,7 @@ export const themeErgonomiaData: ThemeDefinition = {
                 'Apoiar todo o peso do peito sobre o teclado enquanto escreve'
               ],
               c: 2,
-              e: 'Exato! Pulsos direitos e alinhados numa linha reta reduzem a tensão nas articulações ao digitar.'
+              e: 'Manter os pulsos direitos e alinhados numa linha reta reduz a tensão nas articulações ao digitar.'
             },
             {
               q: 'O sol da tarde está a bater na janela atrás das costas do Pedro, criando um reflexo muito brilhante no monitor que não o deixa ler. O que deve fazer?',
@@ -442,7 +442,7 @@ export const themeErgonomiaData: ThemeDefinition = {
                 'Trabalhar de olhos semicerrados forçando a visão'
               ],
               c: 1,
-              e: 'Boa decisão! A luz natural deve vir de lado para iluminar o espaço sem provocar reflexos diretos no monitor.'
+              e: 'A luz natural deve vir de lado para iluminar o espaço sem provocar reflexos diretos no monitor nem encandeamento.'
             }
           ]
         }

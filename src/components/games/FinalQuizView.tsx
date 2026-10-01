@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { ArrowLeft, CheckCircle2, AlertCircle, RefreshCw, Award, Sparkles, BookOpen, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, AlertCircle, RefreshCw, Award, Sparkles, BookOpen, ShieldCheck, Zap, RotateCcw, Trophy, Star } from 'lucide-react';
 import { QuizQuestion, Language, ActivityProgress } from '../../types';
 import { translations } from '../../i18n/translations';
-import { getQuizMention, getQuizMentionBadgeStyle } from '../../utils/exportUtils';
+import { getQuizMention, getQuizMentionBadgeStyle, cleanPedagogicalExplanation } from '../../utils/exportUtils';
 import { AudioSpeakButton } from '../AudioSpeakButton';
+import { ticoFeedback } from '../../utils/ticoEvents';
+import { soundEffects } from '../../utils/soundEffects';
 
 interface FinalQuizViewProps {
   themeTitle: string;
@@ -31,6 +33,7 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
 }) => {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [showResultModal, setShowResultModal] = useState(false);
 
   // Determinar se já existe uma 1.ª tentativa registada como avaliação oficial
   const officialEvaluationScore = existingProgress?.firstAttemptScore ??
@@ -91,6 +94,7 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
 
   const handleSubmit = () => {
     setSubmitted(true);
+    setShowResultModal(true);
     const { score, maxScore, percentage } = calculateScore();
 
     // Collect student selected answers with explicit option text for server grading
@@ -109,6 +113,21 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
     }
     setAttemptCount((prev) => prev + 1);
 
+    if (percentage === 100) {
+      soundEffects.playVictory();
+      ticoFeedback.triggerQuizPerfect();
+    } else if (percentage >= 70) {
+      soundEffects.playSuccess();
+      ticoFeedback.triggerCorrect();
+    } else {
+      soundEffects.playAlert();
+      ticoFeedback.triggerWrong(
+        language === 'pt'
+          ? 'Não desanimes! Dá uma vista de olhos às pistas pedagógicas abaixo para aprenderes cada conceito! 💡'
+          : 'Keep going! Review each pedagogical clue below to master the concepts! 💡'
+      );
+    }
+
     // Guardar progresso: 1.ª tentativa = avaliação; tentativas seguintes = treino. Sem XP atribuídos.
     onFinish(percentage, 100, percentage, answersPayload);
   };
@@ -116,6 +135,7 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
   const handleRetry = () => {
     setSelectedAnswers({});
     setSubmitted(false);
+    setShowResultModal(false);
     setShuffledQuestions(
       questions.map((q) => {
         const optsPt = q.options.pt;
@@ -208,6 +228,125 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
         {/* Ambient geometric blur */}
         <div className="absolute right-[-20px] top-[-20px] w-48 h-48 bg-indigo-600/30 rounded-full blur-3xl pointer-events-none" />
       </div>
+
+      {/* 🏆 Quiz de Aprendizagem Completion Pop-Up Modal */}
+      {showResultModal && submitted && (() => {
+        const currentMention = getQuizMention(result.percentage, language);
+        const badgeStyle = getQuizMentionBadgeStyle(result.percentage);
+        const officialScoreToDisplay = wasFirstAttemptOnStart ? result.percentage : (recordedOfficialScore ?? result.percentage);
+        const officialMention = getQuizMention(officialScoreToDisplay, language);
+
+        return (
+          <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200 overflow-y-auto">
+            <div className="bg-white rounded-[2.5rem] border-2 border-indigo-200 shadow-2xl max-w-lg w-full p-6 sm:p-8 text-center animate-in zoom-in-95 my-auto space-y-5">
+              <div className="text-6xl animate-bounce">
+                {badgeStyle.emoji}
+              </div>
+
+              <div className="space-y-1.5">
+                <span className="text-xs font-black uppercase tracking-wider text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
+                  {language === 'pt' ? `Tema ${themeNumber} • Quiz de Aprendizagem Concluído` : `Theme ${themeNumber} • Learning Quiz Completed`}
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-black text-slate-900 pt-1">
+                  {result.percentage === 100
+                    ? (language === 'pt' ? 'Excelente! Pontuação Máxima!' : 'Excellent! Perfect Score!')
+                    : result.percentage >= 90
+                    ? (language === 'pt' ? 'Muito Bom! Excelente Trabalho!' : 'Very Good! Great Work!')
+                    : result.percentage >= 70
+                    ? (language === 'pt' ? 'Bom Trabalho! Quiz Concluído!' : 'Good Job! Quiz Completed!')
+                    : result.percentage >= 50
+                    ? (language === 'pt' ? 'Satisfatório! Quiz Concluído!' : 'Satisfactory! Quiz Completed!')
+                    : (language === 'pt' ? 'Tentativa Concluída! Vamos Praticar!' : 'Attempt Completed! Keep Practicing!')}
+                </h2>
+              </div>
+
+              <div>
+                <div className={`inline-block px-6 py-2.5 rounded-2xl text-2xl sm:text-3xl font-black border shadow-2xs mb-2 ${badgeStyle.pillClass}`}>
+                  {currentMention}
+                </div>
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-indigo-50 border border-indigo-200 text-indigo-900 mx-auto flex-wrap justify-center">
+                  <span>{result.score} de {result.maxScore} Respostas Corretas</span>
+                  <span>•</span>
+                  <span>{result.percentage}%</span>
+                </div>
+              </div>
+
+              {/* Assessment Explanation */}
+              <div className="text-left text-xs sm:text-sm">
+                {wasFirstAttemptOnStart ? (
+                  <div className="p-3.5 rounded-2xl bg-indigo-50 border border-indigo-200 text-indigo-950 space-y-1">
+                    <div className="flex items-center gap-2 font-black text-indigo-900">
+                      <ShieldCheck className="w-4 h-4 text-indigo-600 shrink-0" />
+                      <span>
+                        {language === 'pt'
+                          ? '1.ª Tentativa Registada como Avaliação Oficial'
+                          : '1st Attempt Recorded as Official Grade'}
+                      </span>
+                    </div>
+                    <p className="text-slate-700 leading-relaxed text-xs">
+                      {language === 'pt' ? (
+                        <>
+                          A tua primeira tentativa foi gravada como nota oficial com a menção:{' '}
+                          <strong className="font-black text-indigo-900">{currentMention}</strong>.
+                        </>
+                      ) : (
+                        <>
+                          Your 1st attempt was recorded as official grade with mention:{' '}
+                          <strong className="font-black text-indigo-900">{currentMention}</strong>.
+                        </>
+                      )}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 space-y-1">
+                    <p className="font-bold text-slate-900 text-xs flex items-center gap-1.5">
+                      <ShieldCheck className="w-4 h-4 text-indigo-600" />
+                      <span>{language === 'pt' ? `Tentativa de Treino ${attemptCount}` : `Practice Attempt ${attemptCount}`}</span>
+                    </p>
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      {language === 'pt' ? (
+                        <>
+                          Nota oficial registada da 1.ª tentativa: <strong className="text-indigo-950 font-bold">{officialMention}</strong>.
+                        </>
+                      ) : (
+                        <>
+                          Official recorded grade from 1st attempt: <strong className="text-indigo-950 font-bold">{officialMention}</strong>.
+                        </>
+                      )}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Action buttons */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                <button
+                  onClick={() => setShowResultModal(false)}
+                  className="w-full sm:w-auto px-5 py-3 rounded-2xl border-2 border-indigo-200 bg-indigo-50/80 hover:bg-indigo-100 text-indigo-900 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-colors shadow-2xs"
+                >
+                  <span>🔍</span>
+                  <span>{language === 'pt' ? 'Rever Respostas com Pistas' : 'Review Answers with Clues'}</span>
+                </button>
+
+                <button
+                  onClick={handleRetry}
+                  className="w-full sm:w-auto px-5 py-3 rounded-2xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-2xs transition-colors"
+                >
+                  <RotateCcw className="w-4 h-4 text-indigo-600" />
+                  <span>{language === 'pt' ? 'Repetir o Quiz (Treino)' : 'Retake Quiz (Practice)'}</span>
+                </button>
+
+                <button
+                  onClick={onBack}
+                  className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs sm:text-sm cursor-pointer shadow-md transition-all flex items-center justify-center gap-1.5"
+                >
+                  <span>{t.backToTheme}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Results banner if submitted */}
       {submitted && (() => {
@@ -324,7 +463,14 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
               </div>
             </div>
 
-            <div className="flex items-center justify-center gap-3 pt-2">
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              <button
+                onClick={() => setShowResultModal(true)}
+                className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-md transition-colors"
+              >
+                <Trophy className="w-4 h-4 text-amber-300" />
+                <span>{language === 'pt' ? 'Ver Pop-Up de Resultado 🏆' : 'View Result Modal 🏆'}</span>
+              </button>
               <button
                 onClick={handleRetry}
                 className="px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-2xs transition-colors"
@@ -334,7 +480,7 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
               </button>
               <button
                 onClick={onBack}
-                className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm cursor-pointer shadow-xs transition-colors"
+                className="px-6 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 font-bold text-xs sm:text-sm cursor-pointer shadow-xs transition-colors"
               >
                 {t.backToTheme}
               </button>
@@ -405,45 +551,62 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
               </div>
 
               {submitted && (
-                <div className={`mt-3 p-4 rounded-xl text-xs sm:text-sm sm:ml-10 space-y-2 ${
-                  isCorrect ? 'bg-emerald-100/70 text-emerald-950 border border-emerald-200' : 'bg-rose-50 text-rose-950 border border-rose-200'
+                <div className={`mt-3 p-4 sm:p-5 rounded-2xl text-xs sm:text-sm sm:ml-10 space-y-3 ${
+                  isCorrect
+                    ? 'bg-emerald-100/70 text-emerald-950 border-2 border-emerald-300'
+                    : 'bg-gradient-to-br from-amber-50 to-orange-50/80 text-amber-950 border-2 border-amber-300 shadow-xs'
                 }`}>
                   <div className="flex items-start justify-between gap-3">
-                    <div className="space-y-2 flex-1">
-                      <p className="font-extrabold text-sm flex items-center gap-1.5">
-                        <span>{isCorrect ? '✅' : '❌'}</span>
-                        <span>{isCorrect ? t.correctAnswer : t.wrongAnswer}</span>
-                      </p>
+                    <div className="space-y-2.5 flex-1">
+                      {isCorrect ? (
+                        <p className="font-extrabold text-sm sm:text-base flex items-center gap-2 text-emerald-900">
+                          <span>✅</span>
+                          <span>{t.correctAnswer}</span>
+                        </p>
+                      ) : (
+                        <div className="flex items-center gap-2 text-rose-800 font-black text-sm sm:text-base">
+                          <span className="text-xl">❌</span>
+                          <span>{language === 'pt' ? 'Resposta Incorreta' : 'Incorrect Answer'}</span>
+                        </div>
+                      )}
 
                       {!isCorrect && userChoice !== undefined && (
-                        <div className="p-3 rounded-lg bg-rose-100/80 border border-rose-300 text-rose-950 font-medium space-y-1">
-                          <p className="font-bold text-xs uppercase tracking-wide text-rose-900">
-                            {language === 'pt' ? `A tua escolha: «${q.options[language][userChoice]}»` : `Your choice: "${q.options[language][userChoice]}"`}
+                        <div className="p-3.5 rounded-xl bg-amber-100/90 border border-amber-300 text-amber-950 font-medium space-y-1">
+                          <p className="font-bold text-xs uppercase tracking-wide text-amber-900 flex items-center gap-1.5">
+                            <span>🔍</span>
+                            <span>{language === 'pt' ? `A tua seleção: «${q.options[language][userChoice]}»` : `Your selection: "${q.options[language][userChoice]}"`}</span>
                           </p>
-                          <p className="text-xs sm:text-sm">
+                          <p className="text-xs sm:text-sm leading-relaxed">
                             {q.optionExplanations?.[language]?.[userChoice] ||
                               (language === 'pt'
-                                ? `Esta opção está incorreta porque não responde adequadamente à situação do problema. A resposta correta é «${q.options[language][q.correctIndex]}».`
-                                : `This option is incorrect as it does not solve the scenario appropriately. The correct answer is "${q.options[language][q.correctIndex]}".`)}
+                                ? `Atenção: esta opção não resolve adequadamente o desafio. A solução correta e recomendada é «${q.options[language][q.correctIndex]}».`
+                                : `Note: this choice does not solve the scenario. The correct and recommended choice is "${q.options[language][q.correctIndex]}".`)}
                           </p>
                         </div>
                       )}
 
-                      <div className="pt-1">
-                        <p className="font-bold text-xs text-slate-700 mb-0.5">
-                          {language === 'pt' ? '💡 Resposta Correta e Explicação do Conceito:' : '💡 Correct Answer & Concept Explanation:'}
+                      <div className={`p-3.5 rounded-xl ${isCorrect ? 'bg-white/60 border border-emerald-200' : 'bg-white/80 border border-amber-200'}`}>
+                        <p className="font-black text-xs text-slate-800 mb-1 flex items-center gap-1.5">
+                          <span>💡</span>
+                          <span>{language === 'pt' ? 'Micro-Pista do Robô TICo & Conceito-Chave:' : 'TICo Robot Clue & Key Concept:'}</span>
                         </p>
-                        <p className="leading-relaxed">{q.explanation[language]}</p>
+                        <p className="leading-relaxed text-xs sm:text-sm text-slate-700 font-medium">
+                          {cleanPedagogicalExplanation(q.explanation[language], isCorrect)}
+                        </p>
                       </div>
                     </div>
 
                     <AudioSpeakButton
                       id={`finalquiz-expl-${q.id}`}
-                      text={`${isCorrect ? t.correctAnswer : t.wrongAnswer}. ${
+                      text={`${
+                        isCorrect
+                          ? t.correctAnswer
+                          : (language === 'pt' ? 'Resposta incorreta. Atenção à pista pedagógica:' : 'Incorrect answer. Pay attention to the pedagogical clue:')
+                      }. ${
                         !isCorrect && userChoice !== undefined && q.optionExplanations?.[language]?.[userChoice]
                           ? q.optionExplanations[language][userChoice] + '. '
                           : ''
-                      } ${q.explanation[language]}`}
+                      } ${cleanPedagogicalExplanation(q.explanation[language], isCorrect)}`}
                       language={language}
                       variant="icon"
                       size="xs"
@@ -456,8 +619,8 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
         })}
       </div>
 
-      {/* Submit Button */}
-      {!submitted && (
+      {/* Submit Button or Bottom Review Controls */}
+      {!submitted ? (
         <div className="mt-8 pt-4 border-t border-slate-200">
           <button
             disabled={!allAnswered}
@@ -466,6 +629,29 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
           >
             <Sparkles className="w-5 h-5" />
             <span>{language === 'pt' ? 'Submeter Respostas e Avaliar' : 'Submit Answers & Evaluate'}</span>
+          </button>
+        </div>
+      ) : (
+        <div className="mt-8 pt-4 border-t border-slate-200 flex flex-wrap items-center justify-center gap-3">
+          <button
+            onClick={() => setShowResultModal(true)}
+            className="px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm flex items-center gap-2 cursor-pointer shadow-md transition-colors"
+          >
+            <Trophy className="w-4 h-4 text-amber-300" />
+            <span>{language === 'pt' ? 'Ver Pop-Up de Resultado 🏆' : 'View Result Modal 🏆'}</span>
+          </button>
+          <button
+            onClick={handleRetry}
+            className="px-5 py-3 rounded-2xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-sm flex items-center gap-2 cursor-pointer shadow-2xs transition-colors"
+          >
+            <RotateCcw className="w-4 h-4 text-indigo-600" />
+            <span>{language === 'pt' ? 'Repetir o Quiz (Treino)' : 'Retake Quiz (Practice)'}</span>
+          </button>
+          <button
+            onClick={onBack}
+            className="px-6 py-3 rounded-2xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-sm cursor-pointer shadow-2xs transition-colors"
+          >
+            {t.backToTheme}
           </button>
         </div>
       )}

@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { api } from '../services/api';
 import { Language } from '../types';
-import citationBlocksImg from '../assets/images/citation_blocks_art_1788807180640.jpg';
+import citationBlocksImg from '../assets/images/citation_blocks_art_1788807180640.webp';
 
 interface CitationSimulatorProps {
   language?: Language;
@@ -313,6 +313,8 @@ export const CitationSimulator: React.FC<CitationSimulatorProps> = ({
           <img
             src={citationBlocksImg}
             alt={language === 'pt' ? 'Blocos de citação' : 'Citation blocks'}
+            loading="lazy"
+            decoding="async"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover"
           />

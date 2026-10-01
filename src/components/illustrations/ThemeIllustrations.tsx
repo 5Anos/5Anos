@@ -397,6 +397,8 @@ export const ThemeIllustration: React.FC<{ themeId: string; className?: string; 
     <img
       src={imageUrl}
       alt={alt}
+      loading="lazy"
+      decoding="async"
       referrerPolicy="no-referrer"
       className={`${className} object-cover`}
     />

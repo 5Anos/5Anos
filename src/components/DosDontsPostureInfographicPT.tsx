@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { ZoomIn, ZoomOut, Maximize2, X } from 'lucide-react';
-import postureWrongRed from '../assets/images/posture_wrong_red.jpg';
-import postureCorrectGreen from '../assets/images/posture_correct_green.jpg';
-import dosDontsPosture from '../assets/images/dos_donts_posture_1788646816497.jpg';
+import postureWrongRed from '../assets/images/posture_wrong_red.webp';
+import postureCorrectGreen from '../assets/images/posture_correct_green.webp';
+import dosDontsPosture from '../assets/images/dos_donts_posture_1788646816497.webp';
 
 export const DosDontsPostureInfographicPT: React.FC = () => {
   const [zoomLevel, setZoomLevel] = useState<number>(1);
@@ -36,6 +36,8 @@ export const DosDontsPostureInfographicPT: React.FC = () => {
           <img
             src={postureWrongRed}
             alt="Postura incorreta na área vermelha"
+            loading="lazy"
+            decoding="async"
             referrerPolicy="no-referrer"
             className="w-auto h-auto max-h-72 sm:max-h-80 object-contain rounded-lg group-hover:scale-105 transition-transform duration-500 shadow-sm"
           />
@@ -98,6 +100,8 @@ export const DosDontsPostureInfographicPT: React.FC = () => {
           <img
             src={postureCorrectGreen}
             alt="Postura correta na área verde"
+            loading="lazy"
+            decoding="async"
             referrerPolicy="no-referrer"
             className="w-auto h-auto max-h-72 sm:max-h-80 object-contain rounded-lg group-hover:scale-105 transition-transform duration-500 shadow-sm"
           />

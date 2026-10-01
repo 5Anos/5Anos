@@ -3,6 +3,8 @@ import { ArrowLeft, CheckCircle2, RotateCcw, ShieldCheck, Check, X, KeyRound, De
 import { PostureCorrectionSimulator } from '../PostureCorrectionSimulator';
 import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language, ActivityProgress } from '../../types';
+import { ticoFeedback } from '../../utils/ticoEvents';
+import { cleanPedagogicalExplanation } from '../../utils/exportUtils';
 
 interface GenericHtmlGameRunnerProps {
   gameData: {
@@ -162,6 +164,20 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
   // TF Handler
   const handleTfSelect = (idx: number, val: boolean) => {
     setAnswers((prev) => ({ ...prev, [idx]: val }));
+    const items = data.items || data.questions || [];
+    const it = items[idx];
+    if (it) {
+      const expected = it.a !== undefined ? it.a : it.isTrue;
+      if (val === expected) {
+        ticoFeedback.triggerCorrect();
+      } else {
+        ticoFeedback.triggerWrong(
+          language === 'pt'
+            ? 'Boa tentativa! Errar é o início de aprender. Lê a micro-pista do TICo! 💡'
+            : 'Good try! Making mistakes is where learning begins. Check TICo’s clue! 💡'
+        );
+      }
+    }
   };
 
   const handleTfFinish = () => {
@@ -182,6 +198,18 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
   const handleMcSelect = (optIdx: number) => {
     const nextAnswers = [...mcAnswers, optIdx];
     setMcAnswers(nextAnswers);
+    const q = shuffledQuestions[mcIndex];
+    if (q) {
+      if (optIdx === q.c) {
+        ticoFeedback.triggerCorrect();
+      } else {
+        ticoFeedback.triggerWrong(
+          language === 'pt'
+            ? 'Boa tentativa! Errar é o início de aprender. Vê a micro-pista do TICo! 💡'
+            : 'Good try! Making mistakes is where learning begins. See TICo’s clue! 💡'
+        );
+      }
+    }
   };
 
   const handleMcNext = () => {
@@ -349,20 +377,43 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                       </div>
                     </div>
                     {revealed && (
-                      <div className={`text-xs p-2.5 rounded-xl font-medium flex items-start justify-between gap-2 ${ans === expectedAnswer ? 'bg-emerald-100 text-emerald-900' : 'bg-rose-100 text-rose-900'}`}>
-                        <div>
-                          {ans === expectedAnswer
-                            ? (language === 'pt' ? '✅ Correto! ' : '✅ Correct! ')
-                            : (language === 'pt' ? '❌ Incorreto. ' : '❌ Incorrect. ')}
-                          {explanationText}
+                      <div className={`text-xs p-3.5 rounded-2xl font-medium space-y-2 border ${
+                        ans === expectedAnswer
+                          ? 'bg-emerald-100/80 border-emerald-300 text-emerald-950'
+                          : 'bg-rose-50 border-rose-300 text-rose-950 shadow-xs'
+                      }`}>
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="space-y-1.5 flex-1">
+                            {ans === expectedAnswer ? (
+                              <p className="font-extrabold text-emerald-900 flex items-center gap-1.5 text-xs sm:text-sm">
+                                <span>✅</span>
+                                <span>{language === 'pt' ? 'Resposta Correta!' : 'Correct Answer!'}</span>
+                              </p>
+                            ) : (
+                              <p className="font-extrabold text-rose-900 flex items-center gap-1.5 text-xs sm:text-sm">
+                                <span>❌</span>
+                                <span>{language === 'pt' ? 'Resposta Incorreta' : 'Incorrect Answer'}</span>
+                              </p>
+                            )}
+
+                            <p className="text-xs text-slate-800 leading-relaxed font-medium">
+                              <span className="font-bold text-slate-900">💡 {language === 'pt' ? 'Explicação:' : 'Explanation:'} </span>
+                              {cleanPedagogicalExplanation(explanationText, ans === expectedAnswer)}
+                            </p>
+                          </div>
+
+                          <AudioSpeakButton
+                            id={`tf-feedback-${i}`}
+                            text={`${
+                              ans === expectedAnswer
+                                ? (language === 'pt' ? 'Resposta correta.' : 'Correct answer.')
+                                : (language === 'pt' ? 'Resposta incorreta.' : 'Incorrect answer.')
+                            } ${cleanPedagogicalExplanation(explanationText, ans === expectedAnswer)}`}
+                            language={language}
+                            variant="icon"
+                            size="xs"
+                          />
                         </div>
-                        <AudioSpeakButton
-                          id={`tf-feedback-${i}`}
-                          text={`${ans === expectedAnswer ? (language === 'pt' ? 'Correto.' : 'Correct.') : (language === 'pt' ? 'Incorreto.' : 'Incorrect.')} ${explanationText}`}
-                          language={language}
-                          variant="icon"
-                          size="xs"
-                        />
                       </div>
                     )}
                   </div>
@@ -532,9 +583,9 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                   <div className={`p-4 sm:p-5 rounded-2xl border-2 text-sm sm:text-base font-semibold flex items-start justify-between gap-3 shadow-xs ${
                     chosen === q.c
                       ? 'bg-emerald-50 border-emerald-300 text-emerald-950'
-                      : 'bg-amber-50 border-amber-300 text-amber-950'
+                      : 'bg-rose-50 border-rose-300 text-rose-950'
                   }`}>
-                    <div className="space-y-1 flex-1">
+                    <div className="space-y-2.5 flex-1">
                       <div className="font-extrabold flex items-center gap-2 text-base">
                         {chosen === q.c ? (
                           <span className="text-emerald-700 flex items-center gap-1.5">
@@ -542,20 +593,42 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                             <span>{language === 'pt' ? 'Excelente Decisão!' : 'Excellent Decision!'}</span>
                           </span>
                         ) : (
-                          <span className="text-amber-800 flex items-center gap-1.5">
-                            <Sparkles className="w-5 h-5 text-amber-600" />
-                            <span>{language === 'pt' ? 'Atenção ao Risco:' : 'Pay Attention to Risk:'}</span>
+                          <span className="text-rose-700 flex items-center gap-1.5">
+                            <X className="w-5 h-5 text-rose-600 stroke-[3]" />
+                            <span>{language === 'pt' ? 'Resposta Incorreta' : 'Incorrect Answer'}</span>
                           </span>
                         )}
                       </div>
-                      <p className="text-xs sm:text-sm text-slate-800 leading-relaxed pt-1">
-                        {q.e}
-                      </p>
+
+                      {chosen !== q.c && (
+                        <div className="p-3 rounded-xl bg-white/95 border border-rose-200 text-rose-950 text-xs sm:text-sm font-semibold shadow-2xs">
+                          <span className="text-rose-800 font-bold block mb-0.5">
+                            {language === 'pt' ? 'A opção correta é:' : 'The correct option is:'}
+                          </span>
+                          <span className="text-emerald-900 font-black">
+                            «{q.opts[q.c]}»
+                          </span>
+                        </div>
+                      )}
+
+                      <div className={`p-3 rounded-xl ${chosen === q.c ? 'bg-white/80 border border-emerald-200' : 'bg-white/90 border border-slate-200'}`}>
+                        <p className="font-black text-xs text-slate-800 mb-0.5 flex items-center gap-1.5">
+                          <span>💡</span>
+                          <span>{language === 'pt' ? 'Explicação Pedagógica:' : 'Educational Explanation:'}</span>
+                        </p>
+                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+                          {cleanPedagogicalExplanation(q.e, chosen === q.c)}
+                        </p>
+                      </div>
                     </div>
 
                     <AudioSpeakButton
                       id={`mc-expl-${mcIndex}`}
-                      text={`${chosen === q.c ? (language === 'pt' ? 'Excelente decisão.' : 'Excellent decision.') : (language === 'pt' ? 'Atenção ao risco.' : 'Pay attention to risk.')} ${q.e}`}
+                      text={`${
+                        chosen === q.c
+                          ? (language === 'pt' ? 'Excelente decisão.' : 'Excellent decision.')
+                          : (language === 'pt' ? `Resposta incorreta. A opção correta é: ${q.opts[q.c]}.` : `Incorrect answer. The correct option is: ${q.opts[q.c]}.`)
+                      } ${cleanPedagogicalExplanation(q.e, chosen === q.c)}`}
                       language={language}
                       variant="icon"
                       size="sm"
@@ -657,6 +730,8 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                       <img
                         src={image}
                         alt=""
+                        loading="lazy"
+                        decoding="async"
                         className="w-11 h-11 rounded-xl object-cover border border-slate-200/80 shrink-0 shadow-2xs"
                       />
                     );

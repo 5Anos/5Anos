@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { CheckCircle2, XCircle, RotateCcw, Sparkles, Sliders, ShieldCheck, Image as ImageIcon, Gamepad2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import correctPostureGuide from '../assets/images/correct_posture_guide_1788640792425.jpg';
-import boyAvatarImg from '../assets/images/tic_boy_avatar_1788537870929.jpg';
-import girlAvatarImg from '../assets/images/tic_girl_avatar_1788537889222.jpg';
+import correctPostureGuide from '../assets/images/correct_posture_guide_1788640792425.webp';
+import boyAvatarImg from '../assets/images/tic_boy_avatar_1788537870929.webp';
+import girlAvatarImg from '../assets/images/tic_girl_avatar_1788537889222.webp';
 import { DosDontsPostureInfographicPT } from './DosDontsPostureInfographicPT';
 
 interface PostureState {
@@ -822,7 +822,7 @@ export const PostureCorrectionSimulator: React.FC<Props> = ({ language = 'pt', o
             {isPerfect ? (
               <div className="flex items-center gap-3 p-1">
                 <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-white shadow-md shrink-0 animate-bounce">
-                  <img src={boyAvatarImg} alt="Aluno Feliz" className="w-full h-full object-cover" />
+                  <img src={boyAvatarImg} alt="Aluno Feliz" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 text-left space-y-0.5">
                   <div className="flex items-center gap-1.5 font-black text-sm sm:text-base">

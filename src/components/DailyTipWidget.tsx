@@ -23,6 +23,7 @@ import { api } from '../services/api';
 import { AudioSpeakButton } from './AudioSpeakButton';
 import { SabiasQueBadge } from './SabiasQueBadge';
 import { getStudentFirstAndLastName } from '../utils/studentCredentials';
+import { cleanPedagogicalExplanation } from '../utils/exportUtils';
 
 interface DailyTipWidgetProps {
   user: User | null;
@@ -677,7 +678,7 @@ export const DailyTipWidget: React.FC<DailyTipWidgetProps> = ({
                             <span className="font-bold">
                               {language === 'pt' ? '💡 Explicação da Resposta Correta: ' : '💡 Correct Answer Explanation: '}
                             </span>
-                            <span>{todayTip.explanation[language]}</span>
+                            <span>{cleanPedagogicalExplanation(todayTip.explanation[language], savedAnswer?.isCorrect ?? false)}</span>
                           </div>
                         </div>
                       </div>

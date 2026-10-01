@@ -3,6 +3,7 @@ import { ArrowLeft, CheckCircle2, AlertCircle, RefreshCw, EyeOff, Users, User, T
 import { AudioSpeakButton } from '../AudioSpeakButton';
 import { Language } from '../../types';
 import { translations } from '../../i18n/translations';
+import { cleanPedagogicalExplanation } from '../../utils/exportUtils';
 
 interface CcBccSimulatorGameProps {
   language: Language;
@@ -360,11 +361,11 @@ export const CcBccSimulatorGame: React.FC<CcBccSimulatorGameProps> = ({ language
                               ? '🎉 Escolha Pedagógica Perfeita!'
                               : '🎉 Perfect Choice!'
                             : language === 'pt'
-                            ? `A opção correta seria: ${currentScenario.correctFieldName[language]}`
-                            : `The correct option was: ${currentScenario.correctFieldName[language]}`}
+                            ? `❌ Escolha Incorreta. A opção recomendada seria: ${currentScenario.correctFieldName[language]}`
+                            : `❌ Incorrect Choice. The recommended option was: ${currentScenario.correctFieldName[language]}`}
                         </p>
                         <p className="text-xs text-slate-700 leading-relaxed font-medium">
-                          {currentScenario.explanation[language]}
+                          {cleanPedagogicalExplanation(currentScenario.explanation[language], selectedField === currentScenario.correctField)}
                         </p>
                         <div className="pt-2 text-[11px] font-bold text-blue-800 bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-200">
                           💡 {language === 'pt' ? 'Efeito na Privacidade: ' : 'Privacy Effect: '}
