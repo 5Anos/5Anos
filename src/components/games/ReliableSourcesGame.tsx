@@ -418,7 +418,13 @@ export const ReliableSourcesGame: React.FC<ReliableSourcesGameProps> = ({ langua
 
           <div>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
-              {language === 'pt' ? 'Investigação de Fontes Concluída!' : 'Source Investigation Completed!'}
+              {Math.round((score / 90) * 100) === 100
+                ? (language === 'pt' ? 'Excelente! Investigação de Fontes Perfeita!' : 'Excellent! Perfect Source Investigation!')
+                : Math.round((score / 90) * 100) >= 70
+                ? (language === 'pt' ? 'Bom Trabalho na Análise de Fontes!' : 'Good Source Analysis!')
+                : Math.round((score / 90) * 100) >= 50
+                ? (language === 'pt' ? 'Análise de Fontes Satisfatória!' : 'Satisfactory Analysis!')
+                : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
             </h2>
             <p className="text-slate-600 text-sm mt-1 max-w-md mx-auto">
               {Math.round((score / 90) * 100) === 100 ? (

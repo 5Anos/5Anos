@@ -613,10 +613,12 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
               </span>
               <h2 className="text-2xl sm:text-4xl font-black">
                 {pct === 100
-                  ? (language === 'pt' ? 'Guardião Digital das Palavras-passe!' : 'Digital Password Guardian!')
+                  ? (language === 'pt' ? 'Excelente! Guardião Digital das Palavras-passe!' : 'Excellent! Digital Password Guardian!')
+                  : pct >= 70
+                  ? (language === 'pt' ? 'Muito Bom Trabalho na Proteção Digital!' : 'Very Good Digital Protection!')
                   : pct >= 50
-                  ? (language === 'pt' ? 'Excelente Proteção Digital!' : 'Great Digital Protection!')
-                  : (language === 'pt' ? 'Bom Trabalho na Proteção!' : 'Good Effort on Protection!')}
+                  ? (language === 'pt' ? 'Boa Proteção Digital!' : 'Good Digital Protection!')
+                  : (language === 'pt' ? 'Tentativa Realizada!' : 'Attempt Completed!')}
               </h2>
 
               <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${

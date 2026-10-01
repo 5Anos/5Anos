@@ -1152,8 +1152,8 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
                   : 'bg-amber-100 text-amber-900 border-amber-300'
               }`}>
                 {evaluationResult.percentage >= 50
-                  ? (language === 'pt' ? '✓ Concluído (≥50%)' : '✓ Completed (≥50%)')
-                  : (language === 'pt' ? '<50% (A Treinar)' : '<50% (In Progress)')}
+                  ? (language === 'pt' ? '✓ Desafio Concluído' : '✓ Challenge Completed')
+                  : (language === 'pt' ? 'Tentativa Realizada' : 'In Progress')}
               </span>
             </div>
 

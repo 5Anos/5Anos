@@ -522,21 +522,35 @@ export const PhishingDetectorGame: React.FC<PhishingDetectorGameProps> = ({ lang
       )}
 
       {/* Completed Screen */}
-      {activeStage === 'completed' && (
+      {activeStage === 'completed' && (() => {
+        const finalPct = 50 + Math.round((radarScores.filter(Boolean).length / RADAR_ITEMS.length) * 50);
+        return (
         <div className="p-8 sm:p-12 rounded-[2.5rem] bg-gradient-to-br from-rose-950 via-slate-900 to-red-950 text-white text-center space-y-6 shadow-2xl border-2 border-rose-400/30 animate-in zoom-in-95">
           <div className="w-20 h-20 rounded-3xl bg-amber-400 text-slate-950 text-4xl flex items-center justify-center mx-auto shadow-xl">
-            🕵️
+            {finalPct === 100 ? '🏆' : '💡'}
           </div>
 
           <div className="max-w-xl mx-auto space-y-2">
-            <span className="text-xs font-black uppercase tracking-wider text-rose-300 px-3 py-1 rounded-full bg-rose-400/20 border border-rose-400/30">
-              {language === 'pt' ? 'Desafio Superado com Sucesso!' : 'Challenge Completed!'}
+            <span className={`text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full border ${
+              finalPct === 100
+                ? 'text-rose-300 bg-rose-400/20 border-rose-400/30'
+                : 'text-slate-300 bg-slate-400/20 border-slate-400/30'
+            }`}>
+              {finalPct === 100
+                ? (language === 'pt' ? 'Desafio Superado com Sucesso!' : 'Challenge Completed!')
+                : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
             </span>
             <h2 className="text-2xl sm:text-4xl font-black">
-              {language === 'pt' ? 'Detetive de Phishing Certificado!' : 'Certified Phishing Detective!'}
+              {finalPct === 100
+                ? (language === 'pt' ? 'Excelente! Detetive de Phishing Certificado!' : 'Excellent! Certified Phishing Detective!')
+                : finalPct >= 70
+                ? (language === 'pt' ? 'Bom Trabalho na Deteção de Ameaças!' : 'Good Threat Detection Work!')
+                : finalPct >= 50
+                ? (language === 'pt' ? 'Deteção de Ameaças Satisfatória!' : 'Satisfactory Threat Detection!')
+                : (language === 'pt' ? 'Tentativa Realizada!' : 'Attempt Completed!')}
             </h2>
             <p className="text-xs sm:text-sm text-rose-100 leading-relaxed font-medium">
-              {(50 + Math.round((radarScores.filter(Boolean).length / RADAR_ITEMS.length) * 50)) === 100 ? (
+              {finalPct === 100 ? (
                 language === 'pt' ? (
                   <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
                 ) : (
@@ -544,9 +558,9 @@ export const PhishingDetectorGame: React.FC<PhishingDetectorGameProps> = ({ lang
                 )
               ) : (
                 language === 'pt' ? (
-                  <>Obtiveste <strong>{50 + Math.round((radarScores.filter(Boolean).length / RADAR_ITEMS.length) * 50)} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+                  <>Obtiveste <strong>{finalPct} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
                 ) : (
-                  <>You got <strong>{50 + Math.round((radarScores.filter(Boolean).length / RADAR_ITEMS.length) * 50)} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+                  <>You got <strong>{finalPct} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
                 )
               )}
             </p>
@@ -555,11 +569,11 @@ export const PhishingDetectorGame: React.FC<PhishingDetectorGameProps> = ({ lang
           <div className="inline-flex flex-wrap items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white font-extrabold text-sm sm:text-base">
             <Sparkles className="w-5 h-5 text-amber-400" />
             <span>
-              {50 + Math.round((radarScores.filter(Boolean).length / RADAR_ITEMS.length) * 50)}% {language === 'pt' ? 'de Pontuação' : 'Score'}
+              {finalPct}% {language === 'pt' ? 'de Pontuação' : 'Score'}
             </span>
             <span>•</span>
             <span className="text-amber-300">
-              {50 + Math.round((radarScores.filter(Boolean).length / RADAR_ITEMS.length) * 50)} XP
+              {finalPct} XP
             </span>
           </div>
 
@@ -585,7 +599,8 @@ export const PhishingDetectorGame: React.FC<PhishingDetectorGameProps> = ({ lang
             </button>
           </div>
         </div>
-      )}
+        );
+      })()}
     </div>
   );
 };

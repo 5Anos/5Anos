@@ -918,7 +918,7 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
                         {!scoreData.hasQuestions || scoreData.percentage === 100
                           ? (language === 'pt' ? 'Excelente! 100 XP Ganhos!' : 'Excellent! 100 XP Earned!')
                           : scoreData.percentage >= 90
-                          ? (language === 'pt' ? 'Muito Bom! Excelente Trabalho!' : 'Very Good! Great Work!')
+                          ? (language === 'pt' ? 'Muito Bom Trabalho!' : 'Very Good Work!')
                           : scoreData.percentage >= 70
                           ? (language === 'pt' ? 'Bom Trabalho! Tópico Concluído!' : 'Good Job! Topic Completed!')
                           : scoreData.percentage >= 50

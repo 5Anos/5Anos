@@ -372,19 +372,29 @@ export const PlanetDigitalMissionGame: React.FC<PlanetDigitalMissionGameProps> =
       <div className="max-w-3xl mx-auto px-4 py-8 animate-fadeIn">
         <div className="bg-white rounded-3xl shadow-xl border-4 border-emerald-400 p-6 md:p-8 text-center relative overflow-hidden">
           {/* Header Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-800 font-black text-sm mb-4">
+          <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-black text-sm mb-4 ${
+            currentTotalPoints === 100
+              ? 'bg-emerald-100 text-emerald-800'
+              : 'bg-amber-100 text-amber-800'
+          }`}>
             <Globe className="w-4 h-4 text-emerald-600" />
-            {language === 'pt' ? 'MISSÃO CONCLUÍDA! 🌍' : 'MISSION COMPLETED! 🌍'}
+            {currentTotalPoints === 100
+              ? (language === 'pt' ? 'MISSÃO CONCLUÍDA COM 100%! 🌍' : 'MISSION COMPLETED WITH 100%! 🌍')
+              : (language === 'pt' ? 'TENTATIVA CONCLUÍDA! 🌍' : 'ATTEMPT COMPLETED! 🌍')}
           </div>
 
           <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-emerald-300 to-teal-500 rounded-full flex items-center justify-center text-5xl shadow-lg border-4 border-white animate-bounce">
-            🌱
+            {currentTotalPoints === 100 ? '🌱' : '💡'}
           </div>
 
           <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-2">
-            {language === 'pt'
-              ? 'Parabéns, Guardião do Planeta!'
-              : 'Congratulations, Planet Guardian!'}
+            {currentTotalPoints === 100
+              ? (language === 'pt' ? 'Excelente! Parabéns, Guardião do Planeta!' : 'Excellent! Congratulations, Planet Guardian!')
+              : currentTotalPoints >= 70
+              ? (language === 'pt' ? 'Bom Trabalho na Proteção do Planeta!' : 'Good Planet Protection Work!')
+              : currentTotalPoints >= 50
+              ? (language === 'pt' ? 'Missão Ecológica Satisfatória!' : 'Satisfactory Eco Mission!')
+              : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
           </h2>
           <p className="text-slate-600 text-base md:text-lg mb-6 max-w-lg mx-auto font-medium">
             {currentTotalPoints === 100 ? (

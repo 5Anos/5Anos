@@ -792,16 +792,30 @@ export const TicWhatIsTechGame: React.FC<TicWhatIsTechGameProps> = ({
 
         return (
           <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-xl text-center space-y-6 animate-in zoom-in-95">
-            <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-4xl mx-auto shadow-inner border border-emerald-200 animate-bounce">
-              🎉
+            <div className={`w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto shadow-inner border animate-bounce ${
+              finalPercentage === 100 ? 'bg-emerald-100 text-emerald-600 border-emerald-200' : 'bg-amber-100 text-amber-600 border-amber-200'
+            }`}>
+              {finalPercentage === 100 ? '🏆' : '💡'}
             </div>
 
             <div className="space-y-2 max-w-lg mx-auto">
-              <span className="text-xs font-black uppercase tracking-widest text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-                {language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed!'}
+              <span className={`text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full border ${
+                finalPercentage === 100
+                  ? 'text-emerald-700 bg-emerald-50 border-emerald-200'
+                  : 'text-amber-800 bg-amber-50 border-amber-200'
+              }`}>
+                {finalPercentage === 100
+                  ? (language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed Successfully!')
+                  : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-                {language === 'pt' ? 'Excelente Trabalho de Investigação TIC!' : 'Outstanding ICT Investigation Work!'}
+                {finalPercentage === 100
+                  ? (language === 'pt' ? 'Excelente Trabalho de Investigação TIC!' : 'Outstanding ICT Investigation Work!')
+                  : finalPercentage >= 70
+                  ? (language === 'pt' ? 'Bom Trabalho de Investigação!' : 'Good Investigation Work!')
+                  : finalPercentage >= 50
+                  ? (language === 'pt' ? 'Investigação Satisfatória!' : 'Satisfactory Investigation!')
+                  : (language === 'pt' ? 'Tentativa Realizada!' : 'Attempt Completed!')}
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed font-medium">
                 {finalPercentage === 100 ? (

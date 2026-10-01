@@ -224,19 +224,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
                         {theme.icon}
                       </div>
 
-                      {/* Celebration Pill if 100% completed or in progress */}
-                      {themePct === 100 ? (
-                        <div className="absolute top-2.5 left-2.5 z-10 px-2.5 py-1 rounded-full bg-gradient-to-r from-amber-400 to-yellow-400 text-amber-950 font-black text-[11px] shadow-lg flex items-center gap-1 border border-white/60 animate-bounce">
-                          <span>⭐</span>
-                          <span>{language === 'pt' ? 'Tema Dominado!' : 'Completed!'}</span>
-                        </div>
-                      ) : themePct > 0 ? (
-                        <div className="absolute top-2.5 left-2.5 z-10 px-2.5 py-0.5 rounded-full bg-indigo-600/90 backdrop-blur-xs text-white font-extrabold text-[10px] shadow-md flex items-center gap-1 border border-white/30">
-                          <span>🚀</span>
-                          <span>{themePct}%</span>
-                        </div>
-                      ) : null}
-
                       {/* Admin Theme Toggle Ribbon */}
                       {isAdmin && (
                         <div className="absolute top-2.5 right-2.5 z-10">

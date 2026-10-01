@@ -792,14 +792,14 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                                 ? (language === 'pt' ? ' • Máxima!' : ' • Max!')
                                 : isDone
                                 ? (language === 'pt' ? ' • Melhora para mais XP' : ' • Improve for more XP')
-                                : (language === 'pt' ? ' • ≥50% para concluir' : ' • ≥50% to complete')}
+                                : (language === 'pt' ? ' • Pratica para mais XP' : ' • Practice for more XP')}
                               {record?.attempts && record.attempts > 1 ? (language === 'pt' ? ` • ${record.attempts} tent.` : ` • ${record.attempts} att.`) : ''}
                             </span>
                           </span>
                         ) : (
                           <span className="text-[11px] font-bold text-indigo-600 flex items-center gap-1 mt-0.5">
                             <Zap className="w-3 h-3 fill-current text-indigo-500" />
-                            <span>{language === 'pt' ? 'Até 100 XP • Conclui com ≥50%' : 'Up to 100 XP • Complete with ≥50%'}</span>
+                            <span>{language === 'pt' ? 'Até 100 XP' : 'Up to 100 XP'}</span>
                           </span>
                         )}
                       </div>

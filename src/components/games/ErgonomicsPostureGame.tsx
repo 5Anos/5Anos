@@ -489,21 +489,35 @@ export const ErgonomicsPostureGame: React.FC<Props> = ({ language, onBack, onFin
       )}
 
       {/* Completed Final Screen */}
-      {activeStage === 'completed' && (
+      {activeStage === 'completed' && (() => {
+        const finalPct = 50 + Math.round((scenarioScores.filter(Boolean).length / HABIT_SCENARIOS.length) * 50);
+        return (
         <div className="p-8 sm:p-12 rounded-[2.5rem] bg-gradient-to-br from-indigo-950 via-slate-900 to-blue-950 text-white text-center space-y-6 shadow-2xl border-2 border-indigo-400/30 animate-in zoom-in-95">
           <div className="w-20 h-20 rounded-3xl bg-amber-400 text-slate-950 text-4xl flex items-center justify-center mx-auto shadow-xl">
-            🏆
+            {finalPct === 100 ? '🏆' : '💡'}
           </div>
 
           <div className="max-w-xl mx-auto space-y-2">
-            <span className="text-xs font-black uppercase tracking-wider text-amber-300 px-3 py-1 rounded-full bg-amber-400/20 border border-amber-400/30">
-              {language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed!'}
+            <span className={`text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full border ${
+              finalPct === 100
+                ? 'text-amber-300 bg-amber-400/20 border-amber-400/30'
+                : 'text-slate-300 bg-slate-400/20 border-slate-400/30'
+            }`}>
+              {finalPct === 100
+                ? (language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed!')
+                : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
             </span>
             <h2 className="text-2xl sm:text-4xl font-black">
-              {language === 'pt' ? 'Mestre da Ergonomia e Bem-Estar!' : 'Master of Ergonomics & Well-Being!'}
+              {finalPct === 100
+                ? (language === 'pt' ? 'Excelente! Mestre da Ergonomia!' : 'Excellent! Master of Ergonomics!')
+                : finalPct >= 70
+                ? (language === 'pt' ? 'Bom Conhecimento em Ergonomia!' : 'Good Ergonomics Knowledge!')
+                : finalPct >= 50
+                ? (language === 'pt' ? 'Postura e Hábitos Satisfatórios!' : 'Satisfactory Posture & Habits!')
+                : (language === 'pt' ? 'Tentativa Realizada!' : 'Attempt Completed!')}
             </h2>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-medium">
-              {(50 + Math.round((scenarioScores.filter(Boolean).length / HABIT_SCENARIOS.length) * 50)) === 100 ? (
+              {finalPct === 100 ? (
                 language === 'pt' ? (
                   <>Obtiveste <strong>100 XP</strong>. Parabéns! Acertaste em todas as respostas!</>
                 ) : (
@@ -511,9 +525,9 @@ export const ErgonomicsPostureGame: React.FC<Props> = ({ language, onBack, onFin
                 )
               ) : (
                 language === 'pt' ? (
-                  <>Obtiveste <strong>{50 + Math.round((scenarioScores.filter(Boolean).length / HABIT_SCENARIOS.length) * 50)} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
+                  <>Obtiveste <strong>{finalPct} XP</strong>. Para ganhares 100XP tens que acertar em todas as respostas. Clica em "Repetir o Desafio" para tentar novamente.</>
                 ) : (
-                  <>You got <strong>{50 + Math.round((scenarioScores.filter(Boolean).length / HABIT_SCENARIOS.length) * 50)} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
+                  <>You got <strong>{finalPct} XP</strong>. To earn 100XP you must answer all questions correctly. Click "Repetir o Desafio" to try again.</>
                 )
               )}
             </p>
@@ -522,11 +536,11 @@ export const ErgonomicsPostureGame: React.FC<Props> = ({ language, onBack, onFin
           <div className="inline-flex flex-wrap items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white font-extrabold text-sm sm:text-base">
             <Sparkles className="w-5 h-5 text-amber-400" />
             <span>
-              {50 + Math.round((scenarioScores.filter(Boolean).length / HABIT_SCENARIOS.length) * 50)}% {language === 'pt' ? 'de Pontuação' : 'Score'}
+              {finalPct}% {language === 'pt' ? 'de Pontuação' : 'Score'}
             </span>
             <span>•</span>
             <span className="text-amber-300">
-              {50 + Math.round((scenarioScores.filter(Boolean).length / HABIT_SCENARIOS.length) * 50)} XP
+              {finalPct} XP
             </span>
           </div>
 
@@ -551,7 +565,8 @@ export const ErgonomicsPostureGame: React.FC<Props> = ({ language, onBack, onFin
             </button>
           </div>
         </div>
-      )}
+        );
+      })()}
     </div>
   );
 };

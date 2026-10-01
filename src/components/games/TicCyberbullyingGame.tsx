@@ -609,21 +609,23 @@ export const TicCyberbullyingGame: React.FC<TicCyberbullyingGameProps> = ({
                   : 'text-amber-800 bg-amber-50 border-amber-200'
               }`}>
                 {percentage === 100
-                  ? (language === 'pt' ? 'Guardião Digital Certificado!' : 'Certified Digital Guardian!')
-                  : percentage > 50
+                  ? (language === 'pt' ? 'Desafio Concluído! 100 XP Ganhos!' : 'Challenge Completed! 100 XP Earned!')
+                  : percentage >= 50
                   ? (language === 'pt' ? 'Desafio Concluído com Sucesso!' : 'Challenge Completed Successfully!')
                   : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
                 {percentage === 100
-                  ? (language === 'pt' ? 'Sabes agir com 100% de Segurança!' : 'You Know How to Stay Safe!')
-                  : percentage > 50
-                  ? (language === 'pt' ? 'Excelente Empenho no Caso Prático!' : 'Great Effort on Case Study!')
-                  : (language === 'pt' ? 'Bom Trabalho no Caso Prático!' : 'Good Effort on Case Study!')}
+                  ? (language === 'pt' ? 'Excelente! Sabes agir com 100% de Segurança!' : 'Excellent! You Know How to Stay Safe!')
+                  : percentage >= 70
+                  ? (language === 'pt' ? 'Muito Bom Empenho no Caso Prático!' : 'Very Good Effort on Case Study!')
+                  : percentage >= 50
+                  ? (language === 'pt' ? 'Bom Empenho no Caso Prático!' : 'Good Effort on Case Study!')
+                  : (language === 'pt' ? 'Tentativa Realizada!' : 'Attempt Completed!')}
               </h2>
 
               <div className={`inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full font-extrabold text-sm border ${
-                percentage > 50
+                percentage >= 50
                   ? 'bg-emerald-100 border-emerald-300 text-emerald-800'
                   : 'bg-amber-100 border-amber-300 text-amber-900'
               }`}>

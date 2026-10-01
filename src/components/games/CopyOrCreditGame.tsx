@@ -337,7 +337,13 @@ export const CopyOrCreditGame: React.FC<CopyOrCreditGameProps> = ({ language, on
 
           <div>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
-              {language === 'pt' ? 'Defensor da Criatividade e Autoria!' : 'Creativity & Authorship Defender!'}
+              {Math.round((score / 90) * 100) === 100
+                ? (language === 'pt' ? 'Excelente! Defensor da Criatividade e Autoria!' : 'Excellent! Creativity & Authorship Defender!')
+                : Math.round((score / 90) * 100) >= 70
+                ? (language === 'pt' ? 'Bom Trabalho na Identificação de Autoria!' : 'Good Work on Authorship Rights!')
+                : Math.round((score / 90) * 100) >= 50
+                ? (language === 'pt' ? 'Identificação Satisfatória!' : 'Satisfactory Identification!')
+                : (language === 'pt' ? 'Tentativa Concluída!' : 'Attempt Completed!')}
             </h2>
             <p className="text-slate-600 text-sm mt-1 max-w-md mx-auto">
               {Math.round((score / 90) * 100) === 100 ? (

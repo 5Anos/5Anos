@@ -251,7 +251,7 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                   {result.percentage === 100
                     ? (language === 'pt' ? 'Excelente! Pontuação Máxima!' : 'Excellent! Perfect Score!')
                     : result.percentage >= 90
-                    ? (language === 'pt' ? 'Muito Bom! Excelente Trabalho!' : 'Very Good! Great Work!')
+                    ? (language === 'pt' ? 'Muito Bom Trabalho!' : 'Very Good Work!')
                     : result.percentage >= 70
                     ? (language === 'pt' ? 'Bom Trabalho! Quiz Concluído!' : 'Good Job! Quiz Completed!')
                     : result.percentage >= 50
@@ -415,8 +415,8 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                         </div>
                         <p className="text-xs sm:text-sm text-emerald-900 leading-relaxed font-medium">
                           {language === 'pt'
-                            ? `Alcançaste a menção «${currentMention}» nesta tentativa de treino! Excelente esforço e dedicação.`
-                            : `You achieved the mention "${currentMention}" in this practice attempt! Great effort and dedication.`}
+                            ? `Alcançaste a menção «${currentMention}» nesta tentativa de treino! Bom esforço e dedicação.`
+                            : `You achieved the mention "${currentMention}" in this practice attempt! Good effort and dedication.`}
                         </p>
                       </div>
                     ) : (
