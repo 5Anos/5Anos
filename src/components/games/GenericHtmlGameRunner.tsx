@@ -173,8 +173,8 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
       } else {
         ticoFeedback.triggerWrong(
           language === 'pt'
-            ? 'Boa tentativa! Errar é o início de aprender. Lê a micro-pista do TICo! 💡'
-            : 'Good try! Making mistakes is where learning begins. Check TICo’s clue! 💡'
+            ? 'Boa tentativa! Errar é o início de aprender. Lê a micro-pista explicativa! 💡'
+            : 'Good try! Making mistakes is where learning begins. Check the clue! 💡'
         );
       }
     }
@@ -205,8 +205,8 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
       } else {
         ticoFeedback.triggerWrong(
           language === 'pt'
-            ? 'Boa tentativa! Errar é o início de aprender. Vê a micro-pista do TICo! 💡'
-            : 'Good try! Making mistakes is where learning begins. See TICo’s clue! 💡'
+            ? 'Boa tentativa! Errar é o início de aprender. Vê a micro-pista explicativa! 💡'
+            : 'Good try! Making mistakes is where learning begins. See the clue! 💡'
         );
       }
     }

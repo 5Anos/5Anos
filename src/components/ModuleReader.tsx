@@ -740,7 +740,7 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
                                 <div className={`p-3.5 rounded-xl ${isCorrect ? 'bg-white/60 border border-emerald-200' : 'bg-white/80 border border-amber-200'}`}>
                                   <p className="font-black text-xs text-slate-800 mb-1 flex items-center gap-1.5">
                                     <span>💡</span>
-                                    <span>{language === 'pt' ? 'Micro-Pista do Robô TICo & Conceito-Chave:' : 'TICo Robot Clue & Key Concept:'}</span>
+                                    <span>{language === 'pt' ? 'Micro-Pista Pedagógica & Conceito-Chave:' : 'Pedagogical Clue & Key Concept:'}</span>
                                   </p>
                                   <p className="leading-relaxed text-xs sm:text-sm text-slate-700 font-medium">
                                     {cleanPedagogicalExplanation(q.explanation?.[language] || '', isCorrect)}
@@ -986,15 +986,15 @@ export const ModuleReader: React.FC<ModuleReaderProps> = ({
                         )
                       ) : scoreData.percentage >= 70 ? (
                         language === 'pt' ? (
-                          <>Muito bom trabalho! Obtiveste <strong>{scoreData.percentage} XP</strong>. Clica em "Rever Respostas com Pistas" para analisares as dicas pedagógicas do Robô TICo!</>
+                          <>Muito bom trabalho! Obtiveste <strong>{scoreData.percentage} XP</strong>. Clica em "Rever Respostas com Pistas" para analisares as explicações pedagógicas!</>
                         ) : (
-                          <>Great job! You earned <strong>{scoreData.percentage} XP</strong>. Click "Review Answers with Clues" to check TICo Robot's clues!</>
+                          <>Great job! You earned <strong>{scoreData.percentage} XP</strong>. Click "Review Answers with Clues" to check the clues!</>
                         )
                       ) : (
                         language === 'pt' ? (
-                          <>Obtiveste <strong>{scoreData.percentage} XP</strong>. Clica em "Rever Respostas com Pistas" para aprenderes com as dicas do Robô TICo ou repete o desafio para alcançar os 100 XP.</>
+                          <>Obtiveste <strong>{scoreData.percentage} XP</strong>. Clica em "Rever Respostas com Pistas" para reveres as explicações pedagógicas ou repete o desafio para alcançar os 100 XP.</>
                         ) : (
-                          <>You scored <strong>{scoreData.percentage} XP</strong>. Review your answers to learn from TICo Robot's clues or retry to aim for 100 XP.</>
+                          <>You scored <strong>{scoreData.percentage} XP</strong>. Review your answers to learn from the clues or retry to aim for 100 XP.</>
                         )
                       )}
                     </p>

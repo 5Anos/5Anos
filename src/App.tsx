@@ -28,7 +28,6 @@ import { DigitalDetectivesGame } from './components/games/DigitalDetectivesGame'
 import { PlanetDigitalMissionGame } from './components/games/PlanetDigitalMissionGame';
 import { GenericChallengeGame } from './components/games/GenericChallengeGame';
 import { GenericHtmlGameRunner } from './components/games/GenericHtmlGameRunner';
-import { TICoRobotAssistant } from './components/TICoRobotAssistant';
 import { DigitalDilemmasGame } from './components/DigitalDilemmasGame';
 import { PassphraseVaultLab } from './components/PassphraseVaultLab';
 import { CyberHeroCertificateModal } from './components/CyberHeroCertificateModal';
@@ -1158,17 +1157,6 @@ export default function App() {
           </div>
         </div>
       </footer>
-
-      {/* TICo Robot Assistant (Página Inicial, Telas de Módulos & Temas) */}
-      {(currentView === 'dashboard' || currentView === 'module' || currentView === 'theme') && (
-        <TICoRobotAssistant
-          language={language}
-          context={currentView === 'dashboard' ? 'dashboard' : currentView === 'module' ? 'module' : 'theme'}
-          user={user}
-          moduleTitle={currentModule ? currentModule.title[language] : undefined}
-          themeTitle={currentTheme ? currentTheme.title[language] : undefined}
-        />
-      )}
 
       {/* Floating Toast Notification */}
       {toastMessage && (

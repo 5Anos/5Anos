@@ -584,7 +584,7 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                       <div className={`p-3.5 rounded-xl ${isCorrect ? 'bg-white/60 border border-emerald-200' : 'bg-white/80 border border-amber-200'}`}>
                         <p className="font-black text-xs text-slate-800 mb-1 flex items-center gap-1.5">
                           <span>💡</span>
-                          <span>{language === 'pt' ? 'Micro-Pista do Robô TICo & Conceito-Chave:' : 'TICo Robot Clue & Key Concept:'}</span>
+                          <span>{language === 'pt' ? 'Micro-Pista Pedagógica & Conceito-Chave:' : 'Pedagogical Clue & Key Concept:'}</span>
                         </p>
                         <p className="leading-relaxed text-xs sm:text-sm text-slate-700 font-medium">
                           {cleanPedagogicalExplanation(q.explanation[language], isCorrect)}

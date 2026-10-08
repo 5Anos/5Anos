@@ -348,8 +348,8 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
     } else {
       ticoFeedback.triggerWrong(
         language === 'pt'
-          ? 'Boa tentativa! Errar é o início de aprender. Vê o diagnóstico do robô TICo! 💡'
-          : 'Good try! Making mistakes is part of learning. Check TICo’s safety clue! 💡'
+          ? 'Boa tentativa! Errar é o início de aprender. Vê o diagnóstico pedagógico! 💡'
+          : 'Good try! Making mistakes is part of learning. Check the safety clue! 💡'
       );
     }
   };
@@ -545,7 +545,7 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
                       </>
                     ) : (
                       <div className="flex items-center gap-2 text-amber-900 font-black">
-                        <span className="text-xl animate-pulse">🤖</span>
+                        <span className="text-xl animate-pulse">💡</span>
                         <span>{language === 'pt' ? 'Boa tentativa! Errar é o início de aprender!' : 'Good try! Making mistakes is where learning begins!'}</span>
                       </div>
                     )}
@@ -566,7 +566,7 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
                 <div className={`p-3.5 rounded-xl ${selectedOpt.isCorrect ? 'bg-white/60 border border-emerald-200' : 'bg-white/80 border border-amber-200'}`}>
                   <p className="font-black text-xs text-slate-800 mb-0.5 flex items-center gap-1.5">
                     <span>💡</span>
-                    <span>{language === 'pt' ? 'Micro-Pista do Robô TICo & Diagnóstico:' : 'TICo Robot Clue & Diagnosis:'}</span>
+                    <span>{language === 'pt' ? 'Micro-Pista Pedagógica & Diagnóstico:' : 'Pedagogical Clue & Diagnosis:'}</span>
                   </p>
                   <p className="text-xs sm:text-sm leading-relaxed font-medium text-slate-700">
                     {language === 'pt' ? 'Lembra-te: ' : 'Remember: '}

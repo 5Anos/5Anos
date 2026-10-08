@@ -372,8 +372,8 @@ export const GenericChallengeGame: React.FC<GenericChallengeGameProps> = ({
     } else {
       ticoFeedback.triggerWrong(
         language === 'pt'
-          ? 'Boa tentativa! Errar é o início de aprender. Vê a micro-pista do TICo! 💡'
-          : 'Good try! Making mistakes is part of learning. Check TICo’s clue! 💡'
+          ? 'Boa tentativa! Errar é o início de aprender. Vê a micro-pista pedagógica! 💡'
+          : 'Good try! Making mistakes is part of learning. Check the clue! 💡'
       );
     }
   };
