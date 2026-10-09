@@ -1,0 +1,1335 @@
+{
+  "timestamp": "2026-10-09T11:23:36.825Z",
+  "correctionsCount": 154,
+  "corrections": [
+    {
+      "turma": "5.º A",
+      "studentName": "Artur Pawelczyk Pimentel",
+      "oldNumber": 1,
+      "newNumber": 2,
+      "id": "std_1790931731459_5if3cso",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Carolina Martins Bexiga Nunes Pinheiro",
+      "oldNumber": 2,
+      "newNumber": 3,
+      "id": "std_1790931733384_w6qgmpr",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Clara Jorge Morgadinho de Morais Borga",
+      "oldNumber": 3,
+      "newNumber": 4,
+      "id": "std_1790931734095_c718lxw",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Cláudia dos Santos Felismino",
+      "oldNumber": 4,
+      "newNumber": 5,
+      "id": "std_1790931734822_hpp4c4c",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Denys Zlochevskyi",
+      "oldNumber": 5,
+      "newNumber": 6,
+      "id": "std_1790931735656_vxp8fu0",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Diana Alexandra de Carvalho Santos",
+      "oldNumber": 6,
+      "newNumber": 7,
+      "id": "std_1790931736547_aekkr26",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Dinis Nascimento Machado",
+      "oldNumber": 7,
+      "newNumber": 8,
+      "id": "std_1790931737547_xo0qsda",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Diogo Mendonça Baptista",
+      "oldNumber": 8,
+      "newNumber": 9,
+      "id": "std_1790931738503_vu9fyyh",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Duarte Santos Gamboa Antunes",
+      "oldNumber": 9,
+      "newNumber": 10,
+      "id": "std_1790931739197_y14v392",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Helena Santos Ferreira Rosa Pinto",
+      "oldNumber": 10,
+      "newNumber": 11,
+      "id": "std_1790931740038_i78s2cq",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Joana Freire Batista",
+      "oldNumber": 11,
+      "newNumber": 12,
+      "id": "std_1790931740997_hrfh6mw",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "João Miguel Antunes Raimundo",
+      "oldNumber": 12,
+      "newNumber": 13,
+      "id": "std_1790931741824_r453kx6",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "José Júlio da Costa Pinto",
+      "oldNumber": 13,
+      "newNumber": 14,
+      "id": "std_1790931742699_w8hvbvx",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Leonor Ferreira de Lima Santos",
+      "oldNumber": 14,
+      "newNumber": 15,
+      "id": "std_1790931743314_u5vgghy",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Liane Sofia Filomino Barros",
+      "oldNumber": 15,
+      "newNumber": 16,
+      "id": "std_1790931743929_ei3ef0v",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Luana Alves Costa Paisano Pinho",
+      "oldNumber": 16,
+      "newNumber": 17,
+      "id": "std_1790931746696_uh183qt",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Luísa Lemos Guerreiro",
+      "oldNumber": 17,
+      "newNumber": 18,
+      "id": "std_1790931747396_u1e10w6",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Madalena Gonçalves da Costa",
+      "oldNumber": 18,
+      "newNumber": 19,
+      "id": "std_1790931748125_ql1gfin",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Maria Carolina Craveiro Lopes Correia Esperanço",
+      "oldNumber": 19,
+      "newNumber": 20,
+      "id": "std_1790931748847_3zahdbb",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Maria Inês Areias Moreira",
+      "oldNumber": 20,
+      "newNumber": 21,
+      "id": "std_1790931749532_gf8qcsi",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Mel Chakour",
+      "oldNumber": 21,
+      "newNumber": 22,
+      "id": "std_1790931750199_aux8viy",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Nelmira Obega",
+      "oldNumber": 22,
+      "newNumber": 23,
+      "id": "std_1790931751007_s345nf6",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Rodrigo Alexandre da Silva Teles",
+      "oldNumber": 23,
+      "newNumber": 24,
+      "id": "std_1790931751661_pbeyvph",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Salvador Esteves Pereira",
+      "oldNumber": 24,
+      "newNumber": 25,
+      "id": "std_1790931752351_70uumpv",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Vasco Monteiro Bettencourt",
+      "oldNumber": 25,
+      "newNumber": 26,
+      "id": "std_1790931753043_rie0eji",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Vasco Pinto Rocha",
+      "oldNumber": 26,
+      "newNumber": 27,
+      "id": "std_1790931753731_p5uo5mt",
+      "points": 0
+    },
+    {
+      "turma": "5.º A",
+      "studentName": "Vicente Lugano Araujo de Sousa",
+      "oldNumber": 27,
+      "newNumber": 28,
+      "id": "std_1790931754385_iiwyfvl",
+      "points": 0
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Débora Isabel Rocha Monteiro Andrade",
+      "oldNumber": 1,
+      "newNumber": 2,
+      "id": "std_1790931864253_wf7phrn",
+      "points": 330
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Duarte Bettencourt Bernardo",
+      "oldNumber": 2,
+      "newNumber": 3,
+      "id": "std_1790931865626_8esukow",
+      "points": 320
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Duarte Miguel Pereira Lourenço",
+      "oldNumber": 3,
+      "newNumber": 4,
+      "id": "std_1790931866418_omayo02",
+      "points": 0
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Enzo Ricardo Neto dos Santos",
+      "oldNumber": 4,
+      "newNumber": 5,
+      "id": "std_1790931867127_0jz8mer",
+      "points": 350
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Isabela Viana Galvão",
+      "oldNumber": 5,
+      "newNumber": 6,
+      "id": "std_1790931867833_18zui2i",
+      "points": 290
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Ivan Sousa Garcia",
+      "oldNumber": 6,
+      "newNumber": 7,
+      "id": "std_1790931868549_r2o38aq",
+      "points": 0
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "João Pedro Monteiro de Oliveira Reis",
+      "oldNumber": 7,
+      "newNumber": 8,
+      "id": "std_1790931869276_w9pwolr",
+      "points": 50
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Laura Ribeiro Godinho Rodrigues",
+      "oldNumber": 8,
+      "newNumber": 9,
+      "id": "std_1790931869982_b1cmhkf",
+      "points": 400
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Lourenço de Almeida Silva",
+      "oldNumber": 9,
+      "newNumber": 10,
+      "id": "std_1790931870699_it8rz68",
+      "points": 0
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Mafalda Pinto Correia",
+      "oldNumber": 10,
+      "newNumber": 11,
+      "id": "std_1790931871445_iz87h21",
+      "points": 0
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Maria Clara Silva Nunes",
+      "oldNumber": 11,
+      "newNumber": 12,
+      "id": "std_1790931872239_51m3fyh",
+      "points": 0
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Mariana Domingues Ferreira Cruz",
+      "oldNumber": 12,
+      "newNumber": 13,
+      "id": "std_1790931872955_z6dlb7k",
+      "points": 0
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Nair Santos Silva Conceição",
+      "oldNumber": 13,
+      "newNumber": 14,
+      "id": "std_1790931873682_xvbb3s7",
+      "points": 0
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Nicole Lamine Jesus",
+      "oldNumber": 14,
+      "newNumber": 15,
+      "id": "std_1790931874351_fv8hq50",
+      "points": 0
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Noa Sofia Monteiro Gouveia",
+      "oldNumber": 15,
+      "newNumber": 16,
+      "id": "std_1790931875030_uln3osz",
+      "points": 0
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Pakiza Sheraz",
+      "oldNumber": 16,
+      "newNumber": 17,
+      "id": "std_1790931875819_11dev30",
+      "points": 730
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Pedro Mateus Hernandez Tavares dos Santos",
+      "oldNumber": 17,
+      "newNumber": 18,
+      "id": "std_1790931876547_fpttfou",
+      "points": 250
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Rafael Guilherme Santos Pereira Fernandes",
+      "oldNumber": 18,
+      "newNumber": 19,
+      "id": "std_1790931877258_qj106n1",
+      "points": 350
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Santiago Manuel Moras Baldo",
+      "oldNumber": 19,
+      "newNumber": 20,
+      "id": "std_1790931877924_r1zssjw",
+      "points": 0
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Waldemiro Claudio Carlos Sambingo Lobo",
+      "oldNumber": 20,
+      "newNumber": 21,
+      "id": "std_1790931878591_habrbxw",
+      "points": 330
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Yutong He",
+      "oldNumber": 21,
+      "newNumber": 22,
+      "id": "std_1790931879244_rsduugt",
+      "points": 0
+    },
+    {
+      "turma": "5.º B",
+      "studentName": "Carminho de Almeida Laffan Oliveira",
+      "oldNumber": 22,
+      "newNumber": 23,
+      "id": "std_1790931879938_d3p4phx",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Álvaro Pires Beja",
+      "oldNumber": 1,
+      "newNumber": 2,
+      "id": "std_1790931926600_65vkzho",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "António Martins Pedras Cadima Lopes",
+      "oldNumber": 2,
+      "newNumber": 3,
+      "id": "std_1790931928203_vrsj6dr",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Dinis Cardoso Mendes",
+      "oldNumber": 3,
+      "newNumber": 4,
+      "id": "std_1790931929805_51fy1dx",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Dinis Taborda Rodrigues",
+      "oldNumber": 4,
+      "newNumber": 5,
+      "id": "std_1790931931410_y2n7ayx",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Gonçalo Ribeiro Oliveira",
+      "oldNumber": 5,
+      "newNumber": 6,
+      "id": "std_1790931933231_2t36z8z",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Íris Pedrosa da Silva",
+      "oldNumber": 6,
+      "newNumber": 7,
+      "id": "std_1790931935162_o8a27v7",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Isaac Miguel Fernandes Ribeiro",
+      "oldNumber": 7,
+      "newNumber": 8,
+      "id": "std_1790931937097_wwvqzo5",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Isaac Rodrigues Rua",
+      "oldNumber": 8,
+      "newNumber": 9,
+      "id": "std_1790931938863_osd91hc",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Isadora Campagnaro Porto",
+      "oldNumber": 9,
+      "newNumber": 10,
+      "id": "std_1790931940642_p83yy3h",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Lara Martins Gonçalves",
+      "oldNumber": 10,
+      "newNumber": 11,
+      "id": "std_1790931941356_u4tefqi",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Laura Silva Martins",
+      "oldNumber": 11,
+      "newNumber": 12,
+      "id": "std_1790931942052_ql4stkj",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Leonor das Neves Cardoso Ferreira",
+      "oldNumber": 12,
+      "newNumber": 13,
+      "id": "std_1790931942788_wyfqcmz",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Lourenço Martins Ezequiel",
+      "oldNumber": 13,
+      "newNumber": 14,
+      "id": "std_1790931943506_mssab41",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Luís Roberto Talaia Jacinto",
+      "oldNumber": 14,
+      "newNumber": 15,
+      "id": "std_1790931944216_f2m93af",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Madalena Amaral Bento",
+      "oldNumber": 15,
+      "newNumber": 16,
+      "id": "std_1790931944939_2375a7h",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Maiara Filipa Brandão Lourenço",
+      "oldNumber": 16,
+      "newNumber": 17,
+      "id": "std_1790931945670_pao2xf9",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Marcela Francisco Battaglion",
+      "oldNumber": 17,
+      "newNumber": 18,
+      "id": "std_1790931946382_tjnppoe",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Margarida Baptista de Almeida",
+      "oldNumber": 18,
+      "newNumber": 19,
+      "id": "std_1790931947098_pnjwitv",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Margarida Santos Pires",
+      "oldNumber": 19,
+      "newNumber": 20,
+      "id": "std_1790931947811_3bh1u6i",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Maria Clara Harrington dos Santos",
+      "oldNumber": 20,
+      "newNumber": 21,
+      "id": "std_1790931948533_ckpfaly",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Maria Izabela Icur",
+      "oldNumber": 21,
+      "newNumber": 22,
+      "id": "std_1790931949211_5ce3dpw",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Maria Sofia Felício Pereira Capela",
+      "oldNumber": 22,
+      "newNumber": 23,
+      "id": "std_1790931949939_b2jkaf3",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Mariana Fortuna Meneses",
+      "oldNumber": 23,
+      "newNumber": 24,
+      "id": "std_1790931950677_rborgdp",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Miguel Ângelo Anes Fonseca",
+      "oldNumber": 24,
+      "newNumber": 25,
+      "id": "std_1790931951338_72cqj7u",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Sara Ribeiro Oliveira",
+      "oldNumber": 25,
+      "newNumber": 26,
+      "id": "std_1790931952006_myvdvlr",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Sol de Fátima Silvestre Francisco",
+      "oldNumber": 26,
+      "newNumber": 27,
+      "id": "std_1790931952723_33y1kj6",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Teresa Carmelino Alves dos Santos Jorge",
+      "oldNumber": 27,
+      "newNumber": 28,
+      "id": "std_1790931953391_4qppdw2",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Yasmin Beatriz Paulitos da Silva",
+      "oldNumber": 28,
+      "newNumber": 29,
+      "id": "std_1790931954049_vwfxnu4",
+      "points": 0
+    },
+    {
+      "turma": "5.º C",
+      "studentName": "Catarina Isabel Varela Semedo Ferreira",
+      "oldNumber": 29,
+      "newNumber": 30,
+      "id": "std_1790931954711_iuydo5x",
+      "points": 0
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Bárbara Rodrigues Lopes",
+      "oldNumber": 1,
+      "newNumber": 2,
+      "id": "std_1790931973455_8xkxpto",
+      "points": 50
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Camila Batista Coutinho",
+      "oldNumber": 2,
+      "newNumber": 3,
+      "id": "std_1790931974129_skn6ukp",
+      "points": 0
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Chenxi Zheng",
+      "oldNumber": 3,
+      "newNumber": 4,
+      "id": "std_1790931974875_ebynany",
+      "points": 30
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Danielly Marques Fonseca Filipe",
+      "oldNumber": 4,
+      "newNumber": 5,
+      "id": "std_1790931975663_7pbbahc",
+      "points": 0
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Gabriel Baleine Bettencourt Bernardo",
+      "oldNumber": 5,
+      "newNumber": 6,
+      "id": "std_1790931976490_zew7yqw",
+      "points": 330
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Guilherme António Borges Moreira",
+      "oldNumber": 6,
+      "newNumber": 7,
+      "id": "std_1790931977306_gmpbd9d",
+      "points": 0
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Guilherme da Costa Novais",
+      "oldNumber": 7,
+      "newNumber": 8,
+      "id": "std_1790931978020_rj4w4cf",
+      "points": 0
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Hareem Rehmat",
+      "oldNumber": 8,
+      "newNumber": 9,
+      "id": "std_1790931978757_z6iuaue",
+      "points": 0
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "João Miguel Vigário Rodrigues",
+      "oldNumber": 9,
+      "newNumber": 10,
+      "id": "std_1790931979555_2lxq5v0",
+      "points": 0
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Kissamá Francisco de Castro Seabra",
+      "oldNumber": 10,
+      "newNumber": 11,
+      "id": "std_1790931980268_mybu8ye",
+      "points": 300
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Laura Sioga dos Santos",
+      "oldNumber": 11,
+      "newNumber": 12,
+      "id": "std_1790931981091_o3iwkvl",
+      "points": 0
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Luana Raquel Lopes da Silva",
+      "oldNumber": 12,
+      "newNumber": 13,
+      "id": "std_1790931981810_jysju2t",
+      "points": 0
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Lucas Benjamin Farias Meneses",
+      "oldNumber": 13,
+      "newNumber": 14,
+      "id": "std_1790931982635_9bko7qw",
+      "points": 207
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Margarida Sofia Rosa Rodrigues",
+      "oldNumber": 14,
+      "newNumber": 15,
+      "id": "std_1790931983319_hfgb0j2",
+      "points": 0
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Matilde Alexandra Garrido Neves",
+      "oldNumber": 15,
+      "newNumber": 16,
+      "id": "std_1790931984058_1xtmu6w",
+      "points": 120
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Muhammad Muzamal Hussain",
+      "oldNumber": 16,
+      "newNumber": 17,
+      "id": "std_1790931984881_aa6nu0s",
+      "points": 250
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Pedro Gaspar Pires Cobra",
+      "oldNumber": 17,
+      "newNumber": 18,
+      "id": "std_1790931985572_9s7f3uu",
+      "points": 295
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Senia Timilsina",
+      "oldNumber": 18,
+      "newNumber": 19,
+      "id": "std_1790931986318_e7v7887",
+      "points": 0
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Vasco Rafael Luis Gonçalves",
+      "oldNumber": 19,
+      "newNumber": 20,
+      "id": "std_1790931987040_iuzj7eo",
+      "points": 0
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Vicente Henrique Luís Gonçalves",
+      "oldNumber": 20,
+      "newNumber": 21,
+      "id": "std_1790931987834_bujbq0v",
+      "points": 0
+    },
+    {
+      "turma": "5.º D",
+      "studentName": "Vinicius Inácio dos Santos",
+      "oldNumber": 21,
+      "newNumber": 22,
+      "id": "std_1790931988569_zw48enn",
+      "points": 0
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Alícia Victória Lopes de Almeida",
+      "oldNumber": 1,
+      "newNumber": 2,
+      "id": "std_1790932038239_pan22pj",
+      "points": 393
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Ana Rita Pisoeiro Pereira",
+      "oldNumber": 2,
+      "newNumber": 3,
+      "id": "std_1790932038943_qbrjbpe",
+      "points": 350
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Barbara Sousa Santos",
+      "oldNumber": 3,
+      "newNumber": 4,
+      "id": "std_1790932039696_emc0kqg",
+      "points": 0
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Derick da Silva Barros Vaz",
+      "oldNumber": 4,
+      "newNumber": 5,
+      "id": "std_1790932040385_zmeh7ut",
+      "points": 0
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Diogo Marques Vital",
+      "oldNumber": 5,
+      "newNumber": 6,
+      "id": "std_1790932041200_5a6mf0r",
+      "points": 650
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Enmanuel Berrio Fraser",
+      "oldNumber": 6,
+      "newNumber": 7,
+      "id": "std_1790932042016_hbu7jqu",
+      "points": 280
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Francisco Correia dos Santos Cardoso Oliveira",
+      "oldNumber": 7,
+      "newNumber": 8,
+      "id": "std_1790932042742_oi39d7u",
+      "points": 0
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Guilherme Muranho Monteiro",
+      "oldNumber": 8,
+      "newNumber": 9,
+      "id": "std_1790932043458_x2naqj0",
+      "points": 300
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Inês Ribeiro Gouveia",
+      "oldNumber": 9,
+      "newNumber": 10,
+      "id": "std_1790932044176_adyxj13",
+      "points": 0
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Iris Mendes Soares",
+      "oldNumber": 10,
+      "newNumber": 11,
+      "id": "std_1790932044886_pm6hc9v",
+      "points": 440
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Joana Alexandra Oliveira Teixeira",
+      "oldNumber": 11,
+      "newNumber": 12,
+      "id": "std_1790932045606_0j9vh3x",
+      "points": 0
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Lara Valles Rocha Martins",
+      "oldNumber": 12,
+      "newNumber": 13,
+      "id": "std_1790932046423_wkfuaag",
+      "points": 0
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Mafalda dos Santos Chaparro",
+      "oldNumber": 13,
+      "newNumber": 14,
+      "id": "std_1790932047144_1c62w2t",
+      "points": 290
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Mafalda Mouro Cruz",
+      "oldNumber": 14,
+      "newNumber": 15,
+      "id": "std_1790932047858_na70h2r",
+      "points": 350
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Maria Carmelino Alves dos Santos Jorge",
+      "oldNumber": 15,
+      "newNumber": 16,
+      "id": "std_1790932048569_q119ged",
+      "points": 0
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Maria Inês Sousa de Almeida",
+      "oldNumber": 16,
+      "newNumber": 17,
+      "id": "std_1790932049391_gxpj4fs",
+      "points": 0
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Matheus Antunes Carvalho",
+      "oldNumber": 17,
+      "newNumber": 18,
+      "id": "std_1790932050055_a9fgdmk",
+      "points": 320
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Nicolas Ferreira Ribeiro",
+      "oldNumber": 18,
+      "newNumber": 19,
+      "id": "std_1790932051558_ptm6ezn",
+      "points": 350
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Noa Yasmin Silva Rodrigues",
+      "oldNumber": 19,
+      "newNumber": 20,
+      "id": "std_1790932052758_gskro0q",
+      "points": 0
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Salvador dos Santos Pinto",
+      "oldNumber": 20,
+      "newNumber": 21,
+      "id": "std_1790932054101_i2jj8pi",
+      "points": 20
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Sandro Silva Carvalho Gonçalves Tavares",
+      "oldNumber": 21,
+      "newNumber": 22,
+      "id": "std_1790932055432_a2bi9p8",
+      "points": 0
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Santiago Alexandre Monteiro Oliveira",
+      "oldNumber": 22,
+      "newNumber": 23,
+      "id": "std_1790932056768_4wd05ag",
+      "points": 0
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Santiago Miguel de Almeida Fernandes",
+      "oldNumber": 23,
+      "newNumber": 24,
+      "id": "std_1790932058083_3hdmuxn",
+      "points": 0
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Santiago Miguel Nunes",
+      "oldNumber": 24,
+      "newNumber": 25,
+      "id": "std_1790932059352_9hvqv54",
+      "points": 0
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Sirem Turé",
+      "oldNumber": 25,
+      "newNumber": 26,
+      "id": "std_1790932060546_eod9uji",
+      "points": 330
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Yasmin dos Santos Fernandes",
+      "oldNumber": 26,
+      "newNumber": 27,
+      "id": "std_1790932061574_2z3j83n",
+      "points": 300
+    },
+    {
+      "turma": "5.º E",
+      "studentName": "Yuri Rafael Gomes Batista",
+      "oldNumber": 27,
+      "newNumber": 28,
+      "id": "std_1790932062220_0reolja",
+      "points": 0
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Carolina de Oliveira Lisboa",
+      "oldNumber": 1,
+      "newNumber": 2,
+      "id": "std_1790932085033_puo3axh",
+      "points": 0
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Clara da Gandra Tonel",
+      "oldNumber": 2,
+      "newNumber": 3,
+      "id": "std_1790932085637_jcw7o66",
+      "points": 0
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Daniel da Conceição Pacheco Lima",
+      "oldNumber": 3,
+      "newNumber": 4,
+      "id": "std_1790932086326_rj4tmth",
+      "points": 300
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Flávia Gonçalves Fernandes",
+      "oldNumber": 4,
+      "newNumber": 5,
+      "id": "std_1790932087692_3atgut6",
+      "points": 0
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Francisca Silva Alfredo",
+      "oldNumber": 5,
+      "newNumber": 6,
+      "id": "std_1790932089031_l90w9m5",
+      "points": 320
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Guilherme Pinto da Fonseca",
+      "oldNumber": 6,
+      "newNumber": 7,
+      "id": "std_1790932090469_9mx157t",
+      "points": 570
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Gustavo Martins Pires Correia Lameira",
+      "oldNumber": 7,
+      "newNumber": 8,
+      "id": "std_1790932091887_2cgp1dp",
+      "points": 0
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Gustavo Valoroso Pereira",
+      "oldNumber": 8,
+      "newNumber": 9,
+      "id": "std_1790932092616_w9bq5kw",
+      "points": 0
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Isaac Samuel da Silva Paulo",
+      "oldNumber": 9,
+      "newNumber": 10,
+      "id": "std_1790932093332_h6kbba6",
+      "points": 0
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Letícia Alexandra Cardoso da Rocha",
+      "oldNumber": 10,
+      "newNumber": 11,
+      "id": "std_1790932094035_c8pub1g",
+      "points": 30
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Luca Tomé Bráz",
+      "oldNumber": 11,
+      "newNumber": 12,
+      "id": "std_1790932095061_wjshyvp",
+      "points": 250
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Mara Sofia Cohen",
+      "oldNumber": 12,
+      "newNumber": 13,
+      "id": "std_1790932095987_v9kz10o",
+      "points": 300
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Maria Leonor Caetano Serafim",
+      "oldNumber": 13,
+      "newNumber": 14,
+      "id": "std_1790932096907_f8sspyx",
+      "points": 275
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Maria Neves Romão",
+      "oldNumber": 14,
+      "newNumber": 15,
+      "id": "std_1790932097835_749n3za",
+      "points": 0
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Mariana João Ribeiro Fontes Frade",
+      "oldNumber": 15,
+      "newNumber": 16,
+      "id": "std_1790932098650_hg0zrti",
+      "points": 350
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Martim Batista Coelho de Sousa Folgado",
+      "oldNumber": 16,
+      "newNumber": 17,
+      "id": "std_1790932099468_wsrv0yt",
+      "points": 539
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Martim Francisco Raeiro",
+      "oldNumber": 17,
+      "newNumber": 18,
+      "id": "std_1790932100487_oyg52o7",
+      "points": 0
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Miguel da Silva Martins da Conceição Melgueira",
+      "oldNumber": 18,
+      "newNumber": 19,
+      "id": "std_1790932101377_o4inn05",
+      "points": 0
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Miguel Mendes Carona",
+      "oldNumber": 19,
+      "newNumber": 20,
+      "id": "std_1790932102333_r3wyqny",
+      "points": 504
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Miriam Isabel Ferreira Antunes Lopes Lucas",
+      "oldNumber": 20,
+      "newNumber": 21,
+      "id": "std_1790932103051_5itb7fl",
+      "points": 0
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Pietro Rodrigues Xavier",
+      "oldNumber": 21,
+      "newNumber": 22,
+      "id": "std_1790932103724_uwl5zpg",
+      "points": 300
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Ralph Venancio Barreira",
+      "oldNumber": 22,
+      "newNumber": 23,
+      "id": "std_1790932104385_o8yohky",
+      "points": 0
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Salvador Martim Moras Baldo",
+      "oldNumber": 23,
+      "newNumber": 24,
+      "id": "std_1790932105084_tg3g1ek",
+      "points": 0
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Sara de Melo Azevedo Kowalczyk",
+      "oldNumber": 24,
+      "newNumber": 25,
+      "id": "std_1790932105768_44z70bg",
+      "points": 330
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Sofia Duarte Silva Sousa de Carvalho",
+      "oldNumber": 25,
+      "newNumber": 26,
+      "id": "std_1790932106434_mjs4psh",
+      "points": 0
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Tiago Fialho Cunha",
+      "oldNumber": 26,
+      "newNumber": 27,
+      "id": "std_1790932107128_iz35y62",
+      "points": 0
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Tomás Frangi Páscoa",
+      "oldNumber": 27,
+      "newNumber": 28,
+      "id": "std_1790932107877_7aypmfz",
+      "points": 300
+    },
+    {
+      "turma": "5.º F",
+      "studentName": "Vicente Temudo Ferreira Pereira",
+      "oldNumber": 28,
+      "newNumber": 29,
+      "id": "std_1790932108593_pxemkar",
+      "points": 300
+    }
+  ],
+  "createdCount": 7,
+  "created": [
+    {
+      "turma": "5.º A",
+      "number": 1,
+      "name": "Anderson Obega",
+      "username": "anderson.obega",
+      "password": "espada817",
+      "id": "std_1791545014763_2a4a9499"
+    },
+    {
+      "turma": "5.º B",
+      "number": 1,
+      "name": "Catarina Isabel Varela Semedo Ferreira",
+      "username": "catarina.ferreira.5b",
+      "password": "gato928",
+      "id": "std_1791545015027_ba3603f0"
+    },
+    {
+      "turma": "5.º C",
+      "number": 1,
+      "name": "Alice de Oliveira Florentino",
+      "username": "alice.florentino",
+      "password": "diamante740",
+      "id": "std_1791545015293_042e9dd4"
+    },
+    {
+      "turma": "5.º C",
+      "number": 31,
+      "name": "ALUNA CARLA EXPERIEINCIA",
+      "username": "aluna.carla",
+      "password": "trofeu701",
+      "id": "std_1791545015560_71a3044b"
+    },
+    {
+      "turma": "5.º D",
+      "number": 1,
+      "name": "Alícia Ferreira Códices",
+      "username": "alicia.codices",
+      "password": "sol201",
+      "id": "std_1791545015837_66e6ee05"
+    },
+    {
+      "turma": "5.º E",
+      "number": 1,
+      "name": "Adrien Francisco Amado Martins",
+      "username": "adrien.martins",
+      "password": "palma492",
+      "id": "std_1791545016079_98370b36"
+    },
+    {
+      "turma": "5.º F",
+      "number": 1,
+      "name": "Afonso Miguel de Albuquerque e Fernandes Alves",
+      "username": "afonso.alves",
+      "password": "radar675",
+      "id": "std_1791545016312_80691d32"
+    }
+  ],
+  "verification": [
+    {
+      "turma": "5.º A",
+      "pautaTotal": 28,
+      "dbTotal": 28,
+      "status": "PERFEITO"
+    },
+    {
+      "turma": "5.º B",
+      "pautaTotal": 23,
+      "dbTotal": 23,
+      "status": "PERFEITO"
+    },
+    {
+      "turma": "5.º C",
+      "pautaTotal": 31,
+      "dbTotal": 31,
+      "status": "PERFEITO"
+    },
+    {
+      "turma": "5.º D",
+      "pautaTotal": 22,
+      "dbTotal": 22,
+      "status": "PERFEITO"
+    },
+    {
+      "turma": "5.º E",
+      "pautaTotal": 28,
+      "dbTotal": 28,
+      "status": "PERFEITO"
+    },
+    {
+      "turma": "5.º F",
+      "pautaTotal": 29,
+      "dbTotal": 29,
+      "status": "PERFEITO"
+    }
+  ]
+}
