@@ -202,15 +202,23 @@ export interface TurmaRanking {
   topStudents: {
     publicId: string;
     nickname?: string;
+    name?: string;
+    realName?: string;
+    number?: number;
     points: number;
     avatar?: AvatarConfig;
   }[];
   allStudents?: {
+    id?: string;
     publicId: string;
     nickname?: string;
+    name?: string;
+    realName?: string;
+    number?: number;
+    turma?: string;
     points: number;
-    activitiesCount: number;
-    badgeCount: number;
+    activitiesCount?: number;
+    badgeCount?: number;
     avatar?: AvatarConfig;
   }[];
 }
@@ -220,6 +228,9 @@ export interface StudentRanking {
   id: string;
   publicId: string;
   nickname?: string;
+  name?: string;
+  realName?: string;
+  number?: number;
   turma: string;
   points: number;
   activitiesCount: number;

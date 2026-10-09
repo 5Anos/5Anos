@@ -1125,28 +1125,103 @@ app.post('/api/user/profile', requireAuth, async (req: AuthenticatedRequest, res
 // 1. Turma Rankings (Aggregated stats, authenticated)
 app.get('/api/rankings/turmas', requireAuth, async (req: AuthenticatedRequest, res) => {
   try {
+    const currentUser = req.user!;
+    const isTeacher = currentUser.role === 'admin' || currentUser.role === 'teacher' || isTeacherEmail(currentUser.email);
+    const userTurma = normalizeTurmaName(currentUser.turma);
+
     const profilesSnap = await db.collection('publicProfiles').get();
-    const classMap = new Map<string, { turma: string; totalPoints: number; studentCount: number }>();
+
+    // If teacher, fetch real names from users collection
+    const usersNameMap = new Map<string, { name: string; number?: number }>();
+    if (isTeacher) {
+      const usersSnap = await db.collection('users').get();
+      usersSnap.docs.forEach((ud) => {
+        const udata = ud.data();
+        usersNameMap.set(ud.id, {
+          name: udata.name || udata.fullName || '',
+          number: udata.number,
+        });
+      });
+    }
+
+    const classMap = new Map<string, {
+      turma: string;
+      totalPoints: number;
+      studentCount: number;
+      students: any[];
+    }>();
 
     profilesSnap.docs.forEach((d) => {
       const data = d.data();
       if (data.role === 'admin' || data.role === 'teacher') return;
-      const turma = (data.turma || '').trim();
-      if (!turma) return;
+      const rawTurma = (data.turma || '').trim();
+      if (!rawTurma) return;
+      const turma = normalizeTurmaName(rawTurma);
 
-      const current = classMap.get(turma) || { turma, totalPoints: 0, studentCount: 0 };
-      current.totalPoints += Number(data.points || 0);
+      const current = classMap.get(turma) || {
+        turma,
+        totalPoints: 0,
+        studentCount: 0,
+        students: [],
+      };
+
+      const pts = Number(data.points || 0);
+      current.totalPoints += pts;
       current.studentCount += 1;
+
+      const rawNick = data.nickname || data.publicId;
+      const studentNickname = getSafeDisplayNickname(rawNick, d.id, data.role);
+      const teacherInfo = isTeacher ? usersNameMap.get(d.id) : null;
+
+      current.students.push({
+        id: d.id,
+        publicId: studentNickname,
+        nickname: studentNickname,
+        name: isTeacher ? (teacherInfo?.name || data.name || '') : undefined,
+        realName: isTeacher ? (teacherInfo?.name || data.name || '') : undefined,
+        number: isTeacher ? (teacherInfo?.number ?? data.number) : data.number,
+        turma,
+        points: pts,
+        activitiesCount: Number(data.activitiesCount || 0),
+        badgeCount: Number(data.badgeCount || 0),
+        avatar: data.avatar,
+      });
+
       classMap.set(turma, current);
     });
 
-    const list = Array.from(classMap.values()).map((c) => ({
-      turma: c.turma,
-      totalPoints: c.totalPoints,
-      averagePoints: c.studentCount > 0 ? Math.round(c.totalPoints / c.studentCount) : 0,
-      studentCount: c.studentCount,
-      rank: 0,
-    }));
+    const list = Array.from(classMap.values()).map((c) => {
+      // Sort students in this class by points descending
+      c.students.sort((a, b) => b.points - a.points);
+
+      const topStudents = c.students.slice(0, 3).map((s) => ({
+        publicId: s.publicId,
+        nickname: s.nickname,
+        name: s.name,
+        realName: s.realName,
+        number: s.number,
+        points: s.points,
+        avatar: s.avatar,
+      }));
+
+      // Non-teachers only get allStudents if it's their own class, protecting privacy of other classes
+      const allStudentsForCaller = (isTeacher || normalizeTurmaName(c.turma) === userTurma)
+        ? c.students
+        : [];
+
+      return {
+        turma: c.turma,
+        totalPoints: c.totalPoints,
+        averagePoints: c.studentCount > 0 ? Math.round(c.totalPoints / c.studentCount) : 0,
+        avgPoints: c.studentCount > 0 ? Math.round(c.totalPoints / c.studentCount) : 0,
+        studentCount: c.studentCount,
+        completedActivities: 0,
+        topBadge: '🏆',
+        topStudents,
+        allStudents: allStudentsForCaller,
+        rank: 0,
+      };
+    });
 
     list.sort((a, b) => b.averagePoints - a.averagePoints || b.totalPoints - a.totalPoints);
     list.forEach((item, index) => { item.rank = index + 1; });
@@ -1158,34 +1233,60 @@ app.get('/api/rankings/turmas', requireAuth, async (req: AuthenticatedRequest, r
   }
 });
 
-// 2. Student Rankings (Authenticated & Minimal Non-PII Data with Nickname)
+// 2. Student Rankings (Authenticated & Minimal Non-PII Data for students; real names for teachers)
 app.get('/api/rankings/students', requireAuth, async (req: AuthenticatedRequest, res) => {
   try {
     const currentUser = req.user!;
     const isTeacher = currentUser.role === 'admin' || currentUser.role === 'teacher' || isTeacherEmail(currentUser.email);
-    const userTurma = String(req.query.turma || currentUser.turma || '').trim();
+    const requestedTurma = req.query.turma ? normalizeTurmaName(String(req.query.turma)) : '';
+    const userTurma = normalizeTurmaName(currentUser.turma);
 
     const profilesSnap = await db.collection('publicProfiles').get();
-    const list: any[] = [];
 
+    // If teacher, fetch real names from users collection
+    const usersNameMap = new Map<string, { name: string; number?: number }>();
+    if (isTeacher) {
+      const usersSnap = await db.collection('users').get();
+      usersSnap.docs.forEach((ud) => {
+        const udata = ud.data();
+        usersNameMap.set(ud.id, {
+          name: udata.name || udata.fullName || '',
+          number: udata.number,
+        });
+      });
+    }
+
+    const list: any[] = [];
     profilesSnap.docs.forEach((d) => {
       const data = d.data();
       if (data.role === 'admin' || data.role === 'teacher') return;
-      const studentTurma = (data.turma || '').trim();
+      const rawTurma = (data.turma || '').trim();
+      if (!rawTurma) return;
+      const studentTurma = normalizeTurmaName(rawTurma);
 
       // Non-teachers only see rankings for their own class
-      if (!isTeacher && userTurma && studentTurma !== userTurma) return;
+      if (!isTeacher) {
+        if (studentTurma !== userTurma) return;
+      } else if (requestedTurma && requestedTurma.toLowerCase() !== 'all' && studentTurma !== requestedTurma) {
+        // Teacher requested a specific turma filter
+        return;
+      }
 
       const rawNick = data.nickname || data.publicId;
       const studentNickname = getSafeDisplayNickname(rawNick, d.id, data.role);
+      const teacherInfo = isTeacher ? usersNameMap.get(d.id) : null;
 
-      // Expose minimal pseudonymous data only (Nickname, Avatar, XP, Turma)
       list.push({
         id: d.id,
         publicId: studentNickname,
         nickname: studentNickname,
+        name: isTeacher ? (teacherInfo?.name || data.name || '') : undefined,
+        realName: isTeacher ? (teacherInfo?.name || data.name || '') : undefined,
+        number: isTeacher ? (teacherInfo?.number ?? data.number) : data.number,
         turma: studentTurma,
         points: Number(data.points || 0),
+        activitiesCount: Number(data.activitiesCount || 0),
+        badgeCount: Number(data.badgeCount || 0),
         avatar: data.avatar,
         rank: 0,
       });
@@ -1194,7 +1295,7 @@ app.get('/api/rankings/students', requireAuth, async (req: AuthenticatedRequest,
     list.sort((a, b) => b.points - a.points);
     list.forEach((item, index) => { item.rank = index + 1; });
 
-    return res.json({ success: true, rankings: list.slice(0, 100) });
+    return res.json({ success: true, rankings: list });
   } catch (error) {
     console.error('Students ranking error:', error);
     return res.status(500).json({ error: 'Não foi possível carregar a classificação dos alunos.' });

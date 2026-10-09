@@ -1185,7 +1185,7 @@ export const api = {
     }
   },
 
-  async getTurmaRankings(_userTurma?: string, _isAdminUser = false): Promise<TurmaRanking[]> {
+  async getTurmaRankings(userTurma?: string, isAdminUser = false): Promise<TurmaRanking[]> {
     try {
       const res = await serverApi<{ rankings: TurmaRanking[] }>('/api/rankings/turmas');
       if (res?.rankings && Array.isArray(res.rankings)) return res.rankings;
@@ -1193,24 +1193,71 @@ export const api = {
 
     try {
       const snap = await getDocs(collection(db, 'publicProfiles'));
-      const map = new Map<string, { totalPoints: number; studentCount: number }>();
+      const usersNameMap = new Map<string, { name: string; number?: number }>();
+      if (isAdminUser) {
+        try {
+          const usersSnap = await getDocs(collection(db, 'users'));
+          usersSnap.docs.forEach((ud) => {
+            const udata = ud.data();
+            usersNameMap.set(ud.id, {
+              name: udata.name || udata.fullName || '',
+              number: udata.number,
+            });
+          });
+        } catch {}
+      }
+
+      const map = new Map<string, { totalPoints: number; studentCount: number; students: any[] }>();
       const defaultList = getTurmasList();
-      defaultList.forEach(t => map.set(t, { totalPoints: 0, studentCount: 0 }));
+      defaultList.forEach((t) => map.set(normalizeTurmaName(t), { totalPoints: 0, studentCount: 0, students: [] }));
 
       snap.docs.forEach((d) => {
         const data = d.data();
         if (data.role === 'student' && data.turma) {
           const t = normalizeTurmaName(data.turma);
-          const current = map.get(t) || { totalPoints: 0, studentCount: 0 };
-          map.set(t, {
-            totalPoints: current.totalPoints + (Number(data.points) || 0),
-            studentCount: current.studentCount + 1,
+          const current = map.get(t) || { totalPoints: 0, studentCount: 0, students: [] };
+          const pts = Number(data.points) || 0;
+          current.totalPoints += pts;
+          current.studentCount += 1;
+
+          const rawNick = data.nickname || data.publicId;
+          const studentNickname = getSafeDisplayNickname(rawNick, d.id, data.role);
+          const teacherInfo = isAdminUser ? usersNameMap.get(d.id) : null;
+
+          current.students.push({
+            id: d.id,
+            publicId: studentNickname,
+            nickname: studentNickname,
+            name: isAdminUser ? (teacherInfo?.name || data.name || '') : undefined,
+            realName: isAdminUser ? (teacherInfo?.name || data.name || '') : undefined,
+            number: isAdminUser ? (teacherInfo?.number ?? data.number) : data.number,
+            turma: t,
+            points: pts,
+            activitiesCount: Number(data.activitiesCount) || 0,
+            badgeCount: Number(data.badgeCount) || 0,
+            avatar: data.avatar || getDefaultAvatar(data.publicId || 'aluno'),
           });
+
+          map.set(t, current);
         }
       });
 
+      const callerTurma = userTurma ? normalizeTurmaName(userTurma) : '';
       const list: TurmaRanking[] = [];
       map.forEach((val, key) => {
+        val.students.sort((a, b) => b.points - a.points);
+        const topStudents = val.students.slice(0, 3).map((s) => ({
+          publicId: s.publicId,
+          nickname: s.nickname,
+          name: s.name,
+          realName: s.realName,
+          number: s.number,
+          points: s.points,
+          avatar: s.avatar,
+        }));
+
+        const canSeeStudents = isAdminUser || key === callerTurma;
+
         list.push({
           turma: key,
           totalPoints: val.totalPoints,
@@ -1218,7 +1265,8 @@ export const api = {
           studentCount: val.studentCount,
           completedActivities: 0,
           topBadge: '🏆',
-          topStudents: [],
+          topStudents,
+          allStudents: canSeeStudents ? val.students : [],
         });
       });
 
@@ -1232,10 +1280,10 @@ export const api = {
   async getStudentRankings(
     currentUserId?: string,
     userTurma?: string,
-    _isAdminUser = false
+    isAdminUser = false
   ): Promise<StudentRanking[]> {
     try {
-      const queryParam = userTurma ? `?turma=${encodeURIComponent(userTurma)}` : '';
+      const queryParam = (!isAdminUser && userTurma) ? `?turma=${encodeURIComponent(userTurma)}` : '';
       const res = await serverApi<{ rankings: StudentRanking[] }>(`/api/rankings/students${queryParam}`);
       if (res?.rankings && Array.isArray(res.rankings)) {
         return res.rankings.map((r, idx) => ({
@@ -1248,16 +1296,38 @@ export const api = {
 
     try {
       const snap = await getDocs(collection(db, 'publicProfiles'));
+      const usersNameMap = new Map<string, { name: string; number?: number }>();
+      if (isAdminUser) {
+        try {
+          const usersSnap = await getDocs(collection(db, 'users'));
+          usersSnap.docs.forEach((ud) => {
+            const udata = ud.data();
+            usersNameMap.set(ud.id, {
+              name: udata.name || udata.fullName || '',
+              number: udata.number,
+            });
+          });
+        } catch {}
+      }
+
       const list: StudentRanking[] = [];
+      const normalizedUserTurma = userTurma ? normalizeTurmaName(userTurma) : '';
+
       snap.docs.forEach((d) => {
         const data = d.data();
         if (data.role === 'student') {
-          if (!userTurma || normalizeTurmaName(data.turma) === normalizeTurmaName(userTurma)) {
+          const sTurma = normalizeTurmaName(data.turma || '');
+          if (isAdminUser || !normalizedUserTurma || sTurma === normalizedUserTurma) {
             const studentNickname = getSafeDisplayNickname(data.nickname || data.publicId, d.id, data.role);
+            const teacherInfo = isAdminUser ? usersNameMap.get(d.id) : null;
+
             list.push({
               id: d.id,
               publicId: studentNickname,
               nickname: studentNickname,
+              name: isAdminUser ? (teacherInfo?.name || data.name || '') : undefined,
+              realName: isAdminUser ? (teacherInfo?.name || data.name || '') : undefined,
+              number: isAdminUser ? (teacherInfo?.number ?? data.number) : data.number,
               turma: data.turma || '',
               avatar: data.avatar || getDefaultAvatar(data.publicId || 'aluno'),
               points: Number(data.points) || 0,

@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { User, Language, TurmaRanking, StudentRanking } from '../types';
 import { api, isUserAdmin } from '../services/api';
+import { normalizeTurmaName } from '../utils/studentCredentials';
 import { CartoonAvatar } from './avatar/CartoonAvatar';
 import { getDefaultAvatar } from '../utils/avatarUtils';
 
@@ -63,7 +64,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
     try {
       const [turmas, students] = await Promise.all([
         api.getTurmaRankings(currentUser?.turma, isAdmin),
-        api.getStudentRankings(currentUser?.id, currentUser?.turma, isAdmin),
+        api.getStudentRankings(currentUser?.id, isAdmin ? undefined : currentUser?.turma, isAdmin),
       ]);
       setTurmaRankings(turmas);
       setStudentRankings(students);
@@ -82,7 +83,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
   const baseStudentList = isAdmin
     ? studentRankings
     : studentRankings.filter(
-        (s) => s.turma.toLowerCase().trim() === userTurma.toLowerCase().trim()
+        (s) => normalizeTurmaName(s.turma) === normalizeTurmaName(userTurma)
       );
 
   // Recalculate positions within the visible group
@@ -96,10 +97,11 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
     const matchesTurma =
       !isAdmin ||
       selectedTurmaFilter === 'all' ||
-      s.turma.toLowerCase().trim() === selectedTurmaFilter.toLowerCase().trim();
+      normalizeTurmaName(s.turma) === normalizeTurmaName(selectedTurmaFilter);
     const matchesSearch =
       !searchNickname.trim() ||
-      (s.nickname || s.publicId || '').toLowerCase().includes(searchNickname.toLowerCase().trim());
+      (s.nickname || s.publicId || '').toLowerCase().includes(searchNickname.toLowerCase().trim()) ||
+      (isAdmin && (s.name || s.realName || '').toLowerCase().includes(searchNickname.toLowerCase().trim()));
     return matchesTurma && matchesSearch;
   });
 
@@ -111,7 +113,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
     if (isAdmin) {
       setSelectedTurmaFilter(turmaName);
       setActiveTab('students');
-    } else if (turmaName.toLowerCase().trim() === userTurma.toLowerCase().trim()) {
+    } else if (normalizeTurmaName(turmaName) === normalizeTurmaName(userTurma)) {
       setActiveTab('students');
     }
   };
@@ -199,6 +201,22 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
             /* TAB 1: 🏆 RANKING DAS TURMAS */
             <div className="space-y-6">
               {/* Gamification Explanation Card */}
+              {isAdmin && (
+                <div className="p-3 rounded-2xl bg-indigo-50/90 border border-indigo-200/90 flex items-center justify-between gap-3 shadow-2xs">
+                  <div className="flex items-center gap-2 text-indigo-950 text-xs font-bold">
+                    <ShieldCheck className="w-4 h-4 text-indigo-600 shrink-0" />
+                    <span>
+                      {language === 'pt'
+                        ? '👁️ Modo Professor Ativo: Estás a ver os nomes reais dos alunos. Os alunos apenas conseguem ver os nicknames cartoon nos respetivos rankings.'
+                        : '👁️ Teacher Mode Active: You are viewing real student names. Students only see cartoon nicknames on their leaderboards.'}
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-black uppercase px-2 py-0.5 bg-indigo-200/80 text-indigo-950 rounded-full shrink-0">
+                    Apenas Professor
+                  </span>
+                </div>
+              )}
+
               <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-indigo-500/10 to-purple-500/10 border border-amber-200/80 flex items-start gap-3">
                 <Zap className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
                 <div className="text-xs text-slate-700 leading-relaxed">
@@ -231,7 +249,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                           🥈
                         </div>
                         <div className="w-full bg-gradient-to-t from-slate-200 to-slate-100 rounded-xl sm:rounded-2xl p-2 sm:p-4 border border-slate-300 text-center shadow-xs relative">
-                          {currentUser?.turma?.toLowerCase() === top3Turmas[1].turma.toLowerCase() && (
+                          {normalizeTurmaName(currentUser?.turma) === normalizeTurmaName(top3Turmas[1].turma) && (
                             <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[8px] sm:text-[9px] font-black uppercase bg-indigo-600 text-white px-1.5 sm:px-2 py-0.5 rounded-full shadow-xs whitespace-nowrap">
                               A tua turma!
                             </span>
@@ -247,7 +265,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                             {top3Turmas[1].studentCount} alunos • {top3Turmas[1].avgPoints} XP/aluno
                           </p>
                           <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-bold text-indigo-600 mt-1.5 sm:mt-2 bg-white/80 px-1.5 sm:px-2 py-0.5 rounded-md">
-                            {isAdmin || currentUser?.turma?.toLowerCase() === top3Turmas[1].turma.toLowerCase()
+                            {isAdmin || normalizeTurmaName(currentUser?.turma) === normalizeTurmaName(top3Turmas[1].turma)
                               ? (language === 'pt' ? 'Ver alunos' : 'View students')
                               : (language === 'pt' ? 'Ver detalhes' : 'View details')}{' '}
                             <ChevronDown className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
@@ -267,7 +285,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                           👑
                         </div>
                         <div className="w-full bg-gradient-to-t from-amber-400 to-amber-300 rounded-xl sm:rounded-2xl p-2.5 sm:p-5 border-2 border-amber-400 text-center shadow-md relative">
-                          {currentUser?.turma?.toLowerCase() === top3Turmas[0].turma.toLowerCase() && (
+                          {normalizeTurmaName(currentUser?.turma) === normalizeTurmaName(top3Turmas[0].turma) && (
                             <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[9px] sm:text-[10px] font-black uppercase bg-indigo-700 text-white px-2 sm:px-2.5 py-0.5 rounded-full shadow-xs whitespace-nowrap">
                               🌟 #1!
                             </span>
@@ -285,7 +303,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                             {top3Turmas[0].studentCount} alunos • {top3Turmas[0].avgPoints} XP/aluno
                           </p>
                           <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-bold text-amber-950 mt-1.5 sm:mt-2 bg-white/90 px-1.5 sm:px-2 py-0.5 rounded-md shadow-xs">
-                            {isAdmin || currentUser?.turma?.toLowerCase() === top3Turmas[0].turma.toLowerCase()
+                            {isAdmin || normalizeTurmaName(currentUser?.turma) === normalizeTurmaName(top3Turmas[0].turma)
                               ? (language === 'pt' ? 'Ver alunos' : 'View students')
                               : (language === 'pt' ? 'Ver detalhes' : 'View details')}{' '}
                             <ChevronDown className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
@@ -305,7 +323,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                           🥉
                         </div>
                         <div className="w-full bg-gradient-to-t from-amber-100 to-amber-50 rounded-xl sm:rounded-2xl p-2 sm:p-4 border border-amber-200 text-center shadow-xs relative">
-                          {currentUser?.turma?.toLowerCase() === top3Turmas[2].turma.toLowerCase() && (
+                          {normalizeTurmaName(currentUser?.turma) === normalizeTurmaName(top3Turmas[2].turma) && (
                             <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[8px] sm:text-[9px] font-black uppercase bg-indigo-600 text-white px-1.5 sm:px-2 py-0.5 rounded-full shadow-xs whitespace-nowrap">
                               A tua turma!
                             </span>
@@ -321,7 +339,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                             {top3Turmas[2].studentCount} alunos • {top3Turmas[2].avgPoints} XP/aluno
                           </p>
                           <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-bold text-amber-900 mt-1.5 sm:mt-2 bg-white/80 px-1.5 sm:px-2 py-0.5 rounded-md">
-                            {isAdmin || currentUser?.turma?.toLowerCase() === top3Turmas[2].turma.toLowerCase()
+                            {isAdmin || normalizeTurmaName(currentUser?.turma) === normalizeTurmaName(top3Turmas[2].turma)
                               ? (language === 'pt' ? 'Ver alunos' : 'View students')
                               : (language === 'pt' ? 'Ver detalhes' : 'View details')}{' '}
                             <ChevronDown className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
@@ -346,9 +364,11 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
 
                 <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs divide-y divide-slate-100">
                   {turmaRankings.map((tr, idx) => {
-                    const isUserTurma = currentUser?.turma?.toLowerCase() === tr.turma.toLowerCase();
+                    const isUserTurma = normalizeTurmaName(currentUser?.turma) === normalizeTurmaName(tr.turma);
                     const isExpanded = expandedTurma === tr.turma;
-                    const studentsInTurma = tr.allStudents || [];
+                    const studentsInTurma = (tr.allStudents && tr.allStudents.length > 0)
+                      ? tr.allStudents
+                      : studentRankings.filter((s) => normalizeTurmaName(s.turma) === normalizeTurmaName(tr.turma));
                     const canViewStudents = isAdmin || isUserTurma;
 
                     return (
@@ -464,28 +484,46 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                                 ) : (
                                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                     {studentsInTurma.map((stu, sIdx) => {
+                                      const hasRealName = isAdmin && Boolean(stu.name || stu.realName);
+                                      const displayName = hasRealName ? (stu.name || stu.realName) : (stu.nickname || stu.publicId);
+
                                       return (
                                         <div
-                                          key={stu.publicId + sIdx}
+                                          key={(stu.id || stu.publicId) + sIdx}
                                           className="flex items-center justify-between p-2.5 bg-white rounded-xl border border-slate-200 shadow-2xs"
                                         >
-                                          <div className="flex items-center gap-2.5">
+                                          <div className="flex items-center gap-2.5 min-w-0">
                                             <span className="w-6 h-6 rounded-lg bg-slate-100 text-slate-700 font-extrabold text-[11px] flex items-center justify-center shrink-0">
                                               #{sIdx + 1}
                                             </span>
                                             <div className="w-7 h-7 rounded-lg overflow-hidden shadow-2xs shrink-0 ring-1 ring-slate-200">
                                               <CartoonAvatar config={stu.avatar || getDefaultAvatar(stu.nickname || stu.publicId)} size={28} />
                                             </div>
-                                            <div>
-                                              <p className="text-xs font-extrabold text-slate-800 font-mono">
-                                                {stu.nickname || stu.publicId}
-                                              </p>
+                                            <div className="min-w-0">
+                                              <div className="flex items-center gap-1.5 flex-wrap">
+                                                <p
+                                                  className={`text-xs truncate ${hasRealName ? 'font-black text-slate-900 font-sans' : 'font-extrabold text-slate-800 font-mono'}`}
+                                                  title={displayName}
+                                                >
+                                                  {displayName}
+                                                </p>
+                                                {hasRealName && (
+                                                  <span className="text-[10px] font-mono font-bold text-indigo-700 bg-indigo-50 px-1.5 py-0.2 rounded border border-indigo-200">
+                                                    @{stu.nickname || stu.publicId}
+                                                  </span>
+                                                )}
+                                                {isAdmin && stu.number !== undefined && (
+                                                  <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-1 py-0.2 rounded">
+                                                    N.º {stu.number}
+                                                  </span>
+                                                )}
+                                              </div>
                                               <p className="text-[10px] text-slate-400">
-                                                {stu.activitiesCount} {language === 'pt' ? 'atividades' : 'activities'}
+                                                {stu.activitiesCount ?? 0} {language === 'pt' ? 'atividades' : 'activities'}
                                               </p>
                                             </div>
                                           </div>
-                                          <span className="text-xs font-extrabold text-indigo-600 font-mono">
+                                          <span className="text-xs font-extrabold text-indigo-600 font-mono shrink-0 ml-2">
                                             {stu.points} XP
                                           </span>
                                         </div>
@@ -662,11 +700,27 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                           <CartoonAvatar config={student.avatar || getDefaultAvatar(student.nickname || student.publicId)} size={44} />
                         </div>
 
-                        <div>
+                        <div className="min-w-0">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <p className="text-sm font-extrabold text-slate-900 font-mono">
-                              {student.nickname || student.publicId}
-                            </p>
+                            {isAdmin && (student.name || student.realName) ? (
+                              <>
+                                <p className="text-sm font-black text-slate-900 font-sans truncate" title={student.name || student.realName}>
+                                  {student.name || student.realName}
+                                </p>
+                                <span className="text-xs font-mono font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-200">
+                                  @{student.nickname || student.publicId}
+                                </span>
+                                {student.number !== undefined && (
+                                  <span className="text-[11px] font-bold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-md border border-slate-200">
+                                    N.º {student.number}
+                                  </span>
+                                )}
+                              </>
+                            ) : (
+                              <p className="text-sm font-extrabold text-slate-900 font-mono">
+                                {student.nickname || student.publicId}
+                              </p>
+                            )}
                             <span className="text-[10px] font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
                               {student.turma}
                             </span>
