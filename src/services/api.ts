@@ -1652,10 +1652,10 @@ export const api = {
       avatar: getDefaultAvatar(username),
       initialPassword: password,
       password: password,
+      createdAt: duplicateUser?.createdAt || now,
       updatedAt: now,
     };
     if (studentNumber !== undefined) userData.number = studentNumber;
-    if (!duplicateUser) userData.createdAt = now;
 
     const credData = {
       userId,

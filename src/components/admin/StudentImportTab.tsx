@@ -19,6 +19,7 @@ import {
   X,
   Layers,
   Download,
+  UserPlus,
 } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import { User, Language } from '../../types';
@@ -32,6 +33,7 @@ interface StudentImportTabProps {
   onImportSuccess: () => void;
   onNavigateToCredentials: () => void;
   onNavigateToStudents?: () => void;
+  onOpenCreateSingleStudent?: () => void;
 }
 
 interface ParsedStudentRow {
@@ -262,6 +264,7 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
   onImportSuccess,
   onNavigateToCredentials,
   onNavigateToStudents,
+  onOpenCreateSingleStudent,
 }) => {
   const [activeMode, setActiveMode] = useState<'upload' | 'paste'>('upload');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -601,6 +604,36 @@ export const StudentImportTab: React.FC<StudentImportTabProps> = ({
             {language === 'pt' ? 'Seguro & Sem Nomes Truncados' : 'GDPR Compliant & Full Names'}
           </div>
         </div>
+
+        {/* Quick alternative: Create single student individually */}
+        {onOpenCreateSingleStudent && (
+          <div className="bg-gradient-to-r from-indigo-50 via-white to-amber-50/50 border border-indigo-200/80 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                <UserPlus className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="text-sm font-black text-slate-900">
+                  {language === 'pt' ? 'Queres criar apenas 1 aluno novo para uma turma?' : 'Want to add just 1 student to a class?'}
+                </h4>
+                <p className="text-xs text-slate-600 mt-0.5">
+                  {language === 'pt'
+                    ? 'Podes registar um aluno individualmente em poucos segundos, sem precisar de importar ficheiro Excel.'
+                    : 'Register an individual student quickly without needing an Excel spreadsheet.'}
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={onOpenCreateSingleStudent}
+              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer shrink-0 whitespace-nowrap"
+            >
+              <UserPlus className="w-4 h-4 text-indigo-200" />
+              <span>{language === 'pt' ? '+ Criar Aluno Individual' : '+ Add Single Student'}</span>
+            </button>
+          </div>
+        )}
 
         {/* POST-IMPORT SUCCESS RESULT CARD */}
         {importResult && (

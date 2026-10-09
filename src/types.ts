@@ -34,6 +34,7 @@ export interface User {
   language: Language;
   points: number;
   createdAt: string;
+  updatedAt?: string;
   avatar?: AvatarConfig;
   lastActivity?: {
     themeId: string;

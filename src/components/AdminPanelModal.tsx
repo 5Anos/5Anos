@@ -37,6 +37,7 @@ import {
   Scissors,
   HelpCircle,
   Copy,
+  UserPlus,
 } from 'lucide-react';
 import { User, Language, ThemeVisibilityMap, QuizVisibilityMap, ActivityProgress } from '../types';
 import { api, isUserAdmin, DEFAULT_THEME_VISIBILITY, DEFAULT_QUIZ_VISIBILITY } from '../services/api';
@@ -66,6 +67,7 @@ import { CartoonAvatar } from './avatar/CartoonAvatar';
 import { getDefaultAvatar } from '../utils/avatarUtils';
 import { StudentCredentialsTab } from './admin/StudentCredentialsTab';
 import { StudentImportTab } from './admin/StudentImportTab';
+import { CreateSingleStudentModal } from './admin/CreateSingleStudentModal';
 
 interface AdminPanelModalProps {
   isOpen: boolean;
@@ -151,6 +153,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
   const [confirmDialog, setConfirmDialog] = useState<ConfirmDialogState | null>(null);
   const [actionLoading, setActionLoading] = useState(false);
   const [isRecalibratingXP, setIsRecalibratingXP] = useState(false);
+  const [isCreateStudentModalOpen, setIsCreateStudentModalOpen] = useState(false);
 
   // Route initialTab to the correct tab and sub-section
   useEffect(() => {
@@ -982,6 +985,17 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
                     </button>
                   </div>
 
+                  {/* Button to Create Single Student Individually */}
+                  <button
+                    type="button"
+                    onClick={() => setIsCreateStudentModalOpen(true)}
+                    className="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
+                    title={language === 'pt' ? 'Criar conta individual para um aluno novo sem precisar de Excel' : 'Create single student account'}
+                  >
+                    <UserPlus className="w-4 h-4 text-indigo-200" />
+                    <span>{language === 'pt' ? '+ Criar Aluno Individual' : '+ Add Student'}</span>
+                  </button>
+
                   {/* UNIFIED EXPORT DROPDOWN MENU */}
                   <div className="relative" ref={exportDropdownRef}>
                     <button
@@ -1463,6 +1477,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
               setActiveTab('students');
               setAssessmentMode('global');
             }}
+            onOpenCreateSingleStudent={() => setIsCreateStudentModalOpen(true)}
           />
         )}
 
@@ -2308,6 +2323,18 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({
             </div>
           </div>
         )}
+        {/* MODAL: CRIAR ALUNO INDIVIDUAL */}
+        <CreateSingleStudentModal
+          isOpen={isCreateStudentModalOpen}
+          onClose={() => setIsCreateStudentModalOpen(false)}
+          turmasList={turmasList}
+          defaultTurma={selectedTurma === 'all' ? (turmasList[0] || '5.º A') : selectedTurma}
+          language={language}
+          onStudentCreated={async (newStudent) => {
+            await loadStudents();
+            showToast('success', `Aluno ${newStudent.fullName || newStudent.name} (${newStudent.turma}) criado com sucesso!`);
+          }}
+        />
       </div>
     </div>
   );
