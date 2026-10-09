@@ -52,7 +52,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
   const [searchNickname, setSearchNickname] = useState<string>('');
 
   const isAdmin = currentUser
-    ? isUserAdmin(currentUser.email, currentUser.role, currentUser.username, currentUser.publicId || currentUser.id)
+    ? isUserAdmin(currentUser.email, currentUser.role, currentUser.username, currentUser.publicId || currentUser.id, currentUser.id)
     : false;
   const userTurma = currentUser?.turma ? String(currentUser.turma).trim() : '5.º A';
 

@@ -1161,7 +1161,7 @@ app.post('/api/user/profile', requireAuth, async (req: AuthenticatedRequest, res
 app.get('/api/rankings/turmas', requireAuth, async (req: AuthenticatedRequest, res) => {
   try {
     const currentUser = req.user!;
-    const isTeacher = currentUser.role === 'admin' || currentUser.role === 'teacher' || isUserAdmin(currentUser.email, currentUser.role, currentUser.username, currentUser.publicId || currentUser.id);
+    const isTeacher = currentUser.role === 'admin' || currentUser.role === 'teacher' || isUserAdmin(currentUser.email, currentUser.role, currentUser.username, currentUser.publicId || currentUser.id, req.userId);
     const userTurma = normalizeTurmaName(currentUser.turma);
 
     const profilesSnap = await db.collection('publicProfiles').get();
@@ -1272,7 +1272,7 @@ app.get('/api/rankings/turmas', requireAuth, async (req: AuthenticatedRequest, r
 app.get('/api/rankings/students', requireAuth, async (req: AuthenticatedRequest, res) => {
   try {
     const currentUser = req.user!;
-    const isTeacher = currentUser.role === 'admin' || currentUser.role === 'teacher' || isUserAdmin(currentUser.email, currentUser.role, currentUser.username, currentUser.publicId || currentUser.id);
+    const isTeacher = currentUser.role === 'admin' || currentUser.role === 'teacher' || isUserAdmin(currentUser.email, currentUser.role, currentUser.username, currentUser.publicId || currentUser.id, req.userId);
     const requestedTurma = req.query.turma ? normalizeTurmaName(String(req.query.turma)) : '';
     const userTurma = normalizeTurmaName(currentUser.turma);
 
