@@ -510,9 +510,24 @@ async function requireAuth(req: AuthenticatedRequest, res: Response, next: NextF
     let session = verifySessionToken(token);
     if (!session) {
       // Support direct tokens issued during fallback auth (teacher_<id>_<time> or std_<id>_<time>)
-      if (token.startsWith('teacher_') || token.startsWith('std_')) {
-        const parts = token.split('_');
-        const candidateId = parts[1];
+      if (token.startsWith('teacher_')) {
+        const last = token.lastIndexOf('_');
+        const candidateId = last > 8 ? token.slice('teacher_'.length, last) : token.slice('teacher_'.length);
+        if (candidateId) {
+          const uDoc = await db.collection('users').doc(candidateId).get();
+          if (uDoc.exists) {
+            const uData = uDoc.data();
+            if (uData) {
+              req.userId = candidateId;
+              req.user = uData;
+              req.sessionId = token;
+              return next();
+            }
+          }
+        }
+      } else if (token.startsWith('std_')) {
+        const last = token.lastIndexOf('_');
+        const candidateId = last > 4 ? token.slice('std_'.length, last) : token.slice('std_'.length);
         if (candidateId) {
           const uDoc = await db.collection('users').doc(candidateId).get();
           if (uDoc.exists) {
@@ -2327,6 +2342,158 @@ app.post('/api/teacher/import-students', requireAuth, requireTeacher, async (req
   } catch (error) {
     console.error('Import students error:', error);
     return res.status(500).json({ error: 'Erro ao importar alunos.' });
+  }
+});
+
+// 3b. CREATE SINGLE STUDENT INDIVIDUALLY (Teacher Only)
+app.post('/api/teacher/create-student', requireAuth, requireTeacher, async (req, res) => {
+  try {
+    const rawName = String(req.body?.name || '').trim();
+    if (!rawName || rawName.length < 2) {
+      return res.status(400).json({ error: 'O nome do aluno é obrigatório (mínimo 2 caracteres).' });
+    }
+
+    const rawTurma = String(req.body?.turma || '5.º A').trim();
+    const normalizedTurma = normalizeTurmaName(rawTurma);
+
+    const rawNumber = req.body?.number;
+    const studentNumber =
+      typeof rawNumber === 'number' && rawNumber > 0
+        ? Math.floor(rawNumber)
+        : typeof rawNumber === 'string' && parseInt(rawNumber, 10) > 0
+        ? parseInt(rawNumber, 10)
+        : undefined;
+
+    const { fullName, firstName, lastName, greetingName } = parseStudentName(rawName);
+
+    // Check existing users to avoid collision
+    const existingUsersSnap = await db.collection('users').get();
+    const existingUsernames = new Set<string>();
+    const existingNicknames = new Set<string>();
+    let duplicateUser: any = null;
+
+    existingUsersSnap.docs.forEach((d) => {
+      const data = d.data();
+      if (data.username) existingUsernames.add(String(data.username).toLowerCase());
+      if (data.nickname) existingNicknames.add(String(data.nickname).toLowerCase());
+      if (data.publicId) existingNicknames.add(String(data.publicId).toLowerCase());
+
+      const sTurma = normalizeTurmaName(data.turma || '');
+      const sName = String(data.fullName || data.name || '').trim().toLowerCase();
+      if (sTurma === normalizedTurma && sName === fullName.toLowerCase()) {
+        duplicateUser = { id: d.id, ...data };
+      }
+    });
+
+    if (duplicateUser && !req.body?.overwrite) {
+      return res.status(409).json({
+        error: `Já existe um aluno com o nome "${fullName}" na turma ${normalizedTurma} (utilizador: ${duplicateUser.username}).`,
+        existingStudent: duplicateUser,
+      });
+    }
+
+    // Determine username
+    let username = String(req.body?.username || '').trim().toLowerCase();
+    if (username) {
+      username = username.replace(/[^a-z0-9._-]/g, '');
+      if (username.length < 3) {
+        username = generateKidUsername(fullName, normalizedTurma, existingUsernames);
+      } else if (existingUsernames.has(username) && (!duplicateUser || duplicateUser.username !== username)) {
+        username = generateKidUsername(fullName, normalizedTurma, existingUsernames);
+      }
+    } else {
+      username = generateKidUsername(fullName, normalizedTurma, existingUsernames);
+    }
+
+    // Determine password
+    let password = String(req.body?.password || '').trim();
+    if (!password || password.length < 4) {
+      password = generateKidPassword(new Set());
+    }
+
+    const userId = duplicateUser ? duplicateUser.id : `std_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
+    const nickname = generateUniqueKidNickname(firstName || fullName, normalizedTurma, existingNicknames);
+    const publicId = nickname;
+    const now = new Date().toISOString();
+    const hashed = await hashPassword(password);
+
+    // 1. users document
+    const userData: Record<string, unknown> = {
+      id: userId,
+      name: fullName,
+      fullName: fullName,
+      firstName: firstName,
+      lastName: lastName,
+      greetingName: greetingName,
+      username: username,
+      nickname: nickname,
+      turma: normalizedTurma,
+      publicId: publicId,
+      role: 'student',
+      language: 'pt',
+      points: duplicateUser ? (duplicateUser.points || 0) : 0,
+      xp: duplicateUser ? (duplicateUser.xp || 0) : 0,
+      avatar: getDefaultAvatar(username),
+      initialPassword: password,
+      password: password,
+      updatedAt: now,
+    };
+    if (studentNumber !== undefined) userData.number = studentNumber;
+    if (!duplicateUser) userData.createdAt = now;
+
+    // 2. credentials document
+    const credData: Record<string, unknown> = {
+      userId,
+      initialPassword: password,
+      passwordHash: hashed.hash,
+      passwordSalt: hashed.salt,
+      passwordChangedAt: now,
+      updatedAt: now,
+    };
+    if (!duplicateUser) credData.createdAt = now;
+
+    // 3. publicProfiles document
+    const publicData: Record<string, unknown> = {
+      id: userId,
+      publicId: publicId,
+      nickname: nickname,
+      turma: normalizedTurma,
+      avatar: getDefaultAvatar(username),
+      points: duplicateUser ? (duplicateUser.points || 0) : 0,
+      role: 'student',
+    };
+    if (studentNumber !== undefined) publicData.number = studentNumber;
+
+    const batch = db.batch();
+    batch.set(db.collection('users').doc(userId), userData, { merge: true });
+    batch.set(db.collection('credentials').doc(userId), credData, { merge: true });
+    batch.set(db.collection('publicProfiles').doc(userId), publicData, { merge: true });
+    await batch.commit();
+
+    return res.json({
+      success: true,
+      message: duplicateUser ? `Aluno ${fullName} atualizado com sucesso!` : `Aluno ${fullName} criado com sucesso!`,
+      student: {
+        id: userId,
+        name: fullName,
+        fullName: fullName,
+        firstName,
+        lastName,
+        greetingName,
+        turma: normalizedTurma,
+        number: studentNumber,
+        username,
+        password,
+        nickname,
+        publicId,
+        avatar: userData.avatar,
+        points: userData.points,
+        createdAt: now,
+      },
+    });
+  } catch (error: any) {
+    console.error('Create single student error:', error);
+    return res.status(500).json({ error: error.message || 'Erro ao criar aluno individualmente.' });
   }
 });
 

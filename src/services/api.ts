@@ -151,8 +151,8 @@ async function serverApi<T>(path: string, init: RequestInit = {}): Promise<T> {
   const headers = new Headers(init.headers || {});
   headers.set('Content-Type', 'application/json');
 
-  // Only attach Authorization header if the client holds a cryptographically signed server HMAC session token
-  if (token && isServerSessionToken(token)) {
+  // Attach Authorization header if any token is stored (HMAC session token or fallback token)
+  if (token) {
     headers.set('Authorization', `Bearer ${token}`);
   }
 
@@ -1550,6 +1550,145 @@ export const api = {
         filesProcessed: [fileName],
       };
     }
+  },
+
+  async adminCreateSingleStudent(studentData: {
+    name: string;
+    turma: string;
+    number?: number;
+    username?: string;
+    password?: string;
+    overwrite?: boolean;
+  }): Promise<{
+    success: boolean;
+    message: string;
+    student: User & { password?: string };
+  }> {
+    try {
+      const res = await serverApi<any>('/api/teacher/create-student', {
+        method: 'POST',
+        body: JSON.stringify(studentData),
+      });
+      if (res && res.success && res.student) {
+        return res;
+      }
+    } catch (err: any) {
+      if (!isServerUnavailable(err)) {
+        throw err;
+      }
+    }
+
+    // Client fallback if static host
+    const cleanName = (studentData.name || '').trim();
+    if (!cleanName || cleanName.length < 2) {
+      throw new Error('O nome do aluno é obrigatório (mínimo 2 caracteres).');
+    }
+
+    const cleanTurma = normalizeTurmaName(studentData.turma || '5.º A');
+    const studentNumber =
+      typeof studentData.number === 'number' && studentData.number > 0
+        ? Math.floor(studentData.number)
+        : undefined;
+
+    const { fullName, firstName, lastName, greetingName } = parseStudentName(cleanName);
+
+    const existingUsersSnap = await getDocs(collection(db, 'users'));
+    const existingUsernames = new Set<string>();
+    const existingNicknames = new Set<string>();
+    let duplicateUser: any = null;
+
+    existingUsersSnap.docs.forEach((d) => {
+      const data = d.data();
+      if (data.username) existingUsernames.add(String(data.username).toLowerCase());
+      if (data.nickname) existingNicknames.add(String(data.nickname).toLowerCase());
+      if (data.publicId) existingNicknames.add(String(data.publicId).toLowerCase());
+
+      const sTurma = normalizeTurmaName(data.turma || '');
+      const sName = String(data.fullName || data.name || '').trim().toLowerCase();
+      if (sTurma === cleanTurma && sName === fullName.toLowerCase()) {
+        duplicateUser = { id: d.id, ...data };
+      }
+    });
+
+    if (duplicateUser && !studentData.overwrite) {
+      throw new Error(`Já existe um aluno com o nome "${fullName}" na turma ${cleanTurma}.`);
+    }
+
+    let username = String(studentData.username || '').trim().toLowerCase();
+    if (username) {
+      username = username.replace(/[^a-z0-9._-]/g, '');
+      if (username.length < 3 || (existingUsernames.has(username) && (!duplicateUser || duplicateUser.username !== username))) {
+        username = generateKidUsername(fullName, cleanTurma, existingUsernames);
+      }
+    } else {
+      username = generateKidUsername(fullName, cleanTurma, existingUsernames);
+    }
+
+    let password = String(studentData.password || '').trim();
+    if (!password || password.length < 4) {
+      password = generateKidPassword(new Set());
+    }
+
+    const userId = duplicateUser ? duplicateUser.id : `std_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    const nickname = generateUniqueKidNickname(firstName || fullName, cleanTurma, existingNicknames);
+    const publicId = nickname;
+    const now = new Date().toISOString();
+    const hashed = await hashPasswordClient(password);
+
+    const userData: User = {
+      id: userId,
+      name: fullName,
+      fullName,
+      firstName,
+      lastName,
+      greetingName,
+      username,
+      nickname,
+      turma: cleanTurma,
+      publicId,
+      role: 'student',
+      language: 'pt',
+      points: duplicateUser ? (duplicateUser.points || 0) : 0,
+      avatar: getDefaultAvatar(username),
+      initialPassword: password,
+      password: password,
+      updatedAt: now,
+    };
+    if (studentNumber !== undefined) userData.number = studentNumber;
+    if (!duplicateUser) userData.createdAt = now;
+
+    const credData = {
+      userId,
+      initialPassword: password,
+      passwordHash: hashed.hash,
+      passwordSalt: hashed.salt,
+      passwordChangedAt: now,
+      updatedAt: now,
+    };
+
+    const publicData = {
+      id: userId,
+      publicId,
+      nickname,
+      turma: cleanTurma,
+      number: studentNumber,
+      avatar: getDefaultAvatar(username),
+      points: duplicateUser ? (duplicateUser.points || 0) : 0,
+      role: 'student',
+    };
+
+    await setDoc(doc(db, 'users', userId), userData, { merge: true });
+    await setDoc(doc(db, 'credentials', userId), credData, { merge: true });
+    await setDoc(doc(db, 'publicProfiles', userId), publicData, { merge: true });
+
+    return {
+      success: true,
+      message: duplicateUser ? `Aluno ${fullName} atualizado com sucesso!` : `Aluno ${fullName} criado com sucesso!`,
+      student: {
+        ...userData,
+        password,
+      },
+    };
   },
 
   async importStudentsBatch(

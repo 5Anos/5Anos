@@ -18,6 +18,7 @@ import {
   Search,
   Filter,
   Lock,
+  Eye,
 } from 'lucide-react';
 import { User, Language, TurmaRanking, StudentRanking } from '../types';
 import { api, isUserAdmin } from '../services/api';
@@ -50,7 +51,9 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
   const [selectedTurmaFilter, setSelectedTurmaFilter] = useState<string>('all');
   const [searchNickname, setSearchNickname] = useState<string>('');
 
-  const isAdmin = currentUser ? isUserAdmin(currentUser.email, currentUser.role) : false;
+  const isAdmin = currentUser
+    ? isUserAdmin(currentUser.email, currentUser.role, currentUser.username, currentUser.publicId || currentUser.id)
+    : false;
   const userTurma = currentUser?.turma ? String(currentUser.turma).trim() : '5.º A';
 
   useEffect(() => {
@@ -448,13 +451,24 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                           <div className="bg-slate-50 p-4 border-t border-slate-100 space-y-3 animate-in fade-in duration-150">
                             {canViewStudents ? (
                               <>
-                                <div className="flex items-center justify-between">
-                                  <span className="text-xs font-extrabold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
-                                    <GraduationCap className="w-4 h-4 text-indigo-600" />
-                                    {language === 'pt'
-                                      ? `Alunos da turma ${tr.turma} (${studentsInTurma.length})`
-                                      : `Students in class ${tr.turma} (${studentsInTurma.length})`}
-                                  </span>
+                                <div className="flex items-center justify-between gap-2 flex-wrap">
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <span className="text-xs font-extrabold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
+                                      <GraduationCap className="w-4 h-4 text-indigo-600" />
+                                      {language === 'pt'
+                                        ? `Alunos da turma ${tr.turma} (${studentsInTurma.length})`
+                                        : `Students in class ${tr.turma} (${studentsInTurma.length})`}
+                                    </span>
+                                    {isAdmin && (
+                                      <span
+                                        className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200"
+                                        title="Privacidade garantida: Os alunos veem apenas alcunhas e avatares; apenas a professora visualiza os nomes reais."
+                                      >
+                                        <Eye className="w-3 h-3 text-emerald-600" />
+                                        {language === 'pt' ? 'Nomes reais (apenas professor)' : 'Real names (teacher only)'}
+                                      </span>
+                                    )}
+                                  </div>
 
                                   <button
                                     type="button"
@@ -470,15 +484,23 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                                 {studentsInTurma.length === 0 ? (
                                   <div className="py-6 text-center text-slate-400 bg-white rounded-xl border border-dashed border-slate-200 p-4">
                                     <Users className="w-6 h-6 mx-auto mb-1.5 text-slate-300" />
-                                    <p className="text-xs font-medium">
+                                    <p className="text-xs font-medium text-slate-700">
                                       {language === 'pt'
-                                        ? 'Ainda não há alunos com XP registado nesta turma.'
-                                        : 'No students with registered XP in this class yet.'}
+                                        ? (tr.totalPoints > 0
+                                            ? `Esta turma tem ${tr.totalPoints} XP acumulados por ${tr.studentCount} alunos.`
+                                            : 'Ainda não há alunos com XP registado nesta turma.')
+                                        : (tr.totalPoints > 0
+                                            ? `This class has ${tr.totalPoints} XP earned across ${tr.studentCount} students.`
+                                            : 'No students with registered XP in this class yet.')}
                                     </p>
                                     <p className="text-[11px] text-slate-400 mt-0.5">
                                       {language === 'pt'
-                                        ? `Sê o primeiro a criar conta no ${tr.turma} e ganha XP!`
-                                        : `Be the first to register in ${tr.turma} and earn XP!`}
+                                        ? (tr.totalPoints > 0
+                                            ? 'Clica em "Ver no Ranking Geral" acima para filtrar todos os desafios.'
+                                            : `Sê o primeiro a criar conta no ${tr.turma} e ganha XP!`)
+                                        : (tr.totalPoints > 0
+                                            ? 'Click "View in General Ranking" above to filter all challenges.'
+                                            : `Be the first to register in ${tr.turma} and earn XP!`)}
                                     </p>
                                   </div>
                                 ) : (
@@ -645,6 +667,17 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                   <div className="flex items-center gap-2 px-3.5 py-2 bg-white rounded-xl border border-slate-200 text-xs font-bold text-slate-700 shrink-0">
                     <Users className="w-3.5 h-3.5 text-indigo-600" />
                     <span>{userTurma} ({filteredStudents.length} {language === 'pt' ? 'alunos' : 'students'})</span>
+                  </div>
+                )}
+
+                {isAdmin && (
+                  <div className="flex items-center gap-2 px-3 py-2 bg-emerald-50/90 rounded-xl border border-emerald-200 text-xs font-semibold text-emerald-900 w-full">
+                    <Eye className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>
+                      {language === 'pt'
+                        ? 'Vista Exclusiva de Docente: Os nomes reais dos alunos e números de pauta são visíveis apenas para a professora. Para os alunos, a privacidade é total (apenas alcunhas e avatares).'
+                        : 'Teacher Exclusive View: Real student names and numbers are visible only to the teacher.'}
+                    </span>
                   </div>
                 )}
               </div>
