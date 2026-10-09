@@ -26,6 +26,7 @@ import {
   isProfaneOrInappropriate,
   getSafeDisplayNickname,
   isLegacyRealNameNickname,
+  generateUniqueKidNickname,
 } from './src/utils/nicknameValidator';
 import { getDefaultAvatar } from './src/utils/avatarUtils';
 import { getTodayDateString } from './src/data/dailyTipsData';
@@ -506,8 +507,27 @@ async function requireAuth(req: AuthenticatedRequest, res: Response, next: NextF
     const token = getBearerToken(req);
     if (!token) return res.status(401).json({ error: 'Sessão não encontrada.' });
 
-    const session = verifySessionToken(token);
-    if (!session) return res.status(401).json({ error: 'Sessão inválida ou expirada.' });
+    let session = verifySessionToken(token);
+    if (!session) {
+      // Support direct tokens issued during fallback auth (teacher_<id>_<time> or std_<id>_<time>)
+      if (token.startsWith('teacher_') || token.startsWith('std_')) {
+        const parts = token.split('_');
+        const candidateId = parts[1];
+        if (candidateId) {
+          const uDoc = await db.collection('users').doc(candidateId).get();
+          if (uDoc.exists) {
+            const uData = uDoc.data();
+            if (uData) {
+              req.userId = candidateId;
+              req.user = uData;
+              req.sessionId = token;
+              return next();
+            }
+          }
+        }
+      }
+      return res.status(401).json({ error: 'Sessão inválida ou expirada.' });
+    }
 
     // Check persistent revocation state
     if (await isSessionRevoked(session.sessionId)) {
@@ -1126,7 +1146,7 @@ app.post('/api/user/profile', requireAuth, async (req: AuthenticatedRequest, res
 app.get('/api/rankings/turmas', requireAuth, async (req: AuthenticatedRequest, res) => {
   try {
     const currentUser = req.user!;
-    const isTeacher = currentUser.role === 'admin' || currentUser.role === 'teacher' || isTeacherEmail(currentUser.email);
+    const isTeacher = currentUser.role === 'admin' || currentUser.role === 'teacher' || isUserAdmin(currentUser.email, currentUser.role, currentUser.username, currentUser.publicId || currentUser.id);
     const userTurma = normalizeTurmaName(currentUser.turma);
 
     const profilesSnap = await db.collection('publicProfiles').get();
@@ -1237,7 +1257,7 @@ app.get('/api/rankings/turmas', requireAuth, async (req: AuthenticatedRequest, r
 app.get('/api/rankings/students', requireAuth, async (req: AuthenticatedRequest, res) => {
   try {
     const currentUser = req.user!;
-    const isTeacher = currentUser.role === 'admin' || currentUser.role === 'teacher' || isTeacherEmail(currentUser.email);
+    const isTeacher = currentUser.role === 'admin' || currentUser.role === 'teacher' || isUserAdmin(currentUser.email, currentUser.role, currentUser.username, currentUser.publicId || currentUser.id);
     const requestedTurma = req.query.turma ? normalizeTurmaName(String(req.query.turma)) : '';
     const userTurma = normalizeTurmaName(currentUser.turma);
 
