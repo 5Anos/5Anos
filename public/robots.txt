@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tic5-descomplica.web.app/sitemap.xml

@@ -729,7 +729,7 @@ export const GenericHtmlGameRunner: React.FC<GenericHtmlGameRunnerProps> = ({
                     conceptVisual = (
                       <img
                         src={image}
-                        alt=""
+                        alt={leftText || 'Conceito visual'}
                         loading="lazy"
                         decoding="async"
                         className="w-11 h-11 rounded-xl object-cover border border-slate-200/80 shrink-0 shadow-2xs"

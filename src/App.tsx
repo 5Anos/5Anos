@@ -1001,7 +1001,7 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 pb-16">
+      <main id="main-content" className="flex-1 pb-16 outline-none" tabIndex={-1}>
         {/* VIEW 1: Dashboard */}
         {currentView === 'dashboard' && (
           <Dashboard

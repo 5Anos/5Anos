@@ -94,6 +94,14 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shrink-0 shadow-2xs">
+      {/* Skip to Main Content Link (WCAG 2.2 AA) */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2.5 focus:bg-indigo-600 focus:text-white focus:rounded-xl focus:shadow-lg focus:font-bold focus:text-xs focus:ring-2 focus:ring-white"
+      >
+        {language === 'pt' ? 'Saltar para o conteúdo principal' : 'Skip to main content'}
+      </a>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Brand logo & Platform Name: TIC 5 — Descomplica! */}
