@@ -174,7 +174,7 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
       </button>
 
       {/* Header */}
-      <div className="rounded-[2rem] bg-indigo-950 text-white p-6 sm:p-8 md:p-10 shadow-xl mb-8 relative overflow-hidden">
+      <div className="rounded-2xl sm:rounded-[2rem] bg-indigo-950 text-white p-5 sm:p-8 md:p-10 shadow-xl mb-6 sm:mb-8 relative overflow-hidden">
         <div className="relative z-10 space-y-3">
           <div className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-widest text-indigo-300">
             <span className="inline-flex items-center gap-1 bg-indigo-900/80 border border-indigo-700/60 px-2.5 py-1 rounded-full text-indigo-200">
@@ -238,7 +238,7 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
 
         return (
           <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200 overflow-y-auto">
-            <div className="bg-white rounded-[2.5rem] border-2 border-indigo-200 shadow-2xl max-w-lg w-full p-6 sm:p-8 text-center animate-in zoom-in-95 my-auto space-y-5">
+            <div className="bg-white rounded-3xl sm:rounded-[2.5rem] border-2 border-indigo-200 shadow-2xl max-w-lg w-full p-5 sm:p-8 text-center animate-in zoom-in-95 my-auto space-y-5">
               <div className="text-6xl animate-bounce">
                 {badgeStyle.emoji}
               </div>
@@ -532,7 +532,7 @@ export const FinalQuizView: React.FC<FinalQuizViewProps> = ({
                       key={optIdx}
                       disabled={submitted}
                       onClick={() => handleSelect(q.id, optIdx)}
-                      className={`w-full text-left p-3.5 rounded-xl border text-xs sm:text-sm transition-all flex items-center justify-between cursor-pointer ${style}`}
+                      className={`w-full text-left p-3.5 sm:p-4 rounded-xl border text-xs sm:text-sm transition-all flex items-center justify-between cursor-pointer min-h-[48px] gap-2 ${style}`}
                     >
                       <span>{opt}</span>
                       {submitted && optIdx === q.correctIndex && (

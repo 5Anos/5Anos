@@ -539,13 +539,13 @@ export const TicApplicationsExplorer: React.FC<TicApplicationsExplorerProps> = (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-slate-700">{language === 'pt' ? 'Destino da Viagem:' : 'Destination:'}</label>
-                <div className="grid grid-cols-3 gap-1.5">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
                   {(['escola', 'hospital', 'biblioteca'] as const).map((dest) => (
                     <button
                       key={dest}
                       type="button"
                       onClick={() => setGpsDest(dest)}
-                      className={`p-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                      className={`p-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer min-h-[40px] flex items-center justify-center ${
                         gpsDest === dest ? 'bg-purple-600 text-white border-purple-600 shadow-xs' : 'bg-slate-50 border-slate-200 text-slate-700'
                       }`}
                     >

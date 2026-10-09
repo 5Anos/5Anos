@@ -42,7 +42,7 @@ export const HeroTICBanner: React.FC<HeroTICBannerProps> = ({
   return (
     <div
       id="hero-tic-banner"
-      className="relative w-full rounded-[2.5rem] bg-gradient-to-b from-[#E0F2FE]/90 via-[#EFF6FF]/80 to-[#F8FAFC] border-2 border-[#BAE6FD]/60 shadow-xl overflow-hidden p-6 sm:p-8 md:p-10 lg:p-12 transition-all"
+      className="relative w-full rounded-3xl sm:rounded-[2.5rem] bg-gradient-to-b from-[#E0F2FE]/90 via-[#EFF6FF]/80 to-[#F8FAFC] border-2 border-[#BAE6FD]/60 shadow-xl overflow-hidden p-4 sm:p-7 md:p-10 lg:p-12 transition-all"
     >
       {/* Background Soft Glow & Cloud Circles */}
       <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-sky-200/40 blur-3xl pointer-events-none" />
@@ -196,7 +196,7 @@ export const HeroTICBanner: React.FC<HeroTICBannerProps> = ({
 
           <button
             onClick={handleCtaClick}
-            className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-[#6366F1] via-[#4F46E5] to-[#7C3AED] hover:from-[#4F46E5] hover:to-[#6D28D9] text-white font-extrabold text-sm sm:text-base shadow-lg hover:shadow-indigo-300/60 transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer group transform hover:-translate-y-0.5 active:translate-y-0"
+            className="w-full sm:w-auto px-4 sm:px-6 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-[#6366F1] via-[#4F46E5] to-[#7C3AED] hover:from-[#4F46E5] hover:to-[#6D28D9] text-white font-extrabold text-xs sm:text-sm md:text-base shadow-lg hover:shadow-indigo-300/60 transition-all duration-300 flex items-center justify-center gap-2.5 cursor-pointer group transform hover:-translate-y-0.5 active:translate-y-0 text-center"
           >
             <span>
               {user
@@ -207,7 +207,7 @@ export const HeroTICBanner: React.FC<HeroTICBannerProps> = ({
                 ? 'Entra, explora e começa a tua aventura nas TIC!'
                 : 'Enter, explore & start your ICT adventure!'}
             </span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 group-hover:translate-x-1 transition-transform shrink-0" />
           </button>
 
           {/* Playful curved note */}

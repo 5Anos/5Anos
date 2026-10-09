@@ -151,12 +151,12 @@ export const TicEvolutionExplorer: React.FC<TicEvolutionExplorerProps> = ({ lang
       {activeTab === 'evolution' ? (
         <div className="space-y-4">
           {/* Era Navigation buttons */}
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             {ERAS.map((e, idx) => (
               <button
                 key={e.id}
                 onClick={() => setSelectedEra(idx)}
-                className={`p-3 rounded-2xl border text-left transition-all cursor-pointer ${
+                className={`p-3 rounded-2xl border text-left transition-all cursor-pointer min-h-[48px] ${
                   selectedEra === idx
                     ? 'bg-indigo-600 text-white border-amber-400 shadow-md ring-2 ring-amber-400/30'
                     : 'bg-indigo-900/40 text-indigo-200 border-indigo-800/60 hover:bg-indigo-900/70'
@@ -166,7 +166,7 @@ export const TicEvolutionExplorer: React.FC<TicEvolutionExplorerProps> = ({ lang
                   <span>{e.year}</span>
                   <span className="text-base">{e.icon}</span>
                 </div>
-                <p className="text-xs sm:text-sm font-bold truncate">{e.eraName[language]}</p>
+                <p className="text-xs sm:text-sm font-bold">{e.eraName[language]}</p>
               </button>
             ))}
           </div>

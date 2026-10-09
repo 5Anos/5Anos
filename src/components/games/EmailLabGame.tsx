@@ -209,6 +209,14 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
     setValidationError(null);
   };
 
+  const handleAssignToSlot = (option: DraggableOption, slot: SlotKey) => {
+    setPlacedSlots((prev) => ({
+      ...prev,
+      [slot]: option,
+    }));
+    setValidationError(null);
+  };
+
   const handleRemoveFromSlot = (slot: SlotKey, e: React.MouseEvent) => {
     e.stopPropagation();
     setPlacedSlots((prev) => ({
@@ -1077,6 +1085,48 @@ export const EmailLabGame: React.FC<EmailLabGameProps> = ({ language, onBack, on
                             {option.content}
                           </p>
                         </div>
+                      </div>
+
+                      {/* Touch Quick Assign Buttons for phones, tablets & click users */}
+                      <div className="mt-2.5 pt-2 border-t border-slate-200/70 flex flex-wrap items-center gap-1.5">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                          {language === 'pt' ? 'Colocar:' : 'Place:'}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handleAssignToSlot(option, 'to')}
+                          className="px-2 py-1 rounded-lg text-[11px] font-bold bg-purple-100 hover:bg-purple-200 text-purple-900 border border-purple-200 transition-colors cursor-pointer min-h-[28px]"
+                        >
+                          + Para
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleAssignToSlot(option, 'cc')}
+                          className="px-2 py-1 rounded-lg text-[11px] font-bold bg-rose-100 hover:bg-rose-200 text-rose-900 border border-rose-200 transition-colors cursor-pointer min-h-[28px]"
+                        >
+                          + Cc
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleAssignToSlot(option, 'subject')}
+                          className="px-2 py-1 rounded-lg text-[11px] font-bold bg-emerald-100 hover:bg-emerald-200 text-emerald-900 border border-emerald-200 transition-colors cursor-pointer min-h-[28px]"
+                        >
+                          + Assunto
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleAssignToSlot(option, 'body')}
+                          className="px-2 py-1 rounded-lg text-[11px] font-bold bg-sky-100 hover:bg-sky-200 text-sky-900 border border-sky-200 transition-colors cursor-pointer min-h-[28px]"
+                        >
+                          + Mensagem
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleAssignToSlot(option, 'attachment')}
+                          className="px-2 py-1 rounded-lg text-[11px] font-bold bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-200 transition-colors cursor-pointer min-h-[28px]"
+                        >
+                          + Anexo
+                        </button>
                       </div>
                     </div>
                   );

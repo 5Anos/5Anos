@@ -42,7 +42,7 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <AudioSpeakButton
             id="cyberbullying-card-intro"
             text={`${cardTitle}. ${cardDesc}. ${STEPS.map((s) => `Passo ${s.num}: ${s.title[language]}, ${s.desc[language]}`).join('. ')}`}
@@ -58,20 +58,20 @@ export const CyberbullyingActionCard: React.FC<CyberbullyingActionCardProps> = (
         </div>
       </div>
 
-      {/* 5 Steps Interactive Selector */}
-      <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
+      {/* 5 Steps Interactive Selector - Responsive grid for comfortable touch */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
         {STEPS.map((s, idx) => (
           <button
             key={idx}
             onClick={() => setActiveStep(idx)}
-            className={`p-2.5 rounded-2xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-1 ${
+            className={`p-3 rounded-2xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-1.5 min-h-[58px] ${
               activeStep === idx
                 ? 'bg-rose-600 text-white border-rose-700 shadow-md scale-[1.02]'
                 : 'bg-white text-slate-700 border-slate-200 hover:bg-rose-50'
             }`}
           >
-            <span className="text-lg">{s.icon}</span>
-            <span className="text-[10px] sm:text-xs font-black uppercase tracking-tight">{s.title[language]}</span>
+            <span className="text-xl">{s.icon}</span>
+            <span className="text-xs font-black uppercase tracking-tight">{s.title[language]}</span>
           </button>
         ))}
       </div>

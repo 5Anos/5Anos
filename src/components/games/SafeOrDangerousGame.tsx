@@ -391,7 +391,7 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
       </button>
 
       {/* Header with Game Character & Theme */}
-      <div className="bg-gradient-to-r from-emerald-800 via-teal-900 to-slate-900 rounded-[2rem] text-white p-6 sm:p-8 shadow-xl mb-6 relative overflow-hidden">
+      <div className="bg-gradient-to-r from-emerald-800 via-teal-900 to-slate-900 rounded-2xl sm:rounded-[2rem] text-white p-5 sm:p-8 shadow-xl mb-6 relative overflow-hidden">
         <div className="relative z-10 space-y-2">
           <div className="flex items-center justify-between gap-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/15 text-xs font-black uppercase tracking-wider text-emerald-300 backdrop-blur-sm border border-white/10">
@@ -423,7 +423,7 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
       </div>
 
       {!gameOver ? (
-        <div className="bg-white rounded-[2rem] border-2 border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div className="bg-white rounded-2xl sm:rounded-[2rem] border-2 border-slate-200 shadow-sm p-5 sm:p-8 space-y-6">
           {/* Progress Tracker */}
           <div className="flex items-center justify-between text-xs font-black text-slate-500 pb-3 border-b border-slate-100">
             <span className="flex items-center gap-2">
@@ -501,7 +501,7 @@ export const SafeOrDangerousGame: React.FC<SafeOrDangerousGameProps> = ({ langua
                   key={opt.id}
                   disabled={showFeedback}
                   onClick={() => handleSelect(opt.id)}
-                  className={`w-full text-left p-4 sm:p-5 rounded-2xl border-2 transition-all flex items-start justify-between gap-3.5 cursor-pointer shadow-2xs ${btnClass}`}
+                  className={`w-full text-left p-4 sm:p-5 rounded-2xl border-2 transition-all flex items-start justify-between gap-3.5 cursor-pointer shadow-2xs min-h-[52px] ${btnClass}`}
                 >
                   <div className="space-y-1">
                     <span className="text-xs sm:text-sm font-semibold block leading-relaxed">

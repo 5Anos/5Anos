@@ -346,7 +346,7 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
                     key={idx}
                     type="button"
                     onClick={() => handleAddBrick(brick[language])}
-                    className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-emerald-50 text-slate-800 hover:text-emerald-900 border border-slate-200 hover:border-emerald-300 font-bold text-xs sm:text-sm transition-all cursor-pointer shadow-xs active:scale-95"
+                    className="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-emerald-50 text-slate-800 hover:text-emerald-900 border border-slate-200 hover:border-emerald-300 font-bold text-xs sm:text-sm transition-all cursor-pointer shadow-xs active:scale-95 min-h-[44px] flex items-center justify-center"
                   >
                     + {brick[language]}
                   </button>
@@ -357,7 +357,7 @@ export const PasswordBuilderGame: React.FC<PasswordBuilderGameProps> = ({ langua
                     setSelectedWords([]);
                     setMockPassword('');
                   }}
-                  className="px-3 py-2 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-500 hover:text-rose-600 border border-slate-200 text-xs font-bold transition-all cursor-pointer"
+                  className="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-500 hover:text-rose-600 border border-slate-200 text-xs font-bold transition-all cursor-pointer min-h-[44px] flex items-center justify-center"
                 >
                   <RefreshCw className="w-3.5 h-3.5 inline mr-1" />
                   {language === 'pt' ? 'Limpar' : 'Clear'}

@@ -219,7 +219,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                     {language === 'pt' ? 'Pódio das Melhores Turmas de 5.º Ano' : '5th Grade Podium'}
                   </h3>
 
-                  <div className="grid grid-cols-3 gap-2 sm:gap-4 items-end pt-4 pb-2">
+                  <div className="grid grid-cols-3 gap-1.5 sm:gap-4 items-end pt-4 pb-2">
                     {/* 2nd Place */}
                     {top3Turmas[1] && (
                       <button
@@ -227,30 +227,30 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                         onClick={() => handleToggleTurma(top3Turmas[1].turma)}
                         className="flex flex-col items-center group text-left cursor-pointer transition-transform hover:-translate-y-1"
                       >
-                        <div className="w-10 h-10 rounded-full bg-slate-200 text-slate-700 font-extrabold flex items-center justify-center border-2 border-white shadow-md text-sm mb-1.5">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-slate-200 text-slate-700 font-extrabold flex items-center justify-center border-2 border-white shadow-md text-xs sm:text-sm mb-1.5">
                           🥈
                         </div>
-                        <div className="w-full bg-gradient-to-t from-slate-200 to-slate-100 rounded-2xl p-3 sm:p-4 border border-slate-300 text-center shadow-xs relative">
+                        <div className="w-full bg-gradient-to-t from-slate-200 to-slate-100 rounded-xl sm:rounded-2xl p-2 sm:p-4 border border-slate-300 text-center shadow-xs relative">
                           {currentUser?.turma?.toLowerCase() === top3Turmas[1].turma.toLowerCase() && (
-                            <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[9px] font-black uppercase bg-indigo-600 text-white px-2 py-0.5 rounded-full shadow-xs whitespace-nowrap">
+                            <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[8px] sm:text-[9px] font-black uppercase bg-indigo-600 text-white px-1.5 sm:px-2 py-0.5 rounded-full shadow-xs whitespace-nowrap">
                               A tua turma!
                             </span>
                           )}
-                          <span className="text-xs font-bold text-slate-500">2.º Lugar</span>
-                          <h4 className="text-base sm:text-xl font-black text-slate-800 tracking-tight my-0.5">
+                          <span className="text-[10px] sm:text-xs font-bold text-slate-500">2.º Lugar</span>
+                          <h4 className="text-sm sm:text-xl font-black text-slate-800 tracking-tight my-0.5 truncate">
                             {top3Turmas[1].turma}
                           </h4>
-                          <p className="text-xs font-extrabold text-indigo-600 font-mono">
+                          <p className="text-[11px] sm:text-xs font-extrabold text-indigo-600 font-mono">
                             {top3Turmas[1].totalPoints} XP
                           </p>
-                          <p className="text-[10px] text-slate-500 mt-1">
+                          <p className="text-[9px] sm:text-[10px] text-slate-500 mt-1">
                             {top3Turmas[1].studentCount} alunos • {top3Turmas[1].avgPoints} XP/aluno
                           </p>
-                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-indigo-600 mt-2 bg-white/80 px-2 py-0.5 rounded-md">
+                          <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-bold text-indigo-600 mt-1.5 sm:mt-2 bg-white/80 px-1.5 sm:px-2 py-0.5 rounded-md">
                             {isAdmin || currentUser?.turma?.toLowerCase() === top3Turmas[1].turma.toLowerCase()
                               ? (language === 'pt' ? 'Ver alunos' : 'View students')
                               : (language === 'pt' ? 'Ver detalhes' : 'View details')}{' '}
-                            <ChevronDown className="w-3 h-3" />
+                            <ChevronDown className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                           </span>
                         </div>
                       </button>
@@ -263,32 +263,32 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                         onClick={() => handleToggleTurma(top3Turmas[0].turma)}
                         className="flex flex-col items-center -mt-4 group text-left cursor-pointer transition-transform hover:-translate-y-1"
                       >
-                        <div className="w-12 h-12 rounded-full bg-amber-400 text-amber-950 font-black flex items-center justify-center border-2 border-white shadow-lg text-lg mb-1.5 animate-bounce">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-amber-400 text-amber-950 font-black flex items-center justify-center border-2 border-white shadow-lg text-base sm:text-lg mb-1.5 animate-bounce">
                           👑
                         </div>
-                        <div className="w-full bg-gradient-to-t from-amber-400 to-amber-300 rounded-2xl p-4 sm:p-5 border-2 border-amber-400 text-center shadow-md relative">
+                        <div className="w-full bg-gradient-to-t from-amber-400 to-amber-300 rounded-xl sm:rounded-2xl p-2.5 sm:p-5 border-2 border-amber-400 text-center shadow-md relative">
                           {currentUser?.turma?.toLowerCase() === top3Turmas[0].turma.toLowerCase() && (
-                            <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase bg-indigo-700 text-white px-2.5 py-0.5 rounded-full shadow-xs whitespace-nowrap">
-                              🌟 A tua turma é #1!
+                            <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[9px] sm:text-[10px] font-black uppercase bg-indigo-700 text-white px-2 sm:px-2.5 py-0.5 rounded-full shadow-xs whitespace-nowrap">
+                              🌟 #1!
                             </span>
                           )}
-                          <span className="text-xs font-black uppercase tracking-wider text-amber-900">
+                          <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-amber-900">
                             🏆 1.º Lugar
                           </span>
-                          <h4 className="text-xl sm:text-2xl font-black text-amber-950 tracking-tight my-0.5">
+                          <h4 className="text-base sm:text-2xl font-black text-amber-950 tracking-tight my-0.5 truncate">
                             {top3Turmas[0].turma}
                           </h4>
-                          <p className="text-sm font-black text-indigo-950 font-mono">
-                            {top3Turmas[0].totalPoints} XP Total
+                          <p className="text-xs sm:text-sm font-black text-indigo-950 font-mono">
+                            {top3Turmas[0].totalPoints} XP
                           </p>
-                          <p className="text-[11px] font-bold text-amber-900 mt-1">
+                          <p className="text-[9px] sm:text-[11px] font-bold text-amber-900 mt-1">
                             {top3Turmas[0].studentCount} alunos • {top3Turmas[0].avgPoints} XP/aluno
                           </p>
-                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-950 mt-2 bg-white/90 px-2 py-0.5 rounded-md shadow-xs">
+                          <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-bold text-amber-950 mt-1.5 sm:mt-2 bg-white/90 px-1.5 sm:px-2 py-0.5 rounded-md shadow-xs">
                             {isAdmin || currentUser?.turma?.toLowerCase() === top3Turmas[0].turma.toLowerCase()
                               ? (language === 'pt' ? 'Ver alunos' : 'View students')
                               : (language === 'pt' ? 'Ver detalhes' : 'View details')}{' '}
-                            <ChevronDown className="w-3 h-3" />
+                            <ChevronDown className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                           </span>
                         </div>
                       </button>
@@ -301,30 +301,30 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                         onClick={() => handleToggleTurma(top3Turmas[2].turma)}
                         className="flex flex-col items-center group text-left cursor-pointer transition-transform hover:-translate-y-1"
                       >
-                        <div className="w-10 h-10 rounded-full bg-amber-700 text-amber-100 font-extrabold flex items-center justify-center border-2 border-white shadow-md text-sm mb-1.5">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-amber-700 text-amber-100 font-extrabold flex items-center justify-center border-2 border-white shadow-md text-xs sm:text-sm mb-1.5">
                           🥉
                         </div>
-                        <div className="w-full bg-gradient-to-t from-amber-100 to-amber-50 rounded-2xl p-3 sm:p-4 border border-amber-200 text-center shadow-xs relative">
+                        <div className="w-full bg-gradient-to-t from-amber-100 to-amber-50 rounded-xl sm:rounded-2xl p-2 sm:p-4 border border-amber-200 text-center shadow-xs relative">
                           {currentUser?.turma?.toLowerCase() === top3Turmas[2].turma.toLowerCase() && (
-                            <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[9px] font-black uppercase bg-indigo-600 text-white px-2 py-0.5 rounded-full shadow-xs whitespace-nowrap">
+                            <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[8px] sm:text-[9px] font-black uppercase bg-indigo-600 text-white px-1.5 sm:px-2 py-0.5 rounded-full shadow-xs whitespace-nowrap">
                               A tua turma!
                             </span>
                           )}
-                          <span className="text-xs font-bold text-amber-800">3.º Lugar</span>
-                          <h4 className="text-base sm:text-xl font-black text-amber-950 tracking-tight my-0.5">
+                          <span className="text-[10px] sm:text-xs font-bold text-amber-800">3.º Lugar</span>
+                          <h4 className="text-sm sm:text-xl font-black text-amber-950 tracking-tight my-0.5 truncate">
                             {top3Turmas[2].turma}
                           </h4>
-                          <p className="text-xs font-extrabold text-indigo-600 font-mono">
+                          <p className="text-[11px] sm:text-xs font-extrabold text-amber-900 font-mono">
                             {top3Turmas[2].totalPoints} XP
                           </p>
-                          <p className="text-[10px] text-amber-800 mt-1">
+                          <p className="text-[9px] sm:text-[10px] text-amber-800 mt-1">
                             {top3Turmas[2].studentCount} alunos • {top3Turmas[2].avgPoints} XP/aluno
                           </p>
-                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-900 mt-2 bg-white/80 px-2 py-0.5 rounded-md">
+                          <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-bold text-amber-900 mt-1.5 sm:mt-2 bg-white/80 px-1.5 sm:px-2 py-0.5 rounded-md">
                             {isAdmin || currentUser?.turma?.toLowerCase() === top3Turmas[2].turma.toLowerCase()
                               ? (language === 'pt' ? 'Ver alunos' : 'View students')
                               : (language === 'pt' ? 'Ver detalhes' : 'View details')}{' '}
-                            <ChevronDown className="w-3 h-3" />
+                            <ChevronDown className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                           </span>
                         </div>
                       </button>

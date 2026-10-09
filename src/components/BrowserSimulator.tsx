@@ -1423,7 +1423,7 @@ export const BrowserSimulator: React.FC<BrowserSimulatorProps> = ({ language = '
                 </div>
 
                 {/* 3 C's of Detective badge */}
-                <div className="grid grid-cols-3 gap-2 text-[11px] p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-slate-700">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs sm:text-[11px] p-3 sm:p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-slate-700">
                   <div>
                     <span className="text-slate-400 block text-[10px]">1. Autor:</span>
                     <strong className="text-slate-900">Dr. M. Santos (Biólogo)</strong>

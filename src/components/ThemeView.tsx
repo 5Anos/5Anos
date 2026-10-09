@@ -207,7 +207,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
         )}
 
         <div
-          className={`p-6 sm:p-8 md:p-10 rounded-[2.5rem] text-white shadow-xl relative overflow-hidden bg-gradient-to-br ${getBannerGradient(
+          className={`p-5 sm:p-8 md:p-10 rounded-3xl sm:rounded-[2.5rem] text-white shadow-xl relative overflow-hidden bg-gradient-to-br ${getBannerGradient(
             theme.number
           )} flex flex-col md:flex-row items-center justify-between gap-6 border-2 border-white/10`}
         >
@@ -219,7 +219,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
               </div>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+            <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
               {theme.title[language]}
             </h1>
 
@@ -273,16 +273,16 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
       })()}
 
       {/* Tabs Selector: Conteúdos vs Jogos e Desafios */}
-      <div className="flex border-b border-slate-200 gap-2">
+      <div className="flex border-b border-slate-200 gap-1.5 sm:gap-2 overflow-x-auto pb-0.5">
         <button
           onClick={() => setActiveTab('content')}
-          className={`pb-4 px-6 text-sm sm:text-base font-black flex items-center gap-2.5 border-b-3 transition-all cursor-pointer ${
+          className={`py-3 px-3.5 sm:px-6 text-xs sm:text-base font-black flex items-center gap-2 border-b-3 transition-all cursor-pointer whitespace-nowrap min-h-[44px] ${
             activeTab === 'content'
               ? 'border-indigo-600 text-indigo-600'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
-          <BookOpen className="w-5 h-5" />
+          <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
           <span>{t.tabContent}</span>
           <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100 font-bold ml-1">
             {lessons.length}
@@ -291,13 +291,13 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
 
         <button
           onClick={() => setActiveTab('games')}
-          className={`pb-4 px-6 text-sm sm:text-base font-black flex items-center gap-2.5 border-b-3 transition-all cursor-pointer ${
+          className={`py-3 px-3.5 sm:px-6 text-xs sm:text-base font-black flex items-center gap-2 border-b-3 transition-all cursor-pointer whitespace-nowrap min-h-[44px] ${
             activeTab === 'games'
               ? 'border-indigo-600 text-indigo-600'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
-          <Gamepad2 className="w-5 h-5" />
+          <Gamepad2 className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
           <span>{t.tabGames}</span>
           <span className="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-bold ml-1">
             {theme.challenges.length}
@@ -653,7 +653,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                 <div
                   key={chal.id}
                   onClick={() => onOpenChallenge(chal.id)}
-                  className={`rounded-[2rem] border-2 p-6 shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer flex flex-col justify-between group relative overflow-hidden ${
+                  className={`rounded-3xl sm:rounded-[2rem] border-2 p-5 sm:p-6 shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer flex flex-col justify-between group relative overflow-hidden ${
                     isFinalQuiz
                       ? isQuizVisible
                         ? 'border-amber-300 bg-gradient-to-b from-amber-50/90 via-orange-50/40 to-white hover:border-amber-400'
@@ -665,7 +665,7 @@ export const ThemeView: React.FC<ThemeViewProps> = ({
                 >
                   <div>
                     {/* Card Top Pill Badge */}
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4">
                       <div className="flex items-center gap-2 flex-wrap">
                         <span
                           className={`text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider ${

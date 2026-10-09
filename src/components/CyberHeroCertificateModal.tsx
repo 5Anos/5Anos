@@ -79,7 +79,7 @@ export const CyberHeroCertificateModal: React.FC<CyberHeroCertificateModalProps>
         {/* PRINTABLE DIPLOMA CANVAS */}
         <div
           ref={certificateRef}
-          className="p-6 sm:p-10 bg-[#FFFDF8] text-slate-900 relative selection:bg-amber-100"
+          className="p-4 sm:p-10 bg-[#FFFDF8] text-slate-900 relative selection:bg-amber-100"
           style={{ minHeight: '520px' }}
         >
           {/* Decorative Certificate Borders */}
@@ -137,7 +137,7 @@ export const CyberHeroCertificateModal: React.FC<CyberHeroCertificateModalProps>
             {/* Left: Date & Code */}
             <div className="space-y-1">
               <p className="text-[11px] text-slate-500 font-semibold">{currentDate}</p>
-              <div className="w-24 sm:w-36 h-0.5 bg-slate-300 mx-auto" />
+              <div className="w-16 sm:w-36 max-w-full h-0.5 bg-slate-300 mx-auto" />
               <p className="text-[10px] uppercase font-bold text-slate-400">
                 {language === 'pt' ? 'Data de Emissão' : 'Issue Date'}
               </p>
@@ -146,10 +146,10 @@ export const CyberHeroCertificateModal: React.FC<CyberHeroCertificateModalProps>
 
             {/* Center: Golden Seal Badge */}
             <div className="flex flex-col items-center">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-amber-400 via-yellow-300 to-amber-500 text-amber-950 flex flex-col items-center justify-center shadow-lg border-2 border-white ring-2 ring-amber-400/50">
-                <span className="text-lg sm:text-xl">🛡️</span>
-                <span className="text-[8px] font-black uppercase tracking-tighter">Ciber-Herói</span>
-                <span className="text-[7px] font-extrabold opacity-80">5.º ANO</span>
+              <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-amber-400 via-yellow-300 to-amber-500 text-amber-950 flex flex-col items-center justify-center shadow-lg border-2 border-white ring-2 ring-amber-400/50">
+                <span className="text-base sm:text-xl">🛡️</span>
+                <span className="text-[7px] sm:text-[8px] font-black uppercase tracking-tighter">Ciber-Herói</span>
+                <span className="text-[6px] sm:text-[7px] font-extrabold opacity-80">5.º ANO</span>
               </div>
             </div>
 
@@ -158,7 +158,7 @@ export const CyberHeroCertificateModal: React.FC<CyberHeroCertificateModalProps>
               <p className="text-[11px] sm:text-xs font-serif italic text-indigo-950 font-bold">
                 Carla Oliveira
               </p>
-              <div className="w-24 sm:w-36 h-0.5 bg-slate-300 mx-auto" />
+              <div className="w-16 sm:w-36 max-w-full h-0.5 bg-slate-300 mx-auto" />
               <p className="text-[10px] uppercase font-bold text-slate-400">
                 {language === 'pt' ? 'Professora de TIC' : 'ICT Teacher'}
               </p>
