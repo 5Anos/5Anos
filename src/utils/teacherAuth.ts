@@ -36,19 +36,25 @@ export function isTeacherEmail(email?: string | null): boolean {
   const envEmail = typeof process !== 'undefined' ? process.env?.TEACHER_EMAIL : '';
   if (envEmail && normalizeEmail(envEmail) === normalized) return true;
 
+  // Official teacher emails
+  const knownTeacherEmails = [
+    'imaginebycarla2023@gmail.com',
+    'prof.carla@escola.pt',
+    'professora.carla@escola.pt',
+    'carla.oliveira@escola.pt',
+  ];
+  if (knownTeacherEmails.includes(normalized)) return true;
+
   // Institutional or standard teacher email formats
   if (
     normalized.startsWith('prof.') ||
     normalized.startsWith('professora.') ||
-    normalized.startsWith('docente.') ||
-    normalized.endsWith('@escola.pt') ||
-    normalized.endsWith('@agrupamento.pt')
+    normalized.startsWith('docente.')
   ) {
     return true;
   }
 
-  // Any valid teacher registered in the system (verified via role in database)
-  return true;
+  return false;
 }
 
 /**
@@ -61,11 +67,13 @@ export function isTeacherIdentifier(identifier?: string | null): boolean {
   if (TEACHER_USERNAMES.some((u) => u.toLowerCase() === clean)) return true;
   if (TEACHER_PUBLIC_IDS.some((p) => p.toLowerCase() === clean)) return true;
   if (
-    clean.startsWith('teacher') ||
-    clean.startsWith('admin') ||
-    clean.startsWith('prof') ||
-    clean.startsWith('docente') ||
-    clean.includes('carla')
+    clean === 'admin_carla_oliveira_by' ||
+    clean === 'teacher-carla' ||
+    clean === 'prof.carla' ||
+    clean === 'carla.oliveira' ||
+    clean === 'professora.carla' ||
+    clean === 'docente' ||
+    clean === 'admin'
   ) {
     return true;
   }
@@ -84,8 +92,8 @@ export function isUserAdmin(
 ): boolean {
   if (role === 'admin' || role === 'teacher') return true;
   if (email && isTeacherEmail(email)) return true;
-  if (username && isTeacherIdentifier(username)) return true;
-  if (publicId && isTeacherIdentifier(publicId)) return true;
-  if (id && isTeacherIdentifier(id)) return true;
+  if (username && (username === 'prof.carla' || username === 'carla.oliveira' || username === 'professora.carla')) return true;
+  if (publicId && (publicId === 'PROF_CARLA' || publicId === 'PROFESSORA_CARLA' || publicId === 'DOCENTE_TIC')) return true;
+  if (id && (id === 'admin_carla_oliveira_by' || id === 'teacher-carla')) return true;
   return false;
 }

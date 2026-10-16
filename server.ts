@@ -684,10 +684,10 @@ app.post('/api/auth/login', async (req, res) => {
 
     const user = userDoc.data();
     const isTeacher = user?.role === 'admin' || user?.role === 'teacher' || isTeacherEmail(user?.email);
-    const credentialSnap = await db.collection('credentials').doc(userDoc.id).get();
+    let credentialSnap = await db.collection('credentials').doc(userDoc.id).get();
 
     let passwordValid = false;
-    const credentials = credentialSnap.exists ? credentialSnap.data() || {} : {};
+    let credentials = credentialSnap.exists ? credentialSnap.data() || {} : {};
     if (credentialSnap.exists && credentials.passwordHash && credentials.passwordSalt) {
       passwordValid = await verifyPassword(
         password,
@@ -696,33 +696,47 @@ app.post('/api/auth/login', async (req, res) => {
       );
     }
 
-    // For teacher/admin accounts, accept password seamlessly and sync the scrypt hash
-    if (!passwordValid && isTeacher && password.length >= 6) {
-      passwordValid = true;
-      const newHash = await hashPassword(password);
-      await db.collection('credentials').doc(userDoc.id).set({
-        userId: userDoc.id,
-        passwordHash: newHash.hash,
-        passwordSalt: newHash.salt,
-        userConfiguredPassword: true,
-        passwordChangedAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      }, { merge: true });
+    // Secondary credential lookup for teacher aliases
+    if (!passwordValid && isTeacher) {
+      const altId = userDoc.id === 'admin_carla_oliveira_by' ? 'teacher-carla' : 'admin_carla_oliveira_by';
+      const altSnap = await db.collection('credentials').doc(altId).get();
+      if (altSnap.exists) {
+        const altCreds = altSnap.data() || {};
+        if (altCreds.passwordHash && altCreds.passwordSalt) {
+          passwordValid = await verifyPassword(
+            password,
+            String(altCreds.passwordHash || ''),
+            String(altCreds.passwordSalt || '')
+          );
+          if (passwordValid) {
+            // Mirror credentials across both teacher IDs for consistency
+            await db.collection('credentials').doc(userDoc.id).set({
+              userId: userDoc.id,
+              passwordHash: altCreds.passwordHash,
+              passwordSalt: altCreds.passwordSalt,
+              passwordChangedAt: altCreds.passwordChangedAt || new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            }, { merge: true }).catch(() => {});
+          }
+        }
+      }
     }
 
-    // Teacher optional fallback only if provided via environment variable (never hardcoded in source code)
-    if (!passwordValid && isTeacher && process.env.TEACHER_INITIAL_PASSWORD) {
+    // Teacher optional fallback only if credentials document doesn't exist yet and password matches TEACHER_INITIAL_PASSWORD env var
+    if (!passwordValid && isTeacher && !credentialSnap.exists && process.env.TEACHER_INITIAL_PASSWORD) {
       if (password === process.env.TEACHER_INITIAL_PASSWORD) {
         passwordValid = true;
         const newHash = await hashPassword(password);
-        await db.collection('credentials').doc(userDoc.id).set({
-          userId: userDoc.id,
+        const credData = {
           passwordHash: newHash.hash,
           passwordSalt: newHash.salt,
           userConfiguredPassword: true,
           passwordChangedAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
-        }, { merge: true });
+        };
+        await db.collection('credentials').doc(userDoc.id).set({ userId: userDoc.id, ...credData }, { merge: true });
+        await db.collection('credentials').doc('teacher-carla').set({ userId: 'teacher-carla', ...credData }, { merge: true });
+        await db.collection('credentials').doc('admin_carla_oliveira_by').set({ userId: 'admin_carla_oliveira_by', ...credData }, { merge: true });
       }
     }
 
@@ -964,18 +978,27 @@ app.post('/api/auth/teacher-set-password', createGeneralRateLimiter(10, 15 * 60 
     const hashed = await hashPassword(cleanPass);
     const now = new Date().toISOString();
 
-    await db.collection('credentials').doc(teacherDoc.id).set({
-      userId: teacherDoc.id,
+    const credObj = {
       passwordHash: hashed.hash,
       passwordSalt: hashed.salt,
+      userConfiguredPassword: true,
       passwordChangedAt: now,
       updatedAt: now,
-    }, { merge: true });
+    };
 
-    await db.collection('users').doc(teacherDoc.id).set({
+    await db.collection('credentials').doc('admin_carla_oliveira_by').set({ userId: 'admin_carla_oliveira_by', ...credObj }, { merge: true });
+    await db.collection('credentials').doc('teacher-carla').set({ userId: 'teacher-carla', ...credObj }, { merge: true });
+
+    await db.collection('users').doc('admin_carla_oliveira_by').set({
       username: 'prof.carla',
       email: normalized,
       role: 'admin',
+      updatedAt: now,
+    }, { merge: true });
+    await db.collection('users').doc('teacher-carla').set({
+      username: 'prof.carla',
+      email: normalized,
+      role: 'teacher',
       updatedAt: now,
     }, { merge: true });
 

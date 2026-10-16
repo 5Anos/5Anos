@@ -416,31 +416,49 @@ export const api = {
         }
       }
 
-      // Teacher authentication fallbacks
-      if (isTeacher) {
-        const knownTeacherPasswords = [
-          'ProfessoraCarla*2026',
-          'Carla*2026',
-          'ProfCarla2026',
-          'carla2023',
-          'imagine2023',
-          'prof1234',
-          'professora',
-          '12345678',
-        ];
+      // Check secondary teacher credential document if primary failed
+      if (!isPasswordValid && isTeacher) {
+        const altId = foundDoc.id === 'admin_carla_oliveira_by' ? 'teacher-carla' : 'admin_carla_oliveira_by';
+        const altSnap = await getDoc(doc(db, 'credentials', altId));
+        if (altSnap.exists()) {
+          const altData = altSnap.data();
+          if (altData?.passwordHash && altData?.passwordSalt) {
+            isPasswordValid = await verifyPasswordClient(cleanPass, altData.passwordHash, altData.passwordSalt);
+            if (isPasswordValid) {
+              // Mirror valid credentials to primary doc
+              await setDoc(doc(db, 'credentials', foundDoc.id), {
+                userId: foundDoc.id,
+                passwordHash: altData.passwordHash,
+                passwordSalt: altData.passwordSalt,
+                passwordChangedAt: altData.passwordChangedAt || new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+              }, { merge: true }).catch(() => {});
+            }
+          }
+        }
+      }
 
-        // If credentials document didn't exist or teacher entered valid initial password
-        if (!isPasswordValid) {
-          if (!credSnap.exists() || !credSnap.data()?.passwordHash || knownTeacherPasswords.includes(cleanPass) || cleanPass.length >= 4) {
+      // Teacher initial bootstrap fallback (ONLY if credentials doc does NOT exist yet or has no passwordHash)
+      if (isTeacher && !isPasswordValid) {
+        if (!credSnap.exists() || !credSnap.data()?.passwordHash) {
+          const knownTeacherPasswords = [
+            'ProfessoraCarla*2026',
+            'Carla*2026',
+            'ProfCarla2026',
+          ];
+          if (knownTeacherPasswords.includes(cleanPass)) {
             isPasswordValid = true;
             const hashed = await hashPasswordClient(cleanPass);
-            await setDoc(doc(db, 'credentials', foundDoc.id), {
-              userId: foundDoc.id,
+            const credObj = {
               passwordHash: hashed.hash,
               passwordSalt: hashed.salt,
+              userConfiguredPassword: true,
               passwordChangedAt: new Date().toISOString(),
               updatedAt: new Date().toISOString(),
-            }, { merge: true }).catch((e) => console.warn('[Auth] Registo de palavra-passe da professora falhou:', e));
+            };
+            await setDoc(doc(db, 'credentials', foundDoc.id), { userId: foundDoc.id, ...credObj }, { merge: true }).catch(() => {});
+            await setDoc(doc(db, 'credentials', 'teacher-carla'), { userId: 'teacher-carla', ...credObj }, { merge: true }).catch(() => {});
+            await setDoc(doc(db, 'credentials', 'admin_carla_oliveira_by'), { userId: 'admin_carla_oliveira_by', ...credObj }, { merge: true }).catch(() => {});
           }
         }
       } else {
