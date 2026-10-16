@@ -35,7 +35,7 @@ export const translations = {
     achievements: 'Conquistas',
     bestScore: 'Melhor Resultado',
     exploreThemes: 'Os Sete Grandes Temas de TIC',
-    exploreThemesDesc: 'Seleciona um tema para explorar os conteúdos e praticar nos jogos e desafios interativos.',
+    exploreThemesDesc: 'Só as pessoas registadas (que entram com o nome de utilizador e palavra-passe) podem aceder aos conteúdos dos Temas (Tema 1 a Tema 7).',
     recentBadgesTitle: 'Conquistas Recentes',
     viewAllProgress: 'Ver galeria de conquistas',
     continueLearning: 'Continuar Aprendizagem',
@@ -114,7 +114,7 @@ export const translations = {
     passwordSecurityNotice: '🛡️ A tua palavra-passe é encriptada e guardada com segurança.',
     logoutConfirm: 'Tens a certeza de que pretendes terminar sessão?',
     studentAccount: 'Conta de Aluno',
-    guestNotice: 'Estás a explorar em modo visitante. Inicia sessão para guardar XP e conquistas permanentemente!',
+    guestNotice: '🔒 Acesso Reservado: Só as pessoas registadas (que entram na plataforma com o seu nome de utilizador e palavra-passe) têm acesso aos conteúdos dos Temas de TIC (Tema 1 a Tema 7).',
   },
   en: {
     appTitle: 'TIC 5 — Descomplica!',

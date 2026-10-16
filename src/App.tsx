@@ -238,7 +238,18 @@ export default function App() {
 
   // If active theme or active quiz is locked and user is a student, automatically return
   useEffect(() => {
-    if (!isAdmin && themeVisibility[currentTheme.id] === false) {
+    if (!user && currentView !== 'dashboard') {
+      setCurrentView('dashboard');
+      setActiveModuleId(null);
+      setActiveChallengeId(null);
+      setAuthModalOpen(true);
+      showToast(
+        language === 'pt' ? '🔒 Acesso Reservado' : '🔒 Restricted Access',
+        language === 'pt'
+          ? 'Só as pessoas registadas (que entram com o nome de utilizador e palavra-passe) têm acesso aos Temas de TIC!'
+          : 'Only registered users who log in with username and password can access ICT Themes!'
+      );
+    } else if (!isAdmin && themeVisibility[currentTheme.id] === false) {
       if (currentView === 'theme' || currentView === 'module' || currentView === 'challenge') {
         setCurrentView('dashboard');
         setActiveModuleId(null);
@@ -252,7 +263,7 @@ export default function App() {
         returnToGames();
       }
     }
-  }, [isAdmin, currentView, currentTheme.id, themeVisibility, quizVisibility, activeChallengeId]);
+  }, [user, isAdmin, currentView, currentTheme.id, themeVisibility, quizVisibility, activeChallengeId, language]);
 
   const handleToggleThemeVisibility = async (themeId: string) => {
     try {
@@ -395,6 +406,16 @@ export default function App() {
 
   // Navigation handlers
   const navigateToTheme = (themeId: string, moduleId?: string, challengeId?: string) => {
+    if (!user) {
+      setAuthModalOpen(true);
+      showToast(
+        language === 'pt' ? '🔒 Acesso Reservado' : '🔒 Restricted Access',
+        language === 'pt'
+          ? 'Só as pessoas registadas (que entram com o nome de utilizador e palavra-passe) têm acesso aos Temas de TIC!'
+          : 'Only registered users who log in with username and password can access ICT Themes!'
+      );
+      return;
+    }
     if (!isAdmin && themeVisibility[themeId] === false) {
       showToast(
         language === 'pt' ? '🔒 Tema Oculto' : '🔒 Theme Hidden',

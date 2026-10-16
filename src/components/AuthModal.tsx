@@ -119,16 +119,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         </div>
 
         {/* Informative Banner */}
-        <div className="bg-indigo-50/70 border-b border-indigo-100 px-5 py-3 text-xs text-indigo-950 flex items-start gap-2.5">
-          <ShieldCheck className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+        <div className="bg-amber-50/90 border-b border-amber-200/80 px-5 py-3 text-xs text-amber-950 flex items-start gap-2.5">
+          <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
           <p className="leading-relaxed">
             {language === 'pt' ? (
               <>
-                <strong className="font-bold">Alunos do 5.º Ano:</strong> As vossas contas são criadas previamente pela professora de TIC. Insiram o vosso <strong>nome de utilizador</strong> e <strong>palavra-passe</strong> do vosso cartão de credenciais.
+                <strong className="font-bold font-sans text-slate-900">🔒 Acesso Reservado aos Temas (Tema 1 a Tema 7):</strong> Insere o teu <strong>nome de utilizador</strong> e <strong>palavra-passe</strong> para aceder aos conteúdos, jogos e quizzes!
               </>
             ) : (
               <>
-                <strong className="font-bold">5th Grade Students:</strong> Your accounts are pre-created by your ICT teacher. Enter your student <strong>username</strong> and <strong>password</strong>.
+                <strong className="font-bold font-sans text-slate-900">🔒 Restricted Access to Topics (Theme 1 to 7):</strong> Enter your <strong>username</strong> and <strong>password</strong> to unlock all learning topics!
               </>
             )}
           </p>
